@@ -77,6 +77,9 @@ import ProductUpdate from "@/js/components/products/ProductEdit";
 import ProductTagMain from "@/js/components/products/ProductTagMain";
 
 export default {
+    props:[
+        'selectProduct'
+    ],
     components: {
         ProductUpdate,
         ProductTagMain

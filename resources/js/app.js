@@ -36,6 +36,7 @@ axios.defaults.headers.common["Authorization"] =
     "Bearer " + localStorage.getItem("token");
 axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
 //
+
 const app = new Vue({
     el: "#app",
     store,

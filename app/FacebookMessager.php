@@ -6,6 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class FacebookMessager extends Model
 {
+
+    public static function url()
+    {
+        return "https://graph.facebook.com/";
+    }
+
+    public static function version()
+    {
+        return 'v6.0/';
+    }
+ 
     public static function pageToken()
     {
         return [
@@ -56,7 +67,9 @@ class FacebookMessager extends Model
             if (empty($customer->psid)) { // ไม่มี PSID
 
                 $pageToken = FacebookMessager::pageToken();
-                $url = 'https://graph.facebook.com/v6.0/' . $customer->fbid . '/ids_for_pages?' . "app=" . $pageToken['app'] . "&access_token=" . $pageToken['access_token'] . "&appsecret_proof=" . $pageToken['appsecret_proof'] . "&page=" . $pageToken['page'];
+                $url = self::url().self::version(). $customer->fbid . '/ids_for_pages?' . "app=" . $pageToken['app'] . "&access_token=" . $pageToken['access_token'] . "&appsecret_proof=" . $pageToken['appsecret_proof'] . "&page=" . $pageToken['page'];
+
+                //$url = 'https://graph.facebook.com/v6.0/' . $customer->fbid . '/ids_for_pages?' . "app=" . $pageToken['app'] . "&access_token=" . $pageToken['access_token'] . "&appsecret_proof=" . $pageToken['appsecret_proof'] . "&page=" . $pageToken['page'];
 
                 $client = new \GuzzleHttp\Client();
                 $response = $client->get($url);
@@ -80,7 +93,7 @@ class FacebookMessager extends Model
         }
 
         $pageToken = FacebookMessager::pageToken();
-        $url = 'https://graph.facebook.com/v6.0/me/messages?access_token=' . $pageToken['access_token'];
+        $url = self::url().self::version().'me/messages?access_token=' . $pageToken['access_token'];
         $data = [
             'recipient' => ['id' => $psid],
             'message' => ['text' => $text]

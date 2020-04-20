@@ -31,4 +31,8 @@ class Product extends Model implements Auditable
     {
         return $this->hasMany(ProductTag::class,"product_id",'id');
     }
+    public function ProductTagUseOnly()
+    {
+        return $this->hasMany(ProductTag::class,"product_id",'id')->whereStatus('1');
+    }
 }

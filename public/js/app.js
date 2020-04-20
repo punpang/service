@@ -98952,7 +98952,7 @@ var routes = [{
   path: "/customer",
   name: "Customer",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 0).then(__webpack_require__.bind(null, /*! @/js/pages/orders/customer */ "./resources/js/pages/orders/customer.vue"));
+    return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! @/js/pages/orders/customer */ "./resources/js/pages/orders/customer.vue"));
   },
   meta: {
     requiresAuth: true
@@ -98970,7 +98970,7 @@ var routes = [{
   path: "/order",
   name: "Order",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! @/js/pages/orders/order */ "./resources/js/pages/orders/order.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(0)]).then(__webpack_require__.bind(null, /*! @/js/pages/orders/order */ "./resources/js/pages/orders/order.vue"));
   },
   meta: {
     requiresAuth: true

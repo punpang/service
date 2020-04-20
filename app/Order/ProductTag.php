@@ -22,6 +22,11 @@ class ProductTag extends Model implements Auditable
         return $this->belongsTo(ProductCategorySub::class, "product_category_sub_id", "id");
     }
 
+    public function ProductCategorySubUseOnly()
+    {
+        return $this->belongsTo(ProductCategorySub::class, "product_category_sub_id", "id")->whereStatus('1');
+    }
+
     public function scopeUseOnly()
     {
         return $query = $this->where('status', 1);

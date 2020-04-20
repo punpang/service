@@ -13,14 +13,12 @@ use App\FacebookMessager;
 class OrderController extends Controller
 {
     public function create()
-    {   
+    {
         $dataRequest = request()->all();
         $dataRequest['token'] = $this->generateToken();
-
         $order = Order::create($dataRequest);
-
-        $message = 'รายการสั่งซื้อ #'.$order->id. ' ของคุณ เรากำลังรอยืนยันการสั่งซื้อจากคุณ ยอดชำระทั้งหมด 300.00 บ. โปรดชำระขั้นต่ำ 150 บ. \n\nชำระโอนผ่านธนาคาร 408-672-0266 (พรรษิษฐ์ ศรีสุข) ธนาคารไทยพาณิชย์ แจ้งชำระเงินได้ที่ ...';
-        FacebookMessager::postMessage($order->customer,$order->ChannelOfPurchase->name,$message);
+        //$message = 'รายการสั่งซื้อ #'.$order->id. ' ของคุณ เรากำลังรอยืนยันการสั่งซื้อจากคุณ ยอดชำระทั้งหมด 300.00 บ. โปรดชำระขั้นต่ำ 150 บ. \n\nชำระโอนผ่านธนาคาร 408-672-0266 (พรรษิษฐ์ ศรีสุข) ธนาคารไทยพาณิชย์ แจ้งชำระเงินได้ที่ ...';
+        //FacebookMessager::postMessage($order->customer,$order->ChannelOfPurchase->name,$message);
         //MSms::Sms($order->customer->phone,$message);
         //MSms::Sms($order->customer->phone,'รายการสั่งซื้อ #'.$order->id. ' ของคุณ เรากำลังรอยืนยันการสั่งซื้อจากคุณ ยอดชำระทั้งหมด '.number_format($order->total,2).' บ. โปรดชำระขั้นต่ำ '.number_format($order->total/2,2).' บ. \n\nชำระโอนผ่านธนาคาร 408-672-0266 (พรรษิษฐ์ ศรีสุข) ธนาคารไทยพาณิชย์ แจ้งชำระเงินได้ที่ ...');
         Linenotify::send('รายการสั่งซื้อใหม่ #' . $order->id . ' รับเมื่อ ' . $order->dateTime_get);
@@ -48,13 +46,15 @@ class OrderController extends Controller
         return Order::TomorrowOrder()->with('Customer', 'ChannelOfPurchase', 'OrderStatus')->get();
     }
 
-    function generateToken($length = 30)
+    function generateToken($length = 2)
     {
+        $timestamp = \Carbon\Carbon::now()->timestamp;
         $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         $data = '';
         for ($i = 0; $i < $length; $i++)
             $data .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
-        return $data;
+
+        return encrypt($data . $timestamp);
     }
 
     public function listsMenu()
@@ -141,7 +141,7 @@ class OrderController extends Controller
     public function checkDateTimeForGet()
     {
         $dateTimeGet = request('dateTime_get');
-        $now = \Carbon\Carbon::now()->format('Y-m-d H:i:s');
+        $now = \Carbon\Carbon::now()->toDateTimeString(); //format("Y-m-d H:i:s")
 
         if ($dateTimeGet > $now) {
             $orders = Order::where('dateTime_get', $dateTimeGet)->with('Customer', 'ChannelOfPurchase', 'OrderStatus')->get();

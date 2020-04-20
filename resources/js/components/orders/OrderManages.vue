@@ -1,53 +1,96 @@
 <template>
     <div>
-        <v-dialog v-model="dialog" persistent width="300">
+        <v-dialog v-model="dialog" width="1250">
             <template v-slot:activator="{ on }">
-                <v-btn class="warning" fab x-small v-on="on" @click="start"
-                    ><v-icon>edit</v-icon></v-btn
+                <v-btn
+                    block
+                    color="primary"
+                    v-on="on"
+                    class="mb-2"
+                    small
+                    rounded
+                    @click="start"
+                    >การจัดการ</v-btn
                 >
             </template>
-            <v-card>
-                <v-card-title>
-                    การจัดการ
-                    <v-spacer></v-spacer>
-                    <v-icon color="error" @click="dialog = false">close</v-icon>
-                </v-card-title>
-                <v-card-text>
-                    <OrderDetailAdd :order="order"></OrderDetailAdd>
-                    <v-btn
-                        block
-                        color="warning"
-                        class="mb-2"
-                        @click="testFacebook"
-                        >ชำระเงิน</v-btn
-                    >
-                    <v-btn block color="info">ส่งลิงก์สำหรับอัปโหลดรูป</v-btn>
-                    <hr class="my-2" />
-                    <v-btn block color="info" class="mb-2"
-                        >เปลี่ยนแปลงผู้ส่งซื้อ</v-btn
-                    >
-                    <v-btn block color="info"
-                        >เปลี่ยนแปลงวัน-เวลาที่รับสินค้า</v-btn
-                    >
-                    <hr class="my-2" />
-                    <div
-                        v-for="{ index, color, status, text } in buttons"
-                        :key="index"
-                    >
-                        <v-btn
-                            block
-                            :color="color"
-                            @click="clickUpdateStatus(status)"
-                            class="mb-2"
-                            >{{ text }}</v-btn
-                        >
-                    </div>
-                    <v-btn
-                        v-if="this.order.order_status.id != 8"
-                        block
-                        color="error"
-                        >ยกเลิกรายการสั่งซื้อ</v-btn
-                    >
+            <v-card color="#121212">
+                <v-card-text class="pa-0">
+                    <v-container>
+                        <v-row>
+                            <v-col cols="12" md="3">
+                                <v-card>
+                                    <v-card-title>
+                                        รายการสั่งซื้อ
+                                        <v-spacer></v-spacer>
+                                        #{{ order.id }}0582
+                                    </v-card-title>
+                                    <v-divider class="ma-1"></v-divider>
+                                    <v-card-text>
+                                        <v-container class="pt-1">
+                                            <v-row>
+                                                <v-col
+                                                    cols="12"
+                                                    md="12"
+                                                    class="pb-0"
+                                                >
+                                                    <b>ชื่อลูกค้า</b>
+                                                    <v-spacer></v-spacer>
+                                                    {{ order.customer.name }}
+                                                </v-col>
+                                                <v-col
+                                                    cols="12"
+                                                    md="12"
+                                                    class="pb-0"
+                                                >
+                                                    <b>เบอร์โทรศัพท์</b>
+                                                    <v-spacer></v-spacer>
+                                                    {{ order.customer.phone }}
+                                                </v-col>
+                                                <v-col
+                                                    cols="12"
+                                                    md="12"
+                                                    class="pb-0"
+                                                >
+                                                    <b>วัน-เวลารับสินค้า</b>
+                                                    <v-spacer></v-spacer>
+                                                    {{ order.dateTime_get }}
+                                                </v-col>
+                                                <v-col
+                                                    cols="12"
+                                                    md="12"
+                                                    class="pb-0"
+                                                >
+                                                    <b>สถานะ</b>
+                                                    <v-spacer></v-spacer>
+                                                    <span>{{
+                                                        order.order_status.name
+                                                    }}</span>
+                                                </v-col>
+                                            </v-row>
+                                        </v-container>
+                                    </v-card-text>
+                                </v-card>
+                            </v-col>
+                            <v-col cols="12" :md="setMDForDetail">
+                                <v-card>
+                                    <v-card-title>
+                                        รายละเอียด
+                                        <v-spacer></v-spacer>
+                                        <v-icon @click="clickMenu"
+                                            >dehaze</v-icon
+                                        >
+                                    </v-card-title>
+                                    <v-divider class="ma-1"></v-divider>
+                                    <v-card-text> </v-card-text>
+                                </v-card>
+                            </v-col>
+                            <v-col cols="12" md="2" v-show="menu">
+                                <OrderMenuForManages
+                                    :order="order"
+                                ></OrderMenuForManages>
+                            </v-col>
+                        </v-row>
+                    </v-container>
                 </v-card-text>
             </v-card>
         </v-dialog>
@@ -55,54 +98,27 @@
 </template>
 
 <script>
-import OrderDetailAdd from "@/js/components/orders/details/add";
-
+import OrderMenuForManages from "@/js/components/orders/OrderMenuForManages";
 export default {
     props: ["order"],
     components: {
-        OrderDetailAdd
+        OrderMenuForManages
     },
     data() {
         return {
             dialog: false,
-            buttons: []
+            menu: true,
+            setMDForDetail: 7
         };
     },
     methods: {
-        async testFacebook() {
-            const response = await this.$store.dispatch("order/createOrder");
-        },
-        start() {
-            this.setButtonByStatus();
-        },
-        setButtonByStatus() {
-            switch (this.order.order_status.id) {
-                case 4 || 5:
-                    this.buttons = [
-                        {
-                            color: "warning",
-                            text: "เตรียมสินค้าแล้ว",
-                            status: 6
-                        }
-                    ];
-                    break;
-                case 6:
-                    this.buttons = [
-                        {
-                            color: "warning",
-                            text: "กำลังจัดส่งสินค้า",
-                            status: 6
-                        },
-                        { color: "success", text: "รับสินค้าแล้ว", status: 8 }
-                    ];
-                    break;
-                case 1:
-                    this.button = {
-                        color: "info",
-                        text: "เตรียมสินค้าแล้ว",
-                        status: 6
-                    };
-                    break;
+        start() {},
+        clickMenu() {
+            this.menu = !this.menu;
+            if (this.menu) {
+                this.setMDForDetail = 7;
+            } else {
+                this.setMDForDetail = 9;
             }
         }
     }

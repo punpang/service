@@ -970,6 +970,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['selectProduct'],
   components: {
     ProductUpdate: _js_components_products_ProductEdit__WEBPACK_IMPORTED_MODULE_1__["default"],
     ProductTagMain: _js_components_products_ProductTagMain__WEBPACK_IMPORTED_MODULE_2__["default"]
