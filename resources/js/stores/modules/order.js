@@ -1,15 +1,20 @@
 export default {
     namespaced: true,
     state: {
-        all: []
+        all: [],
+        getByID:{}
     },
     mutations: {
         all(state, data) {
             state.all = data;
+        },
+        getByID(state, data) {
+            state.getByID = data;
         }
     },
     getters: {
-        all: state => state.all
+        all: state => state.all,
+        getByID: state => state.getByID
     },
     actions: {
         async checkDateTimeForGet({ commit }, payload) {
@@ -43,6 +48,15 @@ export default {
             try {
                 const response = await axios.post("api/order/create", payload);
                 //dispatch('all');
+                return response;
+            } catch (e) {
+                return e;
+            }
+        },
+        async getByID({ commit },payload){
+            try {
+                const response = await axios.get("api/order/"+payload+"/getByID");
+                commit('getByID',response.data);
                 return response;
             } catch (e) {
                 return e;

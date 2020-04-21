@@ -98961,7 +98961,7 @@ var routes = [{
   path: "/product",
   name: "Product",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! @/js/pages/orders/product */ "./resources/js/pages/orders/product.vue"));
+    return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! @/js/pages/orders/product */ "./resources/js/pages/orders/product.vue"));
   },
   meta: {
     requiresAuth: true
@@ -98970,7 +98970,7 @@ var routes = [{
   path: "/order",
   name: "Order",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! @/js/pages/orders/order */ "./resources/js/pages/orders/order.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! @/js/pages/orders/order */ "./resources/js/pages/orders/order.vue"));
   },
   meta: {
     requiresAuth: true
@@ -99452,16 +99452,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ __webpack_exports__["default"] = ({
   namespaced: true,
   state: {
-    all: []
+    all: [],
+    getByID: {}
   },
   mutations: {
     all: function all(state, data) {
       state.all = data;
+    },
+    getByID: function getByID(state, data) {
+      state.getByID = data;
     }
   },
   getters: {
     all: function all(state) {
       return state.all;
+    },
+    getByID: function getByID(state) {
+      return state.getByID;
     }
   },
   actions: {
@@ -99588,6 +99595,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee4, null, [[0, 7]]);
       }))();
+    },
+    getByID: function getByID(_ref6, payload) {
+      var commit = _ref6.commit;
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.prev = 0;
+                _context5.next = 3;
+                return axios.get("api/order/" + payload + "/getByID");
+
+              case 3:
+                response = _context5.sent;
+                commit('getByID', response.data);
+                return _context5.abrupt("return", response);
+
+              case 8:
+                _context5.prev = 8;
+                _context5.t0 = _context5["catch"](0);
+                return _context5.abrupt("return", _context5.t0);
+
+              case 11:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, null, [[0, 8]]);
+      }))();
     }
   }
 });
@@ -99614,16 +99651,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ __webpack_exports__["default"] = ({
   namespaced: true,
   state: {
-    dataUseOnly: []
+    dataUseOnly: [],
+    getByOrderId: []
   },
   mutations: {
     dataUseOnly: function dataUseOnly(state, data) {
       state.dataUseOnly = data;
+    },
+    getByOrderId: function getByOrderId(state, data) {
+      state.getByOrderId = data;
     }
   },
   getters: {
     dataUseOnly: function dataUseOnly(state) {
       return state.dataUseOnly;
+    },
+    getByOrderId: function getByOrderId(state) {
+      return state.getByOrderId;
     }
   },
   actions: {
@@ -99672,6 +99716,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee2);
+      }))();
+    },
+    getByOrderID: function getByOrderID(_ref3, payload) {
+      var commit = _ref3.commit;
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return axios.get("api/order/detail/" + payload + "/getByOrderID");
+
+              case 2:
+                response = _context3.sent;
+                commit("getByOrderId", response.data);
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
       }))();
     }
   }

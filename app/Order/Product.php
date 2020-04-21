@@ -16,7 +16,8 @@ class Product extends Model implements Auditable
     protected $table = "products";
     protected $connection = 'order';
     protected $fillable = ['name', 'detail_status', 'detail', 'price_normal', 'price_special_status', 'price_special', 'status', 'image_status', 'product_image_id'];
-
+    protected $hidden = ['created_at','updated_at'];
+    
     public function scopeUseOnly()
     {
         return $query = $this->where('status', 1);

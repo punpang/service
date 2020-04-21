@@ -17,6 +17,7 @@ class Customer extends Model implements Auditable
     protected $table = 'customers';
 
     protected $connection = 'order';
+    protected $hidden = ['created_at','updated_at'];
 
     protected $fillable = [
         'name', 'phone'

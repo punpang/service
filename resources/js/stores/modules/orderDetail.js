@@ -1,15 +1,20 @@
 export default {
     namespaced: true,
     state: {
-        dataUseOnly: []
+        dataUseOnly: [],
+        getByOrderId: []
     },
     mutations: {
         dataUseOnly(state, data) {
             state.dataUseOnly = data;
+        },
+        getByOrderId(state, data) {
+            state.getByOrderId = data;
         }
     },
     getters: {
-        dataUseOnly: state => state.dataUseOnly
+        dataUseOnly: state => state.dataUseOnly,
+        getByOrderId: state => state.getByOrderId
     },
     actions: {
         async store({ dispatch }, payload) {
@@ -22,6 +27,12 @@ export default {
                 "api/order/detail/" + payload + "useonly"
             );
             commit("dataUseOnly", response.data);
+        },
+        async getByOrderID({ commit }, payload) {
+            const response = await axios.get(
+                "api/order/detail/" + payload + "/getByOrderID"
+            );
+            commit("getByOrderId", response.data);
         }
     }
 };

@@ -57,6 +57,7 @@ class OrderController extends Controller
         return encrypt($data . $timestamp);
     }
 
+
     public function listsMenu()
     {
         return [

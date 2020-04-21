@@ -17,7 +17,6 @@ class CreateLinesTable extends Migration
             $table->bigIncrements('id');
             $table->string('key')->unique();
             $table->string('target')->unique();
-            $table->timestamps();
         });
     }
 

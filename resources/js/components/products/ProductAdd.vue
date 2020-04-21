@@ -195,7 +195,6 @@ export default {
                 this.imagePreview =
                     "https://drive.google.com/thumbnail?id=" +
                     response.data.src_name;
-                console.log(this.imagePreview);
 
                 this.snackbar = {
                     status: true,

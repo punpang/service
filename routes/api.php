@@ -58,13 +58,16 @@ Route::middleware('auth:api')->group(function () {
 
     Route::prefix('order')->group(function () { // api/order/...
 
-        Route::post('create', 'Order\OrderController@create');
         Route::get('all', 'Order\OrderController@all');
+        
         Route::get('timeGets', 'Order\OrderController@timeGets');
+
+        Route::post('create', 'Order\OrderController@create');        
         Route::post('checkDateTimeForGet', 'Order\OrderController@checkDateTimeForGet');
 
         Route::prefix('detail')->group(function () { // api/order/detail
             Route::post('store', 'Order\OrderDetailController@store');
+            Route::get('{order_id}/getByOrderID', 'Order\OrderDetailController@getByOrderID');
         });
 
     });

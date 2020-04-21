@@ -17,6 +17,8 @@ class ProductTag extends Model implements Auditable
     protected $connection = 'order';
     protected $fillable = ['product_id', 'product_category_sub_id'];
 
+    protected $hidden = ['created_at','updated_at'];
+
     public function ProductCategorySub()
     {
         return $this->belongsTo(ProductCategorySub::class, "product_category_sub_id", "id");
@@ -25,6 +27,11 @@ class ProductTag extends Model implements Auditable
     public function ProductCategorySubUseOnly()
     {
         return $this->belongsTo(ProductCategorySub::class, "product_category_sub_id", "id")->whereStatus('1');
+    }
+
+    public function Product()
+    {
+        return $this->hasOne(Product::class, "id", "product_id");
     }
 
     public function scopeUseOnly()

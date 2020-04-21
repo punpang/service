@@ -41,6 +41,11 @@ class Order extends Model  implements Auditable
         return $this->belongsTo(OrderStatus::class, 'order_status_id', 'id');
     }
 
+    public function OrderDetail()
+    {
+        return $this->hasMany(OrderDetail::class, 'order_id', 'id')->whereStatus(1);
+    }
+
     public function scopeUseOnly()
     {
         return $query = $this->where('status', 1);

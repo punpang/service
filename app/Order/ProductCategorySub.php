@@ -19,6 +19,8 @@ class ProductCategorySub extends Model implements Auditable
     protected $connection = 'order';
     protected $fillable = ['name', 'status', 'product_category_id'];
 
+    protected $hidden = ['created_at','updated_at'];
+
     public function ProductCategory()
     {
         return $this->belongsTo(ProductCategory::class, "product_category_id", "id")->select('id','name','status');

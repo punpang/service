@@ -12,13 +12,18 @@ class OrderDetailController extends Controller
     public function store()
     {
         OrderDetail::create(request()->all());
-        
-        $details = OrderDetail::whereOrderId(request('order_id'))->get();
-        if($details->count() == 1){
-            $order = Order::find(request('order_id'));
+        $order = Order::whereId(request('order_id'))->whereOrderStatusId(1)->first();
+        if (isset($order)) {
             $order->order_status_id = '2';
             $order->update();
         }
         return response()->json('success', 200);
+    }
+
+    
+    public function getByOrderID($order_id)
+    {
+        $data = OrderDetail::whereOrderId($order_id)->with('Product.ProductTagUseOnly.ProductCategorySubUseOnly.ProductCategory')->with('Product.ProductImage')->get();
+        return response()->json($data, 200);
     }
 }

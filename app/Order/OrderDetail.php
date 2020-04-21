@@ -17,4 +17,11 @@ class OrderDetail extends Model implements Auditable
     protected $fillable = [
         'order_id', 'price' ,'product_id', 'write_status', 'write', 'note_status', 'note', 'status'
     ];
+
+    protected $hidden = ['created_at','updated_at'];
+
+    public function Product()
+    {
+        return $this->belongsTo(Product::class,'product_id','id');//->exclude()
+    }
 }

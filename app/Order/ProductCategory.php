@@ -17,6 +17,7 @@ class ProductCategory extends Model implements Auditable
     protected $table = "product_categories";
     protected $connection = 'order';
     protected $fillable = ['name', 'status'];
+    protected $hidden = ['created_at','updated_at'];
 
     public function scopeUseOnly()
     {

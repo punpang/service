@@ -16,6 +16,7 @@ class ProductImage extends Model implements Auditable
     protected $table = "product_images";
     protected $connection = 'order';
     protected $fillable = ['src_name'];
+    protected $hidden = ['created_at','updated_at'];
 
     public function scopeUseOnly()
     {

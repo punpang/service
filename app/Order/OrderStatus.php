@@ -11,6 +11,9 @@ class OrderStatus extends Model implements Auditable
     protected $auditInclude = [
         'name'
     ];
+    
+    protected $hidden = ['created_at','updated_at'];
+
 
     protected $table = "order_statuses";
     protected $connection = "order";

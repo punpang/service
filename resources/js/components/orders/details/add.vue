@@ -2,7 +2,12 @@
     <div>
         <v-dialog v-model="dialog" persistent width="700">
             <template v-slot:activator="{ on }">
-                <v-btn block color="primary" v-on="on" class="mb-2"
+                <v-btn
+                    block
+                    color="primary"
+                    v-on="on"
+                    class="mb-2"
+                    @click="start"
                     >เพิ่มสินค้าใหม่</v-btn
                 >
             </template>
@@ -190,6 +195,8 @@
                         </v-card>
                     </v-form>
                 </v-card-text>
+
+                {{ form }}
             </v-card>
             <processingProduct
                 :product="product"
@@ -225,45 +232,9 @@ export default {
                 status: false
             },
             overlay: false,
-            product: {
-                id: 0,
-                product_image: {
-                    src_name: ""
-                },
-                price_normal: 0,
-                price_special_status: 0,
-                price_special: 0
-            },
-            productDefault: {
-                id: 0,
-                product_image: {
-                    src_name: ""
-                },
-                price_normal: 0,
-                price_special_status: 0,
-                price_special: 0
-            },
+            product: {},
             priceProduct: 0,
-            form: {
-                order_id: this.order.id,
-                product_id: "",
-                write_status: true,
-                write: "",
-                note_status: true,
-                note: "",
-                price: "",
-                status: true
-            },
-            formDefault: {
-                order_id: "",
-                product_id: "",
-                write_status: true,
-                write: "",
-                note_status: true,
-                note: "",
-                price: "",
-                status: true
-            },
+            form: {},
             Rules: {
                 order_id: [v => !!v],
                 product_id: [v => !!v],
@@ -304,11 +275,28 @@ export default {
             }
             this.overlay = false;
         },
+        async start() {
+            await this.form = {
+                order_id: this.order.id,
+                product_id: "",
+                write_status: true,
+                write: "",
+                note_status: true,
+                note: "",
+                price: "",
+                status: true
+            };
+            await this.product = {
+                id: 0,
+                product_image: {
+                    src_name: ""
+                },
+                price_normal: 0,
+                price_special_status: 0,
+                price_special: 0
+            };
+        },
         out() {
-            this.form = "";
-            this.form = this.formDefault;
-            this.product = "";
-            this.product = this.productDefault;
             this.dialog = false;
         },
         emitSelectProduct(item) {
