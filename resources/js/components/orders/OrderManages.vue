@@ -72,17 +72,7 @@
                                 </v-card>
                             </v-col>
                             <v-col cols="12" :md="setMDForDetail">
-                                <v-card>
-                                    <v-card-title>
-                                        รายละเอียด
-                                        <v-spacer></v-spacer>
-                                        <v-icon @click="clickMenu"
-                                            >dehaze</v-icon
-                                        >
-                                    </v-card-title>
-                                    <v-divider class="ma-1"></v-divider>
-                                    <v-card-text> </v-card-text>
-                                </v-card>
+                                
                             </v-col>
                             <v-col cols="12" md="2" v-show="menu">
                                 <OrderMenuForManages
@@ -99,6 +89,8 @@
 
 <script>
 import OrderMenuForManages from "@/js/components/orders/OrderMenuForManages";
+import OrderShow from "@/js/components/orders/details/show";
+
 export default {
     props: ["order"],
     components: {

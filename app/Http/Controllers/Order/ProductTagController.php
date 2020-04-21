@@ -35,14 +35,15 @@ class ProductTagController extends Controller
             }
         }
 
-        $datas = ProductTag::where('product_id', request('product_id'))->get();
+        //$datas = ProductTag::where('product_id', request('product_id'))->get();
 
-        return response()->json($datas, 200);
+        return 'success';
+        //return response()->json($datas, 200);
     }
 
     public function isProductTags($id)
     {
-        $datas = ProductTag::where('product_id', $id)->get();
+        $datas = ProductTag::UseOnly()->where('product_id', $id)->get();
 
         foreach ($datas as $newData) {
             $data[] = $newData->product_category_sub_id;

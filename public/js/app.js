@@ -98952,7 +98952,7 @@ var routes = [{
   path: "/customer",
   name: "Customer",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! @/js/pages/orders/customer */ "./resources/js/pages/orders/customer.vue"));
+    return __webpack_require__.e(/*! import() */ 0).then(__webpack_require__.bind(null, /*! @/js/pages/orders/customer */ "./resources/js/pages/orders/customer.vue"));
   },
   meta: {
     requiresAuth: true
@@ -98970,7 +98970,7 @@ var routes = [{
   path: "/order",
   name: "Order",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(0)]).then(__webpack_require__.bind(null, /*! @/js/pages/orders/order */ "./resources/js/pages/orders/order.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! @/js/pages/orders/order */ "./resources/js/pages/orders/order.vue"));
   },
   meta: {
     requiresAuth: true
@@ -99050,6 +99050,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_stores_modules_productCategorySub__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/js/stores/modules/productCategorySub */ "./resources/js/stores/modules/productCategorySub.js");
 /* harmony import */ var _js_stores_modules_channelOfPurchase__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/js/stores/modules/channelOfPurchase */ "./resources/js/stores/modules/channelOfPurchase.js");
 /* harmony import */ var _js_stores_modules_order__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/js/stores/modules/order */ "./resources/js/stores/modules/order.js");
+/* harmony import */ var _js_stores_modules_orderDetail__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/js/stores/modules/orderDetail */ "./resources/js/stores/modules/orderDetail.js");
+
 
 
 
@@ -99073,7 +99075,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     productCategory: _js_stores_modules_productCategory__WEBPACK_IMPORTED_MODULE_8__["default"],
     productCategorySub: _js_stores_modules_productCategorySub__WEBPACK_IMPORTED_MODULE_9__["default"],
     channelOfPurchase: _js_stores_modules_channelOfPurchase__WEBPACK_IMPORTED_MODULE_10__["default"],
-    order: _js_stores_modules_order__WEBPACK_IMPORTED_MODULE_11__["default"]
+    order: _js_stores_modules_order__WEBPACK_IMPORTED_MODULE_11__["default"],
+    orderDetail: _js_stores_modules_orderDetail__WEBPACK_IMPORTED_MODULE_12__["default"]
   }
 }));
 
@@ -99387,7 +99390,12 @@ __webpack_require__.r(__webpack_exports__);
   state: {
     User: "",
     isLoggedIn: !!localStorage.getItem("token"),
-    sizeOverlay: "64"
+    sizeOverlay: "64",
+    snackbar: {
+      text: {
+        error: 'เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง'
+      }
+    }
   },
   mutations: {
     User: function User(state, data) {
@@ -99412,6 +99420,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     sizeOverlay: function sizeOverlay(state) {
       return state.sizeOverlay;
+    },
+    snackbarError: function snackbarError(state) {
+      return state.snackbar.text.error;
     }
   },
   actions: {}
@@ -99576,6 +99587,91 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee4, null, [[0, 7]]);
+      }))();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/stores/modules/orderDetail.js":
+/*!****************************************************!*\
+  !*** ./resources/js/stores/modules/orderDetail.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  state: {
+    dataUseOnly: []
+  },
+  mutations: {
+    dataUseOnly: function dataUseOnly(state, data) {
+      state.dataUseOnly = data;
+    }
+  },
+  getters: {
+    dataUseOnly: function dataUseOnly(state) {
+      return state.dataUseOnly;
+    }
+  },
+  actions: {
+    store: function store(_ref, payload) {
+      var dispatch = _ref.dispatch;
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.post("api/order/detail/store", payload);
+
+              case 2:
+                res = _context.sent;
+                dispatch("dataUseOnly");
+                return _context.abrupt("return", res);
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    UseOnly: function UseOnly(_ref2, payload) {
+      var commit = _ref2.commit;
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios.post("api/order/detail/" + payload + "useonly");
+
+              case 2:
+                response = _context2.sent;
+                commit("dataUseOnly", response.data);
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
       }))();
     }
   }

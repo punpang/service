@@ -4,6 +4,11 @@ export default {
         User: "",
         isLoggedIn: !!localStorage.getItem("token"),
         sizeOverlay: "64",
+        snackbar:{
+            text:{
+                error:'เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง'
+            }
+        }
     },
     mutations: {
         User(state, data) {
@@ -22,7 +27,8 @@ export default {
     getters: {
         User: state => state.User,
         isLoggedIn: state => state.isLoggedIn,
-        sizeOverlay:state=>state.sizeOverlay
+        sizeOverlay:state=>state.sizeOverlay,
+        snackbarError:state=>state.snackbar.text.error
     },
     actions: {}
 };

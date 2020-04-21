@@ -17,11 +17,12 @@ class CreateOrderDetailsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('order_id');
             $table->integer('product_id');
-            $table->enum('write_status',['true','false']);
+            $table->integer('write_status');
             $table->text('write');
-            $table->enum('note_status',['true','false']);
+            $table->integer('note_status');
             $table->text('note');
-            $table->enum('status',['true','false']);
+            $table->double('price');
+            $table->integer('status')->default('1');
             $table->timestamps();
         });
     }

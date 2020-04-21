@@ -1,14 +1,10 @@
 <template>
     <v-dialog v-model="dialog" persistent width="700">
         <template v-slot:activator="{ on }">
-            <v-text-field
-                label="ชื่อสินค้า"
-                filled
-                placeholder="คลิกที่นี่เพื่อเลือกสินค้า"
-                readonly
-                v-model="nameProduct"
-                v-on="on"
-            ></v-text-field>
+            <v-btn color="primary" v-on="on" block large>
+                <v-icon left>fiber_new</v-icon>
+                เลือกสินค้า
+            </v-btn>
         </template>
         <v-card color="#121212">
             <v-card-title>
@@ -73,7 +69,6 @@ export default {
     data() {
         return {
             dialog: false,
-            nameProduct: "",
             search: "",
             headers: [
                 { text: "รูปภาพ", value: "image", align: "center" },
@@ -87,7 +82,6 @@ export default {
     methods: {
         clickSelectProduct(item) {
             this.$emit("emitSelectProduct", item);
-            this.nameProduct = item.name;
             this.dialog = false;
         }
     },

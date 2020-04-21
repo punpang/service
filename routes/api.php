@@ -63,6 +63,10 @@ Route::middleware('auth:api')->group(function () {
         Route::get('timeGets', 'Order\OrderController@timeGets');
         Route::post('checkDateTimeForGet', 'Order\OrderController@checkDateTimeForGet');
 
+        Route::prefix('detail')->group(function () { // api/order/detail
+            Route::post('store', 'Order\OrderDetailController@store');
+        });
+
     });
 
     Route::prefix('product')->group(function () { // api/product/...

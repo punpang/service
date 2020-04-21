@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import axios from 'axios'
+import axios from "axios";
 
 import main from "@/js/stores/modules/main";
 import customer from "@/js/stores/modules/customer";
@@ -11,6 +11,7 @@ import productCategory from "@/js/stores/modules/productCategory";
 import productCategorySub from "@/js/stores/modules/productCategorySub";
 import channelOfPurchase from "@/js/stores/modules/channelOfPurchase";
 import order from "@/js/stores/modules/order";
+import orderDetail from "@/js/stores/modules/orderDetail";
 
 Vue.use(Vuex);
 
@@ -25,6 +26,6 @@ export default new Vuex.Store({
         productCategorySub,
         channelOfPurchase,
         order,
-
+        orderDetail
     }
 });
