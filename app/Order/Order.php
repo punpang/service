@@ -70,7 +70,7 @@ class Order extends Model  implements Auditable
 
     public function scopeNotifyOrder()
     {
-        return $query = $this->where('order_status_id', '2')->orderBy('dateTime_get', 'ASC');
+        return $query = $this->whereIn('order_status_id', ['2','3'])->where('dateTime_get','>=',\Carbon\Carbon::now()->format('Y-m-d'))->orderBy('dateTime_get', 'ASC');
     }
 
     public function DateTimeFormatTH($dateTime) 

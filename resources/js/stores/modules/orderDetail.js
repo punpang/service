@@ -19,7 +19,7 @@ export default {
     actions: {
         async store({ dispatch }, payload) {
             const res = await axios.post("api/order/detail/store", payload);
-            dispatch("dataUseOnly");
+            dispatch("getByOrderID",payload.order_id);
             return res;
         },
         async UseOnly({ commit }, payload) {
@@ -31,8 +31,11 @@ export default {
         async getByOrderID({ commit }, payload) {
             const response = await axios.get(
                 "api/order/detail/" + payload + "/getByOrderID"
-            );
+            );            
             commit("getByOrderId", response.data);
+        },
+        getByOrderIDReset({ commit }) {         
+            commit("getByOrderId", []);
         }
     }
 };

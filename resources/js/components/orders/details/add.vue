@@ -2,14 +2,14 @@
     <div>
         <v-dialog v-model="dialog" persistent width="700">
             <template v-slot:activator="{ on }">
-                <v-btn
-                    block
-                    color="primary"
-                    v-on="on"
-                    class="mb-2"
-                    @click="start"
-                    >เพิ่มสินค้าใหม่</v-btn
-                >
+                <v-list-item @click="start" v-on="on" class="teal darken-1">
+                    <v-list-item-icon>
+                        <v-icon>add_shopping_cart</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                        <v-list-item-title>เพิ่มสินค้าใหม่</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
             </template>
             <v-card color="#121212">
                 <v-card-title>
@@ -30,7 +30,7 @@
                                         ></selectProduct>
                                         <v-divider></v-divider>
                                         <v-img
-                                            v-show="product.id >= 1"
+                                            v-if="product.id >= 1"
                                             width="auto"
                                             :src="
                                                 'https://drive.google.com/thumbnail?id=' +
@@ -39,7 +39,11 @@
                                             "
                                         ></v-img>
                                     </v-col>
-                                    <v-col cols="12" md="8">
+                                    <v-col
+                                        cols="12"
+                                        md="8"
+                                        v-if="product.id >= 1"
+                                    >
                                         <v-row>
                                             <v-col
                                                 cols="12"
@@ -190,13 +194,21 @@
                                             </div>
                                         </v-row>
                                     </v-col>
+                                    <v-col v-else cols="12" md="8">
+                                        <v-alert
+                                            color="blue-grey"
+                                            dark
+                                            dense
+                                            prominent
+                                        >
+                                            กรุณาเลือกสินค้าก่อน "เลือกสินค้า"
+                                        </v-alert>
+                                    </v-col>
                                 </v-row>
                             </v-card-text>
                         </v-card>
                     </v-form>
                 </v-card-text>
-
-                {{ form }}
             </v-card>
             <processingProduct
                 :product="product"
@@ -232,7 +244,12 @@ export default {
                 status: false
             },
             overlay: false,
-            product: {},
+            product: {
+                id: 0,
+                product_image: {
+                    src_name: ""
+                }
+            },
             priceProduct: 0,
             form: {},
             Rules: {
@@ -252,6 +269,8 @@ export default {
                     "orderDetail/store",
                     this.form
                 );
+                console.log(res);
+
                 if (res.status == 200) {
                     this.snackbar = {
                         status: true,
@@ -276,7 +295,7 @@ export default {
             this.overlay = false;
         },
         async start() {
-            await this.form = {
+            this.form = {
                 order_id: this.order.id,
                 product_id: "",
                 write_status: true,
@@ -286,7 +305,7 @@ export default {
                 price: "",
                 status: true
             };
-            await this.product = {
+            this.product = {
                 id: 0,
                 product_image: {
                     src_name: ""
@@ -298,6 +317,7 @@ export default {
         },
         out() {
             this.dialog = false;
+            this.overlay = false;
         },
         emitSelectProduct(item) {
             this.product = item;

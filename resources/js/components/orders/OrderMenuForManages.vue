@@ -1,41 +1,66 @@
 <template>
     <div>
-        <v-card>
+        <v-card class="mb-3">
             <v-card-title>
                 การจัดการ
                 <v-spacer></v-spacer>
                 <v-icon color="error" @click="dialog = false">close</v-icon>
             </v-card-title>
-            <v-card-text class="pa-0">
-                <OrderDetailAdd :order="order"></OrderDetailAdd>
-                <v-btn block color="warning" class="mb-2" @click="testFacebook"
-                    >ชำระเงิน</v-btn
-                >
-                <v-btn block color="info">อัปโหลดภาพ</v-btn>
-                <hr class="my-2" />
-                <v-btn block color="info" class="mb-2">ข้อมูลผู้ส่งซื้อ</v-btn>
-                <v-btn block color="info">วัน-เวลาที่รับสินค้า</v-btn>
-                <hr class="my-2" />
-                <div
-                    v-for="{ index, color, status, text } in buttons"
-                    :key="index"
-                >
-                    <v-btn
-                        block
-                        :color="color"
-                        @click="clickUpdateStatus(status)"
-                        class="mb-2"
-                        >{{ text }}</v-btn
-                    >
-                </div>
-                <v-btn
-                    v-if="this.order.order_status.id != 8"
-                    block
-                    color="error"
-                    >ยกเลิก</v-btn
-                >
-            </v-card-text>
         </v-card>
+        <v-list-item-group class="py-0">
+            <OrderDetailAdd :order="order"></OrderDetailAdd>
+
+            <v-list-item @click="testFacebook" class="yellow darken-1">
+                <v-list-item-icon>
+                    <v-icon class="black--text">attach_money</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                    <v-list-item-title class="black--text"
+                        >ชำระเงิน</v-list-item-title
+                    >
+                </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item class="error" v-if="this.order.order_status.id != 8">
+                <v-list-item-icon>
+                    <v-icon>cancel</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                    <v-list-item-title>ยกเลิกรายการสั่งซื้อ</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item @click="emitDialogOff" class="red accent-4 mt-4" dark>
+                <v-list-item-icon>
+                    <v-icon>exit_to_app</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                    <v-list-item-title>ออก</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+        </v-list-item-group>
+
+        <hr />
+        <hr />
+
+        <v-btn block color="info" large>อัปโหลดภาพ</v-btn>
+        <hr class="my-2" />
+        <v-btn block color="info" class="mb-2" large>ข้อมูลผู้ส่งซื้อ</v-btn>
+        <v-btn block color="info" large>วัน-เวลาที่รับสินค้า</v-btn>
+        <hr class="my-2" />
+        <div v-for="{ index, color, status, text } in buttons" :key="index">
+            <v-btn
+                block
+                large
+                :color="color"
+                @click="clickUpdateStatus(status)"
+                class="mb-2"
+                >{{ text }}</v-btn
+            >
+        </div>
+        <v-btn v-if="this.order.order_status.id != 1" block color="error" large
+            >ยกเลิก</v-btn
+        >
     </div>
 </template>
 
@@ -54,6 +79,9 @@ export default {
         };
     },
     methods: {
+        emitDialogOff() {
+            this.$emit("emitDialogOff");
+        },
         async testFacebook() {
             const response = await this.$store.dispatch("order/createOrder");
         },

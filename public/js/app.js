@@ -98961,7 +98961,7 @@ var routes = [{
   path: "/product",
   name: "Product",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! @/js/pages/orders/product */ "./resources/js/pages/orders/product.vue"));
+    return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! @/js/pages/orders/product */ "./resources/js/pages/orders/product.vue"));
   },
   meta: {
     requiresAuth: true
@@ -98970,7 +98970,7 @@ var routes = [{
   path: "/order",
   name: "Order",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! @/js/pages/orders/order */ "./resources/js/pages/orders/order.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! @/js/pages/orders/order */ "./resources/js/pages/orders/order.vue"));
   },
   meta: {
     requiresAuth: true
@@ -99684,7 +99684,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 res = _context.sent;
-                dispatch("dataUseOnly");
+                dispatch("getByOrderID", payload.order_id);
                 return _context.abrupt("return", res);
 
               case 5:
@@ -99740,6 +99740,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee3);
       }))();
+    },
+    getByOrderIDReset: function getByOrderIDReset(_ref4) {
+      var commit = _ref4.commit;
+      commit("getByOrderId", []);
     }
   }
 });

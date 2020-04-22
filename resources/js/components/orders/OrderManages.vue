@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-dialog v-model="dialog" width="1250">
+        <v-dialog v-model="dialog" width="1250" persistent>
             <template v-slot:activator="{ on }">
                 <v-btn
                     block
@@ -72,18 +72,19 @@
                         </v-col>
                         <v-col cols="12" :md="setMDForDetail">
                             <OrderShow
-                                :order_id="order.id"
                                 @emitClickMenu="emitClickMenu"
                             ></OrderShow>
                         </v-col>
-                        <v-col cols="12" md="2" v-show="menu">
+                        <v-col cols="12" md="3" v-show="menu">
                             <OrderMenuForManages
                                 :order="order"
+                                @emitDialogOff="emitDialogOff"
                             ></OrderMenuForManages>
                         </v-col>
                     </v-row>
                 </v-card-text>
             </v-card>
+            <overlay :overlay="overlay"></overlay>
         </v-dialog>
     </div>
 </template>
@@ -91,29 +92,43 @@
 <script>
 import OrderMenuForManages from "@/js/components/orders/OrderMenuForManages";
 import OrderShow from "@/js/components/orders/details/show";
+import overlay from "@/js/layouts/overlay";
 
 export default {
     props: ["order"],
     components: {
         OrderMenuForManages,
-        OrderShow
+        OrderShow,
+        overlay
     },
     data() {
         return {
             dialog: false,
             menu: true,
-            setMDForDetail: 7
+            setMDForDetail: 6,
+            overlay: false
         };
     },
     methods: {
-        async start() {},
-        emitClickMenu() {
+        async start() {
+            this.overlay = true;
+            await this.$store.dispatch(
+                "orderDetail/getByOrderID",
+                this.order.id
+            );
+            this.overlay = false;
+        },
+        emitClickMenu(value) {
             this.menu = !this.menu;
             if (this.menu) {
-                this.setMDForDetail = 7;
+                this.setMDForDetail = 6;
             } else {
-                this.setMDForDetail = 9;
+                this.setMDForDetail = 8;
             }
+        },
+        async emitDialogOff() {
+            await this.$store.dispatch("orderDetail/getByOrderIDReset");
+            this.dialog = false;
         }
     }
 };

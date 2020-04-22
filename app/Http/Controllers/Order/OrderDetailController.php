@@ -17,7 +17,7 @@ class OrderDetailController extends Controller
             $order->order_status_id = '2';
             $order->update();
         }
-        return response()->json('success', 200);
+        return response()->json(['success' => true], 200);
     }
 
     
