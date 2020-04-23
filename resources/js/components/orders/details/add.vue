@@ -62,12 +62,46 @@
 
                                             <v-col cols="12" md="12">
                                                 <v-text-field
-                                                    label="ราคา"
+                                                    label="ราคา/หน่วย"
+                                                    v-currency
                                                     outlined
                                                     placeholder="กรุณาเลือกสินค้า"
                                                     readonly
                                                     v-model="form.price"
                                                     :rules="Rules.price"
+                                                    suffix="บาท"
+                                                    hide-details
+                                                ></v-text-field>
+                                            </v-col>
+                                            <v-col cols="6" md="6">
+                                                <v-text-field
+                                                    label="จำนวน"
+                                                    outlined
+                                                    type="number"
+                                                    pattern="\d*"
+                                                    placeholder="กรุณาเลือกสินค้า"
+                                                    v-model="form.quantity"
+                                                    :rules="Rules.quantity"
+                                                    suffix="หน่วย"
+                                                    hide-details
+                                                    @click="clickQuantity"
+                                                    @change="
+                                                        changeQuantity(
+                                                            form.quantity,
+                                                            form.price
+                                                        )
+                                                    "
+                                                ></v-text-field>
+                                            </v-col>
+                                            <v-col cols="6" md="6">
+                                                <v-text-field
+                                                    label="ราคารวม"
+                                                    outlined
+                                                    placeholder="กรุณาเลือกสินค้า"
+                                                    readonly
+                                                    v-model="form.sum_price"
+                                                    :rules="Rules.sum_price"
+                                                    v-currency
                                                     suffix="บาท"
                                                     hide-details
                                                 ></v-text-field>
@@ -94,87 +128,93 @@
                                                 ></v-text-field>
                                             </v-col>
                                             <v-col cols="12" md="12">
-                                                <v-container class="py-0">
-                                                    <v-row>
-                                                        <v-text-field
-                                                            label="เขียนข้อความ"
-                                                            hide-details
-                                                            outlined
-                                                            v-model="form.write"
-                                                            :rules="Rules.write"
-                                                            :readonly="
-                                                                form.write_status ==
-                                                                    false
-                                                            "
-                                                        ></v-text-field>
-                                                        <v-switch
-                                                            v-model="
-                                                                form.write_status
-                                                            "
-                                                            inset
-                                                            hide-details
-                                                            class="ml-3"
-                                                            @change="
-                                                                changeWriteStatus
-                                                            "
-                                                        ></v-switch>
-                                                    </v-row>
-                                                </v-container>
+                                                <v-row class="px-4">
+                                                    <v-checkbox
+                                                        v-model="
+                                                            form.write_status
+                                                        "
+                                                        @change="
+                                                            changeWriteStatus
+                                                        "
+                                                        hide-details
+                                                        class="shrink mr-2 mt-0"
+                                                    ></v-checkbox>
+                                                    <v-textarea
+                                                        label="เขียนข้อความ"
+                                                        hide-details
+                                                        outlined
+                                                        rows="1"
+                                                        v-model="form.write"
+                                                        :rules="Rules.write"
+                                                        :readonly="
+                                                            form.write_status ==
+                                                                false
+                                                        "
+                                                    ></v-textarea>
+                                                </v-row>
                                             </v-col>
                                             <v-col cols="12" md="12">
-                                                <v-container class="py-0">
-                                                    <v-row>
-                                                        <v-textarea
-                                                            label="เพิ่มเติม"
-                                                            hide-details
-                                                            outlined
-                                                            rows="2"
-                                                            v-model="form.note"
-                                                            :rules="Rules.note"
-                                                            :readonly="
-                                                                form.note_status ==
-                                                                    false
-                                                            "
-                                                        ></v-textarea>
-                                                        <v-switch
-                                                            v-model="
-                                                                form.note_status
-                                                            "
-                                                            inset
-                                                            hide-details
-                                                            class="ml-3"
-                                                            @change="
-                                                                changeNoteStatus
-                                                            "
-                                                        ></v-switch>
-                                                    </v-row>
-                                                </v-container>
+                                                <v-row class="px-4">
+                                                    <v-checkbox
+                                                        v-model="
+                                                            form.note_status
+                                                        "
+                                                        @change="
+                                                            changeNoteStatus
+                                                        "
+                                                        hide-details
+                                                        class="shrink mr-2 mt-0"
+                                                    ></v-checkbox>
+                                                    <v-textarea
+                                                        label="เพิ่มเติม"
+                                                        hide-details
+                                                        outlined
+                                                        rows="2"
+                                                        v-model="form.note"
+                                                        :rules="Rules.note"
+                                                        :readonly="
+                                                            form.note_status ==
+                                                                false
+                                                        "
+                                                    ></v-textarea>
+                                                </v-row>
                                             </v-col>
 
                                             <v-col cols="12" md="12">
-                                                <v-container class="py-0">
-                                                    <v-row>
-                                                        <v-btn
-                                                            @click="save"
-                                                            color="success"
-                                                            class="mr-2"
+                                                <v-row class="px-4">
+                                                    <v-checkbox
+                                                        v-model="
+                                                            form.upload_image_status
+                                                        "
+                                                        hide-details
+                                                        label="ส่งลิงก์อัปโหลดรูปภาพ"
+                                                        class="ma-0 pa-0"
+                                                    ></v-checkbox>
+                                                </v-row>
+                                            </v-col>
+
+                                            <v-col cols="12" md="12">
+                                                <v-row class="px-4">
+                                                    <v-btn
+                                                        @click="save"
+                                                        color="success"
+                                                        class="mr-2"
+                                                    >
+                                                        <v-icon left
+                                                            >save</v-icon
                                                         >
-                                                            <v-icon left
-                                                                >save</v-icon
-                                                            >
-                                                            เรียบร้อย</v-btn
+                                                        เรียบร้อย</v-btn
+                                                    >
+                                                    <v-btn
+                                                        color="error"
+                                                        @click="out"
+                                                    >
+                                                        <v-icon left
+                                                            >exit_to_app</v-icon
                                                         >
-                                                        <v-btn
-                                                            color="error"
-                                                            @click="out"
-                                                        >
-                                                            <v-icon left
-                                                                >exit_to_app</v-icon
-                                                            >
-                                                            ออก</v-btn
-                                                        >
-                                                    </v-row>
-                                                </v-container>
+                                                        ออก</v-btn
+                                                    >
+                                                </v-row>
                                             </v-col>
                                             <div v-show="1 == 0">
                                                 <v-text-field
@@ -235,7 +275,7 @@ export default {
         tagsProduct,
         processingProduct,
         snackbarRight,
-        overlay
+        overlay,
     },
     data() {
         return {
@@ -257,7 +297,9 @@ export default {
                 product_id: [v => !!v],
                 write: [v => !!v],
                 note: [v => !!v],
-                price: [v => !!v, v => v > 0]
+                price: [v => !!v],
+                quantity: [v => !!v, v => v > 0],
+                sum_price: [v => !!v]
             }
         };
     },
@@ -294,6 +336,12 @@ export default {
             }
             this.overlay = false;
         },
+        changeQuantity(q, p) {
+            this.form.sum_price = q * p;
+        },
+        clickQuantity() {
+            this.form.quantity = "";
+        },
         async start() {
             this.form = {
                 order_id: this.order.id,
@@ -301,8 +349,11 @@ export default {
                 write_status: true,
                 write: "",
                 note_status: true,
+                upload_image_status: false,
                 note: "",
                 price: "",
+                quantity: "1",
+                sum_price: "",
                 status: true
             };
             this.product = {
@@ -346,7 +397,8 @@ export default {
             }
         },
         emitProcessed(v) {
-            this.form.price = v.price;
+            this.form.price = v.price;            
+            this.changeQuantity(this.form.quantity, v.price);
         }
     }
 };

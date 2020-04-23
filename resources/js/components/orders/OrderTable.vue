@@ -3,9 +3,13 @@
         <v-data-table
             :items="dataTable"
             :headers="headers"
-            :items-per-page="15"
+            hide-default-footer
             item-key="id"
-        >
+        >   
+            <template v-slot:item.id="{ item }">
+                #{{ item.id }}
+            </template>
+
             <template v-slot:item.customer_name="{ item }">
                 {{ item.customer.name }}
             </template>
@@ -19,13 +23,13 @@
             </template>
 
             <template v-slot:item.order_status_id="{ item }">
-                <v-btn :class="item.order_status.style" block small rounded>{{
+                <v-btn :class="item.order_status.style" block small>{{
                     item.order_status.name
                 }}</v-btn>
             </template>
 
             <template v-slot:item.action="{ item }">
-                    <OrderManages class="mr-2" :order="item"></OrderManages>
+                    <OrderManages :order="item"></OrderManages>
             </template>
         </v-data-table>
     </div>

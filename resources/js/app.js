@@ -37,6 +37,12 @@ axios.defaults.headers.common["Authorization"] =
 axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
 //
 
+import VueCurrencyInput from "vue-currency-input";
+const pluginOptions = {
+    globalOptions: { currency: null }
+};
+
+Vue.use(VueCurrencyInput, pluginOptions);
 const app = new Vue({
     el: "#app",
     store,

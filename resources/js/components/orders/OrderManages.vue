@@ -1,15 +1,8 @@
 <template>
     <div>
-        <v-dialog v-model="dialog" width="1250" persistent>
+        <v-dialog v-model="dialog" fullscreen persistent>
             <template v-slot:activator="{ on }">
-                <v-btn
-                    block
-                    color="primary"
-                    v-on="on"
-                    class="mb-2"
-                    small
-                    rounded
-                    @click="start"
+                <v-btn block color="primary" v-on="on" small @click="start"
                     >การจัดการ</v-btn
                 >
             </template>
@@ -17,65 +10,18 @@
                 <v-card-text class="px-4">
                     <v-row>
                         <v-col cols="12" md="3">
-                            <v-card>
-                                <v-card-title>
-                                    รายการสั่งซื้อ
-                                    <v-spacer></v-spacer>
-                                    #{{ order.id }}0582
-                                </v-card-title>
-                                <v-divider class="ma-1"></v-divider>
-                                <v-card-text class="px-0 pt-0">
-                                    <v-container class="py-0">
-                                        <v-row>
-                                            <v-col
-                                                cols="12"
-                                                md="12"
-                                                class="pb-0"
-                                            >
-                                                <b>ชื่อลูกค้า</b>
-                                                <v-spacer></v-spacer>
-                                                {{ order.customer.name }}
-                                            </v-col>
-                                            <v-col
-                                                cols="12"
-                                                md="12"
-                                                class="pb-0"
-                                            >
-                                                <b>เบอร์โทรศัพท์</b>
-                                                <v-spacer></v-spacer>
-                                                {{ order.customer.phone }}
-                                            </v-col>
-                                            <v-col
-                                                cols="12"
-                                                md="12"
-                                                class="pb-0"
-                                            >
-                                                <b>วัน-เวลารับสินค้า</b>
-                                                <v-spacer></v-spacer>
-                                                {{ order.dateTime_get }}
-                                            </v-col>
-                                            <v-col
-                                                cols="12"
-                                                md="12"
-                                                class="pb-0"
-                                            >
-                                                <b>สถานะ</b>
-                                                <v-spacer></v-spacer>
-                                                <span>{{
-                                                    order.order_status.name
-                                                }}</span>
-                                            </v-col>
-                                        </v-row>
-                                    </v-container>
-                                </v-card-text>
-                            </v-card>
+                            <OrderDetail
+                                :order="order"
+                                class="mb-4"
+                            ></OrderDetail>
+                            <OrderCost
+                                :cost="this.$store.getters['orderDetail/cost']"
+                            ></OrderCost>
                         </v-col>
-                        <v-col cols="12" :md="setMDForDetail">
-                            <OrderShow
-                                @emitClickMenu="emitClickMenu"
-                            ></OrderShow>
+                        <v-col cols="12" md="6">
+                            <OrderShow @emitStart="emitStart"></OrderShow>
                         </v-col>
-                        <v-col cols="12" md="3" v-show="menu">
+                        <v-col cols="12" md="3">
                             <OrderMenuForManages
                                 :order="order"
                                 @emitDialogOff="emitDialogOff"
@@ -92,6 +38,9 @@
 <script>
 import OrderMenuForManages from "@/js/components/orders/OrderMenuForManages";
 import OrderShow from "@/js/components/orders/details/show";
+
+import OrderCost from "@/js/components/orders/details/costs";
+import OrderDetail from "@/js/components/orders/details/detail";
 import overlay from "@/js/layouts/overlay";
 
 export default {
@@ -99,13 +48,13 @@ export default {
     components: {
         OrderMenuForManages,
         OrderShow,
-        overlay
+        overlay,
+        OrderDetail,
+        OrderCost
     },
     data() {
         return {
             dialog: false,
-            menu: true,
-            setMDForDetail: 6,
             overlay: false
         };
     },
@@ -118,13 +67,8 @@ export default {
             );
             this.overlay = false;
         },
-        emitClickMenu(value) {
-            this.menu = !this.menu;
-            if (this.menu) {
-                this.setMDForDetail = 6;
-            } else {
-                this.setMDForDetail = 8;
-            }
+        emitStart(value) {
+            this.start();
         },
         async emitDialogOff() {
             await this.$store.dispatch("orderDetail/getByOrderIDReset");

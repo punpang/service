@@ -98,7 +98,7 @@ export default {
                 created: {}
             },
             headers: [
-                { text: "NO.", value: "id", align: "center" },
+                { text: "Order.", value: "id"},
                 { text: "ชื่อลูกค้า", value: "customer_name" },
                 { text: "เบอร์โทรลูกค้า", value: "customer_phone" },
                 { text: "วัน-เวลาที่รับ", value: "dateTime_get" },

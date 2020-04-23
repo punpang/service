@@ -22,7 +22,7 @@ export default {
             }
 
             const processed = {
-                price : this.priceProduct+".00"
+                price : this.priceProduct
             }
         
             this.$emit('emitProcessed',processed)

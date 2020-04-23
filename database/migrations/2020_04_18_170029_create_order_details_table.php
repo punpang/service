@@ -21,7 +21,10 @@ class CreateOrderDetailsTable extends Migration
             $table->text('write');
             $table->integer('note_status');
             $table->text('note');
-            $table->double('price');
+            $table->float('price');            
+            $table->integer('quantity')->default('1');
+            $table->float('sum_price');
+            $table->integer('upload_image_status');
             $table->integer('status')->default('1');
             $table->timestamps();
         });

@@ -4,7 +4,7 @@
             <v-card-title>
                 การจัดการ
                 <v-spacer></v-spacer>
-                <v-icon color="error" @click="dialog = false">close</v-icon>
+                <v-icon color="error" @click="emitDialogOff">close</v-icon>
             </v-card-title>
         </v-card>
         <v-list-item-group class="py-0">

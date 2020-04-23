@@ -2,7 +2,9 @@ export default {
     namespaced: true,
     state: {
         dataUseOnly: [],
-        getByOrderId: []
+        getByOrderId: [],
+        cost: "",
+        count: ""
     },
     mutations: {
         dataUseOnly(state, data) {
@@ -10,16 +12,24 @@ export default {
         },
         getByOrderId(state, data) {
             state.getByOrderId = data;
+        },
+        cost(state, data) {
+            state.cost = data;
+        },
+        count(state, data) {
+            state.count = data;
         }
     },
     getters: {
         dataUseOnly: state => state.dataUseOnly,
-        getByOrderId: state => state.getByOrderId
+        getByOrderId: state => state.getByOrderId,
+        cost: state => state.cost,
+        count: state => state.count
     },
     actions: {
         async store({ dispatch }, payload) {
             const res = await axios.post("api/order/detail/store", payload);
-            dispatch("getByOrderID",payload.order_id);
+            dispatch("getByOrderID", payload.order_id);
             return res;
         },
         async UseOnly({ commit }, payload) {
@@ -31,10 +41,12 @@ export default {
         async getByOrderID({ commit }, payload) {
             const response = await axios.get(
                 "api/order/detail/" + payload + "/getByOrderID"
-            );            
-            commit("getByOrderId", response.data);
+            );
+            commit("cost", response.data.cost);
+            commit("count", response.data.count);
+            commit("getByOrderId", response.data.data);
         },
-        getByOrderIDReset({ commit }) {         
+        getByOrderIDReset({ commit }) {
             commit("getByOrderId", []);
         }
     }
