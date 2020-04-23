@@ -5,6 +5,7 @@
             v-model="search"
             append-icon="search"
         ></v-text-field>
+        
         <v-data-table
             :headers="headers"
             :items="this.$store.getters['productCategory/data']"

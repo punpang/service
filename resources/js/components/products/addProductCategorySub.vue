@@ -94,7 +94,6 @@ export default {
                     "productCategorySub/add",
                     this.form
                 );
-                console.log(response);
                 if (response.status === 200) {
                     this.dialog = false;
                     this.snackbar = {

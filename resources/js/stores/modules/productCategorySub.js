@@ -32,7 +32,7 @@ export default {
                     "api/product/category/sub/store",
                     payload
                 );
-                dispatch("getUseOnly");
+                dispatch("get");
                 return response;
             } catch ({ response }) {
                 console.log(response);

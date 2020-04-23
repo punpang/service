@@ -17,6 +17,9 @@ class DatabaseSeeder extends Seeder
             OrderStatusTableSeeder::class,
             LinesKeyTableSeeder::class,
             CustomerTableSeeder::class,
+            ProductCategorySubTableSeed::class,
+            ProductCategoryTableSeed::class,
+            ProductTableSeed::class
         ]);
     }
 }

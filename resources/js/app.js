@@ -18,7 +18,7 @@ Routers.beforeEach((to, from, next) => {
     ) {
         // redirect to login page
         const loginpath = window.location.pathname;
-        next({ name: "login" , query: { from: loginpath }});
+        next({ name: "login", query: { from: loginpath } });
         return;
     }
 
