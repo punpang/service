@@ -13,7 +13,8 @@ class Order extends Model  implements Auditable
         'dateTime_get',
         'channel_of_purchase_id',
         'status',
-        'token'
+        'token',
+        'permission_to_publish'
     ];
 
     protected $table = "orders";
@@ -23,7 +24,8 @@ class Order extends Model  implements Auditable
         'dateTime_get',
         'channel_of_purchase_id',
         'status',
-        'token'
+        'token',
+        'permission_to_publish'
     ];
 
     public function Customer()

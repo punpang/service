@@ -23,11 +23,22 @@
                             v-model="form.name"
                             :rules="Rules.name"
                         ></v-text-field>
-                        <v-switch
-                            v-model="form.status"
-                            inset
-                            label="สถานะการใช้งาน"
-                        ></v-switch>
+                        <v-row>
+                            <v-col cols="12" md="6">
+                                <v-switch
+                                    v-model="form.status"
+                                    inset
+                                    label="สถานะการใช้งาน"
+                                ></v-switch>
+                            </v-col>
+                            <v-col cols="12" md="6">
+                                <v-switch
+                                    v-model="form.product_show"
+                                    inset
+                                    label="แสดงสินค้าบนหน้าเว็ปไซต์"
+                                ></v-switch>
+                            </v-col>
+                        </v-row>
 
                         <v-text-field
                             label="ราคาปกติ"
@@ -147,7 +158,8 @@ export default {
                 price_special: "",
                 status: "1",
                 image_status: true,
-                product_image_id: "1"
+                product_image_id: "1",
+                product_show: 1
             },
             formDefault: {
                 name: "",
@@ -156,7 +168,8 @@ export default {
                 price_special: "",
                 status: "1",
                 image_status: true,
-                product_image_id: "1"
+                product_image_id: "1",
+                product_show: 1
             },
             Rules: {
                 name: [

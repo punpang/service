@@ -26,6 +26,23 @@
                             :rules="Rules.name"
                         ></v-text-field>
 
+                        <v-row>
+                            <v-col cols="12" md="6">
+                                <v-switch
+                                    v-model="form.status"
+                                    inset
+                                    label="สถานะการใช้งาน"
+                                ></v-switch>
+                            </v-col>
+                            <v-col cols="12" md="6">
+                                <v-switch
+                                    v-model="form.product_show"
+                                    inset
+                                    label="แสดงสินค้าบนหน้าเว็ปไซต์"
+                                ></v-switch>
+                            </v-col>
+                        </v-row>
+
                         <v-text-field
                             label="ราคาปกติ"
                             counter="10"
@@ -96,7 +113,10 @@
                             >
                                 <v-card>
                                     <v-img
-                                        :src="'https://drive.google.com/thumbnail?id=' + imagePreview"
+                                        :src="
+                                            'https://drive.google.com/thumbnail?id=' +
+                                                imagePreview
+                                        "
                                     ></v-img>
                                 </v-card>
                             </v-col>
@@ -120,10 +140,13 @@
                     :size="this.$store.getters['main/sizeOverlay']"
                 ></v-progress-circular>
             </v-overlay>
+            {{ form }}
         </v-dialog>
         <v-snackbar v-model="snackbar.status" :color="snackbar.color" right>{{
             snackbar.text
         }}</v-snackbar>
+
+        
     </div>
 </template>
 
@@ -147,7 +170,8 @@ export default {
                 price_special: "",
                 status: "1",
                 image_status: true,
-                product_image_id: "1"
+                product_image_id: "1",
+                product_show: 1
             },
             Rules: {
                 name: [

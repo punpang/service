@@ -25,6 +25,7 @@ class CreateOrderDetailsTable extends Migration
             $table->integer('quantity')->default('1');
             $table->float('sum_price');
             $table->integer('upload_image_status');
+            $table->integer('permission_to_publish')->nullable()->default(1);
             $table->integer('status')->default('1');
             $table->timestamps();
         });

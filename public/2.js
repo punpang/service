@@ -273,6 +273,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -290,7 +301,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         price_special: "",
         status: "1",
         image_status: true,
-        product_image_id: "1"
+        product_image_id: "1",
+        product_show: 1
       },
       formDefault: {
         name: "",
@@ -299,7 +311,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         price_special: "",
         status: "1",
         image_status: true,
-        product_image_id: "1"
+        product_image_id: "1",
+        product_show: 1
       },
       Rules: {
         name: [function (v) {
@@ -650,6 +663,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["data"],
   data: function data() {
@@ -669,7 +705,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         price_special: "",
         status: "1",
         image_status: true,
-        product_image_id: "1"
+        product_image_id: "1",
+        product_show: 1
       },
       Rules: {
         name: [function (v) {
@@ -2747,16 +2784,50 @@ var render = function() {
                         }
                       }),
                       _vm._v(" "),
-                      _c("v-switch", {
-                        attrs: { inset: "", label: "สถานะการใช้งาน" },
-                        model: {
-                          value: _vm.form.status,
-                          callback: function($$v) {
-                            _vm.$set(_vm.form, "status", $$v)
-                          },
-                          expression: "form.status"
-                        }
-                      }),
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12", md: "6" } },
+                            [
+                              _c("v-switch", {
+                                attrs: { inset: "", label: "สถานะการใช้งาน" },
+                                model: {
+                                  value: _vm.form.status,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.form, "status", $$v)
+                                  },
+                                  expression: "form.status"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12", md: "6" } },
+                            [
+                              _c("v-switch", {
+                                attrs: {
+                                  inset: "",
+                                  label: "แสดงสินค้าบนหน้าเว็ปไซต์"
+                                },
+                                model: {
+                                  value: _vm.form.product_show,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.form, "product_show", $$v)
+                                  },
+                                  expression: "form.product_show"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
                       _vm._v(" "),
                       _c("v-text-field", {
                         attrs: {
@@ -3135,6 +3206,51 @@ var render = function() {
                         }
                       }),
                       _vm._v(" "),
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12", md: "6" } },
+                            [
+                              _c("v-switch", {
+                                attrs: { inset: "", label: "สถานะการใช้งาน" },
+                                model: {
+                                  value: _vm.form.status,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.form, "status", $$v)
+                                  },
+                                  expression: "form.status"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12", md: "6" } },
+                            [
+                              _c("v-switch", {
+                                attrs: {
+                                  inset: "",
+                                  label: "แสดงสินค้าบนหน้าเว็ปไซต์"
+                                },
+                                model: {
+                                  value: _vm.form.product_show,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.form, "product_show", $$v)
+                                  },
+                                  expression: "form.product_show"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
                       _c("v-text-field", {
                         attrs: {
                           label: "ราคาปกติ",
@@ -3386,7 +3502,8 @@ var render = function() {
               })
             ],
             1
-          )
+          ),
+          _vm._v("\n        " + _vm._s(_vm.form) + "\n    ")
         ],
         1
       ),

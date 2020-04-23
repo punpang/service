@@ -36,15 +36,13 @@ class ProductController extends Controller
 
         $data = Product::create(request()->all());
 
-        return response()->json($data, 200);
+        return response()->json(['success' => true], 200);
     }
 
     public function update(Product $id)
     {
- 
         $id->update(request()->all());
         $id->save();
-
-        return response()->json($id, 200);
+        return response()->json(['success' => true], 200);
     }
 }

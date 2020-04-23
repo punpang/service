@@ -19,6 +19,7 @@ class CreateOrdersTable extends Migration
             $table->dateTime('dateTime_get');
             $table->integer('channel_of_purchase_id');
             $table->integer('order_status_id')->default('1');
+            $table->integer('permission_to_publish')->nullable()->default(1);
             $table->string('token')->unique();
             $table->timestamps();
         });
