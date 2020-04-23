@@ -12,6 +12,7 @@ class OrderDetailController extends Controller
 {
     public function store()
     {
+        //dd(request()->all());
         $detail = OrderDetail::create(request()->all());
         $order = Order::whereId(request('order_id'))->whereOrderStatusId(1)->first();
         if (isset($order)) {

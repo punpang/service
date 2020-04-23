@@ -431,7 +431,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     changePriceSpecialStatus: function changePriceSpecialStatus(value) {
       if (value === false && this.form.price_special === "") {
-        this.form.price_special = "0.00";
+        if (this.form.price_normal > 0) {
+          this.form.price_special = this.form.price_normal;
+        } else {
+          this.form.price_special = "999.99";
+        }
       }
     },
     changeImageStatus: function changeImageStatus(value) {
@@ -534,7 +538,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//
 //
 //
 //
@@ -827,8 +830,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     changePriceSpecialStatus: function changePriceSpecialStatus(value) {
-      if (value == false && this.form.price_special == "") {
-        this.form.price_special = "0.00";
+      if (value === false && this.form.price_special === "") {
+        if (this.form.price_normal > 0) {
+          this.form.price_special = this.form.price_normal;
+        } else {
+          this.form.price_special = "999.99";
+        }
       }
     },
     changeImageStatus: function changeImageStatus(value) {
@@ -3502,8 +3509,7 @@ var render = function() {
               })
             ],
             1
-          ),
-          _vm._v("\n        " + _vm._s(_vm.form) + "\n    ")
+          )
         ],
         1
       ),

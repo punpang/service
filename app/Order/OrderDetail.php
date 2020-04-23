@@ -49,6 +49,6 @@ class OrderDetail extends Model implements Auditable
 
     public static  function sumPrice()
     {
-        return number_format(OrderDetail::sum("price"), 2);
+        return number_format(OrderDetail::sum("sum_price"), 2);
     }
 }

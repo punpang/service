@@ -250,7 +250,11 @@ export default {
         },
         changePriceSpecialStatus(value) {
             if (value === false && this.form.price_special === "") {
-                this.form.price_special = "0.00";
+                if (this.form.price_normal > 0) {
+                    this.form.price_special = this.form.price_normal;
+                } else {
+                    this.form.price_special = "999.99";
+                }
             }
         },
         changeImageStatus(value) {
