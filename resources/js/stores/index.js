@@ -12,6 +12,7 @@ import productCategorySub from "@/js/stores/modules/productCategorySub";
 import channelOfPurchase from "@/js/stores/modules/channelOfPurchase";
 import order from "@/js/stores/modules/order";
 import orderDetail from "@/js/stores/modules/orderDetail";
+import snackbar from "@/js/stores/modules/snackbar";
 
 Vue.use(Vuex);
 
@@ -26,6 +27,7 @@ export default new Vuex.Store({
         productCategorySub,
         channelOfPurchase,
         order,
-        orderDetail
+        orderDetail,
+        snackbar
     }
 });

@@ -19,24 +19,7 @@
                 <v-card-text class="pa-0">
                     <v-container class="py-0">
                         <productDetail :detail="detail"></productDetail>
-
-                        <v-col cols="12" md="12">
-                            <v-row>
-                                <formDetail
-                                    :detail="detail"
-                                    :action="action.update.detail"
-                                ></formDetail>
-                                <v-btn
-                                    color="primary"
-                                    v-if="detail.upload_image_status"
-                                    class="mr-2"
-                                >
-                                    <v-icon left>link</v-icon>
-                                    ส่งลิงก์อัปโหลดรูป
-                                </v-btn>
-                                <deleteDetail :detail="detail"></deleteDetail>
-                            </v-row>
-                        </v-col>
+                        <buttonForAction :detail="detail"></buttonForAction>
 
                         <v-col
                             cols="12"
@@ -70,28 +53,16 @@
 </template>
 
 <script>
-import formDetail from "@/js/components/orders/details/_form_detail";
 import productDetail from "@/js/components/orders/details/productDetail";
-import deleteDetail from "@/js/components/orders/details/deleteDetail";
+import buttonForAction from "@/js/components/orders/details/buttonForAction";
 
 export default {
     components: {
-        formDetail,
         productDetail,
-        deleteDetail
+        buttonForAction
     },
     data() {
-        return {
-            action: {
-                update: {
-                    detail: {
-                        method: "update",
-                        title: "แก้ไขสินค้า",
-                        icon: "edit"
-                    }
-                }
-            }
-        };
+        return {};
     },
     methods: {
         start() {

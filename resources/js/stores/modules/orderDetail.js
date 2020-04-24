@@ -4,7 +4,7 @@ export default {
         dataUseOnly: [],
         getByOrderId: [],
         cost: "",
-        count: ""
+        count: "",
     },
     mutations: {
         dataUseOnly(state, data) {
@@ -18,13 +18,14 @@ export default {
         },
         count(state, data) {
             state.count = data;
-        }
+        },
     },
     getters: {
         dataUseOnly: state => state.dataUseOnly,
         getByOrderId: state => state.getByOrderId,
         cost: state => state.cost,
-        count: state => state.count
+        count: state => state.count,
+        
     },
     actions: {
         async store({ dispatch }, payload) {
@@ -36,6 +37,20 @@ export default {
             const res = await axios.post(
                 "api/order/detail/" + payload.id + "/update",
                 payload
+            );
+            dispatch("getByOrderID", payload.order_id);
+            return res;
+        },
+        async delete({ dispatch }, payload) {
+            const res = await axios.delete(
+                "api/order/detail/" + payload.detail_id + "/delete"
+            );
+            dispatch("getByOrderID", payload.order_id);
+            return res;
+        },
+        async redelete({ dispatch }, payload) {
+            const res = await axios.patch(
+                "api/order/detail/" + payload.detail_id + "/redelete"
             );
             dispatch("getByOrderID", payload.order_id);
             return res;

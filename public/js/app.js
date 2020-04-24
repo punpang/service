@@ -99671,6 +99671,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_stores_modules_channelOfPurchase__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/js/stores/modules/channelOfPurchase */ "./resources/js/stores/modules/channelOfPurchase.js");
 /* harmony import */ var _js_stores_modules_order__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/js/stores/modules/order */ "./resources/js/stores/modules/order.js");
 /* harmony import */ var _js_stores_modules_orderDetail__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/js/stores/modules/orderDetail */ "./resources/js/stores/modules/orderDetail.js");
+/* harmony import */ var _js_stores_modules_snackbar__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/js/stores/modules/snackbar */ "./resources/js/stores/modules/snackbar.js");
+
 
 
 
@@ -99696,7 +99698,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     productCategorySub: _js_stores_modules_productCategorySub__WEBPACK_IMPORTED_MODULE_9__["default"],
     channelOfPurchase: _js_stores_modules_channelOfPurchase__WEBPACK_IMPORTED_MODULE_10__["default"],
     order: _js_stores_modules_order__WEBPACK_IMPORTED_MODULE_11__["default"],
-    orderDetail: _js_stores_modules_orderDetail__WEBPACK_IMPORTED_MODULE_12__["default"]
+    orderDetail: _js_stores_modules_orderDetail__WEBPACK_IMPORTED_MODULE_12__["default"],
+    snackbar: _js_stores_modules_snackbar__WEBPACK_IMPORTED_MODULE_13__["default"]
   }
 }));
 
@@ -100010,17 +100013,7 @@ __webpack_require__.r(__webpack_exports__);
   state: {
     User: "",
     isLoggedIn: !!localStorage.getItem("token"),
-    sizeOverlay: "64",
-    snackbar: {
-      text: {
-        error: 'เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง',
-        success: {
-          status: true,
-          color: 'success',
-          text: "ทำรายการสำเร็จ"
-        }
-      }
-    }
+    sizeOverlay: "64"
   },
   mutations: {
     User: function User(state, data) {
@@ -100045,12 +100038,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     sizeOverlay: function sizeOverlay(state) {
       return state.sizeOverlay;
-    },
-    snackbarError: function snackbarError(state) {
-      return state.snackbar.text.error;
-    },
-    snackbarSuccess: function snackbarSuccess(state) {
-      return state.snackbar.text.success;
     }
   },
   actions: {}
@@ -100361,22 +100348,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
-    UseOnly: function UseOnly(_ref3, payload) {
-      var commit = _ref3.commit;
+    "delete": function _delete(_ref3, payload) {
+      var dispatch = _ref3.dispatch;
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var response;
+        var res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return axios.post("api/order/detail/" + payload + "useonly");
+                return axios["delete"]("api/order/detail/" + payload.detail_id + "/delete");
 
               case 2:
-                response = _context3.sent;
-                commit("dataUseOnly", response.data);
+                res = _context3.sent;
+                dispatch("getByOrderID", payload.order_id);
+                return _context3.abrupt("return", res);
 
-              case 4:
+              case 5:
               case "end":
                 return _context3.stop();
             }
@@ -100384,24 +100372,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee3);
       }))();
     },
-    getByOrderID: function getByOrderID(_ref4, payload) {
-      var commit = _ref4.commit;
+    redelete: function redelete(_ref4, payload) {
+      var dispatch = _ref4.dispatch;
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var response;
+        var res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
                 _context4.next = 2;
-                return axios.get("api/order/detail/" + payload + "/getByOrderID");
+                return axios.patch("api/order/detail/" + payload.detail_id + "/redelete");
 
               case 2:
-                response = _context4.sent;
-                commit("cost", response.data.cost);
-                commit("count", response.data.count);
-                commit("getByOrderId", response.data.data);
+                res = _context4.sent;
+                dispatch("getByOrderID", payload.order_id);
+                return _context4.abrupt("return", res);
 
-              case 6:
+              case 5:
               case "end":
                 return _context4.stop();
             }
@@ -100409,8 +100396,56 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee4);
       }))();
     },
-    getByOrderIDReset: function getByOrderIDReset(_ref5) {
+    UseOnly: function UseOnly(_ref5, payload) {
       var commit = _ref5.commit;
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
+                return axios.post("api/order/detail/" + payload + "useonly");
+
+              case 2:
+                response = _context5.sent;
+                commit("dataUseOnly", response.data);
+
+              case 4:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
+    },
+    getByOrderID: function getByOrderID(_ref6, payload) {
+      var commit = _ref6.commit;
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                _context6.next = 2;
+                return axios.get("api/order/detail/" + payload + "/getByOrderID");
+
+              case 2:
+                response = _context6.sent;
+                commit("cost", response.data.cost);
+                commit("count", response.data.count);
+                commit("getByOrderId", response.data.data);
+
+              case 6:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }))();
+    },
+    getByOrderIDReset: function getByOrderIDReset(_ref7) {
+      var commit = _ref7.commit;
       commit("getByOrderId", []);
     }
   }
@@ -101229,6 +101264,47 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     }
   }
+});
+
+/***/ }),
+
+/***/ "./resources/js/stores/modules/snackbar.js":
+/*!*************************************************!*\
+  !*** ./resources/js/stores/modules/snackbar.js ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  state: {
+    snackbar: {
+      text: {
+        error: {
+          status: true,
+          color: "error",
+          text: "เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง"
+        },
+        success: {
+          status: true,
+          color: "success",
+          text: "ทำรายการสำเร็จ"
+        }
+      }
+    }
+  },
+  mutations: {},
+  getters: {
+    error: function error(state) {
+      return state.snackbar.text.error;
+    },
+    success: function success(state) {
+      return state.snackbar.text.success;
+    }
+  },
+  actions: {}
 });
 
 /***/ }),

@@ -68,6 +68,8 @@ Route::middleware('auth:api')->group(function () {
         Route::prefix('detail')->group(function () { // api/order/detail
             Route::post('store', 'Order\OrderDetailController@store');
             Route::post('{detail}/update', 'Order\OrderDetailController@update');
+            Route::delete('{detail}/delete', 'Order\OrderDetailController@delete');
+            Route::patch('{detail}/redelete', 'Order\OrderDetailController@redelete');
             Route::get('{order_id}/getByOrderID', 'Order\OrderDetailController@getByOrderID');
         });
 

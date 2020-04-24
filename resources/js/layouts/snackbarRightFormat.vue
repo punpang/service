@@ -12,17 +12,24 @@ export default {
             text: ""
         };
     },
-    computed() {
-        if (this.snackbar == "success") {
-            this.status = true;
-            this.color = "success";
-            this.text = "ทำรายการสำเร็จ";
-        }
+    mounted(){
+        this.setSnackber(this.snackbar)
+        console.log(this.snackbar);
+        
+    },
+    methods: {
+        setSnackber(snackbar) {
+            if (snackbar == "success") {
+                this.status = true;
+                this.color = "success";
+                this.text = "ทำรายการสำเร็จ";
+            }
 
-        if (this.snackbar == "error") {
-            this.status = true;
-            this.color = "error";
-            this.text = "เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง";
+            if (snackbar == "error") {
+                this.status = true;
+                this.color = "error";
+                this.text = "เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง";
+            }
         }
     }
 };

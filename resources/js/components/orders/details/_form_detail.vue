@@ -12,7 +12,9 @@
                         <v-icon>{{ action.icon }}</v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
-                        <v-list-item-title>{{ action.title }}</v-list-item-title>
+                        <v-list-item-title>{{
+                            action.title
+                        }}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
                 <v-btn
@@ -312,7 +314,7 @@ export default {
                 status: false
             },
             overlay: false,
-            response:{},
+            response: {},
             product: {
                 id: 0,
                 product_image: {
@@ -349,21 +351,13 @@ export default {
                 }
 
                 if (this.response.status == 200) {
-                    this.snackbar = this.$store.getters["main/snackbarSuccess"];
+                    this.snackbar = this.$store.getters["snackbar/success"];
                     this.out();
                 } else {
-                    this.snackbar = {
-                        status: true,
-                        color: "warning",
-                        text: this.$store.getters["main/snackbarError"]
-                    };
+                    this.snackbar = this.$store.getters["snackbar/error"];
                 }
             } else {
-                this.snackbar = {
-                    status: true,
-                    color: "warning",
-                    text: this.$store.getters["main/snackbarError"]
-                };
+                this.snackbar = this.$store.getters["snackbar/error"];
             }
             this.overlay = false;
         },
