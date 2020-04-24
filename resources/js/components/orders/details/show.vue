@@ -25,10 +25,15 @@
                                 ></imageThumbnail>
                             </v-col>
                             <v-col cols="12" md="8">
-                                <span class="title font-weight-bold">{{
-                                    detail.product.name
-                                }}</span>
-                                <br />
+                                <v-row class="px-4">
+                                    <span class="title font-weight-bold">{{
+                                        detail.product.name
+                                    }}</span>
+                                    <v-spacer></v-spacer>
+                                    <span class="title font-weight-bold"
+                                        >X{{ detail.quantity }}</span
+                                    >
+                                </v-row>
                                 <p
                                     class="mb-0"
                                     v-for="tag in detail.product
@@ -52,44 +57,41 @@
                                 </p>
                                 <v-divider class="my-2"></v-divider>
                                 <p class="mb-0">
-                                    ร่าคา {{ detail.price }}.00 บาท
+                                    ราคา/หน่วย {{ detail.price }} บาท
+                                </p>
+                                <p class="mb-0">
+                                    รวมราคา {{ detail.sum_price }} บาท
                                 </p>
                             </v-col>
                         </v-row>
 
-                        <v-row>
-                            <v-col
-                                cols="12"
-                                md="12"
-                                class="d-none d-sm-flex"
-                            >
-                                <v-btn color="warning" class="mr-2">
-                                    <v-icon left>edit</v-icon>
-                                    แก้ไขข้อมูล
-                                </v-btn>
-                                <v-btn
-                                    color="primary"
-                                    v-if="detail.upload_image_status"
-                                    class="mr-2"
-                                >
-                                    <v-icon left>link</v-icon>
-                                    ส่งลิงก์อัปโหลดรูป
-                                </v-btn>
-                                <v-btn color="error" class="mr-2">
-                                    <v-icon left>cancel</v-icon>
-                                    ยกเลิก
-                                </v-btn>
+                            <v-col cols="12" md="12">
+                                <v-row>
+                                    <formDetail
+                                        :detail="detail"
+                                        :action="action.update.detail"
+                                    ></formDetail>
+                                    <v-btn
+                                        color="primary"
+                                        v-if="detail.upload_image_status"
+                                        class="mr-2"
+                                    >
+                                        <v-icon left>link</v-icon>
+                                        ส่งลิงก์อัปโหลดรูป
+                                    </v-btn>
+                                    <v-btn color="error" class="mr-2">
+                                        <v-icon left>cancel</v-icon>
+                                        ยกเลิก
+                                    </v-btn>
+                                </v-row>
                             </v-col>
 
                             <v-col
                                 cols="12"
                                 md="12"
                                 class="pt-0 d-flex d-sm-none"
+                                v-if="1 == 2"
                             >
-                                <v-btn color="warning" class="mr-2" fab small>
-                                    <v-icon>edit</v-icon>
-                                    <!-- แก้ไขข้อมูล -->
-                                </v-btn>
                                 <v-btn
                                     color="primary"
                                     v-if="detail.upload_image_status"
@@ -105,7 +107,6 @@
                                     <!-- ยกเลิก -->
                                 </v-btn>
                             </v-col>
-                        </v-row>
                     </v-container>
                 </v-card-text>
             </v-card>
@@ -118,13 +119,25 @@
 
 <script>
 import imageThumbnail from "@/js/components/google/drive/imageThumbnail";
+import formDetail from "@/js/components/orders/details/_form_detail";
 
 export default {
     components: {
-        imageThumbnail
+        imageThumbnail,
+        formDetail
     },
     data() {
-        return {};
+        return {
+            action: {
+                update: {
+                    detail: {
+                        method: "update",
+                        title: "แก้ไขสินค้า",
+                        icon: "edit"
+                    }
+                }
+            }
+        };
     },
     methods: {
         start() {

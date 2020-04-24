@@ -32,6 +32,14 @@ export default {
             dispatch("getByOrderID", payload.order_id);
             return res;
         },
+        async update({ dispatch }, payload) {
+            const res = await axios.post(
+                "api/order/detail/" + payload.id + "/update",
+                payload
+            );
+            dispatch("getByOrderID", payload.order_id);
+            return res;
+        },
         async UseOnly({ commit }, payload) {
             const response = await axios.post(
                 "api/order/detail/" + payload + "useonly"

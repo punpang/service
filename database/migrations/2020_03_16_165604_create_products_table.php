@@ -16,9 +16,9 @@ class CreateProductsTable extends Migration
         Schema::connection('order')->create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 100);
-            $table->float('price_normal');
+            $table->decimal('price_normal',8,2);
             $table->boolean('price_special_status')->default(false);
-            $table->float('price_special');
+            $table->decimal('price_special',8,2);
             $table->boolean('status')->default(false);
             $table->boolean('image_status')->default(false);
             $table->integer('product_image_id')->default('1');

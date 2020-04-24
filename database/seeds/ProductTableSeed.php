@@ -15,8 +15,8 @@ class ProductTableSeed extends Seeder
     public function run()
     {
         $products = [
-            ["name" => "ฝอยทอง", "price_normal" => 200, "price_special_status" => 0, "price_special" => 200, "status" => 1, "image_status" => 1, "product_image_id" => 1],
-            ["name" => "มะพร้าวอ่อน", "price_normal" => 420, "price_special_status" => 1, "price_special" => 370, "status" => 1, "image_status" => 1, "product_image_id" => 2]
+            ["name" => "ฝอยทอง", "price_normal" => 200, "price_special_status" => 0, "price_special" => 200.00, "status" => 1, "image_status" => 1, "product_image_id" => 1],
+            ["name" => "มะพร้าวอ่อน", "price_normal" => 420, "price_special_status" => 1, "price_special" => 370.00, "status" => 1, "image_status" => 1, "product_image_id" => 2]
         ];
         $images = [
             ["src_name" => "1xjCwaYTe66X_RZjrty0gOZSp2gxvRdYF"],

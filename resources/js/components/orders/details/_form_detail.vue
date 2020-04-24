@@ -2,18 +2,45 @@
     <div>
         <v-dialog v-model="dialog" persistent width="700">
             <template v-slot:activator="{ on }">
-                <v-list-item @click="start" v-on="on" class="teal darken-1">
+                <v-list-item
+                    @click="start"
+                    v-on="on"
+                    class="teal darken-1"
+                    v-if="action.method == 'create'"
+                >
                     <v-list-item-icon>
-                        <v-icon>add_shopping_cart</v-icon>
+                        <v-icon>{{ action.icon }}</v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
-                        <v-list-item-title>เพิ่มสินค้าใหม่</v-list-item-title>
+                        <v-list-item-title>{{ action.title }}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
+                <v-btn
+                    color="warning"
+                    class="mr-2 d-none d-sm-flex"
+                    v-if="action.method == 'update'"
+                    v-on="on"
+                    @click="start"
+                >
+                    <v-icon left>edit</v-icon>
+                    {{ action.title }}
+                </v-btn>
+                <v-btn
+                    color="warning"
+                    class="mr-2 d-flex d-sm-none"
+                    v-if="action.method == 'update'"
+                    fab
+                    small
+                    v-on="on"
+                    @click="start"
+                >
+                    <v-icon>edit</v-icon>
+                    <!-- แก้ไขข้อมูล -->
+                </v-btn>
             </template>
             <v-card color="#121212">
                 <v-card-title>
-                    เพิ่มสินค้าใหม่
+                    {{ action.title }}
                     <v-spacer></v-spacer>
                     <v-icon color="error" @click="dialog = false">close</v-icon>
                 </v-card-title>
@@ -114,7 +141,8 @@
                                             >
                                                 <v-text-field
                                                     :label="
-                                                        tag.product_category_sub_use_only
+                                                        tag
+                                                            .product_category_sub_use_only
                                                             .product_category
                                                             .name
                                                     "
@@ -122,7 +150,8 @@
                                                     readonly
                                                     hide-details
                                                     v-model="
-                                                        tag.product_category_sub_use_only
+                                                        tag
+                                                            .product_category_sub_use_only
                                                             .name
                                                     "
                                                 ></v-text-field>
@@ -254,9 +283,6 @@
                 :product="product"
                 @emitProcessed="emitProcessed"
             ></processingProduct>
-
-            {{ product }}
-
             <overlay :overlay="overlay"></overlay>
         </v-dialog>
         <snackbarRight :snackbar="snackbar"></snackbarRight>
@@ -271,13 +297,13 @@ import snackbarRight from "@/js/layouts/snackbarRight";
 import overlay from "@/js/layouts/overlay";
 
 export default {
-    props: ["order"],
+    props: ["order", "action", "detail"],
     components: {
         selectProduct,
         tagsProduct,
         processingProduct,
         snackbarRight,
-        overlay,
+        overlay
     },
     data() {
         return {
@@ -286,6 +312,7 @@ export default {
                 status: false
             },
             overlay: false,
+            response:{},
             product: {
                 id: 0,
                 product_image: {
@@ -309,18 +336,20 @@ export default {
         async save() {
             this.overlay = true;
             if (this.$refs.form.validate()) {
-                const res = await this.$store.dispatch(
-                    "orderDetail/store",
-                    this.form
-                );
-                console.log(res);
+                if (this.action.method == "create") {
+                    this.response = await this.$store.dispatch(
+                        "orderDetail/store",
+                        this.form
+                    );
+                } else if (this.action.method == "update") {
+                    this.response = await this.$store.dispatch(
+                        "orderDetail/update",
+                        this.form
+                    );
+                }
 
-                if (res.status == 200) {
-                    this.snackbar = {
-                        status: true,
-                        color: "success",
-                        text: "ลงสินค้าสำหรับรายการสั่งซื้อ #" + this.order.id
-                    };
+                if (this.response.status == 200) {
+                    this.snackbar = this.$store.getters["main/snackbarSuccess"];
                     this.out();
                 } else {
                     this.snackbar = {
@@ -345,28 +374,33 @@ export default {
             this.form.quantity = "";
         },
         async start() {
-            this.form = {
-                order_id: this.order.id,
-                product_id: "",
-                write_status: true,
-                write: "",
-                note_status: true,
-                upload_image_status: false,
-                note: "",
-                price: "",
-                quantity: "1",
-                sum_price: "",
-                status: true
-            };
-            this.product = {
-                id: 0,
-                product_image: {
-                    src_name: ""
-                },
-                price_normal: 0,
-                price_special_status: 0,
-                price_special: 0
-            };
+            if (this.action.method == "create") {
+                this.form = {
+                    order_id: this.order.id,
+                    product_id: "",
+                    write_status: true,
+                    write: "",
+                    note_status: true,
+                    upload_image_status: false,
+                    note: "",
+                    price: "",
+                    quantity: "1",
+                    sum_price: "",
+                    status: true
+                };
+                this.product = {
+                    id: 0,
+                    product_image: {
+                        src_name: ""
+                    },
+                    price_normal: 0,
+                    price_special_status: 0,
+                    price_special: 0
+                };
+            } else if (this.action.method == "update") {
+                this.form = this.detail;
+                this.product = this.detail.product;
+            }
         },
         out() {
             this.dialog = false;
@@ -399,7 +433,7 @@ export default {
             }
         },
         emitProcessed(v) {
-            this.form.price = v.price;            
+            this.form.price = v.price;
             this.changeQuantity(this.form.quantity, v.price);
         }
     }

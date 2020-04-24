@@ -99572,7 +99572,7 @@ var routes = [{
   path: "/customer",
   name: "Customer",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! @/js/pages/orders/customer */ "./resources/js/pages/orders/customer.vue"));
+    return __webpack_require__.e(/*! import() */ 0).then(__webpack_require__.bind(null, /*! @/js/pages/orders/customer */ "./resources/js/pages/orders/customer.vue"));
   },
   meta: {
     requiresAuth: true
@@ -99590,7 +99590,7 @@ var routes = [{
   path: "/order",
   name: "Order",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(0)]).then(__webpack_require__.bind(null, /*! @/js/pages/orders/order */ "./resources/js/pages/orders/order.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! @/js/pages/orders/order */ "./resources/js/pages/orders/order.vue"));
   },
   meta: {
     requiresAuth: true
@@ -100013,7 +100013,12 @@ __webpack_require__.r(__webpack_exports__);
     sizeOverlay: "64",
     snackbar: {
       text: {
-        error: 'เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง'
+        error: 'เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง',
+        success: {
+          status: true,
+          color: 'success',
+          text: "ทำรายการสำเร็จ"
+        }
       }
     }
   },
@@ -100043,6 +100048,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     snackbarError: function snackbarError(state) {
       return state.snackbar.text.error;
+    },
+    snackbarSuccess: function snackbarSuccess(state) {
+      return state.snackbar.text.success;
     }
   },
   actions: {}
@@ -100329,22 +100337,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    UseOnly: function UseOnly(_ref2, payload) {
-      var commit = _ref2.commit;
+    update: function update(_ref2, payload) {
+      var dispatch = _ref2.dispatch;
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var response;
+        var res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios.post("api/order/detail/" + payload + "useonly");
+                return axios.post("api/order/detail/" + payload.id + "/update", payload);
 
               case 2:
-                response = _context2.sent;
-                commit("dataUseOnly", response.data);
+                res = _context2.sent;
+                dispatch("getByOrderID", payload.order_id);
+                return _context2.abrupt("return", res);
 
-              case 4:
+              case 5:
               case "end":
                 return _context2.stop();
             }
@@ -100352,7 +100361,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
-    getByOrderID: function getByOrderID(_ref3, payload) {
+    UseOnly: function UseOnly(_ref3, payload) {
       var commit = _ref3.commit;
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var response;
@@ -100361,15 +100370,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return axios.get("api/order/detail/" + payload + "/getByOrderID");
+                return axios.post("api/order/detail/" + payload + "useonly");
 
               case 2:
                 response = _context3.sent;
-                commit("cost", response.data.cost);
-                commit("count", response.data.count);
-                commit("getByOrderId", response.data.data);
+                commit("dataUseOnly", response.data);
 
-              case 6:
+              case 4:
               case "end":
                 return _context3.stop();
             }
@@ -100377,8 +100384,33 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee3);
       }))();
     },
-    getByOrderIDReset: function getByOrderIDReset(_ref4) {
+    getByOrderID: function getByOrderID(_ref4, payload) {
       var commit = _ref4.commit;
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return axios.get("api/order/detail/" + payload + "/getByOrderID");
+
+              case 2:
+                response = _context4.sent;
+                commit("cost", response.data.cost);
+                commit("count", response.data.count);
+                commit("getByOrderId", response.data.data);
+
+              case 6:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    },
+    getByOrderIDReset: function getByOrderIDReset(_ref5) {
+      var commit = _ref5.commit;
       commit("getByOrderId", []);
     }
   }

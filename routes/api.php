@@ -67,6 +67,7 @@ Route::middleware('auth:api')->group(function () {
 
         Route::prefix('detail')->group(function () { // api/order/detail
             Route::post('store', 'Order\OrderDetailController@store');
+            Route::post('{detail}/update', 'Order\OrderDetailController@update');
             Route::get('{order_id}/getByOrderID', 'Order\OrderDetailController@getByOrderID');
         });
 

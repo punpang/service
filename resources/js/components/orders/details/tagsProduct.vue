@@ -1,8 +1,8 @@
 <template>
     <div>
-        {{ tag.product_category_sub.product_category.name }}
+        {{ tag.product_category_sub_use_only.product_category.name }}
         :
-        {{ tag.product_category_sub.name }}
+        {{ tag.product_category_sub_use_only.name }}
     </div>
 </template>
 

@@ -6,7 +6,12 @@ export default {
         sizeOverlay: "64",
         snackbar:{
             text:{
-                error:'เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง'
+                error:'เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง',
+                success:{
+                    status:true,
+                    color:'success',
+                    text:"ทำรายการสำเร็จ"
+                }
             }
         }
     },
@@ -28,7 +33,8 @@ export default {
         User: state => state.User,
         isLoggedIn: state => state.isLoggedIn,
         sizeOverlay:state=>state.sizeOverlay,
-        snackbarError:state=>state.snackbar.text.error
+        snackbarError:state=>state.snackbar.text.error,
+        snackbarSuccess:state=>state.snackbar.text.success
     },
     actions: {}
 };

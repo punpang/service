@@ -17,7 +17,7 @@ class ProductController extends Controller
 
     public function useonly()
     {
-        $data = Product::UseOnly()->with('ProductImage','ProductTagUseOnly.ProductCategorySub.ProductCategory')->get();
+        $data = Product::UseOnly()->with('ProductImage','ProductTagUseOnly.ProductCategorySubUseOnly.ProductCategory')->get();
 
         return response()->json($data, 200);
     }

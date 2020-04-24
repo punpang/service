@@ -36,9 +36,9 @@
                     </template>
                     <template v-slot:item.price="{ item }">
                         <span v-if="item.price_special_status == 0"
-                            >{{ item.price_normal }}.00</span
+                            >{{ item.price_normal }}</span
                         >
-                        <span v-else>{{ item.price_special }}.00</span>
+                        <span v-else>{{ item.price_special }}</span>
                     </template>
                     <template v-slot:item.tags="{ item }">
                         <div v-for="tag in item.product_tag_use_only" :key="tag.id">

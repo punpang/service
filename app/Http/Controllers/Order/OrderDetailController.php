@@ -24,6 +24,14 @@ class OrderDetailController extends Controller
         return response()->json(['success' => true], 200);
     }
 
+    public function update(OrderDetail $detail)
+    {
+        $detail->update(request()->all());
+        Linenotify::send('แก้ไขสินค้า #'.$detail->order_id.'/n รายละ');
+
+        return response()->json(['success' => true], 200);
+    }
+
 
     public function getByOrderID($order_id)
     {

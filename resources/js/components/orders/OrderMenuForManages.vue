@@ -8,7 +8,10 @@
             </v-card-title>
         </v-card>
         <v-list-item-group class="py-0">
-            <OrderDetailAdd :order="order"></OrderDetailAdd>
+            <formDetail
+                :order="order"
+                :action="action.create.detail"
+            ></formDetail>
 
             <v-list-item @click="testFacebook" class="yellow darken-1">
                 <v-list-item-icon>
@@ -66,16 +69,26 @@
 
 <script>
 import OrderDetailAdd from "@/js/components/orders/details/add";
+import formDetail from "@/js/components/orders/details/_form_detail";
 
 export default {
     props: ["order"],
     components: {
-        OrderDetailAdd
+        formDetail
     },
     data() {
         return {
             dialog: false,
-            buttons: []
+            buttons: [],
+            action: {
+                create: {
+                    detail: {
+                        method: "create",
+                        title:"เพิ่มสินค้าใหม่",
+                        icon:"add_shopping_cart"
+                    }
+                }
+            }
         };
     },
     methods: {
