@@ -47,8 +47,14 @@ class OrderDetail extends Model implements Auditable
         return $this->belongsTo(Product::class, 'product_id', 'id'); //->exclude()
     }
 
-    public static  function sumPrice()
+    public static function sumPrice($order_id) //รวมเงินเฉพาะที่ใช้งาน
     {
-        return number_format(OrderDetail::sum("sum_price"), 2);
+        $data = OrderDetail::whereOrderId($order_id)->whereStatus(1)->sum('sum_price');
+        return number_format($data);
+    }
+
+    public static function getByOrderIDAll($order_id)
+    {
+        return OrderDetail::whereOrderId($order_id)->orderBy('status', "DESC")->with('Product.ProductTagUseOnly.ProductCategorySubUseOnly.ProductCategory')->with('Product.ProductImage')->get();
     }
 }

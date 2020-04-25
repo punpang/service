@@ -1979,8 +1979,6 @@ __webpack_require__.r(__webpack_exports__);
               Authorization: "Bearer " + localStorage.getItem("token")
             }
           }).then(function (res) {
-            _this.$store.commit("main/AuthToken");
-
             _this.$store.commit("main/User", res.data);
 
             _this.$router.replace(_this.$route.query.from);
@@ -2065,45 +2063,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['drawer'],
+  data: function data() {
+    return {
+      menus: [{
+        icon: "home",
+        title: "หน้าแรก",
+        to: "/"
+      }]
+    };
+  },
+  methods: {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/layouts/NavbarAdmin.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/layouts/NavbarAdmin.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 //
 //
 //
@@ -2130,38 +2114,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['drawer'],
   data: function data() {
     return {
-      NewOrder: true,
-      form: {
-        name: "",
-        phone: ""
-      },
-      dialog: false,
       menus: [{
         icon: "home",
         title: "หน้าแรก",
         to: "/"
       }, {
+        icon: "shopping_basket",
+        title: "รายการสั่งซื้อ",
+        to: "/order"
+      }, {
         icon: "person",
         title: "ลูกค้า",
-        to: "/customers"
-      }],
-      drawer: true
+        to: "/customer"
+      }, {
+        icon: "shop",
+        title: "สินค้า",
+        to: "/product"
+      }]
     };
   },
-  methods: {
-    New: function New() {
-      if (this.$refs.FormNewOrder.validate()) {
-        this.$store.commit("addOrder", this.form);
-        this.$refs.FormNewOrder.reset();
-        this.dialog = false;
-      }
-    },
-    Reset: function Reset() {
-      this.$refs.FormNewOrder.reset();
-    }
-  }
+  methods: {}
 });
 
 /***/ }),
@@ -2175,93 +2150,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2304,57 +2192,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["Profile"],
   data: function data() {
-    var _ref;
-
-    return _ref = {
-      //navbar
-      NewOrder: true,
-      form: {
-        name: "",
-        phone: ""
-      },
-      dialog: false,
-      menus: [{
-        icon: "home",
-        title: "หน้าแรก",
-        to: "/"
-      }, {
-        icon: "shopping_basket",
-        title: "รายการสั่งซื้อ",
-        to: "/order"
-      }, {
-        icon: "person",
-        title: "ลูกค้า",
-        to: "/customer"
-      }, {
-        icon: "shop",
-        title: "สินค้า",
-        to: "/product"
-      }],
-      //toolbar
-      drawer: false
-    }, _defineProperty(_ref, "NewOrder", true), _defineProperty(_ref, "form", {
-      name: "",
-      phone: ""
-    }), _defineProperty(_ref, "dialog", false), _defineProperty(_ref, "MenuProfiles", [{
-      icon: "exit_to_app",
-      title: "ออกจากระบบ",
-      to: "/logout"
-    }]), _ref;
+    return {
+      MenuProfiles: [{
+        icon: "exit_to_app",
+        title: "ออกจากระบบ",
+        to: "/logout"
+      }]
+    };
   },
   methods: {
-    //drawer() {
-    //    this.$store.commit("main/drawerMain");
-    //},
-    New: function New() {
-      if (this.$refs.FormNewOrder.validate()) {
-        this.$store.commit("addOrder", this.form);
-        this.$refs.FormNewOrder.reset();
-        this.dialog = false;
-      }
-    },
-    Reset: function Reset() {
-      this.$refs.FormNewOrder.reset();
+    drawer: function drawer() {
+      this.$emit('emitDialogNavbar');
     }
   }
 });
@@ -2372,6 +2220,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_layouts_Toolbar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/js/layouts/Toolbar */ "./resources/js/layouts/Toolbar.vue");
 /* harmony import */ var _js_layouts_Navbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/layouts/Navbar */ "./resources/js/layouts/Navbar.vue");
+/* harmony import */ var _js_layouts_NavbarAdmin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/layouts/NavbarAdmin */ "./resources/js/layouts/NavbarAdmin.vue");
 //
 //
 //
@@ -2387,18 +2236,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "App",
   components: {
     Toolbar: _js_layouts_Toolbar__WEBPACK_IMPORTED_MODULE_0__["default"],
-    Navbar: _js_layouts_Navbar__WEBPACK_IMPORTED_MODULE_1__["default"]
+    Navbar: _js_layouts_Navbar__WEBPACK_IMPORTED_MODULE_1__["default"],
+    NavbarAdmin: _js_layouts_NavbarAdmin__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
-      Profile: {}
+      Profile: {},
+      drawer: true
     };
+  },
+  methods: {
+    emitDialogNavbar: function emitDialogNavbar() {
+      this.drawer = !this.drawer;
+    }
   },
   beforeCreate: function beforeCreate() {
     var _this = this;
@@ -40689,16 +40554,85 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return this.$store.getters["main/isLoggedIn"] == true &&
-    this.$store.getters["main/drawerMain"] == true
+  return this.$store.getters["main/isLoggedIn"] == true
     ? _c(
         "v-navigation-drawer",
-        { attrs: { app: "" } },
+        {
+          attrs: { app: "" },
+          model: {
+            value: _vm.drawer,
+            callback: function($$v) {
+              _vm.drawer = $$v
+            },
+            expression: "drawer"
+          }
+        },
         [
-          false
-            ? undefined
-            : _vm._e(),
-          _vm._v(" "),
+          _c(
+            "v-list",
+            _vm._l(_vm.menus, function(menu) {
+              return _c(
+                "v-list-item",
+                { key: menu.name, attrs: { link: "", to: menu.to } },
+                [
+                  _c(
+                    "v-list-item-icon",
+                    [_c("v-icon", [_vm._v(_vm._s(menu.icon))])],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-item-content",
+                    [_c("v-list-item-title", [_vm._v(_vm._s(menu.title))])],
+                    1
+                  )
+                ],
+                1
+              )
+            }),
+            1
+          )
+        ],
+        1
+      )
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/layouts/NavbarAdmin.vue?vue&type=template&id=3f18362a&":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/layouts/NavbarAdmin.vue?vue&type=template&id=3f18362a& ***!
+  \***********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return this.$store.getters["main/isLoggedIn"] == true
+    ? _c(
+        "v-navigation-drawer",
+        {
+          attrs: { app: "" },
+          model: {
+            value: _vm.drawer,
+            callback: function($$v) {
+              _vm.drawer = $$v
+            },
+            expression: "drawer"
+          }
+        },
+        [
           _c(
             "v-list",
             _vm._l(_vm.menus, function(menu) {
@@ -40766,11 +40700,7 @@ var render = function() {
                 expression: "this.$store.getters['main/isLoggedIn'] == true"
               }
             ],
-            on: {
-              click: function($event) {
-                _vm.drawer = !_vm.drawer
-              }
-            }
+            on: { click: _vm.drawer }
           }),
           _vm._v(" "),
           _c("v-toolbar-title", [_vm._v("PUNPANG")]),
@@ -40840,54 +40770,7 @@ var render = function() {
             : _vm._e()
         ],
         1
-      ),
-      _vm._v(" "),
-      this.$store.getters["main/isLoggedIn"] == true
-        ? _c(
-            "v-navigation-drawer",
-            {
-              attrs: { app: "" },
-              model: {
-                value: _vm.drawer,
-                callback: function($$v) {
-                  _vm.drawer = $$v
-                },
-                expression: "drawer"
-              }
-            },
-            [
-              false
-                ? undefined
-                : _vm._e(),
-              _vm._v(" "),
-              _c(
-                "v-list",
-                _vm._l(_vm.menus, function(menu) {
-                  return _c(
-                    "v-list-item",
-                    { key: menu.name, attrs: { link: "", to: menu.to } },
-                    [
-                      _c(
-                        "v-list-item-icon",
-                        [_c("v-icon", [_vm._v(_vm._s(menu.icon))])],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-list-item-content",
-                        [_c("v-list-item-title", [_vm._v(_vm._s(menu.title))])],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                }),
-                1
-              )
-            ],
-            1
-          )
-        : _vm._e()
+      )
     ],
     1
   )
@@ -40917,7 +40800,14 @@ var render = function() {
   return _c(
     "v-app",
     [
-      _c("Toolbar", { attrs: { Profile: _vm.Profile } }),
+      _c("Toolbar", {
+        attrs: { Profile: _vm.Profile },
+        on: { emitDialogNavbar: _vm.emitDialogNavbar }
+      }),
+      _vm._v(" "),
+      this.$store.getters["main/User"].type == 1
+        ? _c("NavbarAdmin", { attrs: { drawer: _vm.drawer } })
+        : _c("Navbar", { attrs: { drawer: _vm.drawer } }),
       _vm._v(" "),
       _c(
         "v-content",
@@ -59056,6 +58946,7 @@ var __assign = undefined && undefined.__assign || function () {
       var around = this.parsedValue;
       var component = null;
       var maxDays = this.maxDays;
+      var weekdays = this.parsedWeekdays;
       var start = around;
       var end = around;
 
@@ -59076,6 +58967,7 @@ var __assign = undefined && undefined.__assign || function () {
         case 'day':
           component = _VCalendarDaily__WEBPACK_IMPORTED_MODULE_4__["default"];
           maxDays = 1;
+          weekdays = [start.weekday];
           break;
 
         case '4day':
@@ -59083,6 +58975,7 @@ var __assign = undefined && undefined.__assign || function () {
           end = Object(_util_timestamp__WEBPACK_IMPORTED_MODULE_2__["relativeDays"])(Object(_util_timestamp__WEBPACK_IMPORTED_MODULE_2__["copyTimestamp"])(end), _util_timestamp__WEBPACK_IMPORTED_MODULE_2__["nextDay"], 4);
           Object(_util_timestamp__WEBPACK_IMPORTED_MODULE_2__["updateFormatted"])(end);
           maxDays = 4;
+          weekdays = [start.weekday, (start.weekday + 1) % 7, (start.weekday + 2) % 7, (start.weekday + 3) % 7];
           break;
 
         case 'custom-weekly':
@@ -59105,8 +58998,12 @@ var __assign = undefined && undefined.__assign || function () {
         component: component,
         start: start,
         end: end,
-        maxDays: maxDays
+        maxDays: maxDays,
+        weekdays: weekdays
       };
+    },
+    eventWeekdays: function eventWeekdays() {
+      return this.renderProps.weekdays;
     }
   },
   watch: {
@@ -59161,9 +59058,7 @@ var __assign = undefined && undefined.__assign || function () {
             break;
 
           case 'day':
-            var index = moved.weekday;
-            var days = forward ? this.weekdaySkips[index] : this.weekdaySkipsReverse[index];
-            Object(_util_timestamp__WEBPACK_IMPORTED_MODULE_2__["relativeDays"])(moved, mover, days);
+            Object(_util_timestamp__WEBPACK_IMPORTED_MODULE_2__["relativeDays"])(moved, mover, 1);
             break;
 
           case '4day':
@@ -59231,7 +59126,8 @@ var __assign = undefined && undefined.__assign || function () {
         start = _a.start,
         end = _a.end,
         maxDays = _a.maxDays,
-        component = _a.component;
+        component = _a.component,
+        weekdays = _a.weekdays;
     return h(component, {
       staticClass: 'v-calendar',
       class: {
@@ -59240,7 +59136,8 @@ var __assign = undefined && undefined.__assign || function () {
       props: __assign({}, this.$props, {
         start: start.date,
         end: end.date,
-        maxDays: maxDays
+        maxDays: maxDays,
+        weekdays: weekdays
       }),
       directives: [{
         modifiers: {
@@ -59436,7 +59333,7 @@ var __spread = undefined && undefined.__spread || function () {
     genHeadDayLabel: function genHeadDayLabel(day) {
       return this.$createElement('div', {
         staticClass: 'v-calendar-daily_head-day-label'
-      }, [this.genHeadDayButton(day)]);
+      }, Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["getSlot"])(this, 'day-label-header', day) || [this.genHeadDayButton(day)]);
     },
     genHeadDayButton: function genHeadDayButton(day) {
       var color = day.present ? this.color : 'transparent';
@@ -60152,6 +60049,9 @@ var MINUTES_IN_DAY = 1440;
     },
     eventModeFunction: function eventModeFunction() {
       return typeof this.eventOverlapMode === 'function' ? this.eventOverlapMode : _modes__WEBPACK_IMPORTED_MODULE_5__["CalendarEventOverlapModes"][this.eventOverlapMode];
+    },
+    eventWeekdays: function eventWeekdays() {
+      return this.parsedWeekdays;
     }
   },
   methods: {
@@ -60394,14 +60294,14 @@ var MINUTES_IN_DAY = 1440;
     },
     getEventsForDay: function getEventsForDay(day) {
       var identifier = Object(_util_timestamp__WEBPACK_IMPORTED_MODULE_6__["getDayIdentifier"])(day);
-      var firstWeekday = this.parsedWeekdays[0];
+      var firstWeekday = this.eventWeekdays[0];
       return this.parsedEvents.filter(function (event) {
         return Object(_util_events__WEBPACK_IMPORTED_MODULE_7__["isEventStart"])(event, day, identifier, firstWeekday);
       });
     },
     getEventsForDayAll: function getEventsForDayAll(day) {
       var identifier = Object(_util_timestamp__WEBPACK_IMPORTED_MODULE_6__["getDayIdentifier"])(day);
-      var firstWeekday = this.parsedWeekdays[0];
+      var firstWeekday = this.eventWeekdays[0];
       return this.parsedEvents.filter(function (event) {
         return event.allDay && Object(_util_events__WEBPACK_IMPORTED_MODULE_7__["isEventStart"])(event, day, identifier, firstWeekday);
       });
@@ -60416,10 +60316,10 @@ var MINUTES_IN_DAY = 1440;
       var _this = this;
 
       if (this.noEvents) {
-        return this.$scopedSlots;
+        return __assign({}, this.$scopedSlots);
       }
 
-      var mode = this.eventModeFunction(this.parsedEvents, this.parsedWeekdays[0], this.parsedEventOverlapThreshold);
+      var mode = this.eventModeFunction(this.parsedEvents, this.eventWeekdays[0], this.parsedEventOverlapThreshold);
 
       var getSlotChildren = function getSlotChildren(day, getter, mapper, timed) {
         var events = getter(day);
@@ -61586,7 +61486,7 @@ function parseEvent(input, index, startProperty, endProperty) {
   };
 }
 function isEventOn(event, dayIdentifier) {
-  return dayIdentifier >= event.startIdentifier && dayIdentifier <= event.endIdentifier;
+  return dayIdentifier >= event.startIdentifier && dayIdentifier <= event.endIdentifier && dayIdentifier * _timestamp__WEBPACK_IMPORTED_MODULE_0__["OFFSET_TIME"] !== event.endTimestampIdentifier;
 }
 function isEventStart(event, day, dayIdentifier, firstWeekday) {
   return dayIdentifier === event.startIdentifier || firstWeekday === day.weekday && isEventOn(event, dayIdentifier);
@@ -61844,7 +61744,7 @@ function validateWeekdays(input) {
 /*!****************************************************!*\
   !*** ./src/components/VCalendar/util/timestamp.ts ***!
   \****************************************************/
-/*! exports provided: PARSE_REGEX, PARSE_TIME, DAYS_IN_MONTH, DAYS_IN_MONTH_LEAP, DAYS_IN_MONTH_MIN, DAYS_IN_MONTH_MAX, MONTH_MAX, MONTH_MIN, DAY_MIN, DAYS_IN_WEEK, MINUTES_IN_HOUR, HOURS_IN_DAY, FIRST_HOUR, getStartOfWeek, getEndOfWeek, getStartOfMonth, getEndOfMonth, parseTime, validateTimestamp, parseTimestamp, parseDate, getDayIdentifier, getTimeIdentifier, getTimestampIdentifier, updateRelative, updateMinutes, updateWeekday, updateFormatted, getWeekday, isLeapYear, daysInMonth, copyTimestamp, padNumber, getDate, getTime, nextMinutes, nextDay, prevDay, relativeDays, diffMinutes, findWeekday, getWeekdaySkips, createDayList, createIntervalList, createNativeLocaleFormatter */
+/*! exports provided: PARSE_REGEX, PARSE_TIME, DAYS_IN_MONTH, DAYS_IN_MONTH_LEAP, DAYS_IN_MONTH_MIN, DAYS_IN_MONTH_MAX, MONTH_MAX, MONTH_MIN, DAY_MIN, DAYS_IN_WEEK, MINUTES_IN_HOUR, HOURS_IN_DAY, FIRST_HOUR, OFFSET_YEAR, OFFSET_MONTH, OFFSET_HOUR, OFFSET_TIME, getStartOfWeek, getEndOfWeek, getStartOfMonth, getEndOfMonth, parseTime, validateTimestamp, parseTimestamp, parseDate, getDayIdentifier, getTimeIdentifier, getTimestampIdentifier, updateRelative, updateMinutes, updateWeekday, updateFormatted, getWeekday, daysInMonth, copyTimestamp, padNumber, getDate, getTime, nextMinutes, nextDay, prevDay, relativeDays, diffMinutes, findWeekday, getWeekdaySkips, createDayList, createIntervalList, createNativeLocaleFormatter */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -61862,6 +61762,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MINUTES_IN_HOUR", function() { return MINUTES_IN_HOUR; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HOURS_IN_DAY", function() { return HOURS_IN_DAY; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FIRST_HOUR", function() { return FIRST_HOUR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OFFSET_YEAR", function() { return OFFSET_YEAR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OFFSET_MONTH", function() { return OFFSET_MONTH; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OFFSET_HOUR", function() { return OFFSET_HOUR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OFFSET_TIME", function() { return OFFSET_TIME; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getStartOfWeek", function() { return getStartOfWeek; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEndOfWeek", function() { return getEndOfWeek; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getStartOfMonth", function() { return getStartOfMonth; });
@@ -61878,7 +61782,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateWeekday", function() { return updateWeekday; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateFormatted", function() { return updateFormatted; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getWeekday", function() { return getWeekday; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isLeapYear", function() { return isLeapYear; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "daysInMonth", function() { return daysInMonth; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "copyTimestamp", function() { return copyTimestamp; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "padNumber", function() { return padNumber; });
@@ -61894,7 +61797,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createDayList", function() { return createDayList; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createIntervalList", function() { return createIntervalList; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNativeLocaleFormatter", function() { return createNativeLocaleFormatter; });
+/* harmony import */ var _util_dateTimeUtils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../util/dateTimeUtils */ "./src/util/dateTimeUtils.ts");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 
 var PARSE_REGEX = /^(\d{4})-(\d{1,2})(-(\d{1,2}))?([^\d]+(\d{1,2}))?(:(\d{1,2}))?(:(\d{1,2}))?$/;
 var PARSE_TIME = /(\d\d?)(:(\d\d?)|)(:(\d\d?)|)/;
@@ -61909,6 +61814,10 @@ var DAYS_IN_WEEK = 7;
 var MINUTES_IN_HOUR = 60;
 var HOURS_IN_DAY = 24;
 var FIRST_HOUR = 0;
+var OFFSET_YEAR = 10000;
+var OFFSET_MONTH = 100;
+var OFFSET_HOUR = 100;
+var OFFSET_TIME = 10000;
 function getStartOfWeek(timestamp, weekdays, today) {
   var start = copyTimestamp(timestamp);
   findWeekday(start, weekdays[0], prevDay);
@@ -62031,13 +61940,13 @@ function parseDate(date) {
   });
 }
 function getDayIdentifier(timestamp) {
-  return timestamp.year * 10000 + timestamp.month * 100 + timestamp.day;
+  return timestamp.year * OFFSET_YEAR + timestamp.month * OFFSET_MONTH + timestamp.day;
 }
 function getTimeIdentifier(timestamp) {
-  return timestamp.hour * 100 + timestamp.minute;
+  return timestamp.hour * OFFSET_HOUR + timestamp.minute;
 }
 function getTimestampIdentifier(timestamp) {
-  return getDayIdentifier(timestamp) * 10000 + getTimeIdentifier(timestamp);
+  return getDayIdentifier(timestamp) * OFFSET_TIME + getTimeIdentifier(timestamp);
 }
 function updateRelative(timestamp, now, time) {
   if (time === void 0) {
@@ -62094,11 +62003,8 @@ function getWeekday(timestamp) {
 
   return timestamp.weekday;
 }
-function isLeapYear(year) {
-  return year % 4 === 0 && year % 100 !== 0 || year % 400 === 0;
-}
 function daysInMonth(year, month) {
-  return isLeapYear(year) ? DAYS_IN_MONTH_LEAP[month] : DAYS_IN_MONTH[month];
+  return Object(_util_dateTimeUtils__WEBPACK_IMPORTED_MODULE_0__["isLeapYear"])(year) ? DAYS_IN_MONTH_LEAP[month] : DAYS_IN_MONTH[month];
 }
 function copyTimestamp(timestamp) {
   var date = timestamp.date,
@@ -66832,7 +66738,9 @@ function searchTableItems(items, search, headersWithCustomFilters, headersWithou
           group: group,
           groupBy: props.options.groupBy,
           items: items,
-          headers: this.computedHeaders
+          headers: this.computedHeaders,
+          isOpen: isOpen,
+          toggle: toggleFn
         })]));
       }
 
@@ -68150,6 +68058,10 @@ function sanitizeDateString(dateString, type) {
     },
     // Function formatting the tableDate in the day/month table header
     headerDateFormat: Function,
+    localeFirstDayOfYear: {
+      type: [String, Number],
+      default: 0
+    },
     max: String,
     min: String,
     // Function formatting month in the months table
@@ -68371,7 +68283,7 @@ function sanitizeDateString(dateString, type) {
   methods: {
     emitInput: function emitInput(newInput) {
       if (this.range && this.value) {
-        if (this.value.length === 2) {
+        if (this.value.length !== 1) {
           this.$emit('input', [newInput]);
         } else {
           var output_1 = __spread(this.value, [newInput]);
@@ -68506,6 +68418,7 @@ function sanitizeDateString(dateString, type) {
           format: this.dayFormat,
           light: this.light,
           locale: this.locale,
+          localeFirstDayOfYear: this.localeFirstDayOfYear,
           min: this.min,
           max: this.max,
           range: this.range,
@@ -68623,16 +68536,18 @@ function sanitizeDateString(dateString, type) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_date_picker_table__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./mixins/date-picker-table */ "./src/components/VDatePicker/mixins/date-picker-table.ts");
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./util */ "./src/components/VDatePicker/util/index.ts");
-/* harmony import */ var _util_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util/helpers */ "./src/util/helpers.ts");
-/* harmony import */ var _util_mixins__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../util/mixins */ "./src/util/mixins.ts");
+/* harmony import */ var _util_dateTimeUtils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/dateTimeUtils */ "./src/util/dateTimeUtils.ts");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./util */ "./src/components/VDatePicker/util/index.ts");
+/* harmony import */ var _util_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../util/helpers */ "./src/util/helpers.ts");
+/* harmony import */ var _util_mixins__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../util/mixins */ "./src/util/mixins.ts");
 // Mixins
  // Utils
 
 
 
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(_util_mixins__WEBPACK_IMPORTED_MODULE_3__["default"])(_mixins_date_picker_table__WEBPACK_IMPORTED_MODULE_0__["default"]
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(_util_mixins__WEBPACK_IMPORTED_MODULE_4__["default"])(_mixins_date_picker_table__WEBPACK_IMPORTED_MODULE_0__["default"]
 /* @vue/component */
 ).extend({
   name: 'v-date-picker-date-table',
@@ -68641,12 +68556,16 @@ __webpack_require__.r(__webpack_exports__);
       type: [String, Number],
       default: 0
     },
+    localeFirstDayOfYear: {
+      type: [String, Number],
+      default: 0
+    },
     showWeek: Boolean,
     weekdayFormat: Function
   },
   computed: {
     formatter: function formatter() {
-      return this.format || Object(_util__WEBPACK_IMPORTED_MODULE_1__["createNativeLocaleFormatter"])(this.currentLocale, {
+      return this.format || Object(_util__WEBPACK_IMPORTED_MODULE_2__["createNativeLocaleFormatter"])(this.currentLocale, {
         day: 'numeric',
         timeZone: 'UTC'
       }, {
@@ -68655,7 +68574,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     weekdayFormatter: function weekdayFormatter() {
-      return this.weekdayFormat || Object(_util__WEBPACK_IMPORTED_MODULE_1__["createNativeLocaleFormatter"])(this.currentLocale, {
+      return this.weekdayFormat || Object(_util__WEBPACK_IMPORTED_MODULE_2__["createNativeLocaleFormatter"])(this.currentLocale, {
         weekday: 'narrow',
         timeZone: 'UTC'
       });
@@ -68664,17 +68583,17 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var first = parseInt(this.firstDayOfWeek, 10);
-      return this.weekdayFormatter ? Object(_util_helpers__WEBPACK_IMPORTED_MODULE_2__["createRange"])(7).map(function (i) {
+      return this.weekdayFormatter ? Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["createRange"])(7).map(function (i) {
         return _this.weekdayFormatter("2017-01-" + (first + i + 15));
       }) // 2017-01-15 is Sunday
-      : Object(_util_helpers__WEBPACK_IMPORTED_MODULE_2__["createRange"])(7).map(function (i) {
+      : Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["createRange"])(7).map(function (i) {
         return ['S', 'M', 'T', 'W', 'T', 'F', 'S'][(i + first) % 7];
       });
     }
   },
   methods: {
     calculateTableDate: function calculateTableDate(delta) {
-      return Object(_util__WEBPACK_IMPORTED_MODULE_1__["monthChange"])(this.tableDate, Math.sign(delta || 1));
+      return Object(_util__WEBPACK_IMPORTED_MODULE_2__["monthChange"])(this.tableDate, Math.sign(delta || 1));
     },
     genTHead: function genTHead() {
       var _this = this;
@@ -68682,25 +68601,21 @@ __webpack_require__.r(__webpack_exports__);
       var days = this.weekDays.map(function (day) {
         return _this.$createElement('th', day);
       });
-      this.showWeek && days.unshift(this.$createElement('th'));
+
+      if (this.showWeek) {
+        days.unshift(this.$createElement('th'));
+      }
+
       return this.$createElement('thead', this.genTR(days));
     },
     // Returns number of the days from the firstDayOfWeek to the first day of the current month
     weekDaysBeforeFirstDayOfTheMonth: function weekDaysBeforeFirstDayOfTheMonth() {
-      var firstDayOfTheMonth = new Date(this.displayedYear + "-" + Object(_util__WEBPACK_IMPORTED_MODULE_1__["pad"])(this.displayedMonth + 1) + "-01T00:00:00+00:00");
+      var firstDayOfTheMonth = new Date(this.displayedYear + "-" + Object(_util__WEBPACK_IMPORTED_MODULE_2__["pad"])(this.displayedMonth + 1) + "-01T00:00:00+00:00");
       var weekDay = firstDayOfTheMonth.getUTCDay();
       return (weekDay - parseInt(this.firstDayOfWeek) + 7) % 7;
     },
-    getWeekNumber: function getWeekNumber() {
-      var dayOfYear = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334][this.displayedMonth];
-
-      if (this.displayedMonth > 1 && (this.displayedYear % 4 === 0 && this.displayedYear % 100 !== 0 || this.displayedYear % 400 === 0)) {
-        dayOfYear++;
-      }
-
-      var offset = (this.displayedYear + (this.displayedYear - 1 >> 2) - Math.floor((this.displayedYear - 1) / 100) + Math.floor((this.displayedYear - 1) / 400) - Number(this.firstDayOfWeek)) % 7; // https://en.wikipedia.org/wiki/Zeller%27s_congruence
-
-      return Math.floor((dayOfYear + offset) / 7) + 1;
+    getWeekNumber: function getWeekNumber(dayInMonth) {
+      return Object(_util_dateTimeUtils__WEBPACK_IMPORTED_MODULE_1__["weekNumber"])(this.displayedYear, this.displayedMonth, dayInMonth, parseInt(this.firstDayOfWeek), parseInt(this.localeFirstDayOfYear));
     },
     genWeekNumber: function genWeekNumber(weekNumber) {
       return this.$createElement('td', [this.$createElement('small', {
@@ -68712,21 +68627,26 @@ __webpack_require__.r(__webpack_exports__);
       var daysInMonth = new Date(this.displayedYear, this.displayedMonth + 1, 0).getDate();
       var rows = [];
       var day = this.weekDaysBeforeFirstDayOfTheMonth();
-      var weekNumber = this.getWeekNumber();
-      this.showWeek && rows.push(this.genWeekNumber(weekNumber++));
+
+      if (this.showWeek) {
+        rows.push(this.genWeekNumber(this.getWeekNumber(1)));
+      }
 
       while (day--) {
         rows.push(this.$createElement('td'));
       }
 
       for (day = 1; day <= daysInMonth; day++) {
-        var date = this.displayedYear + "-" + Object(_util__WEBPACK_IMPORTED_MODULE_1__["pad"])(this.displayedMonth + 1) + "-" + Object(_util__WEBPACK_IMPORTED_MODULE_1__["pad"])(day);
+        var date = this.displayedYear + "-" + Object(_util__WEBPACK_IMPORTED_MODULE_2__["pad"])(this.displayedMonth + 1) + "-" + Object(_util__WEBPACK_IMPORTED_MODULE_2__["pad"])(day);
         rows.push(this.$createElement('td', [this.genButton(date, true, 'date', this.formatter)]));
 
         if (rows.length % (this.showWeek ? 8 : 7) === 0) {
           children.push(this.genTR(rows));
           rows = [];
-          day < daysInMonth && this.showWeek && rows.push(this.genWeekNumber(weekNumber++));
+
+          if (this.showWeek && day < daysInMonth) {
+            rows.push(this.genWeekNumber(this.getWeekNumber(day + 7)));
+          }
         }
       }
 
@@ -78538,7 +78458,11 @@ var baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_13__["default"])(_
       var item = this.allItems[index];
 
       if (index !== -1) {
+        this.lastItem = Math.max(this.lastItem, index + 5);
         this.setValue(this.returnObject ? item : this.getValue(item));
+        this.$nextTick(function () {
+          return _this.$refs.menu.getTiles();
+        });
         setTimeout(function () {
           return _this.setMenuIndex(index);
         });
@@ -79584,10 +79508,10 @@ var BaseSlideGroup = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_6__["default"]
     this.setWidths();
   },
   methods: {
+    // Always generate next for scrollable hint
     genNext: function genNext() {
       var _this = this;
 
-      if (!this.hasAffixes) return null;
       var slot = this.$scopedSlots.next ? this.$scopedSlots.next({}) : this.$slots.next || this.__cachedNext;
       return this.$createElement('div', {
         staticClass: 'v-slide-group__next',
@@ -83370,12 +83294,17 @@ var dirtyTypes = ['color', 'file', 'time', 'date', 'datetime-local', 'week', 'mo
       }
     },
     onInput: function onInput(e) {
-      var target = e.target;
-      this.internalValue = target.value;
-      this.badInput = target.validity && target.validity.badInput;
+      if (!e.isComposing) {
+        var target = e.target;
+        this.internalValue = target.value;
+        this.badInput = target.validity && target.validity.badInput;
+      }
     },
     onKeyDown: function onKeyDown(e) {
-      if (e.keyCode === _util_helpers__WEBPACK_IMPORTED_MODULE_8__["keyCodes"].enter) this.$emit('change', this.internalValue);
+      if (!e.isComposing && e.keyCode === _util_helpers__WEBPACK_IMPORTED_MODULE_8__["keyCodes"].enter) {
+        this.$emit('change', this.internalValue);
+      }
+
       this.$emit('keydown', e);
     },
     onMouseDown: function onMouseDown(e) {
@@ -88402,7 +88331,7 @@ function () {
 
   Vuetify.install = _install__WEBPACK_IMPORTED_MODULE_0__["install"];
   Vuetify.installed = false;
-  Vuetify.version = "2.2.22";
+  Vuetify.version = "2.2.23";
   return Vuetify;
 }();
 
@@ -96951,6 +96880,82 @@ function generateComponentTrace(vm) {
 
 /***/ }),
 
+/***/ "./src/util/dateTimeUtils.ts":
+/*!***********************************!*\
+  !*** ./src/util/dateTimeUtils.ts ***!
+  \***********************************/
+/*! exports provided: weekNumber, isLeapYear */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "weekNumber", function() { return weekNumber; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isLeapYear", function() { return isLeapYear; });
+function createUTCDate(year, month, day) {
+  if (month === void 0) {
+    month = 0;
+  }
+
+  if (day === void 0) {
+    day = 1;
+  }
+
+  var date;
+
+  if (year < 100 && year >= 0) {
+    date = new Date(Date.UTC(year, month, day));
+
+    if (isFinite(date.getUTCFullYear())) {
+      date.setUTCFullYear(year);
+    }
+  } else {
+    date = new Date(Date.UTC(year, month, day));
+  }
+
+  return date;
+}
+
+function firstWeekOffset(year, firstDayOfWeek, firstDayOfYear) {
+  var firstWeekDayInFirstWeek = 7 + firstDayOfWeek - firstDayOfYear;
+  var firstWeekDayOfYear = (7 + createUTCDate(year, 0, firstWeekDayInFirstWeek).getUTCDay() - firstDayOfWeek) % 7;
+  return -firstWeekDayOfYear + firstWeekDayInFirstWeek - 1;
+}
+
+function dayOfYear(year, month, day, firstDayOfWeek) {
+  var dayOfYear = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334][month];
+
+  if (month > 1 && isLeapYear(year)) {
+    dayOfYear++;
+  }
+
+  return dayOfYear + day;
+}
+
+function weeksInYear(year, firstDayOfWeek, firstDayOfYear) {
+  var weekOffset = firstWeekOffset(year, firstDayOfWeek, firstDayOfYear);
+  var weekOffsetNext = firstWeekOffset(year + 1, firstDayOfWeek, firstDayOfYear);
+  var daysInYear = isLeapYear(year) ? 366 : 365;
+  return (daysInYear - weekOffset + weekOffsetNext) / 7;
+}
+
+function weekNumber(year, month, day, firstDayOfWeek, localeFirstDayOfYear) {
+  var weekOffset = firstWeekOffset(year, firstDayOfWeek, localeFirstDayOfYear);
+  var week = Math.ceil((dayOfYear(year, month, day, firstDayOfWeek) - weekOffset) / 7);
+
+  if (week < 1) {
+    return week + weeksInYear(year - 1, firstDayOfWeek, localeFirstDayOfYear);
+  } else if (week > weeksInYear(year, firstDayOfWeek, localeFirstDayOfYear)) {
+    return week - weeksInYear(year, firstDayOfWeek, localeFirstDayOfYear);
+  } else {
+    return week;
+  }
+}
+function isLeapYear(year) {
+  return year % 4 === 0 && year % 100 !== 0 || year % 400 === 0;
+}
+
+/***/ }),
+
 /***/ "./src/util/dedupeModelListeners.ts":
 /*!******************************************!*\
   !*** ./src/util/dedupeModelListeners.ts ***!
@@ -97910,7 +97915,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapActions", function() { return mapActions; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNamespacedHelpers", function() { return createNamespacedHelpers; });
 /**
- * vuex v3.1.3
+ * vuex v3.2.0
  * (c) 2020 Evan You
  * @license MIT
  */
@@ -98038,6 +98043,10 @@ Module.prototype.getChild = function getChild (key) {
   return this._children[key]
 };
 
+Module.prototype.hasChild = function hasChild (key) {
+  return key in this._children
+};
+
 Module.prototype.update = function update (rawModule) {
   this._rawModule.namespaced = rawModule.namespaced;
   if (rawModule.actions) {
@@ -98128,6 +98137,13 @@ ModuleCollection.prototype.unregister = function unregister (path) {
   if (!parent.getChild(key).runtime) { return }
 
   parent.removeChild(key);
+};
+
+ModuleCollection.prototype.isRegistered = function isRegistered (path) {
+  var parent = this.get(path.slice(0, -1));
+  var key = path[path.length - 1];
+
+  return parent.hasChild(key)
 };
 
 function update (path, targetModule, newModule) {
@@ -98424,6 +98440,16 @@ Store.prototype.unregisterModule = function unregisterModule (path) {
     Vue.delete(parentState, path[path.length - 1]);
   });
   resetStore(this);
+};
+
+Store.prototype.hasModule = function hasModule (path) {
+  if (typeof path === 'string') { path = [path]; }
+
+  if (true) {
+    assert(Array.isArray(path), "module path must be a string or an Array.");
+  }
+
+  return this._modules.isRegistered(path)
 };
 
 Store.prototype.hotUpdate = function hotUpdate (newOptions) {
@@ -98950,7 +98976,7 @@ function getModuleByNamespace (store, helper, namespace) {
 var index_esm = {
   Store: Store,
   install: install,
-  version: '3.1.3',
+  version: '3.2.0',
   mapState: mapState,
   mapMutations: mapMutations,
   mapGetters: mapGetters,
@@ -99467,6 +99493,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/layouts/NavbarAdmin.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/layouts/NavbarAdmin.vue ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _NavbarAdmin_vue_vue_type_template_id_3f18362a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NavbarAdmin.vue?vue&type=template&id=3f18362a& */ "./resources/js/layouts/NavbarAdmin.vue?vue&type=template&id=3f18362a&");
+/* harmony import */ var _NavbarAdmin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NavbarAdmin.vue?vue&type=script&lang=js& */ "./resources/js/layouts/NavbarAdmin.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _NavbarAdmin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _NavbarAdmin_vue_vue_type_template_id_3f18362a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _NavbarAdmin_vue_vue_type_template_id_3f18362a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/layouts/NavbarAdmin.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/layouts/NavbarAdmin.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/layouts/NavbarAdmin.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NavbarAdmin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./NavbarAdmin.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/layouts/NavbarAdmin.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NavbarAdmin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/layouts/NavbarAdmin.vue?vue&type=template&id=3f18362a&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/layouts/NavbarAdmin.vue?vue&type=template&id=3f18362a& ***!
+  \*****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NavbarAdmin_vue_vue_type_template_id_3f18362a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./NavbarAdmin.vue?vue&type=template&id=3f18362a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/layouts/NavbarAdmin.vue?vue&type=template&id=3f18362a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NavbarAdmin_vue_vue_type_template_id_3f18362a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NavbarAdmin_vue_vue_type_template_id_3f18362a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/layouts/Toolbar.vue":
 /*!******************************************!*\
   !*** ./resources/js/layouts/Toolbar.vue ***!
@@ -99635,6 +99730,26 @@ var routes = [{
   path: "/logout",
   name: "logout",
   component: _js_components_LogoutComponent__WEBPACK_IMPORTED_MODULE_6__["default"]
+},
+/* punpang */
+{
+  path: "/punpang/order/:token",
+  name: "orderToken",
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/orders/show */ "./resources/js/pages/punpang/orders/show.vue"));
+  },
+  meta: {
+    requiresAuth: true
+  }
+}, {
+  path: "/punpang/order/:token/payment",
+  name: "orderTokenPayment",
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/orders/payment */ "./resources/js/pages/punpang/orders/payment.vue"));
+  },
+  meta: {
+    requiresAuth: true
+  }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   history: true,
@@ -99672,6 +99787,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_stores_modules_order__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/js/stores/modules/order */ "./resources/js/stores/modules/order.js");
 /* harmony import */ var _js_stores_modules_orderDetail__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/js/stores/modules/orderDetail */ "./resources/js/stores/modules/orderDetail.js");
 /* harmony import */ var _js_stores_modules_snackbar__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/js/stores/modules/snackbar */ "./resources/js/stores/modules/snackbar.js");
+/* harmony import */ var _js_stores_modules_payment__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/js/stores/modules/payment */ "./resources/js/stores/modules/payment.js");
+
 
 
 
@@ -99699,7 +99816,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     channelOfPurchase: _js_stores_modules_channelOfPurchase__WEBPACK_IMPORTED_MODULE_10__["default"],
     order: _js_stores_modules_order__WEBPACK_IMPORTED_MODULE_11__["default"],
     orderDetail: _js_stores_modules_orderDetail__WEBPACK_IMPORTED_MODULE_12__["default"],
-    snackbar: _js_stores_modules_snackbar__WEBPACK_IMPORTED_MODULE_13__["default"]
+    snackbar: _js_stores_modules_snackbar__WEBPACK_IMPORTED_MODULE_13__["default"],
+    payment: _js_stores_modules_payment__WEBPACK_IMPORTED_MODULE_14__["default"]
   }
 }));
 
@@ -100068,7 +100186,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   namespaced: true,
   state: {
     all: [],
-    getByID: {}
+    getByID: {},
+    selected: {}
   },
   mutations: {
     all: function all(state, data) {
@@ -100076,6 +100195,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     getByID: function getByID(state, data) {
       state.getByID = data;
+    },
+    selected: function selected(state, data) {
+      state.selected = data;
     }
   },
   getters: {
@@ -100084,6 +100206,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     getByID: function getByID(state) {
       return state.getByID;
+    },
+    selected: function selected(state) {
+      return state.selected;
     }
   },
   actions: {
@@ -100225,7 +100350,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 3:
                 response = _context5.sent;
-                commit('getByID', response.data);
+                commit("getByID", response.data);
                 return _context5.abrupt("return", response);
 
               case 8:
@@ -100447,6 +100572,62 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getByOrderIDReset: function getByOrderIDReset(_ref7) {
       var commit = _ref7.commit;
       commit("getByOrderId", []);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/stores/modules/payment.js":
+/*!************************************************!*\
+  !*** ./resources/js/stores/modules/payment.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  state: {},
+  mutations: {},
+  getters: {},
+  actions: {
+    create: function create(_ref, payload) {
+      _objectDestructuringEmpty(_ref);
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                console.log(payload);
+                _context.next = 3;
+                return axios.post("/api/payment/create", payload);
+
+              case 3:
+                response = _context.sent;
+                console.log("store.payment / create", response);
+                return _context.abrupt("return", response);
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     }
   }
 });

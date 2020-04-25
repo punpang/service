@@ -2,7 +2,8 @@ export default {
     namespaced: true,
     state: {
         all: [],
-        getByID:{}
+        getByID: {},
+        selected: {}
     },
     mutations: {
         all(state, data) {
@@ -10,11 +11,15 @@ export default {
         },
         getByID(state, data) {
             state.getByID = data;
+        },
+        selected(state, data) {
+            state.selected = data;
         }
     },
     getters: {
         all: state => state.all,
-        getByID: state => state.getByID
+        getByID: state => state.getByID,
+        selected: state => state.selected
     },
     actions: {
         async checkDateTimeForGet({ commit }, payload) {
@@ -53,10 +58,12 @@ export default {
                 return e;
             }
         },
-        async getByID({ commit },payload){
+        async getByID({ commit }, payload) {
             try {
-                const response = await axios.get("api/order/"+payload+"/getByID");
-                commit('getByID',response.data);
+                const response = await axios.get(
+                    "api/order/" + payload + "/getByID"
+                );
+                commit("getByID", response.data);
                 return response;
             } catch (e) {
                 return e;

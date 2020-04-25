@@ -164,4 +164,12 @@ class OrderController extends Controller
             ], 400);
         }
     }
+
+    public function getByToken($token)
+    {
+        $data = Order::whereToken($token)->with('CustomerNotFB', 'ChannelOfPurchase', 'OrderStatus','OrderDetail')->first();
+        return response()->json([
+            'data' => $data
+        ], 200);
+    }
 }

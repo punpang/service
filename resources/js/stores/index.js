@@ -13,6 +13,7 @@ import channelOfPurchase from "@/js/stores/modules/channelOfPurchase";
 import order from "@/js/stores/modules/order";
 import orderDetail from "@/js/stores/modules/orderDetail";
 import snackbar from "@/js/stores/modules/snackbar";
+import payment from "@/js/stores/modules/payment";
 
 Vue.use(Vuex);
 
@@ -28,6 +29,7 @@ export default new Vuex.Store({
         channelOfPurchase,
         order,
         orderDetail,
-        snackbar
+        snackbar,
+        payment
     }
 });

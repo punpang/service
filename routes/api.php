@@ -31,7 +31,7 @@ Route::group([
     Route::post('me', 'AuthController@me');
 });
 
-Route::middleware('auth:api')->group(function () {
+Route::middleware('admin')->group(function () { //สำหรับ admin
     Route::get('user', 'AuthController@me');
     Route::get('dashboard', 'AuthController@me');
     Route::get('test', 'Order\AOrderController@DashboardToday');
@@ -45,7 +45,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('customer/find', 'Order\CustomerController@Finded')->name('admin.order.customer.finded');
         Route::get('customer/new/{phone}', 'Order\CustomerController@NewCustomer')->where('phone', '[0][0-9]{9}')->name('admin.order.customer.new');
         Route::post('store', 'Order\CustomerController@store');
-        
+
         Route::get('phoneOnly', 'Order\CustomerController@phoneOnly');
         Route::get('{phone}/selectCustomerByPhone', 'Order\CustomerController@selectCustomerByPhone');
     });
@@ -53,16 +53,15 @@ Route::middleware('auth:api')->group(function () {
     Route::prefix('channelOfPurchase')->group(function () { // api/channelOfPurchase/...
 
         Route::get('/useonly', 'Order\ChannelOfPurchaseController@UseOnly');
-
     });
 
     Route::prefix('order')->group(function () { // api/order/...
 
         Route::get('all', 'Order\OrderController@all');
-        
+
         Route::get('timeGets', 'Order\OrderController@timeGets');
 
-        Route::post('create', 'Order\OrderController@create');        
+        Route::post('create', 'Order\OrderController@create');
         Route::post('checkDateTimeForGet', 'Order\OrderController@checkDateTimeForGet');
 
         Route::prefix('detail')->group(function () { // api/order/detail
@@ -72,7 +71,10 @@ Route::middleware('auth:api')->group(function () {
             Route::patch('{detail}/redelete', 'Order\OrderDetailController@redelete');
             Route::get('{order_id}/getByOrderID', 'Order\OrderDetailController@getByOrderID');
         });
+    });
 
+    Route::prefix('payment')->group(function () { // api/payment/...
+        Route::post('create', 'Order\OrderPaymentController@create');
     });
 
     Route::prefix('product')->group(function () { // api/product/...
@@ -124,4 +126,18 @@ Route::middleware('auth:api')->group(function () {
         Route::post('customer/store', 'Order\CustomerController@store');
     });
     */
+});
+
+Route::prefix('v1')->group(function () { // api/v1/...
+    Route::prefix('guest')->group(function () { // api/v1/guest/
+        Route::prefix('order')->group(function () { // api/guest/order/
+            Route::get('{token}', 'Order\OrderController@getByToken');
+        });
+    });
+});
+
+
+
+Route::middleware('auth')->group(function () { //สำหรับ user
+
 });

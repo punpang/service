@@ -14,9 +14,7 @@
                                 :order="order"
                                 class="mb-4"
                             ></OrderDetail>
-                            <OrderCost
-                                :cost="this.$store.getters['orderDetail/cost']"
-                            ></OrderCost>
+                            <OrderCostMain></OrderCostMain>
                         </v-col>
                         <v-col cols="12" md="6">
                             <OrderShow @emitStart="emitStart"></OrderShow>
@@ -39,7 +37,7 @@
 import OrderMenuForManages from "@/js/components/orders/OrderMenuForManages";
 import OrderShow from "@/js/components/orders/details/show";
 
-import OrderCost from "@/js/components/orders/details/costs";
+import OrderCostMain from "@/js/components/orders/details/CostMain";
 import OrderDetail from "@/js/components/orders/details/detail";
 import overlay from "@/js/layouts/overlay";
 
@@ -50,7 +48,7 @@ export default {
         OrderShow,
         overlay,
         OrderDetail,
-        OrderCost
+        OrderCostMain
     },
     data() {
         return {
@@ -65,6 +63,7 @@ export default {
                 "orderDetail/getByOrderID",
                 this.order.id
             );
+            await this.$store.commit('order/selected', this.order)
             this.overlay = false;
         },
         emitStart(value) {

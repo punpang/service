@@ -92,7 +92,6 @@
                                             <v-col cols="12" md="12">
                                                 <v-text-field
                                                     label="ราคา/หน่วย"
-                                                    v-currency
                                                     outlined
                                                     placeholder="กรุณาเลือกสินค้า"
                                                     readonly
@@ -130,7 +129,6 @@
                                                     readonly
                                                     v-model="form.sum_price"
                                                     :rules="Rules.sum_price"
-                                                    v-currency
                                                     suffix="บาท"
                                                     hide-details
                                                 ></v-text-field>

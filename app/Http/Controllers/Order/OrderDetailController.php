@@ -51,25 +51,11 @@ class OrderDetailController extends Controller
 
     public function getByOrderID($order_id)
     {
-
-        $data = $this->getByOrderIDAll($order_id);
-        $sum_price = $this->sumPrice($order_id);
         return response()->json([
-            'data' => $data,
+            'data' => OrderDetail::getByOrderIDAll($order_id),
             'cost' => [
-                'sumPrice' => $sum_price
+                'sumPrice' => OrderDetail::sumPrice($order_id)
             ]
         ], 200);
-    }
-
-    public function sumPrice($order_id) //รวมเงินเฉพาะที่ใช้งาน
-    {
-        $dataForSumPrice = OrderDetail::whereOrderId($order_id)->whereStatus(1)->with('Product.ProductTagUseOnly.ProductCategorySubUseOnly.ProductCategory')->with('Product.ProductImage')->get();
-        return number_format($dataForSumPrice->sum('sum_price'), 2);
-    }
-
-    public function getByOrderIDAll($order_id)
-    {
-        return OrderDetail::whereOrderId($order_id)->orderBy('status', "DESC")->with('Product.ProductTagUseOnly.ProductCategorySubUseOnly.ProductCategory')->with('Product.ProductImage')->get();
     }
 }

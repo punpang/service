@@ -32,6 +32,13 @@ export default {
         return {
             menus: [
                 { icon: "home", title: "หน้าแรก", to: "/" },
+                {
+                    icon: "shopping_basket",
+                    title: "รายการสั่งซื้อ",
+                    to: "/order"
+                },
+                { icon: "person", title: "ลูกค้า", to: "/customer" },
+                { icon: "shop", title: "สินค้า", to: "/product" }
             ],
         };
     },

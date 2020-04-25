@@ -11,18 +11,9 @@
             <formDetail
                 :order="order"
                 :action="action.create.detail"
-            ></formDetail>
+            ></formDetail>      
 
-            <v-list-item @click="testFacebook" class="yellow darken-1">
-                <v-list-item-icon>
-                    <v-icon class="black--text">attach_money</v-icon>
-                </v-list-item-icon>
-                <v-list-item-content>
-                    <v-list-item-title class="black--text"
-                        >ชำระเงิน</v-list-item-title
-                    >
-                </v-list-item-content>
-            </v-list-item>
+            <MainPayment></MainPayment>          
 
             <v-list-item class="error" v-if="this.order.order_status.id != 8">
                 <v-list-item-icon>
@@ -70,11 +61,13 @@
 <script>
 import OrderDetailAdd from "@/js/components/orders/details/add";
 import formDetail from "@/js/components/orders/details/_form_detail";
+import MainPayment from "@/js/components/orders/payments/main";
 
 export default {
     props: ["order"],
     components: {
-        formDetail
+        formDetail,
+        MainPayment
     },
     data() {
         return {

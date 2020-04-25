@@ -1,7 +1,15 @@
 <template>
     <v-app>
-        <Toolbar :Profile="Profile"></Toolbar>
+        <Toolbar
+            :Profile="Profile"
+            @emitDialogNavbar="emitDialogNavbar"
+        ></Toolbar>
 
+        <NavbarAdmin
+            :drawer="drawer"
+            v-if="this.$store.getters['main/User'].type == 1"
+        ></NavbarAdmin>
+        <Navbar :drawer="drawer" v-else></Navbar>
         <v-content>
             <v-container fluid>
                 <router-view></router-view>
@@ -16,17 +24,25 @@
 <script>
 import Toolbar from "@/js/layouts/Toolbar";
 import Navbar from "@/js/layouts/Navbar";
+import NavbarAdmin from "@/js/layouts/NavbarAdmin";
 
 export default {
     name: "App",
     components: {
         Toolbar,
-        Navbar
+        Navbar,
+        NavbarAdmin
     },
     data() {
         return {
-            Profile: {}
+            Profile: {},
+            drawer: true
         };
+    },
+    methods: {
+        emitDialogNavbar() {
+            this.drawer = !this.drawer;
+        }
     },
     beforeCreate() {
         if (localStorage.token) {

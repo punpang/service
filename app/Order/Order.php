@@ -33,6 +33,12 @@ class Order extends Model  implements Auditable
         return $this->belongsTo(Customer::class, "customer_id", "id");
     }
 
+    public function CustomerNotFB()
+    {
+        return $this->belongsTo(Customer::class, "customer_id", "id")->select('id','name','phone');
+    }
+    
+
     public function ChannelOfPurchase()
     {
         return $this->belongsTo(ChannelOfPurchase::class, "channel_of_purchase_id", "id");

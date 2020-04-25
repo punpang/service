@@ -29,6 +29,6 @@ export default {
         onSearch(value){
             this.search = value         
         }
-    }
+    },
 };
 </script>

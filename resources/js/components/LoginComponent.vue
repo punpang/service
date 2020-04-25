@@ -94,7 +94,6 @@ export default {
                                 }
                             })
                             .then(res => {
-                                this.$store.commit("main/AuthToken");
                                 this.$store.commit("main/User", res.data);
                                 this.$router.replace(this.$route.query.from);
                             });
