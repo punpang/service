@@ -196,8 +196,6 @@ export default {
                     );
                 }
 
-                await this.$store.dispatch("order/getByID", this.detail.order_id);
-
                 if (this.response.status == 200) {
                     this.snackbar = this.$store.getters["snackbar/success"];
                     this.overlay = false;

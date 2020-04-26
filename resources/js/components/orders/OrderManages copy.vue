@@ -11,13 +11,13 @@
                     <v-row>
                         <v-col cols="12" md="3">
                             <OrderDetail
-                                :order="this.$store.getters['order/getByID'].data"
+                                :order="order"
                                 class="mb-4"
                             ></OrderDetail>
-                            <OrderCostMain :sum="this.$store.getters['order/getByID'].sum"></OrderCostMain>
+                            <OrderCostMain></OrderCostMain>
                         </v-col>
                         <v-col cols="12" md="6">
-                            <OrderShow @emitStart="emitStart" :details="this.$store.getters['order/getByID'].data"></OrderShow>
+                            <OrderShow @emitStart="emitStart"></OrderShow>
                         </v-col>
                         <v-col cols="12" md="3">
                             <OrderMenuForManages
@@ -53,16 +53,17 @@ export default {
     data() {
         return {
             dialog: false,
-            overlay: false,
-            data: []
+            overlay: false
         };
     },
     methods: {
         async start() {
             this.overlay = true;
-            await this.$store.dispatch("order/getByID", this.order.id);
-
-            await this.$store.commit("order/selected", this.order);
+            await this.$store.dispatch(
+                "orderDetail/getByOrderID",
+                this.order.id
+            );
+            await this.$store.commit('order/selected', this.order)
             this.overlay = false;
         },
         emitStart(value) {

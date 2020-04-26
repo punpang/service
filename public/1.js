@@ -690,7 +690,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       dialog: false,
-      overlay: false
+      overlay: false,
+      data: []
     };
   },
   methods: {
@@ -704,11 +705,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _this.overlay = true;
                 _context.next = 3;
-                return _this.$store.dispatch("orderDetail/getByOrderID", _this.order.id);
+                return _this.$store.dispatch("order/getByID", _this.order.id);
 
               case 3:
                 _context.next = 5;
-                return _this.$store.commit('order/selected', _this.order);
+                return _this.$store.commit("order/selected", _this.order);
 
               case 5:
                 _this.overlay = false;
@@ -1000,8 +1001,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['sum'],
   components: {
     CostSub: _js_components_orders_details_CostSub__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
@@ -1038,7 +1041,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["cost"]
+  props: ["sum"]
 });
 
 /***/ }),
@@ -1065,6 +1068,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
 //
 //
 //
@@ -1425,7 +1430,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.overlay = true;
 
                 if (!_this.$refs.form.validate()) {
-                  _context.next = 15;
+                  _context.next = 17;
                   break;
                 }
 
@@ -1455,6 +1460,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.response = _context.sent;
 
               case 12:
+                _context.next = 14;
+                return _this.$store.dispatch("order/getByID", _this.form.order_id);
+
+              case 14:
                 if (_this.response.status == 200) {
                   _this.snackbar = _this.$store.getters["snackbar/success"];
 
@@ -1463,16 +1472,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.snackbar = _this.$store.getters["snackbar/error"];
                 }
 
-                _context.next = 16;
+                _context.next = 18;
                 break;
 
-              case 15:
+              case 17:
                 _this.snackbar = _this.$store.getters["snackbar/error"];
 
-              case 16:
+              case 18:
                 _this.overlay = false;
 
-              case 17:
+              case 19:
               case "end":
                 return _context.stop();
             }
@@ -2349,7 +2358,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 if (!_this.$refs.form.validate()) {
-                  _context.next = 16;
+                  _context.next = 18;
                   break;
                 }
 
@@ -2385,6 +2394,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.response = _context.sent;
 
               case 13:
+                _context.next = 15;
+                return _this.$store.dispatch("order/getByID", _this.detail.order_id);
+
+              case 15:
                 if (_this.response.status == 200) {
                   _this.snackbar = _this.$store.getters["snackbar/success"];
                   _this.overlay = false;
@@ -2394,14 +2407,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.overlay = false;
                 }
 
-                _context.next = 18;
+                _context.next = 20;
                 break;
 
-              case 16:
+              case 18:
                 _this.snackbar = _this.$store.getters["snackbar/error"];
                 _this.overlay = false;
 
-              case 18:
+              case 20:
               case "end":
                 return _context.stop();
             }
@@ -2777,10 +2790,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['details'],
   components: {
     productDetail: _js_components_orders_details_productDetail__WEBPACK_IMPORTED_MODULE_0__["default"],
     buttonForAction: _js_components_orders_details_buttonForAction__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -2832,6 +2845,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _js_components_orders_details_CostSub__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/orders/details/CostSub */ "./resources/js/components/orders/details/CostSub.vue");
+/* harmony import */ var _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/layouts/overlay */ "./resources/js/layouts/overlay.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2904,17 +2918,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["costs"],
+  props: ["sum"],
   components: {
-    CostSub: _js_components_orders_details_CostSub__WEBPACK_IMPORTED_MODULE_1__["default"]
+    CostSub: _js_components_orders_details_CostSub__WEBPACK_IMPORTED_MODULE_1__["default"],
+    overlay: _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
       dialog: false,
-      sum_price: this.costs.sumPrice,
+      sum_price: this.sum.total,
       response: {},
+      balance: "",
+      overlay: false,
       form: {
         order_id: this.$store.getters["order/selected"].id,
         payment_method_id: 1,
@@ -2934,26 +2960,39 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 if (!_this.$refs.form.validate()) {
-                  _context.next = 7;
+                  _context.next = 11;
                   break;
                 }
 
-                _context.next = 3;
-                return _this.$store.dispatch('payment/create', _this.form);
+                _this.overlay = true;
+                _context.next = 4;
+                return _this.$store.dispatch("payment/create", _this.form);
 
-              case 3:
+              case 4:
                 _this.response = _context.sent;
-                console.log('acceptPayment', _this.response);
                 _context.next = 7;
-                break;
+                return _this.$store.dispatch("orderDetail/getByOrderID", _this.form.order_id);
 
               case 7:
+                if (_this.response.status == 200) {
+                  _this.dialog = false;
+                  _this.overlay = false;
+                }
+
+                console.log("acceptPayment", _this.response);
+                _context.next = 11;
+                break;
+
+              case 11:
               case "end":
                 return _context.stop();
             }
           }
         }, _callee);
       }))();
+    },
+    setBalance: function setBalance() {
+      this.balance = this.form.amount - this.sum.NoFormat.balance;
     }
   }
 });
@@ -4153,10 +4192,16 @@ var render = function() {
                         [
                           _c("OrderDetail", {
                             staticClass: "mb-4",
-                            attrs: { order: _vm.order }
+                            attrs: {
+                              order: this.$store.getters["order/getByID"].data
+                            }
                           }),
                           _vm._v(" "),
-                          _c("OrderCostMain")
+                          _c("OrderCostMain", {
+                            attrs: {
+                              sum: this.$store.getters["order/getByID"].sum
+                            }
+                          })
                         ],
                         1
                       ),
@@ -4164,7 +4209,14 @@ var render = function() {
                       _c(
                         "v-col",
                         { attrs: { cols: "12", md: "6" } },
-                        [_c("OrderShow", { on: { emitStart: _vm.emitStart } })],
+                        [
+                          _c("OrderShow", {
+                            attrs: {
+                              details: this.$store.getters["order/getByID"].data
+                            },
+                            on: { emitStart: _vm.emitStart }
+                          })
+                        ],
                         1
                       ),
                       _vm._v(" "),
@@ -4252,7 +4304,7 @@ var render = function() {
             attrs: { order: _vm.order, action: _vm.action.create.detail }
           }),
           _vm._v(" "),
-          _c("MainPayment"),
+          this.order.order_status.id > 1 ? _c("MainPayment") : _vm._e(),
           _vm._v(" "),
           this.order.order_status.id != 8
             ? _c(
@@ -4493,11 +4545,7 @@ var render = function() {
       _c(
         "v-card-text",
         { staticClass: "pt-0" },
-        [
-          _c("CostSub", {
-            attrs: { cost: this.$store.getters["orderDetail/cost"] }
-          })
-        ],
+        [_c("CostSub", { attrs: { sum: _vm.sum } })],
         1
       )
     ],
@@ -4542,7 +4590,11 @@ var render = function() {
               staticClass: "text-right",
               attrs: { cols: "6", md: "6", sm: "6" }
             },
-            [_vm._v(_vm._s(_vm.cost.sumPrice) + " บาท")]
+            [
+              _vm._v(
+                _vm._s(this.$store.getters["order/getByID"].sum.total) + " บาท"
+              )
+            ]
           )
         ],
         1
@@ -4558,7 +4610,12 @@ var render = function() {
           _c(
             "v-col",
             { staticClass: "text-right", attrs: { cols: "6", md: "6" } },
-            [_vm._v("XXX บาท")]
+            [
+              _vm._v(
+                _vm._s(this.$store.getters["order/getByID"].sum.deposit) +
+                  " บาท"
+              )
+            ]
           )
         ],
         1
@@ -4574,7 +4631,12 @@ var render = function() {
           _c(
             "v-col",
             { staticClass: "text-right", attrs: { cols: "6", md: "6" } },
-            [_vm._v("XXX บาท")]
+            [
+              _vm._v(
+                _vm._s(this.$store.getters["order/getByID"].sum.balance) +
+                  " บาท"
+              )
+            ]
           )
         ],
         1
@@ -4830,6 +4892,12 @@ var render = function() {
                                                 },
                                                 [
                                                   _c("v-text-field", {
+                                                    directives: [
+                                                      {
+                                                        name: "currency",
+                                                        rawName: "v-currency"
+                                                      }
+                                                    ],
                                                     attrs: {
                                                       label: "ราคา/หน่วย",
                                                       outlined: "",
@@ -4907,6 +4975,12 @@ var render = function() {
                                                 },
                                                 [
                                                   _c("v-text-field", {
+                                                    directives: [
+                                                      {
+                                                        name: "currency",
+                                                        rawName: "v-currency"
+                                                      }
+                                                    ],
                                                     attrs: {
                                                       label: "ราคารวม",
                                                       outlined: "",
@@ -6460,7 +6534,11 @@ var render = function() {
         [
           _vm._v("\n        รายการสั่งซื้อ\n        "),
           _c("v-spacer"),
-          _vm._v("\n        #" + _vm._s(_vm.order.id) + "0582\n    ")
+          _vm._v(
+            "\n        #" +
+              _vm._s(this.$store.getters["order/getByID"].data.id) +
+              "0582\n    "
+          )
         ],
         1
       ),
@@ -6487,7 +6565,10 @@ var render = function() {
                       _c("v-spacer"),
                       _vm._v(
                         "\n                    " +
-                          _vm._s(_vm.order.customer.name) +
+                          _vm._s(
+                            this.$store.getters["order/getByID"].data.customer
+                              .name
+                          ) +
                           "\n                "
                       )
                     ],
@@ -6503,7 +6584,10 @@ var render = function() {
                       _c("v-spacer"),
                       _vm._v(
                         "\n                    " +
-                          _vm._s(_vm.order.customer.phone) +
+                          _vm._s(
+                            this.$store.getters["order/getByID"].data.customer
+                              .phone
+                          ) +
                           "\n                "
                       )
                     ],
@@ -6519,7 +6603,10 @@ var render = function() {
                       _c("v-spacer"),
                       _vm._v(
                         "\n                    " +
-                          _vm._s(_vm.order.dateTime_get) +
+                          _vm._s(
+                            this.$store.getters["order/getByID"].data
+                              .dateTime_get
+                          ) +
                           "\n                "
                       )
                     ],
@@ -6534,7 +6621,14 @@ var render = function() {
                       _vm._v(" "),
                       _c("v-spacer"),
                       _vm._v(" "),
-                      _c("span", [_vm._v(_vm._s(_vm.order.order_status.name))])
+                      _c("span", [
+                        _vm._v(
+                          _vm._s(
+                            this.$store.getters["order/getByID"].data
+                              .order_status.name
+                          )
+                        )
+                      ])
                     ],
                     1
                   )
@@ -6923,41 +7017,44 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      this.$store.getters["orderDetail/getByOrderId"].length > 0
+      this.$store.getters["order/getByID"].count.product.use > 0
         ? _c(
             "div",
-            _vm._l(this.$store.getters["orderDetail/getByOrderId"], function(
-              detail
-            ) {
-              return _c(
-                "v-card",
-                { key: detail.id, staticClass: "mt-4" },
-                [
-                  _c(
-                    "v-card-text",
-                    { staticClass: "pa-0" },
-                    [
-                      _c(
-                        "v-container",
-                        { staticClass: "py-0" },
-                        [
-                          _c("productDetail", { attrs: { detail: detail } }),
-                          _vm._v(" "),
-                          _c("buttonForAction", { attrs: { detail: detail } }),
-                          _vm._v(" "),
-                           false
-                            ? undefined
-                            : _vm._e()
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            }),
+            _vm._l(
+              this.$store.getters["order/getByID"].data.order_detail,
+              function(detail) {
+                return _c(
+                  "v-card",
+                  { key: detail.id, staticClass: "mt-4" },
+                  [
+                    _c(
+                      "v-card-text",
+                      { staticClass: "pa-0" },
+                      [
+                        _c(
+                          "v-container",
+                          { staticClass: "py-0" },
+                          [
+                            _c("productDetail", { attrs: { detail: detail } }),
+                            _vm._v(" "),
+                            _c("buttonForAction", {
+                              attrs: { detail: detail }
+                            }),
+                            _vm._v(" "),
+                             false
+                              ? undefined
+                              : _vm._e()
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              }
+            ),
             1
           )
         : _c("v-alert", { attrs: { type: "info" } }, [
@@ -7024,214 +7121,259 @@ var render = function() {
   return _c(
     "div",
     [
-      _c(
-        "v-dialog",
-        {
-          attrs: { persistent: "", width: "350" },
-          scopedSlots: _vm._u([
+      _vm.sum.balance > 0
+        ? _c(
+            "v-dialog",
             {
-              key: "activator",
-              fn: function(ref) {
-                var on = ref.on
-                return [
-                  _c("v-btn", _vm._g({ attrs: { color: "success" } }, on), [
-                    _vm._v("รับชำระเงิน")
-                  ])
-                ]
-              }
-            }
-          ]),
-          model: {
-            value: _vm.dialog,
-            callback: function($$v) {
-              _vm.dialog = $$v
-            },
-            expression: "dialog"
-          }
-        },
-        [
-          _vm._v(" "),
-          _c(
-            "v-card",
-            { attrs: { color: "#121212" } },
-            [
-              _c(
-                "v-card-title",
+              attrs: { persistent: "", width: "350" },
+              scopedSlots: _vm._u(
                 [
-                  _vm._v("\n                รับชำระเงิน\n                "),
-                  _c("v-spacer"),
-                  _vm._v(" "),
-                  _c(
-                    "v-icon",
-                    {
-                      attrs: { color: "error" },
-                      on: {
-                        click: function($event) {
-                          _vm.dialog = false
-                        }
-                      }
-                    },
-                    [_vm._v("close")]
-                  )
+                  {
+                    key: "activator",
+                    fn: function(ref) {
+                      var on = ref.on
+                      return [
+                        _c(
+                          "v-btn",
+                          _vm._g({ attrs: { color: "success" } }, on),
+                          [_vm._v("รับชำระเงิน")]
+                        )
+                      ]
+                    }
+                  }
                 ],
-                1
+                null,
+                false,
+                1529103533
               ),
+              model: {
+                value: _vm.dialog,
+                callback: function($$v) {
+                  _vm.dialog = $$v
+                },
+                expression: "dialog"
+              }
+            },
+            [
               _vm._v(" "),
               _c(
-                "v-card-text",
+                "v-card",
+                { attrs: { color: "#121212" } },
                 [
-                  _c("CostSub", {
-                    attrs: { cost: this.$store.getters["orderDetail/cost"] }
-                  }),
-                  _vm._v(" "),
-                  _c("v-divider", { staticClass: "ma-0" }),
-                  _vm._v(" "),
                   _c(
-                    "v-row",
+                    "v-card-title",
                     [
-                      _c(
-                        "v-col",
-                        { staticClass: "pt-4", attrs: { cols: "6", md: "6" } },
-                        [_vm._v("ช่องทางการชำระ")]
-                      ),
+                      _vm._v("\n                รับชำระเงิน\n                "),
+                      _c("v-spacer"),
                       _vm._v(" "),
                       _c(
-                        "v-col",
+                        "v-icon",
                         {
-                          staticClass: "text-right",
-                          attrs: { cols: "6", md: "6" }
+                          attrs: { color: "error" },
+                          on: {
+                            click: function($event) {
+                              _vm.dialog = false
+                            }
+                          }
                         },
-                        [_vm._v("เงินสด")]
+                        [_vm._v("close")]
                       )
                     ],
                     1
                   ),
                   _vm._v(" "),
                   _c(
-                    "v-row",
+                    "v-card-text",
                     [
-                      _c(
-                        "v-col",
-                        { staticClass: "pt-4", attrs: { cols: "6", md: "6" } },
-                        [_vm._v("ชำระครั้งนี้")]
-                      ),
+                      _c("CostSub", {
+                        attrs: { sum: this.$store.getters["orderDetail/sum"] }
+                      }),
+                      _vm._v(" "),
+                      _c("v-divider", { staticClass: "ma-0" }),
                       _vm._v(" "),
                       _c(
-                        "v-col",
-                        { attrs: { cols: "6", md: "6" } },
+                        "v-row",
                         [
                           _c(
-                            "v-form",
-                            { ref: "form", attrs: { "lazy-validation": "" } },
+                            "v-col",
+                            {
+                              staticClass: "pt-4",
+                              attrs: { cols: "6", md: "6" }
+                            },
+                            [_vm._v("ช่องทางการชำระ")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            {
+                              staticClass: "text-right",
+                              attrs: { cols: "6", md: "6" }
+                            },
+                            [_vm._v("เงินสด")]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _vm.sum.balance > 0
+                        ? _c(
+                            "v-row",
                             [
-                              _c("v-text-field", {
-                                staticClass: "ma-0 pa-0",
-                                attrs: {
-                                  rules: [
-                                    function(v) {
-                                      return !!v
-                                    }
-                                  ],
-                                  "hide-details": "",
-                                  autocomplete: "false",
-                                  pattern: "\\d*",
-                                  autofocus: "",
-                                  suffix: "บาท"
+                              _c(
+                                "v-col",
+                                {
+                                  staticClass: "pt-4",
+                                  attrs: { cols: "6", md: "6" }
                                 },
-                                model: {
-                                  value: _vm.form.amount,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.form, "amount", $$v)
-                                  },
-                                  expression: "form.amount"
-                                }
-                              })
+                                [_vm._v("ชำระครั้งนี้")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-col",
+                                { attrs: { cols: "6", md: "6" } },
+                                [
+                                  _c(
+                                    "v-form",
+                                    {
+                                      ref: "form",
+                                      attrs: { "lazy-validation": "" }
+                                    },
+                                    [
+                                      _c("v-text-field", {
+                                        directives: [
+                                          {
+                                            name: "currency",
+                                            rawName: "v-currency"
+                                          }
+                                        ],
+                                        staticClass: "ma-0 pa-0",
+                                        attrs: {
+                                          rules: [
+                                            function(v) {
+                                              return !!v
+                                            }
+                                          ],
+                                          "hide-details": "",
+                                          autocomplete: "false",
+                                          pattern: "\\d*",
+                                          autofocus: "",
+                                          suffix: "บาท"
+                                        },
+                                        model: {
+                                          value: _vm.form.amount,
+                                          callback: function($$v) {
+                                            _vm.$set(_vm.form, "amount", $$v)
+                                          },
+                                          expression: "form.amount"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
                             ],
                             1
                           )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.form.amount - _vm.sum.balance > 0,
+                              expression: "form.amount - sum.balance > 0"
+                            }
+                          ],
+                          staticClass: "py-1"
+                        },
+                        [
+                          _c("v-col", { attrs: { cols: "6", md: "6" } }, [
+                            _vm._v("เงินทอน")
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            {
+                              staticClass: "text-right",
+                              attrs: { cols: "6", md: "6" }
+                            },
+                            [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(_vm.form.amount - _vm.sum.balance) +
+                                  ".00 บาท\n                    "
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("v-divider", { staticClass: "ma-0" }),
+                      _vm._v(" "),
+                      _c("v-checkbox", {
+                        attrs: { label: "แจ้งผ่านข้อความ" },
+                        model: {
+                          value: _vm.form.AlertSMS,
+                          callback: function($$v) {
+                            _vm.$set(_vm.form, "AlertSMS", $$v)
+                          },
+                          expression: "form.AlertSMS"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "success" },
+                          on: { click: _vm.clickSubmit }
+                        },
+                        [
+                          _c("v-icon", { attrs: { left: "" } }, [
+                            _vm._v("attach_money")
+                          ]),
+                          _vm._v(
+                            "\n                    ชำระเงิน\n                "
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "error" },
+                          on: {
+                            click: function($event) {
+                              _vm.dialog = false
+                            }
+                          }
+                        },
+                        [
+                          _c("v-icon", { attrs: { left: "" } }, [
+                            _vm._v("exit_to_app")
+                          ]),
+                          _vm._v("\n                    ออก\n                ")
                         ],
                         1
                       )
                     ],
                     1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-row",
-                    { staticClass: "py-1" },
-                    [
-                      _c("v-col", { attrs: { cols: "6", md: "6" } }, [
-                        _vm._v("เงินทอน")
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "v-col",
-                        {
-                          staticClass: "text-right",
-                          attrs: { cols: "6", md: "6" }
-                        },
-                        [_vm._v(_vm._s(_vm.sum_price) + " บาท")]
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("v-divider", { staticClass: "ma-0" }),
-                  _vm._v(" "),
-                  _c("v-checkbox", {
-                    attrs: { label: "แจ้งผ่านข้อความ" },
-                    model: {
-                      value: _vm.form.AlertSMS,
-                      callback: function($$v) {
-                        _vm.$set(_vm.form, "AlertSMS", $$v)
-                      },
-                      expression: "form.AlertSMS"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: { color: "success" },
-                      on: { click: _vm.clickSubmit }
-                    },
-                    [
-                      _c("v-icon", { attrs: { left: "" } }, [
-                        _vm._v("attach_money")
-                      ]),
-                      _vm._v("\n                    ชำระเงิน\n                ")
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: { color: "error" },
-                      on: {
-                        click: function($event) {
-                          _vm.dialog = false
-                        }
-                      }
-                    },
-                    [
-                      _c("v-icon", { attrs: { left: "" } }, [
-                        _vm._v("exit_to_app")
-                      ]),
-                      _vm._v("\n                    ออก\n                ")
-                    ],
-                    1
                   )
                 ],
                 1
-              )
+              ),
+              _vm._v(" "),
+              _c("overlay", { attrs: { overlay: _vm.overlay } })
             ],
             1
-          ),
-          _vm._v("\n        " + _vm._s(_vm.form) + "\n    ")
-        ],
-        1
-      )
+          )
+        : _vm._e()
     ],
     1
   )
@@ -7439,9 +7581,7 @@ var render = function() {
                     [
                       _c("acceptPayment", {
                         staticClass: "mr-2",
-                        attrs: {
-                          costs: this.$store.getters["orderDetail/cost"]
-                        }
+                        attrs: { sum: this.$store.getters["orderDetail/sum"] }
                       }),
                       _vm._v(" "),
                       _c("alertCost")

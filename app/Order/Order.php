@@ -38,6 +38,20 @@ class Order extends Model  implements Auditable
         return $this->belongsTo(Customer::class, "customer_id", "id")->select('id','name','phone');
     }
     
+    public function Payment()
+    {
+        return $this->hasMany(OrderPayment::class, "order_id", "id");
+    }
+
+    public function sumDeposit() //รวมเงินเฉพาะที่ใช้งาน
+    {
+        return $this->Payment()->whereStatus(1)->sum('amount');
+    }
+
+    public function sumDepositFormat() //รวมเงินเฉพาะที่ใช้งาน
+    {
+        return number_format($this->sumDeposit(),2);
+    }
 
     public function ChannelOfPurchase()
     {
@@ -52,6 +66,41 @@ class Order extends Model  implements Auditable
     public function OrderDetail()
     {
         return $this->hasMany(OrderDetail::class, 'order_id', 'id')->whereStatus(1);
+    }
+
+    public function OrderDetailNoUse()
+    {
+        return $this->hasMany(OrderDetail::class, 'order_id', 'id')->whereStatus(0);
+    }
+
+    public function CountOrderDetail()
+    {
+        return $this->OrderDetail()->count();
+    }
+
+    public function CountOrderDetailNoUse()
+    {
+        return $this->OrderDetailNoUse()->count();
+    }
+
+    public function sumTotal() //รวมเงินเฉพาะที่ใช้งาน
+    {
+        return $this->OrderDetail()->sum('sum_price');
+    }
+
+    public function sumTotalFormat() //รวมเงินเฉพาะที่ใช้งาน
+    {
+        return number_format($this->sumTotal(),2);
+    }
+
+    public function balance() //รวมเงินเฉพาะที่ใช้งาน
+    {
+        return $this->sumTotal() - $this->sumDeposit();
+    }
+
+    public function balanceFormat() //รวมเงินเฉพาะที่ใช้งาน
+    {
+        return number_format($this->balance(),2);
     }
 
     public function scopeUseOnly()

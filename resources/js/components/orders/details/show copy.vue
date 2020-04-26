@@ -8,10 +8,11 @@
             </v-card-title>
             <v-divider class="ma-1"></v-divider>
         </v-card>
-        <div v-if="this.$store.getters['order/getByID'].count.product.use > 0">
-            
+        <div v-if="this.$store.getters['orderDetail/getByOrderId'].length > 0">
             <v-card
-                v-for="detail in this.$store.getters['order/getByID'].data.order_detail"
+                v-for="detail in this.$store.getters[
+                    'orderDetail/getByOrderId'
+                ]"
                 :key="detail.id"
                 class="mt-4"
             >
@@ -56,9 +57,6 @@ import productDetail from "@/js/components/orders/details/productDetail";
 import buttonForAction from "@/js/components/orders/details/buttonForAction";
 
 export default {
-    props:[
-        'details'
-    ],
     components: {
         productDetail,
         buttonForAction

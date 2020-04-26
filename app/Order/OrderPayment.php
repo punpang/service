@@ -4,6 +4,7 @@ namespace App\Order;
 
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use App\Currency;
 
 class OrderPayment extends Model implements Auditable
 {
@@ -27,4 +28,22 @@ class OrderPayment extends Model implements Auditable
         'status',
         'image_slip_id'
     ];
+
+    public static function FormatData($data)
+    {
+        $input = $data;
+        $input['amount'] = Currency::change($input['amount']);
+        return $input;
+    }
+
+    public static function getDataByOrderIDUseOnly($order_id)
+    {
+        return OrderPayment::whereOrderId($order_id)->whereStatus(1)->get();
+    }
+
+    public static function sumDeposit($order_id)
+    {
+        $sum = OrderPayment::whereOrderId($order_id)->whereStatus(1)->sum('amount');
+        return number_format($sum,2);
+    }
 }

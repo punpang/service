@@ -2,10 +2,7 @@
     <div>
         <v-dialog v-model="dialog" persistent width="600">
             <template v-slot:activator="{ on }">
-                <v-list-item
-                    class="yellow darken-1"
-                    v-on="on"
-                >
+                <v-list-item class="yellow darken-1" v-on="on">
                     <v-list-item-icon>
                         <v-icon class="black--text">attach_money</v-icon>
                     </v-list-item-icon>
@@ -24,8 +21,11 @@
                 </v-card-title>
                 <v-card-text>
                     <v-row class="px-4 mb-4">
-                        <acceptPayment class="mr-2" :costs="this.$store.getters['orderDetail/cost']"></acceptPayment>
-                        <alertCost></alertCost>                     
+                        <acceptPayment
+                            class="mr-2"
+                            :sum="this.$store.getters['orderDetail/sum']"
+                        ></acceptPayment>
+                        <alertCost></alertCost>
                     </v-row>
                 </v-card-text>
             </v-card>
@@ -38,18 +38,16 @@ import alertCost from "@/js/components/orders/payments/alertCost";
 import acceptPayment from "@/js/components/orders/payments/acceptPayment";
 
 export default {
-    props:[
-
-    ],
-    components:{
+    props: [],
+    components: {
         alertCost,
         acceptPayment
     },
     data() {
         return {
-            dialog:false
-        }
-    },
+            dialog: false,
+        };
+    }
 };
 </script>
 

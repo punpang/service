@@ -99736,7 +99736,7 @@ var routes = [{
   path: "/punpang/order/:token",
   name: "orderToken",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/orders/show */ "./resources/js/pages/punpang/orders/show.vue"));
+    return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/orders/show */ "./resources/js/pages/punpang/orders/show.vue"));
   },
   meta: {
     requiresAuth: true
@@ -99745,7 +99745,7 @@ var routes = [{
   path: "/punpang/order/:token/payment",
   name: "orderTokenPayment",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/orders/payment */ "./resources/js/pages/punpang/orders/payment.vue"));
+    return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/orders/payment */ "./resources/js/pages/punpang/orders/payment.vue"));
   },
   meta: {
     requiresAuth: true
@@ -100393,7 +100393,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   state: {
     dataUseOnly: [],
     getByOrderId: [],
-    cost: "",
+    sum: "",
     count: ""
   },
   mutations: {
@@ -100403,8 +100403,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getByOrderId: function getByOrderId(state, data) {
       state.getByOrderId = data;
     },
-    cost: function cost(state, data) {
-      state.cost = data;
+    sum: function sum(state, data) {
+      state.sum = data;
     },
     count: function count(state, data) {
       state.count = data;
@@ -100417,8 +100417,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getByOrderId: function getByOrderId(state) {
       return state.getByOrderId;
     },
-    cost: function cost(state) {
-      return state.cost;
+    sum: function sum(state) {
+      return state.sum;
     },
     count: function count(state) {
       return state.count;
@@ -100438,10 +100438,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 res = _context.sent;
-                dispatch("getByOrderID", payload.order_id);
                 return _context.abrupt("return", res);
 
-              case 5:
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -100462,10 +100461,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 res = _context2.sent;
-                dispatch("getByOrderID", payload.order_id);
                 return _context2.abrupt("return", res);
 
-              case 5:
+              case 4:
               case "end":
                 return _context2.stop();
             }
@@ -100486,10 +100484,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 res = _context3.sent;
-                dispatch("getByOrderID", payload.order_id);
                 return _context3.abrupt("return", res);
 
-              case 5:
+              case 4:
               case "end":
                 return _context3.stop();
             }
@@ -100510,10 +100507,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 res = _context4.sent;
-                dispatch("getByOrderID", payload.order_id);
                 return _context4.abrupt("return", res);
 
-              case 5:
+              case 4:
               case "end":
                 return _context4.stop();
             }
@@ -100545,7 +100541,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     getByOrderID: function getByOrderID(_ref6, payload) {
-      var commit = _ref6.commit;
+      var commit = _ref6.commit,
+          dispatch = _ref6.dispatch;
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
         var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
@@ -100557,7 +100554,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 response = _context6.sent;
-                commit("cost", response.data.cost);
+                commit("sum", response.data.sum);
                 commit("count", response.data.count);
                 commit("getByOrderId", response.data.data);
 
@@ -100591,8 +100588,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
 
-function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
-
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -100604,8 +100599,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   getters: {},
   actions: {
     create: function create(_ref, payload) {
-      _objectDestructuringEmpty(_ref);
-
+      var dispatch = _ref.dispatch;
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {

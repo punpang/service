@@ -4,7 +4,7 @@ export default {
     mutations: {},
     getters: {},
     actions: {
-        async create({}, payload) {
+        async create({dispatch}, payload) {
             console.log(payload);
             const response = await axios.post(
                 "/api/payment/create",

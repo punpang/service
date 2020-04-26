@@ -13,7 +13,7 @@
                 :action="action.create.detail"
             ></formDetail>      
 
-            <MainPayment></MainPayment>          
+            <MainPayment v-if="this.order.order_status.id > 1"></MainPayment>          
 
             <v-list-item class="error" v-if="this.order.order_status.id != 8">
                 <v-list-item-icon>

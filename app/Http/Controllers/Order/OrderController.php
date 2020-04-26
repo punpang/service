@@ -167,9 +167,30 @@ class OrderController extends Controller
 
     public function getByToken($token)
     {
-        $data = Order::whereToken($token)->with('CustomerNotFB', 'ChannelOfPurchase', 'OrderStatus','OrderDetail')->first();
+        $data = Order::whereToken($token)->with('CustomerNotFB', 'ChannelOfPurchase', 'OrderStatus', 'OrderDetail')->first();
         return response()->json([
             'data' => $data
+        ], 200);
+    }
+
+    public function getByID($order)
+    {
+        $data = Order::find($order)
+            ->with('Customer', 'ChannelOfPurchase', 'OrderStatus', 'OrderDetail.Product.ProductTagUseOnly.ProductCategorySubUseOnly.ProductCategory', "Payment")
+            ->with('OrderDetail.Product.ProductImage')->first();
+
+        return response()->json([
+            'data' => $data,
+            'sum' => [
+                'total' => $data->sumTotalFormat(),
+                'deposit' => $data->sumDepositFormat(),
+                'balance' => $data->balanceFormat()
+            ],
+            'count' => [
+                'product' => [
+                    'use' => $data->CountOrderDetail(),
+                ]
+            ]
         ], 200);
     }
 }

@@ -58,6 +58,7 @@ Route::middleware('admin')->group(function () { //สำหรับ admin
     Route::prefix('order')->group(function () { // api/order/...
 
         Route::get('all', 'Order\OrderController@all');
+        Route::get('{order}/getByID', 'Order\OrderController@getByID');
 
         Route::get('timeGets', 'Order\OrderController@timeGets');
 

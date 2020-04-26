@@ -3,8 +3,8 @@ export default {
     state: {
         dataUseOnly: [],
         getByOrderId: [],
-        cost: "",
-        count: "",
+        sum: "",
+        count: ""
     },
     mutations: {
         dataUseOnly(state, data) {
@@ -13,24 +13,23 @@ export default {
         getByOrderId(state, data) {
             state.getByOrderId = data;
         },
-        cost(state, data) {
-            state.cost = data;
+        sum(state, data) {
+            state.sum = data;
         },
         count(state, data) {
             state.count = data;
-        },
+        }
     },
     getters: {
         dataUseOnly: state => state.dataUseOnly,
         getByOrderId: state => state.getByOrderId,
-        cost: state => state.cost,
-        count: state => state.count,
-        
+        sum: state => state.sum,
+        count: state => state.count
     },
     actions: {
         async store({ dispatch }, payload) {
             const res = await axios.post("api/order/detail/store", payload);
-            dispatch("getByOrderID", payload.order_id);
+            //dispatch("getByOrderID", payload.order_id);
             return res;
         },
         async update({ dispatch }, payload) {
@@ -38,21 +37,21 @@ export default {
                 "api/order/detail/" + payload.id + "/update",
                 payload
             );
-            dispatch("getByOrderID", payload.order_id);
+            //dispatch("getByOrderID", payload.order_id);
             return res;
         },
         async delete({ dispatch }, payload) {
             const res = await axios.delete(
                 "api/order/detail/" + payload.detail_id + "/delete"
             );
-            dispatch("getByOrderID", payload.order_id);
+            //dispatch("getByOrderID", payload.order_id);
             return res;
         },
         async redelete({ dispatch }, payload) {
             const res = await axios.patch(
                 "api/order/detail/" + payload.detail_id + "/redelete"
             );
-            dispatch("getByOrderID", payload.order_id);
+            //dispatch("getByOrderID", payload.order_id);
             return res;
         },
         async UseOnly({ commit }, payload) {
@@ -61,14 +60,15 @@ export default {
             );
             commit("dataUseOnly", response.data);
         },
-        async getByOrderID({ commit }, payload) {
+        async getByOrderID({ commit , dispatch }, payload) {
             const response = await axios.get(
                 "api/order/detail/" + payload + "/getByOrderID"
             );
-            commit("cost", response.data.cost);
+            commit("sum", response.data.sum);
             commit("count", response.data.count);
             commit("getByOrderId", response.data.data);
         },
+
         getByOrderIDReset({ commit }) {
             commit("getByOrderId", []);
         }

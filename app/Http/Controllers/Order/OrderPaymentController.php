@@ -9,9 +9,10 @@ use App\Order\OrderPayment;
 class OrderPaymentController extends Controller
 {
     public function create()
-    {
-        $data = OrderPayment::create(request()->all());
+    {   
+        $input = OrderPayment::FormatData(request()->all());
+        $data = OrderPayment::create($input);
 
-        return $data;
+        return response()->json($data, 200);
     }
 }

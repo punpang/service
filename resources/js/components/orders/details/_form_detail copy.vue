@@ -349,8 +349,6 @@ export default {
                         this.form
                     );
                 }
-                
-                await this.$store.dispatch("order/getByID", this.form.order_id);
 
                 if (this.response.status == 200) {
                     this.snackbar = this.$store.getters["snackbar/success"];
