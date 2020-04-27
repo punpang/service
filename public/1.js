@@ -8380,7 +8380,8 @@ var render = function() {
         attrs: {
           headers: _vm.headers,
           items: _vm.payments,
-          "hide-default-footer": ""
+          "hide-default-footer": "",
+          "items-per-page": "100"
         },
         scopedSlots: _vm._u([
           {

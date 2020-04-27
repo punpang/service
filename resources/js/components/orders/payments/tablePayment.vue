@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-data-table :headers="headers" :items="payments" hide-default-footer>
+        <v-data-table :headers="headers" :items="payments" hide-default-footer items-per-page="100">
             <template v-slot:item.payment_method_id="{ item }"
                 >หน้าร้าน</template
             >
