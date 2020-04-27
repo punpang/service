@@ -673,6 +673,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -733,13 +756,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
-                return _this2.$store.dispatch("orderDetail/getByOrderIDReset");
+                _this2.$emit("emitDialogTableFalse");
 
-              case 2:
                 _this2.dialog = false;
 
-              case 3:
+              case 2:
               case "end":
                 return _context2.stop();
             }
@@ -974,6 +995,11 @@ __webpack_require__.r(__webpack_exports__);
   props: ["dataTable", "headers"],
   components: {
     OrderManages: _js_components_orders_OrderManages__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  methods: {
+    emitDialogTableFalse: function emitDialogTableFalse() {
+      this.$emit('emitDialogTableFalse');
+    }
   }
 });
 
@@ -2790,10 +2816,49 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['details'],
+  props: ['details', 'count', 'detailsNo', 'countNo'],
   components: {
     productDetail: _js_components_orders_details_productDetail__WEBPACK_IMPORTED_MODULE_0__["default"],
     buttonForAction: _js_components_orders_details_buttonForAction__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -2937,16 +3002,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       dialog: false,
-      sum_price: this.sum.total,
       response: {},
-      balance: "",
       overlay: false,
       form: {
-        order_id: this.$store.getters["order/selected"].id,
+        order_id: this.$store.getters['order/getByID'].data.id,
         payment_method_id: 1,
         amount: "",
         status: 1,
-        AlertSMS: true
+        alert: true
       }
     };
   },
@@ -2960,7 +3023,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 if (!_this.$refs.form.validate()) {
-                  _context.next = 11;
+                  _context.next = 10;
                   break;
                 }
 
@@ -2971,7 +3034,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 4:
                 _this.response = _context.sent;
                 _context.next = 7;
-                return _this.$store.dispatch("orderDetail/getByOrderID", _this.form.order_id);
+                return _this.$store.dispatch("order/getByID", _this.$store.getters['order/getByID'].data.id);
 
               case 7:
                 if (_this.response.status == 200) {
@@ -2979,11 +3042,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.overlay = false;
                 }
 
-                console.log("acceptPayment", _this.response);
-                _context.next = 11;
+                _context.next = 10;
                 break;
 
-              case 11:
+              case 10:
               case "end":
                 return _context.stop();
             }
@@ -2991,8 +3053,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    setBalance: function setBalance() {
-      this.balance = this.form.amount - this.sum.NoFormat.balance;
+    setMoneyBack: function setMoneyBack(a, b) {
+      return a - b;
     }
   }
 });
@@ -3038,6 +3100,117 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/payments/cancelPayment.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/orders/payments/cancelPayment.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _js_components_orders_payments_setStautsColorText__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/js/components/orders/payments/setStautsColorText */ "./resources/js/components/orders/payments/setStautsColorText.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["payment"],
+  components: {
+    setStautsColorText: _js_components_orders_payments_setStautsColorText__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      dialog: false
+    };
+  },
+  methods: {
+    clickCancelPayment: function clickCancelPayment() {
+      if (this.$refs.form.validate()) {
+        console.log('pass');
+      } else {
+        console.log('dont pass');
+      }
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/payments/main.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/orders/payments/main.vue?vue&type=script&lang=js& ***!
@@ -3049,6 +3222,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_components_orders_payments_alertCost__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/js/components/orders/payments/alertCost */ "./resources/js/components/orders/payments/alertCost.vue");
 /* harmony import */ var _js_components_orders_payments_acceptPayment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/orders/payments/acceptPayment */ "./resources/js/components/orders/payments/acceptPayment.vue");
+/* harmony import */ var _js_components_orders_payments_tablePayment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/components/orders/payments/tablePayment */ "./resources/js/components/orders/payments/tablePayment.vue");
 //
 //
 //
@@ -3066,6 +3240,92 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: [],
+  components: {
+    alertCost: _js_components_orders_payments_alertCost__WEBPACK_IMPORTED_MODULE_0__["default"],
+    acceptPayment: _js_components_orders_payments_acceptPayment__WEBPACK_IMPORTED_MODULE_1__["default"],
+    tablePayment: _js_components_orders_payments_tablePayment__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+  data: function data() {
+    return {
+      dialog: false
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/payments/setStautsColorText.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/orders/payments/setStautsColorText.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["status"],
+  methods: {
+    setStatusColor: function setStatusColor(s) {
+      if (s === 1) {
+        return "success";
+      } else if (s === 0) {
+        return "error";
+      }
+    },
+    setStatusText: function setStatusText(s) {
+      if (s === 1) {
+        return "ใช้งานอยู่";
+      } else if (s === 0) {
+        return "ยกเลิกแล้ว";
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/payments/tablePayment.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/orders/payments/tablePayment.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _js_components_orders_payments_cancelPayment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/js/components/orders/payments/cancelPayment */ "./resources/js/components/orders/payments/cancelPayment.vue");
+/* harmony import */ var _js_components_orders_payments_setStautsColorText__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/orders/payments/setStautsColorText */ "./resources/js/components/orders/payments/setStautsColorText.vue");
 //
 //
 //
@@ -3087,14 +3347,36 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: [],
+  props: ["payments"],
   components: {
-    alertCost: _js_components_orders_payments_alertCost__WEBPACK_IMPORTED_MODULE_0__["default"],
-    acceptPayment: _js_components_orders_payments_acceptPayment__WEBPACK_IMPORTED_MODULE_1__["default"]
+    cancelPayment: _js_components_orders_payments_cancelPayment__WEBPACK_IMPORTED_MODULE_0__["default"],
+    setStautsColorText: _js_components_orders_payments_setStautsColorText__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
-      dialog: false
+      headers: [{
+        text: "เลขที่ใบเสร็จ",
+        value: "bill_id"
+      }, {
+        text: "จำนวนเงิน",
+        value: "amount"
+      }, {
+        text: "ช่องทางชำระเงิน",
+        value: "payment_method_id",
+        align: "center"
+      }, {
+        text: "วัน-เวลาทำรายการ",
+        value: "updated_at",
+        align: "center"
+      }, {
+        text: "สถานะ",
+        value: "status",
+        align: "center"
+      }, {
+        text: "การจัดการ",
+        value: "action",
+        align: "end"
+      }]
     };
   }
 });
@@ -3289,6 +3571,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
+    emitDialogTableFalse: function emitDialogTableFalse() {
+      this.reload();
+    },
     clickOrderSelect: function clickOrderSelect(value) {
       if (value == "today") {
         this.dataTable = this.orders.today;
@@ -4213,6 +4498,13 @@ var render = function() {
                           _c("OrderShow", {
                             attrs: {
                               details: this.$store.getters["order/getByID"].data
+                                .order_detail,
+                              count: this.$store.getters["order/getByID"].count
+                                .product.use,
+                              detailsNo: this.$store.getters["order/getByID"]
+                                .data.order_detail_no_use,
+                              countNo: this.$store.getters["order/getByID"]
+                                .count.product.nouse
                             },
                             on: { emitStart: _vm.emitStart }
                           })
@@ -4241,7 +4533,12 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c("overlay", { attrs: { overlay: _vm.overlay } })
+          _c("overlay", { attrs: { overlay: _vm.overlay } }),
+          _vm._v(
+            "\n        " +
+              _vm._s(this.$store.getters["order/getByID"]) +
+              "\n    "
+          )
         ],
         1
       )
@@ -4304,24 +4601,41 @@ var render = function() {
             attrs: { order: _vm.order, action: _vm.action.create.detail }
           }),
           _vm._v(" "),
-          this.order.order_status.id > 1 ? _c("MainPayment") : _vm._e(),
+          _c("MainPayment", {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: this.order.order_status.id > 1,
+                expression: "this.order.order_status.id > 1"
+              }
+            ]
+          }),
           _vm._v(" "),
-          this.order.order_status.id != 8
-            ? _c(
-                "v-list-item",
-                { staticClass: "error" },
-                [
-                  _c("v-list-item-icon", [_c("v-icon", [_vm._v("cancel")])], 1),
-                  _vm._v(" "),
-                  _c(
-                    "v-list-item-content",
-                    [_c("v-list-item-title", [_vm._v("ยกเลิกรายการสั่งซื้อ")])],
-                    1
-                  )
-                ],
+          _c(
+            "v-list-item",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: this.order.order_status.id != 8,
+                  expression: "this.order.order_status.id != 8"
+                }
+              ],
+              staticClass: "error"
+            },
+            [
+              _c("v-list-item-icon", [_c("v-icon", [_vm._v("cancel")])], 1),
+              _vm._v(" "),
+              _c(
+                "v-list-item-content",
+                [_c("v-list-item-title", [_vm._v("ยกเลิกรายการสั่งซื้อ")])],
                 1
               )
-            : _vm._e(),
+            ],
+            1
+          ),
           _vm._v(" "),
           _c(
             "v-list-item",
@@ -4504,7 +4818,12 @@ var render = function() {
             key: "item.action",
             fn: function(ref) {
               var item = ref.item
-              return [_c("OrderManages", { attrs: { order: item } })]
+              return [
+                _c("OrderManages", {
+                  attrs: { order: item },
+                  on: { emitDialogTableFalse: _vm.emitDialogTableFalse }
+                })
+              ]
             }
           }
         ])
@@ -4590,11 +4909,7 @@ var render = function() {
               staticClass: "text-right",
               attrs: { cols: "6", md: "6", sm: "6" }
             },
-            [
-              _vm._v(
-                _vm._s(this.$store.getters["order/getByID"].sum.total) + " บาท"
-              )
-            ]
+            [_vm._v(_vm._s(_vm.sum.total) + " บาท")]
           )
         ],
         1
@@ -4610,12 +4925,7 @@ var render = function() {
           _c(
             "v-col",
             { staticClass: "text-right", attrs: { cols: "6", md: "6" } },
-            [
-              _vm._v(
-                _vm._s(this.$store.getters["order/getByID"].sum.deposit) +
-                  " บาท"
-              )
-            ]
+            [_vm._v(_vm._s(_vm.sum.deposit) + " บาท")]
           )
         ],
         1
@@ -4631,12 +4941,7 @@ var render = function() {
           _c(
             "v-col",
             { staticClass: "text-right", attrs: { cols: "6", md: "6" } },
-            [
-              _vm._v(
-                _vm._s(this.$store.getters["order/getByID"].sum.balance) +
-                  " บาท"
-              )
-            ]
+            [_vm._v(_vm._s(_vm.sum.balance) + " บาท")]
           )
         ],
         1
@@ -7017,49 +7322,81 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      this.$store.getters["order/getByID"].count.product.use > 0
+      _vm.count > 0
         ? _c(
             "div",
-            _vm._l(
-              this.$store.getters["order/getByID"].data.order_detail,
-              function(detail) {
-                return _c(
-                  "v-card",
-                  { key: detail.id, staticClass: "mt-4" },
-                  [
-                    _c(
-                      "v-card-text",
-                      { staticClass: "pa-0" },
-                      [
-                        _c(
-                          "v-container",
-                          { staticClass: "py-0" },
-                          [
-                            _c("productDetail", { attrs: { detail: detail } }),
-                            _vm._v(" "),
-                            _c("buttonForAction", {
-                              attrs: { detail: detail }
-                            }),
-                            _vm._v(" "),
-                             false
-                              ? undefined
-                              : _vm._e()
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                )
-              }
-            ),
+            _vm._l(_vm.details, function(detail) {
+              return _c(
+                "v-card",
+                { key: detail.id, staticClass: "mt-4" },
+                [
+                  _c(
+                    "v-card-text",
+                    { staticClass: "pa-0" },
+                    [
+                      _c(
+                        "v-container",
+                        { staticClass: "py-0" },
+                        [
+                          _c("productDetail", { attrs: { detail: detail } }),
+                          _vm._v(" "),
+                          _c("buttonForAction", { attrs: { detail: detail } }),
+                          _vm._v(" "),
+                           false
+                            ? undefined
+                            : _vm._e()
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            }),
             1
           )
         : _c("v-alert", { attrs: { type: "info" } }, [
             _vm._v("\n        ยังไม่มีสินค้า\n    ")
-          ])
+          ]),
+      _vm._v(" "),
+      _vm.countNo > 0
+        ? _c(
+            "div",
+            _vm._l(_vm.detailsNo, function(detail) {
+              return _c(
+                "v-card",
+                { key: detail.id, staticClass: "mt-4" },
+                [
+                  _c(
+                    "v-card-text",
+                    { staticClass: "pa-0" },
+                    [
+                      _c(
+                        "v-container",
+                        { staticClass: "py-0" },
+                        [
+                          _c("productDetail", { attrs: { detail: detail } }),
+                          _vm._v(" "),
+                          _c("buttonForAction", { attrs: { detail: detail } }),
+                          _vm._v(" "),
+                           false
+                            ? undefined
+                            : _vm._e()
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            }),
+            1
+          )
+        : _vm._e()
     ],
     1
   )
@@ -7186,7 +7523,7 @@ var render = function() {
                     "v-card-text",
                     [
                       _c("CostSub", {
-                        attrs: { sum: this.$store.getters["orderDetail/sum"] }
+                        attrs: { sum: this.$store.getters["order/getByID"].sum }
                       }),
                       _vm._v(" "),
                       _c("v-divider", { staticClass: "ma-0" }),
@@ -7305,8 +7642,13 @@ var render = function() {
                             [
                               _vm._v(
                                 "\n                        " +
-                                  _vm._s(_vm.form.amount - _vm.sum.balance) +
-                                  ".00 บาท\n                    "
+                                  _vm._s(
+                                    _vm.setMoneyBack(
+                                      _vm.form.amount,
+                                      _vm.sum.balance
+                                    )
+                                  ) +
+                                  " บาท\n                    "
                               )
                             ]
                           )
@@ -7319,11 +7661,11 @@ var render = function() {
                       _c("v-checkbox", {
                         attrs: { label: "แจ้งผ่านข้อความ" },
                         model: {
-                          value: _vm.form.AlertSMS,
+                          value: _vm.form.alert,
                           callback: function($$v) {
-                            _vm.$set(_vm.form, "AlertSMS", $$v)
+                            _vm.$set(_vm.form, "alert", $$v)
                           },
-                          expression: "form.AlertSMS"
+                          expression: "form.alert"
                         }
                       }),
                       _vm._v(" "),
@@ -7476,6 +7818,271 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/payments/cancelPayment.vue?vue&type=template&id=453f960e&":
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/orders/payments/cancelPayment.vue?vue&type=template&id=453f960e& ***!
+  \********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "v-dialog",
+        {
+          attrs: { persistent: "", width: "350" },
+          scopedSlots: _vm._u([
+            {
+              key: "activator",
+              fn: function(ref) {
+                var on = ref.on
+                return [
+                  _c(
+                    "v-btn",
+                    _vm._g({ attrs: { color: "error", small: "" } }, on),
+                    [
+                      _c("v-icon", { attrs: { left: "" } }, [_vm._v("cancel")]),
+                      _vm._v("\n                ยกเลิกรายการ\n            ")
+                    ],
+                    1
+                  )
+                ]
+              }
+            }
+          ]),
+          model: {
+            value: _vm.dialog,
+            callback: function($$v) {
+              _vm.dialog = $$v
+            },
+            expression: "dialog"
+          }
+        },
+        [
+          _vm._v(" "),
+          _c(
+            "v-card",
+            [
+              _c(
+                "v-card-title",
+                [
+                  _vm._v(
+                    "\n                ยกเลิกการชำระเงิน\n                "
+                  ),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-icon",
+                    {
+                      attrs: { color: "error" },
+                      on: {
+                        click: function($event) {
+                          _vm.dialog = false
+                        }
+                      }
+                    },
+                    [_vm._v("close")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                [
+                  _c(
+                    "v-row",
+                    [
+                      _c("v-col", { attrs: { cols: "6", md: "6" } }, [
+                        _vm._v("คำสั่งซื้อ")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        {
+                          staticClass: "text-right",
+                          attrs: { cols: "6", md: "6" }
+                        },
+                        [_vm._v("#" + _vm._s(_vm.payment.order_id))]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-row",
+                    [
+                      _c("v-col", { attrs: { cols: "6", md: "6" } }, [
+                        _vm._v("ช่องทางการชำระเงิน")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        {
+                          staticClass: "text-right",
+                          attrs: { cols: "6", md: "6" }
+                        },
+                        [_vm._v("#" + _vm._s(_vm.payment.payment_method_id))]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-row",
+                    [
+                      _c("v-col", { attrs: { cols: "6", md: "6" } }, [
+                        _vm._v("เลขที่ใบเสร็จ")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        {
+                          staticClass: "text-right",
+                          attrs: { cols: "6", md: "6" }
+                        },
+                        [_vm._v("#" + _vm._s(_vm.payment.bill_id))]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-row",
+                    [
+                      _c("v-col", { attrs: { cols: "6", md: "6" } }, [
+                        _vm._v("สถานะ")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        {
+                          staticClass: "text-right py-2",
+                          attrs: { cols: "6", md: "6" }
+                        },
+                        [
+                          _c("setStautsColorText", {
+                            attrs: { status: _vm.payment.status }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-row",
+                    [
+                      _c("v-col", { attrs: { cols: "6", md: "6" } }, [
+                        _vm._v("วัน-เวลาทำรายการ")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        {
+                          staticClass: "text-right",
+                          attrs: { cols: "6", md: "6" }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(_vm.payment.updated_at) +
+                              "\n                    "
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("v-alert", { attrs: { type: "warning" } }, [
+                    _vm._v("ต้องการยกเลิกรายการใช่ไหม ?")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "v-form",
+                    { ref: "form", attrs: { "lazy-validation": "" } },
+                    [
+                      _c("v-text-field", {
+                        staticClass: "mb-4",
+                        attrs: {
+                          outlined: "",
+                          label: "โปรดกรอกคำนวน 'ยกเลิก' ลงในช่อง",
+                          rules: [
+                            function(v) {
+                              return v == "ยกเลิก"
+                            }
+                          ],
+                          "hide-details": ""
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "error", large: "" },
+                      on: { click: _vm.clickCancelPayment }
+                    },
+                    [
+                      _c("v-icon", { attrs: { left: "" } }, [_vm._v("delete")]),
+                      _vm._v(
+                        "\n                    ยกเลิกรายการ\n                "
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "primary", large: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.dialog = false
+                        }
+                      }
+                    },
+                    [
+                      _c("v-icon", { attrs: { left: "" } }, [
+                        _vm._v("exit_to_app")
+                      ]),
+                      _vm._v("\n                    ออก\n                ")
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/payments/main.vue?vue&type=template&id=afee8c08&":
 /*!***********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/orders/payments/main.vue?vue&type=template&id=afee8c08& ***!
@@ -7497,7 +8104,7 @@ var render = function() {
       _c(
         "v-dialog",
         {
-          attrs: { persistent: "", width: "600" },
+          attrs: { persistent: "", width: "900" },
           scopedSlots: _vm._u([
             {
               key: "activator",
@@ -7581,13 +8188,20 @@ var render = function() {
                     [
                       _c("acceptPayment", {
                         staticClass: "mr-2",
-                        attrs: { sum: this.$store.getters["orderDetail/sum"] }
+                        attrs: { sum: this.$store.getters["order/getByID"].sum }
                       }),
                       _vm._v(" "),
                       _c("alertCost")
                     ],
                     1
-                  )
+                  ),
+                  _vm._v(" "),
+                  _c("tablePayment", {
+                    attrs: {
+                      payments: this.$store.getters["order/getByID"].data
+                        .payment
+                    }
+                  })
                 ],
                 1
               )
@@ -7597,6 +8211,95 @@ var render = function() {
         ],
         1
       )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/payments/setStautsColorText.vue?vue&type=template&id=78533c86&":
+/*!*************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/orders/payments/setStautsColorText.vue?vue&type=template&id=78533c86& ***!
+  \*************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-btn",
+    { attrs: { color: _vm.setStatusColor(_vm.status), small: "", block: "" } },
+    [_vm._v(_vm._s(_vm.setStatusText(_vm.status)))]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/payments/tablePayment.vue?vue&type=template&id=dd8987ca&":
+/*!*******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/orders/payments/tablePayment.vue?vue&type=template&id=dd8987ca& ***!
+  \*******************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("v-data-table", {
+        attrs: {
+          headers: _vm.headers,
+          items: _vm.payments,
+          "hide-default-footer": ""
+        },
+        scopedSlots: _vm._u([
+          {
+            key: "item.payment_method_id",
+            fn: function(ref) {
+              var item = ref.item
+              return [_vm._v("หน้าร้าน")]
+            }
+          },
+          {
+            key: "item.status",
+            fn: function(ref) {
+              var item = ref.item
+              return [
+                _c("setStautsColorText", { attrs: { status: item.status } })
+              ]
+            }
+          },
+          {
+            key: "item.action",
+            fn: function(ref) {
+              var item = ref.item
+              return [_c("cancelPayment", { attrs: { payment: item } })]
+            }
+          }
+        ])
+      })
     ],
     1
   )
@@ -7843,7 +8546,8 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("OrderTable", {
-        attrs: { dataTable: _vm.dataTable, headers: _vm.headers }
+        attrs: { dataTable: _vm.dataTable, headers: _vm.headers },
+        on: { emitDialogTableFalse: _vm.emitDialogTableFalse }
       }),
       _vm._v(" "),
       _c("snackbarRight", { attrs: { snackbar: _vm.snackbar } }),
@@ -9309,6 +10013,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/orders/payments/cancelPayment.vue":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/orders/payments/cancelPayment.vue ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _cancelPayment_vue_vue_type_template_id_453f960e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./cancelPayment.vue?vue&type=template&id=453f960e& */ "./resources/js/components/orders/payments/cancelPayment.vue?vue&type=template&id=453f960e&");
+/* harmony import */ var _cancelPayment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./cancelPayment.vue?vue&type=script&lang=js& */ "./resources/js/components/orders/payments/cancelPayment.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _cancelPayment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _cancelPayment_vue_vue_type_template_id_453f960e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _cancelPayment_vue_vue_type_template_id_453f960e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/orders/payments/cancelPayment.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/orders/payments/cancelPayment.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/orders/payments/cancelPayment.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_cancelPayment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./cancelPayment.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/payments/cancelPayment.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_cancelPayment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/orders/payments/cancelPayment.vue?vue&type=template&id=453f960e&":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/orders/payments/cancelPayment.vue?vue&type=template&id=453f960e& ***!
+  \**************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_cancelPayment_vue_vue_type_template_id_453f960e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./cancelPayment.vue?vue&type=template&id=453f960e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/payments/cancelPayment.vue?vue&type=template&id=453f960e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_cancelPayment_vue_vue_type_template_id_453f960e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_cancelPayment_vue_vue_type_template_id_453f960e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/orders/payments/main.vue":
 /*!**********************************************************!*\
   !*** ./resources/js/components/orders/payments/main.vue ***!
@@ -9373,6 +10146,144 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_main_vue_vue_type_template_id_afee8c08___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_main_vue_vue_type_template_id_afee8c08___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/orders/payments/setStautsColorText.vue":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/orders/payments/setStautsColorText.vue ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _setStautsColorText_vue_vue_type_template_id_78533c86___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./setStautsColorText.vue?vue&type=template&id=78533c86& */ "./resources/js/components/orders/payments/setStautsColorText.vue?vue&type=template&id=78533c86&");
+/* harmony import */ var _setStautsColorText_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./setStautsColorText.vue?vue&type=script&lang=js& */ "./resources/js/components/orders/payments/setStautsColorText.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _setStautsColorText_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _setStautsColorText_vue_vue_type_template_id_78533c86___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _setStautsColorText_vue_vue_type_template_id_78533c86___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/orders/payments/setStautsColorText.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/orders/payments/setStautsColorText.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/orders/payments/setStautsColorText.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_setStautsColorText_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./setStautsColorText.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/payments/setStautsColorText.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_setStautsColorText_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/orders/payments/setStautsColorText.vue?vue&type=template&id=78533c86&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/orders/payments/setStautsColorText.vue?vue&type=template&id=78533c86& ***!
+  \*******************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_setStautsColorText_vue_vue_type_template_id_78533c86___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./setStautsColorText.vue?vue&type=template&id=78533c86& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/payments/setStautsColorText.vue?vue&type=template&id=78533c86&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_setStautsColorText_vue_vue_type_template_id_78533c86___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_setStautsColorText_vue_vue_type_template_id_78533c86___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/orders/payments/tablePayment.vue":
+/*!******************************************************************!*\
+  !*** ./resources/js/components/orders/payments/tablePayment.vue ***!
+  \******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _tablePayment_vue_vue_type_template_id_dd8987ca___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tablePayment.vue?vue&type=template&id=dd8987ca& */ "./resources/js/components/orders/payments/tablePayment.vue?vue&type=template&id=dd8987ca&");
+/* harmony import */ var _tablePayment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tablePayment.vue?vue&type=script&lang=js& */ "./resources/js/components/orders/payments/tablePayment.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _tablePayment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _tablePayment_vue_vue_type_template_id_dd8987ca___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _tablePayment_vue_vue_type_template_id_dd8987ca___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/orders/payments/tablePayment.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/orders/payments/tablePayment.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/orders/payments/tablePayment.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_tablePayment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./tablePayment.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/payments/tablePayment.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_tablePayment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/orders/payments/tablePayment.vue?vue&type=template&id=dd8987ca&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/orders/payments/tablePayment.vue?vue&type=template&id=dd8987ca& ***!
+  \*************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_tablePayment_vue_vue_type_template_id_dd8987ca___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./tablePayment.vue?vue&type=template&id=dd8987ca& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/payments/tablePayment.vue?vue&type=template&id=dd8987ca&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_tablePayment_vue_vue_type_template_id_dd8987ca___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_tablePayment_vue_vue_type_template_id_dd8987ca___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

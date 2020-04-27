@@ -5,12 +5,10 @@ export default {
     getters: {},
     actions: {
         async create({dispatch}, payload) {
-            console.log(payload);
             const response = await axios.post(
                 "/api/payment/create",
                 payload
             );
-            console.log("store.payment / create", response);
             return response;
         }
     }

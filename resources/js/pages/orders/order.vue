@@ -60,7 +60,7 @@
                 </v-btn>
             </v-row>
         </v-container>
-        <OrderTable :dataTable="dataTable" :headers="headers"></OrderTable>
+        <OrderTable :dataTable="dataTable" :headers="headers" @emitDialogTableFalse="emitDialogTableFalse"></OrderTable>
         <snackbarRight :snackbar="snackbar"></snackbarRight>
         <overlay :overlay="overlay"></overlay>
     </div>
@@ -109,6 +109,9 @@ export default {
         };
     },
     methods: {
+        emitDialogTableFalse(){
+            this.reload();
+        },
         clickOrderSelect(value) {
             if (value == "today") {
                 this.dataTable = this.orders.today;

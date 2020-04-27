@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-dialog v-model="dialog" persistent width="600">
+        <v-dialog v-model="dialog" persistent width="900">
             <template v-slot:activator="{ on }">
                 <v-list-item class="yellow darken-1" v-on="on">
                     <v-list-item-icon>
@@ -23,10 +23,11 @@
                     <v-row class="px-4 mb-4">
                         <acceptPayment
                             class="mr-2"
-                            :sum="this.$store.getters['orderDetail/sum']"
+                            :sum="this.$store.getters['order/getByID'].sum"
                         ></acceptPayment>
                         <alertCost></alertCost>
                     </v-row>
+                    <tablePayment :payments="this.$store.getters['order/getByID'].data.payment"></tablePayment>
                 </v-card-text>
             </v-card>
         </v-dialog>
@@ -36,12 +37,14 @@
 <script>
 import alertCost from "@/js/components/orders/payments/alertCost";
 import acceptPayment from "@/js/components/orders/payments/acceptPayment";
+import tablePayment from "@/js/components/orders/payments/tablePayment";
 
 export default {
     props: [],
     components: {
         alertCost,
-        acceptPayment
+        acceptPayment,
+        tablePayment
     },
     data() {
         return {

@@ -2,7 +2,44 @@ export default {
     namespaced: true,
     state: {
         all: [],
-        getByID: {},
+        getByID: {
+            data: {
+                id: "",
+                customer_id: "",
+                dateTime_get: "",
+                channel_of_purchase_id: "",
+                order_status_id: "",
+                permission_to_publish: "",
+                token: "",
+                created_at: "",
+                updated_at: "",
+                customer: {
+                    id: "",
+                    name: "",
+                    phone: "",
+                    fbid: "",
+                    psid: ""
+                },
+                channel_of_purchase: {
+                    id: "",
+                    name: "",
+                    status: ""
+                },
+                order_status: {
+                    id: "",
+                    name: "",
+                    style: ""
+                },
+                order_detail: [],
+                payment: []
+            },
+            sum: {
+                total: "",
+                deposit: "",
+                balance: ""
+            },
+            count: { product: { use: 0 } }
+        },
         selected: {}
     },
     mutations: {

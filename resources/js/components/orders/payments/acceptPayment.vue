@@ -17,7 +17,7 @@
                 </v-card-title>
                 <v-card-text>
                     <CostSub
-                        :sum="this.$store.getters['orderDetail/sum']"
+                        :sum="this.$store.getters['order/getByID'].sum"
                     ></CostSub>
                     <v-divider class="ma-0"></v-divider>
                     <v-row>
@@ -48,13 +48,13 @@
                     <v-row class="py-1" v-show="form.amount - sum.balance > 0">
                         <v-col cols="6" md="6">เงินทอน</v-col>
                         <v-col cols="6" md="6" class="text-right">
-                            {{ form.amount - sum.balance }}.00 บาท
+                            {{ setMoneyBack(form.amount, sum.balance) }} บาท
                         </v-col>
                     </v-row>
                     <v-divider class="ma-0"></v-divider>
                     <v-checkbox
                         label="แจ้งผ่านข้อความ"
-                        v-model="form.AlertSMS"
+                        v-model="form.alert"
                     ></v-checkbox>
                     <v-btn color="success" @click="clickSubmit">
                         <v-icon left>attach_money</v-icon>
@@ -85,16 +85,14 @@ export default {
     data() {
         return {
             dialog: false,
-            sum_price: this.sum.total,
             response: {},
-            balance: "",
             overlay: false,
             form: {
-                order_id: this.$store.getters["order/selected"].id,
+                order_id: this.$store.getters['order/getByID'].data.id,
                 payment_method_id: 1,
                 amount: "",
                 status: 1,
-                AlertSMS: true
+                alert: true
             }
         };
     },
@@ -107,21 +105,17 @@ export default {
                     this.form
                 );
 
-                await this.$store.dispatch(
-                    "orderDetail/getByOrderID",
-                    this.form.order_id
-                );
+                await this.$store.dispatch("order/getByID", this.$store.getters['order/getByID'].data.id);
 
                 if (this.response.status == 200) {
                     this.dialog = false;
                     this.overlay = false;
                 }
-                console.log("acceptPayment", this.response);
             } else {
             }
         },
-        setBalance() {
-            this.balance = this.form.amount - this.sum.NoFormat.balance;
+        setMoneyBack(a, b) {
+            return a - b;
         }
     }
 };

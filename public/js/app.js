@@ -100186,7 +100186,48 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   namespaced: true,
   state: {
     all: [],
-    getByID: {},
+    getByID: {
+      data: {
+        id: "",
+        customer_id: "",
+        dateTime_get: "",
+        channel_of_purchase_id: "",
+        order_status_id: "",
+        permission_to_publish: "",
+        token: "",
+        created_at: "",
+        updated_at: "",
+        customer: {
+          id: "",
+          name: "",
+          phone: "",
+          fbid: "",
+          psid: ""
+        },
+        channel_of_purchase: {
+          id: "",
+          name: "",
+          status: ""
+        },
+        order_status: {
+          id: "",
+          name: "",
+          style: ""
+        },
+        order_detail: [],
+        payment: []
+      },
+      sum: {
+        total: "",
+        deposit: "",
+        balance: ""
+      },
+      count: {
+        product: {
+          use: 0
+        }
+      }
+    },
     selected: {}
   },
   mutations: {
@@ -100606,16 +100647,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                console.log(payload);
-                _context.next = 3;
+                _context.next = 2;
                 return axios.post("/api/payment/create", payload);
 
-              case 3:
+              case 2:
                 response = _context.sent;
-                console.log("store.payment / create", response);
                 return _context.abrupt("return", response);
 
-              case 6:
+              case 4:
               case "end":
                 return _context.stop();
             }

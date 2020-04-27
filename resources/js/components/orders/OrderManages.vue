@@ -11,13 +11,35 @@
                     <v-row>
                         <v-col cols="12" md="3">
                             <OrderDetail
-                                :order="this.$store.getters['order/getByID'].data"
+                                :order="
+                                    this.$store.getters['order/getByID'].data
+                                "
                                 class="mb-4"
                             ></OrderDetail>
-                            <OrderCostMain :sum="this.$store.getters['order/getByID'].sum"></OrderCostMain>
+                            <OrderCostMain
+                                :sum="this.$store.getters['order/getByID'].sum"
+                            ></OrderCostMain>
                         </v-col>
                         <v-col cols="12" md="6">
-                            <OrderShow @emitStart="emitStart" :details="this.$store.getters['order/getByID'].data"></OrderShow>
+                            <OrderShow
+                                @emitStart="emitStart"
+                                :details="
+                                    this.$store.getters['order/getByID'].data
+                                        .order_detail
+                                "
+                                :count="
+                                    this.$store.getters['order/getByID'].count
+                                        .product.use
+                                "
+                                :detailsNo="
+                                    this.$store.getters['order/getByID'].data
+                                        .order_detail_no_use
+                                "
+                                :countNo="
+                                    this.$store.getters['order/getByID'].count
+                                        .product.nouse
+                                "
+                            ></OrderShow>
                         </v-col>
                         <v-col cols="12" md="3">
                             <OrderMenuForManages
@@ -29,6 +51,7 @@
                 </v-card-text>
             </v-card>
             <overlay :overlay="overlay"></overlay>
+            {{ this.$store.getters["order/getByID"] }}
         </v-dialog>
     </div>
 </template>
@@ -69,7 +92,7 @@ export default {
             this.start();
         },
         async emitDialogOff() {
-            await this.$store.dispatch("orderDetail/getByOrderIDReset");
+            this.$emit("emitDialogTableFalse");
             this.dialog = false;
         }
     }

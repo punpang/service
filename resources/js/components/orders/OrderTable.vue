@@ -29,7 +29,7 @@
             </template>
 
             <template v-slot:item.action="{ item }">
-                    <OrderManages :order="item"></OrderManages>
+                    <OrderManages :order="item" @emitDialogTableFalse="emitDialogTableFalse"></OrderManages>
             </template>
         </v-data-table>
     </div>
@@ -41,6 +41,11 @@ export default {
     props: ["dataTable", "headers"],
     components: {
         OrderManages
+    },
+    methods:{
+        emitDialogTableFalse(){
+            this.$emit('emitDialogTableFalse')
+        }
     }
 };
 </script>

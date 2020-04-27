@@ -5,25 +5,41 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Sms;
 use App\Linenotify;
+use App\FacebookMessager;
 
 class MSms extends Model
 {
 
-  public static function Sms($p,$m)
+  public static function Sms($p, $m, $allow)
   {
-    $key = MSms::LCKEY();
-    $MSms = MSms::LCSms($p,$m,$key);
-    if ($MSms['status'] == 200) {
-      return 200;
-    }elseif ($MSms['status'] == 400) {
-      (new Linenotify)->line('แจ้งเตือน : ระบบ SMS ไม่ทำงาน กรุณาเปิดปิดแอพใหม่ !');
-      $sms = Sms::send([$p],$m);
-      if ($sms['code'] != 200) {
-        // return 400;
-        return $sms['code'];
+    if ($allow) {
+      $key = MSms::LCKEY();
+      $MSms = MSms::LCSms($p, $m, $key);
+      if ($MSms['status'] == 200) {
+        return response()->json([
+          'success' => true,
+          'message' => 'ส่ง SMS สำเร็จ'
+        ], 200);
+      } elseif ($MSms['status'] == 400) {
+        (new Linenotify)->line('แจ้งเตือน : ระบบ SMS ไม่ทำงาน กรุณาเปิดปิดแอพใหม่ !');
+        $sms = Sms::send([$p], $m);
+        if ($sms['code'] != 200) {
+          // return 400;
+          return $sms['code'];
+        }
       }
+    } else {
+      return [
+        'success' => true,
+        'message' => 'ไม่ต้องส่ง SMS'
+      ];
     }
+  }
 
+  public static function SMSFB($order, $message, $allow) // order , message , allow
+  {
+    MSms::Sms($order->customer->phone, $message, $allow);
+    FacebookMessager::postMessage($order->customer, $order->ChannelOfPurchase->name, $message, $allow);
   }
 
   public static function LCURL()
@@ -36,7 +52,7 @@ class MSms extends Model
     return config('message.LCSms.key');
   }
 
-  public static function LCSms($number,$message,$key)
+  public static function LCSms($number, $message, $key)
   {
     // dd($number,$message,$key,MSms::LCURL());
     if ($key == MSms::LCKEY()) {
@@ -73,9 +89,8 @@ class MSms extends Model
         return [
           "status" => 200,
           "response" => $response
-          ];
+        ];
       }
     }
-
   }
 }

@@ -13,9 +13,9 @@
                 :action="action.create.detail"
             ></formDetail>      
 
-            <MainPayment v-if="this.order.order_status.id > 1"></MainPayment>          
+            <MainPayment v-show="this.order.order_status.id > 1"></MainPayment>          
 
-            <v-list-item class="error" v-if="this.order.order_status.id != 8">
+            <v-list-item class="error" v-show="this.order.order_status.id != 8">
                 <v-list-item-icon>
                     <v-icon>cancel</v-icon>
                 </v-list-item-icon>

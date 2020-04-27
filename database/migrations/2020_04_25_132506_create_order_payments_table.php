@@ -20,6 +20,7 @@ class CreateOrderPaymentsTable extends Migration
             $table->decimal('amount',8,2);
             $table->integer('status');
             $table->integer('image_slip_id')->nullable()->default(null);
+            $table->integer('bill_id');
             $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@ class FacebookMessager extends Model
     {
         return 'v6.0/';
     }
- 
+
     public static function pageToken()
     {
         return [
@@ -67,7 +67,7 @@ class FacebookMessager extends Model
             if (empty($customer->psid)) { // ไม่มี PSID
 
                 $pageToken = FacebookMessager::pageToken();
-                $url = self::url().self::version(). $customer->fbid . '/ids_for_pages?' . "app=" . $pageToken['app'] . "&access_token=" . $pageToken['access_token'] . "&appsecret_proof=" . $pageToken['appsecret_proof'] . "&page=" . $pageToken['page'];
+                $url = self::url() . self::version() . $customer->fbid . '/ids_for_pages?' . "app=" . $pageToken['app'] . "&access_token=" . $pageToken['access_token'] . "&appsecret_proof=" . $pageToken['appsecret_proof'] . "&page=" . $pageToken['page'];
 
                 //$url = 'https://graph.facebook.com/v6.0/' . $customer->fbid . '/ids_for_pages?' . "app=" . $pageToken['app'] . "&access_token=" . $pageToken['access_token'] . "&appsecret_proof=" . $pageToken['appsecret_proof'] . "&page=" . $pageToken['page'];
 
@@ -85,21 +85,47 @@ class FacebookMessager extends Model
         return ['status' => 'error', 'message' => "Don't have Facebook ID"];
     }
 
-    public static function postMessage($customer, $channel_of_purchase, $text) //ลูกค้าทีค้นหาแล้ว ช่องทางการซื้อที่ค้นหาแล้ว ข้อความ
+    public static function postMessage($customer, $channel_of_purchase, $text, $allow) //ลูกค้าทีค้นหาแล้ว ช่องทางการซื้อที่ค้นหาแล้ว ข้อความ
     {
         $psid = FacebookMessager::getPSID($customer);
-        if (empty($psid) || empty($text) && $channel_of_purchase == "FACEBOOK") {
+        if (empty($psid) || empty($text) && $channel_of_purchase == "FACEBOOK" && $allow) {
             return 'ไม่สามารถส่งข้อความได้';
         }
 
         $pageToken = FacebookMessager::pageToken();
-        $url = self::url().self::version().'me/messages?access_token=' . $pageToken['access_token'];
+        $url = self::url() . self::version() . 'me/messages?access_token=' . $pageToken['access_token'];
         $data = [
             'recipient' => ['id' => $psid],
             'message' => ['text' => $text]
         ];
         $client = new \GuzzleHttp\Client();
         $response = $client->post($url, ['form_params' => $data]);
+        
+        if ($response->getStatusCode() === 500) {
+            FacebookMessager::postMessageNotAllow($psid, $text);
+        } else if ($response->getStatusCode() === 200) {
+            return $response->getStatusCode();
+        }
+
+        return [
+            'message' => 'เกิดปัญหาบางอย่าง'
+        ];
+    }
+
+    public static function postMessageNotAllow($psid, $text) //ส่งข้อความหาลูกค้าที่เกิน 24 ชม.
+    {
+        dd('postMessageNotAllow');
+        $pageToken = FacebookMessager::pageToken();
+        $url = self::url() . self::version() . 'me/messages?access_token=' . $pageToken['access_token'];
+        $data = [
+            'recipient' => ['id' => $psid],
+            'message' => ['text' => $text],
+            "messaging_type" => "MESSAGE_TAG",
+            "tag" => "POST_PURCHASE_UPDATE"
+        ];
+        $client = new \GuzzleHttp\Client();
+        $response = $client->post($url, ['form_params' => $data]);
+
         return $response->getStatusCode();
     }
 

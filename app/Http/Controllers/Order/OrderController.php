@@ -175,9 +175,11 @@ class OrderController extends Controller
 
     public function getByID($order)
     {
-        $data = Order::find($order)
-            ->with('Customer', 'ChannelOfPurchase', 'OrderStatus', 'OrderDetail.Product.ProductTagUseOnly.ProductCategorySubUseOnly.ProductCategory', "Payment")
-            ->with('OrderDetail.Product.ProductImage')->first();
+        $data = Order::where('id',$order)
+            ->with('Customer', 'ChannelOfPurchase', 'OrderStatus', 'OrderDetail.Product.ProductTagUseOnly.ProductCategorySubUseOnly.ProductCategory','OrderDetailNoUse.Product.ProductTagUseOnly.ProductCategorySubUseOnly.ProductCategory', "Payment")
+            ->with('OrderDetail.Product.ProductImage')
+            ->with('OrderDetailNoUse.Product.ProductImage')
+            ->first();
 
         return response()->json([
             'data' => $data,
@@ -189,6 +191,7 @@ class OrderController extends Controller
             'count' => [
                 'product' => [
                     'use' => $data->CountOrderDetail(),
+                    'nouse' => $data->CountOrderDetailNoUse(),
                 ]
             ]
         ], 200);
