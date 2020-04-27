@@ -60,7 +60,11 @@
                 </v-btn>
             </v-row>
         </v-container>
-        <OrderTable :dataTable="dataTable" :headers="headers" @emitDialogTableFalse="emitDialogTableFalse"></OrderTable>
+        <OrderTable
+            :dataTable="dataTable"
+            :headers="headers"
+            @emitDialogTableFalse="emitDialogTableFalse"
+        ></OrderTable>
         <snackbarRight :snackbar="snackbar"></snackbarRight>
         <overlay :overlay="overlay"></overlay>
     </div>
@@ -85,6 +89,7 @@ export default {
             snackbar: {
                 status: false
             },
+            selected_table:"today",
             overlay: false,
             counts: {
                 today: 0,
@@ -98,7 +103,7 @@ export default {
                 created: {}
             },
             headers: [
-                { text: "Order.", value: "id"},
+                { text: "Order.", value: "id" },
                 { text: "ชื่อลูกค้า", value: "customer_name" },
                 { text: "เบอร์โทรลูกค้า", value: "customer_phone" },
                 { text: "วัน-เวลาที่รับ", value: "dateTime_get" },
@@ -109,7 +114,7 @@ export default {
         };
     },
     methods: {
-        emitDialogTableFalse(){
+        emitDialogTableFalse() {
             this.reload();
         },
         clickOrderSelect(value) {
@@ -121,6 +126,7 @@ export default {
                 this.dataTable = this.orders.created;
             } else if (value == "tomorrow") {
                 this.dataTable = this.orders.tomorrow;
+            } else if (value == "") {
             } else {
                 this.snackbar = {
                     status: true,
@@ -128,6 +134,7 @@ export default {
                     color: "error"
                 };
             }
+            this.selected_table = value;
         },
         OnDataTable() {
             this.reload();
@@ -145,6 +152,7 @@ export default {
             };
             this.dataTable = this.orders.today;
             this.dataSelect = dataTable.menus;
+            this.clickOrderSelect(this.selected_table);
             this.overlay = false;
         }
     },

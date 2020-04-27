@@ -2,7 +2,7 @@
     <div>
         <v-dialog v-model="dialog" persistent width="350">
             <template v-slot:activator="{ on }">
-                <v-btn color="error" v-on="on" small>
+                <v-btn color="error" v-on="on" small @click="start" :disabled="payment.status === 0">
                     <v-icon left>cancel</v-icon>
                     ยกเลิกรายการ
                 </v-btn>
@@ -49,18 +49,16 @@
                     <v-alert type="warning"
                         >ต้องการยกเลิกรายการใช่ไหม ?</v-alert
                     >
-                    <v-form
-                    ref="form"
-                    lazy-validation>
+                    <v-form ref="form" lazy-validation>
                         <v-text-field
-                        outlined
-                        label="โปรดกรอกคำนวน 'ยกเลิก' ลงในช่อง"
-                        :rules="[v => v == 'ยกเลิก']"
-                        hide-details
-                        class="mb-4"
-                    ></v-text-field>
+                            outlined
+                            label="โปรดกรอกคำนวน 'ยกเลิก' ลงในช่อง"
+                            :rules="[v => v == 'ยกเลิก']"
+                            hide-details
+                            class="mb-4"
+                        ></v-text-field>
                     </v-form>
-                    
+
                     <v-btn color="error" large @click="clickCancelPayment">
                         <v-icon left>delete</v-icon>
                         ยกเลิกรายการ
@@ -71,31 +69,79 @@
                     </v-btn>
                 </v-card-text>
             </v-card>
+            <overlay :overlay="overlay"></overlay>
+            <snackbarRight :snackbar="snackbar"></snackbarRight>
         </v-dialog>
     </div>
 </template>
 
 <script>
 import setStautsColorText from "@/js/components/orders/payments/setStautsColorText";
+import overlay from "@/js/layouts/overlay";
+import snackbarRight from "@/js/layouts/snackbarRight";
 
 export default {
     props: ["payment"],
     components: {
-        setStautsColorText
+        setStautsColorText,
+        overlay
     },
     data() {
         return {
-            dialog: false
+            dialog: false,
+            overlay: false,
+            snackbar: {
+                status: false
+            }
         };
     },
-    methods:{
-        clickCancelPayment(){
-            if(this.$refs.form.validate()){
-                console.log('pass');
-                
-            }else{
-                console.log('dont pass');
-                
+    methods: {
+        start(){
+            this.$refs.form.reset();
+        },
+        async clickCancelPayment() {
+            this.overlay = true;
+            if (this.$refs.form.validate()) {
+                const res = await this.$store.dispatch(
+                    "payment/cancel",
+                    this.payment.id
+                );
+
+                await this.$store.dispatch("order/getByID", this.payment.order_id);
+
+                if (res.status == 200) {
+                    this.snackbar = {
+                        status: true,
+                        color: "success",
+                        text: res.data.message
+                    };
+                    this.$refs.form.reset();
+
+                    this.dialog = false;
+                } else if (res.status == 201) {
+                    this.snackbar = {
+                        status: true,
+                        color: "warning",
+                        text: res.data.message
+                    };
+                    this.dialog = false;
+                    this.$refs.form.reset();
+                }
+
+                this.snackbar = {
+                    status: true,
+                    color: "error",
+                    text: "กรุณาลองอีกครั้ง ผิดพลาดบางอย่าง"
+                };
+
+                this.overlay = false;
+            } else {
+                this.overlay = false;
+                this.snackbar = {
+                    status: true,
+                    color: "error",
+                    text: "กรุณาลองอีกครั้ง ผิดพลาดบางอย่าง"
+                };
             }
         }
     }

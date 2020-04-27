@@ -76,6 +76,7 @@ Route::middleware('admin')->group(function () { //สำหรับ admin
 
     Route::prefix('payment')->group(function () { // api/payment/...
         Route::post('create', 'Order\OrderPaymentController@create');
+        Route::delete('{payment}/cancel', 'Order\OrderPaymentController@cancel');
     });
 
     Route::prefix('product')->group(function () { // api/product/...

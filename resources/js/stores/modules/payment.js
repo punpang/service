@@ -10,6 +10,12 @@ export default {
                 payload
             );
             return response;
+        },
+        async cancel({}, payload) {
+            const response = await axios.delete(
+                "/api/payment/"+payload+'/cancel'
+            );
+            return response;
         }
     }
 };

@@ -3109,7 +3109,17 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _js_components_orders_payments_setStautsColorText__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/js/components/orders/payments/setStautsColorText */ "./resources/js/components/orders/payments/setStautsColorText.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _js_components_orders_payments_setStautsColorText__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/orders/payments/setStautsColorText */ "./resources/js/components/orders/payments/setStautsColorText.vue");
+/* harmony import */ var _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/layouts/overlay */ "./resources/js/layouts/overlay.vue");
+/* harmony import */ var _js_layouts_snackbarRight__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/js/layouts/snackbarRight */ "./resources/js/layouts/snackbarRight.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -3188,23 +3198,97 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["payment"],
   components: {
-    setStautsColorText: _js_components_orders_payments_setStautsColorText__WEBPACK_IMPORTED_MODULE_0__["default"]
+    setStautsColorText: _js_components_orders_payments_setStautsColorText__WEBPACK_IMPORTED_MODULE_1__["default"],
+    overlay: _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
-      dialog: false
+      dialog: false,
+      overlay: false,
+      snackbar: {
+        status: false
+      }
     };
   },
   methods: {
+    start: function start() {
+      this.$refs.form.reset();
+    },
     clickCancelPayment: function clickCancelPayment() {
-      if (this.$refs.form.validate()) {
-        console.log('pass');
-      } else {
-        console.log('dont pass');
-      }
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this.overlay = true;
+
+                if (!_this.$refs.form.validate()) {
+                  _context.next = 12;
+                  break;
+                }
+
+                _context.next = 4;
+                return _this.$store.dispatch("payment/cancel", _this.payment.id);
+
+              case 4:
+                res = _context.sent;
+                _context.next = 7;
+                return _this.$store.dispatch("order/getByID", _this.payment.order_id);
+
+              case 7:
+                if (res.status == 200) {
+                  _this.snackbar = {
+                    status: true,
+                    color: "success",
+                    text: res.data.message
+                  };
+
+                  _this.$refs.form.reset();
+
+                  _this.dialog = false;
+                } else if (res.status == 201) {
+                  _this.snackbar = {
+                    status: true,
+                    color: "warning",
+                    text: res.data.message
+                  };
+                  _this.dialog = false;
+
+                  _this.$refs.form.reset();
+                }
+
+                _this.snackbar = {
+                  status: true,
+                  color: "error",
+                  text: "กรุณาลองอีกครั้ง ผิดพลาดบางอย่าง"
+                };
+                _this.overlay = false;
+                _context.next = 14;
+                break;
+
+              case 12:
+                _this.overlay = false;
+                _this.snackbar = {
+                  status: true,
+                  color: "error",
+                  text: "กรุณาลองอีกครั้ง ผิดพลาดบางอย่าง"
+                };
+
+              case 14:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     }
   }
 });
@@ -3517,6 +3601,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -3534,6 +3622,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       snackbar: {
         status: false
       },
+      selected_table: "today",
       overlay: false,
       counts: {
         today: 0,
@@ -3583,13 +3672,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         this.dataTable = this.orders.created;
       } else if (value == "tomorrow") {
         this.dataTable = this.orders.tomorrow;
-      } else {
+      } else if (value == "") {} else {
         this.snackbar = {
           status: true,
           text: "กรุณาลองใหม่อีกครั้งค่ะ",
           color: "error"
         };
       }
+
+      this.selected_table = value;
     },
     OnDataTable: function OnDataTable() {
       this.reload();
@@ -3622,9 +3713,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 };
                 _this.dataTable = _this.orders.today;
                 _this.dataSelect = dataTable.menus;
+
+                _this.clickOrderSelect(_this.selected_table);
+
                 _this.overlay = false;
 
-              case 11:
+              case 12:
               case "end":
                 return _context.stop();
             }
@@ -7848,7 +7942,17 @@ var render = function() {
                 return [
                   _c(
                     "v-btn",
-                    _vm._g({ attrs: { color: "error", small: "" } }, on),
+                    _vm._g(
+                      {
+                        attrs: {
+                          color: "error",
+                          small: "",
+                          disabled: _vm.payment.status === 0
+                        },
+                        on: { click: _vm.start }
+                      },
+                      on
+                    ),
                     [
                       _c("v-icon", { attrs: { left: "" } }, [_vm._v("cancel")]),
                       _vm._v("\n                ยกเลิกรายการ\n            ")
@@ -8068,7 +8172,11 @@ var render = function() {
               )
             ],
             1
-          )
+          ),
+          _vm._v(" "),
+          _c("overlay", { attrs: { overlay: _vm.overlay } }),
+          _vm._v(" "),
+          _c("snackbarRight", { attrs: { snackbar: _vm.snackbar } })
         ],
         1
       )

@@ -48,4 +48,9 @@ class OrderPayment extends Model implements Auditable
         $sum = OrderPayment::whereOrderId($order_id)->whereStatus(1)->sum('amount');
         return number_format($sum,2);
     }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class,"order_id","id");
+    }
 }
