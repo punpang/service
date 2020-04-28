@@ -46,15 +46,23 @@ class OrderController extends Controller
         return Order::TomorrowOrder()->with('Customer', 'ChannelOfPurchase', 'OrderStatus')->get();
     }
 
-    function generateToken($length = 2)
+    function generateToken($length = 100)
     {
-        $timestamp = \Carbon\Carbon::now()->timestamp;
+        $timestamp = str_split(\Carbon\Carbon::now()->timestamp);
+
         $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         $data = '';
-        for ($i = 0; $i < $length; $i++)
-            $data .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
 
-        return encrypt($data . $timestamp);
+        for ($i = 0; $i < $length; $i++) {
+            if ($i % 10 == 0 && $i <= 90) {
+                $n = ($i / 10) / 1;
+                $data .= $timestamp[$n];
+            } else {
+                $data .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
+            }
+        }
+
+        return $data;
     }
 
 
@@ -173,21 +181,29 @@ class OrderController extends Controller
         ], 200);
     }
 
+    public function getByTokenForPaymentAlert($token)
+    {
+        $data = Order::whereToken($token)
+            ->with('CustomerNotFB', 'OrderStatus')
+            ->first();
+            
+        return response()->json([
+            'data' => $data,
+            'sum' => $data->OrderSum()
+        ], 200);
+    }
+
     public function getByID($order)
     {
-        $data = Order::where('id',$order)
-            ->with('Customer', 'ChannelOfPurchase', 'OrderStatus', 'OrderDetail.Product.ProductTagUseOnly.ProductCategorySubUseOnly.ProductCategory','OrderDetailNoUse.Product.ProductTagUseOnly.ProductCategorySubUseOnly.ProductCategory', "Payment")
+        $data = Order::where('id', $order)
+            ->with('Customer', 'ChannelOfPurchase', 'OrderStatus', 'OrderDetail.Product.ProductTagUseOnly.ProductCategorySubUseOnly.ProductCategory', 'OrderDetailNoUse.Product.ProductTagUseOnly.ProductCategorySubUseOnly.ProductCategory', "OrderPayment.OrderPaymentMethod")
             ->with('OrderDetail.Product.ProductImage')
             ->with('OrderDetailNoUse.Product.ProductImage')
             ->first();
 
         return response()->json([
             'data' => $data,
-            'sum' => [
-                'total' => $data->sumTotalFormat(),
-                'deposit' => $data->sumDepositFormat(),
-                'balance' => $data->balanceFormat()
-            ],
+            'sum' => $data->OrderSum(),
             'count' => [
                 'product' => [
                     'use' => $data->CountOrderDetail(),

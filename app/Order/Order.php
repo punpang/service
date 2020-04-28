@@ -35,27 +35,36 @@ class Order extends Model  implements Auditable
 
     public function CustomerNotFB()
     {
-        return $this->belongsTo(Customer::class, "customer_id", "id")->select('id','name','phone');
+        return $this->belongsTo(Customer::class, "customer_id", "id")->select('id', 'name', 'phone');
     }
-    
-    public function Payment()
+
+    public function OrderPayment()
     {
         return $this->hasMany(OrderPayment::class, "order_id", "id");
     }
 
     public function sumDeposit() //รวมเงินเฉพาะที่ใช้งาน
     {
-        return $this->Payment()->whereStatus(1)->sum('amount');
+        return $this->OrderPayment()->whereStatus(1)->sum('amount');
     }
 
     public function sumDepositFormat() //รวมเงินเฉพาะที่ใช้งาน
     {
-        return number_format($this->sumDeposit(),2);
+        return number_format($this->sumDeposit(), 2);
     }
 
     public function ChannelOfPurchase()
     {
         return $this->belongsTo(ChannelOfPurchase::class, "channel_of_purchase_id", "id");
+    }
+
+    public function OrderSum()
+    {
+        return [
+            'total' => $this->sumTotalFormat(),
+            'deposit' => $this->sumDepositFormat(),
+            'balance' => $this->balanceFormat()
+        ];
     }
 
     public function OrderStatus()
@@ -90,7 +99,7 @@ class Order extends Model  implements Auditable
 
     public function sumTotalFormat() //รวมเงินเฉพาะที่ใช้งาน
     {
-        return number_format($this->sumTotal(),2);
+        return number_format($this->sumTotal(), 2);
     }
 
     public function balance() //รวมเงินเฉพาะที่ใช้งาน
@@ -100,7 +109,7 @@ class Order extends Model  implements Auditable
 
     public function balanceFormat() //รวมเงินเฉพาะที่ใช้งาน
     {
-        return number_format($this->balance(),2);
+        return number_format($this->balance(), 2);
     }
 
     public function scopeUseOnly()
@@ -127,10 +136,10 @@ class Order extends Model  implements Auditable
 
     public function scopeNotifyOrder()
     {
-        return $query = $this->whereIn('order_status_id', ['2','3'])->where('dateTime_get','>=',\Carbon\Carbon::now()->format('Y-m-d'))->orderBy('dateTime_get', 'ASC');
+        return $query = $this->whereIn('order_status_id', ['2', '3'])->where('dateTime_get', '>=', \Carbon\Carbon::now()->format('Y-m-d'))->orderBy('dateTime_get', 'ASC');
     }
 
-    public function DateTimeFormatTH($dateTime) 
+    public function DateTimeFormatTH($dateTime)
     {
         return \Carbon\Carbon::parse($dateTime)->addYears(543)->format('d-m-Y H:i:s');
     }

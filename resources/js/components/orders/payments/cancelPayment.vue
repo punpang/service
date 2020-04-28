@@ -23,7 +23,7 @@
                     <v-row>
                         <v-col cols="6" md="6">ช่องทางการชำระเงิน</v-col>
                         <v-col cols="6" md="6" class="text-right"
-                            >#{{ payment.payment_method_id }}</v-col
+                            >{{ payment.order_payment_method.name }}</v-col
                         >
                     </v-row>
                     <v-row>

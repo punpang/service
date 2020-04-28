@@ -1,8 +1,8 @@
 <template>
     <div>
-        <v-data-table :headers="headers" :items="payments" hide-default-footer items-per-page="100">
-            <template v-slot:item.payment_method_id="{ item }"
-                >หน้าร้าน</template
+        <v-data-table :headers="headers" :items="payments" hide-default-footer :items-per-page="50">
+            <template v-slot:item.order_payment_method_id="{ item }"
+                >{{ item.order_payment_method.name }}</template
             >
 
             <template v-slot:item.status="{ item }">
@@ -33,7 +33,7 @@ export default {
                 { text: "จำนวนเงิน", value: "amount" },
                 {
                     text: "ช่องทางชำระเงิน",
-                    value: "payment_method_id",
+                    value: "order_payment_method_id",
                     align: "center"
                 },
                 {

@@ -10,12 +10,12 @@
                 <v-card-text class="px-4">
                     <v-row>
                         <v-col cols="12" md="3">
-                            <OrderDetail
+                            <OrderDetailHead
                                 :order="
                                     this.$store.getters['order/getByID'].data
                                 "
                                 class="mb-4"
-                            ></OrderDetail>
+                            ></OrderDetailHead>
                             <OrderCostMain
                                 :sum="this.$store.getters['order/getByID'].sum"
                             ></OrderCostMain>
@@ -43,7 +43,7 @@
                         </v-col>
                         <v-col cols="12" md="3">
                             <OrderMenuForManages
-                                :order="order"
+                                :order="this.$store.getters['order/getByID'].data"
                                 @emitDialogOff="emitDialogOff"
                             ></OrderMenuForManages>
                         </v-col>
@@ -51,7 +51,6 @@
                 </v-card-text>
             </v-card>
             <overlay :overlay="overlay"></overlay>
-            {{ this.$store.getters["order/getByID"] }}
         </v-dialog>
     </div>
 </template>
@@ -61,7 +60,7 @@ import OrderMenuForManages from "@/js/components/orders/OrderMenuForManages";
 import OrderShow from "@/js/components/orders/details/show";
 
 import OrderCostMain from "@/js/components/orders/details/CostMain";
-import OrderDetail from "@/js/components/orders/details/detail";
+import OrderDetailHead from "@/js/components/orders/details/detailHead";
 import overlay from "@/js/layouts/overlay";
 
 export default {
@@ -70,7 +69,7 @@ export default {
         OrderMenuForManages,
         OrderShow,
         overlay,
-        OrderDetail,
+        OrderDetailHead,
         OrderCostMain
     },
     data() {
@@ -85,7 +84,7 @@ export default {
             this.overlay = true;
             await this.$store.dispatch("order/getByID", this.order.id);
 
-            await this.$store.commit("order/selected", this.order);
+            //await this.$store.commit("order/selected", this.order);
             this.overlay = false;
         },
         emitStart(value) {

@@ -14,6 +14,7 @@ import order from "@/js/stores/modules/order";
 import orderDetail from "@/js/stores/modules/orderDetail";
 import snackbar from "@/js/stores/modules/snackbar";
 import payment from "@/js/stores/modules/payment";
+import orderPaymentMethod from "@/js/stores/modules/orderPaymentMethod";
 
 Vue.use(Vuex);
 
@@ -30,6 +31,7 @@ export default new Vuex.Store({
         order,
         orderDetail,
         snackbar,
-        payment
+        payment,
+        orderPaymentMethod
     }
 });

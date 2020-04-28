@@ -76,13 +76,11 @@ const routes = [
         path: "/punpang/order/:token",
         name: "orderToken",
         component: () => import("@/js/pages/punpang/orders/show"),
-        meta: { requiresAuth: true }
     },
     {
-        path: "/punpang/order/:token/payment",
+        path: "/punpang/order/:token/:amount/payment",
         name: "orderTokenPayment",
         component: () => import("@/js/pages/punpang/orders/payment"),
-        meta: { requiresAuth: true }
     },
 ];
 

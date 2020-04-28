@@ -25,9 +25,14 @@
                             class="mr-2"
                             :sum="this.$store.getters['order/getByID'].sum"
                         ></acceptPayment>
-                        <alertCost></alertCost>
+                        <alertPayment></alertPayment>
                     </v-row>
-                    <tablePayment :payments="this.$store.getters['order/getByID'].data.payment"></tablePayment>
+                    <tablePayment
+                        :payments="
+                            this.$store.getters['order/getByID'].data
+                                .order_payment
+                        "
+                    ></tablePayment>
                 </v-card-text>
             </v-card>
         </v-dialog>
@@ -35,20 +40,20 @@
 </template>
 
 <script>
-import alertCost from "@/js/components/orders/payments/alertCost";
+import alertPayment from "@/js/components/orders/payments/alertPayment";
 import acceptPayment from "@/js/components/orders/payments/acceptPayment";
 import tablePayment from "@/js/components/orders/payments/tablePayment";
 
 export default {
     props: [],
     components: {
-        alertCost,
+        alertPayment,
         acceptPayment,
         tablePayment
     },
     data() {
         return {
-            dialog: false,
+            dialog: false
         };
     }
 };

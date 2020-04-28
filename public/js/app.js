@@ -99737,18 +99737,12 @@ var routes = [{
   name: "orderToken",
   component: function component() {
     return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/orders/show */ "./resources/js/pages/punpang/orders/show.vue"));
-  },
-  meta: {
-    requiresAuth: true
   }
 }, {
-  path: "/punpang/order/:token/payment",
+  path: "/punpang/order/:token/:amount/payment",
   name: "orderTokenPayment",
   component: function component() {
     return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/orders/payment */ "./resources/js/pages/punpang/orders/payment.vue"));
-  },
-  meta: {
-    requiresAuth: true
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
@@ -99788,6 +99782,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_stores_modules_orderDetail__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/js/stores/modules/orderDetail */ "./resources/js/stores/modules/orderDetail.js");
 /* harmony import */ var _js_stores_modules_snackbar__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/js/stores/modules/snackbar */ "./resources/js/stores/modules/snackbar.js");
 /* harmony import */ var _js_stores_modules_payment__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/js/stores/modules/payment */ "./resources/js/stores/modules/payment.js");
+/* harmony import */ var _js_stores_modules_orderPaymentMethod__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/js/stores/modules/orderPaymentMethod */ "./resources/js/stores/modules/orderPaymentMethod.js");
+
 
 
 
@@ -99817,7 +99813,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     order: _js_stores_modules_order__WEBPACK_IMPORTED_MODULE_11__["default"],
     orderDetail: _js_stores_modules_orderDetail__WEBPACK_IMPORTED_MODULE_12__["default"],
     snackbar: _js_stores_modules_snackbar__WEBPACK_IMPORTED_MODULE_13__["default"],
-    payment: _js_stores_modules_payment__WEBPACK_IMPORTED_MODULE_14__["default"]
+    payment: _js_stores_modules_payment__WEBPACK_IMPORTED_MODULE_14__["default"],
+    orderPaymentMethod: _js_stores_modules_orderPaymentMethod__WEBPACK_IMPORTED_MODULE_15__["default"]
   }
 }));
 
@@ -100616,6 +100613,97 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
+/***/ "./resources/js/stores/modules/orderPaymentMethod.js":
+/*!***********************************************************!*\
+  !*** ./resources/js/stores/modules/orderPaymentMethod.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  state: {
+    all: [],
+    useonly: []
+  },
+  mutations: {
+    all: function all(state, data) {
+      state.all = data;
+    },
+    useonly: function useonly(state, data) {
+      state.useonly = data;
+    }
+  },
+  getters: {
+    all: function all(state) {
+      return state.all;
+    },
+    useonly: function useonly(state) {
+      return state.useonly;
+    }
+  },
+  actions: {
+    all: function all(_ref) {
+      var commit = _ref.commit;
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.get("/api/payment/method/all");
+
+              case 2:
+                res = _context.sent;
+                commit("all", res.data);
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    useonly: function useonly(_ref2) {
+      var commit = _ref2.commit;
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios.get("/api/payment/method/useonly");
+
+              case 2:
+                res = _context2.sent;
+                commit("useonly", res.data);
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/stores/modules/payment.js":
 /*!************************************************!*\
   !*** ./resources/js/stores/modules/payment.js ***!
@@ -100642,7 +100730,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   getters: {},
   actions: {
     create: function create(_ref, payload) {
-      var dispatch = _ref.dispatch;
+      _objectDestructuringEmpty(_ref);
+
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
@@ -100686,6 +100775,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee2);
+      }))();
+    },
+    alert: function alert(_ref3, payload) {
+      _objectDestructuringEmpty(_ref3);
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return axios.post("/api/payment/alert", payload);
+
+              case 2:
+                response = _context3.sent;
+                return _context3.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
       }))();
     }
   }

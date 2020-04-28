@@ -12,6 +12,7 @@ use App\Config_software;
 use App\Summary_score_of_member;
 use App\Linenotify;
 use App\MSms;
+use App\URL;
 
 class OrderPaymentController extends Controller
 {
@@ -19,7 +20,7 @@ class OrderPaymentController extends Controller
     {
         // จัดรูปแบบก่อนสร้าง
         $input = OrderPayment::FormatData(request()->all());
-
+        
         //ค้นหารายการสั่งซื้อ
         $order = Order::find($input['order_id']);
 
@@ -124,5 +125,16 @@ class OrderPaymentController extends Controller
             'success' => true,
             'message' => 'ยกเลิกรายการชำระเงิน #' . $payment->order_id
         ], 200);
+    }
+
+    public function alert()
+    {
+        // เปลี่ยนตัวแปร
+        $input = request()->all();
+
+        // ค้นหา order
+        $order = Order::find($input['order_id']);
+        
+        return URL::punpang().$order->token.'/'.$input['amount'].'/payment';
     }
 }

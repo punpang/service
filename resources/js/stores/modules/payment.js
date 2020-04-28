@@ -4,7 +4,7 @@ export default {
     mutations: {},
     getters: {},
     actions: {
-        async create({dispatch}, payload) {
+        async create({}, payload) {
             const response = await axios.post(
                 "/api/payment/create",
                 payload
@@ -16,6 +16,13 @@ export default {
                 "/api/payment/"+payload+'/cancel'
             );
             return response;
-        }
+        },
+        async alert({}, payload) {
+            const response = await axios.post(
+                "/api/payment/alert",
+                payload
+            );
+            return response;
+        },
     }
 };

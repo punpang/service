@@ -77,6 +77,13 @@ Route::middleware('admin')->group(function () { //สำหรับ admin
     Route::prefix('payment')->group(function () { // api/payment/...
         Route::post('create', 'Order\OrderPaymentController@create');
         Route::delete('{payment}/cancel', 'Order\OrderPaymentController@cancel');
+        Route::post('alert', 'Order\OrderPaymentController@alert');
+
+        Route::prefix('method')->group(function () { // api/payment/method/...
+            Route::get('all', 'Order\OrderPaymentMethodController@all');
+            Route::get('useonly', 'Order\OrderPaymentMethodController@useonly');
+        });
+
     });
 
     Route::prefix('product')->group(function () { // api/product/...
@@ -134,6 +141,7 @@ Route::prefix('v1')->group(function () { // api/v1/...
     Route::prefix('guest')->group(function () { // api/v1/guest/
         Route::prefix('order')->group(function () { // api/guest/order/
             Route::get('{token}', 'Order\OrderController@getByToken');
+            Route::get('{token}/payment/alert', 'Order\OrderController@getByTokenForPaymentAlert');
         });
     });
 });

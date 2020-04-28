@@ -11,7 +11,7 @@ class OrderPayment extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
     protected $auditInclude = [
         'order_id',
-        'payment_method_id',
+        'order_payment_method_id',
         'amount',
         'status',
         'image_slip_id',
@@ -24,7 +24,7 @@ class OrderPayment extends Model implements Auditable
     protected $connection = "order";
     protected $fillable = [
         'order_id',
-        'payment_method_id',
+        'order_payment_method_id',
         'amount',
         'status',
         'image_slip_id',
@@ -52,5 +52,10 @@ class OrderPayment extends Model implements Auditable
     public function order()
     {
         return $this->belongsTo(Order::class,"order_id","id");
+    }
+
+    public function OrderPaymentMethod()
+    {
+        return $this->belongsTo(OrderPaymentMethod::class,"order_payment_method_id","id");
     }
 }
