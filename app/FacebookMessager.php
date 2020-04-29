@@ -98,6 +98,8 @@ class FacebookMessager extends Model
             $data = [
                 'recipient' => ['id' => $psid],
                 'message' => ['text' => $text],
+                "messaging_type" => "MESSAGE_TAG",
+                "tag" => "POST_PURCHASE_UPDATE"
             ];
             $client = new \GuzzleHttp\Client();
             $response = $client->post($url, ['form_params' => $data]);

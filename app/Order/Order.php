@@ -143,4 +143,10 @@ class Order extends Model  implements Auditable
     {
         return \Carbon\Carbon::parse($dateTime)->addYears(543)->format('d-m-Y H:i:s');
     }
+
+    public function slip() //รวมเงินเฉพาะที่ใช้งาน
+    {
+        return $this->hasMany(Slip::class, 'order_id', 'id');
+    }
+
 }

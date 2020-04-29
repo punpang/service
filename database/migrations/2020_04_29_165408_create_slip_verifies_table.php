@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSlipsTable extends Migration
+class CreateSlipVerifiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateSlipsTable extends Migration
      */
     public function up()
     {
-        Schema::connection('order')->create('slips', function (Blueprint $table) {
+        Schema::connection('order')->create('slip_verifies', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('order_id');
-            $table->string('path')->unique();
-            $table->integer('slip_verify_id')->default(1);
-            $table->string('ref')->unique()->nullable();
+            $table->text('text');
+            $table->text('style');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateSlipsTable extends Migration
      */
     public function down()
     {
-        Schema::connection('order')->dropIfExists('slips');
+        Schema::connection('order')->dropIfExists('slip_verifies');
     }
 }

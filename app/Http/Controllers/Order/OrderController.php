@@ -196,7 +196,10 @@ class OrderController extends Controller
     public function getByID($order)
     {
         $data = Order::where('id', $order)
-            ->with('Customer', 'ChannelOfPurchase', 'OrderStatus', 'OrderDetail.Product.ProductTagUseOnly.ProductCategorySubUseOnly.ProductCategory', 'OrderDetailNoUse.Product.ProductTagUseOnly.ProductCategorySubUseOnly.ProductCategory', "OrderPayment.OrderPaymentMethod")
+            ->with('Customer', 'ChannelOfPurchase', 'OrderStatus', 
+            'OrderDetail.Product.ProductTagUseOnly.ProductCategorySubUseOnly.ProductCategory', 
+            'OrderDetailNoUse.Product.ProductTagUseOnly.ProductCategorySubUseOnly.ProductCategory', 
+            "OrderPayment.OrderPaymentMethod",'Slip.SlipVerify')
             ->with('OrderDetail.Product.ProductImage')
             ->with('OrderDetailNoUse.Product.ProductImage')
             ->first();

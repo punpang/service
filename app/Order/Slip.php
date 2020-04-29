@@ -25,4 +25,9 @@ class Slip extends Model implements Auditable
         'verify',
         'ref',
     ];
+
+    public function SlipVerify()
+    {
+        return $this->belongsTo(SlipVerify::class, 'slip_verify_id', 'id');
+    }
 }

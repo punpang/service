@@ -41,7 +41,12 @@
                             suffix="บาท"
                         ></v-text-field>
                     </v-form>
-                    <v-btn color="success" large class="my-4" @click="clickSubmit">
+                    <v-btn
+                        color="success"
+                        large
+                        class="my-4"
+                        @click="clickSubmit"
+                    >
                         <v-icon left>attach_money</v-icon>
                         แจ้งการชำระเงิน
                     </v-btn>
@@ -52,19 +57,23 @@
                     </v-btn>
                 </v-card-text>
             </v-card>
+            <overlay :overlay="overlay"></overlay>
         </v-dialog>
     </div>
 </template>
 
 <script>
 import CostSub from "@/js/components/orders/details/CostSub";
+import overlay from "@/js/layouts/overlay";
 export default {
     components: {
-        CostSub
+        CostSub,
+        overlay
     },
     data() {
         return {
             dialog: false,
+            overlay: false,
             deposits: [
                 { value: "0.5", text: "50 เปอร์เซนต์" },
                 { value: "1", text: "ชำระทั้งหมด" },
@@ -82,11 +91,19 @@ export default {
             this.form.amount =
                 this.$store.getters["order/getByID"].sum.balance * value;
         },
-        async clickSubmit(){
-            if(this.$refs.form.validate())
-            {
-                await this.$store.dispatch('payment/alert',this.form)
+        async clickSubmit() {
+            this.overlay = true;
+            if (this.$refs.form.validate()) {
+                const res = await this.$store.dispatch(
+                    "payment/alert",
+                    this.form
+                );
+
+                if (res.status === 200) {
+                    this.dialog = false;
+                }
             }
+            this.overlay = false;
         }
     },
     mounted() {
