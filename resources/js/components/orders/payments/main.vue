@@ -25,7 +25,7 @@
                             class="mr-2"
                             :sum="this.$store.getters['order/getByID'].sum"
                         ></acceptPayment>
-                        <acceptPaymentFormAlert class="mr-2" :slips="this.$store.getters['order/getByID'].data.slip"></acceptPaymentFormAlert>
+                        <tablePaymentVerify class="mr-2" :slips="this.$store.getters['order/getByID'].data.slip"></tablePaymentVerify>
                         <alertPayment></alertPayment>
                     </v-row>
                     <tablePayment
@@ -42,7 +42,7 @@
 
 <script>
 import alertPayment from "@/js/components/orders/payments/alertPayment";
-import acceptPaymentFormAlert from "@/js/components/orders/payments/acceptPaymentFormAlert";
+import tablePaymentVerify from "@/js/components/orders/payments/tablePaymentVerify";
 import acceptPayment from "@/js/components/orders/payments/acceptPayment";
 import tablePayment from "@/js/components/orders/payments/tablePayment";
 
@@ -52,7 +52,7 @@ export default {
         alertPayment,
         acceptPayment,
         tablePayment,
-        acceptPaymentFormAlert
+        tablePaymentVerify
     },
     data() {
         return {
