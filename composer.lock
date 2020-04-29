@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "733d6bc36068ce5b32735e9dd021134a",
+    "content-hash": "28ae7d30e627c84b291f90ec6ee20f4c",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1218,41 +1218,6 @@
             "description": "Highlight PHP code in terminal",
             "abandoned": "php-parallel-lint/php-console-highlighter",
             "time": "2018-09-29T18:48:56+00:00"
-        },
-        {
-            "name": "jelovac/bitly4laravel",
-            "version": "v3.7.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jelovac/bitly4laravel.git",
-                "reference": "ab661013ab881cd515cbb75fd08b96d40e7d7651"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jelovac/bitly4laravel/zipball/ab661013ab881cd515cbb75fd08b96d40e7d7651",
-                "reference": "ab661013ab881cd515cbb75fd08b96d40e7d7651",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "~5|~6",
-                "illuminate/support": "~4|~5",
-                "php": ">=5.6"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.4.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Jelovac\\Bitly4laravel\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Provides a Laravel package to communicate with Bit.ly API",
-            "time": "2017-12-23T08:34:22+00:00"
         },
         {
             "name": "laravel/framework",
@@ -3273,6 +3238,68 @@
                 "uuid"
             ],
             "time": "2020-02-21T04:36:14+00:00"
+        },
+        {
+            "name": "shivella/laravel-bitly",
+            "version": "1.1.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Shivella/laravel-bitly.git",
+                "reference": "5d0f2bf793e8eb77cb616b19f1df4308235bc090"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Shivella/laravel-bitly/zipball/5d0f2bf793e8eb77cb616b19f1df4308235bc090",
+                "reference": "5d0f2bf793e8eb77cb616b19f1df4308235bc090",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "~6.0",
+                "illuminate/support": "^5.8 || ^6.0 || ^7.0",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.1",
+                "symfony/http-foundation": "^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Shivella\\Bitly\\BitlyServiceProvider"
+                    ],
+                    "aliases": {
+                        "Bitly": "Shivella\\Bitly\\Facade\\Bitly"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Shivella\\Bitly\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Wessel Strengholt",
+                    "email": "wessel.strengholt@gmail.com"
+                }
+            ],
+            "description": "Laravel package for generating bitly url",
+            "homepage": "https://github.com/Shivella/laravel-bitly",
+            "keywords": [
+                "bitly",
+                "laravel",
+                "link",
+                "package",
+                "short",
+                "url"
+            ],
+            "time": "2020-03-05T21:29:15+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

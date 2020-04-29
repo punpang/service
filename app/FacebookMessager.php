@@ -92,29 +92,24 @@ class FacebookMessager extends Model
             return 'ไม่สามารถส่งข้อความได้';
         }
 
-        $pageToken = FacebookMessager::pageToken();
-        $url = self::url() . self::version() . 'me/messages?access_token=' . $pageToken['access_token'];
-        $data = [
-            'recipient' => ['id' => $psid],
-            'message' => ['text' => $text]
-        ];
-        $client = new \GuzzleHttp\Client();
-        $response = $client->post($url, ['form_params' => $data]);
-        
-        if ($response->getStatusCode() === 500) {
-            FacebookMessager::postMessageNotAllow($psid, $text);
-        } else if ($response->getStatusCode() === 200) {
-            return $response->getStatusCode();
-        }
+        try {
+            $pageToken = FacebookMessager::pageToken();
+            $url = self::url() . self::version() . 'me/messages?access_token=' . $pageToken['access_token'];
+            $data = [
+                'recipient' => ['id' => $psid],
+                'message' => ['text' => $text],
+            ];
+            $client = new \GuzzleHttp\Client();
+            $response = $client->post($url, ['form_params' => $data]);
 
-        return [
-            'message' => 'เกิดปัญหาบางอย่าง'
-        ];
+            return $response->getStatusCode();
+        } catch (\Exception $e) {
+            FacebookMessager::postMessageNotAllow($psid, $text);
+        }
     }
 
     public static function postMessageNotAllow($psid, $text) //ส่งข้อความหาลูกค้าที่เกิน 24 ชม.
     {
-        dd('postMessageNotAllow');
         $pageToken = FacebookMessager::pageToken();
         $url = self::url() . self::version() . 'me/messages?access_token=' . $pageToken['access_token'];
         $data = [

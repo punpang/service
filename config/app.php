@@ -163,12 +163,12 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Yugo\SMSGateway\Providers\SmsServiceProvider::class,
-        Jelovac\Bitly4laravel\Bitly4laravelServiceProvider::class,
         Hinaloe\LineNotify\LineNotifyServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         OwenIt\Auditing\AuditingServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Shivella\Bitly\BitlyServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -237,9 +237,9 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Sms' => Facades\Yugo\SMSGateway\Interfaces\SMS::class,
-        'Bitly' => Jelovac\Bitly4laravel\Facades\Bitly4laravel::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Bitly' => Shivella\Bitly\Facade\Bitly::class,
     ],
 
 ];

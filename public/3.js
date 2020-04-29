@@ -72,6 +72,30 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/layouts/overlay.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/layouts/overlay.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['overlay']
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/punpang/orders/payment.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/punpang/orders/payment.vue?vue&type=script&lang=js& ***!
@@ -83,8 +107,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _js_components_orders_details_CostSub__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/orders/details/CostSub */ "./resources/js/components/orders/details/CostSub.vue");
-/* harmony import */ var _js_components_orders_details_detailNotFB__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/components/orders/details/detailNotFB */ "./resources/js/components/orders/details/detailNotFB.vue");
+/* harmony import */ var _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/layouts/overlay */ "./resources/js/layouts/overlay.vue");
+/* harmony import */ var _js_components_orders_details_CostSub__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/components/orders/details/CostSub */ "./resources/js/components/orders/details/CostSub.vue");
+/* harmony import */ var _js_components_orders_details_detailNotFB__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/js/components/orders/details/detailNotFB */ "./resources/js/components/orders/details/detailNotFB.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -160,19 +185,54 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    CostSub: _js_components_orders_details_CostSub__WEBPACK_IMPORTED_MODULE_1__["default"],
-    OrderDetail: _js_components_orders_details_detailNotFB__WEBPACK_IMPORTED_MODULE_2__["default"]
+    CostSub: _js_components_orders_details_CostSub__WEBPACK_IMPORTED_MODULE_2__["default"],
+    OrderDetail: _js_components_orders_details_detailNotFB__WEBPACK_IMPORTED_MODULE_3__["default"],
+    overlay: _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
       token: "",
       amount: "",
       previewSlip: "",
+      show: true,
       sum: {},
+      overlay: false,
+      slipFile: {},
       order: {
         customer_not_f_b: {
           name: "",
@@ -186,36 +246,77 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     onFileChange: function onFileChange(image) {
+      this.slipFile = event.target.files[0];
       this.previewSlip = URL.createObjectURL(image);
+    },
+    clickSubmit: function clickSubmit() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var formData, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this.overlay = true;
+
+                if (!_this.$refs.form.validate()) {
+                  _context.next = 8;
+                  break;
+                }
+
+                formData = new FormData();
+                formData.append("image", _this.slipFile);
+                _context.next = 6;
+                return axios.post("/api/v1/guest/order/" + _this.token + "/payment/alert/uploadslip", formData);
+
+              case 6:
+                res = _context.sent;
+
+                if (res.status === 200) {
+                  _this.show = false;
+                }
+
+              case 8:
+                _this.overlay = false;
+
+              case 9:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     }
   },
   created: function created() {
-    var _this = this;
+    var _this2 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
       var _ref, data;
 
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
-          switch (_context.prev = _context.next) {
+          switch (_context2.prev = _context2.next) {
             case 0:
-              _this.token = _this.$route.params.token;
-              _this.amount = _this.$route.params.amount;
-              _context.next = 4;
-              return axios.get("/api/v1/guest/order/" + _this.token + "/payment/alert");
+              _this2.token = _this2.$route.params.token;
+              _this2.amount = _this2.$route.params.amount;
+              _context2.next = 4;
+              return axios.get("/api/v1/guest/order/" + _this2.token + "/payment/alert");
 
             case 4:
-              _ref = _context.sent;
+              _ref = _context2.sent;
               data = _ref.data;
-              _this.order = data.data;
-              _this.sum = data.sum;
+              _this2.order = data.data; //this.form.order_id = this.order.id
+
+              _this2.sum = data.sum;
 
             case 8:
             case "end":
-              return _context.stop();
+              return _context2.stop();
           }
         }
-      }, _callee);
+      }, _callee2);
     }))();
   }
 });
@@ -391,6 +492,42 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/layouts/overlay.vue?vue&type=template&id=0888f9bc&":
+/*!*******************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/layouts/overlay.vue?vue&type=template&id=0888f9bc& ***!
+  \*******************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-overlay",
+    { attrs: { value: _vm.overlay } },
+    [
+      _c("v-progress-circular", {
+        attrs: {
+          indeterminate: "",
+          size: this.$store.getters["main/sizeOverlay"]
+        }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/punpang/orders/payment.vue?vue&type=template&id=2857e921&":
 /*!********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/punpang/orders/payment.vue?vue&type=template&id=2857e921& ***!
@@ -473,71 +610,26 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-card-text",
-                    { staticClass: "py-0" },
+                    { staticClass: "pt-0" },
                     [
-                      _c(
-                        "v-alert",
-                        { staticClass: "ma-0", attrs: { type: "warning" } },
-                        [
-                          _vm._v(
-                            "\n                        โปรดชำระเงินขั้นต่ำด้วยยอด " +
-                              _vm._s(_vm.amount) +
-                              " บาท\n                    "
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-row",
-                        [
-                          _c(
-                            "v-col",
-                            {
-                              staticClass: "pt-5",
-                              attrs: { cols: "12", md: "6" }
-                            },
-                            [
-                              _c("v-img", {
-                                attrs: {
-                                  src:
-                                    "https://apply.scb.co.th/selfservices/easy-lg/common/img/logo-scb-w.png"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-col",
-                            { attrs: { cols: "12", md: "6" } },
+                      _vm.show
+                        ? _c(
+                            "v-form",
+                            { ref: "form", attrs: { "lazy-validation": "" } },
                             [
                               _c(
-                                "v-row",
+                                "v-alert",
+                                {
+                                  staticClass: "ma-0",
+                                  attrs: { type: "warning" }
+                                },
                                 [
-                                  _c(
-                                    "v-col",
-                                    { attrs: { cols: "6", md: "6" } },
-                                    [
-                                      _vm._v(
-                                        "\n                                    ชื่อบัญชี\n                                "
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "v-col",
-                                    {
-                                      staticClass: "text-right",
-                                      attrs: { cols: "6", md: "6" }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                    พรรษิษฐ์ ศรีสุข\n                                "
-                                      )
-                                    ]
+                                  _vm._v(
+                                    "\n                            โปรดชำระเงินขั้นต่ำด้วยยอด " +
+                                      _vm._s(_vm.amount) +
+                                      " บาท\n                        "
                                   )
-                                ],
-                                1
+                                ]
                               ),
                               _vm._v(" "),
                               _c(
@@ -545,25 +637,127 @@ var render = function() {
                                 [
                                   _c(
                                     "v-col",
-                                    { attrs: { cols: "6", md: "6" } },
+                                    {
+                                      staticClass: "pt-5",
+                                      attrs: { cols: "12", md: "6" }
+                                    },
                                     [
-                                      _vm._v(
-                                        "\n                                    เลขที่บัญชี\n                                "
-                                      )
-                                    ]
+                                      _c("v-img", {
+                                        attrs: {
+                                          src:
+                                            "https://apply.scb.co.th/selfservices/easy-lg/common/img/logo-scb-w.png"
+                                        }
+                                      })
+                                    ],
+                                    1
                                   ),
                                   _vm._v(" "),
                                   _c(
                                     "v-col",
-                                    {
-                                      staticClass: "text-right",
-                                      attrs: { cols: "6", md: "6" }
-                                    },
+                                    { attrs: { cols: "12", md: "6" } },
                                     [
-                                      _vm._v(
-                                        "\n                                    408-672-0266\n                                "
+                                      _c(
+                                        "v-row",
+                                        [
+                                          _c(
+                                            "v-col",
+                                            { attrs: { cols: "6", md: "6" } },
+                                            [
+                                              _vm._v(
+                                                "\n                                        ชื่อบัญชี\n                                    "
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-col",
+                                            {
+                                              staticClass: "text-right",
+                                              attrs: { cols: "6", md: "6" }
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                        พรรษิษฐ์ ศรีสุข\n                                    "
+                                              )
+                                            ]
+                                          )
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-row",
+                                        [
+                                          _c(
+                                            "v-col",
+                                            { attrs: { cols: "6", md: "6" } },
+                                            [
+                                              _vm._v(
+                                                "\n                                        เลขที่บัญชี\n                                    "
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-col",
+                                            {
+                                              staticClass: "text-right",
+                                              attrs: { cols: "6", md: "6" }
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                        408-672-0266\n                                    "
+                                              )
+                                            ]
+                                          )
+                                        ],
+                                        1
                                       )
-                                    ]
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c("v-file-input", {
+                                staticClass: "mb-4",
+                                attrs: {
+                                  outlined: "",
+                                  "prepend-icon": "image",
+                                  placeholder: "แนบสลิปการชำระเงิน",
+                                  accept: "image/*",
+                                  "hide-details": "",
+                                  rules: [
+                                    function(v) {
+                                      return !!v
+                                    }
+                                  ]
+                                },
+                                on: { change: _vm.onFileChange }
+                              }),
+                              _vm._v(" "),
+                              _c("v-img", {
+                                staticClass: "mb-4",
+                                attrs: { src: _vm.previewSlip }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: {
+                                    color: "success",
+                                    large: "",
+                                    block: ""
+                                  },
+                                  on: { click: _vm.clickSubmit }
+                                },
+                                [
+                                  _c("v-icon", { attrs: { left: "" } }, [
+                                    _vm._v("cloud_upload")
+                                  ]),
+                                  _vm._v(
+                                    "\n                            แจ้งชำระเงิน\n                        "
                                   )
                                 ],
                                 1
@@ -571,23 +765,15 @@ var render = function() {
                             ],
                             1
                           )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("v-file-input", {
-                        attrs: {
-                          outlined: "",
-                          "prepend-icon": "image",
-                          placeholder: "แนบสลิปการชำระเงิน",
-                          accept: "image/*"
-                        },
-                        on: { change: _vm.onFileChange }
-                      }),
-                      _vm._v(" "),
-                      _c("v-img", {
-                        attrs: { src: _vm.previewSlip, hidden: "" }
-                      })
+                        : _c(
+                            "v-alert",
+                            { staticClass: "ma-0", attrs: { type: "success" } },
+                            [
+                              _vm._v(
+                                "ขอบคุณที่ชำระเงินค่ะ\n                        เราจะตรวจสอบและแจ้งผลโดยเร็วที่สุดค่ะ"
+                              )
+                            ]
+                          )
                     ],
                     1
                   )
@@ -599,7 +785,9 @@ var render = function() {
           )
         ],
         1
-      )
+      ),
+      _vm._v(" "),
+      _c("overlay", { attrs: { overlay: _vm.overlay } })
     ],
     1
   )
@@ -744,6 +932,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_detailNotFB_vue_vue_type_template_id_2a782192___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_detailNotFB_vue_vue_type_template_id_2a782192___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/layouts/overlay.vue":
+/*!******************************************!*\
+  !*** ./resources/js/layouts/overlay.vue ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _overlay_vue_vue_type_template_id_0888f9bc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./overlay.vue?vue&type=template&id=0888f9bc& */ "./resources/js/layouts/overlay.vue?vue&type=template&id=0888f9bc&");
+/* harmony import */ var _overlay_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./overlay.vue?vue&type=script&lang=js& */ "./resources/js/layouts/overlay.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _overlay_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _overlay_vue_vue_type_template_id_0888f9bc___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _overlay_vue_vue_type_template_id_0888f9bc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/layouts/overlay.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/layouts/overlay.vue?vue&type=script&lang=js&":
+/*!*******************************************************************!*\
+  !*** ./resources/js/layouts/overlay.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_overlay_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./overlay.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/layouts/overlay.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_overlay_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/layouts/overlay.vue?vue&type=template&id=0888f9bc&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/layouts/overlay.vue?vue&type=template&id=0888f9bc& ***!
+  \*************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_overlay_vue_vue_type_template_id_0888f9bc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./overlay.vue?vue&type=template&id=0888f9bc& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/layouts/overlay.vue?vue&type=template&id=0888f9bc&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_overlay_vue_vue_type_template_id_0888f9bc___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_overlay_vue_vue_type_template_id_0888f9bc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

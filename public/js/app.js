@@ -2257,7 +2257,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       Profile: {},
-      drawer: true
+      drawer: false
     };
   },
   methods: {
@@ -99783,6 +99783,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_stores_modules_snackbar__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/js/stores/modules/snackbar */ "./resources/js/stores/modules/snackbar.js");
 /* harmony import */ var _js_stores_modules_payment__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/js/stores/modules/payment */ "./resources/js/stores/modules/payment.js");
 /* harmony import */ var _js_stores_modules_orderPaymentMethod__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/js/stores/modules/orderPaymentMethod */ "./resources/js/stores/modules/orderPaymentMethod.js");
+/* harmony import */ var _js_stores_modules_slip__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/js/stores/modules/slip */ "./resources/js/stores/modules/slip.js");
+
 
 
 
@@ -99814,7 +99816,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     orderDetail: _js_stores_modules_orderDetail__WEBPACK_IMPORTED_MODULE_12__["default"],
     snackbar: _js_stores_modules_snackbar__WEBPACK_IMPORTED_MODULE_13__["default"],
     payment: _js_stores_modules_payment__WEBPACK_IMPORTED_MODULE_14__["default"],
-    orderPaymentMethod: _js_stores_modules_orderPaymentMethod__WEBPACK_IMPORTED_MODULE_15__["default"]
+    orderPaymentMethod: _js_stores_modules_orderPaymentMethod__WEBPACK_IMPORTED_MODULE_15__["default"],
+    slip: _js_stores_modules_slip__WEBPACK_IMPORTED_MODULE_16__["default"]
   }
 }));
 
@@ -101617,6 +101620,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     }
   }
+});
+
+/***/ }),
+
+/***/ "./resources/js/stores/modules/slip.js":
+/*!*********************************************!*\
+  !*** ./resources/js/stores/modules/slip.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  state: {},
+  mutations: {},
+  getters: {},
+  actions: {}
 });
 
 /***/ }),

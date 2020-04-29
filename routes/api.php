@@ -142,6 +142,7 @@ Route::prefix('v1')->group(function () { // api/v1/...
         Route::prefix('order')->group(function () { // api/guest/order/
             Route::get('{token}', 'Order\OrderController@getByToken');
             Route::get('{token}/payment/alert', 'Order\OrderController@getByTokenForPaymentAlert');
+            Route::post('{token}/payment/alert/uploadslip', 'Order\OrderPaymentController@uploadslip');
         });
     });
 });
