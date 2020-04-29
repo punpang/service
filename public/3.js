@@ -258,29 +258,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this.overlay = true;
-
                 if (!_this.$refs.form.validate()) {
-                  _context.next = 8;
+                  _context.next = 7;
                   break;
                 }
 
                 formData = new FormData();
                 formData.append("image", _this.slipFile);
-                _context.next = 6;
+                _context.next = 5;
                 return axios.post("/api/v1/guest/order/" + _this.token + "/payment/alert/uploadslip", formData);
 
-              case 6:
+              case 5:
                 res = _context.sent;
 
-                if (res.status === 200) {
-                  _this.show = false;
+                if (res.status === 200) {//this.show = false;
                 }
 
-              case 8:
+              case 7:
                 _this.overlay = false;
 
-              case 9:
+              case 8:
               case "end":
                 return _context.stop();
             }

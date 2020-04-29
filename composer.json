@@ -23,6 +23,7 @@
         "owen-it/laravel-auditing": "^9.3",
         "shivella/laravel-bitly": "^1.1",
         "tymon/jwt-auth": "^1.0.0",
+        "wapnen/google-cloud-vision-php": "dev-master",
         "yugo/smsgateway": "^1.4"
     },
     "require-dev": {

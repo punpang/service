@@ -16,6 +16,7 @@ use App\MSms;
 use App\URL;
 use App\Order\Slip;
 use Bitly;
+use App\GoogleOcr;
 
 class OrderPaymentController extends Controller
 {
@@ -176,16 +177,19 @@ class OrderPaymentController extends Controller
                     'success' => false,
                     'message' => 'ไม่สามารถเข้าถึงได้'
                 ], 590);
-            }
+            }              
 
             //อัปโหลดรูป และรับ pathid
             $imagePath = GoogleImage::StoreAndFindPath(request('image'));
+            $GoogleOcr = GoogleOcr::ocrImage(request('image'),$imagePath);
+
+            return $GoogleOcr;
 
             $input['order_id'] = $order->id;
             $input['path'] = $imagePath;
 
             // สร้างสลิป
-            Slip::create($input);
+            Slip::create($input);      
 
             $messgae = 'ขอบคุณที่ชำระเงิน เราจะตรวจสอบและแจ้งผลโดยเร็วที่สุดค่ะ';
             MSms::SMSFB($order, $messgae, true);

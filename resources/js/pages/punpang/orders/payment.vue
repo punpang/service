@@ -133,7 +133,7 @@ export default {
             this.previewSlip = URL.createObjectURL(image);
         },
         async clickSubmit() {
-            this.overlay = true;
+            //this.overlay = true;
             if (this.$refs.form.validate()) {                
                 const formData = new FormData();
                 formData.append("image", this.slipFile);
@@ -146,7 +146,7 @@ export default {
                 );
 
                 if (res.status === 200) {
-                    this.show = false;
+                    //this.show = false;
                 }
             }
             this.overlay = false;
