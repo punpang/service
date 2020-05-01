@@ -13,9 +13,11 @@ class SlipVerify extends Model implements Auditable
     ];
 
     protected $table = "slip_verifies";
+    public $hidden = ['created_at','updated_at'];
     protected $connection = 'order';
     protected $fillable = [
         'text'
     ];
 
+    
 }

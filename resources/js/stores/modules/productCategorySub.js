@@ -41,7 +41,7 @@ export default {
         },
         async update({ dispatch }, payload) {
             try {
-                const response = await axios.patch(
+                const response = await axios.post(
                     "api/product/category/sub/" + payload.id + "/edit",
                     payload
                 );

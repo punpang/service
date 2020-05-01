@@ -41,14 +41,14 @@ export default {
             return res;
         },
         async delete({ dispatch }, payload) {
-            const res = await axios.delete(
+            const res = await axios.post(
                 "api/order/detail/" + payload.detail_id + "/delete"
             );
             //dispatch("getByOrderID", payload.order_id);
             return res;
         },
         async redelete({ dispatch }, payload) {
-            const res = await axios.patch(
+            const res = await axios.post(
                 "api/order/detail/" + payload.detail_id + "/redelete"
             );
             //dispatch("getByOrderID", payload.order_id);

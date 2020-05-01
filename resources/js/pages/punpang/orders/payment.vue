@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-row>
+        <v-row v-if="verity">
             <v-col cols="12" md="6">
                 <v-card>
                     <v-card-title>
@@ -93,6 +93,10 @@
                 </v-card>
             </v-col>
         </v-row>
+
+        <v-alert type="error" v-else>
+            ไม่มีสิทธิ์เข้าถึงการใช้งาน กรุณาติดต่อทางร้านค่ะ โทร.091-885-3402
+        </v-alert>
         <overlay :overlay="overlay"></overlay>
     </div>
 </template>
@@ -113,6 +117,7 @@ export default {
             amount: "",
             previewSlip: "",
             show: true,
+            verity: true,
             sum: {},
             overlay: false,
             slipFile: {},
@@ -133,8 +138,8 @@ export default {
             this.previewSlip = URL.createObjectURL(image);
         },
         async clickSubmit() {
-            //this.overlay = true;
-            if (this.$refs.form.validate()) {                
+            this.overlay = true;
+            if (this.$refs.form.validate()) {
                 const formData = new FormData();
                 formData.append("image", this.slipFile);
 
@@ -146,7 +151,7 @@ export default {
                 );
 
                 if (res.status === 200) {
-                    //this.show = false;
+                    this.show = false;
                 }
             }
             this.overlay = false;
@@ -155,12 +160,18 @@ export default {
     async created() {
         this.token = this.$route.params.token;
         this.amount = this.$route.params.amount;
-        const { data } = await axios.get(
+        const response = await axios.get(
             "/api/v1/guest/order/" + this.token + "/payment/alert"
         );
-        this.order = data.data;
-        //this.form.order_id = this.order.id
-        this.sum = data.sum;
+        if (response.status == 200) {
+            this.order = response.data.data;
+            //this.form.order_id = this.order.id
+            this.sum = response.data.sum;
+            this.verity = true;
+        }else{
+            this.verity = false;
+        }
+        
     }
 };
 </script>

@@ -73,6 +73,7 @@ export default {
                 "productCategorySub/update",
                 form
             );
+
             if (response.status === 200) {
                 this.snackbar = {
                     status: true,

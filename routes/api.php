@@ -68,16 +68,17 @@ Route::middleware('admin')->group(function () { //สำหรับ admin
         Route::prefix('detail')->group(function () { // api/order/detail
             Route::post('store', 'Order\OrderDetailController@store');
             Route::post('{detail}/update', 'Order\OrderDetailController@update');
-            Route::delete('{detail}/delete', 'Order\OrderDetailController@delete');
-            Route::patch('{detail}/redelete', 'Order\OrderDetailController@redelete');
+            Route::post('{detail}/delete', 'Order\OrderDetailController@delete');
+            Route::post('{detail}/redelete', 'Order\OrderDetailController@redelete');
             Route::get('{order_id}/getByOrderID', 'Order\OrderDetailController@getByOrderID');
         });
     });
 
     Route::prefix('payment')->group(function () { // api/payment/...
         Route::post('create', 'Order\OrderPaymentController@create');
-        Route::delete('{payment}/cancel', 'Order\OrderPaymentController@cancel');
+        Route::post('{payment}/cancel', 'Order\OrderPaymentController@cancel');
         Route::post('alert', 'Order\OrderPaymentController@alert');
+        Route::post('checkRef', 'Order\OrderPaymentController@checkRef');
 
         Route::prefix('method')->group(function () { // api/payment/method/...
             Route::get('all', 'Order\OrderPaymentMethodController@all');
@@ -91,19 +92,19 @@ Route::middleware('admin')->group(function () { //สำหรับ admin
         Route::get('useonly', 'Order\ProductController@useOnly');
         Route::post('store', 'Order\ProductController@store');
 
-        Route::patch('/{id}/edit', 'Order\ProductController@update');
+        Route::post('/{id}/edit', 'Order\ProductController@update');
 
         Route::prefix('image')->group(function () { // api/product/image/...
             Route::post('store', 'Order\ProductImageController@store');
             Route::post('{id}/update', 'Order\ProductImageController@update');
-            Route::delete('{id}/destroy', 'Order\ProductImageController@destroy');
+            Route::post('{id}/destroy', 'Order\ProductImageController@destroy');
         });
 
         Route::prefix('tag')->group(function () { // api/product/tag/...
             Route::get('{id}', 'Order\ProductTagController@tag');
             Route::post('store', 'Order\ProductTagController@store');
             Route::post('{id}/update', 'Order\ProductTagController@update');
-            Route::delete('{id}/destroy', 'Order\ProductTagController@destroy');
+            Route::post('{id}/destroy', 'Order\ProductTagController@destroy');
             Route::get('{id}/isProductTags', 'Order\ProductTagController@isProductTags');
         });
 
@@ -111,7 +112,7 @@ Route::middleware('admin')->group(function () { //สำหรับ admin
             Route::get('/', 'Order\ProductCategoryController@get');
             Route::get('/useonly', 'Order\ProductCategoryController@useonly');
             Route::post('store', 'Order\ProductCategoryController@store');
-            Route::patch('/{id}/edit', 'Order\ProductCategoryController@update');
+            Route::post('/{id}/edit', 'Order\ProductCategoryController@update');
 
             Route::get('/useonly/with/subs', 'Order\ProductCategoryController@UseOnlyWithSubs');
 
@@ -120,7 +121,7 @@ Route::middleware('admin')->group(function () { //สำหรับ admin
                 Route::get('useonly', 'Order\ProductCategorySubController@useOnly');
                 Route::get('useonly/with/product/category', 'Order\ProductCategorySubController@useOnlyWithProductCategory');
                 Route::post('store', 'Order\ProductCategorySubController@store');
-                Route::patch('/{id}/edit', 'Order\ProductCategorySubController@update');
+                Route::post('/{id}/edit', 'Order\ProductCategorySubController@update');
             });
         });
     });

@@ -93,7 +93,6 @@ export default {
                     "customer/edit",
                     this.form
                 );
-                console.log(response);
                 if (response.status === 200) {
                     this.loadSave = false;
                     this.dialogEdit = false;

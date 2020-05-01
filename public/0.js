@@ -411,7 +411,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 if (!_this.$refs.editForm.validate()) {
-                  _context.next = 7;
+                  _context.next = 6;
                   break;
                 }
 
@@ -421,7 +421,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 4:
                 response = _context.sent;
-                console.log(response);
 
                 if (response.status === 200) {
                   _this.loadSave = false;
@@ -448,7 +447,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 } // end เบอร์ซ้ำ
 
 
-              case 7:
+              case 6:
               case "end":
                 return _context.stop();
             }

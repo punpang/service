@@ -27,10 +27,7 @@
                         </template>
 
                         <template v-slot:item.action="{ item }">
-                            <v-btn color="primary" block>
-                                ตรวจสอบสลิป
-                                <v-icon right>info</v-icon>
-                            </v-btn>
+                            <seeSlipForVerify :slip="item"></seeSlipForVerify>
                         </template>
                     </v-data-table>
                 </v-card-text>
@@ -40,8 +37,13 @@
 </template>
 
 <script>
+
+import seeSlipForVerify from "@/js/components/orders/payments/seeSlipForVerify";
 export default {
     props: ["slips"],
+    components:{
+        seeSlipForVerify
+    },
     data() {
         return {
             dialog: false,

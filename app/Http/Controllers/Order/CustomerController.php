@@ -85,7 +85,7 @@ class CustomerController extends Controller
   {
     request()->validate([
       'name' => 'required',
-      'phone' => 'required|unique:order.a_customer,phone,' . $customer->id
+      'phone' => 'required|unique:order.customers,phone,' . $customer->id
     ], [
       'name.required' => 'กรุณากรอกชื่อลูกค้า',
       'phone.unique' => 'หมายเลขนี้ มีอยู่ในระบบแล้ว'

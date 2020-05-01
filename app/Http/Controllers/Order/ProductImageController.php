@@ -127,6 +127,7 @@ class ProductImageController extends Controller
             $product->update();
         }
 
+        /*
         if ($id->id != "1") {
             $filePath = $id->src_name;
             $path = public_path('/images');
@@ -139,5 +140,8 @@ class ProductImageController extends Controller
         } else if ($id->id == "1") {
             return "success == 1";
         }
+        */
+
+        return ['success' => true];
     }
 }

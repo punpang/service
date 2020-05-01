@@ -26,6 +26,22 @@ class OrderPaymentController extends Controller
             // จัดรูปแบบก่อนสร้าง
             $input = OrderPayment::FormatData(request()->all());
 
+            //ตรวจสอบสลิปซ้ำ
+            if ($input['slip_ref']) {
+                $check_slip = Slip::whereRef($input['slip_ref'])->first();
+                if ($check_slip) {
+                    // เปลี่ยนสถานะเป็นไม่ผ่าน
+                    $slip = Slip::find($input['slip_id']);
+                    $slip->slip_verify_id = 3;
+                    $slip->update();
+
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'อ้างอิงซ้ำ'
+                    ], 299);
+                }
+            }
+
             //ค้นหารายการสั่งซื้อ
             $order = Order::find($input['order_id']);
 
@@ -73,6 +89,17 @@ class OrderPaymentController extends Controller
             // สร้างการชำระเงิน
             $data = OrderPayment::create($input);
 
+            // มี ref
+            if ($data->slip_id) {
+                $slip = Slip::find($data->slip_id);
+                $slip->ref = $input['slip_ref'];
+                $slip->slip_verify_id = 2;
+                $slip->update();
+
+                $ocr = GoogleOcr::where('ocr_text', $input['slip_ref'])->first();
+                $ocr->delete();
+            }
+
             // เปลี่ยนสถานะเป็นชำระ กรณีที่ต่ำกว่า 4
             $order = Order::find($data->order_id);
             if ($order->order_status_id <= 4) {
@@ -80,12 +107,19 @@ class OrderPaymentController extends Controller
                 $order->update();
             }
 
+            //เมื่อชำระผ่านธนาคาร
+
+
             // แจ้งเตือน
-            $messgae = 'ทดสอบ ชำระเงิน SMS FACEBOOK';
+            //$messgae = 'ทดสอบ ชำระเงิน SMS FACEBOOK';
             //MSms::SMSFB($order, $messgae, $input['alert']);
             Linenotify::send('รายการสั่งซื้อ #' . $order->id . ' => ยืนยันการสั่งซื้อแล้ว');
 
-            return response()->json($data, 200);
+            return response()->json([
+                $data,
+                'success' => true,
+                'message' => 'รับชำระเงินสำเร็จ'
+            ], 200);
         } catch (\Exception $e) {
             return $e;
         }
@@ -151,7 +185,7 @@ class OrderPaymentController extends Controller
             $url = URL::punpang() . $order->token . '/' . $input['amount'] . '/payment';
             $bitly = Bitly::getUrl($url); // http://bit.ly/nHcn3
 
-            $messgae = '#ปั้นแป้ง# Order.#'.$order->id.' โปรดชำระมัดจำขั้นต่ำด้วยยอด '.number_format($input['amount'],2).' บ. ช่องทางการชำระเงินและแจ้งการชำระเงินที่ได้ '.$bitly;
+            $messgae = '#ปั้นแป้ง# Order.#' . $order->id . ' โปรดชำระมัดจำขั้นต่ำด้วยยอด ' . number_format($input['amount'], 2) . ' บ. ช่องทางการชำระเงินและแจ้งการชำระเงินที่ได้ ' . $bitly;
 
             //$messgae = '#ปั้นแป้ง# Order.#'.$order->id.' ยอดชำระทั้งหมด '.$order->sumTotalFormat().' บ. ชำระแล้ว '.$order->sumDepositFormat().' บ. คงเหลือ '.$order->sumBalanceFormat().' บ. โปรดชำระเงินขั้นต่ำด้วยยอด '.number_format($input['amount'],2).' บ. รายละเอียดการชำระเงินและแจ้งขำระเงินได้ที่ ';
             MSms::SMSFB($order, $messgae, true);
@@ -177,19 +211,17 @@ class OrderPaymentController extends Controller
                     'success' => false,
                     'message' => 'ไม่สามารถเข้าถึงได้'
                 ], 590);
-            }              
+            }
 
             //อัปโหลดรูป และรับ pathid
             $imagePath = GoogleImage::StoreAndFindPath(request('image'));
-            $GoogleOcr = GoogleOcr::ocrImage(request('image'),$imagePath);
-
-            return $GoogleOcr;
+            GoogleOcr::ocrImage(request('image'), $imagePath);
 
             $input['order_id'] = $order->id;
             $input['path'] = $imagePath;
 
             // สร้างสลิป
-            Slip::create($input);      
+            Slip::create($input);
 
             $messgae = 'ขอบคุณที่ชำระเงิน เราจะตรวจสอบและแจ้งผลโดยเร็วที่สุดค่ะ';
             MSms::SMSFB($order, $messgae, true);
@@ -202,5 +234,16 @@ class OrderPaymentController extends Controller
         } catch (\Exception $e) {
             return $e;
         }
+    }
+
+    public function checkRef()
+    {
+        dd(request()->all());
+        /*
+        try {
+        } catch (\Exception $e) {
+            return $e;
+        }
+        */
     }
 }

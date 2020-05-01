@@ -12,7 +12,7 @@ export default {
             return response;
         },
         async cancel({}, payload) {
-            const response = await axios.delete(
+            const response = await axios.post(
                 "/api/payment/"+payload+'/cancel'
             );
             return response;
@@ -20,6 +20,13 @@ export default {
         async alert({}, payload) {
             const response = await axios.post(
                 "/api/payment/alert",
+                payload
+            );
+            return response;
+        },
+        async checkRef({}, payload) {
+            const response = await axios.post(
+                "/api/payment/checkRef",
                 payload
             );
             return response;

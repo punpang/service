@@ -18,6 +18,8 @@ class Slip extends Model implements Auditable
 
     protected $table = "slips";
     protected $connection = 'order';
+    public $hidden = ['updated_at'];
+    
     protected $fillable = [
         'order_id',
         'path',
@@ -29,5 +31,10 @@ class Slip extends Model implements Auditable
     public function SlipVerify()
     {
         return $this->belongsTo(SlipVerify::class, 'slip_verify_id', 'id');
+    }
+
+    public function GoogleOcr()
+    {
+        return $this->hasMany('App\GoogleOcr','google_image_path','path');
     }
 }

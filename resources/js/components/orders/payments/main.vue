@@ -25,7 +25,7 @@
                             class="mr-2"
                             :sum="this.$store.getters['order/getByID'].sum"
                         ></acceptPayment>
-                        <tablePaymentVerify class="mr-2" :slips="this.$store.getters['order/getByID'].data.slip"></tablePaymentVerify>
+                        <tablePaymentVerify class="mr-2" :slips="this.$store.getters['order/getByID'].data.slip_not_verify"></tablePaymentVerify>
                         <alertPayment></alertPayment>
                     </v-row>
                     <tablePayment

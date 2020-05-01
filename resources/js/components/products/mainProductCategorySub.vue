@@ -17,7 +17,7 @@
                         >refresh</v-icon
                     >จัดการกลุ่มสินค้าย่อย
                     <v-spacer></v-spacer>
-                    <v-icon text color="error" @click="dialog = false"
+                    <v-icon text color="error" @click="clickExit"
                         >close</v-icon
                     >
                 </v-card-title>
@@ -75,6 +75,12 @@ export default {
             };
             
             this.overlay = false;
+        },
+        async clickExit(){         
+            await this.$store.dispatch(
+                "productCategory/get"
+            );
+            this.dialog = false
         }
     }
 };

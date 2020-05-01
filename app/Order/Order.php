@@ -144,9 +144,14 @@ class Order extends Model  implements Auditable
         return \Carbon\Carbon::parse($dateTime)->addYears(543)->format('d-m-Y H:i:s');
     }
 
-    public function slip() //รวมเงินเฉพาะที่ใช้งาน
+    public function SlipNotVerify() //slip ที่ยังไม่ได้ตรวจสอบ และ ไม่ผ่าน
     {
-        return $this->hasMany(Slip::class, 'order_id', 'id');
+        return $this->hasMany(Slip::class, 'order_id', 'id')->whereIn('slip_verify_id',[1,3]);
+    }
+
+    public function SlipVerify() // slip ผ่าน
+    {
+        return $this->hasMany(Slip::class, 'order_id', 'id')->where('slip_verify_id',2);
     }
 
 }

@@ -9,6 +9,9 @@ use GoogleCloudVision\Request\AnnotateImageRequest;
 class GoogleOcr extends Model
 {
     protected $table = "google_ocrs";
+    protected $connection = 'mysql';
+
+    public $hidden = ['created_at', 'updated_at'];
     protected $fillable = [
         'google_image_path',
         'ocr_text',
@@ -18,48 +21,58 @@ class GoogleOcr extends Model
 
     public static function ocrImage($imageFile, $imagePath)
     {
-        if ($imageFile) {
+        try {
+            if ($imageFile) {
 
-            //convert image to base64
-            $image = base64_encode(file_get_contents($imageFile));
-            //Sending image for OCR server
-            $request = new AnnotateImageRequest();
-            $request->setImage($image);
-            $request->setFeature("TEXT_DETECTION");
-            $gcvRequest = new GoogleCloudVision([$request],  env('GOOGLE_CLOUD_KEY'));
-            //Send Request to check image OCR or not through annotate
-            $response = $gcvRequest->annotate();
-            //return json_encode([$response->responses[0]->textAnnotations[0]->description]);
+                //convert image to base64
+                $image = base64_encode(file_get_contents($imageFile));
+                //Sending image for OCR server
+                $request = new AnnotateImageRequest();
+                $request->setImage($image);
+                $request->setFeature("TEXT_DETECTION");
+                $gcvRequest = new GoogleCloudVision([$request],  env('GOOGLE_CLOUD_KEY'));
+                //Send Request to check image OCR or not through annotate
+                $response = $gcvRequest->annotate();
+                //return json_encode([$response->responses[0]->textAnnotations[0]->description]);
 
-            $textAnnotations = $response->responses[0]->textAnnotations;
-            unset($textAnnotations[0]);
-            foreach ($textAnnotations as $item) {
-                $explode = explode(".", $item->description);
-                $countExplode = count($explode);
-                if (strlen($item->description) >= 4 && strlen($item->description) <= 10) { //strlen($item->description) >= 4 && strlen($item->description) <= 10
-                    if ($countExplode == 2 && $item->description > 0 && $explode[1] == '0') {
-                        $q = new GoogleOcr;
-                        $q->google_image_path = $imagePath;
-                        $q->ocr_text = $item->description;
-                        $q->type = 'money';
-                        $q->save();
-                    }
-                } else if (strlen($item->description) >= 5) {
-                    if ($countExplode != 2) {
-                        $ocr = GoogleOcr::where('ocr_text', $item->description)->first();
-                        if (!$ocr) {
-                            $q = new GoogleOcr;
-                            $q->google_image_path = $imagePath;
-                            $q->ocr_text = $item->description;
-                            $q->type = 'ref';
-                            $q->save();
+                $textAnnotations = $response->responses[0]->textAnnotations;
+                unset($textAnnotations[0]);
+                foreach ($textAnnotations as $item) {
+                    $explode = explode(".", $item->description);
+                    $countExplode = count($explode);
+                    if (strlen($item->description) >= 4 && strlen($item->description) <= 10) { //strlen($item->description) >= 4 && strlen($item->description) <= 10
+                        if ($countExplode == 2 && $item->description > 0 && $explode[1] == '0') {
+                            $ocr = GoogleOcr::where('ocr_text', $item->description)
+                                ->where('google_image_path', $imagePath)
+                                ->where('type', 'money')
+                                ->first();
+                            if (!$ocr) {
+                                $q = new GoogleOcr;
+                                $q->google_image_path = $imagePath;
+                                $q->ocr_text = $item->description;
+                                $q->type = 'money';
+                                $q->save();
+                            }
+                        }
+                    } else if (strlen($item->description) >= 5) {
+                        if ($countExplode != 2) {
+                            $ocr = GoogleOcr::where('ocr_text', $item->description)->first();
+                            if (!$ocr) {
+                                $q = new GoogleOcr;
+                                $q->google_image_path = $imagePath;
+                                $q->ocr_text = $item->description;
+                                $q->type = 'ref';
+                                $q->save();
+                            }
                         }
                     }
                 }
+                return response()->json([
+                    'success' => true
+                ], 200);
             }
-            return response()->json([
-                'success' => true
-            ], 200);
+        } catch (\Exception $e) {
+            return $e;
         }
     }
 

@@ -46,7 +46,7 @@ class OrderController extends Controller
         return Order::TomorrowOrder()->with('Customer', 'ChannelOfPurchase', 'OrderStatus')->get();
     }
 
-    function generateToken($length = 100)
+    function generateToken($length = 30)
     {
         $timestamp = str_split(\Carbon\Carbon::now()->timestamp);
 
@@ -54,8 +54,8 @@ class OrderController extends Controller
         $data = '';
 
         for ($i = 0; $i < $length; $i++) {
-            if ($i % 10 == 0 && $i <= 90) {
-                $n = ($i / 10) / 1;
+            if ($i % 3 == 0 && $i <= 30) {
+                $n = ($i / 3) / 1;
                 $data .= $timestamp[$n];
             } else {
                 $data .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
@@ -183,10 +183,23 @@ class OrderController extends Controller
 
     public function getByTokenForPaymentAlert($token)
     {
-        $data = Order::whereToken($token)
+        try {
+            $today = \Carbon\Carbon::now()->addDays(1)->format('Y-m-d 00:00:00');
+            $data = Order::whereToken($token)->where('dateTime_get', '<=', $today)
+                ->with('CustomerNotFB', 'OrderStatus')
+                ->first();
+            return response()->json([
+                'data' => $data,
+                'sum' => $data->OrderSum()
+            ], 200);
+        } catch (\Exception $e) {
+            return $e;
+        }
+
+        $today = \Carbon\Carbon::now()->addDays(1)->format('Y-m-d 00:00:00');
+        $data = Order::whereToken($token)->where('dateTime_get', '<=', $today)
             ->with('CustomerNotFB', 'OrderStatus')
             ->first();
-            
         return response()->json([
             'data' => $data,
             'sum' => $data->OrderSum()
@@ -196,10 +209,17 @@ class OrderController extends Controller
     public function getByID($order)
     {
         $data = Order::where('id', $order)
-            ->with('Customer', 'ChannelOfPurchase', 'OrderStatus', 
-            'OrderDetail.Product.ProductTagUseOnly.ProductCategorySubUseOnly.ProductCategory', 
-            'OrderDetailNoUse.Product.ProductTagUseOnly.ProductCategorySubUseOnly.ProductCategory', 
-            "OrderPayment.OrderPaymentMethod",'Slip.SlipVerify')
+            ->with(
+                'Customer',
+                'ChannelOfPurchase',
+                'OrderStatus',
+                'OrderDetail.Product.ProductTagUseOnly.ProductCategorySubUseOnly.ProductCategory',
+                'OrderDetailNoUse.Product.ProductTagUseOnly.ProductCategorySubUseOnly.ProductCategory',
+                "OrderPayment.OrderPaymentMethod",
+                "OrderPayment.SlipVerify",
+                'SlipNotVerify.SlipVerify',
+                'SlipNotVerify.GoogleOcr'
+            )
             ->with('OrderDetail.Product.ProductImage')
             ->with('OrderDetailNoUse.Product.ProductImage')
             ->first();

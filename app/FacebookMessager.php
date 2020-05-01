@@ -88,7 +88,7 @@ class FacebookMessager extends Model
     public static function postMessage($customer, $channel_of_purchase, $text, $allow) //ลูกค้าทีค้นหาแล้ว ช่องทางการซื้อที่ค้นหาแล้ว ข้อความ
     {
         $psid = FacebookMessager::getPSID($customer);
-        if (empty($psid) || empty($text) && $channel_of_purchase == "FACEBOOK" && $allow) {
+        if (empty($psid) || empty($text) || $channel_of_purchase != "FACEBOOK" || !$allow) {
             return 'ไม่สามารถส่งข้อความได้';
         }
 

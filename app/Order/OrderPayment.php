@@ -14,7 +14,7 @@ class OrderPayment extends Model implements Auditable
         'order_payment_method_id',
         'amount',
         'status',
-        'image_slip_id',
+        'slip_id',
         'bill_id'
     ];
     
@@ -27,7 +27,7 @@ class OrderPayment extends Model implements Auditable
         'order_payment_method_id',
         'amount',
         'status',
-        'image_slip_id',
+        'slip_id',
         'bill_id'
     ];
 
@@ -57,5 +57,10 @@ class OrderPayment extends Model implements Auditable
     public function OrderPaymentMethod()
     {
         return $this->belongsTo(OrderPaymentMethod::class,"order_payment_method_id","id");
+    }
+
+    public function SlipVerify()
+    {
+        return $this->belongsTo(Slip::class,"slip_id","id");
     }
 }

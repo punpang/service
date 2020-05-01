@@ -53,7 +53,7 @@ export default {
 
         async destroy({ commit }, payload) {
             try {
-                const response = await axios.delete(
+                const response = await axios.post(
                     "api/product/image/" + payload + "/destroy"
                 );
                 return response;
