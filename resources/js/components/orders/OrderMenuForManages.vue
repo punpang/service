@@ -13,9 +13,9 @@
                 :action="action.create.detail"
             ></formDetail>      
 
-            <MainPayment v-show="this.order.order_status.id > 1"></MainPayment>          
+            <MainPayment v-show="order.order_status.id > 1" :count="count"></MainPayment>          
 
-            <v-list-item class="error" v-show="this.order.order_status.id != 8">
+            <v-list-item class="error" v-show="order.order_status.id != 8">
                 <v-list-item-icon>
                     <v-icon>cancel</v-icon>
                 </v-list-item-icon>
@@ -52,7 +52,7 @@
                 >{{ text }}</v-btn
             >
         </div>
-        <v-btn v-if="this.order.order_status.id != 1" block color="error" large
+        <v-btn v-if="order.order_status.id != 1" block color="error" large
             >ยกเลิก</v-btn
         >
     </div>
@@ -64,7 +64,7 @@ import formDetail from "@/js/components/orders/details/_form_detail";
 import MainPayment from "@/js/components/orders/payments/main";
 
 export default {
-    props: ["order"],
+    props: ["order",'count'],
     components: {
         formDetail,
         MainPayment

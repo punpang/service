@@ -27,7 +27,7 @@ class OrderPaymentController extends Controller
             $input = OrderPayment::FormatData(request()->all());
 
             //ตรวจสอบสลิปซ้ำ
-            if ($input['slip_ref']) {
+            if (isset($input['slip_ref'])) {
                 $check_slip = Slip::whereRef($input['slip_ref'])->first();
                 if ($check_slip) {
                     // เปลี่ยนสถานะเป็นไม่ผ่าน

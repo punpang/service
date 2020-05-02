@@ -2,9 +2,11 @@
     <div>
         <v-dialog v-model="dialog" fullscreen persistent>
             <template v-slot:activator="{ on }">
-                <v-btn block color="primary" v-on="on" small @click="start"
-                    >การจัดการ</v-btn
-                >
+                <v-btn block color="primary" v-on="on" @click="start">
+                    <v-badge color="warning" dot :value="order.slip_not_verify_only.length">
+                        การจัดการ
+                    </v-badge>
+                </v-btn>
             </template>
             <v-card color="#121212">
                 <v-card-text class="px-4">
@@ -43,7 +45,10 @@
                         </v-col>
                         <v-col cols="12" md="3">
                             <OrderMenuForManages
-                                :order="this.$store.getters['order/getByID'].data"
+                                :order="
+                                    this.$store.getters['order/getByID'].data
+                                "
+                                :count="this.$store.getters['order/getByID'].count"
                                 @emitDialogOff="emitDialogOff"
                             ></OrderMenuForManages>
                         </v-col>

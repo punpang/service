@@ -716,6 +716,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -874,7 +879,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["order"],
+  props: ["order", 'count'],
   components: {
     formDetail: _js_components_orders_details_form_detail__WEBPACK_IMPORTED_MODULE_2__["default"],
     MainPayment: _js_components_orders_payments_main__WEBPACK_IMPORTED_MODULE_3__["default"]
@@ -1007,15 +1012,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["dataTable", "headers"],
   components: {
-    OrderManages: _js_components_orders_OrderManages__WEBPACK_IMPORTED_MODULE_0__["default"]
+    OrderManages: _js_components_orders_OrderManages__WEBPACK_IMPORTED_MODULE_0__["default"],
+    BadgesOrderManages: {
+      content: "",
+      value: "",
+      color: ""
+    }
   },
   methods: {
     emitDialogTableFalse: function emitDialogTableFalse() {
-      this.$emit('emitDialogTableFalse');
+      this.$emit("emitDialogTableFalse");
+    },
+    setBadgesOrderManages: function setBadgesOrderManages() {
+      if (this.$store.getters["order/getByID"].cpunt.slipNotVerify) {
+        this.BadgesOrderManages = {
+          content: this.$store.getters["order/getByID"].cpunt.slipNotVerify,
+          value: this.$store.getters["order/getByID"].cpunt.slipNotVerify,
+          color: "warning"
+        };
+      }
     }
   }
 });
@@ -3662,12 +3682,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: [],
+  props: ["count"],
   components: {
     alertPayment: _js_components_orders_payments_alertPayment__WEBPACK_IMPORTED_MODULE_0__["default"],
     acceptPayment: _js_components_orders_payments_acceptPayment__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -5100,12 +5147,29 @@ var render = function() {
                     "v-btn",
                     _vm._g(
                       {
-                        attrs: { block: "", color: "primary", small: "" },
+                        attrs: { block: "", color: "primary" },
                         on: { click: _vm.start }
                       },
                       on
                     ),
-                    [_vm._v("การจัดการ")]
+                    [
+                      _c(
+                        "v-badge",
+                        {
+                          attrs: {
+                            color: "warning",
+                            dot: "",
+                            value: _vm.order.slip_not_verify_only.length
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    การจัดการ\n                "
+                          )
+                        ]
+                      )
+                    ],
+                    1
                   )
                 ]
               }
@@ -5179,7 +5243,8 @@ var render = function() {
                         [
                           _c("OrderMenuForManages", {
                             attrs: {
-                              order: this.$store.getters["order/getByID"].data
+                              order: this.$store.getters["order/getByID"].data,
+                              count: this.$store.getters["order/getByID"].count
                             },
                             on: { emitDialogOff: _vm.emitDialogOff }
                           })
@@ -5264,10 +5329,11 @@ var render = function() {
               {
                 name: "show",
                 rawName: "v-show",
-                value: this.order.order_status.id > 1,
-                expression: "this.order.order_status.id > 1"
+                value: _vm.order.order_status.id > 1,
+                expression: "order.order_status.id > 1"
               }
-            ]
+            ],
+            attrs: { count: _vm.count }
           }),
           _vm._v(" "),
           _c(
@@ -5277,8 +5343,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: this.order.order_status.id != 8,
-                  expression: "this.order.order_status.id != 8"
+                  value: _vm.order.order_status.id != 8,
+                  expression: "order.order_status.id != 8"
                 }
               ],
               staticClass: "error"
@@ -5370,7 +5436,7 @@ var render = function() {
         )
       }),
       _vm._v(" "),
-      this.order.order_status.id != 1
+      _vm.order.order_status.id != 1
         ? _c("v-btn", { attrs: { block: "", color: "error", large: "" } }, [
             _vm._v("ยกเลิก")
           ])
@@ -5416,9 +5482,7 @@ var render = function() {
             key: "item.id",
             fn: function(ref) {
               var item = ref.item
-              return [
-                _vm._v("\n            #" + _vm._s(item.id) + "\n        ")
-              ]
+              return [_vm._v(" #" + _vm._s(item.id) + " ")]
             }
           },
           {
@@ -8631,7 +8695,14 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-btn",
-                    { attrs: { color: "error", large: "" } },
+                    {
+                      attrs: { color: "error", large: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.dialog = false
+                        }
+                      }
+                    },
                     [
                       _c("v-icon", { attrs: { left: "" } }, [
                         _vm._v("exit_to_app")
@@ -8976,9 +9047,22 @@ var render = function() {
                       _c(
                         "v-list-item-icon",
                         [
-                          _c("v-icon", { staticClass: "black--text" }, [
-                            _vm._v("attach_money")
-                          ])
+                          _c(
+                            "v-badge",
+                            {
+                              attrs: {
+                                color: "primary",
+                                dot: "",
+                                value: _vm.count.slipNotVerifyOnly
+                              }
+                            },
+                            [
+                              _c("v-icon", { staticClass: "black--text" }, [
+                                _vm._v("attach_money")
+                              ])
+                            ],
+                            1
+                          )
                         ],
                         1
                       ),
@@ -8989,7 +9073,11 @@ var render = function() {
                           _c(
                             "v-list-item-title",
                             { staticClass: "black--text" },
-                            [_vm._v("ชำระเงิน")]
+                            [
+                              _vm._v(
+                                "\n                        การชำระเงิน\n\n                    "
+                              )
+                            ]
                           )
                         ],
                         1
@@ -9040,27 +9128,34 @@ var render = function() {
               _c(
                 "v-card-text",
                 [
-                  _c(
-                    "v-row",
-                    { staticClass: "px-4 mb-4" },
-                    [
-                      _c("acceptPayment", {
-                        staticClass: "mr-2",
-                        attrs: { sum: this.$store.getters["order/getByID"].sum }
-                      }),
-                      _vm._v(" "),
-                      _c("tablePaymentVerify", {
-                        staticClass: "mr-2",
-                        attrs: {
-                          slips: this.$store.getters["order/getByID"].data
-                            .slip_not_verify
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("alertPayment")
-                    ],
-                    1
-                  ),
+                  this.$store.getters["order/getByID"].sum.balance != 0
+                    ? _c(
+                        "v-row",
+                        { staticClass: "px-4 mb-4" },
+                        [
+                          _c("acceptPayment", {
+                            staticClass: "mr-2",
+                            attrs: {
+                              sum: this.$store.getters["order/getByID"].sum
+                            }
+                          }),
+                          _vm._v(" "),
+                          this.$store.getters["order/getByID"].count
+                            .slipNotVerify
+                            ? _c("tablePaymentVerify", {
+                                staticClass: "mr-2",
+                                attrs: {
+                                  slips: this.$store.getters["order/getByID"]
+                                    .data.slip_not_verify
+                                }
+                              })
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c("alertPayment")
+                        ],
+                        1
+                      )
+                    : _vm._e(),
                   _vm._v(" "),
                   _c("tablePayment", {
                     attrs: {
@@ -9073,7 +9168,8 @@ var render = function() {
               )
             ],
             1
-          )
+          ),
+          _vm._v("\n        " + _vm._s(_vm.count.slipNotVerifyOnly) + "\n    ")
         ],
         1
       )

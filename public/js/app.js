@@ -100274,7 +100274,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       count: {
         product: {
           use: 0
-        }
+        },
+        slipNotVerify: 0,
+        slipNotVerifyOnly: 0
       }
     },
     selected: {}

@@ -28,22 +28,22 @@ class OrderController extends Controller
 
     public function TodayOrder()
     {
-        return Order::TodayOrder()->with('Customer', 'ChannelOfPurchase', 'OrderStatus')->get();
+        return Order::TodayOrder()->get();
     }
 
     public function CreatedOrder()
     {
-        return Order::CreatedOrder()->with('Customer', 'ChannelOfPurchase', 'OrderStatus')->get();
+        return Order::CreatedOrder()->get();
     }
 
     public function NotifyOrder()
     {
-        return Order::NotifyOrder()->with('Customer', 'ChannelOfPurchase', 'OrderStatus')->get();
+        return Order::NotifyOrder()->get();
     }
 
     public function TomorrowOrder()
     {
-        return Order::TomorrowOrder()->with('Customer', 'ChannelOfPurchase', 'OrderStatus')->get();
+        return Order::TomorrowOrder()->get();
     }
 
     function generateToken($length = 30)
@@ -222,7 +222,9 @@ class OrderController extends Controller
                 'product' => [
                     'use' => $data->CountOrderDetail(),
                     'nouse' => $data->CountOrderDetailNoUse(),
-                ]
+                ],
+                'slipNotVerify' => $data->CountSlipNotVerify(),
+                'slipNotVerifyOnly' => $data->CountSlipNotVerifyOnly()
             ]
         ], 200);
     }

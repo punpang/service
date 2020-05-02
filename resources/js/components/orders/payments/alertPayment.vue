@@ -51,7 +51,7 @@
                         แจ้งการชำระเงิน
                     </v-btn>
 
-                    <v-btn color="error" large>
+                    <v-btn color="error" large @click="dialog = false">
                         <v-icon left>exit_to_app</v-icon>
                         ออก
                     </v-btn>

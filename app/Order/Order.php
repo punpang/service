@@ -67,6 +67,11 @@ class Order extends Model  implements Auditable
         ];
     }
 
+    public function OrderManages()
+    {
+        return ['Customer', 'ChannelOfPurchase', 'OrderStatus', 'SlipNotVerifyOnly'];
+    }
+
     public function OrderStatus()
     {
         return $this->belongsTo(OrderStatus::class, 'order_status_id', 'id');
@@ -119,24 +124,32 @@ class Order extends Model  implements Auditable
 
     public function scopeTodayOrder()
     {
-        return $query = $this->whereDate('dateTime_get', \Carbon\Carbon::now()->format('Y-m-d'))->orderBy('dateTime_get', 'ASC');
+        return $query = $this->whereDate('dateTime_get', \Carbon\Carbon::now()->format('Y-m-d'))
+            ->orderBy('dateTime_get', 'ASC')
+            ->with($this->OrderManages());
     }
 
     public function scopeTomorrowOrder()
     {
-        return $query = $this->whereDate('dateTime_get', \Carbon\Carbon::now()->addDays(1)->format('Y-m-d'))->orderBy('dateTime_get', 'ASC');
+        return $query = $this->whereDate('dateTime_get', \Carbon\Carbon::now()->addDays(1)->format('Y-m-d'))
+            ->orderBy('dateTime_get', 'ASC')
+            ->with($this->OrderManages());
     }
 
     public function scopeCreatedOrder()
     {
         return $query = $this->where('order_status_id', '1')
             ->whereDate('dateTime_get', '>=', \Carbon\Carbon::now()->format('Y-m-d'))
+            ->with($this->OrderManages())
             ->orderBy('dateTime_get', 'ASC');
     }
 
     public function scopeNotifyOrder()
     {
-        return $query = $this->whereIn('order_status_id', ['2', '3'])->where('dateTime_get', '>=', \Carbon\Carbon::now()->format('Y-m-d'))->orderBy('dateTime_get', 'ASC');
+        return $query = $this->whereIn('order_status_id', ['2', '3'])
+            ->where('dateTime_get', '>=', \Carbon\Carbon::now()->format('Y-m-d'))
+            ->with($this->OrderManages())
+            ->orderBy('dateTime_get', 'ASC');
     }
 
     public function DateTimeFormatTH($dateTime)
@@ -146,12 +159,28 @@ class Order extends Model  implements Auditable
 
     public function SlipNotVerify() //slip ที่ยังไม่ได้ตรวจสอบ และ ไม่ผ่าน
     {
-        return $this->hasMany(Slip::class, 'order_id', 'id')->whereIn('slip_verify_id',[1,3]);
+        return $this->hasMany(Slip::class, 'order_id', 'id')->whereIn('slip_verify_id', [1, 3]);
     }
 
     public function SlipVerify() // slip ผ่าน
     {
-        return $this->hasMany(Slip::class, 'order_id', 'id')->where('slip_verify_id',2);
+        return $this->hasMany(Slip::class, 'order_id', 'id')->where('slip_verify_id', 2);
     }
+
+    public function CountSlipNotVerify()
+    {
+        return $this->SlipNotVerify()->count();
+    }
+
+    public function SlipNotVerifyOnly() //slip ที่ยังไม่ได้ตรวจสอบ และ ไม่ผ่าน
+    {
+        return $this->hasMany(Slip::class, 'order_id', 'id')->where('slip_verify_id', 1);
+    }
+
+    public function CountSlipNotVerifyOnly()
+    {
+        return $this->SlipNotVerifyOnly()->count();
+    }
+
 
 }

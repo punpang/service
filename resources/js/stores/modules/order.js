@@ -38,7 +38,11 @@ export default {
                 deposit: "",
                 balance: ""
             },
-            count: { product: { use: 0 } }
+            count: {
+                product: { use: 0 },
+                slipNotVerify: 0,
+                slipNotVerifyOnly: 0
+            }
         },
         selected: {}
     },

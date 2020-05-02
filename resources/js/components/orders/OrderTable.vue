@@ -5,10 +5,8 @@
             :headers="headers"
             hide-default-footer
             item-key="id"
-        >   
-            <template v-slot:item.id="{ item }">
-                #{{ item.id }}
-            </template>
+        >
+            <template v-slot:item.id="{ item }"> #{{ item.id }} </template>
 
             <template v-slot:item.customer_name="{ item }">
                 {{ item.customer.name }}
@@ -29,7 +27,10 @@
             </template>
 
             <template v-slot:item.action="{ item }">
-                    <OrderManages :order="item" @emitDialogTableFalse="emitDialogTableFalse"></OrderManages>
+                <OrderManages
+                    :order="item"
+                    @emitDialogTableFalse="emitDialogTableFalse"
+                ></OrderManages>
             </template>
         </v-data-table>
     </div>
@@ -40,11 +41,27 @@ import OrderManages from "@/js/components/orders/OrderManages";
 export default {
     props: ["dataTable", "headers"],
     components: {
-        OrderManages
+        OrderManages,
+        BadgesOrderManages: {
+            content: "",
+            value: "",
+            color: ""
+        }
     },
-    methods:{
-        emitDialogTableFalse(){
-            this.$emit('emitDialogTableFalse')
+    methods: {
+        emitDialogTableFalse() {
+            this.$emit("emitDialogTableFalse");
+        },
+        setBadgesOrderManages() {
+            if (this.$store.getters["order/getByID"].cpunt.slipNotVerify) {
+                this.BadgesOrderManages = {
+                    content: this.$store.getters["order/getByID"].cpunt
+                        .slipNotVerify,
+                    value: this.$store.getters["order/getByID"].cpunt
+                        .slipNotVerify,
+                    color: "warning"
+                };
+            }
         }
     }
 };
