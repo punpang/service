@@ -71,3 +71,9 @@ export default {
     }
 };
 </script>
+
+<style>
+.v-application {
+    font-family: 'Sarabun', sans-serif;
+}
+</style>

@@ -42,6 +42,7 @@ const pluginOptions = {
     globalOptions: { currency: null }
 };
 
+
 Vue.use(VueCurrencyInput, pluginOptions);
 const app = new Vue({
     el: "#app",

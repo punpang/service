@@ -195,15 +195,6 @@ class OrderController extends Controller
         } catch (\Exception $e) {
             return $e;
         }
-
-        $today = \Carbon\Carbon::now()->addDays(1)->format('Y-m-d 00:00:00');
-        $data = Order::whereToken($token)->where('dateTime_get', '<=', $today)
-            ->with('CustomerNotFB', 'OrderStatus')
-            ->first();
-        return response()->json([
-            'data' => $data,
-            'sum' => $data->OrderSum()
-        ], 200);
     }
 
     public function getByID($order)
