@@ -3076,13 +3076,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["sum", "formData"],
+  props: ["sum", "form"],
   components: {
     CostSub: _js_components_orders_details_CostSub__WEBPACK_IMPORTED_MODULE_1__["default"],
     overlay: _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_2__["default"]
@@ -3092,8 +3089,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       dialog: false,
       response: {},
       overlay: false,
-      form: this.formData,
-      alertRefDouble: false
+      alertRefDouble: false,
+      moneyBack: {
+        text: "",
+        number: 0,
+        numberNot: ""
+      }
     };
   },
   methods: {
@@ -3140,9 +3141,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 7:
                 if (_this2.response.status == 200) {
-                  _this2.overlay = false;
-
                   _this2.clickExit();
+
+                  _this2.overlay = false;
                 } else if (_this2.response.status == 299) {
                   _this2.alertRefDouble = true;
                   _this2.overlay = false;
@@ -3159,31 +3160,58 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
+    clickDestroyRef: function clickDestroyRef() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
     clickExit: function clickExit() {
-      this.reset();
-      this.$emit("emitExit");
       this.dialog = false;
+      this.$emit("emitExit");
+      this.reset();
     },
     reset: function reset() {
       this.$refs.form.reset();
     },
     setMoneyBack: function setMoneyBack(a, b) {
-      var x = a - b;
+      var aSplit = a.split(",");
+      var aNew = "";
+
+      for (var i = 0; i < aSplit.length; i++) {
+        aNew = aNew + aSplit[i];
+      }
+
+      var x = aNew - b;
+      var y = 0;
 
       if (x < 0) {
-        return x * -1;
+        y = x * -1;
       } else {
-        return x;
+        y = x;
       }
+
+      this.setText(x);
+      this.moneyBack.number = y;
+      this.moneyBack.numberNot = x;
     },
-    setText: function setText(a, b) {
-      var x = a - b;
+    setText: function setText(x) {
+      var y = "";
 
       if (x < 0) {
-        return "ยอดคงเหลือ";
+        y = "ยอดคงเหลือ";
       } else {
-        return "เงินทอน";
+        y = "เงินทอน";
       }
+
+      this.moneyBack.text = y;
     }
   },
   mounted: function mounted() {
@@ -3257,7 +3285,7 @@ __webpack_require__.r(__webpack_exports__);
       form: {
         order_id: this.$store.getters["order/getByID"].data.id,
         order_payment_method_id: "",
-        amount: "",
+        amount: "0",
         status: 1,
         alert: true
       }
@@ -3820,24 +3848,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       dialog: false,
-      form: {
-        order_id: this.$store.getters["order/getByID"].data.id,
-        order_payment_method_id: 2,
-        amount: "",
-        slip_id: this.slip.id,
-        slip_ref: "",
-        status: 1,
-        alert: true
-      }
+      form: {}
     };
   },
   methods: {
     emitExit: function emitExit() {
       this.dialog = false;
     },
+    start: function start() {
+      this.form = {
+        order_id: this.$store.getters["order/getByID"].data.id,
+        order_payment_method_id: 2,
+        amount: "0",
+        slip_id: this.slip.id,
+        slip_ref: "",
+        status: 1,
+        alert: true
+      };
+    },
     clickRef: function clickRef(o, t) {
-      console.log(o, t);
-
       if (t == "ref") {
         this.form.slip_ref = o;
       } else if (t == "money") {
@@ -8302,7 +8331,6 @@ var render = function() {
                           "hide-details": "",
                           autocomplete: "false",
                           pattern: "\\d*",
-                          autofocus: "",
                           suffix: "บาท"
                         },
                         model: {
@@ -8312,7 +8340,14 @@ var render = function() {
                           },
                           expression: "form.amount"
                         }
-                      })
+                      }),
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(
+                            _vm.setMoneyBack(_vm.form.amount, _vm.sum.balance)
+                          ) +
+                          "\n            "
+                      )
                     ],
                     1
                   )
@@ -8324,28 +8359,30 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c(
-        "v-row",
-        { staticClass: "py-1" },
-        [
-          _c("v-col", { attrs: { cols: "6", md: "6" } }, [
-            _vm._v(_vm._s(_vm.setText(_vm.form.amount, _vm.sum.balance)))
-          ]),
-          _vm._v(" "),
-          _c(
-            "v-col",
-            { staticClass: "text-right", attrs: { cols: "6", md: "6" } },
+      _vm.moneyBack.number != 0
+        ? _c(
+            "v-row",
+            { staticClass: "py-1" },
             [
-              _vm._v(
-                "\n            " +
-                  _vm._s(_vm.setMoneyBack(_vm.form.amount, _vm.sum.balance)) +
-                  " บาท\n        "
+              _c("v-col", { attrs: { cols: "6", md: "6" } }, [
+                _vm._v(_vm._s(_vm.moneyBack.text))
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "text-right", attrs: { cols: "6", md: "6" } },
+                [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.moneyBack.number) +
+                      " บาท\n        "
+                  )
+                ]
               )
-            ]
+            ],
+            1
           )
-        ],
-        1
-      ),
+        : _vm._e(),
       _vm._v(" "),
       _c("v-divider", { staticClass: "ma-0" }),
       _vm._v(" "),
@@ -8360,29 +8397,37 @@ var render = function() {
         }
       }),
       _vm._v(" "),
-      _c(
-        "v-btn",
-        {
-          attrs: {
-            color: "success",
-            disabled:
-              (_vm.form.order_payment_method_id == 2 &&
-                _vm.form.amount - _vm.sum.balance > 0) ||
-              _vm.alertRefDouble
-          },
-          on: { click: _vm.clickSubmit }
-        },
-        [
-          _c("v-icon", { attrs: { left: "" } }, [_vm._v("attach_money")]),
-          _vm._v("\n        ชำระเงิน\n    ")
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _vm.form.order_payment_method_id == 2
+      !_vm.alertRefDouble
         ? _c(
             "v-btn",
-            { attrs: { color: "warning" }, on: { click: _vm.clickExit } },
+            {
+              attrs: {
+                color: "success",
+                disabled:
+                  _vm.moneyBack.numberNot > 0 &&
+                  _vm.form.order_payment_method_id == 2
+              },
+              on: { click: _vm.clickSubmit }
+            },
+            [
+              _c("v-icon", { attrs: { left: "" } }, [_vm._v("attach_money")]),
+              _vm._v("\n        ชำระเงิน\n    ")
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.form.order_payment_method_id == 2 && _vm.alertRefDouble
+        ? _c(
+            "v-btn",
+            {
+              attrs: { color: "warning" },
+              on: {
+                click: function($event) {
+                  return _vm.clickDestroyRef()
+                }
+              }
+            },
             [
               _c("v-icon", { attrs: { left: "" } }, [_vm._v("cancel")]),
               _vm._v("\n        ไม่ผ่าน\n    ")
@@ -8506,7 +8551,7 @@ var render = function() {
                       _c("formPayment", {
                         attrs: {
                           sum: this.$store.getters["order/getByID"].sum,
-                          formData: _vm.form
+                          form: _vm.form
                         },
                         on: { emitExit: _vm.emitExit }
                       })
@@ -9220,7 +9265,8 @@ var render = function() {
                           color: "primary",
                           block: "",
                           disabled: _vm.slip.slip_verify_id != 1
-                        }
+                        },
+                        on: { click: _vm.start }
                       },
                       on
                     ),
@@ -9343,7 +9389,7 @@ var render = function() {
                           _c("formPayment", {
                             attrs: {
                               sum: this.$store.getters["order/getByID"].sum,
-                              formData: _vm.form
+                              form: _vm.form
                             },
                             on: { emitExit: _vm.emitExit }
                           })

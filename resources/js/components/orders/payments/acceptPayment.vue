@@ -22,7 +22,7 @@
                     <v-divider class="ma-0"></v-divider>
                     <formPayment
                         :sum="this.$store.getters['order/getByID'].sum"
-                        :formData="form"
+                        :form="form"
                         @emitExit="emitExit"
                     ></formPayment>
                 </v-card-text>
@@ -52,7 +52,7 @@ export default {
             form: {
                 order_id: this.$store.getters["order/getByID"].data.id,
                 order_payment_method_id: "",
-                amount: "",
+                amount: "0",
                 status: 1,
                 alert: true,
             }

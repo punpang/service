@@ -45,32 +45,29 @@
                         :rules="[v => !!v]"
                         hide-details
                         autocomplete="false"
+                        v-currency
                         pattern="\d*"
                         class="ma-0 pa-0"
-                        autofocus
                         suffix="บาท"
-                        v-currency
                     ></v-text-field>
+                    {{ setMoneyBack(form.amount, sum.balance) }}
                 </v-col>
             </v-row>
         </v-form>
-        <v-row class="py-1">
-            <v-col cols="6" md="6">{{
-                setText(form.amount, sum.balance)
-            }}</v-col>
+        <v-row class="py-1" v-if="moneyBack.number != 0">
+            <v-col cols="6" md="6">{{ moneyBack.text }}</v-col>
             <v-col cols="6" md="6" class="text-right">
-                {{ setMoneyBack(form.amount, sum.balance) }} บาท
+                {{ moneyBack.number }} บาท
             </v-col>
         </v-row>
         <v-divider class="ma-0"></v-divider>
         <v-checkbox label="แจ้งผ่านข้อความ" v-model="form.alert"></v-checkbox>
         <v-btn
+            v-if="!alertRefDouble"
             color="success"
             @click="clickSubmit"
             :disabled="
-                (form.order_payment_method_id == 2 &&
-                    form.amount - sum.balance > 0) ||
-                    alertRefDouble
+                moneyBack.numberNot > 0 && form.order_payment_method_id == 2
             "
         >
             <v-icon left>attach_money</v-icon>
@@ -79,8 +76,8 @@
 
         <v-btn
             color="warning"
-            v-if="form.order_payment_method_id == 2"
-            @click="clickExit"
+            v-if="form.order_payment_method_id == 2 && alertRefDouble"
+            @click="clickDestroyRef()"
         >
             <v-icon left>cancel</v-icon>
             ไม่ผ่าน
@@ -102,7 +99,7 @@ import CostSub from "@/js/components/orders/details/CostSub";
 import overlay from "@/js/layouts/overlay";
 
 export default {
-    props: ["sum", "formData"],
+    props: ["sum", "form"],
     components: {
         CostSub,
         overlay
@@ -112,8 +109,12 @@ export default {
             dialog: false,
             response: {},
             overlay: false,
-            form: this.formData,
-            alertRefDouble: false
+            alertRefDouble: false,
+            moneyBack: {
+                text: "",
+                number: 0,
+                numberNot: ""
+            }
         };
     },
     methods: {
@@ -134,8 +135,8 @@ export default {
                 );
 
                 if (this.response.status == 200) {
-                    this.overlay = false;
                     this.clickExit();
+                    this.overlay = false;
                 } else if (this.response.status == 299) {
                     this.alertRefDouble = true;
                     this.overlay = false;
@@ -143,29 +144,42 @@ export default {
             } else {
             }
         },
+        async clickDestroyRef(){
+
+        },
         clickExit() {
-            this.reset();
-            this.$emit("emitExit");
             this.dialog = false;
+            this.$emit("emitExit");
+            this.reset();
         },
         reset() {
             this.$refs.form.reset();
         },
         setMoneyBack(a, b) {
-            const x = a - b;
-            if (x < 0) {
-                return x * -1;
-            } else {
-                return x;
+            const aSplit = a.split(",");
+            let aNew = "";
+            for (let i = 0; i < aSplit.length; i++) {
+                aNew = aNew + aSplit[i];
             }
+            const x = aNew - b;
+            let y = 0;
+            if (x < 0) {
+                y = x * -1;
+            } else {
+                y = x;
+            }
+            this.setText(x);
+            this.moneyBack.number = y;
+            this.moneyBack.numberNot = x;
         },
-        setText(a, b) {
-            const x = a - b;
+        setText(x) {
+            let y = "";
             if (x < 0) {
-                return "ยอดคงเหลือ";
+                y = "ยอดคงเหลือ";
             } else {
-                return "เงินทอน";
+                y = "เงินทอน";
             }
+            this.moneyBack.text = y;
         }
     },
 

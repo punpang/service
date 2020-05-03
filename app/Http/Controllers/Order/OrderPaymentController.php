@@ -31,13 +31,15 @@ class OrderPaymentController extends Controller
                 $check_slip = Slip::whereRef($input['slip_ref'])->first();
                 if ($check_slip) {
                     // เปลี่ยนสถานะเป็นไม่ผ่าน
+                    /*
                     $slip = Slip::find($input['slip_id']);
                     $slip->slip_verify_id = 3;
                     $slip->update();
-
+                    */
                     return response()->json([
+                        'data' => $check_slip,
                         'success' => false,
-                        'message' => 'อ้างอิงซ้ำ'
+                        'message' => 'รหัสอ้างอิงซ้ำ'
                     ], 299);
                 }
             }

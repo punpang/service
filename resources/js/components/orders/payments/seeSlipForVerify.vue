@@ -2,7 +2,7 @@
     <div>
         <v-dialog v-model="dialog" persistent width="850">
             <template v-slot:activator="{ on }">
-                <v-btn color="primary" block v-on="on" :disabled="slip.slip_verify_id != 1">
+                <v-btn color="primary" block v-on="on" @click="start" :disabled="slip.slip_verify_id != 1">
                     ตรวจสอบสลิป
                     <v-icon right>info</v-icon>
                 </v-btn>
@@ -42,7 +42,7 @@
                                 :sum="this.$store.getters['order/getByID'].sum"
                             ></CostSub>
 
-                            <formPayment :sum="this.$store.getters['order/getByID'].sum" :formData="form" @emitExit="emitExit"></formPayment>                            
+                            <formPayment :sum="this.$store.getters['order/getByID'].sum" :form="form" @emitExit="emitExit"></formPayment>      
                             
                         </v-col>
                     </v-row>
@@ -70,13 +70,6 @@ export default {
         return {
             dialog: false,
             form: {
-                order_id: this.$store.getters["order/getByID"].data.id,
-                order_payment_method_id: 2,
-                amount: "",
-                slip_id: this.slip.id,
-                slip_ref:"",
-                status: 1,
-                alert: true,
             }
         };
     },
@@ -84,8 +77,18 @@ export default {
         emitExit(){
             this.dialog = false;
         },
+        start(){
+            this.form = {
+                order_id: this.$store.getters["order/getByID"].data.id,
+                order_payment_method_id: 2,
+                amount: "0",
+                slip_id: this.slip.id,
+                slip_ref:"",
+                status: 1,
+                alert: true,
+            }
+        },
         clickRef(o, t) {
-            console.log(o, t);
             if (t == "ref") {
                 this.form.slip_ref = o;
             } else if (t == "money") {

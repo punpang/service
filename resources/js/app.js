@@ -37,13 +37,17 @@ axios.defaults.headers.common["Authorization"] =
 axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
 //
 
+// crrency
 import VueCurrencyInput from "vue-currency-input";
 const pluginOptions = {
     globalOptions: { currency: null }
 };
-
-
 Vue.use(VueCurrencyInput, pluginOptions);
+
+// clipboard
+import VueClipboard from 'vue-clipboard2' 
+Vue.use(VueClipboard)
+
 const app = new Vue({
     el: "#app",
     store,

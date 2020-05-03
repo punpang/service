@@ -30,9 +30,7 @@
                             </v-alert>
                             <v-row>
                                 <v-col cols="12" md="6" class="pt-5">
-                                    <v-img
-                                        src="https://apply.scb.co.th/selfservices/easy-lg/common/img/logo-scb-w.png"
-                                    ></v-img>
+                                    <v-img :src="bank.book.logoBank"></v-img>
                                 </v-col>
                                 <v-col cols="12" md="6">
                                     <v-row>
@@ -44,19 +42,31 @@
                                             md="6"
                                             class="text-right"
                                         >
-                                            พรรษิษฐ์ ศรีสุข
+                                            {{ bank.book.name }}
                                         </v-col>
                                     </v-row>
                                     <v-row>
-                                        <v-col cols="6" md="6">
+                                        <v-col cols="5" md="5">
                                             เลขที่บัญชี
                                         </v-col>
                                         <v-col
-                                            cols="6"
-                                            md="6"
+                                            cols="7"
+                                            md="7"
                                             class="text-right"
                                         >
-                                            408-672-0266
+                                            <v-btn
+                                                x-small
+                                                icon
+                                                color="primary"
+                                                v-clipboard:copy="
+                                                    bank.book.numberClipboard
+                                                "
+                                                fab
+                                                v-clipboard:success="onCopy"
+                                            >
+                                                <v-icon>file_copy</v-icon>
+                                            </v-btn>
+                                            {{ bank.book.number }}
                                         </v-col>
                                     </v-row>
                                 </v-col>
@@ -98,6 +108,7 @@
             ไม่มีสิทธิ์เข้าถึงการใช้งาน กรุณาติดต่อทางร้านค่ะ โทร.091-885-3402
         </v-alert>
         <overlay :overlay="overlay"></overlay>
+        <snackbarRight :snackbar="snackbar"></snackbarRight>
     </div>
 </template>
 
@@ -105,11 +116,14 @@
 import overlay from "@/js/layouts/overlay";
 import CostSub from "@/js/components/orders/details/CostSub";
 import OrderDetail from "@/js/components/orders/details/detailNotFB";
+
+import snackbarRight from "@/js/layouts/snackbarRight";
 export default {
     components: {
         CostSub,
         OrderDetail,
-        overlay
+        overlay,
+        snackbarRight
     },
     data() {
         return {
@@ -119,6 +133,7 @@ export default {
             show: true,
             verity: true,
             sum: {},
+            snackbar: {},
             overlay: false,
             slipFile: {},
             order: {
@@ -129,6 +144,16 @@ export default {
                 order_status: {
                     name: ""
                 }
+            },
+            bank: {
+                book: {
+                    nameBank: "ธนาคารไทยพาณิชย์",
+                    logoBank:
+                        "https://apply.scb.co.th/selfservices/easy-lg/common/img/logo-scb-w.png",
+                    name: "พรรษิษฐ์ ศรีสุข",
+                    number: "408-672-0266",
+                    numberClipboard: "4086720266"
+                }
             }
         };
     },
@@ -136,6 +161,13 @@ export default {
         onFileChange(image) {
             this.slipFile = event.target.files[0];
             this.previewSlip = URL.createObjectURL(image);
+        },
+        onCopy() {
+            this.snackbar = {
+                status: true,
+                color: "success",
+                text: "คัดลอกแล้ว"
+            };
         },
         async clickSubmit() {
             this.overlay = true;
@@ -168,10 +200,9 @@ export default {
             //this.form.order_id = this.order.id
             this.sum = response.data.sum;
             this.verity = true;
-        }else{
+        } else {
             this.verity = false;
         }
-        
     }
 };
 </script>
