@@ -36,6 +36,7 @@ class GoogleOcr extends Model
                 //return json_encode([$response->responses[0]->textAnnotations[0]->description]);
 
                 $textAnnotations = $response->responses[0]->textAnnotations;
+                //dd($textAnnotations);
                 unset($textAnnotations[0]);
                 foreach ($textAnnotations as $item) {
                     $explode = explode(".", $item->description);
@@ -75,7 +76,6 @@ class GoogleOcr extends Model
             return $e;
         }
     }
-
 
     public static function ocrImagev2($imageFile, $imagePath)
     {

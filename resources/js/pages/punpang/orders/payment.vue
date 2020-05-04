@@ -12,7 +12,7 @@
                     <v-card-text class="py-0">
                         <OrderDetail :order="order"></OrderDetail>
                         <v-divider class="ma-0"></v-divider>
-                        <CostSub :sum="this.sum"></CostSub>
+                        <CostSub :sum="sum"></CostSub>
                     </v-card-text>
                 </v-card>
             </v-col>
@@ -23,7 +23,7 @@
                         ยืนยันการชำระเงิน (ที่นี่)
                     </v-card-title>
                     <v-divider class="mt-0"></v-divider>
-                    <v-card-text class="pt-0">
+                    <v-card-text class="pt-0" v-if="sum.balance > 0">
                         <v-form v-if="show" ref="form" lazy-validation>
                             <v-alert type="warning" class="ma-0">
                                 โปรดชำระเงินขั้นต่ำด้วยยอด {{ amount }} บาท
@@ -98,6 +98,11 @@
                         <v-alert v-else type="success" class="ma-0"
                             >ขอบคุณที่ชำระเงินค่ะ
                             เราจะตรวจสอบและแจ้งผลโดยเร็วที่สุดค่ะ</v-alert
+                        >
+                    </v-card-text>
+                    <v-card-text v-else class="pt-0">
+                        <v-alert type="success" class="ma-0"
+                            >คุณได้ทำการชำระครบจำนวนแล้วค่ะ</v-alert
                         >
                     </v-card-text>
                 </v-card>

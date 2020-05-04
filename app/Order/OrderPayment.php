@@ -63,4 +63,14 @@ class OrderPayment extends Model implements Auditable
     {
         return $this->belongsTo(Slip::class,"slip_id","id");
     }
+
+    public function Slip()
+    {
+        return $this->belongsTo(Slip::class,"slip_id","id");
+    }
+
+    public function Bill_ID()
+    {
+        return $this->belongsTo('App\Tb_bill_sale',"bill_id","bill_sale_id");
+    }
 }

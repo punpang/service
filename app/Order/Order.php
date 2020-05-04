@@ -40,7 +40,7 @@ class Order extends Model  implements Auditable
 
     public function OrderPayment()
     {
-        return $this->hasMany(OrderPayment::class, "order_id", "id");
+        return $this->hasMany(OrderPayment::class, "order_id", "id")->orderBy('status','DESC')->orderBy('updated_at',"DESC");
     }
 
     public function sumDeposit() //รวมเงินเฉพาะที่ใช้งาน

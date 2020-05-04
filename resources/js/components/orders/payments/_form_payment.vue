@@ -32,6 +32,7 @@
                         v-model="form.slip_ref"
                         :rules="[v => !!v]"
                         hide-details
+                        readonly
                         class="ma-0 pa-0"
                     ></v-text-field>
                 </v-col>
@@ -67,7 +68,7 @@
             color="success"
             @click="clickSubmit"
             :disabled="
-                moneyBack.numberNot > 0 && form.order_payment_method_id == 2
+                moneyBack.numberNot > 0 && form.order_payment_method_id == 2 || form.amount <= 0
             "
         >
             <v-icon left>attach_money</v-icon>

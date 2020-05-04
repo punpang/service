@@ -3076,6 +3076,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3623,6 +3624,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.dialog = false;
 
                   _this.$refs.form.reset();
+
+                  _this.overlay = false;
                 }
 
                 _this.snackbar = {
@@ -3668,7 +3671,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_components_orders_payments_tablePaymentVerify__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/orders/payments/tablePaymentVerify */ "./resources/js/components/orders/payments/tablePaymentVerify.vue");
 /* harmony import */ var _js_components_orders_payments_acceptPayment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/components/orders/payments/acceptPayment */ "./resources/js/components/orders/payments/acceptPayment.vue");
 /* harmony import */ var _js_components_orders_payments_tablePayment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/js/components/orders/payments/tablePayment */ "./resources/js/components/orders/payments/tablePayment.vue");
-//
 //
 //
 //
@@ -3833,6 +3835,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -3861,7 +3864,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         order_payment_method_id: 2,
         amount: "0",
         slip_id: this.slip.id,
-        slip_ref: "",
+        slip_ref: this.slip.ref,
         status: 1,
         alert: true
       };
@@ -8285,7 +8288,8 @@ var render = function() {
                               return !!v
                             }
                           ],
-                          "hide-details": ""
+                          "hide-details": "",
+                          readonly: ""
                         },
                         model: {
                           value: _vm.form.slip_ref,
@@ -8404,8 +8408,9 @@ var render = function() {
               attrs: {
                 color: "success",
                 disabled:
-                  _vm.moneyBack.numberNot > 0 &&
-                  _vm.form.order_payment_method_id == 2
+                  (_vm.moneyBack.numberNot > 0 &&
+                    _vm.form.order_payment_method_id == 2) ||
+                  _vm.form.amount <= 0
               },
               on: { click: _vm.clickSubmit }
             },
@@ -9213,8 +9218,7 @@ var render = function() {
               )
             ],
             1
-          ),
-          _vm._v("\n        " + _vm._s(_vm.count.slipNotVerifyOnly) + "\n    ")
+          )
         ],
         1
       )
@@ -9332,26 +9336,31 @@ var render = function() {
                           _c("v-divider"),
                           _vm._v(" "),
                           _vm._l(_vm.slip.google_ocr, function(ref) {
-                            return _c(
-                              "v-btn",
-                              {
-                                key: ref.id,
-                                staticClass: "mr-1 mb-1",
-                                attrs: { rounded: "", color: "orange" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.clickRef(ref.ocr_text, ref.type)
-                                  }
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                            " +
-                                    _vm._s(ref.ocr_text) +
-                                    "\n                        "
+                            return !_vm.slip.ref
+                              ? _c(
+                                  "v-btn",
+                                  {
+                                    key: ref.id,
+                                    staticClass: "mr-1 mb-1",
+                                    attrs: { rounded: "", color: "orange" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.clickRef(
+                                          ref.ocr_text,
+                                          ref.type
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                            " +
+                                        _vm._s(ref.ocr_text) +
+                                        "\n                        "
+                                    )
+                                  ]
                                 )
-                              ]
-                            )
+                              : _vm._e()
                           })
                         ],
                         2

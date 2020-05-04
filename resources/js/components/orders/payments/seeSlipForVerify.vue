@@ -20,7 +20,8 @@
                         <v-col cols="12" md="5">
                             <imageFullPath :path="slip.path"></imageFullPath>
                             <v-divider></v-divider>
-                            <v-btn
+                            <v-btn 
+                                v-if="!slip.ref"
                                 rounded
                                 v-for="ref in slip.google_ocr"
                                 color="orange"
@@ -83,7 +84,7 @@ export default {
                 order_payment_method_id: 2,
                 amount: "0",
                 slip_id: this.slip.id,
-                slip_ref:"",
+                slip_ref: this.slip.ref,
                 status: 1,
                 alert: true,
             }

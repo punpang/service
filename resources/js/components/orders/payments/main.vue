@@ -4,7 +4,7 @@
             <template v-slot:activator="{ on }">
                 <v-list-item class="yellow darken-1" v-on="on">
                     <v-list-item-icon>
-                        <v-badge
+                        <v-badge                            
                             color="primary"
                             dot
                             :value="count.slipNotVerifyOnly"
@@ -62,7 +62,6 @@
                     ></tablePayment>
                 </v-card-text>
             </v-card>
-            {{ count.slipNotVerifyOnly }}
         </v-dialog>
     </div>
 </template>

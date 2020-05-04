@@ -126,6 +126,7 @@ export default {
                     };
                     this.dialog = false;
                     this.$refs.form.reset();
+                    this.overlay = false;
                 }
 
                 this.snackbar = {

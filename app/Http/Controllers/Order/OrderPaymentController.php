@@ -28,14 +28,8 @@ class OrderPaymentController extends Controller
 
             //ตรวจสอบสลิปซ้ำ
             if (isset($input['slip_ref'])) {
-                $check_slip = Slip::whereRef($input['slip_ref'])->first();
-                if ($check_slip) {
-                    // เปลี่ยนสถานะเป็นไม่ผ่าน
-                    /*
-                    $slip = Slip::find($input['slip_id']);
-                    $slip->slip_verify_id = 3;
-                    $slip->update();
-                    */
+                $check_slip = Slip::whereRef($input['slip_ref'])->first();                
+                if ($check_slip && $check_slip->order_id != $input['order_id']) {
                     return response()->json([
                         'data' => $check_slip,
                         'success' => false,
@@ -93,20 +87,20 @@ class OrderPaymentController extends Controller
 
             // มี ref
             if ($data->slip_id) {
-                $slip = Slip::find($data->slip_id);
-                $slip->ref = $input['slip_ref'];
-                $slip->slip_verify_id = 2;
-                $slip->update();
+                $data->slip->ref = $input['slip_ref'];
+                $data->slip->slip_verify_id = 2;
+                $data->slip->update();
 
                 $ocr = GoogleOcr::where('ocr_text', $input['slip_ref'])->first();
-                $ocr->delete();
+                if($ocr){
+                    $ocr->delete();
+                }                
             }
 
             // เปลี่ยนสถานะเป็นชำระ กรณีที่ต่ำกว่า 4
-            $order = Order::find($data->order_id);
-            if ($order->order_status_id <= 4) {
-                $order->order_status_id = 4;
-                $order->update();
+            if ($data->order->order_status_id <= 4) {
+                $data->order->order_status_id = 4;
+                $data->order->update();
             }
 
             //เมื่อชำระผ่านธนาคาร
@@ -115,10 +109,9 @@ class OrderPaymentController extends Controller
             // แจ้งเตือน
             //$messgae = 'ทดสอบ ชำระเงิน SMS FACEBOOK';
             //MSms::SMSFB($order, $messgae, $input['alert']);
-            Linenotify::send('รายการสั่งซื้อ #' . $order->id . ' => ยืนยันการสั่งซื้อแล้ว');
+            Linenotify::send('รายการสั่งซื้อ #' . $data->order->id . ' => ยืนยันการสั่งซื้อแล้ว');
 
             return response()->json([
-                $data,
                 'success' => true,
                 'message' => 'รับชำระเงินสำเร็จ'
             ], 200);
@@ -141,19 +134,24 @@ class OrderPaymentController extends Controller
                 );
             }
 
+            //ปรับสถานะ silp เป็น รอการตรวจสอบ
+            if ($payment->slip_id) {
+                $payment->slip->slip_verify_id = 1;
+                $payment->slip->update();
+            }
+
             // เปลี่ยนสถานะเป็นยกเลิก
             $payment->status = '0';
             $payment->update();
 
-            //คนหาบิลที่สอดคล้อง และเปลี่ยนสถานะเป็น DELETE
-            $sale = Tb_bill_sale::find($payment->bill_id);
-            $sale->status = 'delete';
-            $sale->save();
+            //ค้นหาบิลที่สอดคล้อง และเปลี่ยนสถานะเป็น DELETE
+            $payment->Bill_ID->status = 'delete';
+            $payment->Bill_ID->save();
 
             // หากเป็นสมาชิกให้ลดคะแนน
             if (Member::beMember($payment->order->customer->phone) != null) {
-                $addScore = $sale->total_money * (-1) / Config_software::Score()->score;
-                Summary_score_of_member::addScore($sale->member_id, $addScore);
+                $addScore = $payment->Bill_ID->total_money * (-1) / Config_software::Score()->score;
+                Summary_score_of_member::addScore($payment->Bill_ID->member_id, $addScore);
             }
 
             // ตรวจสอบว่า มีรายการชำระอื่นไหม หากไม่มีให้เปลี่ยนสถานะออร์เดอร์เป็น เพิ่มสินค้า
