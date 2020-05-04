@@ -2974,6 +2974,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _js_components_orders_details_CostSub__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/orders/details/CostSub */ "./resources/js/components/orders/details/CostSub.vue");
 /* harmony import */ var _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/layouts/overlay */ "./resources/js/layouts/overlay.vue");
+/* harmony import */ var _js_components_orders_payments_unVerifyPayment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/js/components/orders/payments/unVerifyPayment */ "./resources/js/components/orders/payments/unVerifyPayment.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -3079,16 +3080,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["sum", "form"],
   components: {
     CostSub: _js_components_orders_details_CostSub__WEBPACK_IMPORTED_MODULE_1__["default"],
-    overlay: _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_2__["default"]
+    overlay: _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_2__["default"],
+    unVerifyPayment: _js_components_orders_payments_unVerifyPayment__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
       dialog: false,
-      response: {},
       overlay: false,
       alertRefDouble: false,
       moneyBack: {
@@ -3122,56 +3124,57 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 if (!_this2.$refs.form.validate()) {
-                  _context2.next = 10;
+                  _context2.next = 11;
                   break;
                 }
 
                 _this2.overlay = true;
-                _context2.next = 4;
+                response = {};
+                _context2.next = 5;
                 return _this2.$store.dispatch("payment/create", _this2.form);
 
-              case 4:
-                _this2.response = _context2.sent;
-                _context2.next = 7;
+              case 5:
+                response = _context2.sent;
+                _context2.next = 8;
                 return _this2.$store.dispatch("order/getByID", _this2.$store.getters["order/getByID"].data.id);
 
-              case 7:
-                if (_this2.response.status == 200) {
+              case 8:
+                if (response.status == 200) {
                   _this2.clickExit();
 
                   _this2.overlay = false;
-                } else if (_this2.response.status == 299) {
+
+                  _this2.$notify({
+                    group: "main",
+                    type: "success",
+                    text: "รับชำระเงินสำเร็จ"
+                  });
+                } else if (response.status == 299) {
+                  _this2.$notify({
+                    group: "main",
+                    type: "error",
+                    text: response.data.message
+                  });
+
                   _this2.alertRefDouble = true;
                   _this2.overlay = false;
                 }
 
-                _context2.next = 10;
+                _context2.next = 11;
                 break;
 
-              case 10:
+              case 11:
               case "end":
                 return _context2.stop();
             }
           }
         }, _callee2);
-      }))();
-    },
-    clickDestroyRef: function clickDestroyRef() {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
       }))();
     },
     clickExit: function clickExit() {
@@ -3183,25 +3186,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.$refs.form.reset();
     },
     setMoneyBack: function setMoneyBack(a, b) {
-      var aSplit = a.split(",");
-      var aNew = "";
+      if (a) {
+        var aSplit = a.split(",");
+        var aNew = "";
 
-      for (var i = 0; i < aSplit.length; i++) {
-        aNew = aNew + aSplit[i];
+        for (var i = 0; i < aSplit.length; i++) {
+          aNew = aNew + aSplit[i];
+        }
+
+        var x = aNew - b;
+        var y = 0;
+
+        if (x < 0) {
+          y = x * -1;
+        } else {
+          y = x;
+        }
+
+        this.setText(x);
+        this.moneyBack.number = y;
+        this.moneyBack.numberNot = x;
       }
-
-      var x = aNew - b;
-      var y = 0;
-
-      if (x < 0) {
-        y = x * -1;
-      } else {
-        y = x;
-      }
-
-      this.setText(x);
-      this.moneyBack.number = y;
-      this.moneyBack.numberNot = x;
     },
     setText: function setText(x) {
       var y = "";
@@ -3474,7 +3479,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _js_components_orders_payments_setStautsColorText__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/orders/payments/setStautsColorText */ "./resources/js/components/orders/payments/setStautsColorText.vue");
 /* harmony import */ var _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/layouts/overlay */ "./resources/js/layouts/overlay.vue");
-/* harmony import */ var _js_layouts_snackbarRight__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/js/layouts/snackbarRight */ "./resources/js/layouts/snackbarRight.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -3558,7 +3562,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3570,10 +3578,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       dialog: false,
-      overlay: false,
-      snackbar: {
-        status: false
-      }
+      overlay: false
     };
   },
   methods: {
@@ -3592,7 +3597,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.overlay = true;
 
                 if (!_this.$refs.form.validate()) {
-                  _context.next = 12;
+                  _context.next = 10;
                   break;
                 }
 
@@ -3606,38 +3611,41 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 7:
                 if (res.status == 200) {
-                  _this.snackbar = {
-                    status: true,
-                    color: "success",
+                  _this.$notify({
+                    group: "main",
+                    type: "success",
                     text: res.data.message
-                  };
+                  });
 
                   _this.$refs.form.reset();
 
                   _this.dialog = false;
                 } else if (res.status == 201) {
-                  _this.snackbar = {
-                    status: true,
-                    color: "warning",
+                  _this.$notify({
+                    group: "main",
+                    type: "warning",
                     text: res.data.message
-                  };
+                  });
+
                   _this.dialog = false;
 
                   _this.$refs.form.reset();
 
                   _this.overlay = false;
+                } else {
+                  _this.$notify({
+                    group: "main",
+                    type: "error",
+                    text: "กรุณาลองอีกครั้ง ผิดพลาดบางอย่าง"
+                  });
+
+                  _this.overlay = false;
                 }
 
-                _this.snackbar = {
-                  status: true,
-                  color: "error",
-                  text: "กรุณาลองอีกครั้ง ผิดพลาดบางอย่าง"
-                };
-                _this.overlay = false;
-                _context.next = 14;
+                _context.next = 12;
                 break;
 
-              case 12:
+              case 10:
                 _this.overlay = false;
                 _this.snackbar = {
                   status: true,
@@ -3645,7 +3653,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   text: "กรุณาลองอีกครั้ง ผิดพลาดบางอย่าง"
                 };
 
-              case 14:
+              case 12:
               case "end":
                 return _context.stop();
             }
@@ -4082,6 +4090,94 @@ __webpack_require__.r(__webpack_exports__);
         sortable: false
       }]
     };
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/payments/unVerifyPayment.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/orders/payments/unVerifyPayment.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["form"],
+  data: function data() {
+    return {
+      dialog: false
+    };
+  },
+  methods: {
+    clickUnVerify: function clickUnVerify() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                response = {};
+                _context.next = 3;
+                return _this.$store.dispatch("payment/unVerifySlip", _this.form.slip_id);
+
+              case 3:
+                response = _context.sent;
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    }
   }
 });
 
@@ -8401,61 +8497,53 @@ var render = function() {
         }
       }),
       _vm._v(" "),
-      !_vm.alertRefDouble
-        ? _c(
-            "v-btn",
-            {
-              attrs: {
-                color: "success",
-                disabled:
-                  (_vm.moneyBack.numberNot > 0 &&
-                    _vm.form.order_payment_method_id == 2) ||
-                  _vm.form.amount <= 0
-              },
-              on: { click: _vm.clickSubmit }
-            },
-            [
-              _c("v-icon", { attrs: { left: "" } }, [_vm._v("attach_money")]),
-              _vm._v("\n        ชำระเงิน\n    ")
-            ],
-            1
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.form.order_payment_method_id == 2 && _vm.alertRefDouble
-        ? _c(
-            "v-btn",
-            {
-              attrs: { color: "warning" },
-              on: {
-                click: function($event) {
-                  return _vm.clickDestroyRef()
-                }
-              }
-            },
-            [
-              _c("v-icon", { attrs: { left: "" } }, [_vm._v("cancel")]),
-              _vm._v("\n        ไม่ผ่าน\n    ")
-            ],
-            1
-          )
-        : _vm._e(),
-      _vm._v(" "),
       _c(
-        "v-btn",
-        { attrs: { color: "error" }, on: { click: _vm.clickExit } },
+        "v-row",
+        { staticClass: "px-4" },
         [
-          _c("v-icon", { attrs: { left: "" } }, [_vm._v("exit_to_app")]),
-          _vm._v("\n        ออก\n    ")
+          !_vm.alertRefDouble
+            ? _c(
+                "v-btn",
+                {
+                  staticClass: "mr-2",
+                  attrs: {
+                    color: "success",
+                    disabled:
+                      (_vm.moneyBack.numberNot > 0 &&
+                        _vm.form.order_payment_method_id == 2) ||
+                      _vm.form.amount <= 0
+                  },
+                  on: { click: _vm.clickSubmit }
+                },
+                [
+                  _c("v-icon", { attrs: { left: "" } }, [
+                    _vm._v("attach_money")
+                  ]),
+                  _vm._v("\n        ชำระเงิน\n    ")
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.form.order_payment_method_id == 2
+            ? _c("unVerifyPayment", {
+                staticClass: "mr-2",
+                attrs: { form: _vm.form }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            { attrs: { color: "error" }, on: { click: _vm.clickExit } },
+            [
+              _c("v-icon", { attrs: { left: "" } }, [_vm._v("exit_to_app")]),
+              _vm._v("\n        ออก\n    ")
+            ],
+            1
+          )
         ],
         1
       ),
-      _vm._v(" "),
-      _vm.alertRefDouble
-        ? _c("v-alert", { staticClass: "mt-2", attrs: { type: "error" } }, [
-            _vm._v("\n        " + _vm._s(_vm.response.data.message) + "\n    ")
-          ])
-        : _vm._e(),
       _vm._v(" "),
       _c("overlay", { attrs: { overlay: _vm.overlay } })
     ],
@@ -9045,9 +9133,7 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c("overlay", { attrs: { overlay: _vm.overlay } }),
-          _vm._v(" "),
-          _c("snackbarRight", { attrs: { snackbar: _vm.snackbar } })
+          _c("overlay", { attrs: { overlay: _vm.overlay } })
         ],
         1
       )
@@ -9636,6 +9722,147 @@ var render = function() {
                       }
                     ])
                   })
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/payments/unVerifyPayment.vue?vue&type=template&id=021852c1&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/orders/payments/unVerifyPayment.vue?vue&type=template&id=021852c1& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "v-dialog",
+        {
+          attrs: { persistent: "", width: "500" },
+          scopedSlots: _vm._u([
+            {
+              key: "activator",
+              fn: function(ref) {
+                var on = ref.on
+                return [
+                  _c(
+                    "v-btn",
+                    _vm._g({ attrs: { color: "warning" } }, on),
+                    [
+                      _c("v-icon", { attrs: { left: "" } }, [_vm._v("cancel")]),
+                      _vm._v("\n                ไม่ผ่าน\n            ")
+                    ],
+                    1
+                  )
+                ]
+              }
+            }
+          ]),
+          model: {
+            value: _vm.dialog,
+            callback: function($$v) {
+              _vm.dialog = $$v
+            },
+            expression: "dialog"
+          }
+        },
+        [
+          _vm._v(" "),
+          _c(
+            "v-card",
+            [
+              _c(
+                "v-card-title",
+                [
+                  _vm._v(
+                    "\n                ไม่ผ่านการตรวจสอบ\n                "
+                  ),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-icon",
+                    {
+                      attrs: { color: "error" },
+                      on: {
+                        click: function($event) {
+                          _vm.dialog = false
+                        }
+                      }
+                    },
+                    [_vm._v("close")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(_vm.form) +
+                      "\n                "
+                  ),
+                  _c("v-alert", { attrs: { type: "warning" } }, [
+                    _vm._v("การแจ้งชำระนี้ ไม่ผ่านการตรวจสอบ")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "warning" },
+                      on: { click: _vm.clickUnVerify }
+                    },
+                    [
+                      _c("v-icon", { attrs: { left: "" } }, [_vm._v("close")]),
+                      _vm._v("\n                    ไม่ผ่าน")
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "error" },
+                      on: {
+                        click: function($event) {
+                          _vm.dialog = false
+                        }
+                      }
+                    },
+                    [
+                      _c("v-icon", { attrs: { left: "" } }, [
+                        _vm._v("exit_to_app")
+                      ]),
+                      _vm._v("\n                    ออก")
+                    ],
+                    1
+                  )
                 ],
                 1
               )
@@ -11974,6 +12201,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_tablePaymentVerify_vue_vue_type_template_id_b24f6418___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_tablePaymentVerify_vue_vue_type_template_id_b24f6418___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/orders/payments/unVerifyPayment.vue":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/orders/payments/unVerifyPayment.vue ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _unVerifyPayment_vue_vue_type_template_id_021852c1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./unVerifyPayment.vue?vue&type=template&id=021852c1& */ "./resources/js/components/orders/payments/unVerifyPayment.vue?vue&type=template&id=021852c1&");
+/* harmony import */ var _unVerifyPayment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./unVerifyPayment.vue?vue&type=script&lang=js& */ "./resources/js/components/orders/payments/unVerifyPayment.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _unVerifyPayment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _unVerifyPayment_vue_vue_type_template_id_021852c1___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _unVerifyPayment_vue_vue_type_template_id_021852c1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/orders/payments/unVerifyPayment.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/orders/payments/unVerifyPayment.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/orders/payments/unVerifyPayment.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_unVerifyPayment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./unVerifyPayment.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/payments/unVerifyPayment.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_unVerifyPayment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/orders/payments/unVerifyPayment.vue?vue&type=template&id=021852c1&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/orders/payments/unVerifyPayment.vue?vue&type=template&id=021852c1& ***!
+  \****************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_unVerifyPayment_vue_vue_type_template_id_021852c1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./unVerifyPayment.vue?vue&type=template&id=021852c1& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/payments/unVerifyPayment.vue?vue&type=template&id=021852c1&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_unVerifyPayment_vue_vue_type_template_id_021852c1___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_unVerifyPayment_vue_vue_type_template_id_021852c1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

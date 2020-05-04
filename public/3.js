@@ -257,6 +257,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -349,40 +350,71 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+    start: function start() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _this2.overlay = true;
+                _this2.token = _this2.$route.params.token;
+                _this2.amount = _this2.$route.params.amount;
+                response = "";
+                _context2.prev = 4;
+                _context2.next = 7;
+                return axios.get("/api/v1/guest/order/" + _this2.token + "/payment/alert");
+
+              case 7:
+                response = _context2.sent;
+                _context2.next = 13;
+                break;
+
+              case 10:
+                _context2.prev = 10;
+                _context2.t0 = _context2["catch"](4);
+                response = _context2.t0;
+
+              case 13:
+                if (response.status == 200) {
+                  _this2.order = response.data.data; //this.form.order_id = this.order.id
+
+                  _this2.sum = response.data.sum;
+                  _this2.verity = true;
+                } else {
+                  _this2.verity = false;
+                }
+
+                _this2.overlay = false;
+
+              case 15:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[4, 10]]);
+      }))();
     }
   },
-  created: function created() {
-    var _this2 = this;
+  mounted: function mounted() {
+    var _this3 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-      var response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context3.prev = _context3.next) {
             case 0:
-              _this2.token = _this2.$route.params.token;
-              _this2.amount = _this2.$route.params.amount;
-              _context2.next = 4;
-              return axios.get("/api/v1/guest/order/" + _this2.token + "/payment/alert");
+              _this3.start();
 
-            case 4:
-              response = _context2.sent;
-
-              if (response.status == 200) {
-                _this2.order = response.data.data; //this.form.order_id = this.order.id
-
-                _this2.sum = response.data.sum;
-                _this2.verity = true;
-              } else {
-                _this2.verity = false;
-              }
-
-            case 6:
+            case 1:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
           }
         }
-      }, _callee2);
+      }, _callee3);
     }))();
   }
 });
@@ -979,7 +1011,7 @@ var render = function() {
           )
         : _c("v-alert", { attrs: { type: "error" } }, [
             _vm._v(
-              "\n        ไม่มีสิทธิ์เข้าถึงการใช้งาน กรุณาติดต่อทางร้านค่ะ โทร.091-885-3402\n    "
+              "\n        ไม่สามารถเข้าถึงเนื้อหาได้ กรุณาลองอีกครั้งภายหลัง หรือโทร.\n        091-885-3402\n    "
             )
           ]),
       _vm._v(" "),

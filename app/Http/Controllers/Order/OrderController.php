@@ -188,10 +188,14 @@ class OrderController extends Controller
             $data = Order::whereToken($token)->where('dateTime_get', '<=', $today)
                 ->with('CustomerNotFB', 'OrderStatus')
                 ->first();
-            return response()->json([
-                'data' => $data,
-                'sum' => $data->OrderSum()
-            ], 200);
+            if ($data) {
+                return response()->json([
+                    'data' => $data,
+                    'sum' => $data->OrderSum()
+                ], 200);
+            }else{
+                return response()->json(['unverifed' => true] , 500);
+            }
         } catch (\Exception $e) {
             return $e;
         }

@@ -79,7 +79,8 @@ Route::middleware('admin')->group(function () { //สำหรับ admin
         Route::post('{payment}/cancel', 'Order\OrderPaymentController@cancel');
         Route::post('alert', 'Order\OrderPaymentController@alert');
         Route::post('checkRef', 'Order\OrderPaymentController@checkRef');
-
+        Route::post('{slip}/unVerifySlip', 'Order\OrderPaymentController@unVerifySlip');
+        
         Route::prefix('method')->group(function () { // api/payment/method/...
             Route::get('all', 'Order\OrderPaymentMethodController@all');
             Route::get('useonly', 'Order\OrderPaymentMethodController@useonly');

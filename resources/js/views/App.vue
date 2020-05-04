@@ -18,6 +18,11 @@
         <v-footer app>
             <!-- -->
         </v-footer>
+        <notifications
+            class="notification"
+            group="main"
+            position="bottom center"
+        />
     </v-app>
 </template>
 
@@ -74,6 +79,13 @@ export default {
 
 <style>
 .v-application {
-    font-family: 'Sarabun', sans-serif;
+    font-family: "Sarabun", sans-serif;
+}
+
+.notification {
+    padding: 10px;
+    margin: 0 5px 5px;
+
+    font-size: 12px;
 }
 </style>

@@ -110,7 +110,8 @@
         </v-row>
 
         <v-alert type="error" v-else>
-            ไม่มีสิทธิ์เข้าถึงการใช้งาน กรุณาติดต่อทางร้านค่ะ โทร.091-885-3402
+            ไม่สามารถเข้าถึงเนื้อหาได้ กรุณาลองอีกครั้งภายหลัง หรือโทร.
+            091-885-3402
         </v-alert>
         <overlay :overlay="overlay"></overlay>
         <snackbarRight :snackbar="snackbar"></snackbarRight>
@@ -192,22 +193,33 @@ export default {
                 }
             }
             this.overlay = false;
+        },
+        async start() {
+            this.overlay = true;
+            this.token = this.$route.params.token;
+            this.amount = this.$route.params.amount;
+            let response = "";
+            try {
+                response = await axios.get(
+                    "/api/v1/guest/order/" + this.token + "/payment/alert"
+                );
+            } catch (res) {
+                response = res;
+            }
+
+            if (response.status == 200) {
+                this.order = response.data.data;
+                //this.form.order_id = this.order.id
+                this.sum = response.data.sum;
+                this.verity = true;
+            } else {
+                this.verity = false;
+            }
+            this.overlay = false;
         }
     },
-    async created() {
-        this.token = this.$route.params.token;
-        this.amount = this.$route.params.amount;
-        const response = await axios.get(
-            "/api/v1/guest/order/" + this.token + "/payment/alert"
-        );
-        if (response.status == 200) {
-            this.order = response.data.data;
-            //this.form.order_id = this.order.id
-            this.sum = response.data.sum;
-            this.verity = true;
-        } else {
-            this.verity = false;
-        }
+    async mounted() {
+        this.start();
     }
 };
 </script>

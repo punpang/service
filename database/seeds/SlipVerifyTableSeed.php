@@ -16,6 +16,7 @@ class SlipVerifyTableSeed extends Seeder
             ['รอการตรวจสอบ', 'warning'],
             ['ผ่านการตรวจสอบ', 'success'],
             ['ไม่ผ่านการตรวจสอบ', 'error'],
+            ['ตรวจสอบอีกครั้ง', 'warning'],
         ];
 
         foreach ($datas as $data) {

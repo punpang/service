@@ -48,6 +48,10 @@ Vue.use(VueCurrencyInput, pluginOptions);
 import VueClipboard from 'vue-clipboard2' 
 Vue.use(VueClipboard)
 
+//Notifications
+import Notifications from 'vue-notification'
+Vue.use(Notifications)
+
 const app = new Vue({
     el: "#app",
     store,

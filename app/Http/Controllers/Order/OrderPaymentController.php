@@ -28,13 +28,15 @@ class OrderPaymentController extends Controller
 
             //ตรวจสอบสลิปซ้ำ
             if (isset($input['slip_ref'])) {
-                $check_slip = Slip::whereRef($input['slip_ref'])->first();                
-                if ($check_slip && $check_slip->order_id != $input['order_id']) {
-                    return response()->json([
-                        'data' => $check_slip,
-                        'success' => false,
-                        'message' => 'รหัสอ้างอิงซ้ำ'
-                    ], 299);
+                $check_slip = Slip::whereRef($input['slip_ref'])->first();
+                if ($check_slip) {
+                    if ($check_slip->slip_verify_id != 4) {
+                        return response()->json([
+                            'data' => $check_slip,
+                            'success' => false,
+                            'message' => 'รหัสอ้างอิงซ้ำ'
+                        ], 299);
+                    }
                 }
             }
 
@@ -90,11 +92,12 @@ class OrderPaymentController extends Controller
                 $data->slip->ref = $input['slip_ref'];
                 $data->slip->slip_verify_id = 2;
                 $data->slip->update();
-
+                /*
                 $ocr = GoogleOcr::where('ocr_text', $input['slip_ref'])->first();
-                if($ocr){
+                if ($ocr) {
                     $ocr->delete();
-                }                
+                }
+                */
             }
 
             // เปลี่ยนสถานะเป็นชำระ กรณีที่ต่ำกว่า 4
@@ -134,9 +137,9 @@ class OrderPaymentController extends Controller
                 );
             }
 
-            //ปรับสถานะ silp เป็น รอการตรวจสอบ
+            //ปรับสถานะ silp เป็น รอการตรวจสอบอีกครั้ง
             if ($payment->slip_id) {
-                $payment->slip->slip_verify_id = 1;
+                $payment->slip->slip_verify_id = 4;
                 $payment->slip->update();
             }
 
@@ -236,14 +239,20 @@ class OrderPaymentController extends Controller
         }
     }
 
-    public function checkRef()
+    public function unVerifySlip(Slip $slip)
     {
-        dd(request()->all());
-        /*
-        try {
-        } catch (\Exception $e) {
-            return $e;
-        }
-        */
+        // เปลี่ยนสถานะ slip  เป็นไม่ผ่านการตรวจสอบ
+        $slip->slip_verify_id = 3;
+        $slip->update();
+
+        //
+        $messgae = 'การชำระเงินของคุณ ไม่ผ่านการตรวจสอบ ด้วยเหตุประการใด ประการหนึ่ง';
+        MSms::SMSFB($slip->order, $messgae, true);
+        Linenotify::send('ไม่ผ่านการชำระ #' . $slip->order->id);
+
+
+        return response()->json([
+            'success' => true
+        ], 200);
     }
 }

@@ -63,34 +63,34 @@
         </v-row>
         <v-divider class="ma-0"></v-divider>
         <v-checkbox label="แจ้งผ่านข้อความ" v-model="form.alert"></v-checkbox>
-        <v-btn
+        <v-row class="px-4">
+            <v-btn
             v-if="!alertRefDouble"
+            class="mr-2"
             color="success"
             @click="clickSubmit"
             :disabled="
-                moneyBack.numberNot > 0 && form.order_payment_method_id == 2 || form.amount <= 0
+                (moneyBack.numberNot > 0 &&
+                    form.order_payment_method_id == 2) ||
+                    form.amount <= 0
             "
         >
             <v-icon left>attach_money</v-icon>
             ชำระเงิน
         </v-btn>
 
-        <v-btn
-            color="warning"
-            v-if="form.order_payment_method_id == 2 && alertRefDouble"
-            @click="clickDestroyRef()"
-        >
-            <v-icon left>cancel</v-icon>
-            ไม่ผ่าน
-        </v-btn>
+        <unVerifyPayment
+            class="mr-2"
+            v-if="form.order_payment_method_id == 2"
+            :form="form"
+        ></unVerifyPayment>
 
         <v-btn color="error" @click="clickExit">
             <v-icon left>exit_to_app</v-icon>
             ออก
         </v-btn>
-        <v-alert type="error" class="mt-2" v-if="alertRefDouble">
-            {{ response.data.message }}
-        </v-alert>
+        </v-row>
+        
         <overlay :overlay="overlay"></overlay>
     </div>
 </template>
@@ -98,17 +98,18 @@
 <script>
 import CostSub from "@/js/components/orders/details/CostSub";
 import overlay from "@/js/layouts/overlay";
+import unVerifyPayment from "@/js/components/orders/payments/unVerifyPayment";
 
 export default {
     props: ["sum", "form"],
     components: {
         CostSub,
-        overlay
+        overlay,
+        unVerifyPayment
     },
     data() {
         return {
             dialog: false,
-            response: {},
             overlay: false,
             alertRefDouble: false,
             moneyBack: {
@@ -125,7 +126,8 @@ export default {
         async clickSubmit() {
             if (this.$refs.form.validate()) {
                 this.overlay = true;
-                this.response = await this.$store.dispatch(
+                let response = {};
+                response = await this.$store.dispatch(
                     "payment/create",
                     this.form
                 );
@@ -135,18 +137,25 @@ export default {
                     this.$store.getters["order/getByID"].data.id
                 );
 
-                if (this.response.status == 200) {
+                if (response.status == 200) {
                     this.clickExit();
                     this.overlay = false;
-                } else if (this.response.status == 299) {
+                    this.$notify({
+                        group: "main",
+                        type: "success",
+                        text: "รับชำระเงินสำเร็จ"
+                    });
+                } else if (response.status == 299) {
+                    this.$notify({
+                        group: "main",
+                        type: "error",
+                        text: response.data.message
+                    });
                     this.alertRefDouble = true;
                     this.overlay = false;
                 }
             } else {
             }
-        },
-        async clickDestroyRef(){
-
         },
         clickExit() {
             this.dialog = false;
@@ -157,21 +166,23 @@ export default {
             this.$refs.form.reset();
         },
         setMoneyBack(a, b) {
-            const aSplit = a.split(",");
-            let aNew = "";
-            for (let i = 0; i < aSplit.length; i++) {
-                aNew = aNew + aSplit[i];
+            if (a) {
+                const aSplit = a.split(",");
+                let aNew = "";
+                for (let i = 0; i < aSplit.length; i++) {
+                    aNew = aNew + aSplit[i];
+                }
+                const x = aNew - b;
+                let y = 0;
+                if (x < 0) {
+                    y = x * -1;
+                } else {
+                    y = x;
+                }
+                this.setText(x);
+                this.moneyBack.number = y;
+                this.moneyBack.numberNot = x;
             }
-            const x = aNew - b;
-            let y = 0;
-            if (x < 0) {
-                y = x * -1;
-            } else {
-                y = x;
-            }
-            this.setText(x);
-            this.moneyBack.number = y;
-            this.moneyBack.numberNot = x;
         },
         setText(x) {
             let y = "";

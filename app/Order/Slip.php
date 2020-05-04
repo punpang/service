@@ -33,6 +33,11 @@ class Slip extends Model implements Auditable
         return $this->belongsTo(SlipVerify::class, 'slip_verify_id', 'id');
     }
 
+    public function order()
+    {
+        return $this->hasOne(Order::class, 'id', 'order_id');
+    }
+
     public function GoogleOcr()
     {
         return $this->hasMany('App\GoogleOcr','google_image_path','path');

@@ -2,7 +2,13 @@
     <div>
         <v-dialog v-model="dialog" persistent width="350">
             <template v-slot:activator="{ on }">
-                <v-btn color="error" v-on="on" small @click="start" :disabled="payment.status === 0">
+                <v-btn
+                    color="error"
+                    v-on="on"
+                    small
+                    @click="start"
+                    :disabled="payment.status === 0"
+                >
                     <v-icon left>cancel</v-icon>
                     ยกเลิกรายการ
                 </v-btn>
@@ -22,9 +28,9 @@
                     </v-row>
                     <v-row>
                         <v-col cols="6" md="6">ช่องทางการชำระเงิน</v-col>
-                        <v-col cols="6" md="6" class="text-right"
-                            >{{ payment.order_payment_method.name }}</v-col
-                        >
+                        <v-col cols="6" md="6" class="text-right">{{
+                            payment.order_payment_method.name
+                        }}</v-col>
                     </v-row>
                     <v-row>
                         <v-col cols="6" md="6">เลขที่ใบเสร็จ</v-col>
@@ -70,7 +76,6 @@
                 </v-card-text>
             </v-card>
             <overlay :overlay="overlay"></overlay>
-            <snackbarRight :snackbar="snackbar"></snackbarRight>
         </v-dialog>
     </div>
 </template>
@@ -78,7 +83,6 @@
 <script>
 import setStautsColorText from "@/js/components/orders/payments/setStautsColorText";
 import overlay from "@/js/layouts/overlay";
-import snackbarRight from "@/js/layouts/snackbarRight";
 
 export default {
     props: ["payment"],
@@ -89,14 +93,11 @@ export default {
     data() {
         return {
             dialog: false,
-            overlay: false,
-            snackbar: {
-                status: false
-            }
+            overlay: false
         };
     },
     methods: {
-        start(){
+        start() {
             this.$refs.form.reset();
         },
         async clickCancelPayment() {
@@ -107,35 +108,37 @@ export default {
                     this.payment.id
                 );
 
-                await this.$store.dispatch("order/getByID", this.payment.order_id);
+                await this.$store.dispatch(
+                    "order/getByID",
+                    this.payment.order_id
+                );
 
                 if (res.status == 200) {
-                    this.snackbar = {
-                        status: true,
-                        color: "success",
+                    this.$notify({
+                        group: "main",
+                        type: "success",
                         text: res.data.message
-                    };
+                    });
                     this.$refs.form.reset();
 
                     this.dialog = false;
                 } else if (res.status == 201) {
-                    this.snackbar = {
-                        status: true,
-                        color: "warning",
+                    this.$notify({
+                        group: "main",
+                        type: "warning",
                         text: res.data.message
-                    };
+                    });
                     this.dialog = false;
                     this.$refs.form.reset();
                     this.overlay = false;
+                } else {
+                    this.$notify({
+                        group: "main",
+                        type: "error",
+                        text: "กรุณาลองอีกครั้ง ผิดพลาดบางอย่าง"
+                    });
+                    this.overlay = false;
                 }
-
-                this.snackbar = {
-                    status: true,
-                    color: "error",
-                    text: "กรุณาลองอีกครั้ง ผิดพลาดบางอย่าง"
-                };
-
-                this.overlay = false;
             } else {
                 this.overlay = false;
                 this.snackbar = {
