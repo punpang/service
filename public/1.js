@@ -3078,6 +3078,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 
@@ -3178,8 +3180,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     clickExit: function clickExit() {
-      this.dialog = false;
       this.$emit("emitExit");
+      this.dialog = false;
       this.reset();
     },
     reset: function reset() {
@@ -4106,6 +4108,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/layouts/overlay */ "./resources/js/layouts/overlay.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -4146,11 +4149,33 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["form"],
+  components: {
+    overlay: _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   data: function data() {
     return {
-      dialog: false
+      dialog: false,
+      slip_un_verify_reasoning_id: "",
+      overlay: false
     };
   },
   methods: {
@@ -4158,25 +4183,91 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response;
+        var data, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                response = {};
-                _context.next = 3;
-                return _this.$store.dispatch("payment/unVerifySlip", _this.form.slip_id);
+                _this.overlay = true;
 
-              case 3:
+                if (!_this.$refs.form.validate()) {
+                  _context.next = 11;
+                  break;
+                }
+
+                data = {
+                  slip_id: _this.form.slip_id,
+                  slip_un_verify_reasoning_id: _this.slip_un_verify_reasoning_id
+                };
+                _context.next = 5;
+                return _this.$store.dispatch("payment/unVerifySlip", data);
+
+              case 5:
                 response = _context.sent;
+                _context.next = 8;
+                return _this.$store.dispatch("order/getByID", _this.$store.getters["order/getByID"].data.id);
 
-              case 4:
+              case 8:
+                if (response.status === 200) {
+                  _this.$emit("emitExit");
+
+                  _this.dialog = false;
+
+                  _this.$notify({
+                    group: "main",
+                    type: "success",
+                    text: "ทำรายการสำเร็จ"
+                  });
+                } else {
+                  _this.$notify({
+                    group: "main",
+                    type: "error",
+                    text: "เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้งภายหลังค่ะ"
+                  });
+                }
+
+                _context.next = 12;
+                break;
+
+              case 11:
+                _this.$notify({
+                  group: "main",
+                  type: "warning",
+                  text: "กรุณากรอกข้อมูลให้ครบถ้วน"
+                });
+
+              case 12:
+                _this.overlay = false;
+
+              case 13:
               case "end":
                 return _context.stop();
             }
           }
         }, _callee);
       }))();
+    },
+    start: function start() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return _this2.$store.dispatch("payment/unVerifyReasoning");
+
+              case 2:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    mounted: function mounted() {
+      this.start();
     }
   }
 });
@@ -8341,6 +8432,7 @@ var render = function() {
                       "hide-details": "",
                       "item-text": "name",
                       "item-value": "id",
+                      readonly: _vm.form.order_payment_method_id == 2,
                       rules: [
                         function(v) {
                           return !!v
@@ -8519,7 +8611,7 @@ var render = function() {
                   _c("v-icon", { attrs: { left: "" } }, [
                     _vm._v("attach_money")
                   ]),
-                  _vm._v("\n        ชำระเงิน\n    ")
+                  _vm._v("\n            ชำระเงิน\n        ")
                 ],
                 1
               )
@@ -8528,7 +8620,8 @@ var render = function() {
           _vm.form.order_payment_method_id == 2
             ? _c("unVerifyPayment", {
                 staticClass: "mr-2",
-                attrs: { form: _vm.form }
+                attrs: { form: _vm.form },
+                on: { emitExit: _vm.clickExit }
               })
             : _vm._e(),
           _vm._v(" "),
@@ -8537,7 +8630,7 @@ var render = function() {
             { attrs: { color: "error" }, on: { click: _vm.clickExit } },
             [
               _c("v-icon", { attrs: { left: "" } }, [_vm._v("exit_to_app")]),
-              _vm._v("\n        ออก\n    ")
+              _vm._v("\n            ออก\n        ")
             ],
             1
           )
@@ -9772,7 +9865,10 @@ var render = function() {
                 return [
                   _c(
                     "v-btn",
-                    _vm._g({ attrs: { color: "warning" } }, on),
+                    _vm._g(
+                      { attrs: { color: "warning" }, on: { click: _vm.start } },
+                      on
+                    ),
                     [
                       _c("v-icon", { attrs: { left: "" } }, [_vm._v("cancel")]),
                       _vm._v("\n                ไม่ผ่าน\n            ")
@@ -9823,14 +9919,42 @@ var render = function() {
               _c(
                 "v-card-text",
                 [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(_vm.form) +
-                      "\n                "
-                  ),
                   _c("v-alert", { attrs: { type: "warning" } }, [
                     _vm._v("การแจ้งชำระนี้ ไม่ผ่านการตรวจสอบ")
                   ]),
+                  _vm._v(" "),
+                  _c(
+                    "v-form",
+                    { ref: "form", attrs: { "lazy-validation": "" } },
+                    [
+                      _c("v-select", {
+                        staticClass: "mb-4",
+                        attrs: {
+                          outlined: "",
+                          label: "เหตุผล",
+                          rules: [
+                            function(v) {
+                              return !!v
+                            }
+                          ],
+                          "hide-details": "",
+                          items: this.$store.getters[
+                            "payment/unVerifyReasoning"
+                          ],
+                          "item-text": "reasoning",
+                          "item-value": "id"
+                        },
+                        model: {
+                          value: _vm.slip_un_verify_reasoning_id,
+                          callback: function($$v) {
+                            _vm.slip_un_verify_reasoning_id = $$v
+                          },
+                          expression: "slip_un_verify_reasoning_id"
+                        }
+                      })
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c(
                     "v-btn",
@@ -9868,7 +9992,9 @@ var render = function() {
               )
             ],
             1
-          )
+          ),
+          _vm._v(" "),
+          _c("overlay", { attrs: { overlay: _vm.overlay } })
         ],
         1
       )

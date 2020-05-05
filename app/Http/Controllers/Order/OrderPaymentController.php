@@ -17,6 +17,7 @@ use App\URL;
 use App\Order\Slip;
 use Bitly;
 use App\GoogleOcr;
+use App\Order\SilpUnVerifyReasoning;
 
 class OrderPaymentController extends Controller
 {
@@ -242,17 +243,23 @@ class OrderPaymentController extends Controller
     public function unVerifySlip(Slip $slip)
     {
         // เปลี่ยนสถานะ slip  เป็นไม่ผ่านการตรวจสอบ
+        // และเพิ่มเหตุผลการยกเลิก
         $slip->slip_verify_id = 3;
+        $slip->slip_un_verify_reasoning_id = request('slip_un_verify_reasoning_id');
         $slip->update();
-
         //
-        $messgae = 'การชำระเงินของคุณ ไม่ผ่านการตรวจสอบ ด้วยเหตุประการใด ประการหนึ่ง';
+        $messgae = 'การชำระเงินของคุณ ไม่ผ่านการตรวจสอบ เนื่องจาก : ' . $slip->silpUnVerifyReasoning->reasoning. ' รบกวนแจ้งชำระใหม่อีกครั้ง ผ่านลิงก์ก่อนหน้านี้ค่ะ';
         MSms::SMSFB($slip->order, $messgae, true);
         Linenotify::send('ไม่ผ่านการชำระ #' . $slip->order->id);
-
 
         return response()->json([
             'success' => true
         ], 200);
+    }
+
+    public function unVerifyReasoning()
+    {
+        $data = SilpUnVerifyReasoning::useOnly()->get();
+        return $data;
     }
 }

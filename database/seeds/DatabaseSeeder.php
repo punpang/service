@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             ProductTableSeed::class,
             OrderPaymentMethodTableSeed::class,
             SlipVerifyTableSeed::class,
-            
+            SlipUnVerifyReasoningTableSeed::class,            
         ]);
     }
 }

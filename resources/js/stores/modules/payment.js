@@ -1,8 +1,16 @@
 export default {
     namespaced: true,
-    state: {},
-    mutations: {},
-    getters: {},
+    state: {
+        unVerifyReasoning:[]
+    },
+    mutations: {
+        unVerifyReasoning(state,data){
+            state.unVerifyReasoning = data
+        }
+    },
+    getters: {
+        unVerifyReasoning:state => state.unVerifyReasoning
+    },
     actions: {
         async create({}, payload) {
             const response = await axios.post("/api/payment/create", payload);
@@ -27,11 +35,16 @@ export default {
             const response = await axios.post("/api/payment/checkRef", payload);
             return response;
         },
-        async unVerifySlip({},payload){
+        async unVerifySlip({},payload){        
             console.log(payload);
-            
-            const response = await axios.post("/api/payment/"+payload+"/unVerifySlip");
+                
+            const response = await axios.post("/api/payment/"+payload.slip_id+"/unVerifySlip",payload);
 
+            return response;
+        },
+        async unVerifyReasoning({commit}){
+            const response = await axios.get("/api/payment/unVerifyReasoning");
+            commit('unVerifyReasoning',response.data)
             return response;
         }
     }

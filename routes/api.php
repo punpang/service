@@ -80,6 +80,7 @@ Route::middleware('admin')->group(function () { //สำหรับ admin
         Route::post('alert', 'Order\OrderPaymentController@alert');
         Route::post('checkRef', 'Order\OrderPaymentController@checkRef');
         Route::post('{slip}/unVerifySlip', 'Order\OrderPaymentController@unVerifySlip');
+        Route::get('unVerifyReasoning', 'Order\OrderPaymentController@unVerifyReasoning');
         
         Route::prefix('method')->group(function () { // api/payment/method/...
             Route::get('all', 'Order\OrderPaymentMethodController@all');

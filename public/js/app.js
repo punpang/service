@@ -2249,6 +2249,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -40984,7 +40985,7 @@ var render = function() {
       _vm._v(" "),
       _c("notifications", {
         staticClass: "notification",
-        attrs: { group: "main", position: "bottom center" }
+        attrs: { group: "main", position: "bottom center", width: "350" }
       })
     ],
     1
@@ -102089,9 +102090,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   namespaced: true,
-  state: {},
-  mutations: {},
-  getters: {},
+  state: {
+    unVerifyReasoning: []
+  },
+  mutations: {
+    unVerifyReasoning: function unVerifyReasoning(state, data) {
+      state.unVerifyReasoning = data;
+    }
+  },
+  getters: {
+    unVerifyReasoning: function unVerifyReasoning(state) {
+      return state.unVerifyReasoning;
+    }
+  },
   actions: {
     create: function create(_ref, payload) {
       _objectDestructuringEmpty(_ref);
@@ -102206,7 +102217,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 console.log(payload);
                 _context5.next = 3;
-                return axios.post("/api/payment/" + payload + "/unVerifySlip");
+                return axios.post("/api/payment/" + payload.slip_id + "/unVerifySlip", payload);
 
               case 3:
                 response = _context5.sent;
@@ -102218,6 +102229,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee5);
+      }))();
+    },
+    unVerifyReasoning: function unVerifyReasoning(_ref6) {
+      var commit = _ref6.commit;
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                _context6.next = 2;
+                return axios.get("/api/payment/unVerifyReasoning");
+
+              case 2:
+                response = _context6.sent;
+                commit('unVerifyReasoning', response.data);
+                return _context6.abrupt("return", response);
+
+              case 5:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
       }))();
     }
   }

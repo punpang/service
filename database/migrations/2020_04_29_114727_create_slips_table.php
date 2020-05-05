@@ -19,6 +19,7 @@ class CreateSlipsTable extends Migration
             $table->string('path')->unique();
             $table->integer('slip_verify_id')->default(1);
             $table->string('ref')->unique()->nullable();
+            $table->integer('slip_un_verify_reasoning_id')->nullable();
             $table->timestamps();
         });
     }

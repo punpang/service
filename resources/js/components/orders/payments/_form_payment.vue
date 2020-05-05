@@ -20,6 +20,7 @@
                         hide-details
                         item-text="name"
                         item-value="id"
+                        :readonly="form.order_payment_method_id == 2"
                         v-model="form.order_payment_method_id"
                         :rules="[v => !!v]"
                     ></v-select>
@@ -65,32 +66,33 @@
         <v-checkbox label="แจ้งผ่านข้อความ" v-model="form.alert"></v-checkbox>
         <v-row class="px-4">
             <v-btn
-            v-if="!alertRefDouble"
-            class="mr-2"
-            color="success"
-            @click="clickSubmit"
-            :disabled="
-                (moneyBack.numberNot > 0 &&
-                    form.order_payment_method_id == 2) ||
-                    form.amount <= 0
-            "
-        >
-            <v-icon left>attach_money</v-icon>
-            ชำระเงิน
-        </v-btn>
+                v-if="!alertRefDouble"
+                class="mr-2"
+                color="success"
+                @click="clickSubmit"
+                :disabled="
+                    (moneyBack.numberNot > 0 &&
+                        form.order_payment_method_id == 2) ||
+                        form.amount <= 0
+                "
+            >
+                <v-icon left>attach_money</v-icon>
+                ชำระเงิน
+            </v-btn>
 
-        <unVerifyPayment
-            class="mr-2"
-            v-if="form.order_payment_method_id == 2"
-            :form="form"
-        ></unVerifyPayment>
+            <unVerifyPayment
+                class="mr-2"
+                v-if="form.order_payment_method_id == 2"
+                :form="form"
+                @emitExit="clickExit"
+            ></unVerifyPayment>
 
-        <v-btn color="error" @click="clickExit">
-            <v-icon left>exit_to_app</v-icon>
-            ออก
-        </v-btn>
+            <v-btn color="error" @click="clickExit">
+                <v-icon left>exit_to_app</v-icon>
+                ออก
+            </v-btn>
         </v-row>
-        
+
         <overlay :overlay="overlay"></overlay>
     </div>
 </template>
@@ -158,8 +160,8 @@ export default {
             }
         },
         clickExit() {
-            this.dialog = false;
             this.$emit("emitExit");
+            this.dialog = false;
             this.reset();
         },
         reset() {

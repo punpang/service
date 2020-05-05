@@ -22,6 +22,7 @@
             class="notification"
             group="main"
             position="bottom center"
+            width="350"
         />
     </v-app>
 </template>
