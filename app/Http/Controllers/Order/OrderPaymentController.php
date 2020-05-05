@@ -18,6 +18,7 @@ use App\Order\Slip;
 use Bitly;
 use App\GoogleOcr;
 use App\Order\SilpUnVerifyReasoning;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class OrderPaymentController extends Controller
 {
@@ -248,7 +249,7 @@ class OrderPaymentController extends Controller
         $slip->slip_un_verify_reasoning_id = request('slip_un_verify_reasoning_id');
         $slip->update();
         //
-        $messgae = 'การชำระเงินของคุณ ไม่ผ่านการตรวจสอบ เนื่องจาก : ' . $slip->silpUnVerifyReasoning->reasoning. ' รบกวนแจ้งชำระใหม่อีกครั้ง ผ่านลิงก์ก่อนหน้านี้ค่ะ';
+        $messgae = 'การชำระเงินของคุณ ไม่ผ่านการตรวจสอบ เนื่องจาก : ' . $slip->silpUnVerifyReasoning->reasoning . ' รบกวนแจ้งชำระใหม่อีกครั้ง ผ่านลิงก์ก่อนหน้านี้ค่ะ';
         MSms::SMSFB($slip->order, $messgae, true);
         Linenotify::send('ไม่ผ่านการชำระ #' . $slip->order->id);
 
@@ -261,5 +262,33 @@ class OrderPaymentController extends Controller
     {
         $data = SilpUnVerifyReasoning::useOnly()->get();
         return $data;
+    }
+
+    public function notPayDeposit()
+    {
+        request()->validate([
+            'order_id' => 'required',
+            'alertSMS' => 'required|boolean'
+        ]);
+
+        $input = request()->all();
+        $data = Order::whereId($input['order_id'])->whereIn('order_status_id', [2, 3])->first();
+        if ($data) {
+            $data->order_status_id = 5;
+            $data->update();
+
+            $messgae = 'ลูกค้ายืนยันไม่สะดวกชำระมัดจำ ทางร้านขอนัดลูกค้าเข้าร้าน คิว ' . \Carbon\Carbon::parse($data->dateTime_get)->addYears(543)->format('d-m-Y H:i') . " เพื่อรอตกแต่งสินค้า 15-30 นาทีค่ะ";
+            MSms::SMSFB($data, $messgae, $input['alertSMS']);
+            Linenotify::send('ไม่ผ่านการชำระ #' . $data->id);
+
+            return response()->json([
+                'success' => true
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => true,
+                'message' => "รายการสั่งซื้อนี้ ไม่ได้อยู่ในสถานะที่สามารถเปลี่ยนสถานะเป็น 'ไม่ชำระมัด' จำได้"
+            ], 200);
+        }
     }
 }

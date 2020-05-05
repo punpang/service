@@ -46,6 +46,12 @@ export default {
             const response = await axios.get("/api/payment/unVerifyReasoning");
             commit('unVerifyReasoning',response.data)
             return response;
-        }
+        },
+        async notPayDeposit({},payload){
+            const response = await axios.post("/api/payment/notPayDeposit",payload);
+            return response;
+        },
+
+        
     }
 };

@@ -51,7 +51,7 @@ export default {
             overlay: false,
             form: {
                 order_id: this.$store.getters["order/getByID"].data.id,
-                order_payment_method_id: "",
+                order_payment_method_id: 1,
                 amount: "0",
                 status: 1,
                 alert: true,

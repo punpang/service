@@ -20,7 +20,7 @@
                         hide-details
                         item-text="name"
                         item-value="id"
-                        :readonly="form.order_payment_method_id == 2"
+                        readonly
                         v-model="form.order_payment_method_id"
                         :rules="[v => !!v]"
                     ></v-select>
