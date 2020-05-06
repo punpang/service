@@ -38,9 +38,6 @@
                 ></v-progress-circular>
             </v-overlay>
         </v-dialog>
-        <v-snackbar v-model="snackbar.status" :color="snackbar.color" right>{{
-            snackbar.text
-        }}</v-snackbar>
     </div>
 </template>
 
@@ -55,9 +52,6 @@ export default {
             test: {},
             overlay: false,
             dialog: false,
-            snackbar: {
-                status: false
-            },
             form: {
                 product_id: this.data.id,
                 product_category_sub_id: ""
@@ -68,11 +62,7 @@ export default {
     props: ["data"],
     methods: {
         snackbarError() {
-            this.snackbar = {
-                status: true,
-                text: "เกิดข้อผิดพลาดบางอย่าง ลองอีกครั้งภายหลัง",
-                color: "error"
-            };
+            this.$toast.error("เกิดข้อผิดพลาดบางอย่าง ลองอีกครั้งภายหลัง")
         },
         async reload() {
             this.overlay = true;
@@ -91,28 +81,16 @@ export default {
                 );
                 if (response.status === 200) {
                     this.loading = false;
-                    this.snackbar = {
-                        status: true,
-                        color: "success",
-                        text: "เพิ่มสินค้าใหม่สำเร็จ"
-                    };
+                    this.$toast.success("เพิ่มสินค้าใหม่สำเร็จ")
                     this.overlay = false;
                 }
             } else {
-                this.snackbar = {
-                    status: true,
-                    color: "warning",
-                    text: "คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง"
-                };
+                this.$toast.warning("คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง")
                 this.overlay = false;
             }
         },
         reset() {
-            this.snackbar = {
-                status: true,
-                color: "success",
-                text: "ล้างข้อมูลสำเร็จ"
-            };
+            this.$toast.success("ล้างข้อมูลสำเร็จ")
             this.form.name = "";
         }
     }

@@ -45,12 +45,18 @@ const pluginOptions = {
 Vue.use(VueCurrencyInput, pluginOptions);
 
 // clipboard
-import VueClipboard from 'vue-clipboard2' 
-Vue.use(VueClipboard)
+import VueClipboard from "vue-clipboard2";
+Vue.use(VueClipboard);
 
-//Notifications
-import Notifications from 'vue-notification'
-Vue.use(Notifications)
+// notification
+import VueToast from "vue-toast-notification";
+// Import one of available themes
+import "vue-toast-notification/dist/theme-default.css";
+//import 'vue-toast-notification/dist/theme-sugar.css';
+Vue.use(VueToast, {
+    // One of options
+    position: "bottom",
+});
 
 const app = new Vue({
     el: "#app",

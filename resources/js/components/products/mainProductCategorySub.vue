@@ -33,9 +33,6 @@
                 ></v-progress-circular>
             </v-overlay>
         </v-dialog>
-        <v-snackbar v-model="snackbar.status" :color="snackbar.color" right>{{
-            snackbar.text
-        }}</v-snackbar>
     </div>
 </template>
 
@@ -51,9 +48,6 @@ export default {
     data() {
         return {
             overlay: false,
-            snackbar: {
-                status: false
-            },
             dialog: false
         };
     },
@@ -61,18 +55,10 @@ export default {
         async reload() {
             this.overlay = true;
             this.$store.commit("productCategorySub/get", []);
-            this.snackbar = {
-                status: true,
-                text: "กำลังโหลดข้อมูล...",
-                color: "warning"
-            };
+            this.$toast.warning("กำลังโหลดข้อมูล...")
             await this.$store.dispatch("productCategorySub/get");
             await this.$store.dispatch("productCategory/getUseOnly");
-            this.snackbar = {
-                status: true,
-                text: "โหลดข้อมูลเสร็จสิ้น",
-                color: "success"
-            };
+            this.$toast.success("โหลดข้อมูลเสร็จสิ้น")
             
             this.overlay = false;
         },

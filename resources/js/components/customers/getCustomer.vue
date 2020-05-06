@@ -38,9 +38,6 @@
                 </v-container>
             </template>
         </v-data-table>
-        <v-snackbar v-model="snackbar.status" right :color="snackbar.color">{{
-            snackbar.text
-        }}</v-snackbar>
     </div>
 </template>
 
@@ -63,11 +60,6 @@ export default {
                 { text: "เบอร์โทร", value: "phone" },
                 { text: "การจัดการ", value: "action" }
             ],
-            snackbar: {
-                status: true,
-                color: "info",
-                text: "กำลังโหลดข้อมูล..."
-            }
         };
     },
     methods: {
@@ -86,17 +78,9 @@ export default {
         const response = await this.$store.dispatch("customer/get");
         if (response.status === 200) {
             this.loadingTable = false;
-            this.snackbar = {
-                status: true,
-                color: "success",
-                text: "โหลดข้อมูลลูกค้าสำเร็จ"
-            };
+            this.$toast.success("โหลดข้อมูลลูกค้าสำเร็จ")
         } else {
-            this.snackbar = {
-                status: true,
-                color: "warning",
-                text: "เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง"
-            };
+            this.$toast.warning("เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง")
             this.loadingTable = false;
         }
     }

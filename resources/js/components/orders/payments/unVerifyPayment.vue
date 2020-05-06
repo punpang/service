@@ -86,25 +86,12 @@ export default {
                 if (response.status === 200) {
                     this.$emit("emitExit");
                     this.dialog = false;
-                    this.$notify({
-                        group: "main",
-                        type: "success",
-                        text: "ทำรายการสำเร็จ"
-                    });
+                    this.$toast.success('ทำรายการสำเร็จ')
                 } else {
-                    this.$notify({
-                        group: "main",
-                        type: "error",
-                        text:
-                            "เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้งภายหลังค่ะ"
-                    });
+                    this.$toast.error('เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้งภายหลังค่ะ')
                 }
             } else {
-                this.$notify({
-                    group: "main",
-                    type: "warning",
-                    text: "กรุณากรอกข้อมูลให้ครบถ้วน"
-                });
+                this.$toast.warning('กรุณากรอกข้อมูลให้ครบถ้วน')
             }
             this.overlay = false;
         },

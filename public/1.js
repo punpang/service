@@ -105,8 +105,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _js_components_customers_selectCustomer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/customers/selectCustomer */ "./resources/js/components/customers/selectCustomer.vue");
-/* harmony import */ var _js_layouts_snackbarRight__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/layouts/snackbarRight */ "./resources/js/layouts/snackbarRight.vue");
-/* harmony import */ var _js_components_orders_OrderListsForchecked__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/js/components/orders/OrderListsForchecked */ "./resources/js/components/orders/OrderListsForchecked.vue");
+/* harmony import */ var _js_components_orders_OrderListsForchecked__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/components/orders/OrderListsForchecked */ "./resources/js/components/orders/OrderListsForchecked.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -323,16 +322,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["headers"],
   components: {
     selectCustomer: _js_components_customers_selectCustomer__WEBPACK_IMPORTED_MODULE_1__["default"],
-    snackbarRight: _js_layouts_snackbarRight__WEBPACK_IMPORTED_MODULE_2__["default"],
-    OrderListsForchecked: _js_components_orders_OrderListsForchecked__WEBPACK_IMPORTED_MODULE_3__["default"]
+    OrderListsForchecked: _js_components_orders_OrderListsForchecked__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
@@ -379,9 +375,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         channel_of_purchase_id: [function (v) {
           return !!v;
         }]
-      },
-      snackbar: {
-        status: false
       },
       dateTimeStatus: false
     };
@@ -444,25 +437,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.dateTimeStatus = true;
                   _this.formData.dateTime_get = data.dateTime_get;
                   _this.reply.order = data.orders;
-                  _this.snackbar = {
-                    status: true,
-                    text: response.data.message,
-                    color: "success"
-                  };
+
+                  _this.$toast.success(response.data.message);
+
                   _this.overlay = false;
                 } else if (response.status == 400) {
-                  _this.snackbar = {
-                    status: true,
-                    text: response.data.message,
-                    color: "error"
-                  };
+                  _this.$toast.error(response.data.message);
+
                   _this.overlay = false;
                 } else {
-                  _this.snackbar = {
-                    status: true,
-                    text: "เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง",
-                    color: "error"
-                  };
+                  _this.$toast.error("เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง");
+
                   _this.overlay = false;
                 }
 
@@ -559,11 +544,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this3.$emit("OnDataTable");
 
               case 8:
-                _this3.snackbar = {
-                  status: true,
-                  text: "สร้างรายการใหม่สำเร็จ",
-                  color: "success"
-                };
+                _this3.$toast.success("สร้างรายการใหม่สำเร็จ");
+
                 _this3.dialog = false;
                 _this3.overlay = false;
 
@@ -572,11 +554,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 break;
 
               case 13:
-                _this3.snackbar = {
-                  status: true,
-                  text: "กรุณาตรวจสอบ กรอกข้อมูลไม่ครบถ้วน",
-                  color: "warning"
-                };
+                _this3.$toast.warning("กรุณาตรวจสอบ กรอกข้อมูลไม่ครบถ้วน");
 
               case 14:
               case "end":
@@ -1123,8 +1101,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_components_orders_details_selectProduct__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/orders/details/selectProduct */ "./resources/js/components/orders/details/selectProduct.vue");
 /* harmony import */ var _js_components_orders_details_tagsProduct__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/components/orders/details/tagsProduct */ "./resources/js/components/orders/details/tagsProduct.vue");
 /* harmony import */ var _js_components_orders_details_processingProduct__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/js/components/orders/details/processingProduct */ "./resources/js/components/orders/details/processingProduct.vue");
-/* harmony import */ var _js_layouts_snackbarRight__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/js/layouts/snackbarRight */ "./resources/js/layouts/snackbarRight.vue");
-/* harmony import */ var _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/js/layouts/overlay */ "./resources/js/layouts/overlay.vue");
+/* harmony import */ var _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/js/layouts/overlay */ "./resources/js/layouts/overlay.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -1423,8 +1400,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-
 
 
 
@@ -1435,15 +1410,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     selectProduct: _js_components_orders_details_selectProduct__WEBPACK_IMPORTED_MODULE_1__["default"],
     tagsProduct: _js_components_orders_details_tagsProduct__WEBPACK_IMPORTED_MODULE_2__["default"],
     processingProduct: _js_components_orders_details_processingProduct__WEBPACK_IMPORTED_MODULE_3__["default"],
-    snackbarRight: _js_layouts_snackbarRight__WEBPACK_IMPORTED_MODULE_4__["default"],
-    overlay: _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_5__["default"]
+    overlay: _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   data: function data() {
     return {
       dialog: false,
-      snackbar: {
-        status: false
-      },
       overlay: false,
       response: {},
       product: {
@@ -1528,18 +1499,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 14:
                 if (_this.response.status == 200) {
-                  _this.snackbar = _this.$store.getters["snackbar/success"];
+                  _this.$toast.success("ทำรายการสำเร็จ");
 
                   _this.out();
                 } else {
-                  _this.snackbar = _this.$store.getters["snackbar/error"];
+                  _this.$toast.error("เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง");
                 }
 
                 _context.next = 18;
                 break;
 
               case 17:
-                _this.snackbar = _this.$store.getters["snackbar/error"];
+                _this.$toast.warning("กรุณากรอกข้อมูลให้ถูกต้อง");
 
               case 18:
                 _this.overlay = false;
@@ -1655,8 +1626,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_components_orders_details_selectProduct__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/orders/details/selectProduct */ "./resources/js/components/orders/details/selectProduct.vue");
 /* harmony import */ var _js_components_orders_details_tagsProduct__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/components/orders/details/tagsProduct */ "./resources/js/components/orders/details/tagsProduct.vue");
 /* harmony import */ var _js_components_orders_details_processingProduct__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/js/components/orders/details/processingProduct */ "./resources/js/components/orders/details/processingProduct.vue");
-/* harmony import */ var _js_layouts_snackbarRight__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/js/layouts/snackbarRight */ "./resources/js/layouts/snackbarRight.vue");
-/* harmony import */ var _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/js/layouts/overlay */ "./resources/js/layouts/overlay.vue");
+/* harmony import */ var _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/js/layouts/overlay */ "./resources/js/layouts/overlay.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -1925,8 +1895,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-
 
 
 
@@ -1937,15 +1905,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     selectProduct: _js_components_orders_details_selectProduct__WEBPACK_IMPORTED_MODULE_1__["default"],
     tagsProduct: _js_components_orders_details_tagsProduct__WEBPACK_IMPORTED_MODULE_2__["default"],
     processingProduct: _js_components_orders_details_processingProduct__WEBPACK_IMPORTED_MODULE_3__["default"],
-    snackbarRight: _js_layouts_snackbarRight__WEBPACK_IMPORTED_MODULE_4__["default"],
-    overlay: _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_5__["default"]
+    overlay: _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   data: function data() {
     return {
       dialog: false,
-      snackbar: {
-        status: false
-      },
       overlay: false,
       product: {
         id: 0,
@@ -2007,30 +1971,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 console.log(res);
 
                 if (res.status == 200) {
-                  _this.snackbar = {
-                    status: true,
-                    color: "success",
-                    text: "ลงสินค้าสำหรับรายการสั่งซื้อ #" + _this.order.id
-                  };
+                  _this.$toast.success("ลงสินค้าสำหรับรายการสั่งซื้อ #" + _this.order.id);
 
                   _this.out();
                 } else {
-                  _this.snackbar = {
-                    status: true,
-                    color: "warning",
-                    text: _this.$store.getters["main/snackbarError"]
-                  };
+                  _this.$toast.error("เกิดข้อผิดพลาดบางอย่างขึ้น กรุณาลองอีกครั้ง");
                 }
 
                 _context.next = 10;
                 break;
 
               case 9:
-                _this.snackbar = {
-                  status: true,
-                  color: "warning",
-                  text: _this.$store.getters["main/snackbarError"]
-                };
+                _this.$toast.warning("กรุณากรอกข้อมูลให้ถูกต้อง");
 
               case 10:
                 _this.overlay = false;
@@ -2225,8 +2177,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _js_components_orders_details_productDetail__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/orders/details/productDetail */ "./resources/js/components/orders/details/productDetail.vue");
-/* harmony import */ var _js_layouts_snackbarRight__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/layouts/snackbarRight */ "./resources/js/layouts/snackbarRight.vue");
-/* harmony import */ var _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/js/layouts/overlay */ "./resources/js/layouts/overlay.vue");
+/* harmony import */ var _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/layouts/overlay */ "./resources/js/layouts/overlay.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2311,22 +2262,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["detail", "action"],
   components: {
     productDetail: _js_components_orders_details_productDetail__WEBPACK_IMPORTED_MODULE_1__["default"],
-    snackbarRight: _js_layouts_snackbarRight__WEBPACK_IMPORTED_MODULE_2__["default"],
-    overlay: _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_3__["default"]
+    overlay: _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
       dialog: false,
       confirmText: "",
-      snackbar: "",
       overlay: false,
       response: {},
       main: {
@@ -2462,11 +2409,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 15:
                 if (_this.response.status == 200) {
-                  _this.snackbar = _this.$store.getters["snackbar/success"];
+                  _this.$toast.success("ทำรายการสำเร็จ");
+
                   _this.overlay = false;
                   _this.dialog = false;
                 } else {
-                  _this.snackbar = _this.$store.getters["snackbar/error"];
+                  _this.$toast.error("เกิดข้อผิดพลาดบางอย่างขึ้น กรุณาลองอีกครั้งภายหลัง");
+
                   _this.overlay = false;
                 }
 
@@ -2474,7 +2423,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 break;
 
               case 18:
-                _this.snackbar = _this.$store.getters["snackbar/error"];
+                _this.$toast.warning("กรุณากรอกข้อมูลให้ถูกต้อง");
+
                 _this.overlay = false;
 
               case 20:
@@ -3152,17 +3102,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                   _this2.overlay = false;
 
-                  _this2.$notify({
-                    group: "main",
-                    type: "success",
-                    text: "รับชำระเงินสำเร็จ"
-                  });
+                  _this2.$toast.success('รับชำระเงินสำเร็จ');
                 } else if (response.status == 299) {
-                  _this2.$notify({
-                    group: "main",
-                    type: "error",
-                    text: response.data.message
-                  });
+                  _this2.$toast.error(response.data.message);
 
                   _this2.alertRefDouble = true;
                   _this2.overlay = false;
@@ -3613,21 +3555,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 7:
                 if (res.status == 200) {
-                  _this.$notify({
-                    group: "main",
-                    type: "success",
-                    text: res.data.message
-                  });
+                  _this.$toast.success(res.data.message);
 
                   _this.$refs.form.reset();
 
                   _this.dialog = false;
                 } else if (res.status == 201) {
-                  _this.$notify({
-                    group: "main",
-                    type: "warning",
-                    text: res.data.message
-                  });
+                  _this.$toast.warning(res.data.message);
 
                   _this.dialog = false;
 
@@ -3635,11 +3569,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                   _this.overlay = false;
                 } else {
-                  _this.$notify({
-                    group: "main",
-                    type: "error",
-                    text: "กรุณาลองอีกครั้ง ผิดพลาดบางอย่าง"
-                  });
+                  _this.$toast.error('กรุณาลองอีกครั้ง ผิดพลาดบางอย่าง');
 
                   _this.overlay = false;
                 }
@@ -3649,11 +3579,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 10:
                 _this.overlay = false;
-                _this.snackbar = {
-                  status: true,
-                  color: "error",
-                  text: "กรุณาลองอีกครั้ง ผิดพลาดบางอย่าง"
-                };
+
+                _this.$toast.error('กรุณาลองอีกครั้ง ผิดพลาดบางอย่าง');
 
               case 12:
               case "end":
@@ -3870,17 +3797,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 if (res.status == 200) {
                   _this.dialog = false;
 
-                  _this.$notify({
-                    group: "main",
-                    type: "success",
-                    text: "เปลี่ยนสถานะ : ไม่ชำระมัดจำ"
-                  });
+                  _this.$toast.success('เปลี่ยนสถานะ : ไม่ชำระมัดจำ');
                 } else {
-                  _this.$notify({
-                    group: "main",
-                    type: "error",
-                    text: "เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้งภายหลัง"
-                  });
+                  _this.$toast.error('เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้งภายหลัง');
                 }
 
                 _this.overlay = false;
@@ -4344,28 +4263,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                   _this.dialog = false;
 
-                  _this.$notify({
-                    group: "main",
-                    type: "success",
-                    text: "ทำรายการสำเร็จ"
-                  });
+                  _this.$toast.success('ทำรายการสำเร็จ');
                 } else {
-                  _this.$notify({
-                    group: "main",
-                    type: "error",
-                    text: "เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้งภายหลังค่ะ"
-                  });
+                  _this.$toast.error('เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้งภายหลังค่ะ');
                 }
 
                 _context.next = 12;
                 break;
 
               case 11:
-                _this.$notify({
-                  group: "main",
-                  type: "warning",
-                  text: "กรุณากรอกข้อมูลให้ครบถ้วน"
-                });
+                _this.$toast.warning('กรุณากรอกข้อมูลให้ครบถ้วน');
 
               case 12:
                 _this.overlay = false;
@@ -5407,9 +5314,7 @@ var render = function() {
           )
         ],
         1
-      ),
-      _vm._v(" "),
-      _c("snackbarRight", { attrs: { snackbar: _vm.snackbar } })
+      )
     ],
     1
   )
@@ -6859,9 +6764,7 @@ var render = function() {
           _c("overlay", { attrs: { overlay: _vm.overlay } })
         ],
         1
-      ),
-      _vm._v(" "),
-      _c("snackbarRight", { attrs: { snackbar: _vm.snackbar } })
+      )
     ],
     1
   )
@@ -7605,9 +7508,7 @@ var render = function() {
           _c("overlay", { attrs: { overlay: _vm.overlay } })
         ],
         1
-      ),
-      _vm._v(" "),
-      _c("snackbarRight", { attrs: { snackbar: _vm.snackbar } })
+      )
     ],
     1
   )
@@ -7905,8 +7806,6 @@ var render = function() {
             ],
             1
           ),
-          _vm._v(" "),
-          _c("snackbarRight", { attrs: { snackbar: _vm.snackbar } }),
           _vm._v(" "),
           _c("overlay", { attrs: { overlay: _vm.overlay } })
         ],

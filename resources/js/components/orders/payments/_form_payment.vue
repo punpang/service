@@ -142,17 +142,9 @@ export default {
                 if (response.status == 200) {
                     this.clickExit();
                     this.overlay = false;
-                    this.$notify({
-                        group: "main",
-                        type: "success",
-                        text: "รับชำระเงินสำเร็จ"
-                    });
+                    this.$toast.success('รับชำระเงินสำเร็จ');
                 } else if (response.status == 299) {
-                    this.$notify({
-                        group: "main",
-                        type: "error",
-                        text: response.data.message
-                    });
+                    this.$toast.error(response.data.message);
                     this.alertRefDouble = true;
                     this.overlay = false;
                 }

@@ -60,9 +60,6 @@
                 ></v-progress-circular>
             </v-overlay>
         </v-dialog>
-        <v-snackbar v-model="snackbar.status" :color="snackbar.color" right>{{
-            snackbar.text
-        }}</v-snackbar>
     </div>
 </template>
 
@@ -85,9 +82,6 @@ export default {
                     v => v.length <= 100 || "ไม่เกิน 100 ตัวอักษร"
                 ]
             },
-            snackbar: {
-                status: false
-            }
         };
     },
     methods: {
@@ -99,20 +93,12 @@ export default {
                     this.form
                 );
                 if (response.status === 200) {
-                    this.snackbar = {
-                        status: true,
-                        color: "success",
-                        text: "แก้ไขกลุ่มสินค้าย่อยสำเร็จ"
-                    };
+                    this.$toast.success("แก้ไขกลุ่มสินค้าย่อยสำเร็จ")
                     this.loading = false;
                     this.dialog = false;
                 }
             } else {
-                this.snackbar = {
-                    status: true,
-                    color: "warning",
-                    text: "คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง"
-                };
+                this.$toast.warning("คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง")
             }
         }
     }

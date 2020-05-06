@@ -114,38 +114,22 @@ export default {
                 );
 
                 if (res.status == 200) {
-                    this.$notify({
-                        group: "main",
-                        type: "success",
-                        text: res.data.message
-                    });
+                    this.$toast.success(res.data.message);
                     this.$refs.form.reset();
 
                     this.dialog = false;
                 } else if (res.status == 201) {
-                    this.$notify({
-                        group: "main",
-                        type: "warning",
-                        text: res.data.message
-                    });
+                    this.$toast.warning(res.data.message);
                     this.dialog = false;
                     this.$refs.form.reset();
                     this.overlay = false;
                 } else {
-                    this.$notify({
-                        group: "main",
-                        type: "error",
-                        text: "กรุณาลองอีกครั้ง ผิดพลาดบางอย่าง"
-                    });
+                    this.$toast.error('กรุณาลองอีกครั้ง ผิดพลาดบางอย่าง')
                     this.overlay = false;
                 }
             } else {
                 this.overlay = false;
-                this.snackbar = {
-                    status: true,
-                    color: "error",
-                    text: "กรุณาลองอีกครั้ง ผิดพลาดบางอย่าง"
-                };
+                this.$toast.error('กรุณาลองอีกครั้ง ผิดพลาดบางอย่าง')
             }
         }
     }

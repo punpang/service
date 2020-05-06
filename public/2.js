@@ -62,9 +62,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
 
 
 
@@ -77,9 +74,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       overlay: false,
-      snackbar: {
-        status: false
-      },
       dialog: false
     };
   },
@@ -96,20 +90,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this.$store.commit("productCategory/get", []);
 
-                _this.snackbar = {
-                  status: true,
-                  text: "กำลังโหลดข้อมูล...",
-                  color: "warning"
-                };
+                _this.$toast.warning("กำลังโหลดข้อมูล...");
+
                 _context.next = 5;
                 return _this.$store.dispatch("productCategory/get");
 
               case 5:
-                _this.snackbar = {
-                  status: true,
-                  text: "โหลดข้อมูลเสร็จสิ้น",
-                  color: "success"
-                };
+                _this.$toast.success("โหลดข้อมูลเสร็จสิ้น");
+
                 _this.overlay = false;
 
               case 7:
@@ -142,9 +130,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//
-//
-//
 //
 //
 //
@@ -333,9 +318,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         image: [function (v) {
           return !!v || "ห้ามเว้นว่าง";
         }]
-      },
-      snackbar: {
-        status: false
       }
     };
   },
@@ -364,20 +346,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 if (response.status == 200) {
                   _this.imagePreview = "https://drive.google.com/thumbnail?id=" + response.data.src_name;
-                  _this.snackbar = {
-                    status: true,
-                    color: "success",
-                    text: "อัปโหลดรูปสำเร็จ"
-                  };
+
+                  _this.$toast.success("อัปโหลดรูปสำเร็จ");
+
                   _this.form.product_image_id = response.data.id;
                   _this.loadUploadImage = false;
                   _this.overlay = false;
                 } else {
-                  _this.snackbar = {
-                    status: true,
-                    color: "error",
-                    text: "อัปโหลดรูปไม่สำเร็จ เกิดข้อผิดพลาดบางอย่าง"
-                  };
+                  _this.$toast.error("อัปโหลดรูปไม่สำเร็จ เกิดข้อผิดพลาดบางอย่าง");
+
                   _this.loadUploadImage = false;
                   _this.overlay = false;
                 }
@@ -408,11 +385,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 if (response.status === 200) {
                   _this2.imagePreview = "";
-                  _this2.snackbar = {
-                    status: true,
-                    color: "success",
-                    text: "ลบรูปภาพสำเร็จ"
-                  };
+
+                  _this2.$toast.success("ลบรูปภาพสำเร็จ");
+
                   _this2.form.product_image_id = "1";
                   _this2.overlay = false;
                 } else {
@@ -446,11 +421,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
     },
     snackbarError: function snackbarError() {
-      this.snackbar = {
-        status: true,
-        text: "เกิดข้อผิดพลาดบางอย่าง ลองอีกครั้งภายหลัง",
-        color: "error"
-      };
+      this.$toast.error("เกิดข้อผิดพลาดบางอย่าง ลองอีกครั้งภายหลัง");
     },
     save: function save() {
       var _this3 = this;
@@ -480,11 +451,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this3.image = "";
                   _this3.imagePreview = "";
                   _this3.file = "";
-                  _this3.snackbar = {
-                    status: true,
-                    color: "success",
-                    text: "เพิ่มสินค้าใหม่สำเร็จ"
-                  };
+
+                  _this3.$toast.success("เพิ่มสินค้าใหม่สำเร็จ");
+
                   _this3.dialog = false;
                   _this3.overlay = false;
                 }
@@ -493,11 +462,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 break;
 
               case 9:
-                _this3.snackbar = {
-                  status: true,
-                  color: "warning",
-                  text: "คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง"
-                };
+                _this3.$toast.warning("คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง");
+
                 _this3.overlay = false;
 
               case 11:
@@ -509,11 +475,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     reset: function reset() {
-      this.snackbar = {
-        status: true,
-        color: "success",
-        text: "ล้างข้อมูลสำเร็จ"
-      };
+      this.$toast.success("ล้างข้อมูลสำเร็จ");
       this.form.name = "";
     }
   }
@@ -538,11 +500,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//
-//
-//
-//
-//
 //
 //
 //
@@ -730,9 +687,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         image: [function (v) {
           return !!v || "ห้ามเว้นว่าง";
         }]
-      },
-      snackbar: {
-        status: false
       }
     };
   },
@@ -764,20 +718,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 if (response.status == 200) {
                   _this.imagePreview = response.data.src_name;
-                  _this.snackbar = {
-                    status: true,
-                    color: "success",
-                    text: "อัปโหลดรูปสำเร็จ"
-                  };
+
+                  _this.$toast.success("อัปโหลดรูปสำเร็จ");
+
                   _this.form.product_image_id = response.data.id;
                   _this.loadUploadImage = false;
                   _this.overlay = false;
                 } else {
-                  _this.snackbar = {
-                    status: true,
-                    color: "error",
-                    text: "อัปโหลดรูปไม่สำเร็จ เกิดข้อผิดพลาดบางอย่าง"
-                  };
+                  _this.$toast.error("อัปโหลดรูปไม่สำเร็จ เกิดข้อผิดพลาดบางอย่าง");
+
                   _this.loadUploadImage = false;
                   _this.overlay = false;
                 }
@@ -808,11 +757,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 if (response.status == 200) {
                   _this2.imagePreview = "";
-                  _this2.snackbar = {
-                    status: true,
-                    color: "success",
-                    text: "ลบรูปภาพสำเร็จ"
-                  };
+
+                  _this2.$toast.success("ลบรูปภาพสำเร็จ");
+
                   _this2.form.product_image_id = "1";
                   _this2.overlay = false;
                 } else {
@@ -846,11 +793,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
     },
     snackbarError: function snackbarError() {
-      this.snackbar = {
-        status: true,
-        text: "เกิดข้อผิดพลาดบางอย่าง ลองอีกครั้งภายหลัง",
-        color: "error"
-      };
+      this.$toast.error("เกิดข้อผิดพลาดบางอย่าง ลองอีกครั้งภายหลัง");
     },
     save: function save() {
       var _this3 = this;
@@ -876,11 +819,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 if (response.status == 200) {
                   _this3.loading = false;
-                  _this3.snackbar = {
-                    status: true,
-                    color: "success",
-                    text: "เพิ่มสินค้าใหม่สำเร็จ"
-                  };
+
+                  _this3.$toast.success("เพิ่มสินค้าใหม่สำเร็จ");
+
                   _this3.dialog = false;
                   _this3.overlay = false;
                 }
@@ -889,11 +830,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 break;
 
               case 9:
-                _this3.snackbar = {
-                  status: true,
-                  color: "warning",
-                  text: "คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง"
-                };
+                _this3.$toast.warning("คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง");
+
                 _this3.overlay = false;
 
               case 11:
@@ -905,11 +843,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     reset: function reset() {
-      this.snackbar = {
-        status: true,
-        color: "success",
-        text: "ล้างข้อมูลสำเร็จ"
-      };
+      this.$toast.success("ล้างข้อมูลสำเร็จ");
       this.form.name = "";
     }
   }
@@ -1007,9 +941,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1020,9 +951,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      snackbar: {
-        status: false
-      },
       overlay: true,
       search: "",
       loadingTable: true,
@@ -1066,18 +994,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context.sent;
 
                 if (response.status == 200) {
-                  _this.snackbar = {
-                    status: true,
-                    text: "เปลี่ยนแปลงสถานะเรียบร้อย",
-                    color: "success"
-                  };
+                  _this.$toast.success("เปลี่ยนแปลงสถานะเรียบร้อย");
+
                   _this.overlay = false;
                 } else {
-                  _this.snackbar = {
-                    status: true,
-                    text: "เกิดข้อผิดพลาดบางอย่าง กรุณาลองใหม่ภายหลัง",
-                    color: "error"
-                  };
+                  _this.$toast.error("เกิดข้อผิดพลาดบางอย่าง กรุณาลองใหม่ภายหลัง");
+
                   _this.overlay = false;
                 }
 
@@ -1177,18 +1099,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       asjdl: "",
       overlay: false,
       dialog: false,
-      snackbar: {
-        status: false
-      },
       form: {
         product_id: this.data.id,
         product_category_sub_id: []
@@ -1199,11 +1115,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   props: ["data"],
   methods: {
     snackbarError: function snackbarError() {
-      this.snackbar = {
-        status: true,
-        text: "เกิดข้อผิดพลาดบางอย่าง ลองอีกครั้งภายหลัง",
-        color: "error"
-      };
+      this.$toast.error("เกิดข้อผิดพลาดบางอย่าง ลองอีกครั้งภายหลัง");
     },
     save: function save() {
       var _this = this;
@@ -1324,9 +1236,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -1337,9 +1246,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       test: {},
       overlay: false,
       dialog: false,
-      snackbar: {
-        status: false
-      },
       form: {
         product_id: this.data.id,
         product_category_sub_id: ""
@@ -1350,11 +1256,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   props: ["data"],
   methods: {
     snackbarError: function snackbarError() {
-      this.snackbar = {
-        status: true,
-        text: "เกิดข้อผิดพลาดบางอย่าง ลองอีกครั้งภายหลัง",
-        color: "error"
-      };
+      this.$toast.error("เกิดข้อผิดพลาดบางอย่าง ลองอีกครั้งภายหลัง");
     },
     reload: function reload() {
       var _this = this;
@@ -1405,11 +1307,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 if (response.status === 200) {
                   _this2.loading = false;
-                  _this2.snackbar = {
-                    status: true,
-                    color: "success",
-                    text: "เพิ่มสินค้าใหม่สำเร็จ"
-                  };
+
+                  _this2.$toast.success("เพิ่มสินค้าใหม่สำเร็จ");
+
                   _this2.overlay = false;
                 }
 
@@ -1417,11 +1317,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 break;
 
               case 10:
-                _this2.snackbar = {
-                  status: true,
-                  color: "warning",
-                  text: "คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง"
-                };
+                _this2.$toast.warning("คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง");
+
                 _this2.overlay = false;
 
               case 12:
@@ -1433,11 +1330,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     reset: function reset() {
-      this.snackbar = {
-        status: true,
-        color: "success",
-        text: "ล้างข้อมูลสำเร็จ"
-      };
+      this.$toast.success("ล้างข้อมูลสำเร็จ");
       this.form.name = "";
     }
   }
@@ -1511,8 +1404,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1529,9 +1420,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, function (v) {
           return v.length <= 100 || "ไม่เกิน 100 ตัวอักษร";
         }]
-      },
-      snackbar: {
-        status: false
       }
     };
   },
@@ -1560,11 +1448,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 if (response.status === 200) {
                   _this.dialog = false;
-                  _this.snackbar = {
-                    status: true,
-                    color: "success",
-                    text: "เพิ่มกลุ่มสินค้าสำเร็จ"
-                  };
+
+                  _this.$toast.success("เพิ่มกลุ่มสินค้าสำเร็จ");
+
                   _this.loading = false;
                   _this.overlay = false;
                   _this.form.status = true;
@@ -1575,11 +1461,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 break;
 
               case 9:
-                _this.snackbar = {
-                  status: true,
-                  color: "warning",
-                  text: "คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง"
-                };
+                _this.$toast.warning("คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง");
 
               case 10:
               case "end":
@@ -1590,11 +1472,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     reset: function reset() {
-      this.snackbar = {
-        status: true,
-        color: "success",
-        text: "ล้างข้อมูลสำเร็จ"
-      };
+      this.$toast.success("ล้างข้อมูลสำเร็จ");
       this.form.name = "";
     }
   }
@@ -1680,9 +1558,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1703,9 +1578,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         product_category_id: [function (v) {
           return !!v || "ห้ามเว้นว่าง";
         }]
-      },
-      snackbar: {
-        status: false
       }
     };
   },
@@ -1733,11 +1605,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 if (response.status === 200) {
                   _this.dialog = false;
-                  _this.snackbar = {
-                    status: true,
-                    color: "success",
-                    text: "เพิ่มกลุ่มสินค้าย่อยสำเร็จ"
-                  };
+
+                  _this.$toast.success("เพิ่มกลุ่มสินค้าย่อยสำเร็จ");
+
                   _this.form = {
                     name: "",
                     status: true,
@@ -1745,18 +1615,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   };
                   _this.loading = false;
                 } else if (response.status === 500) {
-                  _this.snackbar = {
-                    status: true,
-                    color: "warning",
-                    text: "เกิดข้อผิดพลาดด้านเซิร์ฟเวอร์ กรุณาลองอีกครั้ง"
-                  };
+                  _this.$toast.error("เกิดข้อผิดพลาดด้านเซิร์ฟเวอร์ กรุณาลองอีกครั้ง");
+
                   _this.loading = false;
                 } else {
-                  _this.snackbar = {
-                    status: true,
-                    color: "warning",
-                    text: "เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง"
-                  };
+                  _this.$toast.warning("เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง");
+
                   _this.loading = false;
                 }
 
@@ -1764,11 +1628,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 break;
 
               case 8:
-                _this.snackbar = {
-                  status: true,
-                  color: "warning",
-                  text: "คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง"
-                };
+                _this.$toast.warning("คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง");
 
               case 9:
               case "end":
@@ -1779,11 +1639,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     reset: function reset() {
-      this.snackbar = {
-        status: true,
-        color: "success",
-        text: "ล้างข้อมูลสำเร็จ"
-      };
+      this.$toast.success("ล้างข้อมูลสำเร็จ");
       this.form.name = "";
     }
   }
@@ -1861,9 +1717,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["data"],
   data: function data() {
@@ -1881,9 +1734,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, function (v) {
           return v.length <= 100 || "ไม่เกิน 100 ตัวอักษร";
         }]
-      },
-      snackbar: {
-        status: false
       }
     };
   },
@@ -1911,11 +1761,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context.sent;
 
                 if (response.status === 200) {
-                  _this.snackbar = {
-                    status: true,
-                    color: "success",
-                    text: "แก้ไขกลุ่มสินค้าสำเร็จ"
-                  };
+                  _this.$toast.success("แก้ไขกลุ่มสินค้าสำเร็จ");
+
                   _this.loading = false;
                   _this.overlay = false;
                   _this.dialog = false;
@@ -1925,11 +1772,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 break;
 
               case 9:
-                _this.snackbar = {
-                  status: true,
-                  color: "warning",
-                  text: "คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง"
-                };
+                _this.$toast.warning("คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง");
 
               case 10:
               case "end":
@@ -2026,9 +1869,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["data"],
   data: function data() {
@@ -2047,9 +1887,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, function (v) {
           return v.length <= 100 || "ไม่เกิน 100 ตัวอักษร";
         }]
-      },
-      snackbar: {
-        status: false
       }
     };
   },
@@ -2076,11 +1913,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context.sent;
 
                 if (response.status === 200) {
-                  _this.snackbar = {
-                    status: true,
-                    color: "success",
-                    text: "แก้ไขกลุ่มสินค้าย่อยสำเร็จ"
-                  };
+                  _this.$toast.success("แก้ไขกลุ่มสินค้าย่อยสำเร็จ");
+
                   _this.loading = false;
                   _this.dialog = false;
                 }
@@ -2089,11 +1923,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 break;
 
               case 8:
-                _this.snackbar = {
-                  status: true,
-                  color: "warning",
-                  text: "คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง"
-                };
+                _this.$toast.warning("คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง");
 
               case 9:
               case "end":
@@ -2164,9 +1994,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2176,9 +2003,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       overlay: false,
       search: "",
-      snackbar: {
-        status: false
-      },
       headers: [{
         text: "ชื่อกลุ่ม",
         value: "name"
@@ -2213,11 +2037,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context.sent;
 
                 if (response.status == 200) {
-                  _this.snackbar = {
-                    status: true,
-                    color: "success",
-                    text: "เปลี่ยนแปลงสถานะสำเร็จ"
-                  };
+                  _this.$toast.success("เปลี่ยนแปลงสถานะสำเร็จ");
+
                   _this.overlay = false;
                 }
 
@@ -2291,9 +2112,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2303,9 +2121,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       overlay: false,
       search: "",
-      snackbar: {
-        status: false
-      },
       headers: [{
         text: "ชื่อกลุ่ม",
         value: "name"
@@ -2343,11 +2158,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context.sent;
 
                 if (response.status === 200) {
-                  _this.snackbar = {
-                    status: true,
-                    color: "success",
-                    text: "เปลี่ยนแปลงสถานะสำเร็จ"
-                  };
+                  _this.$toast.success("เปลี่ยนแปลงสถานะสำเร็จ");
+
                   _this.overlay = false;
                 }
 
@@ -2421,9 +2233,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2434,9 +2243,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       overlay: false,
-      snackbar: {
-        status: false
-      },
       dialog: false
     };
   },
@@ -2453,11 +2259,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this.$store.commit("productCategorySub/get", []);
 
-                _this.snackbar = {
-                  status: true,
-                  text: "กำลังโหลดข้อมูล...",
-                  color: "warning"
-                };
+                _this.$toast.warning("กำลังโหลดข้อมูล...");
+
                 _context.next = 5;
                 return _this.$store.dispatch("productCategorySub/get");
 
@@ -2466,11 +2269,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this.$store.dispatch("productCategory/getUseOnly");
 
               case 7:
-                _this.snackbar = {
-                  status: true,
-                  text: "โหลดข้อมูลเสร็จสิ้น",
-                  color: "success"
-                };
+                _this.$toast.success("โหลดข้อมูลเสร็จสิ้น");
+
                 _this.overlay = false;
 
               case 9:
@@ -2690,21 +2490,6 @@ var render = function() {
           )
         ],
         1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-snackbar",
-        {
-          attrs: { color: _vm.snackbar.color, right: "" },
-          model: {
-            value: _vm.snackbar.status,
-            callback: function($$v) {
-              _vm.$set(_vm.snackbar, "status", $$v)
-            },
-            expression: "snackbar.status"
-          }
-        },
-        [_vm._v(_vm._s(_vm.snackbar.text))]
       )
     ],
     1
@@ -3106,21 +2891,6 @@ var render = function() {
           )
         ],
         1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-snackbar",
-        {
-          attrs: { color: _vm.snackbar.color, right: "" },
-          model: {
-            value: _vm.snackbar.status,
-            callback: function($$v) {
-              _vm.$set(_vm.snackbar, "status", $$v)
-            },
-            expression: "snackbar.status"
-          }
-        },
-        [_vm._v(_vm._s(_vm.snackbar.text))]
       )
     ],
     1
@@ -3534,21 +3304,6 @@ var render = function() {
           )
         ],
         1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-snackbar",
-        {
-          attrs: { color: _vm.snackbar.color, right: "" },
-          model: {
-            value: _vm.snackbar.status,
-            callback: function($$v) {
-              _vm.$set(_vm.snackbar, "status", $$v)
-            },
-            expression: "snackbar.status"
-          }
-        },
-        [_vm._v(_vm._s(_vm.snackbar.text))]
       )
     ],
     1
@@ -3729,21 +3484,6 @@ var render = function() {
       }),
       _vm._v(" "),
       _c(
-        "v-snackbar",
-        {
-          attrs: { color: _vm.snackbar.color, right: "" },
-          model: {
-            value: _vm.snackbar.status,
-            callback: function($$v) {
-              _vm.$set(_vm.snackbar, "status", $$v)
-            },
-            expression: "snackbar.status"
-          }
-        },
-        [_vm._v(_vm._s(_vm.snackbar.text))]
-      ),
-      _vm._v(" "),
-      _c(
         "v-overlay",
         { attrs: { value: _vm.overlay } },
         [
@@ -3897,21 +3637,6 @@ var render = function() {
           )
         ],
         1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-snackbar",
-        {
-          attrs: { color: _vm.snackbar.color, right: "" },
-          model: {
-            value: _vm.snackbar.status,
-            callback: function($$v) {
-              _vm.$set(_vm.snackbar, "status", $$v)
-            },
-            expression: "snackbar.status"
-          }
-        },
-        [_vm._v(_vm._s(_vm.snackbar.text))]
       )
     ],
     1
@@ -4062,21 +3787,6 @@ var render = function() {
           )
         ],
         1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-snackbar",
-        {
-          attrs: { color: _vm.snackbar.color, right: "" },
-          model: {
-            value: _vm.snackbar.status,
-            callback: function($$v) {
-              _vm.$set(_vm.snackbar, "status", $$v)
-            },
-            expression: "snackbar.status"
-          }
-        },
-        [_vm._v(_vm._s(_vm.snackbar.text))]
       )
     ],
     1
@@ -4247,21 +3957,6 @@ var render = function() {
           )
         ],
         1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-snackbar",
-        {
-          attrs: { color: _vm.snackbar.color, right: "" },
-          model: {
-            value: _vm.snackbar.status,
-            callback: function($$v) {
-              _vm.$set(_vm.snackbar, "status", $$v)
-            },
-            expression: "snackbar.status"
-          }
-        },
-        [_vm._v(_vm._s(_vm.snackbar.text))]
       )
     ],
     1
@@ -4451,21 +4146,6 @@ var render = function() {
           )
         ],
         1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-snackbar",
-        {
-          attrs: { color: _vm.snackbar.color, right: "" },
-          model: {
-            value: _vm.snackbar.status,
-            callback: function($$v) {
-              _vm.$set(_vm.snackbar, "status", $$v)
-            },
-            expression: "snackbar.status"
-          }
-        },
-        [_vm._v(_vm._s(_vm.snackbar.text))]
       )
     ],
     1
@@ -4656,21 +4336,6 @@ var render = function() {
           )
         ],
         1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-snackbar",
-        {
-          attrs: { color: _vm.snackbar.color, right: "" },
-          model: {
-            value: _vm.snackbar.status,
-            callback: function($$v) {
-              _vm.$set(_vm.snackbar, "status", $$v)
-            },
-            expression: "snackbar.status"
-          }
-        },
-        [_vm._v(_vm._s(_vm.snackbar.text))]
       )
     ],
     1
@@ -4880,21 +4545,6 @@ var render = function() {
           )
         ],
         1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-snackbar",
-        {
-          attrs: { color: _vm.snackbar.color, right: "" },
-          model: {
-            value: _vm.snackbar.status,
-            callback: function($$v) {
-              _vm.$set(_vm.snackbar, "status", $$v)
-            },
-            expression: "snackbar.status"
-          }
-        },
-        [_vm._v(_vm._s(_vm.snackbar.text))]
       )
     ],
     1
@@ -4985,21 +4635,6 @@ var render = function() {
           }
         ])
       }),
-      _vm._v(" "),
-      _c(
-        "v-snackbar",
-        {
-          attrs: { color: _vm.snackbar.color, right: "" },
-          model: {
-            value: _vm.snackbar.status,
-            callback: function($$v) {
-              _vm.$set(_vm.snackbar, "status", $$v)
-            },
-            expression: "snackbar.status"
-          }
-        },
-        [_vm._v(_vm._s(_vm.snackbar.text))]
-      ),
       _vm._v(" "),
       _c(
         "v-overlay",
@@ -5103,21 +4738,6 @@ var render = function() {
           }
         ])
       }),
-      _vm._v(" "),
-      _c(
-        "v-snackbar",
-        {
-          attrs: { color: _vm.snackbar.color, right: "" },
-          model: {
-            value: _vm.snackbar.status,
-            callback: function($$v) {
-              _vm.$set(_vm.snackbar, "status", $$v)
-            },
-            expression: "snackbar.status"
-          }
-        },
-        [_vm._v(_vm._s(_vm.snackbar.text))]
-      ),
       _vm._v(" "),
       _c(
         "v-overlay",
@@ -5254,21 +4874,6 @@ var render = function() {
           )
         ],
         1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-snackbar",
-        {
-          attrs: { color: _vm.snackbar.color, right: "" },
-          model: {
-            value: _vm.snackbar.status,
-            callback: function($$v) {
-              _vm.$set(_vm.snackbar, "status", $$v)
-            },
-            expression: "snackbar.status"
-          }
-        },
-        [_vm._v(_vm._s(_vm.snackbar.text))]
       )
     ],
     1

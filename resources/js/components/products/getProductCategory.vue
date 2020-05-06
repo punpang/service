@@ -30,9 +30,6 @@
                 </div>
             </template>
         </v-data-table>
-        <v-snackbar v-model="snackbar.status" :color="snackbar.color" right>{{
-            snackbar.text
-        }}</v-snackbar>
         <v-overlay :value="overlay">
             <v-progress-circular indeterminate :size="this.$store.getters['main/sizeOverlay']"></v-progress-circular>
         </v-overlay>
@@ -50,9 +47,6 @@ export default {
         return {
             overlay: false,
             search: "",
-            snackbar:{
-                status:false
-            },
             headers: [
                 { text: "ชื่อกลุ่ม", value: "name" },
                 { text: "สถานะ", value: "status" },
@@ -72,11 +66,7 @@ export default {
                 form
             );
             if (response.status == 200) {
-                this.snackbar = {
-                    status: true,
-                    color: "success",
-                    text: "เปลี่ยนแปลงสถานะสำเร็จ"
-                };
+                this.$toast.success("เปลี่ยนแปลงสถานะสำเร็จ")
                 this.overlay = false;
             }
         }

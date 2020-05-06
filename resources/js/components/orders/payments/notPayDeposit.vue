@@ -63,17 +63,9 @@ export default {
             );
             if (res.status == 200) {
                 this.dialog = false;
-                this.$notify({
-                    group: "main",
-                    type: "success",
-                    text: "เปลี่ยนสถานะ : ไม่ชำระมัดจำ"
-                });
+                this.$toast.success('เปลี่ยนสถานะ : ไม่ชำระมัดจำ')
             } else {
-                this.$notify({
-                    group: "main",
-                    type: "error",
-                    text: "เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้งภายหลัง"
-                });
+                this.$toast.error('เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้งภายหลัง')
             }
             this.overlay = false;
         },

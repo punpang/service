@@ -52,9 +52,6 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
-        <v-snackbar v-model="snackbar.status" :color="snackbar.color" right>{{
-            snackbar.text
-        }}</v-snackbar>
     </div>
 </template>
 
@@ -69,29 +66,16 @@ export default {
                 name: this.data.name,
                 phone: this.data.phone
             },
-            snackbar: {
-                status: false,
-                color: "",
-                text: ""
-            }
         };
     },
     methods: {
         submitDelete() {
             if (this.$refs.deleteForm.validate()) {
                 if (this.confirm == "ลบข้อมูล") {
-                    this.snackbar = {
-                        status: true,
-                        color: "success",
-                        text: "ลบข้อมูลเรียบร้อย"
-                    };
+                    this.$toast.success('ลบข้อมูลเรียบร้อย')
                     this.$refs.deleteForm.reset();
                 } else {
-                    this.snackbar = {
-                        status: true,
-                        color: "error",
-                        text: "กรุณากรอกคำว่า 'ลบข้อมูล' ลงในช่องว่าง"
-                    };
+                    this.$toast.error("กรุณากรอกคำว่า 'ลบข้อมูล' ลงในช่องว่าง")
                 }
             }
         }

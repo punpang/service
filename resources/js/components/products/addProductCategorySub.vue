@@ -56,9 +56,6 @@
                 ></v-progress-circular>
             </v-overlay>
         </v-dialog>
-        <v-snackbar v-model="snackbar.status" :color="snackbar.color" right>{{
-            snackbar.text
-        }}</v-snackbar>
     </div>
 </template>
 
@@ -81,9 +78,6 @@ export default {
                 ],
                 product_category_id: [v => !!v || "ห้ามเว้นว่าง"]
             },
-            snackbar: {
-                status: false
-            }
         };
     },
     methods: {
@@ -96,11 +90,7 @@ export default {
                 );
                 if (response.status === 200) {
                     this.dialog = false;
-                    this.snackbar = {
-                        status: true,
-                        color: "success",
-                        text: "เพิ่มกลุ่มสินค้าย่อยสำเร็จ"
-                    };
+                    this.$toast.success("เพิ่มกลุ่มสินค้าย่อยสำเร็จ")
                     this.form = {
                         name: "",
                         status: true,
@@ -108,34 +98,18 @@ export default {
                     };
                     this.loading = false;
                 } else if (response.status === 500) {
-                    this.snackbar = {
-                        status: true,
-                        color: "warning",
-                        text: "เกิดข้อผิดพลาดด้านเซิร์ฟเวอร์ กรุณาลองอีกครั้ง"
-                    };
+                    this.$toast.error("เกิดข้อผิดพลาดด้านเซิร์ฟเวอร์ กรุณาลองอีกครั้ง")
                     this.loading = false;
                 } else {
-                    this.snackbar = {
-                        status: true,
-                        color: "warning",
-                        text: "เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง"
-                    };
+                    this.$toast.warning("เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง")
                     this.loading = false;
                 }
             } else {
-                this.snackbar = {
-                    status: true,
-                    color: "warning",
-                    text: "คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง"
-                };
+                this.$toast.warning("คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง")
             }
         },
         reset() {
-            this.snackbar = {
-                status: true,
-                color: "success",
-                text: "ล้างข้อมูลสำเร็จ"
-            };
+            this.$toast.success("ล้างข้อมูลสำเร็จ")
             this.form.name = "";
         }
     }

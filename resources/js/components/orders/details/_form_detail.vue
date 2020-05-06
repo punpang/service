@@ -287,7 +287,6 @@
             ></processingProduct>
             <overlay :overlay="overlay"></overlay>
         </v-dialog>
-        <snackbarRight :snackbar="snackbar"></snackbarRight>
     </div>
 </template>
 
@@ -295,7 +294,6 @@
 import selectProduct from "@/js/components/orders/details/selectProduct";
 import tagsProduct from "@/js/components/orders/details/tagsProduct";
 import processingProduct from "@/js/components/orders/details/processingProduct";
-import snackbarRight from "@/js/layouts/snackbarRight";
 import overlay from "@/js/layouts/overlay";
 
 export default {
@@ -304,15 +302,11 @@ export default {
         selectProduct,
         tagsProduct,
         processingProduct,
-        snackbarRight,
         overlay
     },
     data() {
         return {
             dialog: false,
-            snackbar: {
-                status: false
-            },
             overlay: false,
             response: {},
             product: {
@@ -353,13 +347,13 @@ export default {
                 await this.$store.dispatch("order/getByID", this.form.order_id);
 
                 if (this.response.status == 200) {
-                    this.snackbar = this.$store.getters["snackbar/success"];
+                    this.$toast.success("ทำรายการสำเร็จ")
                     this.out();
                 } else {
-                    this.snackbar = this.$store.getters["snackbar/error"];
+                    this.$toast.error("เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง")
                 }
             } else {
-                this.snackbar = this.$store.getters["snackbar/error"];
+                this.$toast.warning("กรุณากรอกข้อมูลให้ถูกต้อง")
             }
             this.overlay = false;
         },

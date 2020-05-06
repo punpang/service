@@ -205,20 +205,17 @@
                 ></v-progress-circular>
             </v-overlay>
         </v-dialog>
-        <snackbarRight :snackbar="snackbar"></snackbarRight>
     </div>
 </template>
 
 <script>
 import selectCustomer from "@/js/components/customers/selectCustomer";
-import snackbarRight from "@/js/layouts/snackbarRight";
 import OrderListsForchecked from "@/js/components/orders/OrderListsForchecked";
 
 export default {
     props: ["headers"],
     components: {
         selectCustomer,
-        snackbarRight,
         OrderListsForchecked
     },
     data() {
@@ -260,9 +257,6 @@ export default {
                 customer_id: [v => !!v],
                 dateTime_get: [v => !!v],
                 channel_of_purchase_id: [v => !!v]
-            },
-            snackbar: {
-                status: false
             },
             dateTimeStatus: false
         };
@@ -310,25 +304,15 @@ export default {
                     this.dateTimeStatus = true;
                     this.formData.dateTime_get = data.dateTime_get;
                     this.reply.order = data.orders;
-                    this.snackbar = {
-                        status: true,
-                        text: response.data.message,
-                        color: "success"
-                    };
+                    this.$toast.success(response.data.message);
                     this.overlay = false;
                 } else if (response.status == 400) {
-                    this.snackbar = {
-                        status: true,
-                        text: response.data.message,
-                        color: "error"
-                    };
+                    this.$toast.error(response.data.message);
                     this.overlay = false;
                 } else {
-                    this.snackbar = {
-                        status: true,
-                        text: "เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง",
-                        color: "error"
-                    };
+                    this.$toast.error(
+                        "เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง"
+                    );
                     this.overlay = false;
                 }
             }
@@ -379,20 +363,12 @@ export default {
                 );
                 if (response.status == 200) {
                     await this.$emit("OnDataTable");
-                    this.snackbar = {
-                        status: true,
-                        text: "สร้างรายการใหม่สำเร็จ",
-                        color: "success"
-                    };
+                    this.$toast.success("สร้างรายการใหม่สำเร็จ");
                     this.dialog = false;
                     this.overlay = false;
                 }
             } else {
-                this.snackbar = {
-                    status: true,
-                    text: "กรุณาตรวจสอบ กรอกข้อมูลไม่ครบถ้วน",
-                    color: "warning"
-                };
+                this.$toast.warning("กรุณาตรวจสอบ กรอกข้อมูลไม่ครบถ้วน");
             }
         }
     }

@@ -32,13 +32,6 @@
             </v-row>
         </v-form>
 
-        <v-snackbar
-            v-model="snackbar.login.show"
-            :color="snackbar.login.color"
-            :right="true"
-        >
-            {{ snackbar.login.text }}
-        </v-snackbar>
     </div>
 </template>
 
@@ -46,13 +39,6 @@
 export default {
     data() {
         return {
-            snackbar: {
-                login: {
-                    show: false,
-                    text: "",
-                    color: ""
-                }
-            },
             rules: {
                 email: [v => !!v || "ห้ามเว้นว่าง"],
                 password: [v => !!v || "ห้ามเว้นว่าง"]
@@ -99,15 +85,10 @@ export default {
                             });
                     })
                     .catch(error => {
-                        this.snackbar.login.color = "error";
-                        this.snackbar.login.show = true;
                         if (error.response.status == "500") {
-                            this.snackbar.login.text =
-                                "ลองอีกครั้ง ! ไม่สามารถเชิ่อมต่อไปยังเซิร์ฟเวอร์ได้";
-                            this.snackbar.login.color = "warning";
+                            this.$toast.warning("ลองอีกครั้ง ! ไม่สามารถเชิ่อมต่อไปยังเซิร์ฟเวอร์ได้")
                         } else {
-                            this.snackbar.login.text =
-                                "ไม่สามารถเข้าสู่ระบบได้ กรุณาลองอีกครั้งค่ะ";
+                            this.$toast.error("ไม่สามารถเข้าสู่ระบบได้ กรุณาลองอีกครั้งค่ะ")
                         }
                         this.loginError = true;
                         this.loading = false;

@@ -65,9 +65,6 @@
         </v-col>
         <v-spacer></v-spacer>
 
-        <v-snackbar right v-model="snackbar.on" :color="snackbar.color">{{
-            snackbar.text
-        }}</v-snackbar>
     </v-row>
 </template>
 
@@ -84,7 +81,6 @@ export default {
                 name: "",
                 phone: ""
             },
-            snackbar: {},
         };
     },
     methods: {
@@ -100,44 +96,24 @@ export default {
                     this.form
                 );
                 if (response.status === 200) {
-                    this.snackbar = {
-                        color: "success",
-                        text: "สำเร็จ",
-                        on: true
-                    };
+                    this.$toast.success('สำเร็จ')
                     this.dialogAddCustomer = false;
                     this.loadingSubmit = false;
                     this.$refs.addCustomerForm.reset();
                 } else if (response.status === 422) {
                     this.form.phone = "";
-                    this.snackbar = {
-                        color: "warning",
-                        text: response.data.errors.phone[0],
-                        on: true
-                    };
+                     this.$toast.warning(response.data.errors.phone[0])
                     this.loadingSubmit = false;
                 } else {
-                    this.snackbar = {
-                        color: "warning",
-                        text: "เกิดข้อผิดพลาดบางอย่างขึ้น กรุณาลองอีกครั้ง",
-                        on: true
-                    };
+                    this.$toast.warning('เกิดข้อผิดพลาดบางอย่างขึ้น กรุณาลองอีกครั้ง')
                 } // end เบอร์ซ้ำ this.loadingSubmit = false; });
             } else {
-                this.snackbar = {
-                    color: "warning",
-                    text: "โปรดกรอกข้อมูลให้ถูกต้อง",
-                    on: true
-                };
+                this.$toast.warning('โปรดกรอกข้อมูลให้ถูกต้อง')
             }
         },
         reset() {
             this.$refs.addCustomerForm.reset();
-            this.snackbar = {
-                color: "error",
-                text: "ล้างสำเร็จ",
-                on: true
-            };
+            this.$toast.error('ล้างสำเร็จ')
         }
     }
 };

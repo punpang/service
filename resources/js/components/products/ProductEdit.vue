@@ -141,11 +141,6 @@
                 ></v-progress-circular>
             </v-overlay>
         </v-dialog>
-        <v-snackbar v-model="snackbar.status" :color="snackbar.color" right>{{
-            snackbar.text
-        }}</v-snackbar>
-
-        
     </div>
 </template>
 
@@ -187,9 +182,6 @@ export default {
                 ],
                 image: [v => !!v || "ห้ามเว้นว่าง"]
             },
-            snackbar: {
-                status: false
-            }
         };
     },
     methods: {
@@ -207,20 +199,12 @@ export default {
             });
             if (response.status == 200) {
                 this.imagePreview = response.data.src_name;
-                this.snackbar = {
-                    status: true,
-                    color: "success",
-                    text: "อัปโหลดรูปสำเร็จ"
-                };
+                this.$toast.success("อัปโหลดรูปสำเร็จ")
                 this.form.product_image_id = response.data.id;
                 this.loadUploadImage = false;
                 this.overlay = false;
             } else {
-                this.snackbar = {
-                    status: true,
-                    color: "error",
-                    text: "อัปโหลดรูปไม่สำเร็จ เกิดข้อผิดพลาดบางอย่าง"
-                };
+                this.$toast.error("อัปโหลดรูปไม่สำเร็จ เกิดข้อผิดพลาดบางอย่าง")
                 this.loadUploadImage = false;
                 this.overlay = false;
             }
@@ -234,11 +218,7 @@ export default {
 
             if (response.status == 200) {
                 this.imagePreview = "";
-                this.snackbar = {
-                    status: true,
-                    color: "success",
-                    text: "ลบรูปภาพสำเร็จ"
-                };
+                this.$toast.success("ลบรูปภาพสำเร็จ")
                 this.form.product_image_id = "1";
                 this.overlay = false;
             } else {
@@ -263,11 +243,7 @@ export default {
             }
         },
         snackbarError() {
-            this.snackbar = {
-                status: true,
-                text: "เกิดข้อผิดพลาดบางอย่าง ลองอีกครั้งภายหลัง",
-                color: "error"
-            };
+            this.$toast.error("เกิดข้อผิดพลาดบางอย่าง ลองอีกครั้งภายหลัง")
         },
         async save() {
             if (this.$refs.formUpdate.validate()) {
@@ -279,30 +255,17 @@ export default {
                 );
                 if (response.status == 200) {
                     this.loading = false;
-
-                    this.snackbar = {
-                        status: true,
-                        color: "success",
-                        text: "เพิ่มสินค้าใหม่สำเร็จ"
-                    };
+                    this.$toast.success("เพิ่มสินค้าใหม่สำเร็จ")
                     this.dialog = false;
                     this.overlay = false;
                 }
             } else {
-                this.snackbar = {
-                    status: true,
-                    color: "warning",
-                    text: "คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง"
-                };
+                this.$toast.warning("คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง")
                 this.overlay = false;
             }
         },
         reset() {
-            this.snackbar = {
-                status: true,
-                color: "success",
-                text: "ล้างข้อมูลสำเร็จ"
-            };
+            this.$toast.success("ล้างข้อมูลสำเร็จ")
             this.form.name = "";
         }
     }

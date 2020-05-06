@@ -63,9 +63,6 @@
                 </v-container>
             </template>
         </v-data-table>
-        <v-snackbar v-model="snackbar.status" :color="snackbar.color" right>{{
-            snackbar.text
-        }}</v-snackbar>
         <v-overlay :value="overlay">
             <v-progress-circular indeterminate :size="this.$store.getters['main/sizeOverlay']"></v-progress-circular>
         </v-overlay>
@@ -86,9 +83,6 @@ export default {
     },
     data() {
         return {
-            snackbar: {
-                status: false
-            },
             overlay: true,
             search: "",
             loadingTable: true,
@@ -110,18 +104,10 @@ export default {
             };
             const response = await this.$store.dispatch("product/update", form);
             if (response.status == 200) {
-                this.snackbar = {
-                    status: true,
-                    text: "เปลี่ยนแปลงสถานะเรียบร้อย",
-                    color: "success"
-                };
+                this.$toast.success("เปลี่ยนแปลงสถานะเรียบร้อย")
                 this.overlay = false;
             } else {
-                this.snackbar = {
-                    status: true,
-                    text: "เกิดข้อผิดพลาดบางอย่าง กรุณาลองใหม่ภายหลัง",
-                    color: "error"
-                };
+                this.$toast.error("เกิดข้อผิดพลาดบางอย่าง กรุณาลองใหม่ภายหลัง")
                 this.overlay = false;
             }
         }

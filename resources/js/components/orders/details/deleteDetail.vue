@@ -71,7 +71,6 @@
                     >
                 </v-card-text>
             </v-card>
-            <snackbarRight :snackbar="snackbar"></snackbarRight>
             <overlay :overlay="overlay"></overlay>
         </v-dialog>
     </div>
@@ -79,21 +78,18 @@
 
 <script>
 import productDetail from "@/js/components/orders/details/productDetail";
-import snackbarRight from "@/js/layouts/snackbarRight";
 import overlay from "@/js/layouts/overlay";
 
 export default {
     props: ["detail", "action"],
     components: {
         productDetail,
-        snackbarRight,
         overlay
     },
     data() {
         return {
             dialog: false,
             confirmText: "",
-            snackbar: "",
             overlay: false,
             response: {},
             main: {
@@ -199,15 +195,15 @@ export default {
                 await this.$store.dispatch("order/getByID", this.detail.order_id);
 
                 if (this.response.status == 200) {
-                    this.snackbar = this.$store.getters["snackbar/success"];
+                    this.$toast.success("ทำรายการสำเร็จ")
                     this.overlay = false;
                     this.dialog = false;
                 } else {
-                    this.snackbar = this.$store.getters["snackbar/error"];
+                    this.$toast.error("เกิดข้อผิดพลาดบางอย่างขึ้น กรุณาลองอีกครั้งภายหลัง")
                     this.overlay = false;
                 }
             } else {
-                this.snackbar = this.$store.getters["snackbar/error"];
+                this.$toast.warning("กรุณากรอกข้อมูลให้ถูกต้อง")
                 this.overlay = false;
             }
         }

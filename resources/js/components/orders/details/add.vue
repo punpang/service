@@ -257,7 +257,6 @@
 
             <overlay :overlay="overlay"></overlay>
         </v-dialog>
-        <snackbarRight :snackbar="snackbar"></snackbarRight>
     </div>
 </template>
 
@@ -265,7 +264,6 @@
 import selectProduct from "@/js/components/orders/details/selectProduct";
 import tagsProduct from "@/js/components/orders/details/tagsProduct";
 import processingProduct from "@/js/components/orders/details/processingProduct";
-import snackbarRight from "@/js/layouts/snackbarRight";
 import overlay from "@/js/layouts/overlay";
 
 export default {
@@ -274,15 +272,11 @@ export default {
         selectProduct,
         tagsProduct,
         processingProduct,
-        snackbarRight,
         overlay,
     },
     data() {
         return {
             dialog: false,
-            snackbar: {
-                status: false
-            },
             overlay: false,
             product: {
                 id: 0,
@@ -314,25 +308,13 @@ export default {
                 console.log(res);
 
                 if (res.status == 200) {
-                    this.snackbar = {
-                        status: true,
-                        color: "success",
-                        text: "ลงสินค้าสำหรับรายการสั่งซื้อ #" + this.order.id
-                    };
+                    this.$toast.success("ลงสินค้าสำหรับรายการสั่งซื้อ #" + this.order.id)
                     this.out();
                 } else {
-                    this.snackbar = {
-                        status: true,
-                        color: "warning",
-                        text: this.$store.getters["main/snackbarError"]
-                    };
+                    this.$toast.error("เกิดข้อผิดพลาดบางอย่างขึ้น กรุณาลองอีกครั้ง")
                 }
             } else {
-                this.snackbar = {
-                    status: true,
-                    color: "warning",
-                    text: this.$store.getters["main/snackbarError"]
-                };
+                this.$toast.warning("กรุณากรอกข้อมูลให้ถูกต้อง")
             }
             this.overlay = false;
         },

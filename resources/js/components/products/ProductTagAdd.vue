@@ -38,9 +38,6 @@
                 ></v-progress-circular>
             </v-overlay>
         </v-dialog>
-        <v-snackbar v-model="snackbar.status" :color="snackbar.color" right>{{
-            snackbar.text
-        }}</v-snackbar>
     </div>
 </template>
 
@@ -51,9 +48,6 @@ export default {
             asjdl: "",
             overlay: false,
             dialog: false,
-            snackbar: {
-                status: false
-            },
             form: {
                 product_id: this.data.id,
                 product_category_sub_id: []
@@ -64,11 +58,7 @@ export default {
     props: ["data"],
     methods: {
         snackbarError() {
-            this.snackbar = {
-                status: true,
-                text: "เกิดข้อผิดพลาดบางอย่าง ลองอีกครั้งภายหลัง",
-                color: "error"
-            };
+            this.$toast.error("เกิดข้อผิดพลาดบางอย่าง ลองอีกครั้งภายหลัง")
         },
         async save() {
             this.overlay = true;

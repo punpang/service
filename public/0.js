@@ -87,9 +87,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['search'],
   data: function data() {
@@ -99,8 +96,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       form: {
         name: "",
         phone: ""
-      },
-      snackbar: {}
+      }
     };
   },
   methods: {
@@ -130,29 +126,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context.sent;
 
                 if (response.status === 200) {
-                  _this.snackbar = {
-                    color: "success",
-                    text: "สำเร็จ",
-                    on: true
-                  };
+                  _this.$toast.success('สำเร็จ');
+
                   _this.dialogAddCustomer = false;
                   _this.loadingSubmit = false;
 
                   _this.$refs.addCustomerForm.reset();
                 } else if (response.status === 422) {
                   _this.form.phone = "";
-                  _this.snackbar = {
-                    color: "warning",
-                    text: response.data.errors.phone[0],
-                    on: true
-                  };
+
+                  _this.$toast.warning(response.data.errors.phone[0]);
+
                   _this.loadingSubmit = false;
                 } else {
-                  _this.snackbar = {
-                    color: "warning",
-                    text: "เกิดข้อผิดพลาดบางอย่างขึ้น กรุณาลองอีกครั้ง",
-                    on: true
-                  };
+                  _this.$toast.warning('เกิดข้อผิดพลาดบางอย่างขึ้น กรุณาลองอีกครั้ง');
                 } // end เบอร์ซ้ำ this.loadingSubmit = false; });
 
 
@@ -160,11 +147,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 break;
 
               case 8:
-                _this.snackbar = {
-                  color: "warning",
-                  text: "โปรดกรอกข้อมูลให้ถูกต้อง",
-                  on: true
-                };
+                _this.$toast.warning('โปรดกรอกข้อมูลให้ถูกต้อง');
 
               case 9:
               case "end":
@@ -176,11 +159,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     reset: function reset() {
       this.$refs.addCustomerForm.reset();
-      this.snackbar = {
-        color: "error",
-        text: "ล้างสำเร็จ",
-        on: true
-      };
+      this.$toast.error('ล้างสำเร็จ');
     }
   }
 });
@@ -253,9 +232,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["data"],
   data: function data() {
@@ -265,11 +241,6 @@ __webpack_require__.r(__webpack_exports__);
       form: {
         name: this.data.name,
         phone: this.data.phone
-      },
-      snackbar: {
-        status: false,
-        color: "",
-        text: ""
       }
     };
   },
@@ -277,18 +248,10 @@ __webpack_require__.r(__webpack_exports__);
     submitDelete: function submitDelete() {
       if (this.$refs.deleteForm.validate()) {
         if (this.confirm == "ลบข้อมูล") {
-          this.snackbar = {
-            status: true,
-            color: "success",
-            text: "ลบข้อมูลเรียบร้อย"
-          };
+          this.$toast.success('ลบข้อมูลเรียบร้อย');
           this.$refs.deleteForm.reset();
         } else {
-          this.snackbar = {
-            status: true,
-            color: "error",
-            text: "กรุณากรอกคำว่า 'ลบข้อมูล' ลงในช่องว่าง"
-          };
+          this.$toast.error("กรุณากรอกคำว่า 'ลบข้อมูล' ลงในช่องว่าง");
         }
       }
     }
@@ -378,9 +341,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["data"],
   data: function data() {
@@ -391,11 +351,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         id: this.data.id,
         name: this.data.name,
         phone: this.data.phone
-      },
-      snackbar: {
-        status: false,
-        color: "",
-        text: ""
       }
     };
   },
@@ -425,25 +380,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 if (response.status === 200) {
                   _this.loadSave = false;
                   _this.dialogEdit = false;
-                  _this.snackbar = {
-                    color: "success",
-                    text: "แก้ไขข้อมูลสำเร็จ",
-                    status: true
-                  };
+
+                  _this.$toast.success('แก้ไขข้อมูลสำเร็จ');
                 } else if (response.status === 422) {
                   _this.form.phone = "";
-                  _this.snackbar = {
-                    color: "warning",
-                    text: response.data.errors.phone[0],
-                    status: true
-                  };
+
+                  _this.$toast.warning(response.data.errors.phone[0]);
+
                   _this.loadSave = false;
                 } else {
-                  _this.snackbar = {
-                    color: "warning",
-                    text: "เกิดข้อผิดพลาดบางอย่างขึ้น กรุณาลองอีกครั้ง",
-                    on: true
-                  };
+                  _this.$toast.warning('เกิดข้อผิดพลาดบางอย่างขึ้น กรุณาลองอีกครั้ง');
                 } // end เบอร์ซ้ำ
 
 
@@ -472,24 +418,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
           _this2.loadSave = false;
           _this2.dialogEdit = false;
-          _this2.snackbar = {
-            color: "success",
-            text: "แก้ไขข้อมูลสำเร็จ",
-            status: true
-          };
+
+          _this2.$toast.success("แก้ไขข้อมูลสำเร็จ");
         })["catch"](function (err) {
           if (err.response.status == 422) {
-            _this2.snackbar = {
-              status: true,
-              color: "error",
-              text: err.response.data.errors.phone[0]
-            };
+            _this2.$toast.error(err.response.data.errors.phone[0]);
           } else {
-            _this2.snackbar = {
-              status: true,
-              color: "warning",
-              text: "กรุณาลองอีกครั้งภายหลัง"
-            };
+            _this2.$toast.warning("กรุณาลองอีกครั้งภายหลัง");
           }
 
           _this2.loadSave = false;
@@ -564,9 +499,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -588,12 +520,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }, {
         text: "การจัดการ",
         value: "action"
-      }],
-      snackbar: {
-        status: true,
-        color: "info",
-        text: "กำลังโหลดข้อมูล..."
-      }
+      }]
     };
   },
   methods: {
@@ -624,17 +551,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               if (response.status === 200) {
                 _this.loadingTable = false;
-                _this.snackbar = {
-                  status: true,
-                  color: "success",
-                  text: "โหลดข้อมูลลูกค้าสำเร็จ"
-                };
+
+                _this.$toast.success("โหลดข้อมูลลูกค้าสำเร็จ");
               } else {
-                _this.snackbar = {
-                  status: true,
-                  color: "warning",
-                  text: "เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง"
-                };
+                _this.$toast.warning("เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง");
+
                 _this.loadingTable = false;
               }
 
@@ -903,22 +824,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("v-spacer"),
-      _vm._v(" "),
-      _c(
-        "v-snackbar",
-        {
-          attrs: { right: "", color: _vm.snackbar.color },
-          model: {
-            value: _vm.snackbar.on,
-            callback: function($$v) {
-              _vm.$set(_vm.snackbar, "on", $$v)
-            },
-            expression: "snackbar.on"
-          }
-        },
-        [_vm._v(_vm._s(_vm.snackbar.text))]
-      )
+      _c("v-spacer")
     ],
     1
   )
@@ -1111,21 +1017,6 @@ var render = function() {
           )
         ],
         1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-snackbar",
-        {
-          attrs: { color: _vm.snackbar.color, right: "" },
-          model: {
-            value: _vm.snackbar.status,
-            callback: function($$v) {
-              _vm.$set(_vm.snackbar, "status", $$v)
-            },
-            expression: "snackbar.status"
-          }
-        },
-        [_vm._v(_vm._s(_vm.snackbar.text))]
       )
     ],
     1
@@ -1332,21 +1223,6 @@ var render = function() {
           )
         ],
         1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-snackbar",
-        {
-          attrs: { color: _vm.snackbar.color, right: "" },
-          model: {
-            value: _vm.snackbar.status,
-            callback: function($$v) {
-              _vm.$set(_vm.snackbar, "status", $$v)
-            },
-            expression: "snackbar.status"
-          }
-        },
-        [_vm._v(_vm._s(_vm.snackbar.text))]
       )
     ],
     1
@@ -1459,22 +1335,7 @@ var render = function() {
             }
           }
         ])
-      }),
-      _vm._v(" "),
-      _c(
-        "v-snackbar",
-        {
-          attrs: { right: "", color: _vm.snackbar.color },
-          model: {
-            value: _vm.snackbar.status,
-            callback: function($$v) {
-              _vm.$set(_vm.snackbar, "status", $$v)
-            },
-            expression: "snackbar.status"
-          }
-        },
-        [_vm._v(_vm._s(_vm.snackbar.text))]
-      )
+      })
     ],
     1
   )
