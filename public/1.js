@@ -442,6 +442,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                   _this.overlay = false;
                 } else if (response.status == 400) {
+                  _this.formData.dateTime_get = '';
+
                   _this.$toast.error(response.data.message);
 
                   _this.overlay = false;

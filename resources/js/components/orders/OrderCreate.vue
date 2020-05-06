@@ -307,6 +307,7 @@ export default {
                     this.$toast.success(response.data.message);
                     this.overlay = false;
                 } else if (response.status == 400) {
+                    this.formData.dateTime_get = '';
                     this.$toast.error(response.data.message);
                     this.overlay = false;
                 } else {

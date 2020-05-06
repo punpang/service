@@ -99335,7 +99335,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_clipboard2__WEBPACK_IMPORTED_
 
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_toast_notification__WEBPACK_IMPORTED_MODULE_9___default.a, {
   // One of options
-  position: "bottom"
+  position: "top"
 });
 var app = new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
   el: "#app",
