@@ -71,6 +71,8 @@ Route::middleware('admin')->group(function () { //สำหรับ admin
             Route::post('{detail}/delete', 'Order\OrderDetailController@delete');
             Route::post('{detail}/redelete', 'Order\OrderDetailController@redelete');
             Route::get('{order_id}/getByOrderID', 'Order\OrderDetailController@getByOrderID');
+
+            Route::post('{detail}/sentLinkForUploadImage', 'Order\OrderDetailController@sentLinkForUploadImage');
         });
     });
 
@@ -146,6 +148,8 @@ Route::prefix('v1')->group(function () { // api/v1/...
             Route::get('{token}', 'Order\OrderController@getByToken');
             Route::get('{token}/payment/alert', 'Order\OrderController@getByTokenForPaymentAlert');
             Route::post('{token}/payment/alert/uploadslip', 'Order\OrderPaymentController@uploadslip');
+
+            Route::get('{token}/uploadImageByToken', 'Order\OrderDetailController@uploadImageByToken');
         });
     });
 });

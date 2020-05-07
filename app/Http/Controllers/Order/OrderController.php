@@ -46,7 +46,7 @@ class OrderController extends Controller
         return Order::TomorrowOrder()->get();
     }
 
-    function generateToken($length = 30)
+    public function generateToken($length = 30)
     {
         $timestamp = str_split(\Carbon\Carbon::now()->timestamp);
 

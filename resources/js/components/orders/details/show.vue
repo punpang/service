@@ -19,7 +19,7 @@
                     <v-container class="py-0">
                         <productDetail :detail="detail"></productDetail>
                         <buttonForAction :detail="detail"></buttonForAction>
-
+                        
                         <v-col
                             cols="12"
                             md="12"
@@ -41,6 +41,8 @@
                                 <!-- ยกเลิก -->
                             </v-btn>
                         </v-col>
+
+                        
                     </v-container>
                 </v-card-text>
             </v-card>

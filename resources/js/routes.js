@@ -82,6 +82,11 @@ const routes = [
         name: "orderTokenPayment",
         component: () => import("@/js/pages/punpang/orders/payment"),
     },
+    {   // ส่งลิงก์อัปโหลดรูป
+        path: "/punpang/order/:token/uploadImage",
+        name: "orderTokenUploadImage",
+        component: () => import("@/js/pages/punpang/orders/uploadImage"),
+    },
 ];
 
 const router = new VueRouter({

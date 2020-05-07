@@ -66,6 +66,11 @@ class OrderDetail extends Model implements Auditable
         return $this->hasMany('App\Order\OrderPayment', 'order_id', 'order_id')->where('status', '1')->sum('amount');
     }
 
+    public function Order()
+    {
+        return $this->belongsTo('App\Order\Order', 'order_id', 'id');
+    }
+
     public static function FormatData($data)
     {
         $input = $data;

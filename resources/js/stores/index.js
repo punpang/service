@@ -16,6 +16,7 @@ import snackbar from "@/js/stores/modules/snackbar";
 import payment from "@/js/stores/modules/payment";
 import orderPaymentMethod from "@/js/stores/modules/orderPaymentMethod";
 import slip from "@/js/stores/modules/slip";
+import punpang from "@/js/stores/modules/punpang";
 
 Vue.use(Vuex);
 
@@ -34,6 +35,8 @@ export default new Vuex.Store({
         snackbar,
         payment,
         orderPaymentMethod,
-        slip
+        slip,
+        //
+        punpang,
     }
 });

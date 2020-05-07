@@ -6,14 +6,7 @@
                     :detail="detail"
                     :action="action.update.detail"
                 ></formDetail>
-                <v-btn
-                    color="primary"
-                    v-if="detail.upload_image_status"
-                    class="mr-2"
-                >
-                    <v-icon left>link</v-icon>
-                    ส่งลิงก์อัปโหลดรูป
-                </v-btn>
+                <sentLinkForUploadImage v-if="detail.upload_image_status" :detail="detail"></sentLinkForUploadImage>
                 <deleteDetail
                     :detail="detail"
                     :action="action.delete"
@@ -35,11 +28,12 @@
 <script>
 import formDetail from "@/js/components/orders/details/_form_detail";
 import deleteDetail from "@/js/components/orders/details/deleteDetail";
+import sentLinkForUploadImage from "@/js/components/orders/details/sentLinkForUploadImage";
 
 export default {
     props: ["detail"],
     components:{
-        formDetail,deleteDetail
+        formDetail,deleteDetail,sentLinkForUploadImage
     },
     data() {
         return {

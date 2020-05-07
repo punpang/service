@@ -71,6 +71,16 @@ export default {
 
         getByOrderIDReset({ commit }) {
             commit("getByOrderId", []);
+        },
+
+        async sentLinkForUploadImage({},payload)
+        {
+            console.log(payload);
+            
+            const res = await axios.post('/api/order/detail/'+ payload.detail_id +'/sentLinkForUploadImage',payload.form)
+            console.log(res);
+            
+            return res;
         }
     }
 };

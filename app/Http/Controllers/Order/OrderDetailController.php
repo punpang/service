@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Order;
 
-use Illuminate\Http\Request;
+use App\Helper;
+use App\URL;
+use Bitly;
+use App\Linenotify;
+use App\MSms;
 use App\Http\Controllers\Controller;
 use App\Order\OrderDetail;
 use App\Order\OrderPayment;
 use App\Order\Order;
-use App\Linenotify;
+use App\Order\SentLinkForUploadImage;
 
 class OrderDetailController extends Controller
 {
@@ -49,7 +53,7 @@ class OrderDetailController extends Controller
 
         return response()->json(['success' => true], 200);
     }
-    
+
     public function getByOrderID($order_id)
     {
         $detail =  OrderDetail::getByOrderIDAll($order_id);
@@ -63,5 +67,58 @@ class OrderDetailController extends Controller
 
             ]
         ], 200);
+    }
+
+    public function sentLinkForUploadImage(OrderDetail $detail)
+    {
+        // ตรวจสอบ มีสถานะสำหรับอัปโหลดรูปภาพ
+        if ($detail->upload_image_status) {
+
+            // เช็ค มีการสร้างไปหรือยัง หากมีให้ไปที่อัปเดทแทน
+            $sent = SentLinkForUploadImage::find($detail->id);
+            $input = request()->all();
+            if ($sent) {
+                $sent->update($input);
+            } else {
+                $input['order_detail_id'] = $detail->id;
+                $input['token'] = Helper::generateToken();
+                $sent = SentLinkForUploadImage::create($input);
+            }
+
+            // สร้างลิงก์
+            $url = URL::punpang() . $sent->token . '/uploadImage';
+            $bitly = Bitly::getUrl($url);
+
+            $messgae = "โปรดคลิกลิงก์ เพื่ออัปโหลดรูปภาพ " . $bitly;
+            MSms::SMSFB($detail->order, $messgae);
+            Linenotify::send('ส่งลิงก์อัปโหลดรูปภาพ #' . $detail->order->id);
+
+            return response()->json([
+                'success' => true,
+                'message' => "ส่งลิงก์สำหรับอัปโหลดสำเร็จ"
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => "ไม่มีสิทธิ์ในการส่งลิงก์ สำหรับอัปโหลดรูปภาพ"
+            ], 200);
+        }
+    }
+
+    public function uploadImageByToken($token)
+    {
+        $sent = SentLinkForUploadImage::whereToken($token)->first();
+        if ($sent) {
+            if ($sent->orderDetail->upload_image_status) {
+                return response()->json([
+                    $sent,
+                    'success' => true,
+                ], 200);
+            } else {
+                return response()->json(['success' => false, 'message' => 'ไม่มีสิทธิ์เข้าถึงหน้าเว็ปได้'], 200);
+            }
+        } else {
+            return response()->json(['success' => false, 'message' => 'ไม่มีสิทธิ์เข้าถึงหน้าเว็ปได้'], 200);
+        }
     }
 }
