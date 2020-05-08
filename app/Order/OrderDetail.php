@@ -71,6 +71,16 @@ class OrderDetail extends Model implements Auditable
         return $this->belongsTo('App\Order\Order', 'order_id', 'id');
     }
 
+    public function ExampleImage()
+    {
+        return $this->hasOne(Image::class, 'order_detail_id', 'id')->whereType('example');
+    }
+
+    public function Image()
+    {
+        return $this->hasMany(Image::class, 'order_detail_id', 'id')->whereType('image');
+    }
+
     public static function FormatData($data)
     {
         $input = $data;

@@ -8,10 +8,12 @@ use Bitly;
 use App\Linenotify;
 use App\MSms;
 use App\Http\Controllers\Controller;
+use App\Order\Image;
 use App\Order\OrderDetail;
 use App\Order\OrderPayment;
 use App\Order\Order;
 use App\Order\SentLinkForUploadImage;
+use Cloudder;
 
 class OrderDetailController extends Controller
 {
@@ -107,13 +109,104 @@ class OrderDetailController extends Controller
 
     public function uploadImageByToken($token)
     {
-        $sent = SentLinkForUploadImage::whereToken($token)->first();
+        $sent = SentLinkForUploadImage::whereToken($token)->with('ExampleImage', 'Image')->first();
         if ($sent) {
             if ($sent->orderDetail->upload_image_status) {
                 return response()->json([
-                    $sent,
+                    'data' => $sent,
                     'success' => true,
                 ], 200);
+            } else {
+                return response()->json(['success' => false, 'message' => 'ไม่มีสิทธิ์เข้าถึงหน้าเว็ปได้'], 200);
+            }
+        } else {
+            return response()->json(['success' => false, 'message' => 'ไม่มีสิทธิ์เข้าถึงหน้าเว็ปได้'], 200);
+        }
+    }
+
+    public function uploadImageByTokenExample($token)
+    {
+        $sent = SentLinkForUploadImage::whereToken($token)->first();
+        if ($sent) {
+            if ($sent->orderDetail->upload_image_status) {
+                Cloudder::upload(request()->file('image'));
+                $cloudder = Cloudder::getResult();
+                $image = new Image;
+                $image->order_detail_id = $sent->order_detail_id;
+                $image->public_id = $cloudder['public_id'];
+                $image->url = $cloudder['url'];
+                $image->type = 'example';
+                $image->save();
+                return response()->json(['success' => true, 'message' => "อัปโหลดรูปภาพสำเร็จ"], 200);
+            } else {
+                return response()->json(['success' => false, 'message' => 'ไม่มีสิทธิ์เข้าถึงหน้าเว็ปได้'], 200);
+            }
+        } else {
+            return response()->json(['success' => false, 'message' => 'ไม่มีสิทธิ์เข้าถึงหน้าเว็ปได้'], 200);
+        }
+    }
+
+    public function uploadImageByTokenImages($token)
+    {
+        $sent = SentLinkForUploadImage::whereToken($token)->first();
+        if ($sent) {
+            if ($sent->orderDetail->upload_image_status) {
+                Cloudder::upload(request()->file('image'));
+                $cloudder = Cloudder::getResult();
+                $image = new Image;
+                $image->order_detail_id = $sent->order_detail_id;
+                $image->public_id = $cloudder['public_id'];
+                $image->url = $cloudder['url'];
+                $image->type = 'images';
+                $image->save();
+                
+                /*
+                foreach (request()->file() as $file) {
+                    Cloudder::upload($file);
+                    $image = new Image;
+                    $image->order_detail_id = $sent->order_detail_id;
+                    $image->public_id = $cloudder['public_id'];
+                    $image->url = $cloudder['url'];
+                    $image->type = 'images';
+                    $image->save();
+                }
+                */
+
+                return response()->json(['success' => true, 'message' => "อัปโหลดรูปภาพสำเร็จ"], 200);
+            } else {
+                return response()->json(['success' => false, 'message' => 'ไม่มีสิทธิ์เข้าถึงหน้าเว็ปได้'], 200);
+            }
+        } else {
+            return response()->json(['success' => false, 'message' => 'ไม่มีสิทธิ์เข้าถึงหน้าเว็ปได้'], 200);
+        }
+    }
+
+    public function uploadImageByTokenDelete($token, Image $image)
+    {
+        $sent = SentLinkForUploadImage::whereToken($token)->first();
+        if ($sent) {
+            if ($sent->orderDetail->upload_image_status) {
+                Cloudder::delete($image->public_id);
+                $image->delete();
+                return response()->json(['success' => true, 'message' => "ลบรูปภาพสำเร็จ"], 200);
+            } else {
+                return response()->json(['success' => false, 'message' => 'ไม่มีสิทธิ์เข้าถึงหน้าเว็ปได้'], 200);
+            }
+        } else {
+            return response()->json(['success' => false, 'message' => 'ไม่มีสิทธิ์เข้าถึงหน้าเว็ปได้'], 200);
+        }
+    }
+
+    public function updateWriteByToken($token)
+    {
+        $sent = SentLinkForUploadImage::whereToken($token)->first();
+        if ($sent) {
+            if ($sent->orderDetail->upload_image_status) {
+                $sent->orderDetail->write_status = true;
+                $sent->orderDetail->write = request('write');
+                $sent->orderDetail->update();
+
+                return response()->json(['success' => true, 'message' => "เปลี่ยนแปลงข้อความสำเร็จ"], 200);
             } else {
                 return response()->json(['success' => false, 'message' => 'ไม่มีสิทธิ์เข้าถึงหน้าเว็ปได้'], 200);
             }

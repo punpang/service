@@ -149,7 +149,11 @@ Route::prefix('v1')->group(function () { // api/v1/...
             Route::get('{token}/payment/alert', 'Order\OrderController@getByTokenForPaymentAlert');
             Route::post('{token}/payment/alert/uploadslip', 'Order\OrderPaymentController@uploadslip');
 
+            Route::post('{token}/updateWrite', 'Order\OrderDetailController@updateWriteByToken');
             Route::get('{token}/uploadImageByToken', 'Order\OrderDetailController@uploadImageByToken');
+            Route::post('{token}/uploadImageByToken/example', 'Order\OrderDetailController@uploadImageByTokenExample');
+            Route::post('{token}/uploadImageByToken/images', 'Order\OrderDetailController@uploadImageByTokenImages');
+            Route::delete('{token}/uploadImageByToken/{image}/delete', 'Order\OrderDetailController@uploadImageByTokenDelete');
         });
     });
 });

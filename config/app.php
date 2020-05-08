@@ -169,6 +169,7 @@ return [
         OwenIt\Auditing\AuditingServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Shivella\Bitly\BitlyServiceProvider::class,
+        JD\Cloudder\CloudderServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -240,6 +241,7 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Bitly' => Shivella\Bitly\Facade\Bitly::class,
+        'Cloudder' => JD\Cloudder\Facades\Cloudder::class,
     ],
 
 ];

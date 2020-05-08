@@ -28,6 +28,16 @@ class SentLinkForUploadImage extends Model implements Auditable
 
     public function orderDetail()
     {
-        return $this->belongsTo(OrderDetail::class,"order_detail_id","id");
+        return $this->belongsTo(OrderDetail::class, "order_detail_id", "id");
+    }
+
+    public function ExampleImage()
+    {
+        return $this->hasOne(Image::class, 'order_detail_id', 'order_detail_id')->whereType('example');
+    }
+
+    public function Image()
+    {
+        return $this->hasMany(Image::class, 'order_detail_id', 'order_detail_id')->whereType('images');
     }
 }
