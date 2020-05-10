@@ -36,7 +36,7 @@ class SentLinkForUploadImage extends Model implements Auditable
         return $this->hasOne(Image::class, 'order_detail_id', 'order_detail_id')->whereType('example');
     }
 
-    public function Image()
+    public function Images()
     {
         return $this->hasMany(Image::class, 'order_detail_id', 'order_detail_id')->whereType('images');
     }

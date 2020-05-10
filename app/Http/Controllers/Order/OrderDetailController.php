@@ -109,7 +109,7 @@ class OrderDetailController extends Controller
 
     public function uploadImageByToken($token)
     {
-        $sent = SentLinkForUploadImage::whereToken($token)->with('ExampleImage', 'Image')->first();
+        $sent = SentLinkForUploadImage::whereToken($token)->with('ExampleImage', 'Images')->first();
         if ($sent) {
             if ($sent->orderDetail->upload_image_status) {
                 return response()->json([
@@ -129,15 +129,19 @@ class OrderDetailController extends Controller
         $sent = SentLinkForUploadImage::whereToken($token)->first();
         if ($sent) {
             if ($sent->orderDetail->upload_image_status) {
-                Cloudder::upload(request()->file('image'));
-                $cloudder = Cloudder::getResult();
-                $image = new Image;
-                $image->order_detail_id = $sent->order_detail_id;
-                $image->public_id = $cloudder['public_id'];
-                $image->url = $cloudder['url'];
-                $image->type = 'example';
-                $image->save();
-                return response()->json(['success' => true, 'message' => "อัปโหลดรูปภาพสำเร็จ"], 200);
+                if ($sent->example) {
+                    Cloudder::upload(request()->file('image'));
+                    $cloudder = Cloudder::getResult();
+                    $image = new Image;
+                    $image->order_detail_id = $sent->order_detail_id;
+                    $image->public_id = $cloudder['public_id'];
+                    $image->url = $cloudder['url'];
+                    $image->type = 'example';
+                    $image->save();
+                    return response()->json(['success' => true, 'message' => "อัปโหลดรูปภาพสำเร็จ"], 200);
+                } else {
+                    return response()->json(['success' => false, 'message' => 'ไม่มีสิทธิ์เข้าถึงหน้าเว็ปได้'], 200);
+                }
             } else {
                 return response()->json(['success' => false, 'message' => 'ไม่มีสิทธิ์เข้าถึงหน้าเว็ปได้'], 200);
             }
@@ -151,15 +155,22 @@ class OrderDetailController extends Controller
         $sent = SentLinkForUploadImage::whereToken($token)->first();
         if ($sent) {
             if ($sent->orderDetail->upload_image_status) {
-                Cloudder::upload(request()->file('image'));
-                $cloudder = Cloudder::getResult();
-                $image = new Image;
-                $image->order_detail_id = $sent->order_detail_id;
-                $image->public_id = $cloudder['public_id'];
-                $image->url = $cloudder['url'];
-                $image->type = 'images';
-                $image->save();
-                
+                if ($sent->image) {
+                    Cloudder::upload(request()->file('image'));
+                    $cloudder = Cloudder::getResult();
+                    $show = Cloudder::show($cloudder['public_id'], ['width' => 800, 'height' => 800]);
+                    $image = new Image;
+                    $image->order_detail_id = $sent->order_detail_id;
+                    $image->public_id = $cloudder['public_id'];
+                    $image->url = $show; //$cloudder['url'];
+                    $image->type = 'images';
+                    $image->save();
+                    return response()->json(['success' => true, 'message' => "อัปโหลดรูปภาพสำเร็จ"], 200);
+                } else {
+                    return response()->json(['success' => false, 'message' => "ไม่มีสิทธิ์เข้าถึงหน้าเว็ปได้"], 200);
+                }
+
+
                 /*
                 foreach (request()->file() as $file) {
                     Cloudder::upload($file);
@@ -171,8 +182,6 @@ class OrderDetailController extends Controller
                     $image->save();
                 }
                 */
-
-                return response()->json(['success' => true, 'message' => "อัปโหลดรูปภาพสำเร็จ"], 200);
             } else {
                 return response()->json(['success' => false, 'message' => 'ไม่มีสิทธิ์เข้าถึงหน้าเว็ปได้'], 200);
             }
@@ -207,6 +216,32 @@ class OrderDetailController extends Controller
                 $sent->orderDetail->update();
 
                 return response()->json(['success' => true, 'message' => "เปลี่ยนแปลงข้อความสำเร็จ"], 200);
+            } else {
+                return response()->json(['success' => false, 'message' => 'ไม่มีสิทธิ์เข้าถึงหน้าเว็ปได้'], 200);
+            }
+        } else {
+            return response()->json(['success' => false, 'message' => 'ไม่มีสิทธิ์เข้าถึงหน้าเว็ปได้'], 200);
+        }
+    }
+
+    public function ImageMain($token, Image $image)
+    {
+        $sent = SentLinkForUploadImage::whereToken($token)->first();
+        if ($sent) {
+            if ($sent->orderDetail->upload_image_status) {
+                if ($sent->image) {
+                    $image->main = !$image->main;
+                    $image->update();
+
+                    if ($image->main) {
+                        $messgae = 'เลือกเป็นรูปหลักสำเร็จ';
+                    } else {
+                        $messgae = 'ยกเลิกรูปหลักสำเร็จ'; 
+                    }
+                    return response()->json(['success' => true, 'message' => $messgae], 200);
+                } else {
+                    return response()->json(['success' => false, 'message' => 'ไม่มีสิทธิ์เข้าถึงหน้าเว็ปได้'], 200);
+                }
             } else {
                 return response()->json(['success' => false, 'message' => 'ไม่มีสิทธิ์เข้าถึงหน้าเว็ปได้'], 200);
             }
