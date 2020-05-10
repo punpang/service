@@ -2868,15 +2868,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 break;
 
               case 4:
-                //this.overlay = true;
+                _this.overlay = true;
                 payload = {
                   detail_id: _this.detail.id,
                   form: _this.form
                 };
-                _context.next = 7;
+                _context.next = 8;
                 return _this.$store.dispatch("orderDetail/sentLinkForUploadImage", payload);
 
-              case 7:
+              case 8:
                 res = _context.sent;
 
                 if (res.status === 200) {
@@ -2890,8 +2890,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                   _this.overlay = false;
                 } else if (res.status === 500) {}
-
-                console.log(payload);
 
               case 10:
               case "end":

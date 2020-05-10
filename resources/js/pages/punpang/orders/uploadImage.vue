@@ -31,9 +31,9 @@
                                 color="error"
                                 class="mt-4 ml-4"
                                 @click="
-                                    clickRemoveImage(
-                                        response.data.example_image.id
-                                    )
+                                    clickRemoveImage([
+                                        response.data.example_image
+                                    ])
                                 "
                             >
                                 <v-icon left>delete</v-icon>
@@ -73,7 +73,7 @@
                             "
                         >
                             <v-icon left>save</v-icon>
-                            บันทึก
+                            บันทึกข้อความ
                         </v-btn>
 
                         <v-divider></v-divider>
@@ -140,20 +140,32 @@
                             </div>
                         </div>
 
-                        <v-divider class="mb-1 mt-2"></v-divider>
-
                         <v-alert
                             type="info"
                             v-if="response.data.images.length == 0"
                             >โปรดอัปโหลดรูป</v-alert
                         >
-                        <v-row>
-                            <v-col
-                                cols="12"
-                                md="12"
-                                v-for="image in response.data.images"
-                                :key="image.id"
-                            >
+                        <v-card
+                            outlined
+                            v-for="image in response.data.images"
+                            :key="image.id"
+                            class="mb-2"
+                        >
+                            <v-img :src="image.url" :lazy-src="image.url">
+                                <template v-slot:placeholder>
+                                    <v-row
+                                        class="fill-height ma-0"
+                                        align="center"
+                                        justify="center"
+                                    >
+                                        <v-progress-circular
+                                            indeterminate
+                                            color="grey lighten-5"
+                                        ></v-progress-circular>
+                                    </v-row>
+                                </template>
+                            </v-img>
+                            <v-card-text class="pa-2">
                                 <v-checkbox
                                     v-model="chooseRemoveImages"
                                     v-if="chooseRemove"
@@ -162,51 +174,37 @@
                                     class="ma-0"
                                     :value="image"
                                 ></v-checkbox>
-                                <v-img :src="image.url" :lazy-src="image.url">
-                                    <div v-if="!chooseRemove">
-                                        <v-btn
-                                            color="warning"
-                                            class="mt-2 ml-2"
-                                            v-if="image.main"
-                                            @click="clickImageMain(image.id)"
-                                        >
-                                            <v-icon left>bookmark</v-icon>
-                                            ยกเลิกรูปหลัก
-                                        </v-btn>
-                                        <v-btn
-                                            color="primary"
-                                            class="mt-2 ml-2"
-                                            v-else
-                                            @click="clickImageMain(image.id)"
-                                        >
-                                            <v-icon left>bookmark</v-icon>
-                                            ตั้งเป็นรูปหลัก
-                                        </v-btn>
+                                <div v-else class="mt-2">
+                                    <v-btn
+                                        color="warning"
+                                        v-if="image.main"
+                                        @click="clickImageMain(image.id)"
+                                        text
+                                    >
+                                        <v-icon left>bookmark_border</v-icon>
+                                        ยกเลิกรูปหลัก
+                                    </v-btn>
+                                    <v-btn
+                                        color="primary"
+                                        v-else
+                                        @click="clickImageMain(image.id)"
+                                        text
+                                    >
+                                        <v-icon left>bookmark</v-icon>
+                                        ตั้งเป็นรูปหลัก
+                                    </v-btn>
 
-                                        <v-btn
-                                            color="error"
-                                            class="mt-2 ml-2"
-                                            @click="clickRemoveImage([image])"
-                                        >
-                                            <v-icon left>delete</v-icon>
-                                            ลบรูปนี้
-                                        </v-btn>
-                                    </div>
-                                    <template v-slot:placeholder>
-                                        <v-row
-                                            class="fill-height ma-0"
-                                            align="center"
-                                            justify="center"
-                                        >
-                                            <v-progress-circular
-                                                indeterminate
-                                                color="grey lighten-5"
-                                            ></v-progress-circular>
-                                        </v-row>
-                                    </template>
-                                </v-img>
-                            </v-col>
-                        </v-row>
+                                    <v-btn
+                                        color="error"
+                                        @click="clickRemoveImage([image])"
+                                        text
+                                    >
+                                        <v-icon left>delete</v-icon>
+                                        ลบรูปนี้
+                                    </v-btn>
+                                </div>
+                            </v-card-text>
+                        </v-card>
                     </v-card-text>
                     <v-card-text v-else>
                         <v-alert type="warning"

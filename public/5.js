@@ -236,8 +236,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -624,10 +622,9 @@ var render = function() {
                                           attrs: { color: "error" },
                                           on: {
                                             click: function($event) {
-                                              return _vm.clickRemoveImage(
+                                              return _vm.clickRemoveImage([
                                                 _vm.response.data.example_image
-                                                  .id
-                                              )
+                                              ])
                                             }
                                           }
                                         },
@@ -714,7 +711,7 @@ var render = function() {
                                     _vm._v("save")
                                   ]),
                                   _vm._v(
-                                    "\n                        บันทึก\n                    "
+                                    "\n                        บันทึกข้อความ\n                    "
                                   )
                                 ],
                                 1
@@ -863,206 +860,193 @@ var render = function() {
                                   ])
                                 : _vm._e(),
                               _vm._v(" "),
-                              _c("v-divider", { staticClass: "mb-1 mt-2" }),
-                              _vm._v(" "),
                               _vm.response.data.images.length == 0
                                 ? _c("v-alert", { attrs: { type: "info" } }, [
                                     _vm._v("โปรดอัปโหลดรูป")
                                   ])
                                 : _vm._e(),
                               _vm._v(" "),
-                              _c(
-                                "v-row",
-                                _vm._l(_vm.response.data.images, function(
-                                  image
-                                ) {
-                                  return _c(
-                                    "v-col",
-                                    {
-                                      key: image.id,
-                                      attrs: { cols: "12", md: "12" }
-                                    },
-                                    [
-                                      _vm.chooseRemove
-                                        ? _c("v-checkbox", {
-                                            staticClass: "ma-0",
-                                            attrs: {
-                                              label: "ลบรูปนี้",
-                                              "hide-details": "",
-                                              value: image
+                              _vm._l(_vm.response.data.images, function(image) {
+                                return _c(
+                                  "v-card",
+                                  {
+                                    key: image.id,
+                                    staticClass: "mb-2",
+                                    attrs: { outlined: "" }
+                                  },
+                                  [
+                                    _c("v-img", {
+                                      attrs: {
+                                        src: image.url,
+                                        "lazy-src": image.url
+                                      },
+                                      scopedSlots: _vm._u(
+                                        [
+                                          {
+                                            key: "placeholder",
+                                            fn: function() {
+                                              return [
+                                                _c(
+                                                  "v-row",
+                                                  {
+                                                    staticClass:
+                                                      "fill-height ma-0",
+                                                    attrs: {
+                                                      align: "center",
+                                                      justify: "center"
+                                                    }
+                                                  },
+                                                  [
+                                                    _c("v-progress-circular", {
+                                                      attrs: {
+                                                        indeterminate: "",
+                                                        color: "grey lighten-5"
+                                                      }
+                                                    })
+                                                  ],
+                                                  1
+                                                )
+                                              ]
                                             },
-                                            model: {
-                                              value: _vm.chooseRemoveImages,
-                                              callback: function($$v) {
-                                                _vm.chooseRemoveImages = $$v
+                                            proxy: true
+                                          }
+                                        ],
+                                        null,
+                                        true
+                                      )
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "v-card-text",
+                                      { staticClass: "pa-2" },
+                                      [
+                                        _vm.chooseRemove
+                                          ? _c("v-checkbox", {
+                                              staticClass: "ma-0",
+                                              attrs: {
+                                                label: "ลบรูปนี้",
+                                                "hide-details": "",
+                                                value: image
                                               },
-                                              expression: "chooseRemoveImages"
-                                            }
-                                          })
-                                        : _vm._e(),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-img",
-                                        {
-                                          attrs: {
-                                            src: image.url,
-                                            "lazy-src": image.url
-                                          },
-                                          scopedSlots: _vm._u(
-                                            [
-                                              {
-                                                key: "placeholder",
-                                                fn: function() {
-                                                  return [
-                                                    _c(
-                                                      "v-row",
+                                              model: {
+                                                value: _vm.chooseRemoveImages,
+                                                callback: function($$v) {
+                                                  _vm.chooseRemoveImages = $$v
+                                                },
+                                                expression: "chooseRemoveImages"
+                                              }
+                                            })
+                                          : _c(
+                                              "div",
+                                              { staticClass: "mt-2" },
+                                              [
+                                                image.main
+                                                  ? _c(
+                                                      "v-btn",
                                                       {
-                                                        staticClass:
-                                                          "fill-height ma-0",
                                                         attrs: {
-                                                          align: "center",
-                                                          justify: "center"
+                                                          color: "warning",
+                                                          text: ""
+                                                        },
+                                                        on: {
+                                                          click: function(
+                                                            $event
+                                                          ) {
+                                                            return _vm.clickImageMain(
+                                                              image.id
+                                                            )
+                                                          }
                                                         }
                                                       },
                                                       [
                                                         _c(
-                                                          "v-progress-circular",
+                                                          "v-icon",
                                                           {
-                                                            attrs: {
-                                                              indeterminate: "",
-                                                              color:
-                                                                "grey lighten-5"
-                                                            }
-                                                          }
+                                                            attrs: { left: "" }
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "bookmark_border"
+                                                            )
+                                                          ]
+                                                        ),
+                                                        _vm._v(
+                                                          "\n                                    ยกเลิกรูปหลัก\n                                "
                                                         )
                                                       ],
                                                       1
                                                     )
-                                                  ]
-                                                },
-                                                proxy: true
-                                              }
-                                            ],
-                                            null,
-                                            true
-                                          )
-                                        },
-                                        [
-                                          !_vm.chooseRemove
-                                            ? _c(
-                                                "div",
-                                                [
-                                                  image.main
-                                                    ? _c(
-                                                        "v-btn",
-                                                        {
-                                                          staticClass:
-                                                            "mt-2 ml-2",
-                                                          attrs: {
-                                                            color: "warning"
-                                                          },
-                                                          on: {
-                                                            click: function(
-                                                              $event
-                                                            ) {
-                                                              return _vm.clickImageMain(
-                                                                image.id
-                                                              )
-                                                            }
-                                                          }
+                                                  : _c(
+                                                      "v-btn",
+                                                      {
+                                                        attrs: {
+                                                          color: "primary",
+                                                          text: ""
                                                         },
-                                                        [
-                                                          _c(
-                                                            "v-icon",
-                                                            {
-                                                              attrs: {
-                                                                left: ""
-                                                              }
-                                                            },
-                                                            [_vm._v("bookmark")]
-                                                          ),
-                                                          _vm._v(
-                                                            "\n                                        ยกเลิกรูปหลัก\n                                    "
-                                                          )
-                                                        ],
-                                                        1
-                                                      )
-                                                    : _c(
-                                                        "v-btn",
-                                                        {
-                                                          staticClass:
-                                                            "mt-2 ml-2",
-                                                          attrs: {
-                                                            color: "primary"
-                                                          },
-                                                          on: {
-                                                            click: function(
-                                                              $event
-                                                            ) {
-                                                              return _vm.clickImageMain(
-                                                                image.id
-                                                              )
-                                                            }
+                                                        on: {
+                                                          click: function(
+                                                            $event
+                                                          ) {
+                                                            return _vm.clickImageMain(
+                                                              image.id
+                                                            )
                                                           }
-                                                        },
-                                                        [
-                                                          _c(
-                                                            "v-icon",
-                                                            {
-                                                              attrs: {
-                                                                left: ""
-                                                              }
-                                                            },
-                                                            [_vm._v("bookmark")]
-                                                          ),
-                                                          _vm._v(
-                                                            "\n                                        ตั้งเป็นรูปหลัก\n                                    "
-                                                          )
-                                                        ],
-                                                        1
-                                                      ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "v-btn",
-                                                    {
-                                                      staticClass: "mt-2 ml-2",
-                                                      attrs: { color: "error" },
-                                                      on: {
-                                                        click: function(
-                                                          $event
-                                                        ) {
-                                                          return _vm.clickRemoveImage(
-                                                            [image]
-                                                          )
                                                         }
-                                                      }
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "v-icon",
+                                                          {
+                                                            attrs: { left: "" }
+                                                          },
+                                                          [_vm._v("bookmark")]
+                                                        ),
+                                                        _vm._v(
+                                                          "\n                                    ตั้งเป็นรูปหลัก\n                                "
+                                                        )
+                                                      ],
+                                                      1
+                                                    ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "v-btn",
+                                                  {
+                                                    attrs: {
+                                                      color: "error",
+                                                      text: ""
                                                     },
-                                                    [
-                                                      _c(
-                                                        "v-icon",
-                                                        { attrs: { left: "" } },
-                                                        [_vm._v("delete")]
-                                                      ),
-                                                      _vm._v(
-                                                        "\n                                        ลบรูปนี้\n                                    "
-                                                      )
-                                                    ],
-                                                    1
-                                                  )
-                                                ],
-                                                1
-                                              )
-                                            : _vm._e()
-                                        ]
-                                      )
-                                    ],
-                                    1
-                                  )
-                                }),
-                                1
-                              )
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.clickRemoveImage(
+                                                          [image]
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "v-icon",
+                                                      { attrs: { left: "" } },
+                                                      [_vm._v("delete")]
+                                                    ),
+                                                    _vm._v(
+                                                      "\n                                    ลบรูปนี้\n                                "
+                                                    )
+                                                  ],
+                                                  1
+                                                )
+                                              ],
+                                              1
+                                            )
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                )
+                              })
                             ],
-                            1
+                            2
                           )
                         : _c(
                             "v-card-text",

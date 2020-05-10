@@ -38,6 +38,17 @@ class SentLinkForUploadImage extends Model implements Auditable
 
     public function Images()
     {
-        return $this->hasMany(Image::class, 'order_detail_id', 'order_detail_id')->whereType('images');
+        return $this->hasMany(Image::class, 'order_detail_id', 'order_detail_id')->whereType('images')->orderBy('main', 'DESC')->orderBy('created_at', 'DESC');
+    }
+
+    public static function SeachByToken($token)
+    {
+        $now = \Carbon\Carbon::now()->format("Y-m-d");
+        $sent = SentLinkForUploadImage::whereToken($token)->with('ExampleImage', 'Images')->first();
+        if ($sent->orderDetail->order->dateTime_get >= $now) {
+            return $sent;
+        } else {
+            return false;
+        }
     }
 }

@@ -70,7 +70,7 @@ export default {
             if (this.form.example == false && this.form.image == false) {
                 this.$toast.error("ไม่สามารถส่งลิงก์ได้ กรุณาตรวจสอบข้อมูล");
             } else {
-                //this.overlay = true;
+                this.overlay = true;
                 const payload = {
                     detail_id: this.detail.id,
                     form: this.form
@@ -90,7 +90,6 @@ export default {
                     this.overlay = false;
                 } else if (res.status === 500) {
                 }
-                console.log(payload);
             }
         }
     }
