@@ -1,6 +1,15 @@
 <?php
-Route::get('/{any?}', function (){
-    return view('app');
+
+Route::get('/clear-cache', function () {
+  Artisan::call('config:clear');
+  Artisan::call('cache:clear');
+  Artisan::call('config:cache');
+  return 'FINISHED';
+});
+
+
+Route::get('/{any?}', function () {
+  return view('app');
 })->where('any', '^(?!api\/)[\/\w\.-]*');
 /*
 |--------------------------------------------------------------------------
