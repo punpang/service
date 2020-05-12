@@ -32,7 +32,11 @@
                         color="success"
                         class="mr-2"
                         @click="clickSubmit"
-                        :disabled="form.example == false && form.image == false"
+                        :disabled="
+                            (form.example == false && form.image == false) ||
+                                (form.example == detail.upload_image.example &&
+                                    form.image == detail.upload_image.image)
+                        "
                     >
                         <v-icon left>link</v-icon>
                         ส่งลิงก์</v-btn
@@ -60,8 +64,8 @@ export default {
             dialog: false,
             overlay: false,
             form: {
-                example: false,
-                image: false
+                example: this.detail.upload_image.example,
+                image: this.detail.upload_image.image
             }
         };
     },

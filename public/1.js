@@ -2831,6 +2831,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["detail"],
@@ -2842,8 +2846,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       dialog: false,
       overlay: false,
       form: {
-        example: false,
-        image: false
+        example: this.detail.upload_image.example,
+        image: this.detail.upload_image.image
       }
     };
   },
@@ -8532,7 +8536,11 @@ var render = function() {
                       attrs: {
                         color: "success",
                         disabled:
-                          _vm.form.example == false && _vm.form.image == false
+                          (_vm.form.example == false &&
+                            _vm.form.image == false) ||
+                          (_vm.form.example ==
+                            _vm.detail.upload_image.example &&
+                            _vm.form.image == _vm.detail.upload_image.image)
                       },
                       on: { click: _vm.clickSubmit }
                     },

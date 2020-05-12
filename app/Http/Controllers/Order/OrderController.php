@@ -216,7 +216,9 @@ class OrderController extends Controller
                 'SlipNotVerify.GoogleOcr'
             )
             ->with('OrderDetail.Product.ProductImage')
-            ->with('OrderDetailNoUse.Product.ProductImage')
+            ->with('OrderDetailNoUse.Product.ProductImage')            
+            ->with('OrderDetail.uploadImage.ExampleImage')
+            ->with('OrderDetail.uploadImage.Images')
             ->first();
 
         return response()->json([

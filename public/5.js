@@ -1,1 +1,1192 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[5],{36:function(t,e,r){"use strict";r.r(e);var a=r(0),o=r.n(a);function n(t,e,r,a,o,n,s){try{var i=t[n](s),c=i.value}catch(t){return void r(t)}i.done?e(c):Promise.resolve(c).then(a,o)}var s={data:function(){return{overlay:!1,dialog:!1,loading:!1,form:{name:"",status:!0},Rules:{name:[function(t){return!!t||"ห้ามเว้นว่าง"},function(t){return t.length<=100||"ไม่เกิน 100 ตัวอักษร"}]}}},methods:{save:function(){var t,e=this;return(t=o.a.mark((function t(){return o.a.wrap((function(t){for(;;)switch(t.prev=t.next){case 0:if(!e.$refs.form.validate()){t.next=9;break}return e.loading=!0,e.overlay=!0,t.next=5,e.$store.dispatch("productCategory/add",e.form);case 5:200===t.sent.status&&(e.dialog=!1,e.$toast.success("เพิ่มกลุ่มสินค้าสำเร็จ"),e.loading=!1,e.overlay=!1,e.form.status=!0,e.form.name=""),t.next=10;break;case 9:e.$toast.warning("คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง");case 10:case"end":return t.stop()}}),t)})),function(){var e=this,r=arguments;return new Promise((function(a,o){var s=t.apply(e,r);function i(t){n(s,a,o,i,c,"next",t)}function c(t){n(s,a,o,i,c,"throw",t)}i(void 0)}))})()},reset:function(){this.$toast.success("ล้างข้อมูลสำเร็จ"),this.form.name=""}}},i=r(1),c=Object(i.a)(s,(function(){var t=this,e=t.$createElement,r=t._self._c||e;return r("div",[r("v-dialog",{attrs:{width:"600",persistent:""},scopedSlots:t._u([{key:"activator",fn:function(e){var a=e.on;return[r("v-btn",t._g({attrs:{color:"info"}},a),[t._v("เพิ่มกลุ่มสินค้า")])]}}]),model:{value:t.dialog,callback:function(e){t.dialog=e},expression:"dialog"}},[t._v(" "),r("v-card",[r("v-card-title",[t._v("เพิ่มกลุ่มสินค้า\n                "),r("v-spacer"),t._v(" "),r("v-icon",{attrs:{color:"error"},on:{click:function(e){t.dialog=!1}}},[t._v("close")])],1),t._v(" "),r("v-card-text",[r("v-form",{ref:"form",attrs:{"lazy-validation":""}},[r("v-text-field",{attrs:{label:"ชื่อกลุ่มสินค้า",counter:"100",rules:t.Rules.name},model:{value:t.form.name,callback:function(e){t.$set(t.form,"name",e)},expression:"form.name"}}),t._v(" "),r("v-switch",{attrs:{inset:"",label:"สถานะ"},model:{value:t.form.status,callback:function(e){t.$set(t.form,"status",e)},expression:"form.status"}})],1)],1),t._v(" "),r("v-card-actions",[r("v-btn",{attrs:{color:"success",loading:t.loading},on:{click:t.save}},[r("v-icon",{attrs:{left:""}},[t._v("save")]),t._v("\n                    บันทึก\n                ")],1),t._v(" "),r("v-btn",{attrs:{color:"error"},on:{click:t.reset}},[r("v-icon",{attrs:{left:""}},[t._v("clear")]),t._v("\n                    ล้างข้อมูล\n                ")],1)],1)],1),t._v(" "),r("v-overlay",{attrs:{value:t.overlay}},[r("v-progress-circular",{attrs:{indeterminate:"",size:this.$store.getters["main/sizeOverlay"]}})],1)],1)],1)}),[],!1,null,null,null).exports;function l(t,e,r,a,o,n,s){try{var i=t[n](s),c=i.value}catch(t){return void r(t)}i.done?e(c):Promise.resolve(c).then(a,o)}var u={props:["data"],data:function(){return{overlay:!1,loading:!1,dialog:!1,form:{id:this.data.id,name:this.data.name},Rules:{name:[function(t){return!!t||"ห้ามเว้นว่าง"},function(t){return t.length<=100||"ไม่เกิน 100 ตัวอักษร"}]}}},methods:{save:function(){var t,e=this;return(t=o.a.mark((function t(){return o.a.wrap((function(t){for(;;)switch(t.prev=t.next){case 0:if(!e.$refs.form.validate()){t.next=9;break}return e.loading=!0,e.overlay=!0,t.next=5,e.$store.dispatch("productCategory/update",e.form);case 5:200===t.sent.status&&(e.$toast.success("แก้ไขกลุ่มสินค้าสำเร็จ"),e.loading=!1,e.overlay=!1,e.dialog=!1),t.next=10;break;case 9:e.$toast.warning("คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง");case 10:case"end":return t.stop()}}),t)})),function(){var e=this,r=arguments;return new Promise((function(a,o){var n=t.apply(e,r);function s(t){l(n,a,o,s,i,"next",t)}function i(t){l(n,a,o,s,i,"throw",t)}s(void 0)}))})()}}};function v(t,e,r,a,o,n,s){try{var i=t[n](s),c=i.value}catch(t){return void r(t)}i.done?e(c):Promise.resolve(c).then(a,o)}var d={components:{editProductCategory:Object(i.a)(u,(function(){var t=this,e=t.$createElement,r=t._self._c||e;return r("div",[r("v-dialog",{attrs:{width:"600",persistent:""},scopedSlots:t._u([{key:"activator",fn:function(e){var a=e.on;return[r("v-icon",t._g({staticClass:"d-flex d-sm-none",attrs:{color:"warning"}},a),[t._v("edit")]),t._v(" "),r("v-btn",t._g({staticClass:"d-none d-sm-flex",attrs:{color:"warning",small:"",rounded:""}},a),[r("v-icon",{attrs:{left:"",small:""}},[t._v("edit")]),t._v("แก้ไข")],1)]}}]),model:{value:t.dialog,callback:function(e){t.dialog=e},expression:"dialog"}},[t._v(" "),r("v-card",[r("v-card-title",[t._v("แก้ไขกลุ่มสินค้า\n                "),r("v-spacer"),t._v(" "),r("v-icon",{attrs:{color:"error"},on:{click:function(e){t.dialog=!1}}},[t._v("close")])],1),t._v(" "),r("v-card-text",[r("v-form",{ref:"form",attrs:{"lazy-validation":""}},[r("v-text-field",{attrs:{label:"ชื่อกลุ่มสินค้า",counter:"100",rules:t.Rules.name},model:{value:t.form.name,callback:function(e){t.$set(t.form,"name",e)},expression:"form.name"}})],1)],1),t._v(" "),r("v-card-actions",[r("v-btn",{attrs:{color:"success",loading:t.loading},on:{click:t.save}},[r("v-icon",{attrs:{left:""}},[t._v("save")]),t._v("\n                    บันทึก\n                ")],1),t._v(" "),r("v-btn",{attrs:{color:"error"},on:{click:function(e){t.dialog=!1}}},[r("v-icon",{attrs:{left:""}},[t._v("close")]),t._v("\n                    ปิด\n                ")],1)],1)],1),t._v(" "),r("v-overlay",{attrs:{value:t.overlay}},[r("v-progress-circular",{attrs:{indeterminate:"",size:this.$store.getters["main/sizeOverlay"]}})],1)],1)],1)}),[],!1,null,null,null).exports},data:function(){return{overlay:!1,search:"",headers:[{text:"ชื่อกลุ่ม",value:"name"},{text:"สถานะ",value:"status"},{text:"การจัดการ",value:"menu"}]}},methods:{changeStatus:function(t){var e,r=this;return(e=o.a.mark((function e(){var a;return o.a.wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return r.overlay=!0,a={id:t.id,status:t.status},e.next=4,r.$store.dispatch("productCategory/update",a);case 4:200==e.sent.status&&(r.$toast.success("เปลี่ยนแปลงสถานะสำเร็จ"),r.overlay=!1);case 6:case"end":return e.stop()}}),e)})),function(){var t=this,r=arguments;return new Promise((function(a,o){var n=e.apply(t,r);function s(t){v(n,a,o,s,i,"next",t)}function i(t){v(n,a,o,s,i,"throw",t)}s(void 0)}))})()}}},m=Object(i.a)(d,(function(){var t=this,e=t.$createElement,r=t._self._c||e;return r("div",[r("v-text-field",{attrs:{label:"ค้นหา","append-icon":"search"},model:{value:t.search,callback:function(e){t.search=e},expression:"search"}}),t._v(" "),r("v-data-table",{attrs:{headers:t.headers,items:this.$store.getters["productCategory/data"],search:t.search,"items-per-page":10,"no-results-text":"ไม่พบข้อมูลที่ค้นหา","loading-text":"รอสักครู่...กำลังโหลดข้อมูล","item-key":"id"},scopedSlots:t._u([{key:"item.status",fn:function(e){var a=e.item;return[r("v-switch",{attrs:{inset:""},on:{change:function(e){return t.changeStatus(a)}},model:{value:a.status,callback:function(e){t.$set(a,"status",e)},expression:"item.status"}})]}},{key:"item.menu",fn:function(t){var e=t.item;return[r("div",[r("editProductCategory",{attrs:{data:e}})],1)]}}])}),t._v(" "),r("v-overlay",{attrs:{value:t.overlay}},[r("v-progress-circular",{attrs:{indeterminate:"",size:this.$store.getters["main/sizeOverlay"]}})],1)],1)}),[],!1,null,null,null).exports;function f(t,e,r,a,o,n,s){try{var i=t[n](s),c=i.value}catch(t){return void r(t)}i.done?e(c):Promise.resolve(c).then(a,o)}var p={data:function(){return{overlay:!1,dialog:!1,loading:!1,form:{name:"",status:!0,product_category_id:""},Rules:{name:[function(t){return!!t||"ห้ามเว้นว่าง"},function(t){return t.length<=100||"ไม่เกิน 100 ตัวอักษร"}],product_category_id:[function(t){return!!t||"ห้ามเว้นว่าง"}]}}},methods:{save:function(){var t,e=this;return(t=o.a.mark((function t(){var r;return o.a.wrap((function(t){for(;;)switch(t.prev=t.next){case 0:if(!e.$refs.form.validate()){t.next=8;break}return e.loading=!0,t.next=4,e.$store.dispatch("productCategorySub/add",e.form);case 4:200===(r=t.sent).status?(e.dialog=!1,e.$toast.success("เพิ่มกลุ่มสินค้าย่อยสำเร็จ"),e.form={name:"",status:!0,product_category_id:""},e.loading=!1):500===r.status?(e.$toast.error("เกิดข้อผิดพลาดด้านเซิร์ฟเวอร์ กรุณาลองอีกครั้ง"),e.loading=!1):(e.$toast.warning("เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง"),e.loading=!1),t.next=9;break;case 8:e.$toast.warning("คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง");case 9:case"end":return t.stop()}}),t)})),function(){var e=this,r=arguments;return new Promise((function(a,o){var n=t.apply(e,r);function s(t){f(n,a,o,s,i,"next",t)}function i(t){f(n,a,o,s,i,"throw",t)}s(void 0)}))})()},reset:function(){this.$toast.success("ล้างข้อมูลสำเร็จ"),this.form.name=""}}},g=Object(i.a)(p,(function(){var t=this,e=t.$createElement,r=t._self._c||e;return r("div",[r("v-dialog",{attrs:{width:"600",persistent:""},scopedSlots:t._u([{key:"activator",fn:function(e){var a=e.on;return[r("v-btn",t._g({attrs:{color:"info"}},a),[t._v("เพิ่มกลุ่มสินค้าย่อย")])]}}]),model:{value:t.dialog,callback:function(e){t.dialog=e},expression:"dialog"}},[t._v(" "),r("v-card",[r("v-card-title",[t._v("เพิ่มกลุ่มสินค้าย่อย\n                "),r("v-spacer"),t._v(" "),r("v-icon",{attrs:{color:"error"},on:{click:function(e){t.dialog=!1}}},[t._v("close")])],1),t._v(" "),r("v-card-text",[r("v-form",{ref:"form",attrs:{"lazy-validation":""}},[r("v-select",{attrs:{items:this.$store.getters["productCategory/dataUseOnly"],"item-text":"name","item-value":"id",label:"กลุ่มสินค้าใหญ่",rules:t.Rules.product_category_id},model:{value:t.form.product_category_id,callback:function(e){t.$set(t.form,"product_category_id",e)},expression:"form.product_category_id"}}),t._v(" "),r("v-text-field",{attrs:{label:"ชื่อกลุ่มสินค้าย่อย",counter:"100",rules:t.Rules.name},model:{value:t.form.name,callback:function(e){t.$set(t.form,"name",e)},expression:"form.name"}}),t._v(" "),r("v-switch",{attrs:{inset:"",label:"สถานะ"},model:{value:t.form.status,callback:function(e){t.$set(t.form,"status",e)},expression:"form.status"}})],1)],1),t._v(" "),r("v-card-actions",[r("v-btn",{attrs:{color:"success",loading:t.loading},on:{click:t.save}},[r("v-icon",{attrs:{left:""}},[t._v("save")]),t._v("\n                    บันทึก\n                ")],1),t._v(" "),r("v-btn",{attrs:{color:"error"},on:{click:t.reset}},[r("v-icon",{attrs:{left:""}},[t._v("clear")]),t._v("\n                    ล้างข้อมูล\n                ")],1)],1)],1),t._v(" "),r("v-overlay",{attrs:{value:t.overlay}},[r("v-progress-circular",{attrs:{indeterminate:"",size:this.$store.getters["main/sizeOverlay"]}})],1)],1)],1)}),[],!1,null,null,null).exports;function _(t,e,r,a,o,n,s){try{var i=t[n](s),c=i.value}catch(t){return void r(t)}i.done?e(c):Promise.resolve(c).then(a,o)}var h={props:["data"],data:function(){return{overlay:!1,loading:!1,dialog:!1,form:{id:this.data.id,name:this.data.name,product_category_id:this.data.product_category_id},Rules:{name:[function(t){return!!t||"ห้ามเว้นว่าง"},function(t){return t.length<=100||"ไม่เกิน 100 ตัวอักษร"}]}}},methods:{save:function(){var t,e=this;return(t=o.a.mark((function t(){return o.a.wrap((function(t){for(;;)switch(t.prev=t.next){case 0:if(!e.$refs.form.validate()){t.next=8;break}return e.loading=!0,t.next=4,e.$store.dispatch("productCategorySub/update",e.form);case 4:200===t.sent.status&&(e.$toast.success("แก้ไขกลุ่มสินค้าย่อยสำเร็จ"),e.loading=!1,e.dialog=!1),t.next=9;break;case 8:e.$toast.warning("คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง");case 9:case"end":return t.stop()}}),t)})),function(){var e=this,r=arguments;return new Promise((function(a,o){var n=t.apply(e,r);function s(t){_(n,a,o,s,i,"next",t)}function i(t){_(n,a,o,s,i,"throw",t)}s(void 0)}))})()}}};function y(t,e,r,a,o,n,s){try{var i=t[n](s),c=i.value}catch(t){return void r(t)}i.done?e(c):Promise.resolve(c).then(a,o)}var x={components:{editProductCategorySub:Object(i.a)(h,(function(){var t=this,e=t.$createElement,r=t._self._c||e;return r("div",[r("v-dialog",{attrs:{width:"600",persistent:""},scopedSlots:t._u([{key:"activator",fn:function(e){var a=e.on;return[r("v-icon",t._g({staticClass:"d-flex d-sm-none",attrs:{color:"warning"}},a),[t._v("edit")]),t._v(" "),r("v-btn",t._g({staticClass:"d-none d-sm-flex",attrs:{color:"warning",small:"",rounded:""}},a),[r("v-icon",{attrs:{left:"",small:""}},[t._v("edit")]),t._v("แก้ไข")],1)]}}]),model:{value:t.dialog,callback:function(e){t.dialog=e},expression:"dialog"}},[t._v(" "),r("v-card",[r("v-card-title",[t._v("แก้ไขกลุ่มสินค้าย่อย\n                "),r("v-spacer"),t._v(" "),r("v-icon",{attrs:{color:"error"},on:{click:function(e){t.dialog=!1}}},[t._v("close")])],1),t._v(" "),r("v-card-text",[r("v-form",{ref:"form",attrs:{"lazy-validation":""}},[r("v-select",{attrs:{items:this.$store.getters["productCategory/dataUseOnly"],"item-text":"name","item-value":"id",label:"กลุ่มสินค้าใหญ่",required:""},model:{value:t.form.product_category_id,callback:function(e){t.$set(t.form,"product_category_id",e)},expression:"form.product_category_id"}}),t._v(" "),r("v-text-field",{attrs:{label:"ชื่อกลุ่มสินค้าย่อย",counter:"100",rules:t.Rules.name},model:{value:t.form.name,callback:function(e){t.$set(t.form,"name",e)},expression:"form.name"}})],1)],1),t._v(" "),r("v-card-actions",[r("v-btn",{attrs:{color:"success",loading:t.loading},on:{click:t.save}},[r("v-icon",{attrs:{left:""}},[t._v("save")]),t._v("\n                    บันทึก\n                ")],1),t._v(" "),r("v-btn",{attrs:{color:"error"},on:{click:function(e){t.dialog=!1}}},[r("v-icon",{attrs:{left:""}},[t._v("close")]),t._v("\n                    ปิด\n                ")],1)],1)],1),t._v(" "),r("v-overlay",{attrs:{value:t.overlay}},[r("v-progress-circular",{attrs:{indeterminate:"",size:this.$store.getters["main/sizeOverlay"]}})],1)],1)],1)}),[],!1,null,null,null).exports},data:function(){return{overlay:!1,search:"",headers:[{text:"ชื่อกลุ่ม",value:"name"},{text:"กลุ่มใหญ่",value:"product_category.name"},{text:"สถานะ",value:"status"},{text:"การจัดการ",value:"menu"}]}},methods:{changeStatus:function(t){var e,r=this;return(e=o.a.mark((function e(){var a;return o.a.wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return r.overlay=!0,a={id:t.id,status:t.status},e.next=4,r.$store.dispatch("productCategorySub/update",a);case 4:200===e.sent.status&&(r.$toast.success("เปลี่ยนแปลงสถานะสำเร็จ"),r.overlay=!1);case 6:case"end":return e.stop()}}),e)})),function(){var t=this,r=arguments;return new Promise((function(a,o){var n=e.apply(t,r);function s(t){y(n,a,o,s,i,"next",t)}function i(t){y(n,a,o,s,i,"throw",t)}s(void 0)}))})()}}};function w(t,e,r,a,o,n,s){try{var i=t[n](s),c=i.value}catch(t){return void r(t)}i.done?e(c):Promise.resolve(c).then(a,o)}function b(t){return function(){var e=this,r=arguments;return new Promise((function(a,o){var n=t.apply(e,r);function s(t){w(n,a,o,s,i,"next",t)}function i(t){w(n,a,o,s,i,"throw",t)}s(void 0)}))}}var k={components:{addProductCategorySub:g,getProductCategorySub:Object(i.a)(x,(function(){var t=this,e=t.$createElement,r=t._self._c||e;return r("div",[r("v-text-field",{attrs:{label:"ค้นหา","append-icon":"search"},model:{value:t.search,callback:function(e){t.search=e},expression:"search"}}),t._v(" "),r("v-data-table",{attrs:{headers:t.headers,items:this.$store.getters["productCategorySub/data"],search:t.search,"items-per-page":10,"no-results-text":"ไม่พบข้อมูลที่ค้นหา","loading-text":"รอสักครู่...กำลังโหลดข้อมูล","item-key":"id"},scopedSlots:t._u([{key:"item.status",fn:function(e){var a=e.item;return[r("v-switch",{attrs:{inset:""},on:{change:function(e){return t.changeStatus(a)}},model:{value:a.status,callback:function(e){t.$set(a,"status",e)},expression:"item.status"}})]}},{key:"item.menu",fn:function(t){var e=t.item;return[r("div",[r("editProductCategorySub",{attrs:{data:e}})],1)]}}])}),t._v(" "),r("v-overlay",{attrs:{value:t.overlay}},[r("v-progress-circular",{attrs:{indeterminate:"",size:this.$store.getters["main/sizeOverlay"]}})],1)],1)}),[],!1,null,null,null).exports},data:function(){return{overlay:!1,dialog:!1}},methods:{reload:function(){var t=this;return b(o.a.mark((function e(){return o.a.wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return t.overlay=!0,t.$store.commit("productCategorySub/get",[]),t.$toast.warning("กำลังโหลดข้อมูล..."),e.next=5,t.$store.dispatch("productCategorySub/get");case 5:return e.next=7,t.$store.dispatch("productCategory/getUseOnly");case 7:t.$toast.success("โหลดข้อมูลเสร็จสิ้น"),t.overlay=!1;case 9:case"end":return e.stop()}}),e)})))()},clickExit:function(){var t=this;return b(o.a.mark((function e(){return o.a.wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return e.next=2,t.$store.dispatch("productCategory/get");case 2:t.dialog=!1;case 3:case"end":return e.stop()}}),e)})))()}}};function $(t,e,r,a,o,n,s){try{var i=t[n](s),c=i.value}catch(t){return void r(t)}i.done?e(c):Promise.resolve(c).then(a,o)}var P={components:{addProductCategory:c,getProductCategory:m,mainProductCategorySub:Object(i.a)(k,(function(){var t=this,e=t.$createElement,r=t._self._c||e;return r("div",[r("v-dialog",{attrs:{persistent:"",fullscreen:"",transition:"dialog-bottom-transition"},scopedSlots:t._u([{key:"activator",fn:function(e){var a=e.on;return[r("v-btn",t._g({attrs:{color:"info"},on:{click:t.reload}},a),[t._v("\n                กลุ่มสินค้าย่อย\n            ")])]}}]),model:{value:t.dialog,callback:function(e){t.dialog=e},expression:"dialog"}},[t._v(" "),r("v-card",[r("v-card-title",[r("v-icon",{attrs:{left:"",color:"success"},on:{click:t.reload}},[t._v("refresh")]),t._v("จัดการกลุ่มสินค้าย่อย\n                "),r("v-spacer"),t._v(" "),r("v-icon",{attrs:{text:"",color:"error"},on:{click:t.clickExit}},[t._v("close")])],1),t._v(" "),r("v-card-text",[r("addProductCategorySub"),t._v(" "),r("getProductCategorySub")],1)],1),t._v(" "),r("v-overlay",{attrs:{value:t.overlay}},[r("v-progress-circular",{attrs:{indeterminate:"",size:this.$store.getters["main/sizeOverlay"]}})],1)],1)],1)}),[],!1,null,null,null).exports},data:function(){return{overlay:!1,dialog:!1}},methods:{reload:function(){var t,e=this;return(t=o.a.mark((function t(){return o.a.wrap((function(t){for(;;)switch(t.prev=t.next){case 0:return e.overlay=!0,e.$store.commit("productCategory/get",[]),e.$toast.warning("กำลังโหลดข้อมูล..."),t.next=5,e.$store.dispatch("productCategory/get");case 5:e.$toast.success("โหลดข้อมูลเสร็จสิ้น"),e.overlay=!1;case 7:case"end":return t.stop()}}),t)})),function(){var e=this,r=arguments;return new Promise((function(a,o){var n=t.apply(e,r);function s(t){$(n,a,o,s,i,"next",t)}function i(t){$(n,a,o,s,i,"throw",t)}s(void 0)}))})()}}},S=Object(i.a)(P,(function(){var t=this,e=t.$createElement,r=t._self._c||e;return r("div",[r("v-dialog",{attrs:{persistent:"",fullscreen:"",transition:"dialog-bottom-transition"},scopedSlots:t._u([{key:"activator",fn:function(e){var a=e.on;return[r("v-btn",t._g({attrs:{color:"info"},on:{click:t.reload}},a),[t._v("\n                กลุ่มสินค้า\n            ")])]}}]),model:{value:t.dialog,callback:function(e){t.dialog=e},expression:"dialog"}},[t._v(" "),r("v-card",[r("v-card-title",[r("v-icon",{attrs:{left:"",color:"success"},on:{click:t.reload}},[t._v("refresh")]),t._v("จัดการกลุ่มสินค้าใหญ่\n                "),r("v-spacer"),t._v(" "),r("v-icon",{attrs:{text:"",color:"error"},on:{click:function(e){t.dialog=!1}}},[t._v("close")])],1),t._v(" "),r("v-card-text",[r("v-row",[r("addProductCategory",{staticClass:"mr-2"}),t._v(" "),r("mainProductCategorySub")],1),t._v(" "),r("getProductCategory")],1)],1),t._v(" "),r("v-overlay",{attrs:{value:t.overlay}},[r("v-progress-circular",{attrs:{indeterminate:"",size:this.$store.getters["main/sizeOverlay"]}})],1)],1)],1)}),[],!1,null,null,null).exports;function C(t,e,r,a,o,n,s){try{var i=t[n](s),c=i.value}catch(t){return void r(t)}i.done?e(c):Promise.resolve(c).then(a,o)}function z(t){return function(){var e=this,r=arguments;return new Promise((function(a,o){var n=t.apply(e,r);function s(t){C(n,a,o,s,i,"next",t)}function i(t){C(n,a,o,s,i,"throw",t)}s(void 0)}))}}var I={data:function(){return{overlay:!1,dialog:!1,loading:!1,file:{},image:"",imagePreview:"",loadUploadImage:!1,form:{name:"",price_normal:"",price_special_status:!0,price_special:"",status:"1",image_status:!0,product_image_id:"1",product_show:1},formDefault:{name:"",price_normal:"",price_special_status:!0,price_special:"",status:"1",image_status:!0,product_image_id:"1",product_show:1},Rules:{name:[function(t){return!!t||"ห้ามเว้นว่าง"},function(t){return t.length<=100||"ไม่เกิน 100 ตัวอักษร"}],price_normal:[function(t){return!!t||"ห้ามเว้นว่าง"},function(t){return t.length<=10||"ไม่เกิน 10 ตัวอักษร"}],price_special:[function(t){return!!t||"ห้ามเว้นว่าง"},function(t){return t.length<=10||"ไม่เกิน 10 ตัวอักษร"}],image:[function(t){return!!t||"ห้ามเว้นว่าง"}]}}},methods:{changeImage:function(){this.image=event.target.files[0]},clickUploadImage:function(){var t=this;return z(o.a.mark((function e(){var r,a;return o.a.wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return t.loadUploadImage=!0,t.overlay=!0,(r=new FormData).append("image",t.image),e.next=6,t.$store.dispatch("productImage/store",r);case 6:200==(a=e.sent).status?(t.imagePreview="https://drive.google.com/thumbnail?id="+a.data.src_name,t.$toast.success("อัปโหลดรูปสำเร็จ"),t.form.product_image_id=a.data.id,t.loadUploadImage=!1,t.overlay=!1):(t.$toast.error("อัปโหลดรูปไม่สำเร็จ เกิดข้อผิดพลาดบางอย่าง"),t.loadUploadImage=!1,t.overlay=!1);case 8:case"end":return e.stop()}}),e)})))()},clickRemoveImage:function(){var t=this;return z(o.a.mark((function e(){return o.a.wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return t.overlay=!0,e.next=3,t.$store.dispatch("productImage/destroy",t.form.product_image_id);case 3:200===e.sent.status?(t.imagePreview="",t.$toast.success("ลบรูปภาพสำเร็จ"),t.form.product_image_id="1",t.overlay=!1):(t.snackbarError(),t.overlay=!1);case 5:case"end":return e.stop()}}),e)})))()},changePriceSpecialStatus:function(t){!1===t&&""===this.form.price_special&&(this.form.price_normal>0?this.form.price_special=this.form.price_normal:this.form.price_special="999.99")},changeImageStatus:function(t){!1===t&&""===this.file?this.file="image.jpg":!0===t&&"image.jpg"===this.file&&(this.file="")},snackbarError:function(){this.$toast.error("เกิดข้อผิดพลาดบางอย่าง ลองอีกครั้งภายหลัง")},save:function(){var t=this;return z(o.a.mark((function e(){return o.a.wrap((function(e){for(;;)switch(e.prev=e.next){case 0:if(!t.$refs.form.validate()){e.next=9;break}return t.loading=!0,t.overlay=!0,e.next=5,t.$store.dispatch("product/add",t.form);case 5:200===e.sent.status&&(t.loading=!1,t.form=t.formDefault,t.image="",t.imagePreview="",t.file="",t.$toast.success("เพิ่มสินค้าใหม่สำเร็จ"),t.dialog=!1,t.overlay=!1),e.next=11;break;case 9:t.$toast.warning("คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง"),t.overlay=!1;case 11:case"end":return e.stop()}}),e)})))()},reset:function(){this.$toast.success("ล้างข้อมูลสำเร็จ"),this.form.name=""}}},O=Object(i.a)(I,(function(){var t=this,e=t.$createElement,r=t._self._c||e;return r("div",[r("v-dialog",{attrs:{width:"600",persistent:"",transition:"dialog-bottom-transition"},scopedSlots:t._u([{key:"activator",fn:function(e){var a=e.on;return[r("v-btn",t._g({attrs:{color:"info"}},a),[t._v("เพิ่มสินค้าใหม่")])]}}]),model:{value:t.dialog,callback:function(e){t.dialog=e},expression:"dialog"}},[t._v(" "),r("v-card",[r("v-card-title",[t._v("เพิ่มสินค้าใหม่\n                "),r("v-spacer"),t._v(" "),r("v-icon",{attrs:{color:"error"},on:{click:function(e){t.dialog=!1}}},[t._v("close")])],1),t._v(" "),r("v-card-text",[r("v-form",{ref:"form",attrs:{"lazy-validation":""}},[r("v-text-field",{attrs:{label:"ชื่อสินค้า",counter:"100",rules:t.Rules.name},model:{value:t.form.name,callback:function(e){t.$set(t.form,"name",e)},expression:"form.name"}}),t._v(" "),r("v-row",[r("v-col",{attrs:{cols:"12",md:"6"}},[r("v-switch",{attrs:{inset:"",label:"สถานะการใช้งาน"},model:{value:t.form.status,callback:function(e){t.$set(t.form,"status",e)},expression:"form.status"}})],1),t._v(" "),r("v-col",{attrs:{cols:"12",md:"6"}},[r("v-switch",{attrs:{inset:"",label:"แสดงสินค้าบนหน้าเว็ปไซต์"},model:{value:t.form.product_show,callback:function(e){t.$set(t.form,"product_show",e)},expression:"form.product_show"}})],1)],1),t._v(" "),r("v-text-field",{attrs:{label:"ราคาปกติ",counter:"10",type:"number",pattern:"\\d*",suffix:"บาท",rules:t.Rules.price_normal},model:{value:t.form.price_normal,callback:function(e){t.$set(t.form,"price_normal",e)},expression:"form.price_normal"}}),t._v(" "),r("v-switch",{attrs:{inset:"",label:"ราคาพิเศษ"},on:{change:t.changePriceSpecialStatus},model:{value:t.form.price_special_status,callback:function(e){t.$set(t.form,"price_special_status",e)},expression:"form.price_special_status"}}),t._v(" "),r("v-text-field",{directives:[{name:"show",rawName:"v-show",value:!0===t.form.price_special_status,expression:"form.price_special_status === true"}],attrs:{label:"ราคาพิเศษ",counter:"10",type:"number",pattern:"\\d*",suffix:"บาท",rules:t.Rules.price_special},model:{value:t.form.price_special,callback:function(e){t.$set(t.form,"price_special",e)},expression:"form.price_special"}}),t._v(" "),r("v-switch",{attrs:{inset:"",label:"อัปโหลดรูป"},on:{change:t.changeImageStatus},model:{value:t.form.image_status,callback:function(e){t.$set(t.form,"image_status",e)},expression:"form.image_status"}}),t._v(" "),r("v-file-input",{directives:[{name:"show",rawName:"v-show",value:!0===t.form.image_status&&!t.imagePreview,expression:"form.image_status === true && !imagePreview"}],attrs:{label:"อัปโหลดรูป",rules:t.Rules.image,"prepend-icon":"image",accept:"image/*"},on:{change:t.changeImage},model:{value:t.file,callback:function(e){t.file=e},expression:"file"}}),t._v(" "),r("v-btn",{directives:[{name:"show",rawName:"v-show",value:1==t.form.image_status&&!t.imagePreview,expression:"form.image_status == true && !imagePreview"}],attrs:{color:"info",loading:t.loadUploadImage},on:{click:t.clickUploadImage}},[r("v-icon",{attrs:{left:""}},[t._v("cloud_upload")]),t._v("\n                        อัปโหลดรูปภาพ\n                    ")],1),t._v(" "),r("v-btn",{directives:[{name:"show",rawName:"v-show",value:t.imagePreview,expression:"imagePreview"}],attrs:{color:"error",loading:t.loadUploadImage},on:{click:t.clickRemoveImage}},[r("v-icon",{attrs:{left:""}},[t._v("delete")]),t._v("\n                        ลบรูปภาพ\n                    ")],1),t._v(" "),r("v-row",[r("v-col",{directives:[{name:"show",rawName:"v-show",value:!0===t.form.image_status&&t.imagePreview,expression:"\n                                form.image_status === true && imagePreview\n                            "}],attrs:{cols:"12",md:"6"}},[r("v-card",[r("v-img",{attrs:{src:t.imagePreview}})],1)],1)],1)],1)],1),t._v(" "),r("v-card-actions",[r("v-btn",{attrs:{color:"success",loading:t.loading},on:{click:t.save}},[r("v-icon",{attrs:{left:""}},[t._v("save")]),t._v("\n                    สร้างสินค้าใหม่\n                ")],1),t._v(" "),r("v-btn",{attrs:{color:"error"},on:{click:t.reset}},[r("v-icon",{attrs:{left:""}},[t._v("clear")]),t._v("\n                    ล้างข้อมูล\n                ")],1)],1)],1),t._v(" "),r("v-overlay",{attrs:{value:t.overlay}},[r("v-progress-circular",{attrs:{indeterminate:"",size:this.$store.getters["main/sizeOverlay"]}})],1)],1)],1)}),[],!1,null,null,null).exports;function U(t,e,r,a,o,n,s){try{var i=t[n](s),c=i.value}catch(t){return void r(t)}i.done?e(c):Promise.resolve(c).then(a,o)}function E(t){return function(){var e=this,r=arguments;return new Promise((function(a,o){var n=t.apply(e,r);function s(t){U(n,a,o,s,i,"next",t)}function i(t){U(n,a,o,s,i,"throw",t)}s(void 0)}))}}var R={props:["data"],data:function(){return{overlay:!1,dialog:!1,loading:!1,file:{},image:"",imagePreview:this.data.product_image.src_name,loadUploadImage:!1,form:this.data,formDefault:{name:"",price_normal:"",price_special_status:!0,price_special:"",status:"1",image_status:!0,product_image_id:"1",product_show:1},Rules:{name:[function(t){return!!t||"ห้ามเว้นว่าง"},function(t){return t.length<=100||"ไม่เกิน 100 ตัวอักษร"}],price_normal:[function(t){return!!t||"ห้ามเว้นว่าง"},function(t){return 0>t.length<=10||"ไม่เกิน 10 ตัวอักษร"}],price_special:[function(t){return!!t||"ห้ามเว้นว่าง"},function(t){return 0>t.length<=10||"ไม่เกิน 10 ตัวอักษร"}],image:[function(t){return!!t||"ห้ามเว้นว่าง"}]}}},methods:{changeImage:function(){this.image=event.target.files[0]},clickUploadImage:function(){var t=this;return E(o.a.mark((function e(){var r,a;return o.a.wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return t.loadUploadImage=!0,t.overlay=!0,(r=new FormData).append("image",t.image),e.next=6,t.$store.dispatch("productImage/update",{id:t.data.id,formData:r});case 6:200==(a=e.sent).status?(t.imagePreview=a.data.src_name,t.$toast.success("อัปโหลดรูปสำเร็จ"),t.form.product_image_id=a.data.id,t.loadUploadImage=!1,t.overlay=!1):(t.$toast.error("อัปโหลดรูปไม่สำเร็จ เกิดข้อผิดพลาดบางอย่าง"),t.loadUploadImage=!1,t.overlay=!1);case 8:case"end":return e.stop()}}),e)})))()},clickRemoveImage:function(){var t=this;return E(o.a.mark((function e(){return o.a.wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return t.overlay=!0,e.next=3,t.$store.dispatch("productImage/destroy",t.form.product_image_id);case 3:200==e.sent.status?(t.imagePreview="",t.$toast.success("ลบรูปภาพสำเร็จ"),t.form.product_image_id="1",t.overlay=!1):(t.snackbarError(),t.overlay=!1);case 5:case"end":return e.stop()}}),e)})))()},changePriceSpecialStatus:function(t){!1===t&&""===this.form.price_special&&(this.form.price_normal>0?this.form.price_special=this.form.price_normal:this.form.price_special="999.99")},changeImageStatus:function(t){0==t&&""==this.file?this.file="image.jpg":1==t&&"image.jpg"==this.file&&(this.file="")},snackbarError:function(){this.$toast.error("เกิดข้อผิดพลาดบางอย่าง ลองอีกครั้งภายหลัง")},save:function(){var t=this;return E(o.a.mark((function e(){return o.a.wrap((function(e){for(;;)switch(e.prev=e.next){case 0:if(!t.$refs.formUpdate.validate()){e.next=9;break}return t.loading=!0,t.overlay=!0,e.next=5,t.$store.dispatch("product/update",t.form);case 5:200==e.sent.status&&(t.loading=!1,t.$toast.success("เพิ่มสินค้าใหม่สำเร็จ"),t.dialog=!1,t.overlay=!1),e.next=11;break;case 9:t.$toast.warning("คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง"),t.overlay=!1;case 11:case"end":return e.stop()}}),e)})))()},reset:function(){this.$toast.success("ล้างข้อมูลสำเร็จ"),this.form.name=""}}},j=Object(i.a)(R,(function(){var t=this,e=t.$createElement,r=t._self._c||e;return r("div",[r("v-dialog",{attrs:{width:"600",persistent:"",transition:"dialog-bottom-transition"},scopedSlots:t._u([{key:"activator",fn:function(e){var a=e.on;return[r("v-btn",t._g({attrs:{color:"warning",fab:"","x-small":""}},a),[r("v-icon",[t._v("edit")])],1)]}}]),model:{value:t.dialog,callback:function(e){t.dialog=e},expression:"dialog"}},[t._v(" "),r("v-card",[r("v-card-title",[t._v("แก้ไขสินค้า\n                "),r("v-spacer"),t._v(" "),r("v-icon",{attrs:{color:"error"},on:{click:function(e){t.dialog=!1}}},[t._v("close")])],1),t._v(" "),r("v-card-text",[r("v-form",{ref:"formUpdate",attrs:{"lazy-validation":""}},[r("v-text-field",{attrs:{label:"ชื่อสินค้า",counter:"100",rules:t.Rules.name},model:{value:t.form.name,callback:function(e){t.$set(t.form,"name",e)},expression:"form.name"}}),t._v(" "),r("v-row",[r("v-col",{attrs:{cols:"12",md:"6"}},[r("v-switch",{attrs:{inset:"",label:"สถานะการใช้งาน"},model:{value:t.form.status,callback:function(e){t.$set(t.form,"status",e)},expression:"form.status"}})],1),t._v(" "),r("v-col",{attrs:{cols:"12",md:"6"}},[r("v-switch",{attrs:{inset:"",label:"แสดงสินค้าบนหน้าเว็ปไซต์"},model:{value:t.form.product_show,callback:function(e){t.$set(t.form,"product_show",e)},expression:"form.product_show"}})],1)],1),t._v(" "),r("v-text-field",{attrs:{label:"ราคาปกติ",counter:"10",type:"number",pattern:"\\d*",suffix:"บาท",rules:t.Rules.price_normal},model:{value:t.form.price_normal,callback:function(e){t.$set(t.form,"price_normal",e)},expression:"form.price_normal"}}),t._v(" "),r("v-switch",{attrs:{inset:"",label:"ราคาพิเศษ"},on:{change:t.changePriceSpecialStatus},model:{value:t.form.price_special_status,callback:function(e){t.$set(t.form,"price_special_status",e)},expression:"form.price_special_status"}}),t._v(" "),r("v-text-field",{directives:[{name:"show",rawName:"v-show",value:1==t.form.price_special_status,expression:"form.price_special_status == true"}],attrs:{label:"ราคาพิเศษ",counter:"10",type:"number",pattern:"\\d*",suffix:"บาท",rules:t.Rules.price_special},model:{value:t.form.price_special,callback:function(e){t.$set(t.form,"price_special",e)},expression:"form.price_special"}}),t._v(" "),r("v-switch",{attrs:{inset:"",label:"อัปโหลดรูป"},on:{change:t.changeImageStatus},model:{value:t.form.image_status,callback:function(e){t.$set(t.form,"image_status",e)},expression:"form.image_status"}}),t._v(" "),r("v-file-input",{directives:[{name:"show",rawName:"v-show",value:1==t.form.image_status&&!t.imagePreview,expression:"form.image_status == true && !imagePreview"}],attrs:{label:"อัปโหลดรูป","prepend-icon":"image",accept:"image/*"},on:{change:t.changeImage},model:{value:t.file,callback:function(e){t.file=e},expression:"file"}}),t._v(" "),r("v-btn",{directives:[{name:"show",rawName:"v-show",value:1==t.form.image_status&&!t.imagePreview,expression:"form.image_status == true && !imagePreview"}],attrs:{color:"info",loading:t.loadUploadImage},on:{click:t.clickUploadImage}},[r("v-icon",{attrs:{left:""}},[t._v("cloud_upload")]),t._v("\n                        อัปโหลดรูปภาพ\n                    ")],1),t._v(" "),r("v-btn",{directives:[{name:"show",rawName:"v-show",value:t.imagePreview&&1==t.form.image_status,expression:"imagePreview && form.image_status == true"}],attrs:{color:"error",loading:t.loadUploadImage},on:{click:t.clickRemoveImage}},[r("v-icon",{attrs:{left:""}},[t._v("delete")]),t._v("\n                        ลบรูปภาพ\n                    ")],1),t._v(" "),r("v-row",[r("v-col",{directives:[{name:"show",rawName:"v-show",value:1==t.form.image_status&&t.imagePreview,expression:"\n                                form.image_status == true && imagePreview\n                            "}],attrs:{cols:"12",md:"6"}},[r("v-card",[r("v-img",{attrs:{src:"https://drive.google.com/thumbnail?id="+t.imagePreview}})],1)],1)],1)],1)],1),t._v(" "),r("v-card-actions",[r("v-btn",{attrs:{color:"success",loading:t.loading},on:{click:t.save}},[r("v-icon",{attrs:{left:""}},[t._v("save")]),t._v("\n                    แก้ไขข้อมูลสินค้า\n                ")],1),t._v(" "),r("v-btn",{attrs:{color:"error"},on:{click:t.reset}},[r("v-icon",{attrs:{left:""}},[t._v("clear")]),t._v("\n                    ล้างข้อมูล\n                ")],1)],1)],1),t._v(" "),r("v-overlay",{attrs:{value:t.overlay}},[r("v-progress-circular",{attrs:{indeterminate:"",size:this.$store.getters["main/sizeOverlay"]}})],1)],1)],1)}),[],!1,null,null,null).exports;function T(t,e,r,a,o,n,s){try{var i=t[n](s),c=i.value}catch(t){return void r(t)}i.done?e(c):Promise.resolve(c).then(a,o)}function N(t){return function(){var e=this,r=arguments;return new Promise((function(a,o){var n=t.apply(e,r);function s(t){T(n,a,o,s,i,"next",t)}function i(t){T(n,a,o,s,i,"throw",t)}s(void 0)}))}}var D={data:function(){return{asjdl:"",overlay:!1,dialog:!1,form:{product_id:this.data.id,product_category_sub_id:[]},items:[]}},props:["data"],methods:{snackbarError:function(){this.$toast.error("เกิดข้อผิดพลาดบางอย่าง ลองอีกครั้งภายหลัง")},save:function(){var t=this;return N(o.a.mark((function e(){return o.a.wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return t.overlay=!0,e.next=3,t.$store.dispatch("productTag/store",t.form);case 3:t.dialog=!1,t.overlay=!1;case 5:case"end":return e.stop()}}),e)})))()},reload:function(){var t=this;return N(o.a.mark((function e(){return o.a.wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return t.overlay=!0,e.next=3,t.$store.dispatch("productCategorySub/getUseOnly");case 3:return t.items=t.$store.getters["productCategorySub/dataUseOnly"],e.next=6,t.$store.dispatch("productTag/isProductTags",t.form.product_id);case 6:t.form.product_category_sub_id=t.$store.getters["productTag/isProductTags"],t.overlay=!1;case 8:case"end":return e.stop()}}),e)})))()}}};function A(t,e,r,a,o,n,s){try{var i=t[n](s),c=i.value}catch(t){return void r(t)}i.done?e(c):Promise.resolve(c).then(a,o)}function M(t){return function(){var e=this,r=arguments;return new Promise((function(a,o){var n=t.apply(e,r);function s(t){A(n,a,o,s,i,"next",t)}function i(t){A(n,a,o,s,i,"throw",t)}s(void 0)}))}}var F={components:{ProductTagAdd:Object(i.a)(D,(function(){var t=this,e=t.$createElement,r=t._self._c||e;return r("div",[r("v-dialog",{attrs:{width:"600",persistent:""},scopedSlots:t._u([{key:"activator",fn:function(e){var a=e.on;return[r("v-btn",t._g({attrs:{color:"info",fab:"","x-small":""},on:{click:t.reload}},a),[r("v-icon",[t._v("add")])],1)]}}]),model:{value:t.dialog,callback:function(e){t.dialog=e},expression:"dialog"}},[t._v(" "),r("v-card",[r("v-card-title",[t._v("\n                เพิ่มแท็กสินค้า\n                "),r("v-spacer"),t._v(" "),r("v-btn",{attrs:{color:"success",fab:"","x-small":""},on:{click:t.save}},[r("v-icon",[t._v("save")])],1)],1),t._v(" "),r("v-card-text",[r("v-chip-group",{attrs:{column:"",multiple:""},model:{value:t.form.product_category_sub_id,callback:function(e){t.$set(t.form,"product_category_sub_id",e)},expression:"form.product_category_sub_id"}},t._l(t.items,(function(e){return r("v-chip",{key:e.id,attrs:{filter:"",value:e.id}},[t._v("\n                        "+t._s(e.product_category.name)+" - "+t._s(e.name)+"\n                    ")])})),1)],1)],1),t._v(" "),r("v-overlay",{attrs:{value:t.overlay}},[r("v-progress-circular",{attrs:{indeterminate:"",size:this.$store.getters["main/sizeOverlay"]}})],1)],1)],1)}),[],!1,null,null,null).exports},data:function(){return{test:{},overlay:!1,dialog:!1,form:{product_id:this.data.id,product_category_sub_id:""},product_tag:[]}},props:["data"],methods:{snackbarError:function(){this.$toast.error("เกิดข้อผิดพลาดบางอย่าง ลองอีกครั้งภายหลัง")},reload:function(){var t=this;return M(o.a.mark((function e(){return o.a.wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return t.overlay=!0,e.next=3,t.$store.dispatch("productTag/get",t.form.product_id);case 3:t.overlay=!1;case 4:case"end":return e.stop()}}),e)})))()},clickProductCategorySub:function(t){var e=this;return M(o.a.mark((function r(){return o.a.wrap((function(r){for(;;)switch(r.prev=r.next){case 0:if(!t){r.next=10;break}return e.overlay=!0,e.loading=!0,e.form.product_category_sub_id=t,r.next=6,e.$store.dispatch("productTag/store",e.form);case 6:200===r.sent.status&&(e.loading=!1,e.$toast.success("เพิ่มสินค้าใหม่สำเร็จ"),e.overlay=!1),r.next=12;break;case 10:e.$toast.warning("คุณอาจกรอกไม่ครบหรือไม่ถูกต้อง"),e.overlay=!1;case 12:case"end":return r.stop()}}),r)})))()},reset:function(){this.$toast.success("ล้างข้อมูลสำเร็จ"),this.form.name=""}}};function G(t,e,r,a,o,n,s){try{var i=t[n](s),c=i.value}catch(t){return void r(t)}i.done?e(c):Promise.resolve(c).then(a,o)}function J(t){return function(){var e=this,r=arguments;return new Promise((function(a,o){var n=t.apply(e,r);function s(t){G(n,a,o,s,i,"next",t)}function i(t){G(n,a,o,s,i,"throw",t)}s(void 0)}))}}var q={props:["selectProduct"],components:{ProductUpdate:j,ProductTagMain:Object(i.a)(F,(function(){var t=this,e=t.$createElement,r=t._self._c||e;return r("div",[r("v-dialog",{attrs:{width:"600",persistent:""},scopedSlots:t._u([{key:"activator",fn:function(e){var a=e.on;return[r("v-btn",t._g({attrs:{color:"blue-grey",fab:"","x-small":""},on:{click:t.reload}},a),[r("v-icon",{attrs:{color:"white"}},[t._v("flag")])],1)]}}]),model:{value:t.dialog,callback:function(e){t.dialog=e},expression:"dialog"}},[t._v(" "),r("v-card",[r("v-card-title",[r("v-icon",[t._v("flag")]),t._v("\n                "+t._s(t.data.name)+"\n                "),r("v-spacer"),t._v(" "),r("ProductTagAdd",{staticClass:"mr-2",attrs:{data:t.data}}),t._v(" "),r("v-btn",{attrs:{color:"error",fab:"","x-small":""},on:{click:function(e){t.dialog=!1}}},[r("v-icon",[t._v("close")])],1)],1),t._v(" "),r("v-card-text",[r("v-chip-group",{attrs:{column:""}},t._l(this.$store.getters["productTag/data"],(function(e){return r("v-chip",{key:e.id},[t._v(t._s(e.product_category_sub.product_category.name)+"\n                        - "+t._s(e.product_category_sub.name)+"\n                    ")])})),1)],1)],1),t._v(" "),r("v-overlay",{attrs:{value:t.overlay}},[r("v-progress-circular",{attrs:{indeterminate:"",size:this.$store.getters["main/sizeOverlay"]}})],1)],1)],1)}),[],!1,null,null,null).exports},data:function(){return{overlay:!0,search:"",loadingTable:!0,headers:[{text:"รูปสินค้า",value:"product_image_id"},{text:"ชื่อสินค้า",value:"name"},{text:"ราคาปกติ/ราคาพิเศษ",value:"price_normal"},{text:"สถานะ",value:"status"},{text:"การจัดการ",value:"action"}]}},methods:{changeStatus:function(t){var e=this;return J(o.a.mark((function r(){var a;return o.a.wrap((function(r){for(;;)switch(r.prev=r.next){case 0:return e.overlay=!0,a={id:t.id,status:t.status},r.next=4,e.$store.dispatch("product/update",a);case 4:200==r.sent.status?(e.$toast.success("เปลี่ยนแปลงสถานะเรียบร้อย"),e.overlay=!1):(e.$toast.error("เกิดข้อผิดพลาดบางอย่าง กรุณาลองใหม่ภายหลัง"),e.overlay=!1);case 6:case"end":return r.stop()}}),r)})))()}},beforeCreate:function(){var t=this;return J(o.a.mark((function e(){return o.a.wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return e.next=2,t.$store.dispatch("product/get");case 2:t.loadingTable=!1,t.overlay=!1;case 4:case"end":return e.stop()}}),e)})))()}},B={components:{MainProductCategory:S,ProductAdd:O,ProductGet:Object(i.a)(q,(function(){var t=this,e=t.$createElement,r=t._self._c||e;return r("div",[r("v-text-field",{attrs:{label:"ค้นหา","append-icon":"search"},model:{value:t.search,callback:function(e){t.search=e},expression:"search"}}),t._v(" "),r("v-data-table",{attrs:{headers:t.headers,items:this.$store.getters["product/data"],loading:t.loadingTable,search:t.search,"items-per-page":10,"no-results-text":"ไม่พบข้อมูลที่ค้นหา","loading-text":"รอสักครู่...กำลังโหลดข้อมูล","item-key":"id"},scopedSlots:t._u([{key:"item.status",fn:function(e){var a=e.item;return[r("v-switch",{attrs:{inset:""},on:{change:function(e){return t.changeStatus(a)}},model:{value:a.status,callback:function(e){t.$set(a,"status",e)},expression:"item.status"}})]}},{key:"item.price_normal",fn:function(e){var a=e.item;return[r("v-row",[1==a.price_special_status?r("v-col",[r("p",[r("S",{staticClass:"red--text"},[t._v(t._s(a.price_normal))]),t._v(" /\n                        "+t._s(a.price_special)+"\n                    ")],1)]):r("v-col",[r("p",[t._v("\n                        "+t._s(a.price_normal)+" /\n                        "),r("S",{staticClass:"red--text"},[t._v("ไม่มี")])],1)])],1)]}},{key:"item.product_image_id",fn:function(t){var e=t.item;return[r("v-img",{directives:[{name:"show",rawName:"v-show",value:1==e.image_status,expression:"item.image_status == true"}],attrs:{width:"100",src:"https://drive.google.com/thumbnail?id="+e.product_image.src_name}})]}},{key:"item.action",fn:function(e){var a=e.item;return[r("v-container",[r("v-row",[r("ProductUpdate",{staticClass:"mr-2",attrs:{data:a}}),t._v(" "),r("ProductTagMain",{staticClass:"mr-2",attrs:{data:a}})],1)],1)]}}])}),t._v(" "),r("v-overlay",{attrs:{value:t.overlay}},[r("v-progress-circular",{attrs:{indeterminate:"",size:this.$store.getters["main/sizeOverlay"]}})],1)],1)}),[],!1,null,null,null).exports},data:function(){return{actionAdd:"actionAdd",formDefault:{name:"",price_normal:"",price_special_status:!0,price_special:"",status:"1",image_status:!0,product_image_id:"1",product_image:{src_name:""}}}}},H=Object(i.a)(B,(function(){var t=this.$createElement,e=this._self._c||t;return e("div",[e("h4",[this._v("สินค้า")]),this._v(" "),e("v-container",[e("v-row",[e("MainProductCategory",{staticClass:"mr-2"}),this._v(" "),e("ProductAdd",{attrs:{action:this.actionAdd,data:this.formDefault}})],1)],1),this._v(" "),e("ProductGet")],1)}),[],!1,null,null,null);e.default=H.exports}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[5],{
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/punpang/orders/uploadImage.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/punpang/orders/uploadImage.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      response: {
+        data: {
+          success: null
+        }
+      },
+      chooseRemove: false,
+      previewExample: "",
+      previewImages: [],
+      form: {
+        write: ""
+      },
+      chooseRemoveImages: []
+    };
+  },
+  methods: {
+    start: function start() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this.token = _this.$route.params.token;
+                _context.next = 3;
+                return axios.get("/api/v1/guest/order/" + _this.token + "/uploadImageByToken");
+
+              case 3:
+                res = _context.sent;
+
+                if (res.status === 200) {
+                  if (res.success) {
+                    _this.form.write = res.data.data.order_detail.write;
+                  }
+
+                  _this.response = res.data;
+                }
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    onFileChangeExample: function onFileChangeExample(image) {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var loader, exampleFile, formData, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                loader = _this2.$loading.show();
+                exampleFile = event.target.files[0];
+                formData = new FormData();
+                formData.append("image", exampleFile);
+                _context2.next = 6;
+                return axios.post("/api/v1/guest/order/" + _this2.token + "/uploadImageByToken/example", formData);
+
+              case 6:
+                res = _context2.sent;
+                _context2.next = 9;
+                return _this2.start();
+
+              case 9:
+                loader.hide();
+
+                _this2.toast(res);
+
+              case 11:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    onFileChangeImages: function onFileChangeImages(images) {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var loader, Images, formData, res, i;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                loader = _this3.$loading.show();
+                Images = event.target.files;
+                formData = new FormData();
+
+                _this3.$toast.warning("กำลังอัปโหลดรูป " + images.length + " รูป");
+
+                res = {};
+                i = 0;
+
+              case 6:
+                if (!(i < images.length)) {
+                  _context3.next = 15;
+                  break;
+                }
+
+                formData.append("image", Images[i]);
+                _context3.next = 10;
+                return axios.post("/api/v1/guest/order/" + _this3.token + "/uploadImageByToken/images", formData);
+
+              case 10:
+                res = _context3.sent;
+
+                if (res.data.success) {
+                  _this3.$toast.success(res.data.message + " " + (i + 1) + "/" + images.length + " รูป");
+                } else {
+                  i = images.length;
+
+                  _this3.$toast.error("คุณไม่มีสิทธิ์อัปโหลดส่วนนี้");
+                }
+
+              case 12:
+                i++;
+                _context3.next = 6;
+                break;
+
+              case 15:
+                _context3.next = 17;
+                return _this3.start();
+
+              case 17:
+                loader.hide(); //this.toast(res);
+
+              case 18:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+    clickRemoveImage: function clickRemoveImage(images) {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var loader, res, index;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                loader = _this4.$loading.show();
+                res = {};
+
+                _this4.$toast.warning("กำลังลบรูปภาพ " + images.length + " รูป");
+
+                index = 0;
+
+              case 4:
+                if (!(index < images.length)) {
+                  _context4.next = 12;
+                  break;
+                }
+
+                _context4.next = 7;
+                return axios["delete"]("/api/v1/guest/order/" + _this4.token + "/uploadImageByToken/" + images[index].id + "/delete");
+
+              case 7:
+                res = _context4.sent;
+
+                if (res.data.success) {
+                  _this4.$toast.success(res.data.message + " " + (index + 1) + "/" + images.length + " รูป");
+                } else {
+                  index = images.length;
+
+                  _this4.$toast.error("คุณไม่มีสิทธิ์อัปโหลดส่วนนี้");
+                }
+
+              case 9:
+                index++;
+                _context4.next = 4;
+                break;
+
+              case 12:
+                _this4.clickRemoveImageCancel();
+
+                _context4.next = 15;
+                return _this4.start();
+
+              case 15:
+                loader.hide();
+
+              case 16:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    },
+    clickImageMain: function clickImageMain(image_id) {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var loader, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                loader = _this5.$loading.show();
+                _context5.next = 3;
+                return axios.post("/api/v1/guest/order/" + _this5.token + "/uploadImageByToken/" + image_id + "/ImageMain");
+
+              case 3:
+                res = _context5.sent;
+                _context5.next = 6;
+                return _this5.start();
+
+              case 6:
+                loader.hide();
+
+                _this5.toast(res);
+
+              case 8:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
+    },
+    clickSubmitUpdateWrite: function clickSubmitUpdateWrite() {
+      var _this6 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        var loader, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                loader = _this6.$loading.show();
+                _context6.next = 3;
+                return axios.post("/api/v1/guest/order/" + _this6.token + "/updateWrite", _this6.form);
+
+              case 3:
+                res = _context6.sent;
+                _context6.next = 6;
+                return _this6.start();
+
+              case 6:
+                loader.hide();
+
+                _this6.toast(res);
+
+              case 8:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }))();
+    },
+    toast: function toast(res) {
+      if (res.status === 200) {
+        if (res.data.success) {
+          this.$toast.success(res.data.message);
+        } else {
+          this.$toast.error(res.data.message);
+        }
+      } else {
+        this.$toast.error("เกิดข้อผิดพลาดบางอย่างขึ้น กรุณาลองอีกครั้ง");
+      }
+    },
+    clickRemoveImageCancel: function clickRemoveImageCancel() {
+      this.chooseRemove = false;
+      this.chooseRemoveImages = [];
+    }
+  },
+  mounted: function mounted() {
+    var _this7 = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+      var loader;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              loader = _this7.$loading.show();
+              _context7.next = 3;
+              return _this7.start();
+
+            case 3:
+              loader.hide();
+
+            case 4:
+            case "end":
+              return _context7.stop();
+          }
+        }
+      }, _callee7);
+    }))();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/punpang/orders/uploadImage.vue?vue&type=template&id=45da7775&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/punpang/orders/uploadImage.vue?vue&type=template&id=45da7775& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _vm.response.success == null
+        ? _c(
+            "div",
+            [
+              _c("v-alert", { attrs: { type: "info" } }, [
+                _vm._v("\n            กำลังโหลดข้อมูล...รอสักครู่ค่ะ\n        ")
+              ])
+            ],
+            1
+          )
+        : !_vm.response.success && _vm.response.success != null
+        ? _c(
+            "div",
+            [
+              _c("v-alert", { attrs: { type: "error" } }, [
+                _vm._v(
+                  "\n            " + _vm._s(_vm.response.message) + "\n        "
+                )
+              ]),
+              _vm._v(" "),
+              _c("h5", [_vm._v("ช่องทางติดต่อทางร้าน")]),
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: {
+                    color: "primary",
+                    href: "http://m.me/punpangpranburi"
+                  }
+                },
+                [_vm._v("Facebook")]
+              ),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: {
+                    color: "success",
+                    disabled: true,
+                    href: "http://m.me/punpangpranburi"
+                  }
+                },
+                [_vm._v("Line")]
+              )
+            ],
+            1
+          )
+        : _c(
+            "v-row",
+            [
+              _vm.response.data.example
+                ? _c(
+                    "v-col",
+                    { attrs: { cols: "12", md: "6" } },
+                    [
+                      _c(
+                        "v-card",
+                        [
+                          _c("v-card-title", [_vm._v("รูปภาพต้นแบบสินค้า")]),
+                          _vm._v(" "),
+                          _c(
+                            "v-card-text",
+                            [
+                              !_vm.response.data.example_image
+                                ? _c(
+                                    "div",
+                                    [
+                                      _c("v-file-input", {
+                                        staticClass: "mb-4",
+                                        attrs: {
+                                          outlined: "",
+                                          "prepend-icon": "image",
+                                          placeholder: "รูปภาพต้นแบบสินค้า",
+                                          accept: "image/*",
+                                          "hide-details": "",
+                                          rules: [
+                                            function(v) {
+                                              return !!v
+                                            }
+                                          ]
+                                        },
+                                        on: { change: _vm.onFileChangeExample }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-alert",
+                                        { attrs: { type: "info" } },
+                                        [_vm._v("โปรดอัปโหลดรูป")]
+                                      )
+                                    ],
+                                    1
+                                  )
+                                : _c(
+                                    "v-img",
+                                    {
+                                      staticClass: "mb-4",
+                                      attrs: {
+                                        src: _vm.response.data.example_image.url
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          staticClass: "mt-4 ml-4",
+                                          attrs: { color: "error" },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.clickRemoveImage([
+                                                _vm.response.data.example_image
+                                              ])
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "v-icon",
+                                            { attrs: { left: "" } },
+                                            [_vm._v("delete")]
+                                          ),
+                                          _vm._v(
+                                            "\n                            ลบรูปนี้\n                        "
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.response.data.image
+                ? _c(
+                    "v-col",
+                    { attrs: { cols: "12", md: "6" } },
+                    [
+                      _c(
+                        "v-card",
+                        [
+                          _c("v-card-title", [_vm._v("รูปภาพสำหรับทำสินค้า")]),
+                          _vm._v(" "),
+                          _c(
+                            "v-card-text",
+                            [
+                              _c("v-text-field", {
+                                attrs: {
+                                  label: "เขียนข้อความ",
+                                  outlined: "",
+                                  "hide-details": "",
+                                  "prepend-icon": "edit"
+                                },
+                                model: {
+                                  value: _vm.form.write,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.form, "write", $$v)
+                                  },
+                                  expression: "form.write"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  staticClass: "mt-2",
+                                  attrs: {
+                                    large: "",
+                                    color: "success",
+                                    block: "",
+                                    disabled:
+                                      _vm.form.write ==
+                                        _vm.response.data.order_detail.write ||
+                                      _vm.form.write == ""
+                                  },
+                                  on: { click: _vm.clickSubmitUpdateWrite }
+                                },
+                                [
+                                  _c("v-icon", { attrs: { left: "" } }, [
+                                    _vm._v("save")
+                                  ]),
+                                  _vm._v(
+                                    "\n                        บันทึกข้อความ\n                    "
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c("v-divider"),
+                              _vm._v(" "),
+                              _c(
+                                "v-form",
+                                { ref: "formInputImages" },
+                                [
+                                  _c("v-file-input", {
+                                    staticClass: "mb-4",
+                                    attrs: {
+                                      multiple: "",
+                                      outlined: "",
+                                      "prepend-icon": "image",
+                                      placeholder: "เลือกรูปที่นี่",
+                                      accept: "image/*",
+                                      "hide-details": ""
+                                    },
+                                    on: { change: _vm.onFileChangeImages }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _vm.response.data.images.length > 1
+                                ? _c("div", [
+                                    _vm.response.data.images.length > 1 &&
+                                    !_vm.chooseRemove
+                                      ? _c(
+                                          "div",
+                                          [
+                                            _c(
+                                              "v-btn",
+                                              {
+                                                staticClass: "mb-2",
+                                                attrs: { color: "warning" },
+                                                on: {
+                                                  click: function($event) {
+                                                    _vm.chooseRemove = true
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c(
+                                                  "v-icon",
+                                                  { attrs: { left: "" } },
+                                                  [_vm._v("delete")]
+                                                ),
+                                                _vm._v(
+                                                  "\n                                เลือกรูปที่ต้องการลบ"
+                                                )
+                                              ],
+                                              1
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      : _c(
+                                          "div",
+                                          [
+                                            _c(
+                                              "v-btn",
+                                              {
+                                                staticClass: "mb-2",
+                                                attrs: {
+                                                  color: "error",
+                                                  disabled:
+                                                    _vm.chooseRemoveImages
+                                                      .length == 0
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.clickRemoveImage(
+                                                      _vm.chooseRemoveImages
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c(
+                                                  "v-icon",
+                                                  { attrs: { left: "" } },
+                                                  [_vm._v("delete")]
+                                                ),
+                                                _vm._v(
+                                                  "\n                                ลบรูปที่เลือกไว้"
+                                                )
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-btn",
+                                              {
+                                                staticClass: "mb-2",
+                                                attrs: { color: "error" },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.clickRemoveImage(
+                                                      _vm.response.data.images
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c(
+                                                  "v-icon",
+                                                  { attrs: { left: "" } },
+                                                  [_vm._v("delete")]
+                                                ),
+                                                _vm._v(
+                                                  "\n                                ลบรูปทั้งหมด"
+                                                )
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-btn",
+                                              {
+                                                staticClass: "mb-2",
+                                                attrs: { color: "warning" },
+                                                on: {
+                                                  click:
+                                                    _vm.clickRemoveImageCancel
+                                                }
+                                              },
+                                              [
+                                                _c(
+                                                  "v-icon",
+                                                  { attrs: { left: "" } },
+                                                  [_vm._v("close")]
+                                                ),
+                                                _vm._v(
+                                                  "\n                                ยกเลิก"
+                                                )
+                                              ],
+                                              1
+                                            )
+                                          ],
+                                          1
+                                        )
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _vm.response.data.images.length == 0
+                                ? _c("v-alert", { attrs: { type: "info" } }, [
+                                    _vm._v("โปรดอัปโหลดรูป")
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _vm._l(_vm.response.data.images, function(image) {
+                                return _c(
+                                  "v-card",
+                                  {
+                                    key: image.id,
+                                    staticClass: "mb-2",
+                                    attrs: { outlined: "" }
+                                  },
+                                  [
+                                    _c("v-img", {
+                                      attrs: {
+                                        src: image.url,
+                                        "lazy-src": image.url
+                                      },
+                                      scopedSlots: _vm._u(
+                                        [
+                                          {
+                                            key: "placeholder",
+                                            fn: function() {
+                                              return [
+                                                _c(
+                                                  "v-row",
+                                                  {
+                                                    staticClass:
+                                                      "fill-height ma-0",
+                                                    attrs: {
+                                                      align: "center",
+                                                      justify: "center"
+                                                    }
+                                                  },
+                                                  [
+                                                    _c("v-progress-circular", {
+                                                      attrs: {
+                                                        indeterminate: "",
+                                                        color: "grey lighten-5"
+                                                      }
+                                                    })
+                                                  ],
+                                                  1
+                                                )
+                                              ]
+                                            },
+                                            proxy: true
+                                          }
+                                        ],
+                                        null,
+                                        true
+                                      )
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "v-card-text",
+                                      { staticClass: "pa-2" },
+                                      [
+                                        _vm.chooseRemove
+                                          ? _c("v-checkbox", {
+                                              staticClass: "ma-0",
+                                              attrs: {
+                                                label: "ลบรูปนี้",
+                                                "hide-details": "",
+                                                value: image
+                                              },
+                                              model: {
+                                                value: _vm.chooseRemoveImages,
+                                                callback: function($$v) {
+                                                  _vm.chooseRemoveImages = $$v
+                                                },
+                                                expression: "chooseRemoveImages"
+                                              }
+                                            })
+                                          : _c(
+                                              "div",
+                                              { staticClass: "mt-2" },
+                                              [
+                                                image.main
+                                                  ? _c(
+                                                      "v-btn",
+                                                      {
+                                                        attrs: {
+                                                          color: "warning",
+                                                          text: ""
+                                                        },
+                                                        on: {
+                                                          click: function(
+                                                            $event
+                                                          ) {
+                                                            return _vm.clickImageMain(
+                                                              image.id
+                                                            )
+                                                          }
+                                                        }
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "v-icon",
+                                                          {
+                                                            attrs: { left: "" }
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "bookmark_border"
+                                                            )
+                                                          ]
+                                                        ),
+                                                        _vm._v(
+                                                          "\n                                    ยกเลิกรูปหลัก\n                                "
+                                                        )
+                                                      ],
+                                                      1
+                                                    )
+                                                  : _c(
+                                                      "v-btn",
+                                                      {
+                                                        attrs: {
+                                                          color: "primary",
+                                                          text: ""
+                                                        },
+                                                        on: {
+                                                          click: function(
+                                                            $event
+                                                          ) {
+                                                            return _vm.clickImageMain(
+                                                              image.id
+                                                            )
+                                                          }
+                                                        }
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "v-icon",
+                                                          {
+                                                            attrs: { left: "" }
+                                                          },
+                                                          [_vm._v("bookmark")]
+                                                        ),
+                                                        _vm._v(
+                                                          "\n                                    ตั้งเป็นรูปหลัก\n                                "
+                                                        )
+                                                      ],
+                                                      1
+                                                    ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "v-btn",
+                                                  {
+                                                    attrs: {
+                                                      color: "error",
+                                                      text: ""
+                                                    },
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.clickRemoveImage(
+                                                          [image]
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "v-icon",
+                                                      { attrs: { left: "" } },
+                                                      [_vm._v("delete")]
+                                                    ),
+                                                    _vm._v(
+                                                      "\n                                    ลบรูปนี้\n                                "
+                                                    )
+                                                  ],
+                                                  1
+                                                )
+                                              ],
+                                              1
+                                            )
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                )
+                              })
+                            ],
+                            2
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                : _vm._e()
+            ],
+            1
+          )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./resources/js/pages/punpang/orders/uploadImage.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/pages/punpang/orders/uploadImage.vue ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _uploadImage_vue_vue_type_template_id_45da7775___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./uploadImage.vue?vue&type=template&id=45da7775& */ "./resources/js/pages/punpang/orders/uploadImage.vue?vue&type=template&id=45da7775&");
+/* harmony import */ var _uploadImage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./uploadImage.vue?vue&type=script&lang=js& */ "./resources/js/pages/punpang/orders/uploadImage.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _uploadImage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _uploadImage_vue_vue_type_template_id_45da7775___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _uploadImage_vue_vue_type_template_id_45da7775___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/punpang/orders/uploadImage.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/pages/punpang/orders/uploadImage.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/pages/punpang/orders/uploadImage.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_uploadImage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./uploadImage.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/punpang/orders/uploadImage.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_uploadImage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/pages/punpang/orders/uploadImage.vue?vue&type=template&id=45da7775&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/pages/punpang/orders/uploadImage.vue?vue&type=template&id=45da7775& ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_uploadImage_vue_vue_type_template_id_45da7775___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./uploadImage.vue?vue&type=template&id=45da7775& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/punpang/orders/uploadImage.vue?vue&type=template&id=45da7775&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_uploadImage_vue_vue_type_template_id_45da7775___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_uploadImage_vue_vue_type_template_id_45da7775___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ })
+
+}]);

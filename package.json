@@ -36,6 +36,6 @@
         "vue-toast-notification": "^0.3.0",
         "vuelidate": "^0.7.5",
         "vuetify": "^2.2.27",
-        "vuex": "^3.3.0"
+        "vuex": "^3.4.0"
     }
 }

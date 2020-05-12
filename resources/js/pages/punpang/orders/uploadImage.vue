@@ -1,13 +1,33 @@
 <template>
     <div>
-        <v-alert type="error" v-if="!response.success">
-            {{ response.message }}
-        </v-alert>
+        <div v-if="response.success == null">
+            <v-alert type="info">
+                กำลังโหลดข้อมูล...รอสักครู่ค่ะ
+            </v-alert>
+        </div>
+        <div v-else-if="!response.success && response.success != null">
+            <v-alert type="error">
+                {{ response.message }}
+            </v-alert>
+            <h5>ช่องทางติดต่อทางร้าน</h5>
+            <v-divider></v-divider>
+            <v-btn color="primary" href="http://m.me/punpangpranburi"
+                >Facebook</v-btn
+            >
+
+            <v-btn
+                color="success"
+                :disabled="true"
+                href="http://m.me/punpangpranburi"
+                >Line</v-btn
+            >
+        </div>
+
         <v-row v-else>
-            <v-col cols="12" md="6">
+            <v-col cols="12" md="6" v-if="response.data.example">
                 <v-card>
                     <v-card-title>รูปภาพต้นแบบสินค้า</v-card-title>
-                    <v-card-text v-if="response.data.example">
+                    <v-card-text >
                         <div v-if="!response.data.example_image">
                             <v-file-input
                                 outlined
@@ -41,18 +61,13 @@
                             </v-btn>
                         </v-img>
                     </v-card-text>
-                    <v-card-text v-else>
-                        <v-alert type="warning"
-                            >คุณไม่มีสิทธิ์อัปโหลดส่วนนี้</v-alert
-                        >
-                    </v-card-text>
                 </v-card>
             </v-col>
 
-            <v-col cols="12" md="6">
+            <v-col cols="12" md="6" v-if="response.data.image">
                 <v-card>
                     <v-card-title>รูปภาพสำหรับทำสินค้า</v-card-title>
-                    <v-card-text v-if="response.data.image">
+                    <v-card-text >
                         <v-text-field
                             label="เขียนข้อความ"
                             outlined
@@ -206,11 +221,6 @@
                             </v-card-text>
                         </v-card>
                     </v-card-text>
-                    <v-card-text v-else>
-                        <v-alert type="warning"
-                            >คุณไม่มีสิทธิ์อัปโหลดส่วนนี้</v-alert
-                        >
-                    </v-card-text>
                 </v-card>
             </v-col>
         </v-row>
@@ -223,7 +233,7 @@ export default {
         return {
             response: {
                 data: {
-                    success: true
+                    success: null
                 }
             },
             chooseRemove: false,
@@ -238,11 +248,15 @@ export default {
     methods: {
         async start() {
             this.token = this.$route.params.token;
-            const { data } = await axios.get(
+            const res = await axios.get(
                 "/api/v1/guest/order/" + this.token + "/uploadImageByToken"
             );
-            this.response = data;
-            this.form.write = data.data.order_detail.write;
+            if (res.status === 200) {
+                if (res.success) {
+                    this.form.write = res.data.data.order_detail.write;
+                }
+                this.response = res.data;
+            }
         },
         async onFileChangeExample(image) {
             let loader = this.$loading.show();

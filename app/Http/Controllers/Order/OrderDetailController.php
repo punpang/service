@@ -109,70 +109,52 @@ class OrderDetailController extends Controller
 
     public function uploadImageByToken($token)
     {
-        $sent = SentLinkForUploadImage::SeachByToken($token);
+        $sent = SentLinkForUploadImage::SeachByTokenRules($token);
         if ($sent) {
-            if ($sent->orderDetail->upload_image_status) {
-                return response()->json([
-                    'data' => $sent,
-                    'success' => true,
-                ], 200);
-            } else {
-                return $this->errorNotVerify();
-            }
-        } else {
-            return $this->errorNotVerify();
+            $sent->ExampleImage;
+            $sent->Images;
+            return response()->json([
+                'data' => $sent,
+                'success' => true,
+            ], 200);
         }
+        return $this->errorNotVerify();
     }
 
     public function uploadImageByTokenExample($token)
     {
-        $sent = SentLinkForUploadImage::SeachByToken($token);
-        if ($sent) {
-            if ($sent->orderDetail->upload_image_status) {
-                if ($sent->example) {
-                    Cloudder::upload(request()->file('image'));
-                    $cloudder = Cloudder::getResult();
-                    $show = Cloudder::show($cloudder['public_id'], ['width' => 800, 'height' => 800]);
-                    $image = new Image;
-                    $image->order_detail_id = $sent->order_detail_id;
-                    $image->public_id = $cloudder['public_id'];
-                    $image->url = $show;
-                    $image->type = 'example';
-                    $image->save();
-                    return response()->json(['success' => true, 'message' => "อัปโหลดรูปภาพสำเร็จ"], 200);
-                } else {
-                    return $this->errorNotVerify();
-                }
-            } else {
-                return $this->errorNotVerify();
-            }
-        } else {
-            return $this->errorNotVerify();
+        $sent = SentLinkForUploadImage::SeachByTokenRules($token);
+        if ($sent && $sent->example) {
+            Cloudder::upload(request()->file('image'));
+            $cloudder = Cloudder::getResult();
+            $image = new Image;
+            $image->order_detail_id = $sent->order_detail_id;
+            $image->public_id = $cloudder['public_id'];
+            $image->url = Cloudder::show($cloudder['public_id'], ['width' => 800, 'height' => 800]);
+            $image->type = 'example';
+            $image->save();
+            return response()->json(['success' => true, 'message' => "อัปโหลดรูปภาพสำเร็จ"], 200);
         }
+        return $this->errorNotVerify();
     }
 
     public function uploadImageByTokenImages($token)
     {
-        $sent = SentLinkForUploadImage::SeachByToken($token);
-        if ($sent) {
-            if ($sent->orderDetail->upload_image_status) {
-                if ($sent->image) {
-                    Cloudder::upload(request()->file('image'));
-                    $cloudder = Cloudder::getResult();
-                    $show = Cloudder::show($cloudder['public_id'], ['width' => 800, 'height' => 800]);
-                    $image = new Image;
-                    $image->order_detail_id = $sent->order_detail_id;
-                    $image->public_id = $cloudder['public_id'];
-                    $image->url = $show; //$cloudder['url'];
-                    $image->type = 'images';
-                    $image->save();
-                    return response()->json(['success' => true, 'message' => "อัปโหลดรูปภาพสำเร็จ"], 200);
-                } else {
-                    return response()->json(['success' => false, 'message' => "ไม่มีสิทธิ์เข้าถึงหน้าเว็ปได้"], 200);
-                }
+        $sent = SentLinkForUploadImage::SeachByTokenRules($token);
+        if ($sent && $sent->image) {
 
+            Cloudder::upload(request()->file('image'));
+            $cloudder = Cloudder::getResult();
+            $image = new Image;
+            $image->order_detail_id = $sent->order_detail_id;
+            $image->public_id = $cloudder['public_id'];
+            $image->url = Cloudder::show($cloudder['public_id'], ['width' => 800, 'height' => 800]);; //$cloudder['url'];
+            $image->type = 'images';
+            $image->save();
 
-                /*
+            return response()->json(['success' => true, 'message' => "อัปโหลดรูปภาพสำเร็จ"], 200);
+
+            /*
                 foreach (request()->file() as $file) {
                     Cloudder::upload($file);
                     $image = new Image;
@@ -183,15 +165,11 @@ class OrderDetailController extends Controller
                     $image->save();
                 }
                 */
-            } else {
-                return $this->errorNotVerify();
-            }
-        } else {
-            return $this->errorNotVerify();
         }
+        return $this->errorNotVerify();
     }
 
-    public function uploadImageByTokenDelete($token, Image $image)
+    public function uploadImageByTokenDeleteV1($token, Image $image)
     {
         $sent = SentLinkForUploadImage::SeachByToken($token);
         if ($sent) {
@@ -207,7 +185,35 @@ class OrderDetailController extends Controller
         }
     }
 
+    public function uploadImageByTokenDelete($token, Image $image)
+    {
+        $sent = SentLinkForUploadImage::SeachByTokenRules($token);
+        if ($sent) {
+
+            Cloudder::delete($image->public_id);
+            $image->delete();
+
+            return response()->json(['success' => true, 'message' => "ลบรูปภาพสำเร็จ"], 200);
+        }
+        return $this->errorNotVerify();
+    }
+
     public function updateWriteByToken($token)
+    {
+        $sent = SentLinkForUploadImage::SeachByTokenRules($token);
+        if ($sent && $sent->image) {
+
+            $sent->orderDetail->write_status = true;
+            $sent->orderDetail->write = request('write');
+            $sent->orderDetail->update();
+
+            return response()->json(['success' => true, 'message' => "เปลี่ยนแปลงข้อความสำเร็จ"], 200);
+        }
+
+        return $this->errorNotVerify();
+    }
+
+    public function updateWriteByTokenV1($token)
     {
         $sent = SentLinkForUploadImage::SeachByToken($token);
         if ($sent) {
@@ -231,32 +237,26 @@ class OrderDetailController extends Controller
 
     public function ImageMain($token, Image $image)
     {
-        $sent = SentLinkForUploadImage::SeachByToken($token);
-        if ($sent) {
-            if ($sent->orderDetail->upload_image_status) {
-                if ($sent->image) {
-                    $image->main = !$image->main;
-                    $image->update();
+        $sent = SentLinkForUploadImage::SeachByTokenRules($token);
+        if ($sent && $sent->image) {
 
-                    if ($image->main) {
-                        $messgae = 'เลือกเป็นรูปหลักสำเร็จ';
-                    } else {
-                        $messgae = 'ยกเลิกรูปหลักสำเร็จ';
-                    }
-                    return response()->json(['success' => true, 'message' => $messgae], 200);
-                } else {
-                    return $this->errorNotVerify();
-                }
+            $image->main = !$image->main;
+            $image->update();
+
+            if ($image->main) {
+                $messgae = 'เลือกเป็นรูปหลักสำเร็จ';
             } else {
-                return $this->errorNotVerify();
+                $messgae = 'ยกเลิกรูปหลักสำเร็จ';
             }
-        } else {
-            return $this->errorNotVerify();
+
+            return response()->json(['success' => true, 'message' => $messgae], 200);
         }
+
+        return $this->errorNotVerify();
     }
 
     public function errorNotVerify()
     {
-        return response()->json(['success' => false, 'message' => 'ไม่มีสิทธิ์เข้าถึงหน้าเว็ปได้'], 200);
+        return response()->json(['success' => false, 'message' => 'ไม่มีสิทธิ์เข้าถึงหน้าเว็ปได้ หากเกิดข้อผิดพลาดโปรดติดต่อผ่านช่องทางด้านล่างค่ะ'], 200);
     }
 }

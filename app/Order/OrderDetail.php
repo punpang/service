@@ -57,8 +57,8 @@ class OrderDetail extends Model implements Auditable
     public static function getByOrderIDAll($order_id)
     {
         return OrderDetail::whereOrderId($order_id)->orderBy('status', "DESC")
-                ->with('Product.ProductTagUseOnly.ProductCategorySubUseOnly.ProductCategory')
-                ->with('Product.ProductImage')->get();
+            ->with('Product.ProductTagUseOnly.ProductCategorySubUseOnly.ProductCategory')
+            ->with('Product.ProductImage')->get();
     }
 
     public function Deposit()
@@ -71,14 +71,9 @@ class OrderDetail extends Model implements Auditable
         return $this->belongsTo('App\Order\Order', 'order_id', 'id');
     }
 
-    public function ExampleImage()
+    public function uploadImage()
     {
-        return $this->hasOne(Image::class, 'order_detail_id', 'id')->whereType('example');
-    }
-
-    public function Image()
-    {
-        return $this->hasMany(Image::class, 'order_detail_id', 'id')->whereType('image');
+        return $this->hasOne(SentLinkForUploadImage::class, 'order_detail_id', 'id');
     }
 
     public static function FormatData($data)
