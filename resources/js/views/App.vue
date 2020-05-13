@@ -10,6 +10,7 @@
             v-if="this.$store.getters['main/User'].type == 1"
         ></NavbarAdmin>
         <Navbar :drawer="drawer" v-else></Navbar>
+
         <v-content>
             <v-container fluid>
                 <router-view></router-view>

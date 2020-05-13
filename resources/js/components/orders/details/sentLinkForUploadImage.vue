@@ -1,7 +1,7 @@
 <template>
     <v-dialog v-model="dialog" persistent width="300">
         <template v-slot:activator="{ on }">
-            <v-btn color="primary" class="mr-2" v-on="on">
+            <v-btn color="primary" class="mr-2" v-on="on" @click="clickStart">
                 <v-icon left>link</v-icon>
                 ส่งลิงก์อัปโหลดรูป
                 <!-- ส่งลิงก์อัปโหลดรูป -->
@@ -32,11 +32,7 @@
                         color="success"
                         class="mr-2"
                         @click="clickSubmit"
-                        :disabled="
-                            (form.example == false && form.image == false) ||
-                                (form.example == detail.upload_image.example &&
-                                    form.image == detail.upload_image.image)
-                        "
+                        :disabled="form.example == false && form.image == false"
                     >
                         <v-icon left>link</v-icon>
                         ส่งลิงก์</v-btn
@@ -64,8 +60,8 @@ export default {
             dialog: false,
             overlay: false,
             form: {
-                example: this.detail.upload_image.example,
-                image: this.detail.upload_image.image
+                example: false,
+                image: false
             }
         };
     },
@@ -94,6 +90,12 @@ export default {
                     this.overlay = false;
                 } else if (res.status === 500) {
                 }
+            }
+        },
+        clickStart() {
+            if (this.detail.upload_image != null) {
+                this.form.example = this.detail.upload_image.example;
+                this.form.image = this.detail.upload_image.image;
             }
         }
     }

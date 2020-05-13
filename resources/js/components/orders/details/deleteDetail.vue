@@ -12,7 +12,7 @@
                     {{ action.buttonHead.text }}
                 </v-btn>
                 <v-btn
-                    :color="action.buttonHead.iconcolor"
+                    :color="action.buttonHead.color"
                     class="mr-2 d-flex d-sm-none"
                     fab
                     small

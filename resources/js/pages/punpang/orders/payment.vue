@@ -80,16 +80,28 @@
                                 @change="onFileChange"
                                 hide-details
                                 :rules="[v => !!v]"
-                                class="mb-4"
                             ></v-file-input>
-
-                            <v-img :src="previewSlip" class="mb-4"></v-img>
-
+                            <div v-if="previewSlip">
+                                <v-divider></v-divider>
+                                <v-img :src="previewSlip"></v-img>
+                            </div>
+                            <v-divider></v-divider>
+                            <paymentConditions
+                                :conditions="conditions"
+                                @emitConditions="emitConditions"
+                            ></paymentConditions>
+                            <v-divider></v-divider>
                             <v-btn
                                 color="success"
                                 large
                                 block
                                 @click="clickSubmit"
+                                :disabled="
+                                    !conditions.deposit ||
+                                        !conditions.dateTime_get ||
+                                        !conditions.acceptAll || 
+                                        !previewSlip
+                                "
                             >
                                 <v-icon left>cloud_upload</v-icon>
                                 แจ้งชำระเงิน
@@ -122,14 +134,16 @@
 import overlay from "@/js/layouts/overlay";
 import CostSub from "@/js/components/orders/details/CostSub";
 import OrderDetail from "@/js/components/orders/details/detailNotFB";
-
 import snackbarRight from "@/js/layouts/snackbarRight";
+import paymentConditions from "@/js/pages/punpang/orders/paymentConditions";
+
 export default {
     components: {
         CostSub,
         OrderDetail,
         overlay,
-        snackbarRight
+        snackbarRight,
+        paymentConditions
     },
     data() {
         return {
@@ -142,6 +156,11 @@ export default {
             snackbar: {},
             overlay: false,
             slipFile: {},
+            conditions: {
+                deposit: false,
+                dateTime_get: false,
+                acceptAll: false
+            },
             order: {
                 customer_not_f_b: {
                     name: "",
@@ -164,6 +183,9 @@ export default {
         };
     },
     methods: {
+        emitConditions(data) {
+            this.conditions = data;
+        },
         onFileChange(image) {
             this.slipFile = event.target.files[0];
             this.previewSlip = URL.createObjectURL(image);

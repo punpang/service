@@ -132,6 +132,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_components_orders_details_CostSub__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/components/orders/details/CostSub */ "./resources/js/components/orders/details/CostSub.vue");
 /* harmony import */ var _js_components_orders_details_detailNotFB__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/js/components/orders/details/detailNotFB */ "./resources/js/components/orders/details/detailNotFB.vue");
 /* harmony import */ var _js_layouts_snackbarRight__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/js/layouts/snackbarRight */ "./resources/js/layouts/snackbarRight.vue");
+/* harmony import */ var _js_pages_punpang_orders_paymentConditions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/js/pages/punpang/orders/paymentConditions */ "./resources/js/pages/punpang/orders/paymentConditions.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -258,6 +259,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -267,7 +281,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     CostSub: _js_components_orders_details_CostSub__WEBPACK_IMPORTED_MODULE_2__["default"],
     OrderDetail: _js_components_orders_details_detailNotFB__WEBPACK_IMPORTED_MODULE_3__["default"],
     overlay: _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_1__["default"],
-    snackbarRight: _js_layouts_snackbarRight__WEBPACK_IMPORTED_MODULE_4__["default"]
+    snackbarRight: _js_layouts_snackbarRight__WEBPACK_IMPORTED_MODULE_4__["default"],
+    paymentConditions: _js_pages_punpang_orders_paymentConditions__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   data: function data() {
     return {
@@ -280,6 +295,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       snackbar: {},
       overlay: false,
       slipFile: {},
+      conditions: {
+        deposit: false,
+        dateTime_get: false,
+        acceptAll: false
+      },
       order: {
         customer_not_f_b: {
           name: "",
@@ -301,6 +321,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
+    emitConditions: function emitConditions(data) {
+      this.conditions = data;
+    },
     onFileChange: function onFileChange(image) {
       this.slipFile = event.target.files[0];
       this.previewSlip = URL.createObjectURL(image);
@@ -416,6 +439,63 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }
       }, _callee3);
     }))();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/punpang/orders/paymentConditions.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/punpang/orders/paymentConditions.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["conditions"],
+  methods: {
+    changeConditions: function changeConditions() {
+      var data = {
+        deposit: this.conditions.deposit,
+        dateTime_get: this.conditions.dateTime_get,
+        acceptAll: this.conditions.acceptAll
+      };
+      this.$emit("emitConditions", data);
+    }
   }
 });
 
@@ -924,7 +1004,6 @@ var render = function() {
                                       ),
                                       _vm._v(" "),
                                       _c("v-file-input", {
-                                        staticClass: "mb-4",
                                         attrs: {
                                           outlined: "",
                                           "prepend-icon": "image",
@@ -940,10 +1019,30 @@ var render = function() {
                                         on: { change: _vm.onFileChange }
                                       }),
                                       _vm._v(" "),
-                                      _c("v-img", {
-                                        staticClass: "mb-4",
-                                        attrs: { src: _vm.previewSlip }
+                                      _vm.previewSlip
+                                        ? _c(
+                                            "div",
+                                            [
+                                              _c("v-divider"),
+                                              _vm._v(" "),
+                                              _c("v-img", {
+                                                attrs: { src: _vm.previewSlip }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      _c("v-divider"),
+                                      _vm._v(" "),
+                                      _c("paymentConditions", {
+                                        attrs: { conditions: _vm.conditions },
+                                        on: {
+                                          emitConditions: _vm.emitConditions
+                                        }
                                       }),
+                                      _vm._v(" "),
+                                      _c("v-divider"),
                                       _vm._v(" "),
                                       _c(
                                         "v-btn",
@@ -951,7 +1050,12 @@ var render = function() {
                                           attrs: {
                                             color: "success",
                                             large: "",
-                                            block: ""
+                                            block: "",
+                                            disabled:
+                                              !_vm.conditions.deposit ||
+                                              !_vm.conditions.dateTime_get ||
+                                              !_vm.conditions.acceptAll ||
+                                              !_vm.previewSlip
                                           },
                                           on: { click: _vm.clickSubmit }
                                         },
@@ -1018,6 +1122,101 @@ var render = function() {
       _c("overlay", { attrs: { overlay: _vm.overlay } }),
       _vm._v(" "),
       _c("snackbarRight", { attrs: { snackbar: _vm.snackbar } })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/punpang/orders/paymentConditions.vue?vue&type=template&id=2510f8b9&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/punpang/orders/paymentConditions.vue?vue&type=template&id=2510f8b9& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("h5", [_vm._v("โปรดรับทราบเงื่อนไข")]),
+      _vm._v(" "),
+      _c("v-checkbox", {
+        staticClass: "mt-0",
+        attrs: {
+          "hide-details": "",
+          label:
+            "หากท่านยกเลิกรายการสั่งซื้อนี้ ทางร้านขอสงวนสิทธิ์ ไม่คืนเงินมัดจำทั้งจำนวน แต่ทางร้านจะออกคูปองเงินสด เท่ากับยอดชำระมัดจำทั้งจำนวน เพื่อใช้แทนเงินสดและใช้เลือกซื้อสินค้าภายในร้าน",
+          rules: [
+            function(v) {
+              return v === true
+            }
+          ]
+        },
+        on: { change: _vm.changeConditions },
+        model: {
+          value: _vm.conditions.deposit,
+          callback: function($$v) {
+            _vm.$set(_vm.conditions, "deposit", $$v)
+          },
+          expression: "conditions.deposit"
+        }
+      }),
+      _vm._v(" "),
+      _c("v-checkbox", {
+        staticClass: "mt-0",
+        attrs: {
+          "hide-details": "",
+          label:
+            "ท่านสามารถรับสินค้าได้ตั้งแต่ " +
+            1 +
+            " หรือหลังจากได้รับข้อความแจ้งว่า ทางร้านได้จัดเตรียมสินค้าของท่านเสร็จแล้ว",
+          rules: [
+            function(v) {
+              return v === true
+            }
+          ]
+        },
+        model: {
+          value: _vm.conditions.dateTime_get,
+          callback: function($$v) {
+            _vm.$set(_vm.conditions, "dateTime_get", $$v)
+          },
+          expression: "conditions.dateTime_get"
+        }
+      }),
+      _vm._v(" "),
+      _c("v-checkbox", {
+        staticClass: "mt-0",
+        attrs: {
+          "hide-details": "",
+          label: "ท่านได้รับทราบและยอมรับเงื่อนไขทั้งหมดแล้ว",
+          rules: [
+            function(v) {
+              return v === true
+            }
+          ]
+        },
+        model: {
+          value: _vm.conditions.acceptAll,
+          callback: function($$v) {
+            _vm.$set(_vm.conditions, "acceptAll", $$v)
+          },
+          expression: "conditions.acceptAll"
+        }
+      })
     ],
     1
   )
@@ -1369,6 +1568,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_payment_vue_vue_type_template_id_2857e921___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_payment_vue_vue_type_template_id_2857e921___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/pages/punpang/orders/paymentConditions.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/pages/punpang/orders/paymentConditions.vue ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _paymentConditions_vue_vue_type_template_id_2510f8b9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./paymentConditions.vue?vue&type=template&id=2510f8b9& */ "./resources/js/pages/punpang/orders/paymentConditions.vue?vue&type=template&id=2510f8b9&");
+/* harmony import */ var _paymentConditions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./paymentConditions.vue?vue&type=script&lang=js& */ "./resources/js/pages/punpang/orders/paymentConditions.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _paymentConditions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _paymentConditions_vue_vue_type_template_id_2510f8b9___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _paymentConditions_vue_vue_type_template_id_2510f8b9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/punpang/orders/paymentConditions.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/pages/punpang/orders/paymentConditions.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/pages/punpang/orders/paymentConditions.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_paymentConditions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./paymentConditions.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/punpang/orders/paymentConditions.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_paymentConditions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/pages/punpang/orders/paymentConditions.vue?vue&type=template&id=2510f8b9&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/pages/punpang/orders/paymentConditions.vue?vue&type=template&id=2510f8b9& ***!
+  \************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_paymentConditions_vue_vue_type_template_id_2510f8b9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./paymentConditions.vue?vue&type=template&id=2510f8b9& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/punpang/orders/paymentConditions.vue?vue&type=template&id=2510f8b9&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_paymentConditions_vue_vue_type_template_id_2510f8b9___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_paymentConditions_vue_vue_type_template_id_2510f8b9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

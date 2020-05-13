@@ -45,7 +45,7 @@ class SentLinkForUploadImage extends Model implements Auditable
     {
         $now = \Carbon\Carbon::now()->format("Y-m-d");
         $sent = SentLinkForUploadImage::whereToken($token)->first();
-        if ($sent->orderDetail->order->dateTime_get >= $now && $sent->orderDetail->status && $sent->orderDetail->upload_image_status) {
+        if ($sent && $sent->orderDetail->order->dateTime_get >= $now && $sent->orderDetail->status && $sent->orderDetail->upload_image_status) {
             return $sent;
         }
     }

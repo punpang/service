@@ -111,8 +111,14 @@ class OrderDetailController extends Controller
     {
         $sent = SentLinkForUploadImage::SeachByTokenRules($token);
         if ($sent) {
-            $sent->ExampleImage;
-            $sent->Images;
+            $sent = SentLinkForUploadImage::whereToken($token)->with(
+                'OrderDetail.order.CustomerNotFB',
+                'OrderDetail.order.OrderStatus',
+                'OrderDetail.Product.ProductImage',
+                'OrderDetail.Product.ProductTagUseOnly.ProductCategorySubUseOnly.ProductCategory',
+                'ExampleImage',
+                'Images'
+            )->first();
             return response()->json([
                 'data' => $sent,
                 'success' => true,
@@ -124,7 +130,7 @@ class OrderDetailController extends Controller
     public function uploadImageByTokenExample($token)
     {
         $sent = SentLinkForUploadImage::SeachByTokenRules($token);
-        if ($sent && $sent->example) {
+        if ($sent && $sent->example && $sent->ExampleImage == null) {
             Cloudder::upload(request()->file('image'));
             $cloudder = Cloudder::getResult();
             $image = new Image;
@@ -257,6 +263,6 @@ class OrderDetailController extends Controller
 
     public function errorNotVerify()
     {
-        return response()->json(['success' => false, 'message' => 'ไม่มีสิทธิ์เข้าถึงหน้าเว็ปได้ หากเกิดข้อผิดพลาดโปรดติดต่อผ่านช่องทางด้านล่างค่ะ'], 200);
+        return response()->json(['success' => false, 'message' => 'เกิดข้อผิดพลาดบางอย่าง'], 200);
     }
 }
