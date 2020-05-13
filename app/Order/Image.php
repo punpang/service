@@ -13,7 +13,8 @@ class Image extends Model implements Auditable
         'public_id',
         'url',
         'main',
-        'type'
+        'type',
+        'url_full'
     ];
 
     protected $table = "images";
@@ -23,7 +24,8 @@ class Image extends Model implements Auditable
         'public_id',
         'url',
         'main',
-        'type'
+        'type',
+        'url_full'
     ];
 
     protected $hidden = ['created_at', 'updated_at'];

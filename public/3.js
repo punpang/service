@@ -271,6 +271,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -339,12 +340,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var formData, res;
+        var loader, formData, res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this.overlay = true;
+                loader = _this.$loading.show();
 
                 if (!_this.$refs.form.validate()) {
                   _context.next = 8;
@@ -364,7 +365,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
               case 8:
-                _this.overlay = false;
+                loader.hide();
 
               case 9:
               case "end":
@@ -378,12 +379,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var response;
+        var loader, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _this2.overlay = true;
+                loader = _this2.$loading.show();
                 _this2.token = _this2.$route.params.token;
                 _this2.amount = _this2.$route.params.amount;
                 response = "";
@@ -411,7 +412,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this2.verity = false;
                 }
 
-                _this2.overlay = false;
+                loader.hide();
 
               case 15:
               case "end":

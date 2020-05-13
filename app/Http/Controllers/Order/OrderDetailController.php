@@ -21,6 +21,9 @@ class OrderDetailController extends Controller
     {
         $input = OrderDetail::FormatData(request()->all());
         $detail = OrderDetail::create($input);
+
+        SentLinkForUploadImage::CreateLink($detail);
+
         $order = Order::whereId(request('order_id'))->whereOrderStatusId(1)->first();
         if (isset($order)) {
             $order->order_status_id = '2';
@@ -35,6 +38,9 @@ class OrderDetailController extends Controller
     {
         $input = OrderDetail::FormatData(request()->all());
         $detail->update($input);
+
+        SentLinkForUploadImage::CreateLink($detail);
+
         Linenotify::send('แก้ไขสินค้า #' . $detail->order_id . '/n รายละ');
 
         return response()->json(['success' => true], 200);
@@ -137,6 +143,7 @@ class OrderDetailController extends Controller
             $image->order_detail_id = $sent->order_detail_id;
             $image->public_id = $cloudder['public_id'];
             $image->url = Cloudder::show($cloudder['public_id'], ['width' => 800, 'height' => 800]);
+            $image->url_full = $cloudder['url']; //$cloudder['url'];
             $image->type = 'example';
             $image->save();
             return response()->json(['success' => true, 'message' => "อัปโหลดรูปภาพสำเร็จ"], 200);
@@ -154,7 +161,8 @@ class OrderDetailController extends Controller
             $image = new Image;
             $image->order_detail_id = $sent->order_detail_id;
             $image->public_id = $cloudder['public_id'];
-            $image->url = Cloudder::show($cloudder['public_id'], ['width' => 800, 'height' => 800]);; //$cloudder['url'];
+            $image->url = Cloudder::show($cloudder['public_id'], ['width' => 800, 'height' => 800]); //$cloudder['url'];
+            $image->url_full = $cloudder['url']; //$cloudder['url'];
             $image->type = 'images';
             $image->save();
 

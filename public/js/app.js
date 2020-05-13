@@ -100009,7 +100009,7 @@ var routes = [{
   path: "/punpang/order/:token",
   name: "orderToken",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/orders/show */ "./resources/js/pages/punpang/orders/show.vue"));
+    return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/orders/show */ "./resources/js/pages/punpang/orders/show.vue"));
   }
 }, {
   path: "/punpang/order/:token/:amount/payment",
@@ -100022,7 +100022,7 @@ var routes = [{
   path: "/punpang/order/:token/uploadImage",
   name: "orderTokenUploadImage",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/orders/uploadImage */ "./resources/js/pages/punpang/orders/uploadImage.vue"));
+    return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/orders/uploadImage */ "./resources/js/pages/punpang/orders/uploadImage.vue"));
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({

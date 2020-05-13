@@ -15,8 +15,8 @@ class CreateSentLinkForUploadImagesTable extends Migration
     {
         Schema::connection('order')->create('sent_link_for_upload_images', function (Blueprint $table) {
             $table->integer('order_detail_id')->unique();
-            $table->boolean('example');
-            $table->boolean('image');
+            $table->boolean('example')->default(0);
+            $table->boolean('image')->default(0);
             $table->string('token')->unique();
             $table->timestamps();
         });

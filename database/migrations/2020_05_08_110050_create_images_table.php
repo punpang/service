@@ -18,6 +18,7 @@ class CreateImagesTable extends Migration
             $table->integer('order_detail_id');
             $table->string('public_id');
             $table->string('url');
+            $table->string('url_full');
             $table->enum('type',['example','images']);
             $table->boolean("main")->default(0);
             $table->timestamps();

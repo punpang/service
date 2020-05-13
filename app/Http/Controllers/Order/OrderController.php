@@ -17,6 +17,7 @@ class OrderController extends Controller
         $dataRequest = request()->all();
         $dataRequest['token'] = $this->generateToken();
         $order = Order::create($dataRequest);
+        
         //$message = 'รายการสั่งซื้อ #'.$order->id. ' ของคุณ เรากำลังรอยืนยันการสั่งซื้อจากคุณ ยอดชำระทั้งหมด 300.00 บ. โปรดชำระขั้นต่ำ 150 บ. \n\nชำระโอนผ่านธนาคาร 408-672-0266 (พรรษิษฐ์ ศรีสุข) ธนาคารไทยพาณิชย์ แจ้งชำระเงินได้ที่ ...';
         //FacebookMessager::postMessage($order->customer,$order->ChannelOfPurchase->name,$message);
         //MSms::Sms($order->customer->phone,$message);

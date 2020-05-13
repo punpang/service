@@ -61,8 +61,9 @@
                                                 v-clipboard:copy="
                                                     bank.book.numberClipboard
                                                 "
-                                                fab
                                                 v-clipboard:success="onCopy"
+                                                fab
+                                                
                                             >
                                                 <v-icon>file_copy</v-icon>
                                             </v-btn>
@@ -198,7 +199,8 @@ export default {
             };
         },
         async clickSubmit() {
-            this.overlay = true;
+            let loader = this.$loading.show();
+            
             if (this.$refs.form.validate()) {
                 const formData = new FormData();
                 formData.append("image", this.slipFile);
@@ -214,10 +216,10 @@ export default {
                     this.show = false;
                 }
             }
-            this.overlay = false;
+            loader.hide();
         },
         async start() {
-            this.overlay = true;
+            let loader = this.$loading.show();
             this.token = this.$route.params.token;
             this.amount = this.$route.params.amount;
             let response = "";
@@ -237,7 +239,7 @@ export default {
             } else {
                 this.verity = false;
             }
-            this.overlay = false;
+            loader.hide();
         }
     },
     async mounted() {
