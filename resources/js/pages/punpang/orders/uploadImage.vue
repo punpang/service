@@ -213,7 +213,7 @@
                                     @click="clickImageMain(image.id)"
                                     text
                                 >
-                                    <v-icon left>bookmark_border</v-icon>
+                                    <v-icon left>star</v-icon>
                                     ยกเลิกรูปหลัก
                                 </v-btn>
                                 <v-btn
@@ -222,7 +222,7 @@
                                     @click="clickImageMain(image.id)"
                                     text
                                 >
-                                    <v-icon left>bookmark</v-icon>
+                                    <v-icon left>star_border</v-icon>
                                     ตั้งเป็นรูปหลัก
                                 </v-btn>
 

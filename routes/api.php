@@ -73,6 +73,7 @@ Route::middleware('admin')->group(function () { //สำหรับ admin
             Route::get('{order_id}/getByOrderID', 'Order\OrderDetailController@getByOrderID');
 
             Route::post('{detail}/sentLinkForUploadImage', 'Order\OrderDetailController@sentLinkForUploadImage');
+            Route::get('{public_id}/downloadImage', 'Order\OrderDetailController@downloadImage');
         });
     });
 

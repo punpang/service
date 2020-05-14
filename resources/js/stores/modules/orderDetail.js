@@ -60,7 +60,7 @@ export default {
             );
             commit("dataUseOnly", response.data);
         },
-        async getByOrderID({ commit , dispatch }, payload) {
+        async getByOrderID({ commit, dispatch }, payload) {
             const response = await axios.get(
                 "api/order/detail/" + payload + "/getByOrderID"
             );
@@ -73,14 +73,22 @@ export default {
             commit("getByOrderId", []);
         },
 
-        async sentLinkForUploadImage({},payload)
-        {
+        async sentLinkForUploadImage({}, payload) {
             console.log(payload);
-            
-            const res = await axios.post('/api/order/detail/'+ payload.detail_id +'/sentLinkForUploadImage',payload.form)
+
+            const res = await axios.post(
+                "/api/order/detail/" +
+                    payload.detail_id +
+                    "/sentLinkForUploadImage",
+                payload.form
+            );
             console.log(res);
-            
+
             return res;
+        },
+
+        async downloadImage({}, payload) {
+            await axios.get("/api/order/detail/" + payload + "/downloadImage");
         }
     }
 };

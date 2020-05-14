@@ -2,17 +2,18 @@
     <div>
         <v-dialog v-model="dialog" persistent width="800">
             <template v-slot:activator="{ on }">
-                <v-btn color="primary" class="mr-2 d-none d-sm-flex" v-on="on">
+                <v-btn color="indigo" class="mr-2 d-none d-sm-flex" v-on="on">
                     <v-icon left>link</v-icon>
                     ส่งลิงก์อัปโหลดรูป
                 </v-btn>
                 <v-btn
-                    color="primary"
+                    color="indigo"
                     class="mr-2 d-flex d-sm-none"
                     fab
+                    small
                     v-on="on"
                 >
-                    <v-icon left>link</v-icon>
+                    <v-icon>link</v-icon>
                     <!-- ส่งลิงก์อัปโหลดรูป -->
                 </v-btn>
             </template>
@@ -33,54 +34,62 @@
                     ></sentLinkExampleImage>
                     <v-divider></v-divider>
 
+                    <h5>รูปภาพต้นแบบสินค้า</h5>
                     <v-row>
-                        <v-col cols="12" md="8">
-                            <h5>รูปภาพต้นแบบสินค้า</h5>
-                            <v-row>
-                                <v-col
-                                    cols="6"
-                                    md="6"
-                                    v-for="image in detail.upload_image.images"
-                                    :key="image.id"
+                        <v-col
+                            cols="12"
+                            md="4"
+                            v-for="image in detail.upload_image.images"
+                            :key="image.id"
+                        >
+                            <v-card outlined>
+                                <v-img
+                                    :src="image.url"
+                                    :lazy-src="image.url"
+                                    aspect-ratio="1"
                                 >
-                                    <v-img
-                                        :src="image.url"
-                                        :lazy-src="image.url"
-                                        aspect-ratio="1"
+                                    <template v-slot:placeholder>
+                                        <v-row
+                                            class="fill-height ma-0"
+                                            align="center"
+                                            justify="center"
+                                        >
+                                            <v-progress-circular
+                                                indeterminate
+                                                color="grey lighten-5"
+                                            ></v-progress-circular>
+                                        </v-row>
+                                    </template>
+                                </v-img>
+                                <v-card-text class="pa-2">
+                                    <v-btn
+                                        color="deep-purple"
+                                        dark
+                                        fab
+                                        small
+                                        v-if="image.main"
                                     >
-                                        <v-btn
-                                            color="cyan"
-                                            class="ma-2"
-                                            fab
-                                            small
-                                        >
-                                            <v-icon>cloud_download</v-icon>
-                                        </v-btn>
-                                        <v-btn
-                                            color="teal"
-                                            fab
-                                            small
-                                            v-clipboard:copy="image.url_full"
-                                            v-clipboard:success="onCopyUrlFull"
-                                        >
-                                            <v-icon>link</v-icon>
-                                        </v-btn>
-
-                                        <template v-slot:placeholder>
-                                            <v-row
-                                                class="fill-height ma-0"
-                                                align="center"
-                                                justify="center"
-                                            >
-                                                <v-progress-circular
-                                                    indeterminate
-                                                    color="grey lighten-5"
-                                                ></v-progress-circular>
-                                            </v-row>
-                                        </template>
-                                    </v-img>
-                                </v-col>
-                            </v-row>
+                                        <v-icon>star</v-icon>
+                                    </v-btn>
+                                    <v-btn
+                                        color="cyan"
+                                        fab
+                                        small
+                                        @click="clickDownloadImage(image)"
+                                    >
+                                        <v-icon>cloud_download</v-icon>
+                                    </v-btn>
+                                    <v-btn
+                                        color="teal"
+                                        fab
+                                        small
+                                        v-clipboard:copy="image.url_full"
+                                        v-clipboard:success="onCopyUrlFull"
+                                    >
+                                        <v-icon>link</v-icon>
+                                    </v-btn>
+                                </v-card-text>
+                            </v-card>
                         </v-col>
                     </v-row>
                 </v-card-text>
@@ -107,6 +116,27 @@ export default {
     methods: {
         onCopyUrlFull() {
             this.$toast.success("คัดลอกลิงก์รูปภาพสำเร็จ");
+        },
+        forceFileDownload(response, name) {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", name + ".png"); //or any other extension
+            document.body.appendChild(link);
+            link.click();
+        },
+        async clickDownloadImage(image) {
+            let loader = this.$loading.show();
+            await axios({
+                method: "get",
+                url: image.url_full,
+                responseType: "arraybuffer"
+            })
+                .then(response => {
+                    this.forceFileDownload(response, image.public_id);
+                })
+                .catch(() => console.log("error occured"));
+            loader.hide();
         }
     }
 };

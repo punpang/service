@@ -162,7 +162,7 @@ class OrderDetailController extends Controller
             $image->order_detail_id = $sent->order_detail_id;
             $image->public_id = $cloudder['public_id'];
             $image->url = Cloudder::show($cloudder['public_id'], ['width' => 800, 'height' => 800]); //$cloudder['url'];
-            $image->url_full = $cloudder['url']; //$cloudder['url'];
+            $image->url_full = $cloudder['secure_url']; //$cloudder['url'];
             $image->type = 'images';
             $image->save();
 
@@ -272,5 +272,11 @@ class OrderDetailController extends Controller
     public function errorNotVerify()
     {
         return response()->json(['success' => false, 'message' => 'เกิดข้อผิดพลาดบางอย่าง'], 200);
+    }
+
+    public function downloadImage($public_id)
+    {
+        return Cloudder::createArchive([$public_id]);
+        return Cloudder::downloadArchiveUrl([$public_id]);
     }
 }

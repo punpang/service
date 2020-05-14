@@ -1,28 +1,24 @@
 <template>
-    <v-row>
-        <v-col cols="12" md="12" class="pb-0">
-            <b>ชื่อลูกค้า</b>
-            <v-spacer></v-spacer>
-            {{ order.customer.name }}
-        </v-col>
-        <v-col cols="12" md="12" class="pb-0">
-            <b>เบอร์โทรศัพท์</b>
-            <v-spacer></v-spacer>
-            {{ order.customer.phone }}
-        </v-col>
-        <v-col cols="12" md="12" class="pb-0">
-            <b>วัน-เวลารับสินค้า</b>
-            <v-spacer></v-spacer>
-            {{ order.dateTime_get }}
-        </v-col>
-        <v-col cols="12" md="12" class="pb-0">
-            <b>สถานะ</b>
-            <v-spacer></v-spacer>
-            <span>{{
+    <div>
+        <v-row>
+            <v-col cols="6" md="6">ชื่อลูกค้า</v-col>
+            <v-col cols="6" md="6" class="text-right">{{ order.customer.name }}</v-col>
+        </v-row>
+        <v-row>
+            <v-col cols="6" md="6">เบอร์โทรศัพท์</v-col>
+            <v-col cols="6" md="6" class="text-right">{{ order.customer.phone }}</v-col>
+        </v-row>
+        <v-row>
+            <v-col cols="5" md="5">วัน-เวลารับสินค้า</v-col>
+            <v-col cols="7" md="7" class="text-right">{{ order.dateTime_get }}</v-col>
+        </v-row>
+        <v-row>
+            <v-col cols="6" md="6">สถานะ</v-col>
+            <v-col cols="6" md="6" class="text-right">{{
                 order.order_status.name
-            }}</span>
-        </v-col>
-    </v-row>
+            }}</v-col>
+        </v-row>
+    </div>
 </template>
 
 <script>

@@ -2470,10 +2470,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["order"]
 });
@@ -2966,8 +2962,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _js_components_orders_details_sentLinkForUploadImage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/js/components/orders/details/sentLinkForUploadImage */ "./resources/js/components/orders/details/sentLinkForUploadImage.vue");
-/* harmony import */ var _js_components_orders_details_sentLinkExampleImage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/orders/details/sentLinkExampleImage */ "./resources/js/components/orders/details/sentLinkExampleImage.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _js_components_orders_details_sentLinkForUploadImage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/orders/details/sentLinkForUploadImage */ "./resources/js/components/orders/details/sentLinkForUploadImage.vue");
+/* harmony import */ var _js_components_orders_details_sentLinkExampleImage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/components/orders/details/sentLinkExampleImage */ "./resources/js/components/orders/details/sentLinkExampleImage.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3061,12 +3074,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 
-_js_components_orders_details_sentLinkExampleImage__WEBPACK_IMPORTED_MODULE_1__["default"];
+_js_components_orders_details_sentLinkExampleImage__WEBPACK_IMPORTED_MODULE_2__["default"];
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["detail"],
   components: {
-    sentLinkForUploadImage: _js_components_orders_details_sentLinkForUploadImage__WEBPACK_IMPORTED_MODULE_0__["default"],
-    sentLinkExampleImage: _js_components_orders_details_sentLinkExampleImage__WEBPACK_IMPORTED_MODULE_1__["default"]
+    sentLinkForUploadImage: _js_components_orders_details_sentLinkForUploadImage__WEBPACK_IMPORTED_MODULE_1__["default"],
+    sentLinkExampleImage: _js_components_orders_details_sentLinkExampleImage__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
@@ -3076,6 +3089,47 @@ _js_components_orders_details_sentLinkExampleImage__WEBPACK_IMPORTED_MODULE_1__[
   methods: {
     onCopyUrlFull: function onCopyUrlFull() {
       this.$toast.success("คัดลอกลิงก์รูปภาพสำเร็จ");
+    },
+    forceFileDownload: function forceFileDownload(response, name) {
+      var url = window.URL.createObjectURL(new Blob([response.data]));
+      var link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", name + ".png"); //or any other extension
+
+      document.body.appendChild(link);
+      link.click();
+    },
+    clickDownloadImage: function clickDownloadImage(image) {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var loader;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                loader = _this.$loading.show();
+                _context.next = 3;
+                return axios({
+                  method: "get",
+                  url: image.url_full,
+                  responseType: "arraybuffer"
+                }).then(function (response) {
+                  _this.forceFileDownload(response, image.public_id);
+                })["catch"](function () {
+                  return console.log("error occured");
+                });
+
+              case 3:
+                loader.hide();
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     }
   }
 });
@@ -8145,53 +8199,66 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-row",
+    "div",
     [
       _c(
-        "v-col",
-        { staticClass: "pb-0", attrs: { cols: "12", md: "12" } },
+        "v-row",
         [
-          _c("b", [_vm._v("ชื่อลูกค้า")]),
+          _c("v-col", { attrs: { cols: "6", md: "6" } }, [
+            _vm._v("ชื่อลูกค้า")
+          ]),
           _vm._v(" "),
-          _c("v-spacer"),
-          _vm._v("\n        " + _vm._s(_vm.order.customer.name) + "\n    ")
+          _c(
+            "v-col",
+            { staticClass: "text-right", attrs: { cols: "6", md: "6" } },
+            [_vm._v(_vm._s(_vm.order.customer.name))]
+          )
         ],
         1
       ),
       _vm._v(" "),
       _c(
-        "v-col",
-        { staticClass: "pb-0", attrs: { cols: "12", md: "12" } },
+        "v-row",
         [
-          _c("b", [_vm._v("เบอร์โทรศัพท์")]),
+          _c("v-col", { attrs: { cols: "6", md: "6" } }, [
+            _vm._v("เบอร์โทรศัพท์")
+          ]),
           _vm._v(" "),
-          _c("v-spacer"),
-          _vm._v("\n        " + _vm._s(_vm.order.customer.phone) + "\n    ")
+          _c(
+            "v-col",
+            { staticClass: "text-right", attrs: { cols: "6", md: "6" } },
+            [_vm._v(_vm._s(_vm.order.customer.phone))]
+          )
         ],
         1
       ),
       _vm._v(" "),
       _c(
-        "v-col",
-        { staticClass: "pb-0", attrs: { cols: "12", md: "12" } },
+        "v-row",
         [
-          _c("b", [_vm._v("วัน-เวลารับสินค้า")]),
+          _c("v-col", { attrs: { cols: "5", md: "5" } }, [
+            _vm._v("วัน-เวลารับสินค้า")
+          ]),
           _vm._v(" "),
-          _c("v-spacer"),
-          _vm._v("\n        " + _vm._s(_vm.order.dateTime_get) + "\n    ")
+          _c(
+            "v-col",
+            { staticClass: "text-right", attrs: { cols: "7", md: "7" } },
+            [_vm._v(_vm._s(_vm.order.dateTime_get))]
+          )
         ],
         1
       ),
       _vm._v(" "),
       _c(
-        "v-col",
-        { staticClass: "pb-0", attrs: { cols: "12", md: "12" } },
+        "v-row",
         [
-          _c("b", [_vm._v("สถานะ")]),
+          _c("v-col", { attrs: { cols: "6", md: "6" } }, [_vm._v("สถานะ")]),
           _vm._v(" "),
-          _c("v-spacer"),
-          _vm._v(" "),
-          _c("span", [_vm._v(_vm._s(_vm.order.order_status.name))])
+          _c(
+            "v-col",
+            { staticClass: "text-right", attrs: { cols: "6", md: "6" } },
+            [_vm._v(_vm._s(_vm.order.order_status.name))]
+          )
         ],
         1
       )
@@ -8891,7 +8958,7 @@ var render = function() {
                     _vm._g(
                       {
                         staticClass: "mr-2 d-none d-sm-flex",
-                        attrs: { color: "primary" }
+                        attrs: { color: "indigo" }
                       },
                       on
                     ),
@@ -8909,11 +8976,11 @@ var render = function() {
                     _vm._g(
                       {
                         staticClass: "mr-2 d-flex d-sm-none",
-                        attrs: { color: "primary", fab: "" }
+                        attrs: { color: "indigo", fab: "", small: "" }
                       },
                       on
                     ),
-                    [_c("v-icon", { attrs: { left: "" } }, [_vm._v("link")])],
+                    [_c("v-icon", [_vm._v("link")])],
                     1
                   )
                 ]
@@ -8970,130 +9037,136 @@ var render = function() {
                   _vm._v(" "),
                   _c("v-divider"),
                   _vm._v(" "),
+                  _c("h5", [_vm._v("รูปภาพต้นแบบสินค้า")]),
+                  _vm._v(" "),
                   _c(
                     "v-row",
-                    [
-                      _c(
+                    _vm._l(_vm.detail.upload_image.images, function(image) {
+                      return _c(
                         "v-col",
-                        { attrs: { cols: "12", md: "8" } },
+                        { key: image.id, attrs: { cols: "12", md: "4" } },
                         [
-                          _c("h5", [_vm._v("รูปภาพต้นแบบสินค้า")]),
-                          _vm._v(" "),
                           _c(
-                            "v-row",
-                            _vm._l(_vm.detail.upload_image.images, function(
-                              image
-                            ) {
-                              return _c(
-                                "v-col",
-                                {
-                                  key: image.id,
-                                  attrs: { cols: "6", md: "6" }
+                            "v-card",
+                            { attrs: { outlined: "" } },
+                            [
+                              _c("v-img", {
+                                attrs: {
+                                  src: image.url,
+                                  "lazy-src": image.url,
+                                  "aspect-ratio": "1"
                                 },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "placeholder",
+                                      fn: function() {
+                                        return [
+                                          _c(
+                                            "v-row",
+                                            {
+                                              staticClass: "fill-height ma-0",
+                                              attrs: {
+                                                align: "center",
+                                                justify: "center"
+                                              }
+                                            },
+                                            [
+                                              _c("v-progress-circular", {
+                                                attrs: {
+                                                  indeterminate: "",
+                                                  color: "grey lighten-5"
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        ]
+                                      },
+                                      proxy: true
+                                    }
+                                  ],
+                                  null,
+                                  true
+                                )
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "v-card-text",
+                                { staticClass: "pa-2" },
                                 [
+                                  image.main
+                                    ? _c(
+                                        "v-btn",
+                                        {
+                                          attrs: {
+                                            color: "deep-purple",
+                                            dark: "",
+                                            fab: "",
+                                            small: ""
+                                          }
+                                        },
+                                        [_c("v-icon", [_vm._v("star")])],
+                                        1
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
                                   _c(
-                                    "v-img",
+                                    "v-btn",
                                     {
                                       attrs: {
-                                        src: image.url,
-                                        "lazy-src": image.url,
-                                        "aspect-ratio": "1"
+                                        color: "cyan",
+                                        fab: "",
+                                        small: ""
                                       },
-                                      scopedSlots: _vm._u(
-                                        [
-                                          {
-                                            key: "placeholder",
-                                            fn: function() {
-                                              return [
-                                                _c(
-                                                  "v-row",
-                                                  {
-                                                    staticClass:
-                                                      "fill-height ma-0",
-                                                    attrs: {
-                                                      align: "center",
-                                                      justify: "center"
-                                                    }
-                                                  },
-                                                  [
-                                                    _c("v-progress-circular", {
-                                                      attrs: {
-                                                        indeterminate: "",
-                                                        color: "grey lighten-5"
-                                                      }
-                                                    })
-                                                  ],
-                                                  1
-                                                )
-                                              ]
-                                            },
-                                            proxy: true
-                                          }
-                                        ],
-                                        null,
-                                        true
-                                      )
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.clickDownloadImage(image)
+                                        }
+                                      }
                                     },
-                                    [
-                                      _c(
-                                        "v-btn",
+                                    [_c("v-icon", [_vm._v("cloud_download")])],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      directives: [
                                         {
-                                          staticClass: "ma-2",
-                                          attrs: {
-                                            color: "cyan",
-                                            fab: "",
-                                            small: ""
-                                          }
+                                          name: "clipboard",
+                                          rawName: "v-clipboard:copy",
+                                          value: image.url_full,
+                                          expression: "image.url_full",
+                                          arg: "copy"
                                         },
-                                        [
-                                          _c("v-icon", [
-                                            _vm._v("cloud_download")
-                                          ])
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-btn",
                                         {
-                                          directives: [
-                                            {
-                                              name: "clipboard",
-                                              rawName: "v-clipboard:copy",
-                                              value: image.url_full,
-                                              expression: "image.url_full",
-                                              arg: "copy"
-                                            },
-                                            {
-                                              name: "clipboard",
-                                              rawName: "v-clipboard:success",
-                                              value: _vm.onCopyUrlFull,
-                                              expression: "onCopyUrlFull",
-                                              arg: "success"
-                                            }
-                                          ],
-                                          attrs: {
-                                            color: "teal",
-                                            fab: "",
-                                            small: ""
-                                          }
-                                        },
-                                        [_c("v-icon", [_vm._v("link")])],
-                                        1
-                                      )
-                                    ],
+                                          name: "clipboard",
+                                          rawName: "v-clipboard:success",
+                                          value: _vm.onCopyUrlFull,
+                                          expression: "onCopyUrlFull",
+                                          arg: "success"
+                                        }
+                                      ],
+                                      attrs: {
+                                        color: "teal",
+                                        fab: "",
+                                        small: ""
+                                      }
+                                    },
+                                    [_c("v-icon", [_vm._v("link")])],
                                     1
                                   )
                                 ],
                                 1
                               )
-                            }),
+                            ],
                             1
                           )
                         ],
                         1
                       )
-                    ],
+                    }),
                     1
                   )
                 ],
