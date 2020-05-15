@@ -17,6 +17,7 @@ class ChannelOfPurchase extends Model  implements Auditable
     protected $table = "channel_of_purchases";
     protected $connection = 'order';
     protected $fillable = ['name', 'status'];
+    protected $hidden = ['created_at', 'updated_at'];
 
     public function scopeUseOnly()
     {

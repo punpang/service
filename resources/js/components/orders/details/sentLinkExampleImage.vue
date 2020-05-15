@@ -1,7 +1,7 @@
 <template>
     <v-dialog v-model="dialog" persistent width="400">
         <template v-slot:activator="{ on }">
-            <v-btn color="primary" v-on="on">
+            <v-btn color="teal" v-on="on">
                 รูปต้นแบบสินค้า
             </v-btn>
         </template>

@@ -1,9 +1,9 @@
 <template>
     <v-row>
         <v-col cols="12" md="4" class="pb-0">
-            <imageThumbnail
-                :src="detail.product.product_image"
-            ></imageThumbnail>
+            <imageThumbnailPathSize800
+                :path="detail.product.product_image.src_name"
+            ></imageThumbnailPathSize800>
         </v-col>
         <v-col cols="12" md="8">
             <v-row class="px-4">
@@ -40,12 +40,12 @@
 </template>
 
 <script>
-import imageThumbnail from "@/js/components/google/drive/imageThumbnail";
+import imageThumbnailPathSize800 from "@/js/components/google/drive/imageThumbnailPathSize800";
 
 export default {
     props: ["detail"],
     components:{
-        imageThumbnail
+        imageThumbnailPathSize800
     }
 };
 </script>

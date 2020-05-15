@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Order;
 
+use App\GoogleImage;
 use App\Helper;
 use App\URL;
 use Bitly;
@@ -119,6 +120,7 @@ class OrderDetailController extends Controller
         if ($sent) {
             $sent = SentLinkForUploadImage::whereToken($token)->with(
                 'OrderDetail.order.CustomerNotFB',
+                'OrderDetail.order.ChannelOfPurchase',
                 'OrderDetail.order.OrderStatus',
                 'OrderDetail.Product.ProductImage',
                 'OrderDetail.Product.ProductTagUseOnly.ProductCategorySubUseOnly.ProductCategory',
@@ -274,9 +276,23 @@ class OrderDetailController extends Controller
         return response()->json(['success' => false, 'message' => 'เกิดข้อผิดพลาดบางอย่าง'], 200);
     }
 
-    public function downloadImage($public_id)
+    public function uploadFinishedProductImage(OrderDetail $detail)
     {
-        return Cloudder::createArchive([$public_id]);
-        return Cloudder::downloadArchiveUrl([$public_id]);
+        request()->validate([
+            'image' => 'required|image'
+        ], [
+            'image.required' => "กรุณาแนปรูปภาพ",
+            'image.image' => "กรุณาตรวจสอบนามสกุลไฟล์ ต้องเป็นไฟล์รูปเท่านั้น"
+        ]);
+
+        $fileName = GoogleImage::StoreAndFindPath(request()->file('image'));
+                
+        $detail->finished_product_image = $fileName;
+        $detail->update();
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'อัปโหลดรูปภาพสินค้าสำเร็จรูปสำเร็จ'
+        ], 200);
     }
 }

@@ -57,7 +57,7 @@
             <v-card
                 v-for="detail in detailsNo"
                 :key="detail.id"
-                class="mt-4"
+                class="mt-4"                
             >
                 <v-card-text class="pa-0">
                     <v-container class="py-0">

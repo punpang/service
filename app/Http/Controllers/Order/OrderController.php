@@ -187,7 +187,7 @@ class OrderController extends Controller
         try {
             $today = \Carbon\Carbon::now()->addDays(1)->format('Y-m-d 00:00:00');
             $data = Order::whereToken($token)->where('dateTime_get', '<=', $today)
-                ->with('CustomerNotFB', 'OrderStatus')
+                ->with('CustomerNotFB', 'OrderStatus','ChannelOfPurchase')
                 ->first();
             if ($data) {
                 return response()->json([

@@ -89,6 +89,16 @@ export default {
 
         async downloadImage({}, payload) {
             await axios.get("/api/order/detail/" + payload + "/downloadImage");
+        },
+
+        async uploadFinishedProductImage({}, payload) {
+            const res = await axios.post(
+                "/api/order/detail/" +
+                    payload.detail_id +
+                    "/uploadFinishedProductImage",
+                payload.formData
+            );
+            return res;
         }
     }
 };

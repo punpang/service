@@ -21,7 +21,8 @@ class OrderDetail extends Model implements Auditable
         'sum_price',
         'upload_image_status',
         'permission_to_publish',
-        'status'
+        'status',
+        'finished_product_image'
     ];
 
     protected $table = "order_details";
@@ -38,7 +39,8 @@ class OrderDetail extends Model implements Auditable
         'sum_price',
         'upload_image_status',
         'permission_to_publish',
-        'status'
+        'status',
+        'finished_product_image'
     ];
 
     protected $hidden = ['created_at', 'updated_at'];

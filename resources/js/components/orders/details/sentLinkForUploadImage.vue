@@ -1,7 +1,7 @@
 <template>
     <v-dialog v-model="dialog" persistent width="300">
         <template v-slot:activator="{ on }">
-            <v-btn color="primary" class="mr-2" v-on="on" @click="clickStart">
+            <v-btn color="indigo" class="mr-2" v-on="on" @click="clickStart">
                 <v-icon left>link</v-icon>
                 ส่งลิงก์อัปโหลดรูป
                 <!-- ส่งลิงก์อัปโหลดรูป -->

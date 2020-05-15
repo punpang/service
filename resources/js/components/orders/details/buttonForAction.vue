@@ -6,7 +6,14 @@
                     :detail="detail"
                     :action="action.update.detail"
                 ></formDetail>
-                <sentLinkMain v-if="detail.upload_image_status" :detail="detail"></sentLinkMain>
+                <sentLinkMain
+                    v-if="detail.upload_image_status"
+                    :detail="detail"
+                ></sentLinkMain>
+                <buttonFinishedProductImage
+                    class="mr-2"
+                    :detail="detail"
+                ></buttonFinishedProductImage>
                 <deleteDetail
                     :detail="detail"
                     :action="action.delete"
@@ -29,11 +36,15 @@
 import formDetail from "@/js/components/orders/details/_form_detail";
 import deleteDetail from "@/js/components/orders/details/deleteDetail";
 import sentLinkMain from "@/js/components/orders/details/sentLinkMain";
+import buttonFinishedProductImage from "@/js/components/orders/details/buttonFinishedProductImage";
 
 export default {
     props: ["detail"],
-    components:{
-        formDetail,deleteDetail,sentLinkMain
+    components: {
+        formDetail,
+        deleteDetail,
+        sentLinkMain,
+        buttonFinishedProductImage
     },
     data() {
         return {

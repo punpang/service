@@ -72,6 +72,8 @@ Route::middleware('admin')->group(function () { //สำหรับ admin
             Route::post('{detail}/redelete', 'Order\OrderDetailController@redelete');
             Route::get('{order_id}/getByOrderID', 'Order\OrderDetailController@getByOrderID');
 
+            Route::post('{detail}/uploadFinishedProductImage', 'Order\OrderDetailController@uploadFinishedProductImage');
+
             Route::post('{detail}/sentLinkForUploadImage', 'Order\OrderDetailController@sentLinkForUploadImage');
             Route::get('{public_id}/downloadImage', 'Order\OrderDetailController@downloadImage');
         });

@@ -13,8 +13,15 @@
             <v-col cols="7" md="7" class="text-right">{{ order.dateTime_get }}</v-col>
         </v-row>
         <v-row>
-            <v-col cols="6" md="6">สถานะ</v-col>
+            <v-col cols="6" md="6">ช่องทางการสั่งซื้อ</v-col>
             <v-col cols="6" md="6" class="text-right">{{
+                order.channel_of_purchase.name
+                
+            }}</v-col>
+        </v-row>
+        <v-row>
+            <v-col cols="5" md="5">สถานะ</v-col>
+            <v-col cols="7" md="7" class="text-right">{{
                 order.order_status.name
             }}</v-col>
         </v-row>
