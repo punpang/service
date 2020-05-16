@@ -4,16 +4,17 @@
             <template v-slot:activator="{ on }">
                 <v-btn
                     :color="action.buttonHead.color"
-                    class="mr-2 d-none d-sm-flex"
+                    class="d-none d-sm-flex"
                     v-on="on"
                     @click="start"
+                    block
                 >
                     <v-icon left>{{ action.buttonHead.icon }}</v-icon>
                     {{ action.buttonHead.text }}
                 </v-btn>
                 <v-btn
                     :color="action.buttonHead.color"
-                    class="mr-2 d-flex d-sm-none"
+                    class="d-flex d-sm-none"
                     fab
                     small
                     @click="start"

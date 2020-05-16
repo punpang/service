@@ -129,7 +129,8 @@ export default {
                 this.$refs.FormNewOrder.reset();
                 this.snackbar.reset = true
         }
-    }
+    },
+    
 }
 </script>
 

@@ -2,16 +2,17 @@
     <div>
         <v-dialog v-model="dialog" persistent width="800">
             <template v-slot:activator="{ on }">
-                <v-btn color="indigo" class="mr-2 d-none d-sm-flex" v-on="on">
+                <v-btn color="indigo" class="d-none d-sm-flex" v-on="on" block>
                     <v-icon left>link</v-icon>
                     ส่งลิงก์อัปโหลดรูป
                 </v-btn>
                 <v-btn
                     color="indigo"
-                    class="mr-2 d-flex d-sm-none"
+                    class="d-flex d-sm-none"
                     fab
                     small
                     v-on="on"
+                    
                 >
                     <v-icon>link</v-icon>
                     <!-- ส่งลิงก์อัปโหลดรูป -->

@@ -874,11 +874,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["order", 'count'],
+  props: ["order", "count"],
   components: {
     formDetail: _js_components_orders_details_form_detail__WEBPACK_IMPORTED_MODULE_2__["default"],
     MainPayment: _js_components_orders_payments_main__WEBPACK_IMPORTED_MODULE_3__["default"]
@@ -1129,6 +1137,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
 //
 //
 //
@@ -2274,6 +2283,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2338,6 +2371,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
 //
 //
 //
@@ -3135,6 +3169,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
 //
 //
 //
@@ -5034,6 +5069,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
+      adminType: this.$store.getters["main/User"].type,
       dataTable: [],
       snackbar: {
         status: false
@@ -5072,7 +5108,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         value: "action",
         align: "end"
       }],
-      dataSelect: []
+      dataSelect: [],
+      firstLoad: false
     };
   },
   methods: {
@@ -5147,13 +5184,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var _this2 = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      var User;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              _this2.reload();
+              _context2.next = 2;
+              return _this2.reload();
 
-            case 1:
+            case 2:
+              _this2.firstLoad = true;
+              _context2.next = 5;
+              return _this2.$store.getters["main/User"];
+
+            case 5:
+              User = _context2.sent;
+
+              if (User && User.type != 1) {
+                _this2.$router.replace({
+                  name: "PageNotFound"
+                });
+              }
+
+            case 7:
             case "end":
               return _context2.stop();
           }
@@ -6186,7 +6239,11 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-icon",
-                { attrs: { color: "error" }, on: { click: _vm.emitDialogOff } },
+                {
+                  staticClass: " d-none d-sm-flex",
+                  attrs: { color: "error" },
+                  on: { click: _vm.emitDialogOff }
+                },
                 [_vm._v("close")]
               )
             ],
@@ -6219,6 +6276,32 @@ var render = function() {
           _c(
             "v-list-item",
             {
+              staticClass: "indigo darken-1",
+              on: { click: _vm.emitDialogOff }
+            },
+            [
+              _c(
+                "v-list-item-icon",
+                [_c("v-icon", [_vm._v("directions_bus")])],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-list-item-content",
+                [
+                  _c("v-list-item-title", { staticClass: "py-1" }, [
+                    _vm._v("บริการจัดส่ง")
+                  ])
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-list-item",
+            {
               directives: [
                 {
                   name: "show",
@@ -6234,7 +6317,56 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-list-item-content",
-                [_c("v-list-item-title", [_vm._v("ยกเลิกรายการสั่งซื้อ")])],
+                [
+                  _c("v-list-item-title", { staticClass: "py-1" }, [
+                    _vm._v("ยกเลิกรายการสั่งซื้อ")
+                  ])
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-list-item",
+            {
+              staticClass: "light-blue mt-4",
+              on: { click: _vm.emitDialogOff }
+            },
+            [
+              _c("v-list-item-icon", [_c("v-icon", [_vm._v("contacts")])], 1),
+              _vm._v(" "),
+              _c(
+                "v-list-item-content",
+                [
+                  _c("v-list-item-title", { staticClass: "py-1" }, [
+                    _vm._v("เปลี่ยนผู้สั่งซื้อ")
+                  ])
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-list-item",
+            { staticClass: "light-blue", on: { click: _vm.emitDialogOff } },
+            [
+              _c(
+                "v-list-item-icon",
+                [_c("v-icon", [_vm._v("access_time")])],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-list-item-content",
+                [
+                  _c("v-list-item-title", { staticClass: "py-1" }, [
+                    _vm._v("เปลี่ยนวัน-เวลารับสินค้า")
+                  ])
+                ],
                 1
               )
             ],
@@ -6257,7 +6389,11 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-list-item-content",
-                [_c("v-list-item-title", [_vm._v("ออก")])],
+                [
+                  _c("v-list-item-title", { staticClass: "py-1" }, [
+                    _vm._v("ออก")
+                  ])
+                ],
                 1
               )
             ],
@@ -6265,64 +6401,9 @@ var render = function() {
           )
         ],
         1
-      ),
-      _vm._v(" "),
-      _c("hr"),
-      _vm._v(" "),
-      _c("hr"),
-      _vm._v(" "),
-      _c("v-btn", { attrs: { block: "", color: "info", large: "" } }, [
-        _vm._v("อัปโหลดภาพ")
-      ]),
-      _vm._v(" "),
-      _c("hr", { staticClass: "my-2" }),
-      _vm._v(" "),
-      _c(
-        "v-btn",
-        { staticClass: "mb-2", attrs: { block: "", color: "info", large: "" } },
-        [_vm._v("ข้อมูลผู้ส่งซื้อ")]
-      ),
-      _vm._v(" "),
-      _c("v-btn", { attrs: { block: "", color: "info", large: "" } }, [
-        _vm._v("วัน-เวลาที่รับสินค้า")
-      ]),
-      _vm._v(" "),
-      _c("hr", { staticClass: "my-2" }),
-      _vm._v(" "),
-      _vm._l(_vm.buttons, function(ref) {
-        var index = ref.index
-        var color = ref.color
-        var status = ref.status
-        var text = ref.text
-        return _c(
-          "div",
-          { key: index },
-          [
-            _c(
-              "v-btn",
-              {
-                staticClass: "mb-2",
-                attrs: { block: "", large: "", color: color },
-                on: {
-                  click: function($event) {
-                    return _vm.clickUpdateStatus(status)
-                  }
-                }
-              },
-              [_vm._v(_vm._s(text))]
-            )
-          ],
-          1
-        )
-      }),
-      _vm._v(" "),
-      _vm.order.order_status.id != 1
-        ? _c("v-btn", { attrs: { block: "", color: "error", large: "" } }, [
-            _vm._v("ยกเลิก")
-          ])
-        : _vm._e()
+      )
     ],
-    2
+    1
   )
 }
 var staticRenderFns = []
@@ -6607,7 +6688,7 @@ var render = function() {
                           _c(
                             "v-list-item-content",
                             [
-                              _c("v-list-item-title", [
+                              _c("v-list-item-title", { staticClass: "py-1" }, [
                                 _vm._v(_vm._s(_vm.action.title))
                               ])
                             ],
@@ -6623,8 +6704,8 @@ var render = function() {
                         "v-btn",
                         _vm._g(
                           {
-                            staticClass: "mr-2 d-none d-sm-flex",
-                            attrs: { color: "warning" },
+                            staticClass: "d-none d-sm-flex",
+                            attrs: { color: "warning", block: "" },
                             on: { click: _vm.start }
                           },
                           on
@@ -6648,7 +6729,7 @@ var render = function() {
                         "v-btn",
                         _vm._g(
                           {
-                            staticClass: "mr-2 d-flex d-sm-none",
+                            staticClass: "d-flex d-sm-none",
                             attrs: { color: "warning", fab: "", small: "" },
                             on: { click: _vm.start }
                           },
@@ -8143,7 +8224,7 @@ var render = function() {
                     _vm._g(
                       {
                         staticClass: "d-none d-sm-flex",
-                        attrs: { color: "cyan" }
+                        attrs: { color: "cyan", block: "" }
                       },
                       on
                     ),
@@ -8285,28 +8366,47 @@ var render = function() {
     [
       _vm.detail.status
         ? _c(
-            "v-col",
-            { attrs: { cols: "12", md: "12" } },
+            "v-row",
+            { staticClass: "pa-2" },
             [
               _c(
-                "v-row",
+                "v-col",
+                { staticClass: "pa-1", attrs: { cols: "2", md: "4" } },
                 [
                   _c("formDetail", {
                     attrs: {
                       detail: _vm.detail,
                       action: _vm.action.update.detail
                     }
-                  }),
-                  _vm._v(" "),
-                  _vm.detail.upload_image_status
-                    ? _c("sentLinkMain", { attrs: { detail: _vm.detail } })
-                    : _vm._e(),
-                  _vm._v(" "),
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _vm.detail.upload_image_status
+                ? _c(
+                    "v-col",
+                    { staticClass: "pa-1", attrs: { cols: "2", md: "4" } },
+                    [_c("sentLinkMain", { attrs: { detail: _vm.detail } })],
+                    1
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pa-1", attrs: { cols: "2", md: "4" } },
+                [
                   _c("buttonFinishedProductImage", {
-                    staticClass: "mr-2",
                     attrs: { detail: _vm.detail }
-                  }),
-                  _vm._v(" "),
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pa-1", attrs: { cols: "2", md: "4" } },
+                [
                   _c("deleteDetail", {
                     attrs: { detail: _vm.detail, action: _vm.action.delete }
                   })
@@ -8317,11 +8417,11 @@ var render = function() {
             1
           )
         : _c(
-            "v-col",
-            { attrs: { cols: "12", md: "12" } },
+            "v-row",
             [
               _c(
-                "v-row",
+                "v-col",
+                { staticClass: "pa-1", attrs: { cols: "2", md: "4" } },
                 [
                   _c("deleteDetail", {
                     attrs: { detail: _vm.detail, action: _vm.action.redelete }
@@ -8375,8 +8475,11 @@ var render = function() {
                     "v-btn",
                     _vm._g(
                       {
-                        staticClass: "mr-2 d-none d-sm-flex",
-                        attrs: { color: _vm.action.buttonHead.color },
+                        staticClass: "d-none d-sm-flex",
+                        attrs: {
+                          color: _vm.action.buttonHead.color,
+                          block: ""
+                        },
                         on: { click: _vm.start }
                       },
                       on
@@ -8398,7 +8501,7 @@ var render = function() {
                     "v-btn",
                     _vm._g(
                       {
-                        staticClass: "mr-2 d-flex d-sm-none",
+                        staticClass: "d-flex d-sm-none",
                         attrs: {
                           color: _vm.action.buttonHead.color,
                           fab: "",
@@ -9350,8 +9453,8 @@ var render = function() {
                     "v-btn",
                     _vm._g(
                       {
-                        staticClass: "mr-2 d-none d-sm-flex",
-                        attrs: { color: "indigo" }
+                        staticClass: "d-none d-sm-flex",
+                        attrs: { color: "indigo", block: "" }
                       },
                       on
                     ),
@@ -9368,7 +9471,7 @@ var render = function() {
                     "v-btn",
                     _vm._g(
                       {
-                        staticClass: "mr-2 d-flex d-sm-none",
+                        staticClass: "d-flex d-sm-none",
                         attrs: { color: "indigo", fab: "", small: "" }
                       },
                       on
@@ -10663,7 +10766,7 @@ var render = function() {
                         [
                           _c(
                             "v-list-item-title",
-                            { staticClass: "black--text" },
+                            { staticClass: "black--text py-1" },
                             [
                               _vm._v(
                                 "\n                        การชำระเงิน\n                    "
@@ -11628,163 +11731,169 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c(
-        "v-item-group",
-        { attrs: { mandatory: true } },
+  return _vm.firstLoad
+    ? _c(
+        "div",
         [
           _c(
-            "v-row",
-            _vm._l(_vm.dataSelect, function(ref) {
-              var text = ref.text
-              var count = ref.count
-              var textSmall = ref.textSmall
-              var textBig = ref.textBig
-              var colorBlock = ref.colorBlock
-              var colorText = ref.colorText
-              return _c("v-col", { key: text, attrs: { cols: "6", md: "3" } }, [
-                _c(
-                  "div",
-                  {
-                    on: {
-                      click: function($event) {
-                        return _vm.clickOrderSelect(text)
-                      }
-                    }
-                  },
-                  [
-                    _c("v-item", {
-                      scopedSlots: _vm._u(
-                        [
-                          {
-                            key: "default",
-                            fn: function(ref) {
-                              var active = ref.active
-                              var toggle = ref.toggle
-                              return [
-                                _c(
-                                  "v-card",
-                                  {
-                                    attrs: {
-                                      shaped: "",
-                                      color: active ? colorBlock : ""
-                                    },
-                                    on: { click: toggle }
-                                  },
-                                  [
-                                    _c("v-card-text", [
-                                      _c(
-                                        "p",
-                                        {
-                                          staticClass:
-                                            "display-2 font-weight-black mb-2",
-                                          class: active ? colorText : ""
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                    " +
-                                              _vm._s(count) +
-                                              "\n                                "
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "p",
-                                        {
-                                          staticClass:
-                                            "subtitle-1 ma-0 d-none d-sm-flex",
-                                          class: active ? colorText : ""
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                    " +
-                                              _vm._s(textBig) +
-                                              "\n                                "
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "p",
-                                        {
-                                          staticClass:
-                                            "subtitle-1 ma-0 d-flex d-sm-none",
-                                          class: active ? colorText : ""
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                    " +
-                                              _vm._s(textSmall) +
-                                              "\n                                "
-                                          )
-                                        ]
-                                      )
-                                    ])
-                                  ],
-                                  1
-                                )
-                              ]
+            "v-item-group",
+            { attrs: { mandatory: true } },
+            [
+              _c(
+                "v-row",
+                _vm._l(_vm.dataSelect, function(ref) {
+                  var text = ref.text
+                  var count = ref.count
+                  var textSmall = ref.textSmall
+                  var textBig = ref.textBig
+                  var colorBlock = ref.colorBlock
+                  var colorText = ref.colorText
+                  return _c(
+                    "v-col",
+                    { key: text, attrs: { cols: "6", md: "3" } },
+                    [
+                      _c(
+                        "div",
+                        {
+                          on: {
+                            click: function($event) {
+                              return _vm.clickOrderSelect(text)
                             }
                           }
+                        },
+                        [
+                          _c("v-item", {
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "default",
+                                  fn: function(ref) {
+                                    var active = ref.active
+                                    var toggle = ref.toggle
+                                    return [
+                                      _c(
+                                        "v-card",
+                                        {
+                                          attrs: {
+                                            shaped: "",
+                                            color: active ? colorBlock : ""
+                                          },
+                                          on: { click: toggle }
+                                        },
+                                        [
+                                          _c("v-card-text", [
+                                            _c(
+                                              "p",
+                                              {
+                                                staticClass:
+                                                  "display-2 font-weight-black mb-2",
+                                                class: active ? colorText : ""
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                    " +
+                                                    _vm._s(count) +
+                                                    "\n                                "
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "p",
+                                              {
+                                                staticClass:
+                                                  "subtitle-1 ma-0 d-none d-sm-flex",
+                                                class: active ? colorText : ""
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                    " +
+                                                    _vm._s(textBig) +
+                                                    "\n                                "
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "p",
+                                              {
+                                                staticClass:
+                                                  "subtitle-1 ma-0 d-flex d-sm-none",
+                                                class: active ? colorText : ""
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                    " +
+                                                    _vm._s(textSmall) +
+                                                    "\n                                "
+                                                )
+                                              ]
+                                            )
+                                          ])
+                                        ],
+                                        1
+                                      )
+                                    ]
+                                  }
+                                }
+                              ],
+                              null,
+                              true
+                            )
+                          })
                         ],
-                        null,
-                        true
+                        1
                       )
-                    })
-                  ],
-                  1
-                )
-              ])
-            }),
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-container",
-        [
-          _c(
-            "v-row",
-            [
-              _c("OrderCreate", {
-                staticClass: "mr-2",
-                attrs: { headers: _vm.headers },
-                on: { OnDataTable: _vm.OnDataTable }
-              }),
-              _vm._v(" "),
-              _c(
-                "v-btn",
-                {
-                  staticClass: "info",
-                  attrs: { fab: "", "x-small": "" },
-                  on: { click: _vm.reload }
-                },
-                [_c("v-icon", [_vm._v("refresh")])],
+                    ]
+                  )
+                }),
                 1
               )
             ],
             1
-          )
+          ),
+          _vm._v(" "),
+          _c(
+            "v-container",
+            [
+              _c(
+                "v-row",
+                [
+                  _c("OrderCreate", {
+                    staticClass: "mr-2",
+                    attrs: { headers: _vm.headers },
+                    on: { OnDataTable: _vm.OnDataTable }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "info",
+                      attrs: { fab: "", "x-small": "" },
+                      on: { click: _vm.reload }
+                    },
+                    [_c("v-icon", [_vm._v("refresh")])],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("OrderTable", {
+            attrs: { dataTable: _vm.dataTable, headers: _vm.headers },
+            on: { emitDialogTableFalse: _vm.emitDialogTableFalse }
+          }),
+          _vm._v(" "),
+          _c("snackbarRight", { attrs: { snackbar: _vm.snackbar } }),
+          _vm._v(" "),
+          _c("overlay", { attrs: { overlay: _vm.overlay } })
         ],
         1
-      ),
-      _vm._v(" "),
-      _c("OrderTable", {
-        attrs: { dataTable: _vm.dataTable, headers: _vm.headers },
-        on: { emitDialogTableFalse: _vm.emitDialogTableFalse }
-      }),
-      _vm._v(" "),
-      _c("snackbarRight", { attrs: { snackbar: _vm.snackbar } }),
-      _vm._v(" "),
-      _c("overlay", { attrs: { overlay: _vm.overlay } })
-    ],
-    1
-  )
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true

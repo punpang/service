@@ -45,16 +45,16 @@ export default {
             this.drawer = !this.drawer;
         }
     },
-    beforeCreate() {
+    async beforeCreate() {
         if (localStorage.token) {
-            axios
+            await axios
                 .get("/api/user", {
                     headers: {
                         Authorization: "Bearer " + localStorage.getItem("token")
                     }
                 })
                 .then(response => {
-                    this.$store.commit("main/loginUser");
+                    //this.$store.commit("main/loginUser");
                     this.$store.commit("main/User", response.data);
                 })
                 .catch(error => {
@@ -65,7 +65,7 @@ export default {
                     ) {
                         this.$store.commit("main/logoutUser");
                         localStorage.setItem("token", "");
-                        this.$router.push({ name: "login" });
+                        this.$router.replace({ name: "login" });
                     }
                 });
         }

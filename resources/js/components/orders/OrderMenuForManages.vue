@@ -4,23 +4,53 @@
             <v-card-title>
                 การจัดการ
                 <v-spacer></v-spacer>
-                <v-icon color="error" @click="emitDialogOff">close</v-icon>
+                <v-icon color="error" class=" d-none d-sm-flex" @click="emitDialogOff">close</v-icon>
             </v-card-title>
         </v-card>
         <v-list-item-group class="py-0">
             <formDetail
                 :order="order"
                 :action="action.create.detail"
-            ></formDetail>      
+            ></formDetail>
 
-            <MainPayment v-show="order.order_status.id > 1" :count="count"></MainPayment>          
+            <MainPayment
+                v-show="order.order_status.id > 1"
+                :count="count"
+            ></MainPayment>
+
+            <v-list-item @click="emitDialogOff" class="indigo darken-1">
+                <v-list-item-icon>
+                    <v-icon>directions_bus</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                    <v-list-item-title class="py-1">บริการจัดส่ง</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
 
             <v-list-item class="error" v-show="order.order_status.id != 8">
                 <v-list-item-icon>
                     <v-icon>cancel</v-icon>
                 </v-list-item-icon>
                 <v-list-item-content>
-                    <v-list-item-title>ยกเลิกรายการสั่งซื้อ</v-list-item-title>
+                    <v-list-item-title class="py-1">ยกเลิกรายการสั่งซื้อ</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item @click="emitDialogOff" class="light-blue mt-4">
+                <v-list-item-icon>
+                    <v-icon>contacts</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                    <v-list-item-title class="py-1">เปลี่ยนผู้สั่งซื้อ</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item @click="emitDialogOff" class="light-blue">
+                <v-list-item-icon>
+                    <v-icon >access_time</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                    <v-list-item-title class="py-1">เปลี่ยนวัน-เวลารับสินค้า</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
 
@@ -29,32 +59,10 @@
                     <v-icon>exit_to_app</v-icon>
                 </v-list-item-icon>
                 <v-list-item-content>
-                    <v-list-item-title>ออก</v-list-item-title>
+                    <v-list-item-title class="py-1">ออก</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
-        </v-list-item-group>
-
-        <hr />
-        <hr />
-
-        <v-btn block color="info" large>อัปโหลดภาพ</v-btn>
-        <hr class="my-2" />
-        <v-btn block color="info" class="mb-2" large>ข้อมูลผู้ส่งซื้อ</v-btn>
-        <v-btn block color="info" large>วัน-เวลาที่รับสินค้า</v-btn>
-        <hr class="my-2" />
-        <div v-for="{ index, color, status, text } in buttons" :key="index">
-            <v-btn
-                block
-                large
-                :color="color"
-                @click="clickUpdateStatus(status)"
-                class="mb-2"
-                >{{ text }}</v-btn
-            >
-        </div>
-        <v-btn v-if="order.order_status.id != 1" block color="error" large
-            >ยกเลิก</v-btn
-        >
+        </v-list-item-group>        
     </div>
 </template>
 
@@ -64,7 +72,7 @@ import formDetail from "@/js/components/orders/details/_form_detail";
 import MainPayment from "@/js/components/orders/payments/main";
 
 export default {
-    props: ["order",'count'],
+    props: ["order", "count"],
     components: {
         formDetail,
         MainPayment
@@ -77,8 +85,8 @@ export default {
                 create: {
                     detail: {
                         method: "create",
-                        title:"เพิ่มสินค้าใหม่",
-                        icon:"add_shopping_cart"
+                        title: "เพิ่มสินค้าใหม่",
+                        icon: "add_shopping_cart"
                     }
                 }
             }

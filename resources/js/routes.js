@@ -9,6 +9,7 @@ Vue.use(VueRouter);
 import DashboardComponent from "@/js/components/DashboardComponent";
 import LoginComponent from "@/js/components/LoginComponent";
 import LogoutComponent from "@/js/components/LogoutComponent";
+import PageNotFound from "@/js/components/PageNotFound";
 
 const routes = [
     {
@@ -75,18 +76,20 @@ const routes = [
     {
         path: "/punpang/order/:token",
         name: "orderToken",
-        component: () => import("@/js/pages/punpang/orders/show"),
+        component: () => import("@/js/pages/punpang/orders/show")
     },
     {
         path: "/punpang/order/:token/:amount/payment",
         name: "orderTokenPayment",
-        component: () => import("@/js/pages/punpang/orders/payment"),
+        component: () => import("@/js/pages/punpang/orders/payment")
     },
-    {   // ส่งลิงก์อัปโหลดรูป
+    {
+        // ส่งลิงก์อัปโหลดรูป
         path: "/punpang/order/:token/uploadImage",
         name: "orderTokenUploadImage",
-        component: () => import("@/js/pages/punpang/orders/uploadImage"),
+        component: () => import("@/js/pages/punpang/orders/uploadImage")
     },
+    { path: "*", name: "PageNotFound", component: PageNotFound }
 ];
 
 const router = new VueRouter({

@@ -12,15 +12,16 @@
                         <v-icon>{{ action.icon }}</v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
-                        <v-list-item-title>{{
+                        <v-list-item-title class="py-1">{{
                             action.title
                         }}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
                 <v-btn
                     color="warning"
-                    class="mr-2 d-none d-sm-flex"
+                    class="d-none d-sm-flex"
                     v-if="action.method == 'update'"
+                    block
                     v-on="on"
                     @click="start"
                 >
@@ -29,7 +30,7 @@
                 </v-btn>
                 <v-btn
                     color="warning"
-                    class="mr-2 d-flex d-sm-none"
+                    class="d-flex d-sm-none"
                     v-if="action.method == 'update'"
                     fab
                     small

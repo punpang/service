@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="firstLoad">
         <v-item-group :mandatory="true">
             <v-row>
                 <v-col
@@ -85,11 +85,12 @@ export default {
     },
     data() {
         return {
+            adminType: this.$store.getters["main/User"].type,
             dataTable: [],
             snackbar: {
                 status: false
             },
-            selected_table:"today",
+            selected_table: "today",
             overlay: false,
             counts: {
                 today: 0,
@@ -110,7 +111,8 @@ export default {
                 { text: "สถานะ", value: "order_status_id", align: "center" },
                 { text: "การจัดการ", value: "action", align: "end" }
             ],
-            dataSelect: []
+            dataSelect: [],
+            firstLoad: false
         };
     },
     methods: {
@@ -152,12 +154,17 @@ export default {
             };
             this.dataTable = this.orders.today;
             this.dataSelect = dataTable.menus;
-            this.clickOrderSelect(this.selected_table);
+            this.clickOrderSelect(this.selected_table);            
             this.overlay = false;
         }
     },
     async mounted() {
-        this.reload();
+        await this.reload();
+        this.firstLoad = true;
+        const User = await this.$store.getters["main/User"];
+        if (User && User.type != 1) {
+            this.$router.replace({ name: "PageNotFound" });
+        }
     }
 };
 </script>

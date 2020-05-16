@@ -1,34 +1,58 @@
 <template>
     <div>
-        <v-col cols="12" md="12" v-if="detail.status">
-            <v-row>
-                <formDetail
+        <v-row v-if="detail.status" class="pa-2">
+            <v-col cols="2" md="4" class="pa-1"
+                ><formDetail
                     :detail="detail"
                     :action="action.update.detail"
-                ></formDetail>
-                <sentLinkMain
-                    v-if="detail.upload_image_status"
+                ></formDetail
+            ></v-col>
+            <v-col
+                cols="2"
+                md="4"
+                class="pa-1"
+                v-if="detail.upload_image_status"
+                ><sentLinkMain :detail="detail"></sentLinkMain
+            ></v-col>
+            <v-col cols="2" md="4" class="pa-1"
+                ><buttonFinishedProductImage
                     :detail="detail"
-                ></sentLinkMain>
-                <buttonFinishedProductImage
-                    class="mr-2"
-                    :detail="detail"
-                ></buttonFinishedProductImage>
-                <deleteDetail
+                ></buttonFinishedProductImage
+            ></v-col>
+            <v-col cols="2" md="4" class="pa-1"
+                ><deleteDetail
                     :detail="detail"
                     :action="action.delete"
-                ></deleteDetail>
-            </v-row>
-        </v-col>
+                ></deleteDetail
+            ></v-col>
+            <!---
+            <formDetail
+                :detail="detail"
+                :action="action.update.detail"
+            ></formDetail>
+            <sentLinkMain
+                v-if="detail.upload_image_status"
+                :detail="detail"
+            ></sentLinkMain>
+            <buttonFinishedProductImage
+                class="mr-2"
+                :detail="detail"
+            ></buttonFinishedProductImage>
+            <deleteDetail
+                :detail="detail"
+                :action="action.delete"
+            ></deleteDetail>
+            -->
+        </v-row>
 
-        <v-col cols="12" md="12" v-else>
-            <v-row>
-                <deleteDetail
+        <v-row v-else>
+            <v-col cols="2" md="4" class="pa-1"
+                ><deleteDetail
                     :detail="detail"
                     :action="action.redelete"
-                ></deleteDetail>
-            </v-row>
-        </v-col>
+                ></deleteDetail
+            ></v-col>
+        </v-row>
     </div>
 </template>
 

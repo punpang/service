@@ -13,7 +13,7 @@
                         </v-badge>
                     </v-list-item-icon>
                     <v-list-item-content>
-                        <v-list-item-title class="black--text">
+                        <v-list-item-title class="black--text py-1">
                             การชำระเงิน
                         </v-list-item-title>
                     </v-list-item-content>

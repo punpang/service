@@ -19,7 +19,7 @@
                         <v-list-item-title>{{ menu.title }}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
-            </v-list>
+            </v-list>            
         </v-navigation-drawer>
 </template>
 
@@ -41,8 +41,6 @@ export default {
                 { icon: "shop", title: "สินค้า", to: "/product" }
             ],
         };
-    },
-    methods: {
     }
 };
 </script>

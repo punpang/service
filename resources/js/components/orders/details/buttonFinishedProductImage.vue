@@ -2,7 +2,7 @@
     <div>
         <v-dialog v-model="dialog" persistent width="500">
             <template v-slot:activator="{ on }">
-                <v-btn v-on="on" color="cyan" class="d-none d-sm-flex">
+                <v-btn v-on="on" color="cyan" class="d-none d-sm-flex" block>
                     <v-icon left>
                         insert_photo
                     </v-icon>
@@ -59,7 +59,7 @@ export default {
     },
     methods: {
         async changeUploadFinishedProductImage() {
-            let loader = this.$loading.show()
+            let loader = this.$loading.show();
             const file = event.target.files[0];
             const formData = new FormData();
             formData.append("image", file);
@@ -70,17 +70,17 @@ export default {
             const res = await this.$store.dispatch(
                 "orderDetail/uploadFinishedProductImage",
                 form
-            );           
+            );
 
-            if(res.status === 200){
-                if(res.data.success){
-                    this.$toast.success(res.data.message)
+            if (res.status === 200) {
+                if (res.data.success) {
+                    this.$toast.success(res.data.message);
                 }
-            }else{
-                this.$toast.error("เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง")
+            } else {
+                this.$toast.error("เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง");
             }
             await this.$store.dispatch("order/getByID", this.detail.order_id);
-            loader.hide()
+            loader.hide();
         }
     }
 };
