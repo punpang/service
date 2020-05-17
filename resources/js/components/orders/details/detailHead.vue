@@ -3,7 +3,7 @@
         <v-card-title>
             รายการสั่งซื้อ
             <v-spacer></v-spacer>
-            #{{ this.$store.getters['order/getByID'].data.id }}0582
+            #{{ this.$store.getters['order/getByID'].data.id }}
         </v-card-title>
         <v-divider class="ma-1"></v-divider>
         <v-card-text class="px-0 pt-0">

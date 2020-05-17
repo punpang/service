@@ -341,6 +341,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -356,7 +357,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       reply: {
         order: {
           counts: 0,
-          data: {}
+          data: []
         }
       },
       form: {
@@ -461,12 +462,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                   _this.overlay = false;
                 } else if (response.status == 400) {
+                  _this.dateTimeStatus = false;
                   _this.formData.dateTime_get = '';
 
                   _this.$toast.error(response.data.message);
 
                   _this.overlay = false;
                 } else {
+                  _this.dateTimeStatus = false;
+
                   _this.$toast.error("เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง");
 
                   _this.overlay = false;
@@ -599,9 +603,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _js_components_orders_OrderTable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/js/components/orders/OrderTable */ "./resources/js/components/orders/OrderTable.vue");
-//
-//
+/* harmony import */ var _js_components_orders_OrderTableForCheckDateTimeGet__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/js/components/orders/OrderTableForCheckDateTimeGet */ "./resources/js/components/orders/OrderTableForCheckDateTimeGet.vue");
 //
 //
 //
@@ -623,13 +625,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["order", 'headers'],
+  name: "OrderListsForchecked",
+  props: ["order"],
   components: {
-    OrderTable: _js_components_orders_OrderTable__WEBPACK_IMPORTED_MODULE_0__["default"]
+    OrderTableForCheckDateTimeGet: _js_components_orders_OrderTableForCheckDateTimeGet__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
     return {
-      dialog: false
+      dialog: false,
+      headers: [{
+        text: "Order.",
+        value: "id"
+      }, {
+        text: "ชื่อลูกค้า",
+        value: "customer_name"
+      }, {
+        text: "เบอร์โทรลูกค้า",
+        value: "customer_phone"
+      }, {
+        text: "วัน-เวลาที่รับ",
+        value: "dateTime_get"
+      }, {
+        text: "สถานะ",
+        value: "order_status_id",
+        align: "center"
+      }]
     };
   }
 });
@@ -805,9 +825,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _js_components_orders_details_add__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/orders/details/add */ "./resources/js/components/orders/details/add.vue");
-/* harmony import */ var _js_components_orders_details_form_detail__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/components/orders/details/_form_detail */ "./resources/js/components/orders/details/_form_detail.vue");
-/* harmony import */ var _js_components_orders_payments_main__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/js/components/orders/payments/main */ "./resources/js/components/orders/payments/main.vue");
+/* harmony import */ var _js_components_orders_details_form_detail__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/orders/details/_form_detail */ "./resources/js/components/orders/details/_form_detail.vue");
+/* harmony import */ var _js_components_orders_payments_main__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/components/orders/payments/main */ "./resources/js/components/orders/payments/main.vue");
+/* harmony import */ var _js_components_orders_details_changeDateTimeGet__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/js/components/orders/details/changeDateTimeGet */ "./resources/js/components/orders/details/changeDateTimeGet.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -875,21 +895,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["order", "count"],
   components: {
-    formDetail: _js_components_orders_details_form_detail__WEBPACK_IMPORTED_MODULE_2__["default"],
-    MainPayment: _js_components_orders_payments_main__WEBPACK_IMPORTED_MODULE_3__["default"]
+    formDetail: _js_components_orders_details_form_detail__WEBPACK_IMPORTED_MODULE_1__["default"],
+    MainPayment: _js_components_orders_payments_main__WEBPACK_IMPORTED_MODULE_2__["default"],
+    changeDateTimeGet: _js_components_orders_details_changeDateTimeGet__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
@@ -1022,29 +1036,80 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: "OrderTable",
   props: ["dataTable", "headers"],
   components: {
-    OrderManages: _js_components_orders_OrderManages__WEBPACK_IMPORTED_MODULE_0__["default"],
-    BadgesOrderManages: {
-      content: "",
-      value: "",
-      color: ""
-    }
+    OrderManages: _js_components_orders_OrderManages__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      BadgesOrderManages: {
+        content: "",
+        value: "",
+        color: ""
+      }
+    };
   },
   methods: {
     emitDialogTableFalse: function emitDialogTableFalse() {
       this.$emit("emitDialogTableFalse");
     },
     setBadgesOrderManages: function setBadgesOrderManages() {
-      if (this.$store.getters["order/getByID"].cpunt.slipNotVerify) {
+      if (this.$store.getters["order/getByID"].count.slipNotVerify) {
         this.BadgesOrderManages = {
-          content: this.$store.getters["order/getByID"].cpunt.slipNotVerify,
-          value: this.$store.getters["order/getByID"].cpunt.slipNotVerify,
+          content: this.$store.getters["order/getByID"].count.slipNotVerify,
+          value: this.$store.getters["order/getByID"].count.slipNotVerify,
           color: "warning"
         };
       }
     }
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/OrderTableForCheckDateTimeGet.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/orders/OrderTableForCheckDateTimeGet.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["dataTable", "headers"]
 });
 
 /***/ }),
@@ -1112,6 +1177,148 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["sum"]
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/details/_FormChangeDateTimeGet.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/orders/details/_FormChangeDateTimeGet.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _js_components_orders_OrderListsForchecked__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/orders/OrderListsForchecked */ "./resources/js/components/orders/OrderListsForchecked.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["form", "timeGets"],
+  components: {
+    OrderListsForchecked: _js_components_orders_OrderListsForchecked__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      dateTime_get: "",
+      headers: [{
+        text: "Order.",
+        value: "id"
+      }, {
+        text: "ชื่อลูกค้า",
+        value: "customer_name"
+      }, {
+        text: "เบอร์โทรลูกค้า",
+        value: "customer_phone"
+      }, {
+        text: "วัน-เวลาที่รับ",
+        value: "dateTime_get"
+      }, {
+        text: "สถานะ",
+        value: "order_status_id",
+        align: "center"
+      }]
+    };
+  },
+  methods: {
+    changeDateTime: function changeDateTime(date, time) {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var dateTime_get, response, data;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!(date && time)) {
+                  _context.next = 8;
+                  break;
+                }
+
+                _this.dateTimeStatus = false;
+                _this.overlay = true;
+                dateTime_get = date + " " + time;
+                _context.next = 6;
+                return _this.$store.dispatch("order/checkDateTimeForGet", dateTime_get);
+
+              case 6:
+                response = _context.sent;
+
+                if (response.status == 200) {
+                  data = response.data.data;
+                  _this.dateTimeStatus = true;
+                  _this.dateTime_get = data.dateTime_get;
+
+                  _this.emitReplyOrder(data.orders);
+
+                  _this.$toast.success(response.data.message);
+
+                  _this.overlay = false;
+                } else if (response.status == 400) {
+                  _this.dateTimeStatus = false;
+                  _this.dateTime_get = "";
+
+                  _this.emitReplyOrder();
+
+                  _this.$toast.error(response.data.message);
+
+                  _this.overlay = false;
+                } else {
+                  _this.dateTimeStatus = false;
+
+                  _this.$toast.error("เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง");
+
+                  _this.overlay = false;
+                }
+
+              case 8:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    emitReplyOrder: function emitReplyOrder() {
+      var reply = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+      var emitData = {
+        reply: reply,
+        dateTimeStatus: this.dateTimeStatus,
+        dateTime_get: this.dateTime_get
+      };
+      this.$emit("emitReplyOrder", emitData);
+    }
+  },
+  mounted: function mounted() {
+    this.changeDateTime(this.form.date, this.form.time);
+  }
 });
 
 /***/ }),
@@ -1642,473 +1849,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/details/add.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/orders/details/add.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _js_components_orders_details_selectProduct__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/orders/details/selectProduct */ "./resources/js/components/orders/details/selectProduct.vue");
-/* harmony import */ var _js_components_orders_details_tagsProduct__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/components/orders/details/tagsProduct */ "./resources/js/components/orders/details/tagsProduct.vue");
-/* harmony import */ var _js_components_orders_details_processingProduct__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/js/components/orders/details/processingProduct */ "./resources/js/components/orders/details/processingProduct.vue");
-/* harmony import */ var _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/js/layouts/overlay */ "./resources/js/layouts/overlay.vue");
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["order"],
-  components: {
-    selectProduct: _js_components_orders_details_selectProduct__WEBPACK_IMPORTED_MODULE_1__["default"],
-    tagsProduct: _js_components_orders_details_tagsProduct__WEBPACK_IMPORTED_MODULE_2__["default"],
-    processingProduct: _js_components_orders_details_processingProduct__WEBPACK_IMPORTED_MODULE_3__["default"],
-    overlay: _js_layouts_overlay__WEBPACK_IMPORTED_MODULE_4__["default"]
-  },
-  data: function data() {
-    return {
-      dialog: false,
-      overlay: false,
-      product: {
-        id: 0,
-        product_image: {
-          src_name: ""
-        }
-      },
-      priceProduct: 0,
-      form: {},
-      Rules: {
-        order_id: [function (v) {
-          return !!v;
-        }],
-        product_id: [function (v) {
-          return !!v;
-        }],
-        write: [function (v) {
-          return !!v;
-        }],
-        note: [function (v) {
-          return !!v;
-        }],
-        price: [function (v) {
-          return !!v;
-        }],
-        quantity: [function (v) {
-          return !!v;
-        }, function (v) {
-          return v > 0;
-        }],
-        sum_price: [function (v) {
-          return !!v;
-        }]
-      }
-    };
-  },
-  methods: {
-    save: function save() {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _this.overlay = true;
-
-                if (!_this.$refs.form.validate()) {
-                  _context.next = 9;
-                  break;
-                }
-
-                _context.next = 4;
-                return _this.$store.dispatch("orderDetail/store", _this.form);
-
-              case 4:
-                res = _context.sent;
-                console.log(res);
-
-                if (res.status == 200) {
-                  _this.$toast.success("ลงสินค้าสำหรับรายการสั่งซื้อ #" + _this.order.id);
-
-                  _this.out();
-                } else {
-                  _this.$toast.error("เกิดข้อผิดพลาดบางอย่างขึ้น กรุณาลองอีกครั้ง");
-                }
-
-                _context.next = 10;
-                break;
-
-              case 9:
-                _this.$toast.warning("กรุณากรอกข้อมูลให้ถูกต้อง");
-
-              case 10:
-                _this.overlay = false;
-
-              case 11:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    changeQuantity: function changeQuantity(q, p) {
-      this.form.sum_price = q * p;
-    },
-    clickQuantity: function clickQuantity() {
-      this.form.quantity = "";
-    },
-    start: function start() {
-      var _this2 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _this2.form = {
-                  order_id: _this2.order.id,
-                  product_id: "",
-                  write_status: true,
-                  write: "",
-                  note_status: true,
-                  upload_image_status: false,
-                  note: "",
-                  price: "",
-                  quantity: "1",
-                  sum_price: "",
-                  status: true
-                };
-                _this2.product = {
-                  id: 0,
-                  product_image: {
-                    src_name: ""
-                  },
-                  price_normal: 0,
-                  price_special_status: 0,
-                  price_special: 0
-                };
-
-              case 2:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
-    },
-    out: function out() {
-      this.dialog = false;
-      this.overlay = false;
-    },
-    emitSelectProduct: function emitSelectProduct(item) {
-      this.product = item;
-      this.form.product_id = item.id;
-    },
-    changeWriteStatus: function changeWriteStatus(v) {
-      if (v == false) {
-        if (this.form.write == "") {
-          this.form.write = "no message";
-        }
-      } else {
-        if (this.form.write == "no message") {
-          this.form.write = "";
-        }
-      }
-    },
-    changeNoteStatus: function changeNoteStatus(v) {
-      if (v == false) {
-        if (this.form.note == "") {
-          this.form.note = "no note";
-        }
-      } else {
-        if (this.form.note == "no note") {
-          this.form.note = "";
-        }
-      }
-    },
-    emitProcessed: function emitProcessed(v) {
-      this.form.price = v.price;
-      this.changeQuantity(this.form.quantity, v.price);
-    }
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/details/buttonFinishedProductImage.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/orders/details/buttonFinishedProductImage.vue?vue&type=script&lang=js& ***!
@@ -2347,6 +2087,203 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
     };
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/details/changeDateTimeGet.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/orders/details/changeDateTimeGet.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _js_components_orders_OrderListsForchecked__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/orders/OrderListsForchecked */ "./resources/js/components/orders/OrderListsForchecked.vue");
+/* harmony import */ var _js_components_orders_details_FormChangeDateTimeGet__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/components/orders/details/_FormChangeDateTimeGet */ "./resources/js/components/orders/details/_FormChangeDateTimeGet.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["dataDateTimeGet"],
+  components: {
+    OrderListsForchecked: _js_components_orders_OrderListsForchecked__WEBPACK_IMPORTED_MODULE_1__["default"],
+    FormChangeDateTimeGet: _js_components_orders_details_FormChangeDateTimeGet__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+  data: function data() {
+    return {
+      dialog: false,
+      form: {
+        date: "",
+        time: ""
+      },
+      dateTime_get: "",
+      dateTimeStatus: true,
+      timeGets: [],
+      reply: {
+        order: {
+          counts: 0,
+          data: {}
+        }
+      },
+      headers: [{
+        text: "Order.",
+        value: "id"
+      }, {
+        text: "ชื่อลูกค้า",
+        value: "customer_name"
+      }, {
+        text: "เบอร์โทรลูกค้า",
+        value: "customer_phone"
+      }, {
+        text: "วัน-เวลาที่รับ",
+        value: "dateTime_get"
+      }, {
+        text: "สถานะ",
+        value: "order_status_id",
+        align: "center"
+      }]
+    };
+  },
+  methods: {
+    start: function start() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var loader, timeGets;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                loader = _this.$loading.show();
+                _context.next = 3;
+                return _this.$store.dispatch("order/timeGets");
+
+              case 3:
+                timeGets = _context.sent;
+                _context.next = 6;
+                return timeGets;
+
+              case 6:
+                _this.timeGets = _context.sent;
+                _context.next = 9;
+                return _this.CheckHasOrderDateTimeGet();
+
+              case 9:
+                loader.hide();
+
+              case 10:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    CheckHasOrderDateTimeGet: function CheckHasOrderDateTimeGet() {
+      if (this.dataDateTimeGet) {
+        this.form.date = new Date(this.dataDateTimeGet).toJSON().slice(0, 10).replace(/-/g, "-");
+        this.form.time = new Date(this.dataDateTimeGet).toLocaleString("th-TH", {
+          timeStyle: "medium"
+        });
+        this.dateTime_get = this.dataDateTimeGet;
+      } else {
+        this.dateTime();
+      }
+    },
+    dateTime: function dateTime() {
+      this.form.date = new Date().toJSON().slice(0, 10).replace(/-/g, "-");
+    },
+    emitReplyOrder: function emitReplyOrder(data) {
+      this.reply.order = data.reply;
+      this.dateTime_get = data.dateTime_get;
+      this.dateTimeStatus = data.dateTimeStatus;
+    },
+    setColorDatetime: function setColorDatetime(a, b) {
+      if (a && b == true) {
+        return "success";
+      }
+
+      return "warning";
+    }
   }
 });
 
@@ -5055,7 +4992,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
 
 
@@ -5816,7 +5752,12 @@ var render = function() {
                     [
                       _c("OrderListsForchecked", {
                         attrs: { order: _vm.reply.order, headers: _vm.headers }
-                      })
+                      }),
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.reply.order) +
+                          "\n                "
+                      )
                     ],
                     1
                   ),
@@ -5985,52 +5926,46 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    [
-      _c(
-        "v-dialog",
+    "v-dialog",
+    {
+      attrs: { width: "80%" },
+      scopedSlots: _vm._u([
         {
-          attrs: { width: "80%" },
-          scopedSlots: _vm._u([
-            {
-              key: "activator",
-              fn: function(ref) {
-                var on = ref.on
-                return [
-                  _c("span", _vm._g({}, on), [
-                    _vm._v(
-                      "มีรายการสั่งซื้ออื่น จำนวน " +
-                        _vm._s(_vm.order.counts) +
-                        " รายการ\n                "
-                    ),
-                    _c("b", [_c("u", [_vm._v("รายละเอียด")])])
-                  ])
-                ]
-              }
-            }
-          ]),
-          model: {
-            value: _vm.dialog,
-            callback: function($$v) {
-              _vm.dialog = $$v
-            },
-            expression: "dialog"
+          key: "activator",
+          fn: function(ref) {
+            var on = ref.on
+            return [
+              _c("span", _vm._g({}, on), [
+                _vm._v(
+                  "มีรายการสั่งซื้ออื่น จำนวน " +
+                    _vm._s(_vm.order.counts) +
+                    " รายการ\n            "
+                ),
+                _c("b", [_c("u", [_vm._v("รายละเอียด")])])
+              ])
+            ]
           }
+        }
+      ]),
+      model: {
+        value: _vm.dialog,
+        callback: function($$v) {
+          _vm.dialog = $$v
         },
+        expression: "dialog"
+      }
+    },
+    [
+      _vm._v(" "),
+      _c(
+        "v-card",
         [
-          _vm._v(" "),
           _c(
-            "v-card",
+            "v-card-text",
             [
-              _c(
-                "v-card-text",
-                [
-                  _c("OrderTable", {
-                    attrs: { dataTable: _vm.order.data, headers: _vm.headers }
-                  })
-                ],
-                1
-              )
+              _c("OrderTableForCheckDateTimeGet", {
+                attrs: { dataTable: _vm.order.data, headers: _vm.headers }
+              })
             ],
             1
           )
@@ -6350,28 +6285,9 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c(
-            "v-list-item",
-            { staticClass: "light-blue", on: { click: _vm.emitDialogOff } },
-            [
-              _c(
-                "v-list-item-icon",
-                [_c("v-icon", [_vm._v("access_time")])],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-list-item-content",
-                [
-                  _c("v-list-item-title", { staticClass: "py-1" }, [
-                    _vm._v("เปลี่ยนวัน-เวลารับสินค้า")
-                  ])
-                ],
-                1
-              )
-            ],
-            1
-          ),
+          _c("changeDateTimeGet", {
+            attrs: { dataDateTimeGet: _vm.order.dateTime_get }
+          }),
           _vm._v(" "),
           _c(
             "v-list-item",
@@ -6522,6 +6438,103 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/OrderTableForCheckDateTimeGet.vue?vue&type=template&id=76c9ad3d&":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/orders/OrderTableForCheckDateTimeGet.vue?vue&type=template&id=76c9ad3d& ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("v-data-table", {
+        attrs: {
+          items: _vm.dataTable,
+          headers: _vm.headers,
+          "hide-default-footer": "",
+          "item-key": "id"
+        },
+        scopedSlots: _vm._u([
+          {
+            key: "item.id",
+            fn: function(ref) {
+              var item = ref.item
+              return [_vm._v(" #" + _vm._s(item.id) + " ")]
+            }
+          },
+          {
+            key: "item.customer_name",
+            fn: function(ref) {
+              var item = ref.item
+              return [
+                _vm._v(
+                  "\n            " + _vm._s(item.customer.name) + "\n        "
+                )
+              ]
+            }
+          },
+          {
+            key: "item.customer_phone",
+            fn: function(ref) {
+              var item = ref.item
+              return [
+                _vm._v(
+                  "\n            " + _vm._s(item.customer.phone) + "\n        "
+                )
+              ]
+            }
+          },
+          {
+            key: "item.channel_of_purchase_id",
+            fn: function(ref) {
+              var item = ref.item
+              return [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(item.channel_of_purchase.name) +
+                    "\n        "
+                )
+              ]
+            }
+          },
+          {
+            key: "item.order_status_id",
+            fn: function(ref) {
+              var item = ref.item
+              return [
+                _c(
+                  "v-btn",
+                  {
+                    class: item.order_status.style,
+                    attrs: { block: "", small: "" }
+                  },
+                  [_vm._v(_vm._s(item.order_status.name))]
+                )
+              ]
+            }
+          }
+        ])
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/details/CostMain.vue?vue&type=template&id=009f2f62&":
 /*!**************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/orders/details/CostMain.vue?vue&type=template&id=009f2f62& ***!
@@ -6629,6 +6642,71 @@ var render = function() {
         ],
         1
       )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/details/_FormChangeDateTimeGet.vue?vue&type=template&id=246e8084&":
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/orders/details/_FormChangeDateTimeGet.vue?vue&type=template&id=246e8084& ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("v-text-field", {
+        attrs: {
+          label: "วัน/เดือน/ปี",
+          type: "date",
+          filled: "",
+          placeholder: "กรุณาเลือกลูกค้า"
+        },
+        on: {
+          change: function($event) {
+            return _vm.changeDateTime(_vm.form.date, _vm.form.time)
+          }
+        },
+        model: {
+          value: _vm.form.date,
+          callback: function($$v) {
+            _vm.$set(_vm.form, "date", $$v)
+          },
+          expression: "form.date"
+        }
+      }),
+      _vm._v(" "),
+      _c("v-select", {
+        attrs: { items: _vm.timeGets, label: "เวลา", filled: "" },
+        on: {
+          change: function($event) {
+            return _vm.changeDateTime(_vm.form.date, _vm.form.time)
+          }
+        },
+        model: {
+          value: _vm.form.time,
+          callback: function($$v) {
+            _vm.$set(_vm.form, "time", $$v)
+          },
+          expression: "form.time"
+        }
+      })
     ],
     1
   )
@@ -7447,750 +7525,6 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/details/add.vue?vue&type=template&id=48920096&":
-/*!*********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/orders/details/add.vue?vue&type=template&id=48920096& ***!
-  \*********************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c(
-        "v-dialog",
-        {
-          attrs: { persistent: "", width: "700" },
-          scopedSlots: _vm._u([
-            {
-              key: "activator",
-              fn: function(ref) {
-                var on = ref.on
-                return [
-                  _c(
-                    "v-list-item",
-                    _vm._g(
-                      {
-                        staticClass: "teal darken-1",
-                        on: { click: _vm.start }
-                      },
-                      on
-                    ),
-                    [
-                      _c(
-                        "v-list-item-icon",
-                        [_c("v-icon", [_vm._v("add_shopping_cart")])],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-list-item-content",
-                        [_c("v-list-item-title", [_vm._v("เพิ่มสินค้าใหม่")])],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ]
-              }
-            }
-          ]),
-          model: {
-            value: _vm.dialog,
-            callback: function($$v) {
-              _vm.dialog = $$v
-            },
-            expression: "dialog"
-          }
-        },
-        [
-          _vm._v(" "),
-          _c(
-            "v-card",
-            { attrs: { color: "#121212" } },
-            [
-              _c(
-                "v-card-title",
-                [
-                  _vm._v("\n                เพิ่มสินค้าใหม่\n                "),
-                  _c("v-spacer"),
-                  _vm._v(" "),
-                  _c(
-                    "v-icon",
-                    {
-                      attrs: { color: "error" },
-                      on: {
-                        click: function($event) {
-                          _vm.dialog = false
-                        }
-                      }
-                    },
-                    [_vm._v("close")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-card-text",
-                [
-                  _c(
-                    "v-form",
-                    { ref: "form", attrs: { "lazy-validation": "" } },
-                    [
-                      _c(
-                        "v-card",
-                        [
-                          _c(
-                            "v-card-text",
-                            [
-                              _c(
-                                "v-row",
-                                [
-                                  _c(
-                                    "v-col",
-                                    { attrs: { cols: "12", md: "4" } },
-                                    [
-                                      _c("selectProduct", {
-                                        on: {
-                                          emitSelectProduct:
-                                            _vm.emitSelectProduct
-                                        }
-                                      }),
-                                      _vm._v(" "),
-                                      _c("v-divider"),
-                                      _vm._v(" "),
-                                      _vm.product.id >= 1
-                                        ? _c("v-img", {
-                                            attrs: {
-                                              width: "auto",
-                                              src:
-                                                "https://drive.google.com/thumbnail?id=" +
-                                                _vm.product.product_image
-                                                  .src_name
-                                            }
-                                          })
-                                        : _vm._e()
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _vm.product.id >= 1
-                                    ? _c(
-                                        "v-col",
-                                        { attrs: { cols: "12", md: "8" } },
-                                        [
-                                          _c(
-                                            "v-row",
-                                            [
-                                              _c(
-                                                "v-col",
-                                                {
-                                                  staticClass: "pt-0",
-                                                  attrs: {
-                                                    cols: "12",
-                                                    md: "12"
-                                                  }
-                                                },
-                                                [
-                                                  _c("v-text-field", {
-                                                    attrs: {
-                                                      label: "ชื่อสินค้า",
-                                                      outlined: "",
-                                                      placeholder:
-                                                        "คลิกที่นี่เพื่อเลือกสินค้า",
-                                                      readonly: "",
-                                                      "hide-details": ""
-                                                    },
-                                                    model: {
-                                                      value: _vm.product.name,
-                                                      callback: function($$v) {
-                                                        _vm.$set(
-                                                          _vm.product,
-                                                          "name",
-                                                          $$v
-                                                        )
-                                                      },
-                                                      expression: "product.name"
-                                                    }
-                                                  })
-                                                ],
-                                                1
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-col",
-                                                {
-                                                  attrs: {
-                                                    cols: "12",
-                                                    md: "12"
-                                                  }
-                                                },
-                                                [
-                                                  _c("v-text-field", {
-                                                    attrs: {
-                                                      label: "ราคา/หน่วย",
-                                                      outlined: "",
-                                                      placeholder:
-                                                        "กรุณาเลือกสินค้า",
-                                                      readonly: "",
-                                                      rules: _vm.Rules.price,
-                                                      suffix: "บาท",
-                                                      "hide-details": ""
-                                                    },
-                                                    model: {
-                                                      value: _vm.form.price,
-                                                      callback: function($$v) {
-                                                        _vm.$set(
-                                                          _vm.form,
-                                                          "price",
-                                                          $$v
-                                                        )
-                                                      },
-                                                      expression: "form.price"
-                                                    }
-                                                  })
-                                                ],
-                                                1
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-col",
-                                                {
-                                                  attrs: { cols: "6", md: "6" }
-                                                },
-                                                [
-                                                  _c("v-text-field", {
-                                                    attrs: {
-                                                      label: "จำนวน",
-                                                      outlined: "",
-                                                      type: "number",
-                                                      pattern: "\\d*",
-                                                      placeholder:
-                                                        "กรุณาเลือกสินค้า",
-                                                      rules: _vm.Rules.quantity,
-                                                      suffix: "หน่วย",
-                                                      "hide-details": ""
-                                                    },
-                                                    on: {
-                                                      click: _vm.clickQuantity,
-                                                      change: function($event) {
-                                                        return _vm.changeQuantity(
-                                                          _vm.form.quantity,
-                                                          _vm.form.price
-                                                        )
-                                                      }
-                                                    },
-                                                    model: {
-                                                      value: _vm.form.quantity,
-                                                      callback: function($$v) {
-                                                        _vm.$set(
-                                                          _vm.form,
-                                                          "quantity",
-                                                          $$v
-                                                        )
-                                                      },
-                                                      expression:
-                                                        "form.quantity"
-                                                    }
-                                                  })
-                                                ],
-                                                1
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-col",
-                                                {
-                                                  attrs: { cols: "6", md: "6" }
-                                                },
-                                                [
-                                                  _c("v-text-field", {
-                                                    attrs: {
-                                                      label: "ราคารวม",
-                                                      outlined: "",
-                                                      placeholder:
-                                                        "กรุณาเลือกสินค้า",
-                                                      readonly: "",
-                                                      rules:
-                                                        _vm.Rules.sum_price,
-                                                      suffix: "บาท",
-                                                      "hide-details": ""
-                                                    },
-                                                    model: {
-                                                      value: _vm.form.sum_price,
-                                                      callback: function($$v) {
-                                                        _vm.$set(
-                                                          _vm.form,
-                                                          "sum_price",
-                                                          $$v
-                                                        )
-                                                      },
-                                                      expression:
-                                                        "form.sum_price"
-                                                    }
-                                                  })
-                                                ],
-                                                1
-                                              ),
-                                              _vm._v(" "),
-                                              _vm._l(
-                                                _vm.product
-                                                  .product_tag_use_only,
-                                                function(tag) {
-                                                  return _c(
-                                                    "v-col",
-                                                    {
-                                                      key: tag.id,
-                                                      attrs: {
-                                                        cols: "12",
-                                                        md: "6"
-                                                      }
-                                                    },
-                                                    [
-                                                      _c("v-text-field", {
-                                                        attrs: {
-                                                          label:
-                                                            tag
-                                                              .product_category_sub_use_only
-                                                              .product_category
-                                                              .name,
-                                                          outlined: "",
-                                                          readonly: "",
-                                                          "hide-details": ""
-                                                        },
-                                                        model: {
-                                                          value:
-                                                            tag
-                                                              .product_category_sub_use_only
-                                                              .name,
-                                                          callback: function(
-                                                            $$v
-                                                          ) {
-                                                            _vm.$set(
-                                                              tag.product_category_sub_use_only,
-                                                              "name",
-                                                              $$v
-                                                            )
-                                                          },
-                                                          expression:
-                                                            "\n                                                    tag.product_category_sub_use_only\n                                                        .name\n                                                "
-                                                        }
-                                                      })
-                                                    ],
-                                                    1
-                                                  )
-                                                }
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-col",
-                                                {
-                                                  attrs: {
-                                                    cols: "12",
-                                                    md: "12"
-                                                  }
-                                                },
-                                                [
-                                                  _c(
-                                                    "v-row",
-                                                    { staticClass: "px-4" },
-                                                    [
-                                                      _c("v-checkbox", {
-                                                        staticClass:
-                                                          "shrink mr-2 mt-0",
-                                                        attrs: {
-                                                          "hide-details": ""
-                                                        },
-                                                        on: {
-                                                          change:
-                                                            _vm.changeWriteStatus
-                                                        },
-                                                        model: {
-                                                          value:
-                                                            _vm.form
-                                                              .write_status,
-                                                          callback: function(
-                                                            $$v
-                                                          ) {
-                                                            _vm.$set(
-                                                              _vm.form,
-                                                              "write_status",
-                                                              $$v
-                                                            )
-                                                          },
-                                                          expression:
-                                                            "\n                                                        form.write_status\n                                                    "
-                                                        }
-                                                      }),
-                                                      _vm._v(" "),
-                                                      _c("v-textarea", {
-                                                        attrs: {
-                                                          label: "เขียนข้อความ",
-                                                          "hide-details": "",
-                                                          outlined: "",
-                                                          rows: "1",
-                                                          rules:
-                                                            _vm.Rules.write,
-                                                          readonly:
-                                                            _vm.form
-                                                              .write_status ==
-                                                            false
-                                                        },
-                                                        model: {
-                                                          value: _vm.form.write,
-                                                          callback: function(
-                                                            $$v
-                                                          ) {
-                                                            _vm.$set(
-                                                              _vm.form,
-                                                              "write",
-                                                              $$v
-                                                            )
-                                                          },
-                                                          expression:
-                                                            "form.write"
-                                                        }
-                                                      })
-                                                    ],
-                                                    1
-                                                  )
-                                                ],
-                                                1
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-col",
-                                                {
-                                                  attrs: {
-                                                    cols: "12",
-                                                    md: "12"
-                                                  }
-                                                },
-                                                [
-                                                  _c(
-                                                    "v-row",
-                                                    { staticClass: "px-4" },
-                                                    [
-                                                      _c("v-checkbox", {
-                                                        staticClass:
-                                                          "shrink mr-2 mt-0",
-                                                        attrs: {
-                                                          "hide-details": ""
-                                                        },
-                                                        on: {
-                                                          change:
-                                                            _vm.changeNoteStatus
-                                                        },
-                                                        model: {
-                                                          value:
-                                                            _vm.form
-                                                              .note_status,
-                                                          callback: function(
-                                                            $$v
-                                                          ) {
-                                                            _vm.$set(
-                                                              _vm.form,
-                                                              "note_status",
-                                                              $$v
-                                                            )
-                                                          },
-                                                          expression:
-                                                            "\n                                                        form.note_status\n                                                    "
-                                                        }
-                                                      }),
-                                                      _vm._v(" "),
-                                                      _c("v-textarea", {
-                                                        attrs: {
-                                                          label: "เพิ่มเติม",
-                                                          "hide-details": "",
-                                                          outlined: "",
-                                                          rows: "2",
-                                                          rules: _vm.Rules.note,
-                                                          readonly:
-                                                            _vm.form
-                                                              .note_status ==
-                                                            false
-                                                        },
-                                                        model: {
-                                                          value: _vm.form.note,
-                                                          callback: function(
-                                                            $$v
-                                                          ) {
-                                                            _vm.$set(
-                                                              _vm.form,
-                                                              "note",
-                                                              $$v
-                                                            )
-                                                          },
-                                                          expression:
-                                                            "form.note"
-                                                        }
-                                                      })
-                                                    ],
-                                                    1
-                                                  )
-                                                ],
-                                                1
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-col",
-                                                {
-                                                  attrs: {
-                                                    cols: "12",
-                                                    md: "12"
-                                                  }
-                                                },
-                                                [
-                                                  _c(
-                                                    "v-row",
-                                                    { staticClass: "px-4" },
-                                                    [
-                                                      _c("v-checkbox", {
-                                                        staticClass:
-                                                          "ma-0 pa-0",
-                                                        attrs: {
-                                                          "hide-details": "",
-                                                          label:
-                                                            "ส่งลิงก์อัปโหลดรูปภาพ"
-                                                        },
-                                                        model: {
-                                                          value:
-                                                            _vm.form
-                                                              .upload_image_status,
-                                                          callback: function(
-                                                            $$v
-                                                          ) {
-                                                            _vm.$set(
-                                                              _vm.form,
-                                                              "upload_image_status",
-                                                              $$v
-                                                            )
-                                                          },
-                                                          expression:
-                                                            "\n                                                        form.upload_image_status\n                                                    "
-                                                        }
-                                                      })
-                                                    ],
-                                                    1
-                                                  )
-                                                ],
-                                                1
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-col",
-                                                {
-                                                  attrs: {
-                                                    cols: "12",
-                                                    md: "12"
-                                                  }
-                                                },
-                                                [
-                                                  _c(
-                                                    "v-row",
-                                                    { staticClass: "px-4" },
-                                                    [
-                                                      _c(
-                                                        "v-btn",
-                                                        {
-                                                          staticClass: "mr-2",
-                                                          attrs: {
-                                                            color: "success"
-                                                          },
-                                                          on: {
-                                                            click: _vm.save
-                                                          }
-                                                        },
-                                                        [
-                                                          _c(
-                                                            "v-icon",
-                                                            {
-                                                              attrs: {
-                                                                left: ""
-                                                              }
-                                                            },
-                                                            [_vm._v("save")]
-                                                          ),
-                                                          _vm._v(
-                                                            "\n                                                    เรียบร้อย"
-                                                          )
-                                                        ],
-                                                        1
-                                                      ),
-                                                      _vm._v(" "),
-                                                      _c(
-                                                        "v-btn",
-                                                        {
-                                                          attrs: {
-                                                            color: "error"
-                                                          },
-                                                          on: { click: _vm.out }
-                                                        },
-                                                        [
-                                                          _c(
-                                                            "v-icon",
-                                                            {
-                                                              attrs: {
-                                                                left: ""
-                                                              }
-                                                            },
-                                                            [
-                                                              _vm._v(
-                                                                "exit_to_app"
-                                                              )
-                                                            ]
-                                                          ),
-                                                          _vm._v(
-                                                            "\n                                                    ออก"
-                                                          )
-                                                        ],
-                                                        1
-                                                      )
-                                                    ],
-                                                    1
-                                                  )
-                                                ],
-                                                1
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "div",
-                                                {
-                                                  directives: [
-                                                    {
-                                                      name: "show",
-                                                      rawName: "v-show",
-                                                      value: 1 == 0,
-                                                      expression: "1 == 0"
-                                                    }
-                                                  ]
-                                                },
-                                                [
-                                                  _c("v-text-field", {
-                                                    attrs: {
-                                                      label: "product id",
-                                                      placeholder:
-                                                        "กรุณาเลือกสินค้า",
-                                                      rules:
-                                                        _vm.Rules.product_id,
-                                                      "hide-details": ""
-                                                    },
-                                                    model: {
-                                                      value:
-                                                        _vm.form.product_id,
-                                                      callback: function($$v) {
-                                                        _vm.$set(
-                                                          _vm.form,
-                                                          "product_id",
-                                                          $$v
-                                                        )
-                                                      },
-                                                      expression:
-                                                        "form.product_id"
-                                                    }
-                                                  }),
-                                                  _vm._v(" "),
-                                                  _c("v-text-field", {
-                                                    attrs: {
-                                                      label: "order id",
-                                                      placeholder:
-                                                        "กรุณาเลือกสินค้า",
-                                                      rules: _vm.Rules.order_id,
-                                                      "hide-details": ""
-                                                    },
-                                                    model: {
-                                                      value: _vm.form.order_id,
-                                                      callback: function($$v) {
-                                                        _vm.$set(
-                                                          _vm.form,
-                                                          "order_id",
-                                                          $$v
-                                                        )
-                                                      },
-                                                      expression:
-                                                        "form.order_id"
-                                                    }
-                                                  })
-                                                ],
-                                                1
-                                              )
-                                            ],
-                                            2
-                                          )
-                                        ],
-                                        1
-                                      )
-                                    : _c(
-                                        "v-col",
-                                        { attrs: { cols: "12", md: "8" } },
-                                        [
-                                          _c(
-                                            "v-alert",
-                                            {
-                                              attrs: {
-                                                color: "blue-grey",
-                                                dark: "",
-                                                dense: "",
-                                                prominent: ""
-                                              }
-                                            },
-                                            [
-                                              _vm._v(
-                                                '\n                                        กรุณาเลือกสินค้าก่อน "เลือกสินค้า"\n                                    '
-                                              )
-                                            ]
-                                          )
-                                        ],
-                                        1
-                                      )
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("processingProduct", {
-            attrs: { product: _vm.product },
-            on: { emitProcessed: _vm.emitProcessed }
-          }),
-          _vm._v("\n\n        " + _vm._s(_vm.product) + "\n\n        "),
-          _c("overlay", { attrs: { overlay: _vm.overlay } })
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/details/buttonFinishedProductImage.vue?vue&type=template&id=15aaf3ac&":
 /*!********************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/orders/details/buttonFinishedProductImage.vue?vue&type=template&id=15aaf3ac& ***!
@@ -8432,6 +7766,215 @@ var render = function() {
             ],
             1
           )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/details/changeDateTimeGet.vue?vue&type=template&id=fd526602&":
+/*!***********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/orders/details/changeDateTimeGet.vue?vue&type=template&id=fd526602& ***!
+  \***********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "v-dialog",
+        {
+          attrs: { persistent: "", width: "500" },
+          scopedSlots: _vm._u([
+            {
+              key: "activator",
+              fn: function(ref) {
+                var on = ref.on
+                return [
+                  _c(
+                    "v-list-item",
+                    _vm._g(
+                      { staticClass: "light-blue", on: { click: _vm.start } },
+                      on
+                    ),
+                    [
+                      _c(
+                        "v-list-item-icon",
+                        [_c("v-icon", [_vm._v("access_time")])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item-content",
+                        [
+                          _c("v-list-item-title", { staticClass: "py-1" }, [
+                            _vm._v("เปลี่ยนวัน-เวลารับสินค้า")
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ]
+              }
+            }
+          ]),
+          model: {
+            value: _vm.dialog,
+            callback: function($$v) {
+              _vm.dialog = $$v
+            },
+            expression: "dialog"
+          }
+        },
+        [
+          _vm._v(" "),
+          _c(
+            "v-card",
+            [
+              _c(
+                "v-card-title",
+                [
+                  _vm._v(
+                    "\n                เปลี่ยนวัน-เวลารับสินค้า\n                "
+                  ),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-icon",
+                    {
+                      attrs: { color: "error" },
+                      on: {
+                        click: function($event) {
+                          _vm.dialog = false
+                        }
+                      }
+                    },
+                    [_vm._v("close")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                [
+                  _c("FormChangeDateTimeGet", {
+                    attrs: { form: _vm.form, timeGets: _vm.timeGets },
+                    on: { emitReplyOrder: _vm.emitReplyOrder }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "v-alert",
+                    {
+                      staticClass: "mb-1",
+                      attrs: {
+                        dense: "",
+                        text: "",
+                        type: _vm.setColorDatetime(
+                          _vm.dateTime_get,
+                          _vm.dateTimeStatus
+                        )
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    วัน-เวลารับสินค้า\n                "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm.reply.order.counts
+                    ? _c(
+                        "v-alert",
+                        {
+                          staticClass: "mb-1",
+                          attrs: { type: "warning", dense: "", text: "" }
+                        },
+                        [
+                          _c("OrderListsForchecked", {
+                            attrs: {
+                              order: _vm.reply.order,
+                              headers: _vm.headers
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "mt-6" },
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: {
+                            color: "success",
+                            disabled:
+                              _vm.dateTime_get == _vm.dataDateTimeGet ||
+                              !_vm.dateTimeStatus
+                          }
+                        },
+                        [
+                          _c("v-icon", { attrs: { left: "" } }, [
+                            _vm._v("save")
+                          ]),
+                          _vm._v(
+                            "\n                        ยืนยัน\n                    "
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "error" },
+                          on: {
+                            click: function($event) {
+                              _vm.dialog = false
+                            }
+                          }
+                        },
+                        [
+                          _c("v-icon", { attrs: { left: "" } }, [
+                            _vm._v("exit_to_app")
+                          ]),
+                          _vm._v(
+                            "\n                        ออก\n                    "
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
     ],
     1
   )
@@ -8795,7 +8338,7 @@ var render = function() {
           _vm._v(
             "\n        #" +
               _vm._s(this.$store.getters["order/getByID"].data.id) +
-              "0582\n    "
+              "\n    "
           )
         ],
         1
@@ -11861,7 +11404,6 @@ var render = function() {
                 [
                   _c("OrderCreate", {
                     staticClass: "mr-2",
-                    attrs: { headers: _vm.headers },
                     on: { OnDataTable: _vm.OnDataTable }
                   }),
                   _vm._v(" "),
@@ -12454,6 +11996,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/orders/OrderTableForCheckDateTimeGet.vue":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/orders/OrderTableForCheckDateTimeGet.vue ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _OrderTableForCheckDateTimeGet_vue_vue_type_template_id_76c9ad3d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./OrderTableForCheckDateTimeGet.vue?vue&type=template&id=76c9ad3d& */ "./resources/js/components/orders/OrderTableForCheckDateTimeGet.vue?vue&type=template&id=76c9ad3d&");
+/* harmony import */ var _OrderTableForCheckDateTimeGet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./OrderTableForCheckDateTimeGet.vue?vue&type=script&lang=js& */ "./resources/js/components/orders/OrderTableForCheckDateTimeGet.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _OrderTableForCheckDateTimeGet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _OrderTableForCheckDateTimeGet_vue_vue_type_template_id_76c9ad3d___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _OrderTableForCheckDateTimeGet_vue_vue_type_template_id_76c9ad3d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/orders/OrderTableForCheckDateTimeGet.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/orders/OrderTableForCheckDateTimeGet.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/orders/OrderTableForCheckDateTimeGet.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_OrderTableForCheckDateTimeGet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./OrderTableForCheckDateTimeGet.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/OrderTableForCheckDateTimeGet.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_OrderTableForCheckDateTimeGet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/orders/OrderTableForCheckDateTimeGet.vue?vue&type=template&id=76c9ad3d&":
+/*!*********************************************************************************************************!*\
+  !*** ./resources/js/components/orders/OrderTableForCheckDateTimeGet.vue?vue&type=template&id=76c9ad3d& ***!
+  \*********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OrderTableForCheckDateTimeGet_vue_vue_type_template_id_76c9ad3d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./OrderTableForCheckDateTimeGet.vue?vue&type=template&id=76c9ad3d& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/OrderTableForCheckDateTimeGet.vue?vue&type=template&id=76c9ad3d&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OrderTableForCheckDateTimeGet_vue_vue_type_template_id_76c9ad3d___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OrderTableForCheckDateTimeGet_vue_vue_type_template_id_76c9ad3d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/orders/details/CostMain.vue":
 /*!*************************************************************!*\
   !*** ./resources/js/components/orders/details/CostMain.vue ***!
@@ -12592,6 +12203,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/orders/details/_FormChangeDateTimeGet.vue":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/orders/details/_FormChangeDateTimeGet.vue ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _FormChangeDateTimeGet_vue_vue_type_template_id_246e8084___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_FormChangeDateTimeGet.vue?vue&type=template&id=246e8084& */ "./resources/js/components/orders/details/_FormChangeDateTimeGet.vue?vue&type=template&id=246e8084&");
+/* harmony import */ var _FormChangeDateTimeGet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_FormChangeDateTimeGet.vue?vue&type=script&lang=js& */ "./resources/js/components/orders/details/_FormChangeDateTimeGet.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _FormChangeDateTimeGet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _FormChangeDateTimeGet_vue_vue_type_template_id_246e8084___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _FormChangeDateTimeGet_vue_vue_type_template_id_246e8084___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/orders/details/_FormChangeDateTimeGet.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/orders/details/_FormChangeDateTimeGet.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/orders/details/_FormChangeDateTimeGet.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormChangeDateTimeGet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./_FormChangeDateTimeGet.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/details/_FormChangeDateTimeGet.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormChangeDateTimeGet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/orders/details/_FormChangeDateTimeGet.vue?vue&type=template&id=246e8084&":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/js/components/orders/details/_FormChangeDateTimeGet.vue?vue&type=template&id=246e8084& ***!
+  \**********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FormChangeDateTimeGet_vue_vue_type_template_id_246e8084___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./_FormChangeDateTimeGet.vue?vue&type=template&id=246e8084& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/details/_FormChangeDateTimeGet.vue?vue&type=template&id=246e8084&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FormChangeDateTimeGet_vue_vue_type_template_id_246e8084___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FormChangeDateTimeGet_vue_vue_type_template_id_246e8084___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/orders/details/_form_detail.vue":
 /*!*****************************************************************!*\
   !*** ./resources/js/components/orders/details/_form_detail.vue ***!
@@ -12656,75 +12336,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_form_detail_vue_vue_type_template_id_20d7c509___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_form_detail_vue_vue_type_template_id_20d7c509___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/orders/details/add.vue":
-/*!********************************************************!*\
-  !*** ./resources/js/components/orders/details/add.vue ***!
-  \********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _add_vue_vue_type_template_id_48920096___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./add.vue?vue&type=template&id=48920096& */ "./resources/js/components/orders/details/add.vue?vue&type=template&id=48920096&");
-/* harmony import */ var _add_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./add.vue?vue&type=script&lang=js& */ "./resources/js/components/orders/details/add.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _add_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _add_vue_vue_type_template_id_48920096___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _add_vue_vue_type_template_id_48920096___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/orders/details/add.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/orders/details/add.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************!*\
-  !*** ./resources/js/components/orders/details/add.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_add_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./add.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/details/add.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_add_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/orders/details/add.vue?vue&type=template&id=48920096&":
-/*!***************************************************************************************!*\
-  !*** ./resources/js/components/orders/details/add.vue?vue&type=template&id=48920096& ***!
-  \***************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_add_vue_vue_type_template_id_48920096___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./add.vue?vue&type=template&id=48920096& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/details/add.vue?vue&type=template&id=48920096&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_add_vue_vue_type_template_id_48920096___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_add_vue_vue_type_template_id_48920096___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -12863,6 +12474,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_buttonForAction_vue_vue_type_template_id_8c7db73e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_buttonForAction_vue_vue_type_template_id_8c7db73e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/orders/details/changeDateTimeGet.vue":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/orders/details/changeDateTimeGet.vue ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _changeDateTimeGet_vue_vue_type_template_id_fd526602___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./changeDateTimeGet.vue?vue&type=template&id=fd526602& */ "./resources/js/components/orders/details/changeDateTimeGet.vue?vue&type=template&id=fd526602&");
+/* harmony import */ var _changeDateTimeGet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./changeDateTimeGet.vue?vue&type=script&lang=js& */ "./resources/js/components/orders/details/changeDateTimeGet.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _changeDateTimeGet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _changeDateTimeGet_vue_vue_type_template_id_fd526602___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _changeDateTimeGet_vue_vue_type_template_id_fd526602___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/orders/details/changeDateTimeGet.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/orders/details/changeDateTimeGet.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/orders/details/changeDateTimeGet.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_changeDateTimeGet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./changeDateTimeGet.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/details/changeDateTimeGet.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_changeDateTimeGet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/orders/details/changeDateTimeGet.vue?vue&type=template&id=fd526602&":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/components/orders/details/changeDateTimeGet.vue?vue&type=template&id=fd526602& ***!
+  \*****************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_changeDateTimeGet_vue_vue_type_template_id_fd526602___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./changeDateTimeGet.vue?vue&type=template&id=fd526602& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/details/changeDateTimeGet.vue?vue&type=template&id=fd526602&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_changeDateTimeGet_vue_vue_type_template_id_fd526602___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_changeDateTimeGet_vue_vue_type_template_id_fd526602___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

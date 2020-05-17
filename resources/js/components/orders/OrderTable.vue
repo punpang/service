@@ -25,7 +25,7 @@
                     item.order_status.name
                 }}</v-btn>
             </template>
-
+            
             <template v-slot:item.action="{ item }">
                 <OrderManages
                     :order="item"
@@ -38,26 +38,32 @@
 
 <script>
 import OrderManages from "@/js/components/orders/OrderManages";
+
 export default {
+    name: "OrderTable",
     props: ["dataTable", "headers"],
     components: {
-        OrderManages,
-        BadgesOrderManages: {
-            content: "",
-            value: "",
-            color: ""
-        }
+        OrderManages
+    },
+    data() {
+        return {
+            BadgesOrderManages: {
+                content: "",
+                value: "",
+                color: ""
+            }
+        };
     },
     methods: {
         emitDialogTableFalse() {
             this.$emit("emitDialogTableFalse");
         },
         setBadgesOrderManages() {
-            if (this.$store.getters["order/getByID"].cpunt.slipNotVerify) {
+            if (this.$store.getters["order/getByID"].count.slipNotVerify) {
                 this.BadgesOrderManages = {
-                    content: this.$store.getters["order/getByID"].cpunt
+                    content: this.$store.getters["order/getByID"].count
                         .slipNotVerify,
-                    value: this.$store.getters["order/getByID"].cpunt
+                    value: this.$store.getters["order/getByID"].count
                         .slipNotVerify,
                     color: "warning"
                 };

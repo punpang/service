@@ -45,14 +45,7 @@
                 </v-list-item-content>
             </v-list-item>
 
-            <v-list-item @click="emitDialogOff" class="light-blue">
-                <v-list-item-icon>
-                    <v-icon >access_time</v-icon>
-                </v-list-item-icon>
-                <v-list-item-content>
-                    <v-list-item-title class="py-1">เปลี่ยนวัน-เวลารับสินค้า</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
+            <changeDateTimeGet :dataDateTimeGet="order.dateTime_get"></changeDateTimeGet>
 
             <v-list-item @click="emitDialogOff" class="red accent-4 mt-4" dark>
                 <v-list-item-icon>
@@ -67,15 +60,16 @@
 </template>
 
 <script>
-import OrderDetailAdd from "@/js/components/orders/details/add";
 import formDetail from "@/js/components/orders/details/_form_detail";
 import MainPayment from "@/js/components/orders/payments/main";
+import changeDateTimeGet from "@/js/components/orders/details/changeDateTimeGet";
 
 export default {
     props: ["order", "count"],
     components: {
         formDetail,
-        MainPayment
+        MainPayment,
+        changeDateTimeGet
     },
     data() {
         return {

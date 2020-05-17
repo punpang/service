@@ -53,7 +53,6 @@
                 <OrderCreate
                     @OnDataTable="OnDataTable"
                     class="mr-2"
-                    :headers="headers"
                 ></OrderCreate>
                 <v-btn class="info" fab x-small @click="reload">
                     <v-icon>refresh</v-icon>

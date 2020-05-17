@@ -159,6 +159,7 @@
                             :order="reply.order"
                             :headers="headers"
                         ></OrderListsForchecked>
+                        {{ reply.order }}
                     </v-alert>
                     <v-form ref="form" lazy-validation>
                         <div v-show="1 == 0">
@@ -225,7 +226,7 @@ export default {
             reply: {
                 order: {
                     counts: 0,
-                    data: {}
+                    data: []
                 }
             },
             form: {
@@ -307,10 +308,12 @@ export default {
                     this.$toast.success(response.data.message);
                     this.overlay = false;
                 } else if (response.status == 400) {
+                    this.dateTimeStatus = false;
                     this.formData.dateTime_get = '';
                     this.$toast.error(response.data.message);
                     this.overlay = false;
                 } else {
+                    this.dateTimeStatus = false;
                     this.$toast.error(
                         "เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง"
                     );
