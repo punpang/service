@@ -2,6 +2,7 @@
     <v-checkbox
         label="แจ้งผ่านข้อความ"
         v-model="alertSMS"
+        hide-details
         @change="emitAlertSMS(alertSMS)"
     ></v-checkbox>
 </template>

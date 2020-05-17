@@ -45,8 +45,12 @@
                             :headers="headers"
                         ></OrderListsForchecked>
                     </v-alert>
+
+                    <formAlertSMS @emitAlert="emitAlert"></formAlertSMS>
+
                     <div class="mt-6">
                         <v-btn
+                            @click="clickSubmit"
                             color="success"
                             :disabled="
                                 dateTime_get == dataDateTimeGet ||
@@ -68,6 +72,7 @@
 </template>
 
 <script>
+import formAlertSMS from "@/js/components/others/form_alert_sms";
 import OrderListsForchecked from "@/js/components/orders/OrderListsForchecked";
 import FormChangeDateTimeGet from "@/js/components/orders/details/_FormChangeDateTimeGet";
 
@@ -75,7 +80,8 @@ export default {
     props: ["dataDateTimeGet"],
     components: {
         OrderListsForchecked,
-        FormChangeDateTimeGet
+        FormChangeDateTimeGet,
+        formAlertSMS
     },
     data() {
         return {
@@ -99,7 +105,8 @@ export default {
                 { text: "เบอร์โทรลูกค้า", value: "customer_phone" },
                 { text: "วัน-เวลาที่รับ", value: "dateTime_get" },
                 { text: "สถานะ", value: "order_status_id", align: "center" }
-            ]
+            ],
+            alertSMS: true
         };
     },
     methods: {
@@ -108,6 +115,7 @@ export default {
             const timeGets = await this.$store.dispatch("order/timeGets");
             this.timeGets = await timeGets;
             await this.CheckHasOrderDateTimeGet();
+            this.alertSMS = true;
             loader.hide();
         },
         CheckHasOrderDateTimeGet() {
@@ -140,6 +148,40 @@ export default {
                 return "success";
             }
             return "warning";
+        },
+        async clickSubmit() {
+            if (this.dateTimeStatus && this.dateTime_get) {
+                let loader = this.$loading.show();
+                const data = {
+                    dateTime_get: this.dateTime_get,
+                    order_id: this.$store.getters["order/getByID"].data.id,
+                    alertSMS: this.alertSMS
+                };
+                const res = await this.$store.dispatch(
+                    "order/changeDateTimeGet",
+                    data
+                );
+
+                await this.$store.dispatch(
+                    "order/getByID",
+                    this.$store.getters["order/getByID"].data.id
+                );
+
+                if (res.status === 200) {
+                    if (res.data.success) {
+                        this.dialog = false;
+                        this.$toast.success(res.data.message);
+                    } else {
+                        this.$toast.error(res.data.message);
+                    }
+                }
+                loader.hide();
+            } else {
+                this.$toast.warning("กรุณากรอกวันและเวลาให้ครบถ้วน");
+            }
+        },
+        emitAlert(data) {
+            this.alertSMS = data.sms;
         }
     }
 };

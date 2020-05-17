@@ -109,6 +109,13 @@ export default {
             } catch (e) {
                 return e;
             }
+        },
+        async changeDateTimeGet({ commit }, payload) {
+            const res = await axios.post(
+                "/api/order/" + payload.order_id + "/changeDateTimeGet",
+                payload
+            );
+            return res;
         }
     }
 };

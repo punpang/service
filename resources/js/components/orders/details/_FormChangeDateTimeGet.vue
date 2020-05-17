@@ -40,6 +40,7 @@ export default {
     methods: {
         async changeDateTime(date, time) {
             if (date && time) {
+                let loader = this.$loading.show()
                 this.dateTimeStatus = false;
                 this.overlay = true;
                 const dateTime_get = date + " " + time;
@@ -68,6 +69,7 @@ export default {
                     );
                     this.overlay = false;
                 }
+                loader.hide()
             }
         },
         emitReplyOrder(reply = []) {

@@ -9,17 +9,12 @@
             <v-divider class="ma-1"></v-divider>
         </v-card>
         <div v-if="count > 0">
-            
-            <v-card
-                v-for="detail in details"
-                :key="detail.id"
-                class="mt-4"
-            >
+            <v-card v-for="detail in details" :key="detail.id" class="mt-4">
                 <v-card-text class="pa-0">
                     <v-container class="py-0">
                         <productDetail :detail="detail"></productDetail>
                         <buttonForAction :detail="detail"></buttonForAction>
-                        
+
                         <v-col
                             cols="12"
                             md="12"
@@ -41,24 +36,17 @@
                                 <!-- ยกเลิก -->
                             </v-btn>
                         </v-col>
-
-                        
                     </v-container>
                 </v-card-text>
             </v-card>
         </div>
-        
+
         <v-alert type="info" v-else>
             ยังไม่มีสินค้า
         </v-alert>
 
         <div v-if="countNo > 0">
-
-            <v-card
-                v-for="detail in detailsNo"
-                :key="detail.id"
-                class="mt-4"                
-            >
+            <v-card v-for="detail in detailsNo" :key="detail.id" class="mt-4">
                 <v-card-text class="pa-0">
                     <v-container class="py-0">
                         <productDetail :detail="detail"></productDetail>
@@ -97,9 +85,7 @@ import productDetail from "@/js/components/orders/details/productDetail";
 import buttonForAction from "@/js/components/orders/details/buttonForAction";
 
 export default {
-    props:[
-        'details','count','detailsNo','countNo'
-    ],
+    props: ["details", "count", "detailsNo", "countNo"],
     components: {
         productDetail,
         buttonForAction

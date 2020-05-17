@@ -17,7 +17,7 @@ class OrderController extends Controller
         $dataRequest = request()->all();
         $dataRequest['token'] = $this->generateToken();
         $order = Order::create($dataRequest);
-        
+
         //$message = 'รายการสั่งซื้อ #'.$order->id. ' ของคุณ เรากำลังรอยืนยันการสั่งซื้อจากคุณ ยอดชำระทั้งหมด 300.00 บ. โปรดชำระขั้นต่ำ 150 บ. \n\nชำระโอนผ่านธนาคาร 408-672-0266 (พรรษิษฐ์ ศรีสุข) ธนาคารไทยพาณิชย์ แจ้งชำระเงินได้ที่ ...';
         //FacebookMessager::postMessage($order->customer,$order->ChannelOfPurchase->name,$message);
         //MSms::Sms($order->customer->phone,$message);
@@ -187,15 +187,15 @@ class OrderController extends Controller
         try {
             $today = \Carbon\Carbon::now()->addDays(1)->format('Y-m-d 00:00:00');
             $data = Order::whereToken($token)->where('dateTime_get', '<=', $today)
-                ->with('CustomerNotFB', 'OrderStatus','ChannelOfPurchase')
+                ->with('CustomerNotFB', 'OrderStatus', 'ChannelOfPurchase')
                 ->first();
             if ($data) {
                 return response()->json([
                     'data' => $data,
                     'sum' => $data->OrderSum()
                 ], 200);
-            }else{
-                return response()->json(['unverifed' => true] , 500);
+            } else {
+                return response()->json(['unverifed' => true], 500);
             }
         } catch (\Exception $e) {
             return $e;
@@ -217,7 +217,7 @@ class OrderController extends Controller
                 'SlipNotVerify.GoogleOcr'
             )
             ->with('OrderDetail.Product.ProductImage')
-            ->with('OrderDetailNoUse.Product.ProductImage')            
+            ->with('OrderDetailNoUse.Product.ProductImage')
             ->with('OrderDetail.uploadImage.ExampleImage')
             ->with('OrderDetail.uploadImage.Images')
             ->first();
@@ -233,6 +233,22 @@ class OrderController extends Controller
                 'slipNotVerify' => $data->CountSlipNotVerify(),
                 'slipNotVerifyOnly' => $data->CountSlipNotVerifyOnly()
             ]
+        ], 200);
+    }
+
+    public function changeDateTimeGet(Order $order)
+    {
+        $old_dateTime_get = $order->dateTime_get;
+        $order->dateTime_get = request("dateTime_get");
+        $order->update();
+
+        $messgae = "คุณขอเปลี่ยนวัน-เวลานัดรับสินค้าจากเดิม " . $old_dateTime_get . " เป็นวัน-เวลานัดรับสินค้าใหม่ " . $order->dateTime_get . " สามารถรับสินค้าได้ตั้งแต่วัน-เวลานัดรับ หรือหลังได้รับ SMS แจ้งเตือนค่ะ";
+        MSms::SMSFB($order, $messgae, request("alertSMS"));
+        Linenotify::send("เปลี่ยนวัน-เวลานัดรับ #" . $order->id . " วัน-เวลานัดรับใหม่ " . $order->dateTime_get);
+
+        return response()->json([
+            'success' => true,
+            'message' => "เปลี่ยนแปลงวัน-เวลานัดรับสินค้าใหม่สำเร็จ"
         ], 200);
     }
 }

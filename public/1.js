@@ -1252,23 +1252,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var dateTime_get, response, data;
+        var loader, dateTime_get, response, data;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 if (!(date && time)) {
-                  _context.next = 8;
+                  _context.next = 10;
                   break;
                 }
 
+                loader = _this.$loading.show();
                 _this.dateTimeStatus = false;
                 _this.overlay = true;
                 dateTime_get = date + " " + time;
-                _context.next = 6;
+                _context.next = 7;
                 return _this.$store.dispatch("order/checkDateTimeForGet", dateTime_get);
 
-              case 6:
+              case 7:
                 response = _context.sent;
 
                 if (response.status == 200) {
@@ -1298,7 +1299,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.overlay = false;
                 }
 
-              case 8:
+                loader.hide();
+
+              case 10:
               case "end":
                 return _context.stop();
             }
@@ -2103,8 +2106,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _js_components_orders_OrderListsForchecked__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/orders/OrderListsForchecked */ "./resources/js/components/orders/OrderListsForchecked.vue");
-/* harmony import */ var _js_components_orders_details_FormChangeDateTimeGet__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/components/orders/details/_FormChangeDateTimeGet */ "./resources/js/components/orders/details/_FormChangeDateTimeGet.vue");
+/* harmony import */ var _js_components_others_form_alert_sms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/others/form_alert_sms */ "./resources/js/components/others/form_alert_sms.vue");
+/* harmony import */ var _js_components_orders_OrderListsForchecked__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/components/orders/OrderListsForchecked */ "./resources/js/components/orders/OrderListsForchecked.vue");
+/* harmony import */ var _js_components_orders_details_FormChangeDateTimeGet__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/js/components/orders/details/_FormChangeDateTimeGet */ "./resources/js/components/orders/details/_FormChangeDateTimeGet.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2180,13 +2184,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["dataDateTimeGet"],
   components: {
-    OrderListsForchecked: _js_components_orders_OrderListsForchecked__WEBPACK_IMPORTED_MODULE_1__["default"],
-    FormChangeDateTimeGet: _js_components_orders_details_FormChangeDateTimeGet__WEBPACK_IMPORTED_MODULE_2__["default"]
+    OrderListsForchecked: _js_components_orders_OrderListsForchecked__WEBPACK_IMPORTED_MODULE_2__["default"],
+    FormChangeDateTimeGet: _js_components_orders_details_FormChangeDateTimeGet__WEBPACK_IMPORTED_MODULE_3__["default"],
+    formAlertSMS: _js_components_others_form_alert_sms__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
@@ -2220,7 +2230,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         text: "สถานะ",
         value: "order_status_id",
         align: "center"
-      }]
+      }],
+      alertSMS: true
     };
   },
   methods: {
@@ -2248,9 +2259,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this.CheckHasOrderDateTimeGet();
 
               case 9:
+                _this.alertSMS = true;
                 loader.hide();
 
-              case 10:
+              case 11:
               case "end":
                 return _context.stop();
             }
@@ -2283,6 +2295,63 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return "warning";
+    },
+    clickSubmit: function clickSubmit() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var loader, data, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                if (!(_this2.dateTimeStatus && _this2.dateTime_get)) {
+                  _context2.next = 12;
+                  break;
+                }
+
+                loader = _this2.$loading.show();
+                data = {
+                  dateTime_get: _this2.dateTime_get,
+                  order_id: _this2.$store.getters["order/getByID"].data.id,
+                  alertSMS: _this2.alertSMS
+                };
+                _context2.next = 5;
+                return _this2.$store.dispatch("order/changeDateTimeGet", data);
+
+              case 5:
+                res = _context2.sent;
+                _context2.next = 8;
+                return _this2.$store.dispatch("order/getByID", _this2.$store.getters["order/getByID"].data.id);
+
+              case 8:
+                if (res.status === 200) {
+                  if (res.data.success) {
+                    _this2.dialog = false;
+
+                    _this2.$toast.success(res.data.message);
+                  } else {
+                    _this2.$toast.error(res.data.message);
+                  }
+                }
+
+                loader.hide();
+                _context2.next = 13;
+                break;
+
+              case 12:
+                _this2.$toast.warning("กรุณากรอกวันและเวลาให้ครบถ้วน");
+
+              case 13:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    emitAlert: function emitAlert(data) {
+      this.alertSMS = data.sms;
     }
   }
 });
@@ -3364,22 +3433,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['details', 'count', 'detailsNo', 'countNo'],
+  props: ["details", "count", "detailsNo", "countNo"],
   components: {
     productDetail: _js_components_orders_details_productDetail__WEBPACK_IMPORTED_MODULE_0__["default"],
     buttonForAction: _js_components_orders_details_buttonForAction__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -4829,6 +4886,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -7918,6 +7976,8 @@ var render = function() {
                       )
                     : _vm._e(),
                   _vm._v(" "),
+                  _c("formAlertSMS", { on: { emitAlert: _vm.emitAlert } }),
+                  _vm._v(" "),
                   _c(
                     "div",
                     { staticClass: "mt-6" },
@@ -7930,7 +7990,8 @@ var render = function() {
                             disabled:
                               _vm.dateTime_get == _vm.dataDateTimeGet ||
                               !_vm.dateTimeStatus
-                          }
+                          },
+                          on: { click: _vm.clickSubmit }
                         },
                         [
                           _c("v-icon", { attrs: { left: "" } }, [
@@ -11164,7 +11225,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("v-checkbox", {
-    attrs: { label: "แจ้งผ่านข้อความ" },
+    attrs: { label: "แจ้งผ่านข้อความ", "hide-details": "" },
     on: {
       change: function($event) {
         return _vm.emitAlertSMS(_vm.alertSMS)

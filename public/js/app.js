@@ -100841,6 +100841,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee5, null, [[0, 8]]);
       }))();
+    },
+    changeDateTimeGet: function changeDateTimeGet(_ref7, payload) {
+      var commit = _ref7.commit;
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                _context6.next = 2;
+                return axios.post("/api/order/" + payload.order_id + "/changeDateTimeGet", payload);
+
+              case 2:
+                res = _context6.sent;
+                return _context6.abrupt("return", res);
+
+              case 4:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }))();
     }
   }
 });
