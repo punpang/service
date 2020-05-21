@@ -46,7 +46,7 @@
                         ></OrderListsForchecked>
                     </v-alert>
 
-                    <formAlertSMS @emitAlert="emitAlert"></formAlertSMS>
+                    <formAlertSMS @emitAlert="emitAlert" :alertSMS.sync="alertSMS"></formAlertSMS>
 
                     <div class="mt-6">
                         <v-btn
@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import formAlertSMS from "@/js/components/others/form_alert_sms";
+import formAlertSMS from "@/js/components/others/formAlertSMS";
 import OrderListsForchecked from "@/js/components/orders/OrderListsForchecked";
 import FormChangeDateTimeGet from "@/js/components/orders/details/_FormChangeDateTimeGet";
 
@@ -112,10 +112,10 @@ export default {
     methods: {
         async start() {
             let loader = this.$loading.show();
+            this.alertSMS = true;
             const timeGets = await this.$store.dispatch("order/timeGets");
             this.timeGets = await timeGets;
-            await this.CheckHasOrderDateTimeGet();
-            this.alertSMS = true;
+            await this.CheckHasOrderDateTimeGet();            
             loader.hide();
         },
         CheckHasOrderDateTimeGet() {
@@ -171,6 +171,7 @@ export default {
                     if (res.data.success) {
                         this.dialog = false;
                         this.$toast.success(res.data.message);
+                        this.alertSMS = true;
                     } else {
                         this.$toast.error(res.data.message);
                     }

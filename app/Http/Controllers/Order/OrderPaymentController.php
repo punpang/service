@@ -81,9 +81,9 @@ class OrderPaymentController extends Controller
             $input['bill_id'] = $sale->bill_sale_id;
 
             // หากเป็นสมาชิกให้เพิ่มคะแนน
-            if (Member::beMember($order->customer->tel) != null) {
+            if (Member::beMember($order->customer->phone)) {
                 $addScore = $sale->total_money / Config_software::Score()->score;
-                Summary_score_of_member::addScore($sale->member_id, $addScore);
+                Summary_score_of_member::addScore($sale->member_id, $addScore); 
             }
 
             // สร้างการชำระเงิน
@@ -154,7 +154,7 @@ class OrderPaymentController extends Controller
             $payment->Bill_ID->save();
 
             // หากเป็นสมาชิกให้ลดคะแนน
-            if (Member::beMember($payment->order->customer->phone) != null) {
+            if (Member::beMember($payment->order->customer->phone)) {
                 $addScore = $payment->Bill_ID->total_money * (-1) / Config_software::Score()->score;
                 Summary_score_of_member::addScore($payment->Bill_ID->member_id, $addScore);
             }

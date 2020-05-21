@@ -13,7 +13,10 @@
                 <v-card-text class="pa-0">
                     <v-container class="py-0">
                         <productDetail :detail="detail"></productDetail>
-                        <buttonForAction :detail="detail"></buttonForAction>
+                        <buttonForAction
+                            :detail="detail"
+                            :orderStatusID="orderStatusID"
+                        ></buttonForAction>
 
                         <v-col
                             cols="12"
@@ -50,7 +53,10 @@
                 <v-card-text class="pa-0">
                     <v-container class="py-0">
                         <productDetail :detail="detail"></productDetail>
-                        <buttonForAction :detail="detail"></buttonForAction>
+                        <buttonForAction
+                            :detail="detail"
+                            :orderStatusID="orderStatusID"
+                        ></buttonForAction>
 
                         <v-col
                             cols="12"
@@ -85,7 +91,7 @@ import productDetail from "@/js/components/orders/details/productDetail";
 import buttonForAction from "@/js/components/orders/details/buttonForAction";
 
 export default {
-    props: ["details", "count", "detailsNo", "countNo"],
+    props: ["details", "count", "detailsNo", "countNo", "orderStatusID"],
     components: {
         productDetail,
         buttonForAction

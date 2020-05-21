@@ -3,7 +3,11 @@
         <v-dialog v-model="dialog" fullscreen persistent>
             <template v-slot:activator="{ on }">
                 <v-btn block color="primary" v-on="on" @click="start">
-                    <v-badge color="warning" dot :value="order.slip_not_verify_only.length">
+                    <v-badge
+                        color="warning"
+                        dot
+                        :value="order.slip_not_verify_only.length"
+                    >
                         การจัดการ
                     </v-badge>
                 </v-btn>
@@ -25,6 +29,7 @@
                         <v-col cols="12" md="6">
                             <OrderShow
                                 @emitStart="emitStart"
+                                :orderStatusID="order.order_status_id"
                                 :details="
                                     this.$store.getters['order/getByID'].data
                                         .order_detail
@@ -48,7 +53,10 @@
                                 :order="
                                     this.$store.getters['order/getByID'].data
                                 "
-                                :count="this.$store.getters['order/getByID'].count"
+                                :count="
+                                    this.$store.getters['order/getByID'].count
+                                "
+                                :sum="this.$store.getters['order/getByID'].sum"
                                 @emitDialogOff="emitDialogOff"
                             ></OrderMenuForManages>
                         </v-col>

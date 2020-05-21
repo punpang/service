@@ -159,7 +159,6 @@
                             :order="reply.order"
                             :headers="headers"
                         ></OrderListsForchecked>
-                        {{ reply.order }}
                     </v-alert>
                     <v-form ref="form" lazy-validation>
                         <div v-show="1 == 0">

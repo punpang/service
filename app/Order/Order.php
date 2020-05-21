@@ -124,7 +124,7 @@ class Order extends Model  implements Auditable
 
     public function scopeTodayOrder()
     {
-        return $query = $this->whereDate('dateTime_get', \Carbon\Carbon::now()->format('Y-m-d'))
+        return $query = $this->whereDate('dateTime_get', \Carbon\Carbon::now()->format('Y-m-d'))->where('order_status_id','<=',7)
             ->orderBy('dateTime_get', 'ASC')
             ->with($this->OrderManages());
     }
