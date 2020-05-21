@@ -103,7 +103,7 @@ class OrderPaymentController extends Controller
             }
 
             // เปลี่ยนสถานะเป็นชำระ กรณีที่ต่ำกว่า 4
-            if ($data->order->order_status_id <= 4) {
+            if ($data->order->order_status_id <= 5) {
                 $data->order->order_status_id = 4;
                 $data->order->update();
             }

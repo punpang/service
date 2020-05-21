@@ -100892,7 +100892,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     changeDateTimeGet: function changeDateTimeGet(_ref7, payload) {
-      var commit = _ref7.commit;
+      _objectDestructuringEmpty(_ref7);
+
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
         var res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
@@ -100912,6 +100913,54 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee6);
+      }))();
+    },
+    goodsDone: function goodsDone(_ref8, payload) {
+      _objectDestructuringEmpty(_ref8);
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                _context7.next = 2;
+                return axios.post("/api/order/" + payload.order_id + "/goodsDone", payload);
+
+              case 2:
+                res = _context7.sent;
+                return _context7.abrupt("return", res);
+
+              case 4:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7);
+      }))();
+    },
+    productReceived: function productReceived(_ref9, payload) {
+      _objectDestructuringEmpty(_ref9);
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                _context8.next = 2;
+                return axios.post("/api/order/" + payload.order_id + "/productReceived", payload);
+
+              case 2:
+                res = _context8.sent;
+                return _context8.abrupt("return", res);
+
+              case 4:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8);
       }))();
     }
   }

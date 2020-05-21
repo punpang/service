@@ -18,22 +18,10 @@
                 class="mb-4"
             ></goodsDone>
 
-            <v-list-item
-                :class="
-                    sum.balance == 0 ? 'green accent-4' : 'blue-grey lighten-1'
-                "
+            <productReceived
                 v-if="order.order_status_id == 6"
-                :disabled="sum.balance > 0"
-            >
-                <v-list-item-icon>
-                    <v-icon>done</v-icon>
-                </v-list-item-icon>
-                <v-list-item-content>
-                    <v-list-item-title class="py-1"
-                        >รับสินค้า
-                    </v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
+                :sum="sum"
+            ></productReceived>
 
             <v-list-item
                 class="deep-orange darken-1 mb-4"
@@ -124,6 +112,7 @@ import formDetail from "@/js/components/orders/details/_form_detail";
 import MainPayment from "@/js/components/orders/payments/main";
 import changeDateTimeGet from "@/js/components/orders/details/changeDateTimeGet";
 import goodsDone from "@/js/components/orders/details/goodsDone";
+import productReceived from "@/js/components/orders/details/productReceived";
 
 export default {
     props: ["order", "count", "sum"],
@@ -131,7 +120,8 @@ export default {
         formDetail,
         MainPayment,
         changeDateTimeGet,
-        goodsDone
+        goodsDone,
+        productReceived
     },
     data() {
         return {

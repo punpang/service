@@ -110,11 +110,27 @@ export default {
                 return e;
             }
         },
-        async changeDateTimeGet({ commit }, payload) {
+        async changeDateTimeGet({  }, payload) {
             const res = await axios.post(
                 "/api/order/" + payload.order_id + "/changeDateTimeGet",
                 payload
             );
+            return res;
+        },
+        async goodsDone({  }, payload) {
+            const res = await axios.post(
+                "/api/order/" + payload.order_id + "/goodsDone",
+                payload
+            );
+
+            return res;
+        },
+        async productReceived({},payload){
+            const res = await axios.post(
+                "/api/order/" + payload.order_id + "/productReceived",
+                payload
+            );
+
             return res;
         }
     }

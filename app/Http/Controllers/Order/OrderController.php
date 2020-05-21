@@ -251,4 +251,48 @@ class OrderController extends Controller
             'message' => "เปลี่ยนแปลงวัน-เวลานัดรับสินค้าใหม่สำเร็จ"
         ], 200);
     }
+
+    public function goodsDone(Order $order)
+    {
+        if ($order->order_status_id == 4) {
+            $order->order_status_id = 6;
+            $order->update();
+
+            $messgae = "รายการสั่งซื้อ #" . $order->id . " ของคุณ สินค้าได้จัดเตรียมเสร็จแล้ว ท่านสามารถเข้าสินค้าได้แล้ว ร้านปิดให้บริการเวลา 20.00 น.";
+            MSms::SMSFB($order, $messgae, request("alertSMS"));
+            Linenotify::send("จัดเตรียมสินค้าแล้ว #" . $order->id);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'เตรียมสินค้าเรียบร้อย'
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'สินค้าไม่สามารถจัดเตรียมได้ เนื่องจากไม่ได้อยู่ในสถานะที่กำหนด'
+            ], 200);
+        }
+    }
+
+    public function productReceived(Order $order)
+    {
+        if ($order->order_status_id == 6) {
+            $order->order_status_id = 6;
+            $order->update();
+
+            $messgae = "คุณได้เข้ารับสินค้าของคุณเรียบร้อย ขอขอบพระคุณท่านที่ไว้วางใจเรา ทางเราขออนุญาตนำภาพสินค้าของท่าน ไปใช้ในการโฆษณาบนเว็ปไซต์ของเราต่อไป หากท่านไม่ประสงค์ ท่านสามารถปิดการอนุญาตได้ด้วยตนเองภายในวันที่รับสินค้าได้ที่ ... หรือโทร. 091-885-3402 ได้ในเวลาทำการของร้าน";
+            MSms::SMSFB($order, $messgae, request("alertSMS"));
+            Linenotify::send("รับสินค้า #" . $order->id);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'รับสินค้าแล้ว'
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'ไม่สามารถรับสินค้า อาจเกิดจากปัญหาบางอย่าง'
+            ], 200);
+        }
+    }
 }

@@ -66,6 +66,8 @@ Route::middleware('admin')->group(function () { //สำหรับ admin
         Route::post('checkDateTimeForGet', 'Order\OrderController@checkDateTimeForGet');
 
         Route::post('{order}/changeDateTimeGet', 'Order\OrderController@changeDateTimeGet');
+        Route::post('{order}/goodsDone', 'Order\OrderController@goodsDone');
+        Route::post('{order}/productReceived', 'Order\OrderController@productReceived');        
 
         Route::prefix('detail')->group(function () { // api/order/detail
             Route::post('store', 'Order\OrderDetailController@store');

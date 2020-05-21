@@ -2,20 +2,28 @@
     <div>
         <v-dialog v-model="dialog" persistent width="300">
             <template v-slot:activator="{ on }">
-                <v-list-item class="light-green darken-2" v-on="on">
+                <v-list-item
+                    v-on="on"
+                    :class="
+                        sum.balance == 0
+                            ? 'green accent-4'
+                            : 'blue-grey lighten-1'
+                    "
+                    :disabled="sum.balance > 0"
+                >
                     <v-list-item-icon>
-                        <v-icon>local_mall</v-icon>
+                        <v-icon>done</v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
                         <v-list-item-title class="py-1"
-                            >เตรียมสินค้า</v-list-item-title
-                        >
+                            >รับสินค้า
+                        </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
             </template>
             <v-card>
                 <v-card-title class="pb-0"
-                    >เตรียมสินค้า
+                    >รับสินค้า
                     <v-spacer></v-spacer>
                     <v-icon color="error" @click="clickExit">close</v-icon>
                 </v-card-title>
@@ -27,8 +35,8 @@
                         class="mb-3"
                     ></formAlertSMS>
                     <v-btn color="success" @click="clickSubmit">
-                        <v-icon left>local_mall</v-icon>
-                        เตรียมสินค้า</v-btn
+                        <v-icon left>done</v-icon>
+                        รับสินค้า</v-btn
                     >
                     <v-btn color="error" @click="clickExit">
                         <v-icon left>exit_to_app</v-icon>
@@ -44,6 +52,7 @@
 import formAlertSMS from "@/js/components/others/formAlertSMS";
 
 export default {
+    props: ["sum"],
     components: {
         formAlertSMS
     },
@@ -64,7 +73,10 @@ export default {
                 alertSMS: this.alertSMS
             };
 
-            const res = await this.$store.dispatch("order/goodsDone", data);
+            const res = await this.$store.dispatch(
+                "order/productReceived",
+                data
+            );
 
             this.$store.dispatch("order/getByID", data.order_id);
 
