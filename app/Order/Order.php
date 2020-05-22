@@ -40,7 +40,7 @@ class Order extends Model  implements Auditable
 
     public function OrderPayment()
     {
-        return $this->hasMany(OrderPayment::class, "order_id", "id")->orderBy('status','DESC')->orderBy('updated_at',"DESC");
+        return $this->hasMany(OrderPayment::class, "order_id", "id")->orderBy('status', 'DESC')->orderBy('updated_at', "DESC");
     }
 
     public function sumDeposit() //รวมเงินเฉพาะที่ใช้งาน
@@ -124,7 +124,7 @@ class Order extends Model  implements Auditable
 
     public function scopeTodayOrder()
     {
-        return $query = $this->whereDate('dateTime_get', \Carbon\Carbon::now()->format('Y-m-d'))->where('order_status_id','<=',7)
+        return $query = $this->whereDate('dateTime_get', \Carbon\Carbon::now()->format('Y-m-d'))->where('order_status_id', '<=', 7)
             ->orderBy('dateTime_get', 'ASC')
             ->with($this->OrderManages());
     }
@@ -152,14 +152,14 @@ class Order extends Model  implements Auditable
             ->orderBy('dateTime_get', 'ASC');
     }
 
-    public function DateTimeFormatTH($dateTime)
+    public function DateTimeFormatTH()
     {
-        return \Carbon\Carbon::parse($dateTime)->addYears(543)->format('d-m-Y H:i:s');
+        return \Carbon\Carbon::parse($this->dateTime_get)->addYears(543)->format('d-m-Y H:i:s');
     }
 
     public function SlipNotVerify() //slip ที่ยังไม่ได้ตรวจสอบ และ ไม่ผ่าน
     {
-        return $this->hasMany(Slip::class, 'order_id', 'id')->whereIn('slip_verify_id', [1, 3]);
+        return $this->hasMany(Slip::class, 'order_id', 'id')->whereIn('slip_verify_id', [1, 3, 4]);
     }
 
     public function SlipVerify() // slip ผ่าน
@@ -181,6 +181,4 @@ class Order extends Model  implements Auditable
     {
         return $this->SlipNotVerifyOnly()->count();
     }
-
-
 }

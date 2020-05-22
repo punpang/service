@@ -2,7 +2,7 @@
     <div>
         <v-dialog v-model="dialog" persistent width="850">
             <template v-slot:activator="{ on }">
-                <v-btn color="primary" block v-on="on" @click="start" :disabled="slip.slip_verify_id != 1">
+                <v-btn color="primary" block v-on="on" @click="start" :disabled="slip.slip_verify_id == 2 || slip.slip_verify_id == 3">
                     ตรวจสอบสลิป
                     <v-icon right>info</v-icon>
                 </v-btn>

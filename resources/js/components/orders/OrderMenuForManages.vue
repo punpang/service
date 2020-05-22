@@ -45,7 +45,7 @@
             ></formDetail>
 
             <MainPayment
-                v-if="order.order_status.id >= 1 && order.order_status.id <= 6"
+                v-if="order.order_status.id >= 1 && order.order_status.id <= 6 && sum.total > 0"
                 :count="count"
             ></MainPayment>
 

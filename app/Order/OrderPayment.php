@@ -73,4 +73,9 @@ class OrderPayment extends Model implements Auditable
     {
         return $this->belongsTo('App\Tb_bill_sale',"bill_id","bill_sale_id");
     }
+
+    public function amountFormat() //รวมเงินเฉพาะที่ใช้งาน
+    {
+        return number_format($this->amount, 2);
+    }
 }

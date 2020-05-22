@@ -18,11 +18,9 @@ class OrderController extends Controller
         $dataRequest['token'] = $this->generateToken();
         $order = Order::create($dataRequest);
 
-        //$message = 'รายการสั่งซื้อ #'.$order->id. ' ของคุณ เรากำลังรอยืนยันการสั่งซื้อจากคุณ ยอดชำระทั้งหมด 300.00 บ. โปรดชำระขั้นต่ำ 150 บ. \n\nชำระโอนผ่านธนาคาร 408-672-0266 (พรรษิษฐ์ ศรีสุข) ธนาคารไทยพาณิชย์ แจ้งชำระเงินได้ที่ ...';
-        //FacebookMessager::postMessage($order->customer,$order->ChannelOfPurchase->name,$message);
-        //MSms::Sms($order->customer->phone,$message);
-        //MSms::Sms($order->customer->phone,'รายการสั่งซื้อ #'.$order->id. ' ของคุณ เรากำลังรอยืนยันการสั่งซื้อจากคุณ ยอดชำระทั้งหมด '.number_format($order->total,2).' บ. โปรดชำระขั้นต่ำ '.number_format($order->total/2,2).' บ. \n\nชำระโอนผ่านธนาคาร 408-672-0266 (พรรษิษฐ์ ศรีสุข) ธนาคารไทยพาณิชย์ แจ้งชำระเงินได้ที่ ...');
-        Linenotify::send('รายการสั่งซื้อใหม่ #' . $order->id . ' รับเมื่อ ' . $order->dateTime_get);
+        $messgae = "รายการสั่งซื้อ #" . $order->id . " ของคุณ สามารถรับสินค้าได้ตั้งแต่ " . $order->DateTimeFormatTH();
+        FacebookMessager::postMessage($order->customer, $order->ChannelOfPurchase->name, $messgae, true);
+        Linenotify::send('รายการสั่งซื้อใหม่ #' . $order->id . ' รับเมื่อ ' . $order->DateTimeFormatTH());
 
         return response()->json('success', 200);
     }
@@ -258,7 +256,7 @@ class OrderController extends Controller
             $order->order_status_id = 6;
             $order->update();
 
-            $messgae = "รายการสั่งซื้อ #" . $order->id . " ของคุณ สินค้าได้จัดเตรียมเสร็จแล้ว ท่านสามารถเข้าสินค้าได้แล้ว ร้านปิดให้บริการเวลา 20.00 น.";
+            $messgae = "รายการสั่งซื้อ #" . $order->id . " ของคุณ สินค้าได้จัดเตรียมเสร็จแล้ว ท่านสามารถเข้ารับสินค้าได้ทันทีหรือก่อนร้านปิดให้บริการเวลา 20.00 น.";
             MSms::SMSFB($order, $messgae, request("alertSMS"));
             Linenotify::send("จัดเตรียมสินค้าแล้ว #" . $order->id);
 
@@ -276,11 +274,11 @@ class OrderController extends Controller
 
     public function productReceived(Order $order)
     {
-        if ($order->order_status_id == 6) {
-            $order->order_status_id = 6;
+        if ($order->order_status_id == 6 || $order->order_status_id == 7) {
+            $order->order_status_id = 8;
             $order->update();
 
-            $messgae = "คุณได้เข้ารับสินค้าของคุณเรียบร้อย ขอขอบพระคุณท่านที่ไว้วางใจเรา ทางเราขออนุญาตนำภาพสินค้าของท่าน ไปใช้ในการโฆษณาบนเว็ปไซต์ของเราต่อไป หากท่านไม่ประสงค์ ท่านสามารถปิดการอนุญาตได้ด้วยตนเองภายในวันที่รับสินค้าได้ที่ ... หรือโทร. 091-885-3402 ได้ในเวลาทำการของร้าน";
+            $messgae = "รายการสั่งซื้อ #" . $order->id . " คุณได้เข้ารับสินค้าของคุณเรียบร้อย ขอขอบพระคุณที่ท่านไว้วางใจเรา ทางเราขออนุญาตนำภาพสินค้าของท่าน ไปใช้ในการโฆษณาบนเว็ปไซต์ของเราต่อไป หากท่านไม่ประสงค์ ท่านสามารถปิดการอนุญาตได้ด้วยตนเอง ภายในวันที่รับสินค้าได้ที่ ... หรือโทร. 091-885-3402 ได้ในเวลาทำการของร้าน";
             MSms::SMSFB($order, $messgae, request("alertSMS"));
             Linenotify::send("รับสินค้า #" . $order->id);
 

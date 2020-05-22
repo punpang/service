@@ -6600,7 +6600,9 @@ var render = function() {
               })
             : _vm._e(),
           _vm._v(" "),
-          _vm.order.order_status.id >= 1 && _vm.order.order_status.id <= 6
+          _vm.order.order_status.id >= 1 &&
+          _vm.order.order_status.id <= 6 &&
+          _vm.sum.total > 0
             ? _c("MainPayment", { attrs: { count: _vm.count } })
             : _vm._e(),
           _vm._v(" "),
@@ -11298,7 +11300,9 @@ var render = function() {
                         attrs: {
                           color: "primary",
                           block: "",
-                          disabled: _vm.slip.slip_verify_id != 1
+                          disabled:
+                            _vm.slip.slip_verify_id == 2 ||
+                            _vm.slip.slip_verify_id == 3
                         },
                         on: { click: _vm.start }
                       },

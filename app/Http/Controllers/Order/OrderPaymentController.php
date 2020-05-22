@@ -83,7 +83,7 @@ class OrderPaymentController extends Controller
             // หากเป็นสมาชิกให้เพิ่มคะแนน
             if (Member::beMember($order->customer->phone)) {
                 $addScore = $sale->total_money / Config_software::Score()->score;
-                Summary_score_of_member::addScore($sale->member_id, $addScore); 
+                Summary_score_of_member::addScore($sale->member_id, $addScore);
             }
 
             // สร้างการชำระเงิน
@@ -102,6 +102,9 @@ class OrderPaymentController extends Controller
                 */
             }
 
+            // สถานะ ไม่ชำระ
+            $oldOrderStatusID = $data->order->order_status_id;
+
             // เปลี่ยนสถานะเป็นชำระ กรณีที่ต่ำกว่า 4
             if ($data->order->order_status_id <= 5) {
                 $data->order->order_status_id = 4;
@@ -112,8 +115,17 @@ class OrderPaymentController extends Controller
 
 
             // แจ้งเตือน
-            //$messgae = 'ทดสอบ ชำระเงิน SMS FACEBOOK';
-            //MSms::SMSFB($order, $messgae, $input['alert']);
+            if ($data->order->balance() > 0) {
+                $messgae = "รายการสั่งซื้อ #" . $data->order->id . " ขอบคุณที่ชำระเงิน " . $data->amountFormat() . "บ. ท่านสามารถชำระยอดคงเหลือ " . $data->order->balanceFormat() . "บ. พร้อมกับรับสินค้าได้เลยค่ะ";
+            } else {
+                if ($data->order->order_status_id == 6 || $oldOrderStatusID == 5) { //เตรียมสินค้าแล้ว
+                    $messgae = "รายการสั่งซื้อ #" . $data->order->id . " ขอบคุณที่ชำระเงิน " . $data->amountFormat() . "บ. ท่านชำระเงินครบจำนวนแล้ว";
+                } else {
+                    $messgae = "รายการสั่งซื้อ #" . $data->order->id . " ขอบคุณที่ชำระเงิน " . $data->amountFormat() . "บ. ท่านชำระเงินครบจำนวนแล้ว สามารถรับสินค้าตามเวลานัดรับได้เลยค่ะ";
+                }
+            }
+
+            MSms::SMSFB($order, $messgae, $input['alert']);
             Linenotify::send('รายการสั่งซื้อ #' . $data->order->id . ' => ยืนยันการสั่งซื้อแล้ว');
 
             return response()->json([
@@ -190,7 +202,7 @@ class OrderPaymentController extends Controller
             $url = URL::punpang() . $order->token . '/' . $input['amount'] . '/payment';
             $bitly = Bitly::getUrl($url); // http://bit.ly/nHcn3
 
-            $messgae = '#ปั้นแป้ง# Order.#' . $order->id . ' โปรดชำระมัดจำขั้นต่ำด้วยยอด ' . number_format($input['amount'], 2) . ' บ. ช่องทางการชำระเงินและแจ้งการชำระเงินที่ได้ ' . $bitly;
+            $messgae = "รายการสั่งซื้อ #" . $order->id . ' โปรดชำระมัดจำขั้นต่ำด้วยยอด ' . number_format($input['amount'], 2) . ' บ. ช่องทางการชำระเงินและแจ้งการชำระเงินที่ได้ ' . $bitly;
 
             //$messgae = '#ปั้นแป้ง# Order.#'.$order->id.' ยอดชำระทั้งหมด '.$order->sumTotalFormat().' บ. ชำระแล้ว '.$order->sumDepositFormat().' บ. คงเหลือ '.$order->sumBalanceFormat().' บ. โปรดชำระเงินขั้นต่ำด้วยยอด '.number_format($input['amount'],2).' บ. รายละเอียดการชำระเงินและแจ้งขำระเงินได้ที่ ';
             MSms::SMSFB($order, $messgae, true);
@@ -228,7 +240,7 @@ class OrderPaymentController extends Controller
             // สร้างสลิป
             Slip::create($input);
 
-            $messgae = 'ขอบคุณที่ชำระเงิน เราจะตรวจสอบและแจ้งผลโดยเร็วที่สุดค่ะ';
+            $messgae = 'ขอบคุณที่ชำระเงิน รายการสั่งซื้อ #' . $order->id . ' เราจะตรวจสอบและแจ้งผลโดยเร็วที่สุดค่ะ';
             MSms::SMSFB($order, $messgae, true);
             Linenotify::send('แจ้งชำระเงิน #' . $order->id);
 
@@ -249,7 +261,7 @@ class OrderPaymentController extends Controller
         $slip->slip_un_verify_reasoning_id = request('slip_un_verify_reasoning_id');
         $slip->update();
         //
-        $messgae = 'การชำระเงินของคุณ ไม่ผ่านการตรวจสอบ เนื่องจาก : ' . $slip->silpUnVerifyReasoning->reasoning . ' รบกวนแจ้งชำระใหม่อีกครั้ง ผ่านลิงก์ก่อนหน้านี้ค่ะ';
+        $messgae = 'การชำระเงินของคุณ รายการสั่งซื้อ #'.$slip->order->id.' ไม่ผ่านการตรวจสอบ เนื่องจาก : ' . $slip->silpUnVerifyReasoning->reasoning . ' รบกวนแจ้งชำระใหม่อีกครั้ง ผ่านลิงก์ก่อนหน้านี้ค่ะ';
         MSms::SMSFB($slip->order, $messgae, true);
         Linenotify::send('ไม่ผ่านการชำระ #' . $slip->order->id);
 
@@ -277,7 +289,7 @@ class OrderPaymentController extends Controller
             $data->order_status_id = 5;
             $data->update();
 
-            $messgae = 'ลูกค้ายืนยันไม่สะดวกชำระมัดจำ ทางร้านขอนัดลูกค้าเข้าร้าน คิว ' . \Carbon\Carbon::parse($data->dateTime_get)->addYears(543)->format('d-m-Y H:i') . " เพื่อรอตกแต่งสินค้า 15-30 นาทีค่ะ";
+            $messgae = "รายการสั่งซื้อ #" . $data->id . ' ลูกค้ายืนยันไม่สะดวกชำระมัดจำ ทางร้านขอนัดลูกค้าเข้าร้าน คิว ' . \Carbon\Carbon::parse($data->dateTime_get)->addYears(543)->format('d-m-Y H:i') . " เพื่อรอตกแต่งสินค้า 15-30 นาทีค่ะ";
             MSms::SMSFB($data, $messgae, $input['alertSMS']);
             Linenotify::send('ไม่ผ่านการชำระ #' . $data->id);
 
