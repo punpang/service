@@ -17,17 +17,18 @@ class CreateOrderDetailsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('order_id');
             $table->integer('product_id');
-            $table->integer('write_status');
+            $table->boolean('write_status')->default(0);
             $table->text('write');
-            $table->integer('note_status');
+            $table->boolean('note_status')->default(0);
             $table->text('note');
             $table->decimal('price',8,2);            
             $table->integer('quantity')->default('1');
             $table->decimal('sum_price',8,2);
-            $table->integer('upload_image_status');
-            $table->integer('permission_to_publish')->default(1);
+            $table->boolean('upload_image_status')->default(0);
+            $table->boolean('hide_money')->default(0);
+            $table->boolean('permission_to_publish')->default(1);
             $table->string('finished_product_image')->nullable();
-            $table->boolean('status')->default('1');
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

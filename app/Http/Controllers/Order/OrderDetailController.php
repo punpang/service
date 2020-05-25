@@ -26,7 +26,7 @@ class OrderDetailController extends Controller
         SentLinkForUploadImage::CreateLink($detail);
 
         $order = Order::whereId(request('order_id'))->whereOrderStatusId(1)->first();
-        if (isset($order)) {
+        if ($order) {
             $order->order_status_id = '2';
             $order->update();
         }

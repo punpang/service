@@ -1636,6 +1636,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1781,6 +1794,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     write: "",
                     note_status: true,
                     upload_image_status: false,
+                    hide_something: false,
                     note: "",
                     price: "",
                     quantity: "1",
@@ -1987,7 +2001,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_components_orders_details_form_detail__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/js/components/orders/details/_form_detail */ "./resources/js/components/orders/details/_form_detail.vue");
 /* harmony import */ var _js_components_orders_details_deleteDetail__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/orders/details/deleteDetail */ "./resources/js/components/orders/details/deleteDetail.vue");
 /* harmony import */ var _js_components_orders_details_sentLinkMain__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/components/orders/details/sentLinkMain */ "./resources/js/components/orders/details/sentLinkMain.vue");
-/* harmony import */ var _js_components_orders_details_buttonFinishedProductImage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/js/components/orders/details/buttonFinishedProductImage */ "./resources/js/components/orders/details/buttonFinishedProductImage.vue");
+/* harmony import */ var _js_components_orders_details_hideMoney__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/js/components/orders/details/hideMoney */ "./resources/js/components/orders/details/hideMoney.vue");
+/* harmony import */ var _js_components_orders_details_buttonFinishedProductImage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/js/components/orders/details/buttonFinishedProductImage */ "./resources/js/components/orders/details/buttonFinishedProductImage.vue");
 //
 //
 //
@@ -2047,6 +2062,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+
 
 
 
@@ -2057,7 +2076,8 @@ __webpack_require__.r(__webpack_exports__);
     formDetail: _js_components_orders_details_form_detail__WEBPACK_IMPORTED_MODULE_0__["default"],
     deleteDetail: _js_components_orders_details_deleteDetail__WEBPACK_IMPORTED_MODULE_1__["default"],
     sentLinkMain: _js_components_orders_details_sentLinkMain__WEBPACK_IMPORTED_MODULE_2__["default"],
-    buttonFinishedProductImage: _js_components_orders_details_buttonFinishedProductImage__WEBPACK_IMPORTED_MODULE_3__["default"]
+    buttonFinishedProductImage: _js_components_orders_details_buttonFinishedProductImage__WEBPACK_IMPORTED_MODULE_4__["default"],
+    hideMoney: _js_components_orders_details_hideMoney__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
@@ -2848,6 +2868,48 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.dialog = false;
       this.alertSMS = true;
     }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/details/hideMoney.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/orders/details/hideMoney.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      dialog: false
+    };
   }
 });
 
@@ -7730,6 +7792,50 @@ var render = function() {
                                                     "v-row",
                                                     { staticClass: "px-4" },
                                                     [
+                                                      _c("v-checkbox", {
+                                                        staticClass:
+                                                          "ma-0 pa-0",
+                                                        attrs: {
+                                                          "hide-details": "",
+                                                          label:
+                                                            "บริการซ่อนเงิน"
+                                                        },
+                                                        model: {
+                                                          value:
+                                                            _vm.form.hide_money,
+                                                          callback: function(
+                                                            $$v
+                                                          ) {
+                                                            _vm.$set(
+                                                              _vm.form,
+                                                              "hide_money",
+                                                              $$v
+                                                            )
+                                                          },
+                                                          expression:
+                                                            "\n                                                        form.hide_money\n                                                    "
+                                                        }
+                                                      })
+                                                    ],
+                                                    1
+                                                  )
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-col",
+                                                {
+                                                  attrs: {
+                                                    cols: "12",
+                                                    md: "12"
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "v-row",
+                                                    { staticClass: "px-4" },
+                                                    [
                                                       _c(
                                                         "v-btn",
                                                         {
@@ -8112,6 +8218,15 @@ var render = function() {
                         }
                       })
                     ],
+                    1
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.status() && _vm.detail.hide_money
+                ? _c(
+                    "v-col",
+                    { staticClass: "pa-1", attrs: { cols: "2", md: "4" } },
+                    [_c("hideMoney")],
                     1
                   )
                 : _vm._e(),
@@ -8914,6 +9029,105 @@ var render = function() {
                 ],
                 1
               )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/details/hideMoney.vue?vue&type=template&id=00663f9c&":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/orders/details/hideMoney.vue?vue&type=template&id=00663f9c& ***!
+  \***************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "v-dialog",
+        {
+          attrs: { persistent: "", width: "500" },
+          scopedSlots: _vm._u([
+            {
+              key: "activator",
+              fn: function(ref) {
+                var on = ref.on
+                return [
+                  _c(
+                    "v-btn",
+                    _vm._g(
+                      { attrs: { color: "light-blue accent-3", block: "" } },
+                      on
+                    ),
+                    [
+                      _c("v-icon", { attrs: { left: "" } }, [
+                        _vm._v("emoji_emotions")
+                      ]),
+                      _vm._v("\n                บริการซ่อนเงิน")
+                    ],
+                    1
+                  )
+                ]
+              }
+            }
+          ]),
+          model: {
+            value: _vm.dialog,
+            callback: function($$v) {
+              _vm.dialog = $$v
+            },
+            expression: "dialog"
+          }
+        },
+        [
+          _vm._v(" "),
+          _c(
+            "v-card",
+            [
+              _c(
+                "v-card-title",
+                [
+                  _vm._v("บริการซ่อนเงิน\n                "),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-icon",
+                    {
+                      attrs: { color: "error" },
+                      on: {
+                        click: function($event) {
+                          _vm.dialog = false
+                        }
+                      }
+                    },
+                    [_vm._v("close")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-card-text")
             ],
             1
           )
@@ -13573,6 +13787,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_goodsDone_vue_vue_type_template_id_f9082ae8___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_goodsDone_vue_vue_type_template_id_f9082ae8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/orders/details/hideMoney.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/orders/details/hideMoney.vue ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _hideMoney_vue_vue_type_template_id_00663f9c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./hideMoney.vue?vue&type=template&id=00663f9c& */ "./resources/js/components/orders/details/hideMoney.vue?vue&type=template&id=00663f9c&");
+/* harmony import */ var _hideMoney_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./hideMoney.vue?vue&type=script&lang=js& */ "./resources/js/components/orders/details/hideMoney.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _hideMoney_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _hideMoney_vue_vue_type_template_id_00663f9c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _hideMoney_vue_vue_type_template_id_00663f9c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/orders/details/hideMoney.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/orders/details/hideMoney.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/orders/details/hideMoney.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_hideMoney_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./hideMoney.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/details/hideMoney.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_hideMoney_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/orders/details/hideMoney.vue?vue&type=template&id=00663f9c&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/orders/details/hideMoney.vue?vue&type=template&id=00663f9c& ***!
+  \*********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_hideMoney_vue_vue_type_template_id_00663f9c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./hideMoney.vue?vue&type=template&id=00663f9c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/orders/details/hideMoney.vue?vue&type=template&id=00663f9c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_hideMoney_vue_vue_type_template_id_00663f9c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_hideMoney_vue_vue_type_template_id_00663f9c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

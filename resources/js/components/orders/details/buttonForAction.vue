@@ -7,6 +7,9 @@
                     :action="action.update.detail"
                 ></formDetail
             ></v-col>
+            <v-col v-if="status() && detail.hide_money" cols="2" md="4" class="pa-1">
+                <hideMoney></hideMoney>
+            </v-col>
             <v-col
                 v-if="status() && detail.upload_image_status"
                 cols="2"
@@ -61,6 +64,7 @@
 import formDetail from "@/js/components/orders/details/_form_detail";
 import deleteDetail from "@/js/components/orders/details/deleteDetail";
 import sentLinkMain from "@/js/components/orders/details/sentLinkMain";
+import hideMoney from "@/js/components/orders/details/hideMoney";
 import buttonFinishedProductImage from "@/js/components/orders/details/buttonFinishedProductImage";
 
 export default {
@@ -69,7 +73,8 @@ export default {
         formDetail,
         deleteDetail,
         sentLinkMain,
-        buttonFinishedProductImage
+        buttonFinishedProductImage,
+        hideMoney
     },
     data() {
         return {

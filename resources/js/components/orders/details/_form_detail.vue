@@ -227,6 +227,19 @@
 
                                             <v-col cols="12" md="12">
                                                 <v-row class="px-4">
+                                                    <v-checkbox
+                                                        v-model="
+                                                            form.hide_money
+                                                        "
+                                                        hide-details
+                                                        label="บริการซ่อนเงิน"
+                                                        class="ma-0 pa-0"
+                                                    ></v-checkbox>
+                                                </v-row>
+                                            </v-col>
+
+                                            <v-col cols="12" md="12">
+                                                <v-row class="px-4">
                                                     <v-btn
                                                         @click="save"
                                                         color="success"
@@ -373,6 +386,7 @@ export default {
                     write: "",
                     note_status: true,
                     upload_image_status: false,
+                    hide_something:false,
                     note: "",
                     price: "",
                     quantity: "1",
