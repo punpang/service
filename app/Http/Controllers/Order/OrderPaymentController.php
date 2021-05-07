@@ -139,6 +139,7 @@ class OrderPaymentController extends Controller
 
     public function cancel(OrderPayment $payment)
     {
+        return "success";
         try {
             // ตรวจสอบว่าถูกยกเลิกไปแล้วหรือยัง
             if ($payment->status == 0) {

@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Sms;
+use App\Sms;
 use App\Linenotify;
 use App\FacebookMessager;
 
@@ -13,6 +13,11 @@ class MSms extends Model
   public static function Sms($p, $m, $allow)
   {
     if ($allow) {
+
+      $sms = Sms::send("0864735562","test");
+      return $sms;
+
+
       $key = MSms::LCKEY();
       $MSms = MSms::LCSms($p, $m, $key);
       if ($MSms['status'] == 200) {
@@ -22,8 +27,8 @@ class MSms extends Model
         ], 200);
       } elseif ($MSms['status'] == 400) {
         (new Linenotify)->line('แจ้งเตือน : ระบบ SMS ไม่ทำงาน กรุณาเปิดปิดแอพใหม่ !');
-        $sms = Sms::send([$p], $m);
-        if ($sms['code'] != 200) {
+        $sms = Sms::send($p,$m);
+        if ($sms != 200) {
           // return 400;
           return $sms['code'];
         }
