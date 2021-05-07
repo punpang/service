@@ -13,11 +13,7 @@ class MSms extends Model
   public static function Sms($p, $m, $allow)
   {
     if ($allow) {
-
-      $sms = Sms::send("0864735562","test");
-      return $sms;
-
-
+      
       $key = MSms::LCKEY();
       $MSms = MSms::LCSms($p, $m, $key);
       if ($MSms['status'] == 200) {

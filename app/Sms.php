@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Linenotify;
 
 class Sms extends Model
 {
@@ -24,6 +25,10 @@ class Sms extends Model
                 ],
             ]
         );
+        if($response->getStatusCode() != 200)
+        {
+            (new Linenotify)->line('แจ้งเตือน : ระบบ SMS.ME ไม่ทำงาน กรุณาปิด-เปิดแอพใหม่ !');
+        }
         return $response->getStatusCode();
     }
 }

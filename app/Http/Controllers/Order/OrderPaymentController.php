@@ -203,7 +203,7 @@ class OrderPaymentController extends Controller
             $url = URL::punpang() . $order->token . '/' . $input['amount'] . '/payment';
             $bitly = Bitly::getUrl($url); // http://bit.ly/nHcn3
 
-            $messgae = "รายการสั่งซื้อ #" . $order->id . ' โปรดชำระมัดจำขั้นต่ำด้วยยอด ' . number_format($input['amount'], 2) . ' บ. ช่องทางการชำระเงินและแจ้งการชำระเงินที่ได้ ' . $bitly;
+            $messgae = "รายการสั่งซื้อ #" . $order->id . ' โปรดชำระมัดจำขั้นต่ำด้วยยอด ' . number_format($input['amount'], 2) . ' บ. ช่องทางการชำระเงินและแจ้งการชำระเงินที่ได้ ' . $bitly .' <= คลิกลิงก์';
 
             //$messgae = '#ปั้นแป้ง# Order.#'.$order->id.' ยอดชำระทั้งหมด '.$order->sumTotalFormat().' บ. ชำระแล้ว '.$order->sumDepositFormat().' บ. คงเหลือ '.$order->sumBalanceFormat().' บ. โปรดชำระเงินขั้นต่ำด้วยยอด '.number_format($input['amount'],2).' บ. รายละเอียดการชำระเงินและแจ้งขำระเงินได้ที่ ';
             MSms::SMSFB($order, $messgae, true);
