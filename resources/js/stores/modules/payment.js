@@ -51,6 +51,11 @@ export default {
             const response = await axios.post("/api/payment/notPayDeposit",payload);
             return response;
         },
+        async scb({},payload){
+            const response = await axios.post("/api/payment/scb",payload);
+            console.log(response);
+            return response;
+        }
 
         
     }

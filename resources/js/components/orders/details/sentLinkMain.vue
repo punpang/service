@@ -33,10 +33,11 @@
                         :detail="detail"
                         v-if="detail.upload_image.example"
                     ></sentLinkExampleImage>
+
                     <v-divider></v-divider>
 
-                    <h5>รูปภาพต้นแบบสินค้า</h5>
-                    <v-row>
+                    <h5 class="pb-2" v-show="detail.upload_image.image == 1">รูปภาพสำหรับทำสินค้า</h5>
+                    <v-row v-show="detail.upload_image.image == 1">
                         <v-col
                             cols="12"
                             md="4"
@@ -102,7 +103,7 @@
 <script>
 import sentLinkForUploadImage from "@/js/components/orders/details/sentLinkForUploadImage";
 import sentLinkExampleImage from "@/js/components/orders/details/sentLinkExampleImage";
-sentLinkExampleImage;
+
 export default {
     props: ["detail"],
     components: {

@@ -3617,9 +3617,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
-_js_components_orders_details_sentLinkExampleImage__WEBPACK_IMPORTED_MODULE_2__["default"];
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["detail"],
   components: {
@@ -4808,6 +4808,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -4823,7 +4827,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       dialog: false,
-      form: {}
+      form: {},
+      deeplink: null
     };
   },
   methods: {
@@ -4870,6 +4875,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee);
+      }))();
+    },
+    scb: function scb() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                console.log("scb test");
+                _context2.next = 3;
+                return _this2.$store.dispatch("payment/scb");
+
+              case 3:
+                res = _context2.sent;
+                _this2.deeplink = res.data.data.deeplinkUrl;
+                console.log(_this2.deeplink);
+
+              case 6:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
       }))();
     }
   }
@@ -9998,10 +10029,34 @@ var render = function() {
                   _vm._v(" "),
                   _c("v-divider"),
                   _vm._v(" "),
-                  _c("h5", [_vm._v("รูปภาพต้นแบบสินค้า")]),
+                  _c(
+                    "h5",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.detail.upload_image.image == 1,
+                          expression: "detail.upload_image.image == 1"
+                        }
+                      ],
+                      staticClass: "pb-2"
+                    },
+                    [_vm._v("รูปภาพสำหรับทำสินค้า")]
+                  ),
                   _vm._v(" "),
                   _c(
                     "v-row",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.detail.upload_image.image == 1,
+                          expression: "detail.upload_image.image == 1"
+                        }
+                      ]
+                    },
                     _vm._l(_vm.detail.upload_image.images, function(image) {
                       return _c(
                         "v-col",
@@ -10416,8 +10471,7 @@ var render = function() {
                               return !!v
                             }
                           ],
-                          "hide-details": "",
-                          readonly: ""
+                          "hide-details": ""
                         },
                         model: {
                           value: _vm.form.slip_ref,
@@ -11585,37 +11639,9 @@ var render = function() {
                             attrs: { path: _vm.slip.path }
                           }),
                           _vm._v(" "),
-                          _c("v-divider"),
-                          _vm._v(" "),
-                          _vm._l(_vm.slip.google_ocr, function(ref) {
-                            return !_vm.slip.ref
-                              ? _c(
-                                  "v-btn",
-                                  {
-                                    key: ref.id,
-                                    staticClass: "mr-1 mb-1",
-                                    attrs: { rounded: "", color: "orange" },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.clickRef(
-                                          ref.ocr_text,
-                                          ref.type
-                                        )
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                            " +
-                                        _vm._s(ref.ocr_text) +
-                                        "\n                        "
-                                    )
-                                  ]
-                                )
-                              : _vm._e()
-                          })
+                          _c("v-divider")
                         ],
-                        2
+                        1
                       ),
                       _vm._v(" "),
                       _c(
@@ -11653,7 +11679,24 @@ var render = function() {
                               form: _vm.form
                             },
                             on: { emitExit: _vm.emitExit }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            { staticClass: "success", on: { click: _vm.scb } },
+                            [_vm._v("SCB Payment")]
+                          ),
+                          _vm._v(" "),
+                          _vm.deeplink
+                            ? _c(
+                                "v-btn",
+                                {
+                                  staticClass: "primary",
+                                  attrs: { href: _vm.deeplink }
+                                },
+                                [_vm._v("click")]
+                              )
+                            : _vm._e()
                         ],
                         1
                       )

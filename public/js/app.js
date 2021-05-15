@@ -101540,6 +101540,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee7);
       }))();
+    },
+    scb: function scb(_ref8, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                _objectDestructuringEmpty(_ref8);
+
+                _context8.next = 3;
+                return axios.post("/api/payment/scb", payload);
+
+              case 3:
+                response = _context8.sent;
+                console.log(response);
+                return _context8.abrupt("return", response);
+
+              case 6:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8);
+      }))();
     }
   }
 });

@@ -19,6 +19,7 @@ use Bitly;
 use App\GoogleOcr;
 use App\Order\SilpUnVerifyReasoning;
 use phpDocumentor\Reflection\Types\Boolean;
+use App\SCBPayment;
 
 class OrderPaymentController extends Controller
 {
@@ -303,5 +304,10 @@ class OrderPaymentController extends Controller
                 'message' => "รายการสั่งซื้อนี้ ไม่ได้อยู่ในสถานะที่สามารถเปลี่ยนสถานะเป็น 'ไม่ชำระมัด' จำได้"
             ], 200);
         }
+    }
+
+    public function scb()
+    {
+        return SCBPayment::CreateDeeplink('150','6545');
     }
 }

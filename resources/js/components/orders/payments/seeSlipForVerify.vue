@@ -20,6 +20,7 @@
                         <v-col cols="12" md="5">
                             <imageFullPath :path="slip.path"></imageFullPath>
                             <v-divider></v-divider>
+                            <!-- ปิด OCR GOOLGE
                             <v-btn 
                                 v-if="!slip.ref"
                                 rounded
@@ -31,6 +32,7 @@
                             >
                                 {{ ref.ocr_text }}
                             </v-btn>
+                            -->
                         </v-col>
                         <v-col cols="12" md="7">
                             <v-row>
@@ -44,7 +46,9 @@
                             ></CostSub>
 
                             <formPayment :sum="this.$store.getters['order/getByID'].sum" :form="form" @emitExit="emitExit"></formPayment>      
-                            
+                            <v-btn class="success" @click="scb">SCB Payment</v-btn>
+
+                            <v-btn v-if="deeplink" :href="deeplink" class="primary">click</v-btn>
                         </v-col>
                     </v-row>
                 </v-card-text>
@@ -71,7 +75,8 @@ export default {
         return {
             dialog: false,
             form: {
-            }
+            },
+            deeplink:null
         };
     },
     methods: {
@@ -100,6 +105,12 @@ export default {
             if (this.$refs.form.validate()) {
                 await this.$store.dispatch("payment/checkRef", this.form);
             }
+        },
+        async scb() {
+            console.log("scb test");
+            const res = await this.$store.dispatch("payment/scb");
+            this.deeplink = res.data.data.deeplinkUrl
+            console.log(this.deeplink);
         }
     }
 };

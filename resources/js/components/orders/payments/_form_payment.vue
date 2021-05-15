@@ -33,7 +33,7 @@
                         v-model="form.slip_ref"
                         :rules="[v => !!v]"
                         hide-details
-                        readonly
+                        
                         class="ma-0 pa-0"
                     ></v-text-field>
                 </v-col>
