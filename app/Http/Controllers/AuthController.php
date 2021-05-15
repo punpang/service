@@ -41,7 +41,7 @@ class AuthController extends Controller
      */
     public function me()
     {
-        //return hash_hmac('sha256', "EAADs9Pa2orYBAOjGg5GJRCZCWsxSZCZBVZClxsRgi4evYIPtaO6d4oOdAZBPwfacC92eTMaikwuUOOndkygZA1tCPQDHChPMBF2zv4t14KrMzrjTfXqmH8m7SZCLXeLixGf37GbNUot40gXtVHzAJyI0fNw3p2GRxQZBnQxMj461KbXrKpuCDf6S9PKVD8UIaBGNhqxxw27RtAZDZD", "45bf99a1675babbadc7033159fed9ee4"); 
+        //return hash_hmac('sha256', "EAADs9Pa2orYBAJWkcpHyNcSF7ZBDkZAyWZCB79ZA3ZCLe4rNCMnNoMvngx7EVrv97y8ZANHIyg7g44sba4g4r2MelePr7dVY6U7tCZAbv2SRyedMvOWZAXzJbpZAlOlsMikwLnG8opZCcT27jusUXfEyz8xNdmahZClBO7shlBZAHkYePMMZBpMZADiFOZALSHzF4GVtMs24oZCgftx35gZDZD", "45bf99a1675babbadc7033159fed9ee4"); 
 
         return response()->json(auth()->user());
     }

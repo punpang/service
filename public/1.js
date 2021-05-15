@@ -3447,13 +3447,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this.$toast.error("ไม่สามารถส่งลิงก์ได้ กรุณาตรวจสอบข้อมูล");
 
-                _context.next = 10;
+                _context.next = 12;
                 break;
 
               case 4:
                 _this.overlay = true;
                 payload = {
-                  detail_id: _this.detail.id,
+                  detail_id: _this.detail.order_id,
                   form: _this.form
                 };
                 _context.next = 8;
@@ -3461,7 +3461,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 8:
                 res = _context.sent;
+                _context.next = 11;
+                return _this.$store.dispatch("order/getByID", _this.detail.order_id);
 
+              case 11:
                 if (res.status === 200) {
                   if (res.data.success === true) {
                     _this.$toast.success(res.data.message);
@@ -3474,7 +3477,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.overlay = false;
                 } else if (res.status === 500) {}
 
-              case 10:
+              case 12:
               case "end":
                 return _context.stop();
             }
@@ -3486,6 +3489,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (this.detail.upload_image != null) {
         this.form.example = this.detail.upload_image.example;
         this.form.image = this.detail.upload_image.image;
+        s;
       }
     }
   }

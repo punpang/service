@@ -37,7 +37,7 @@ class MSms extends Model
     }
   }
 
-  public static function SMSFB($order, $message, $allow = false) // order , message , allow
+  public static function SMSFB($order, $message, $allow = true) // order , message , allow
   {
     MSms::Sms($order->customer->phone, $message, $allow);
     FacebookMessager::postMessage($order->customer, $order->ChannelOfPurchase->name, $message, $allow);

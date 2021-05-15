@@ -72,13 +72,15 @@ export default {
             } else {
                 this.overlay = true;
                 const payload = {
-                    detail_id: this.detail.id,
+                    detail_id: this.detail.order_id,
                     form: this.form
                 };
                 const res = await this.$store.dispatch(
                     "orderDetail/sentLinkForUploadImage",
                     payload
-                );
+                ); 
+
+                await this.$store.dispatch("order/getByID", this.detail.order_id);
 
                 if (res.status === 200) {
                     if (res.data.success === true) {
@@ -95,7 +97,7 @@ export default {
         clickStart() {
             if (this.detail.upload_image != null) {
                 this.form.example = this.detail.upload_image.example;
-                this.form.image = this.detail.upload_image.image;
+                this.form.image = this.detail.upload_image.image;s
             }
         }
     }

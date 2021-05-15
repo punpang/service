@@ -85,14 +85,19 @@ class OrderDetailController extends Controller
 
             // เช็ค มีการสร้างไปหรือยัง หากมีให้ไปที่อัปเดทแทน
             $sent = SentLinkForUploadImage::find($detail->id);
+
             $input = request()->all();
+            
             if ($sent) {
                 $sent->update($input);
             } else {
+                
                 $input['order_detail_id'] = $detail->id;
                 $input['token'] = Helper::generateToken();
                 $sent = SentLinkForUploadImage::create($input);
             }
+
+            $sent = SentLinkForUploadImage::find($detail->id);
 
             // สร้างลิงก์
             $url = URL::punpang() . $sent->token . '/uploadImage';
@@ -103,6 +108,7 @@ class OrderDetailController extends Controller
             Linenotify::send('ส่งลิงก์อัปโหลดรูปภาพ #' . $detail->order->id);
 
             return response()->json([
+                'data' => $sent,
                 'success' => true,
                 'message' => "ส่งลิงก์สำหรับอัปโหลดสำเร็จ"
             ], 200);

@@ -74,7 +74,7 @@ export default {
         },
 
         async sentLinkForUploadImage({}, payload) {
-            console.log(payload);
+            //console.log(payload);
 
             const res = await axios.post(
                 "/api/order/detail/" +
@@ -82,7 +82,7 @@ export default {
                     "/sentLinkForUploadImage",
                 payload.form
             );
-            console.log(res);
+            //console.log(res);
 
             return res;
         },
