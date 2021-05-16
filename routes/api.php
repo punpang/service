@@ -172,6 +172,8 @@ Route::prefix('v1')->group(function () { // api/v1/...
 });
 
 
+Route::get('scbtest', 'Order\SCBController@callback');
+
 
 Route::middleware('auth')->group(function () { //สำหรับ user
 
