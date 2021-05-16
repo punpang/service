@@ -284,6 +284,75 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -322,6 +391,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           name: ""
         }
       },
+      deeplink: null,
       bank: {
         book: {
           nameBank: "ธนาคารไทยพาณิชย์",
@@ -347,6 +417,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         color: "success",
         text: "คัดลอกแล้ว"
       };
+    },
+    ScbClickBTN: function ScbClickBTN() {
+      var loader = this.$loading.show();
     },
     clickSubmit: function clickSubmit() {
       var _this = this;
@@ -391,7 +464,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var loader, response;
+        var loader, response, SCBPayment;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -415,18 +488,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context2.t0;
 
               case 13:
-                if (response.status == 200) {
-                  _this2.order = response.data.data; //this.form.order_id = this.order.id
+                SCBPayment = "";
 
-                  _this2.sum = response.data.sum;
-                  _this2.verity = true;
-                } else {
-                  _this2.verity = false;
+                if (!(response.status == 200)) {
+                  _context2.next = 25;
+                  break;
                 }
 
+                _this2.order = response.data.data; //this.form.order_id = this.order.id
+
+                _this2.sum = response.data.sum;
+                _context2.next = 19;
+                return axios.get("/api/v1/guest/scbpayment/" + _this2.amount + "/" + _this2.order.id + "/" + _this2.order.customer_id + "/deeplinkUrl");
+
+              case 19:
+                SCBPayment = _context2.sent;
+                _this2.deeplink = SCBPayment.data.data.deeplinkUrl;
+                console.log(_this2.deeplink);
+                _this2.verity = true;
+                _context2.next = 26;
+                break;
+
+              case 25:
+                _this2.verity = false;
+
+              case 26:
                 loader.hide();
 
-              case 15:
+              case 27:
               case "end":
                 return _context2.stop();
             }
@@ -868,10 +957,7 @@ var render = function() {
                                     [
                                       _c(
                                         "v-alert",
-                                        {
-                                          staticClass: "ma-0",
-                                          attrs: { type: "warning" }
-                                        },
+                                        { attrs: { type: "warning" } },
                                         [
                                           _vm._v(
                                             "\n                            โปรดชำระเงินขั้นต่ำด้วยยอด " +
@@ -895,7 +981,29 @@ var render = function() {
                                                 attrs: {
                                                   src: _vm.bank.book.logoBank
                                                 }
-                                              })
+                                              }),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-btn",
+                                                {
+                                                  staticClass: "mt-4",
+                                                  staticStyle: {
+                                                    "text-decoration": "none"
+                                                  },
+                                                  attrs: {
+                                                    large: "",
+                                                    block: "",
+                                                    color: "#4E2A82",
+                                                    href: _vm.deeplink
+                                                  },
+                                                  on: { click: _vm.ScbClickBTN }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                    SCB EASY APP\n                                "
+                                                  )
+                                                ]
+                                              )
                                             ],
                                             1
                                           ),
@@ -1024,6 +1132,168 @@ var render = function() {
                                                   )
                                                 ],
                                                 1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-row",
+                                                [
+                                                  _c(
+                                                    "v-col",
+                                                    {
+                                                      attrs: {
+                                                        cols: "5",
+                                                        md: "5"
+                                                      }
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                        พร้อมเพย์\n                                    "
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-col",
+                                                    {
+                                                      staticClass: "text-right",
+                                                      attrs: {
+                                                        cols: "7",
+                                                        md: "7"
+                                                      }
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "v-btn",
+                                                        {
+                                                          directives: [
+                                                            {
+                                                              name: "clipboard",
+                                                              rawName:
+                                                                "v-clipboard:copy",
+                                                              value:
+                                                                _vm.bank.book
+                                                                  .numberClipboard,
+                                                              expression:
+                                                                "\n                                                bank.book.numberClipboard\n                                            ",
+                                                              arg: "copy"
+                                                            },
+                                                            {
+                                                              name: "clipboard",
+                                                              rawName:
+                                                                "v-clipboard:success",
+                                                              value: _vm.onCopy,
+                                                              expression:
+                                                                "onCopy",
+                                                              arg: "success"
+                                                            }
+                                                          ],
+                                                          attrs: {
+                                                            "x-small": "",
+                                                            icon: "",
+                                                            color: "primary",
+                                                            fab: ""
+                                                          }
+                                                        },
+                                                        [
+                                                          _c("v-icon", [
+                                                            _vm._v("file_copy")
+                                                          ])
+                                                        ],
+                                                        1
+                                                      ),
+                                                      _vm._v(
+                                                        "\n                                        " +
+                                                          _vm._s(
+                                                            _vm.bank.book.number
+                                                          ) +
+                                                          "\n                                    "
+                                                      )
+                                                    ],
+                                                    1
+                                                  )
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-row",
+                                                [
+                                                  _c(
+                                                    "v-col",
+                                                    {
+                                                      attrs: {
+                                                        cols: "5",
+                                                        md: "5"
+                                                      }
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                        True Wallet\n                                    "
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-col",
+                                                    {
+                                                      staticClass: "text-right",
+                                                      attrs: {
+                                                        cols: "7",
+                                                        md: "7"
+                                                      }
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "v-btn",
+                                                        {
+                                                          directives: [
+                                                            {
+                                                              name: "clipboard",
+                                                              rawName:
+                                                                "v-clipboard:copy",
+                                                              value:
+                                                                _vm.bank.book
+                                                                  .numberClipboard,
+                                                              expression:
+                                                                "\n                                                bank.book.numberClipboard\n                                            ",
+                                                              arg: "copy"
+                                                            },
+                                                            {
+                                                              name: "clipboard",
+                                                              rawName:
+                                                                "v-clipboard:success",
+                                                              value: _vm.onCopy,
+                                                              expression:
+                                                                "onCopy",
+                                                              arg: "success"
+                                                            }
+                                                          ],
+                                                          attrs: {
+                                                            "x-small": "",
+                                                            icon: "",
+                                                            color: "primary",
+                                                            fab: ""
+                                                          }
+                                                        },
+                                                        [
+                                                          _c("v-icon", [
+                                                            _vm._v("file_copy")
+                                                          ])
+                                                        ],
+                                                        1
+                                                      ),
+                                                      _vm._v(
+                                                        "\n                                        " +
+                                                          _vm._s(
+                                                            _vm.bank.book.number
+                                                          ) +
+                                                          "\n                                    "
+                                                      )
+                                                    ],
+                                                    1
+                                                  )
+                                                ],
+                                                1
                                               )
                                             ],
                                             1
@@ -1033,6 +1303,7 @@ var render = function() {
                                       ),
                                       _vm._v(" "),
                                       _c("v-file-input", {
+                                        staticClass: "mt-4",
                                         attrs: {
                                           outlined: "",
                                           "prepend-icon": "image",

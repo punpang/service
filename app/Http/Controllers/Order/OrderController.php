@@ -9,13 +9,14 @@ use App\Http\Controllers\Controller;
 use App\Linenotify;
 use App\MSms;
 use App\FacebookMessager;
+use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
     public function create()
     {
         $dataRequest = request()->all();
-        $dataRequest['token'] = $this->generateToken();
+        $dataRequest['token'] = Str::random(60);
         $order = Order::create($dataRequest);
 
         $messgae = "รายการสั่งซื้อ #" . $order->id . " ของคุณ สามารถรับสินค้าได้ตั้งแต่ " . $order->DateTimeFormatTH();
@@ -183,8 +184,9 @@ class OrderController extends Controller
     public function getByTokenForPaymentAlert($token)
     {
         try {
-            $today = \Carbon\Carbon::now()->addDays(1)->format('Y-m-d 00:00:00');
-            $data = Order::whereToken($token)->where('dateTime_get', '>=', $today)
+            //$today = \Carbon\Carbon::now()->format('Y-m-d 23:59:59');
+            //dd($today);
+            $data = Order::whereToken($token)->whereNotIn('order_status_id', [8,9])
                 ->with('CustomerNotFB', 'OrderStatus', 'ChannelOfPurchase')
                 ->first();
             if ($data) {

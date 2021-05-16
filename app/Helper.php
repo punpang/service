@@ -3,11 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Helper extends Model
 {
     public static function generateToken($length = 30)
     {
+        return Str::random(60);
+        
         $timestamp = str_split(\Carbon\Carbon::now()->timestamp);
 
         $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';

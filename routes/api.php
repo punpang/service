@@ -164,6 +164,10 @@ Route::prefix('v1')->group(function () { // api/v1/...
             Route::post('{token}/uploadImageByToken/images', 'Order\OrderDetailController@uploadImageByTokenImages');
             Route::delete('{token}/uploadImageByToken/{image}/delete', 'Order\OrderDetailController@uploadImageByTokenDelete');
         });
+
+        Route::prefix('scbpayment')->group(function () { // api/guest/order/
+            Route::get('{amount}/{ref1}/{ref2}/deeplinkUrl', 'Order\SCBController@deeplink');
+        });
     });
 });
 
