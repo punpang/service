@@ -169,6 +169,10 @@ Route::prefix('v1')->group(function () { // api/v1/...
             Route::get('{amount}/{ref1}/{ref2}/deeplinkUrl', 'Order\SCBController@deeplink');
         });
     });
+
+    Route::prefix('otp')->group(function () { // api/guest/order/
+        Route::post('store', 'OTPController@store');
+    });
 });
 
 

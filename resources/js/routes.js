@@ -71,6 +71,11 @@ const routes = [
         path: "/logout",
         name: "logout",
         component: LogoutComponent
+    },//SYSTEM
+    {
+        path: "/testModule",
+        name: "testModule",
+        component: () => import("@/js/pages/testModule")
     },
     /* punpang */
     {

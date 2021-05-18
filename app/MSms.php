@@ -10,7 +10,7 @@ use App\FacebookMessager;
 class MSms extends Model
 {
 
-  public static function Sms($p, $m, $allow)
+  public static function Sms($p, $m, $allow = true)
   {
     if ($allow) {
       

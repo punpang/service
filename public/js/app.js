@@ -99509,7 +99509,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_clipboard2__WEBPACK_IMPORTED_
 
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_toast_notification__WEBPACK_IMPORTED_MODULE_9___default.a, {
   // One of options
-  position: "top"
+  position: "bottom"
 }); // overlay
 
  // Import stylesheet
@@ -100197,13 +100197,20 @@ var routes = [{
   path: "/logout",
   name: "logout",
   component: _js_components_LogoutComponent__WEBPACK_IMPORTED_MODULE_6__["default"]
+}, //SYSTEM
+{
+  path: "/testModule",
+  name: "testModule",
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! @/js/pages/testModule */ "./resources/js/pages/testModule.vue"));
+  }
 },
 /* punpang */
 {
   path: "/punpang/order/:token",
   name: "orderToken",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/orders/show */ "./resources/js/pages/punpang/orders/show.vue"));
+    return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/orders/show */ "./resources/js/pages/punpang/orders/show.vue"));
   }
 }, {
   path: "/punpang/order/:token/:amount/payment",
@@ -100263,6 +100270,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_stores_modules_orderPaymentMethod__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/js/stores/modules/orderPaymentMethod */ "./resources/js/stores/modules/orderPaymentMethod.js");
 /* harmony import */ var _js_stores_modules_slip__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/js/stores/modules/slip */ "./resources/js/stores/modules/slip.js");
 /* harmony import */ var _js_stores_modules_punpang__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/js/stores/modules/punpang */ "./resources/js/stores/modules/punpang.js");
+/* harmony import */ var _js_stores_modules_smsOTP__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/js/stores/modules/smsOTP */ "./resources/js/stores/modules/smsOTP.js");
+
 
 
 
@@ -100298,6 +100307,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     payment: _js_stores_modules_payment__WEBPACK_IMPORTED_MODULE_14__["default"],
     orderPaymentMethod: _js_stores_modules_orderPaymentMethod__WEBPACK_IMPORTED_MODULE_15__["default"],
     slip: _js_stores_modules_slip__WEBPACK_IMPORTED_MODULE_16__["default"],
+    smsOTP: _js_stores_modules_smsOTP__WEBPACK_IMPORTED_MODULE_18__["default"],
     //
     punpang: _js_stores_modules_punpang__WEBPACK_IMPORTED_MODULE_17__["default"]
   }
@@ -102455,6 +102465,60 @@ __webpack_require__.r(__webpack_exports__);
   mutations: {},
   getters: {},
   actions: {}
+});
+
+/***/ }),
+
+/***/ "./resources/js/stores/modules/smsOTP.js":
+/*!***********************************************!*\
+  !*** ./resources/js/stores/modules/smsOTP.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  state: {},
+  mutations: {},
+  getters: {},
+  actions: {
+    sendOTP: function sendOTP(_ref, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _objectDestructuringEmpty(_ref);
+
+                _context.next = 3;
+                return axios.post("api/v1/otp/store", payload);
+
+              case 3:
+                res = _context.sent;
+                return _context.abrupt("return", res);
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    }
+  }
 });
 
 /***/ }),

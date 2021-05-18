@@ -1,7 +1,7 @@
 <template>
     <v-dialog v-model="dialog" persistent width="700">
         <template v-slot:activator="{ on }">
-            <v-btn color="primary" v-on="on" block large>
+            <v-btn color="primary" v-on="on" block large @click="start">
                 <v-icon left>fiber_new</v-icon>
                 เลือกสินค้า
             </v-btn>
@@ -19,7 +19,7 @@
                     append-icon="search"
                 ></v-text-field>
                 <v-data-table
-                    :items="this.$store.getters['product/dataUseOnly']"
+                    :items="dataTable"
                     item-key="id"
                     :headers="headers"
                     :search="search"
@@ -40,11 +40,13 @@
                         >
                         <span v-else>{{ item.price_special }}</span>
                     </template>
+                    <!---
                     <template v-slot:item.tags="{ item }">
                         <div v-for="tag in item.product_tag_use_only" :key="tag.id">
                             <tagsProduct :tag="tag"></tagsProduct>
                         </div>
                     </template>
+                    -->
                     <template v-slot:item.action="{ item }">
                         <v-btn
                             @click="clickSelectProduct(item)"
@@ -53,6 +55,15 @@
                         >
                             เลือก
                         </v-btn>
+                    </template>
+
+                    <template v-slot:item.name="{ item }">
+                        <p class="font-weight-black mb-0">
+                            {{item.name}}
+                        </p>
+                        <div v-for="tag in item.product_tag_use_only" :key="tag.id">
+                            <tagsProduct :tag="tag"></tagsProduct>
+                        </div>
                     </template>
                 </v-data-table>
             </v-card-text>
@@ -72,21 +83,26 @@ export default {
             search: "",
             headers: [
                 { text: "รูปภาพ", value: "image", align: "center" },
-                { text: "ชื่อสินค้า", value: "name", align: "center" },
+                { text: "ชื่อสินค้า", value: "name", align: "left" },
                 { text: "ราคา", value: "price", align: "center" },
-                { text: "แท็กสินค้า", value: "tags", align: "center" },
+                //{ text: "แท็กสินค้า", value: "tags", align: "center" },
                 { text: "การจัดการ", value: "action", align: "end" }
-            ]
+            ],
+            dataTable:[]
         };
     },
     methods: {
         clickSelectProduct(item) {
             this.$emit("emitSelectProduct", item);
             this.dialog = false;
+        },
+        async start(){
+            this.dataTable = await this.$store.getters['product/dataUseOnly'];
         }
     },
     async beforeCreate() {
         await this.$store.dispatch("product/getUseOnly");
+        
         this.loadingTable = false;
         this.overlay = false;
     }

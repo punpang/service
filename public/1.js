@@ -3234,6 +3234,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -3250,49 +3261,69 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }, {
         text: "ชื่อสินค้า",
         value: "name",
-        align: "center"
+        align: "left"
       }, {
         text: "ราคา",
         value: "price",
         align: "center"
-      }, {
-        text: "แท็กสินค้า",
-        value: "tags",
-        align: "center"
-      }, {
+      }, //{ text: "แท็กสินค้า", value: "tags", align: "center" },
+      {
         text: "การจัดการ",
         value: "action",
         align: "end"
-      }]
+      }],
+      dataTable: []
     };
   },
   methods: {
     clickSelectProduct: function clickSelectProduct(item) {
       this.$emit("emitSelectProduct", item);
       this.dialog = false;
+    },
+    start: function start() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return _this.$store.getters['product/dataUseOnly'];
+
+              case 2:
+                _this.dataTable = _context.sent;
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     }
   },
   beforeCreate: function beforeCreate() {
-    var _this = this;
+    var _this2 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
-          switch (_context.prev = _context.next) {
+          switch (_context2.prev = _context2.next) {
             case 0:
-              _context.next = 2;
-              return _this.$store.dispatch("product/getUseOnly");
+              _context2.next = 2;
+              return _this2.$store.dispatch("product/getUseOnly");
 
             case 2:
-              _this.loadingTable = false;
-              _this.overlay = false;
+              _this2.loadingTable = false;
+              _this2.overlay = false;
 
             case 4:
             case "end":
-              return _context.stop();
+              return _context2.stop();
           }
         }
-      }, _callee);
+      }, _callee2);
     }))();
   }
 });
@@ -9488,7 +9519,10 @@ var render = function() {
               _c(
                 "v-btn",
                 _vm._g(
-                  { attrs: { color: "primary", block: "", large: "" } },
+                  {
+                    attrs: { color: "primary", block: "", large: "" },
+                    on: { click: _vm.start }
+                  },
                   on
                 ),
                 [
@@ -9553,7 +9587,7 @@ var render = function() {
               _vm._v(" "),
               _c("v-data-table", {
                 attrs: {
-                  items: this.$store.getters["product/dataUseOnly"],
+                  items: _vm.dataTable,
                   "item-key": "id",
                   headers: _vm.headers,
                   search: _vm.search
@@ -9595,20 +9629,6 @@ var render = function() {
                     }
                   },
                   {
-                    key: "item.tags",
-                    fn: function(ref) {
-                      var item = ref.item
-                      return _vm._l(item.product_tag_use_only, function(tag) {
-                        return _c(
-                          "div",
-                          { key: tag.id },
-                          [_c("tagsProduct", { attrs: { tag: tag } })],
-                          1
-                        )
-                      })
-                    }
-                  },
-                  {
                     key: "item.action",
                     fn: function(ref) {
                       var item = ref.item
@@ -9629,6 +9649,30 @@ var render = function() {
                             )
                           ]
                         )
+                      ]
+                    }
+                  },
+                  {
+                    key: "item.name",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        _c("p", { staticClass: "font-weight-black mb-0" }, [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(item.name) +
+                              "\n                    "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(item.product_tag_use_only, function(tag) {
+                          return _c(
+                            "div",
+                            { key: tag.id },
+                            [_c("tagsProduct", { attrs: { tag: tag } })],
+                            1
+                          )
+                        })
                       ]
                     }
                   }
