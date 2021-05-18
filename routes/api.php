@@ -172,6 +172,7 @@ Route::prefix('v1')->group(function () { // api/v1/...
 
     Route::prefix('otp')->group(function () { // api/guest/order/
         Route::post('store', 'OTPController@store');
+        Route::post("verify","OTPController@verify");
     });
 });
 

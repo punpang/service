@@ -7102,10 +7102,10 @@ exports.push([module.i, ".vld-overlay {\n  bottom: 0;\n  left: 0;\n  position: a
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-toast-notification/dist/theme-default.css":
-/*!****************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-toast-notification/dist/theme-default.css ***!
-  \****************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-toast-notification/dist/theme-sugar.css":
+/*!**************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-toast-notification/dist/theme-sugar.css ***!
+  \**************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7114,7 +7114,7 @@ exports = module.exports = __webpack_require__(/*! ../../css-loader/lib/css-base
 
 
 // module
-exports.push([module.i, "@-webkit-keyframes fadeOut{from{opacity:1}to{opacity:0}}@keyframes fadeOut{from{opacity:1}to{opacity:0}}.fadeOut{-webkit-animation-name:fadeOut;animation-name:fadeOut}@-webkit-keyframes fadeInDown{from{opacity:0;transform:translate3d(0, -100%, 0)}to{opacity:1;transform:none}}@keyframes fadeInDown{from{opacity:0;transform:translate3d(0, -100%, 0)}to{opacity:1;transform:none}}.fadeInDown{-webkit-animation-name:fadeInDown;animation-name:fadeInDown}@-webkit-keyframes fadeInUp{from{opacity:0;transform:translate3d(0, 100%, 0)}to{opacity:1;transform:none}}@keyframes fadeInUp{from{opacity:0;transform:translate3d(0, 100%, 0)}to{opacity:1;transform:none}}.fadeInUp{-webkit-animation-name:fadeInUp;animation-name:fadeInUp}.fade-enter-active,.fade-leave-active{transition:opacity 150ms ease-out}.fade-enter,.fade-leave-to{opacity:0}.notices{position:fixed;display:flex;top:0;bottom:0;left:0;right:0;padding:2em;overflow:hidden;z-index:1052;pointer-events:none}.notices .toast{display:inline-flex;align-items:center;-webkit-animation-duration:150ms;animation-duration:150ms;margin:.5em 0;box-shadow:0 1px 4px rgba(0,0,0,.12),0 0 6px rgba(0,0,0,.04);border-radius:.25em;pointer-events:auto;opacity:.92;color:#fff;min-height:3em;cursor:pointer}.notices .toast .toast-text{margin:0;padding:.5em 1em;word-break:break-all}.notices .toast .toast-icon{display:none}.notices .toast-success{background-color:#28a745}.notices .toast-info{background-color:#17a2b8}.notices .toast-warning{background-color:#ffc107}.notices .toast-error{background-color:#dc3545}.notices .toast-default{background-color:#343a40}.notices .toast.is-top,.notices .toast.is-bottom{align-self:center}.notices .toast.is-top-right,.notices .toast.is-bottom-right{align-self:flex-end}.notices .toast.is-top-left,.notices .toast.is-bottom-left{align-self:flex-start}.notices.is-top{flex-direction:column}.notices.is-bottom{flex-direction:column-reverse}.notices.is-custom-parent{position:absolute}@media screen and (max-width: 768px){.notices{padding:0;position:fixed !important}}\n", ""]);
+exports.push([module.i, "@-webkit-keyframes fadeOut {\n    from {\n        opacity: 1\n    }\n\n    to {\n        opacity: 0\n    }\n}\n\n@keyframes fadeOut {\n    from {\n        opacity: 1\n    }\n\n    to {\n        opacity: 0\n    }\n}\n\n.fadeOut {\n    -webkit-animation-name: fadeOut;\n            animation-name: fadeOut\n}\n\n@-webkit-keyframes fadeInDown {\n    from {\n        opacity: 0;\n        transform: translate3d(0, -100%, 0)\n    }\n\n    to {\n        opacity: 1;\n        transform: none\n    }\n}\n\n@keyframes fadeInDown {\n    from {\n        opacity: 0;\n        transform: translate3d(0, -100%, 0)\n    }\n\n    to {\n        opacity: 1;\n        transform: none\n    }\n}\n\n.fadeInDown {\n    -webkit-animation-name: fadeInDown;\n            animation-name: fadeInDown\n}\n\n@-webkit-keyframes fadeInUp {\n    from {\n        opacity: 0;\n        transform: translate3d(0, 100%, 0)\n    }\n\n    to {\n        opacity: 1;\n        transform: none\n    }\n}\n\n@keyframes fadeInUp {\n    from {\n        opacity: 0;\n        transform: translate3d(0, 100%, 0)\n    }\n\n    to {\n        opacity: 1;\n        transform: none\n    }\n}\n\n.fadeInUp {\n    -webkit-animation-name: fadeInUp;\n            animation-name: fadeInUp\n}\n\n.fade-enter-active,\n.fade-leave-active {\n    transition: opacity 150ms ease-out\n}\n\n.fade-enter,\n.fade-leave-to {\n    opacity: 0\n}\n\n.notices {\n    position: fixed;\n    display: flex;\n    top: 0;\n    bottom: 0;\n    left: 0;\n    right: 0;\n    padding: 2em;\n    overflow: hidden;\n    z-index: 1052;\n    pointer-events: none\n}\n\n.notices .toast {\n    display: inline-flex;\n    align-items: center;\n    -webkit-animation-duration: 150ms;\n            animation-duration: 150ms;\n    margin: .5em 0;\n    box-shadow: 0 1px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);\n    border-radius: .25em;\n    pointer-events: auto;\n    opacity: .92;\n    color: #fff;\n    min-height: 3em;\n    cursor: pointer\n}\n\n.notices .toast .toast-text {\n    margin: 0;\n    padding: .5em 1em;\n    word-break: break-all\n}\n\n.notices .toast .toast-icon {\n    display: none\n}\n\n.notices .toast-success {\n    background-color: #47d78a\n}\n\n.notices .toast-info {\n    background-color: #1c85d5\n}\n\n.notices .toast-warning {\n    background-color: #febc22\n}\n\n.notices .toast-error {\n    background-color: #f7471c\n}\n\n.notices .toast-default {\n    background-color: #343a40\n}\n\n.notices .toast.is-top,\n.notices .toast.is-bottom {\n    align-self: center\n}\n\n.notices .toast.is-top-right,\n.notices .toast.is-bottom-right {\n    align-self: flex-end\n}\n\n.notices .toast.is-top-left,\n.notices .toast.is-bottom-left {\n    align-self: flex-start\n}\n\n.notices.is-top {\n    flex-direction: column\n}\n\n.notices.is-bottom {\n    flex-direction: column-reverse\n}\n\n.notices.is-custom-parent {\n    position: absolute\n}\n\n@media screen and (max-width: 768px) {\n    .notices {\n        padding: 0;\n        position: fixed !important\n    }\n}\n\n.notices .toast {\n    opacity: 1;\n    min-height: 4em\n}\n\n.notices .toast .toast-text {\n    padding: 1.5em 1em\n}\n\n.notices .toast .toast-icon {\n    display: block;\n    width: 27px;\n    min-width: 27px;\n    height: 27px;\n    margin-left: 1em;\n    background: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 45.999 45.999'%3E %3Cpath fill='%23fff' d='M39.264 6.736c-8.982-8.981-23.545-8.982-32.528 0-8.982 8.982-8.981 23.545 0 32.528 8.982 8.98 23.545 8.981 32.528 0 8.981-8.983 8.98-23.545 0-32.528zM25.999 33a3 3 0 11-6 0V21a3 3 0 116 0v12zm-3.053-17.128c-1.728 0-2.88-1.224-2.844-2.735-.036-1.584 1.116-2.771 2.879-2.771 1.764 0 2.88 1.188 2.917 2.771-.001 1.511-1.152 2.735-2.952 2.735z'/%3E %3C/svg%3E\") no-repeat\n}\n\n.notices .toast.toast-success .toast-icon {\n    background: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 52 52'%3E %3Cpath fill='%23fff' d='M26 0C11.664 0 0 11.663 0 26s11.664 26 26 26 26-11.663 26-26S40.336 0 26 0zm14.495 17.329l-16 18a1.997 1.997 0 01-2.745.233l-10-8a2 2 0 012.499-3.124l8.517 6.813L37.505 14.67a2.001 2.001 0 012.99 2.659z'/%3E %3C/svg%3E\") no-repeat\n}\n\n.notices .toast.toast-error .toast-icon {\n    background: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 51.976 51.976'%3E %3Cpath fill='%23fff' d='M44.373 7.603c-10.137-10.137-26.632-10.138-36.77 0-10.138 10.138-10.137 26.632 0 36.77s26.632 10.138 36.77 0c10.137-10.138 10.137-26.633 0-36.77zm-8.132 28.638a2 2 0 01-2.828 0l-7.425-7.425-7.778 7.778a2 2 0 11-2.828-2.828l7.778-7.778-7.425-7.425a2 2 0 112.828-2.828l7.425 7.425 7.071-7.071a2 2 0 112.828 2.828l-7.071 7.071 7.425 7.425a2 2 0 010 2.828z'/%3E %3C/svg%3E\") no-repeat\n}\n\n.notices .toast.toast-warning .toast-icon {\n    background: url(\"data:image/svg+xml,%3Csvg viewBox='0 0 52 52' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath fill='%23fff' d='M49.466 41.26L29.216 6.85c-.69-1.16-1.89-1.85-3.22-1.85-1.32 0-2.53.69-3.21 1.85L2.536 41.26c-.71 1.2-.72 2.64-.03 3.85.68 1.18 1.89 1.89 3.24 1.89h40.51c1.35 0 2.56-.71 3.23-1.89.7-1.21.69-2.65-.02-3.85zm-25.53-21.405h3.381v3.187l-.724 8.92H24.66l-.725-8.92v-3.187zm2.97 17.344a1.712 1.712 0 01-1.267.543c-.491 0-.914-.181-1.268-.543a1.788 1.788 0 01-.531-1.297c0-.502.176-.935.53-1.297a1.712 1.712 0 011.269-.544c.49 0 .914.181 1.268.544s.53.795.53 1.297c0 .503-.176.934-.53 1.297z'/%3E %3C/svg%3E\") no-repeat\n}\n", ""]);
 
 // exports
 
@@ -44464,15 +44464,15 @@ if (inBrowser && window.Vue) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-toast-notification/dist/theme-default.css":
-/*!********************************************************************!*\
-  !*** ./node_modules/vue-toast-notification/dist/theme-default.css ***!
-  \********************************************************************/
+/***/ "./node_modules/vue-toast-notification/dist/theme-sugar.css":
+/*!******************************************************************!*\
+  !*** ./node_modules/vue-toast-notification/dist/theme-sugar.css ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./theme-default.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-toast-notification/dist/theme-default.css");
+var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./theme-sugar.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-toast-notification/dist/theme-sugar.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -99447,8 +99447,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_clipboard2__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(vue_clipboard2__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var vue_toast_notification__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vue-toast-notification */ "./node_modules/vue-toast-notification/dist/index.min.js");
 /* harmony import */ var vue_toast_notification__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(vue_toast_notification__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var vue_toast_notification_dist_theme_default_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vue-toast-notification/dist/theme-default.css */ "./node_modules/vue-toast-notification/dist/theme-default.css");
-/* harmony import */ var vue_toast_notification_dist_theme_default_css__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(vue_toast_notification_dist_theme_default_css__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var vue_toast_notification_dist_theme_sugar_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vue-toast-notification/dist/theme-sugar.css */ "./node_modules/vue-toast-notification/dist/theme-sugar.css");
+/* harmony import */ var vue_toast_notification_dist_theme_sugar_css__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(vue_toast_notification_dist_theme_sugar_css__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
 /* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vue-loading-overlay/dist/vue-loading.css */ "./node_modules/vue-loading-overlay/dist/vue-loading.css");
@@ -99504,12 +99504,13 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_currency_input__WEBPACK_IMPOR
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_clipboard2__WEBPACK_IMPORTED_MODULE_8___default.a); // notification
 
  // Import one of available themes
+//import "vue-toast-notification/dist/theme-default.css";
 
- //import 'vue-toast-notification/dist/theme-sugar.css';
 
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_toast_notification__WEBPACK_IMPORTED_MODULE_9___default.a, {
   // One of options
-  position: "bottom"
+  position: "bottom",
+  duration: 5000
 }); // overlay
 
  // Import stylesheet
@@ -102516,6 +102517,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee);
+      }))();
+    },
+    verify: function verify(_ref2, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _objectDestructuringEmpty(_ref2);
+
+                _context2.next = 3;
+                return axios.post("api/v1/otp/verify", payload);
+
+              case 3:
+                res = _context2.sent;
+                return _context2.abrupt("return", res);
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
       }))();
     }
   }

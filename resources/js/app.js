@@ -51,11 +51,12 @@ Vue.use(VueClipboard);
 // notification
 import VueToast from "vue-toast-notification";
 // Import one of available themes
-import "vue-toast-notification/dist/theme-default.css";
-//import 'vue-toast-notification/dist/theme-sugar.css';
+//import "vue-toast-notification/dist/theme-default.css";
+import 'vue-toast-notification/dist/theme-sugar.css';
 Vue.use(VueToast, {
     // One of options
     position: "bottom",
+    duration: 5000
 });
 
 // overlay
