@@ -31,7 +31,6 @@
                 </v-col>
             </v-row>
         </v-form>
-
     </div>
 </template>
 
@@ -86,9 +85,13 @@ export default {
                     })
                     .catch(error => {
                         if (error.response.status == "500") {
-                            this.$toast.warning("ลองอีกครั้ง ! ไม่สามารถเชิ่อมต่อไปยังเซิร์ฟเวอร์ได้")
+                            this.$toast.warning(
+                                "ลองอีกครั้ง ! ไม่สามารถเชิ่อมต่อไปยังเซิร์ฟเวอร์ได้"
+                            );
                         } else {
-                            this.$toast.error("ไม่สามารถเข้าสู่ระบบได้ กรุณาลองอีกครั้งค่ะ")
+                            this.$toast.error(
+                                "ไม่สามารถเข้าสู่ระบบได้ กรุณาลองอีกครั้งค่ะ"
+                            );
                         }
                         this.loginError = true;
                         this.loading = false;

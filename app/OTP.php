@@ -15,5 +15,8 @@ class OTP extends Model
         'limit'
     ];
 
-    public static function findLastCreated(){}
+    public function scopeCreatedTimestamp()
+    {
+        return $query = $this->created_at->timestamp;
+    }
 }

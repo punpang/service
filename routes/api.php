@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -11,17 +9,17 @@ use Illuminate\Http\Request;
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
-*/
+ */
 /*
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+return $request->user();
 });
-*/
+ */
 
 Route::group([
 
     'middleware' => 'api',
-    'prefix' => 'auth'
+    'prefix' => 'auth',
 
 ], function ($router) {
 
@@ -35,7 +33,6 @@ Route::middleware('admin')->group(function () { //สำหรับ admin
     Route::get('user', 'AuthController@me');
     Route::get('dashboard', 'AuthController@me');
     Route::get('test', 'Order\AOrderController@DashboardToday');
-
 
     Route::prefix('customer')->group(function () { // api/customer/...
 
@@ -67,7 +64,7 @@ Route::middleware('admin')->group(function () { //สำหรับ admin
 
         Route::post('{order}/changeDateTimeGet', 'Order\OrderController@changeDateTimeGet');
         Route::post('{order}/goodsDone', 'Order\OrderController@goodsDone');
-        Route::post('{order}/productReceived', 'Order\OrderController@productReceived');        
+        Route::post('{order}/productReceived', 'Order\OrderController@productReceived');
 
         Route::prefix('detail')->group(function () { // api/order/detail
             Route::post('store', 'Order\OrderDetailController@store');
@@ -88,15 +85,14 @@ Route::middleware('admin')->group(function () { //สำหรับ admin
         Route::post('{payment}/cancel', 'Order\OrderPaymentController@cancel');
         Route::post('alert', 'Order\OrderPaymentController@alert');
         Route::post('{slip}/unVerifySlip', 'Order\OrderPaymentController@unVerifySlip');
-        Route::get('unVerifyReasoning', 'Order\OrderPaymentController@unVerifyReasoning');        
+        Route::get('unVerifyReasoning', 'Order\OrderPaymentController@unVerifyReasoning');
         Route::post('notPayDeposit', 'Order\OrderPaymentController@notPayDeposit');
         Route::post('scb', 'Order\OrderPaymentController@scb');
-        
+
         Route::prefix('method')->group(function () { // api/payment/method/...
             Route::get('all', 'Order\OrderPaymentMethodController@all');
             Route::get('useonly', 'Order\OrderPaymentMethodController@useonly');
         });
-
     });
 
     Route::prefix('product')->group(function () { // api/product/...
@@ -139,15 +135,15 @@ Route::middleware('admin')->group(function () { //สำหรับ admin
     });
 
     /*
-    Route::prefix('order')->group(function () { // api/order/...
+Route::prefix('order')->group(function () { // api/order/...
 
-        Route::get('customers', 'Order\CustomerController@index');
-        Route::get('customer/find', 'Order\CustomerController@Find')->name('admin.order.customer.find');
-        Route::post('customer/find', 'Order\CustomerController@Finded')->name('admin.order.customer.finded');
-        Route::get('customer/new/{phone}', 'Order\CustomerController@NewCustomer')->where('phone', '[0][0-9]{9}')->name('admin.order.customer.new');
-        Route::post('customer/store', 'Order\CustomerController@store');
-    });
-    */
+Route::get('customers', 'Order\CustomerController@index');
+Route::get('customer/find', 'Order\CustomerController@Find')->name('admin.order.customer.find');
+Route::post('customer/find', 'Order\CustomerController@Finded')->name('admin.order.customer.finded');
+Route::get('customer/new/{phone}', 'Order\CustomerController@NewCustomer')->where('phone', '[0][0-9]{9}')->name('admin.order.customer.new');
+Route::post('customer/store', 'Order\CustomerController@store');
+});
+ */
 });
 
 Route::prefix('v1')->group(function () { // api/v1/...
@@ -170,15 +166,13 @@ Route::prefix('v1')->group(function () { // api/v1/...
         });
     });
 
-    Route::prefix('otp')->group(function () { // api/guest/order/
+    Route::prefix('otp')->group(function () { // api/gueœst/order/
         Route::post('store', 'OTPController@store');
-        Route::post("verify","OTPController@verify");
+        Route::post("verify", "OTPController@verify");
     });
 });
 
-
 Route::get('scbtest', 'Order\SCBController@callback');
-
 
 Route::middleware('auth')->group(function () { //สำหรับ user
 

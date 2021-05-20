@@ -5,9 +5,12 @@
             <v-row>
                 <MainProductCategory class="mr-2"></MainProductCategory>
                 <ProductAdd
+                class="mr-2"
                     :action="actionAdd"
                     :data="formDefault"
                 ></ProductAdd>
+
+                <ProductAddV2></ProductAddV2>
             </v-row>
         </v-container>
 
@@ -18,13 +21,15 @@
 <script>
 import MainProductCategory from "@/js/components/products/MainProductCategory";
 import ProductAdd from "@/js/components/products/ProductAdd";
+import ProductAddV2 from "@/js/components/products/ProductAddV2";
 import ProductGet from "@/js/components/products/ProductGet";
 
 export default {
     components: {
         MainProductCategory,
         ProductAdd,
-        ProductGet
+        ProductGet,
+        ProductAddV2
     },
     data() {
         return {

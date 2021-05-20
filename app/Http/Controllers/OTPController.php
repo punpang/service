@@ -29,7 +29,7 @@ class OTPController extends Controller
 
         // เช็ค หากรายการล่าสุด สร้างเกิน 15 นาที ให้สร้างใหม่ //หากไม่มีใช้รายการล่าสุด
 
-        if ($data == null or \Carbon\Carbon::now()->timestamp - $data->created_at->timestamp > 300) {
+        if ($data == null or \Carbon\Carbon::now()->timestamp - $data->CreatedTimestamp() > 300) {
             //สร้างใหม่ หรือ ผ่านการเช็ด
             $input = request()->all();
             $input['ref1'] = Str::random(6);
@@ -79,16 +79,16 @@ class OTPController extends Controller
             ->whereRef1(request("ref1"))
             ->whereRef2(request("ref2"))
             ->whereStatus(0)
-            ->first();
+            ->first();        
 
-        if($data == null){
+        if ($data == null) {
             return response()->json([
                 "status" => 501,
                 "message" => "ไม่พบการยืนยันตัวตนในระบบ โปรดลองอีกครั้ง"
             ], 200);
         }
 
-        if (\Carbon\Carbon::now()->timestamp - $data->created_at->timestamp > 300) {
+        if (\Carbon\Carbon::now()->timestamp - $data->CreatedTimestamp() > 300) {
             return response()->json([
                 "status" => 500,
                 "message" => "รหัส OTP หมดอายุ โปรดทำรายการใหม่"
