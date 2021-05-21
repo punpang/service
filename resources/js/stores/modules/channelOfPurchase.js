@@ -15,7 +15,7 @@ export default {
         async UseOnly({ commit }) {
             try {
                 const response = await axios.get(
-                    "api/channelOfPurchase/useonly"
+                    "/api/channelOfPurchase/useonly"
                 );
                 commit("UseOnly", response.data);
                 return response;

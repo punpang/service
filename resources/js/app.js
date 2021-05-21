@@ -23,7 +23,7 @@ Routers.beforeEach((to, from, next) => {
     }
 
     // if logged in redirect to dashboard
-    if (to.path === "/login" && store.getters["main/isLoggedIn"]) {
+    if (to.path === "/admin/login" && store.getters["main/isLoggedIn"]) {
         next({ name: "dashboard" });
         return;
     }

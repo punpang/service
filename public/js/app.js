@@ -2070,7 +2070,7 @@ __webpack_require__.r(__webpack_exports__);
       menus: [{
         icon: "home",
         title: "หน้าแรก",
-        to: "/"
+        to: "/admin"
       }]
     };
   },
@@ -2114,28 +2114,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['drawer'],
+  props: ["drawer"],
   data: function data() {
     return {
       menus: [{
         icon: "home",
         title: "หน้าแรก",
-        to: "/"
+        to: "/admin/index"
       }, {
         icon: "shopping_basket",
         title: "รายการสั่งซื้อ",
-        to: "/order"
+        to: "/admin/order"
       }, {
         icon: "person",
         title: "ลูกค้า",
-        to: "/customer"
+        to: "/admin/customer"
       }, {
         icon: "shop",
         title: "สินค้า",
-        to: "/product"
+        to: "/admin/product"
       }]
     };
-  }
+  },
+  methods: {}
 });
 
 /***/ }),
@@ -2195,7 +2196,7 @@ __webpack_require__.r(__webpack_exports__);
       MenuProfiles: [{
         icon: "exit_to_app",
         title: "ออกจากระบบ",
-        to: "/logout"
+        to: "/admin/logout"
       }]
     };
   },
@@ -2476,6 +2477,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -41171,191 +41174,16 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("h2", [_vm._v("V Data Table")]),
-      _vm._v(" "),
-      _c("v-text-field", {
-        attrs: { label: "ค้นหา", "append-icon": "search", "hide-details": "" },
-        model: {
-          value: _vm.search,
-          callback: function($$v) {
-            _vm.search = $$v
-          },
-          expression: "search"
-        }
-      }),
-      _vm._v(" "),
-      _c("v-data-table", {
-        attrs: {
-          search: _vm.search,
-          headers: _vm.headers,
-          items: _vm.orders,
-          "items-per-page": 5,
-          "item-key": "id",
-          "show-select": ""
-        },
-        scopedSlots: _vm._u([
-          {
-            key: "item.checked",
-            fn: function(ref) {
-              var item = ref.item
-              return [
-                _c("v-simple-checkbox", {
-                  model: {
-                    value: item.checked,
-                    callback: function($$v) {
-                      _vm.$set(item, "checked", $$v)
-                    },
-                    expression: "item.checked"
-                  }
-                })
-              ]
-            }
-          },
-          {
-            key: "item.status",
-            fn: function(ref) {
-              var item = ref.item
-              return [
-                _c(
-                  "v-chip",
-                  { attrs: { color: _vm.statusColor(item.status), dark: "" } },
-                  [_vm._v(_vm._s(item.status))]
-                )
-              ]
-            }
-          },
-          {
-            key: "item.action",
-            fn: function(ref) {
-              var item = ref.item
-              return [
-                _c(
-                  "v-icon",
-                  {
-                    attrs: { small: "" },
-                    on: {
-                      click: function($event) {
-                        return _vm.deleteItem(item)
-                      }
-                    }
-                  },
-                  [_vm._v("\n        delete\n      ")]
-                )
-              ]
-            }
-          },
-          {
-            key: "item.name",
-            fn: function(props) {
-              return [
-                _c(
-                  "v-edit-dialog",
-                  {
-                    attrs: { "return-value": props.item.name },
-                    on: {
-                      "update:returnValue": function($event) {
-                        return _vm.$set(props.item, "name", $event)
-                      },
-                      "update:return-value": function($event) {
-                        return _vm.$set(props.item, "name", $event)
-                      },
-                      save: _vm.save,
-                      cancel: _vm.cancel,
-                      open: _vm.open,
-                      close: _vm.close
-                    },
-                    scopedSlots: _vm._u(
-                      [
-                        {
-                          key: "input",
-                          fn: function() {
-                            return [
-                              _c("v-text-field", {
-                                attrs: {
-                                  label: "แก้ไข",
-                                  "single-line": "",
-                                  counter: "",
-                                  large: "",
-                                  persistent: "",
-                                  autofocus: ""
-                                },
-                                model: {
-                                  value: props.item.name,
-                                  callback: function($$v) {
-                                    _vm.$set(props.item, "name", $$v)
-                                  },
-                                  expression: "props.item.name"
-                                }
-                              })
-                            ]
-                          },
-                          proxy: true
-                        }
-                      ],
-                      null,
-                      true
-                    )
-                  },
-                  [
-                    _c("div", [
-                      _vm._v(
-                        "\n        " + _vm._s(props.item.name) + "\n      "
-                      )
-                    ])
-                  ]
-                )
-              ]
-            }
-          }
-        ]),
-        model: {
-          value: _vm.selected,
-          callback: function($$v) {
-            _vm.selected = $$v
-          },
-          expression: "selected"
-        }
-      }),
-      _vm._v(" "),
-      _c(
-        "v-snackbar",
-        {
-          attrs: { timeout: 3000, color: _vm.snackColor },
-          model: {
-            value: _vm.snack,
-            callback: function($$v) {
-              _vm.snack = $$v
-            },
-            expression: "snack"
-          }
-        },
-        [
-          _vm._v("\n    " + _vm._s(_vm.snackText) + "\n    "),
-          _c(
-            "v-btn",
-            {
-              attrs: { text: "" },
-              on: {
-                click: function($event) {
-                  _vm.snack = false
-                }
-              }
-            },
-            [_vm._v("Close")]
-          )
-        ],
-        1
-      ),
-      _vm._v("\n\n  " + _vm._s(_vm.selected) + "\n  "),
-      _c("hr")
-    ],
-    1
-  )
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("h2", [_vm._v("HOME PAGE")])])
+  }
+]
 render._withStripped = true
 
 
@@ -99477,7 +99305,7 @@ _js_routes_js__WEBPACK_IMPORTED_MODULE_5__["default"].beforeEach(function (to, f
   } // if logged in redirect to dashboard
 
 
-  if (to.path === "/login" && _js_stores__WEBPACK_IMPORTED_MODULE_4__["default"].getters["main/isLoggedIn"]) {
+  if (to.path === "/admin/login" && _js_stores__WEBPACK_IMPORTED_MODULE_4__["default"].getters["main/isLoggedIn"]) {
     next({
       name: "dashboard"
     });
@@ -100126,12 +99954,16 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 var routes = [{
   path: "/",
   name: "Home",
+  component: _js_views_Home__WEBPACK_IMPORTED_MODULE_2__["default"]
+}, {
+  path: "/admin/index",
+  name: "adminpage",
   component: _js_views_Home__WEBPACK_IMPORTED_MODULE_2__["default"],
   meta: {
     requiresAuth: true
   }
 }, {
-  path: "/customer",
+  path: "/admin/customer",
   name: "Customer",
   component: function component() {
     return __webpack_require__.e(/*! import() */ 0).then(__webpack_require__.bind(null, /*! @/js/pages/orders/customer */ "./resources/js/pages/orders/customer.vue"));
@@ -100140,7 +99972,7 @@ var routes = [{
     requiresAuth: true
   }
 }, {
-  path: "/product",
+  path: "/admin/product",
   name: "Product",
   component: function component() {
     return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! @/js/pages/orders/product */ "./resources/js/pages/orders/product.vue"));
@@ -100149,7 +99981,7 @@ var routes = [{
     requiresAuth: true
   }
 }, {
-  path: "/order",
+  path: "/admin/order",
   name: "Order",
   component: function component() {
     return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! @/js/pages/orders/order */ "./resources/js/pages/orders/order.vue"));
@@ -100158,7 +99990,7 @@ var routes = [{
     requiresAuth: true
   }
 }, {
-  path: "/about",
+  path: "/admin/about",
   name: "About",
   component: function component() {
     return __webpack_require__.e(/*! import() | about */ "about").then(__webpack_require__.bind(null, /*! @/js/views/About */ "./resources/js/views/About.vue"));
@@ -100167,14 +99999,14 @@ var routes = [{
     requiresAuth: true
   }
 }, {
-  path: "/form",
+  path: "/admin/form",
   name: "Form",
   component: _js_views_Form__WEBPACK_IMPORTED_MODULE_3__["default"],
   meta: {
     requiresAuth: true
   }
 }, {
-  path: "/order/test",
+  path: "/admin/order/test",
   name: "OrderTest",
   component: function component() {
     return __webpack_require__.e(/*! import() | about */ "about").then(__webpack_require__.bind(null, /*! @/js/views/Orders */ "./resources/js/views/Orders.vue"));
@@ -100183,18 +100015,18 @@ var routes = [{
     requiresAuth: true
   }
 }, {
-  path: "/dashboard",
+  path: "/admin/dashboard",
   name: "dashboard",
   component: _js_components_DashboardComponent__WEBPACK_IMPORTED_MODULE_4__["default"],
   meta: {
     requiresAuth: true
   }
 }, {
-  path: "/login",
+  path: "/admin/login",
   name: "login",
   component: _js_components_LoginComponent__WEBPACK_IMPORTED_MODULE_5__["default"]
 }, {
-  path: "/logout",
+  path: "/admin/logout",
   name: "logout",
   component: _js_components_LogoutComponent__WEBPACK_IMPORTED_MODULE_6__["default"]
 }, //SYSTEM
@@ -100358,7 +100190,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 commit = _ref.commit;
                 _context.prev = 1;
                 _context.next = 4;
-                return axios.get("api/channelOfPurchase/useonly");
+                return axios.get("/api/channelOfPurchase/useonly");
 
               case 4:
                 response = _context.sent;
@@ -100758,7 +100590,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 commit = _ref.commit;
                 _context.prev = 1;
                 _context.next = 4;
-                return axios.post("api/order/checkDateTimeForGet", {
+                return axios.post("/api/order/checkDateTimeForGet", {
                   dateTime_get: payload
                 });
 
@@ -100790,7 +100622,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 commit = _ref3.commit;
                 _context2.prev = 1;
                 _context2.next = 4;
-                return axios.get("api/order/all");
+                return axios.get("/api/order/all");
 
               case 4:
                 response = _context2.sent;
@@ -100821,7 +100653,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context3.prev = 0;
                 _context3.next = 3;
-                return axios.get("api/order/timeGets");
+                return axios.get("/api/order/timeGets");
 
               case 3:
                 _yield$axios$get = _context3.sent;
@@ -100852,7 +100684,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _context4.prev = 1;
                 _context4.next = 4;
-                return axios.post("api/order/create", payload);
+                return axios.post("/api/order/create", payload);
 
               case 4:
                 response = _context4.sent;
@@ -100881,7 +100713,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 commit = _ref5.commit;
                 _context5.prev = 1;
                 _context5.next = 4;
-                return axios.get("api/order/" + payload + "/getByID");
+                return axios.get("/api/order/" + payload + "/getByID");
 
               case 4:
                 response = _context5.sent;
@@ -101043,7 +100875,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 dispatch = _ref.dispatch;
                 _context.next = 3;
-                return axios.post("api/order/detail/store", payload);
+                return axios.post("/api/order/detail/store", payload);
 
               case 3:
                 res = _context.sent;
@@ -101066,7 +100898,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 dispatch = _ref2.dispatch;
                 _context2.next = 3;
-                return axios.post("api/order/detail/" + payload.id + "/update", payload);
+                return axios.post("/api/order/detail/" + payload.id + "/update", payload);
 
               case 3:
                 res = _context2.sent;
@@ -101089,7 +100921,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 dispatch = _ref3.dispatch;
                 _context3.next = 3;
-                return axios.post("api/order/detail/" + payload.detail_id + "/delete");
+                return axios.post("/api/order/detail/" + payload.detail_id + "/delete");
 
               case 3:
                 res = _context3.sent;
@@ -101112,7 +100944,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 dispatch = _ref4.dispatch;
                 _context4.next = 3;
-                return axios.post("api/order/detail/" + payload.detail_id + "/redelete");
+                return axios.post("/api/order/detail/" + payload.detail_id + "/redelete");
 
               case 3:
                 res = _context4.sent;
@@ -101135,7 +100967,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 commit = _ref5.commit;
                 _context5.next = 3;
-                return axios.post("api/order/detail/" + payload + "useonly");
+                return axios.post("/api/order/detail/" + payload + "useonly");
 
               case 3:
                 response = _context5.sent;
@@ -101158,7 +100990,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 commit = _ref6.commit, dispatch = _ref6.dispatch;
                 _context6.next = 3;
-                return axios.get("api/order/detail/" + payload + "/getByOrderID");
+                return axios.get("/api/order/detail/" + payload + "/getByOrderID");
 
               case 3:
                 response = _context6.sent;
@@ -101633,7 +101465,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 commit = _ref.commit;
                 _context.next = 3;
-                return axios.get("api/product/");
+                return axios.get("/api/product/");
 
               case 3:
                 response = _context.sent;
@@ -101657,7 +101489,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 commit = _ref2.commit;
                 _context2.next = 3;
-                return axios.get("api/product/useonly");
+                return axios.get("/api/product/useonly");
 
               case 3:
                 response = _context2.sent;
@@ -101684,7 +101516,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context3.prev = 1;
                 console.log(payload);
                 _context3.next = 5;
-                return axios.post("api/product/store", payload);
+                return axios.post("/api/product/store", payload);
 
               case 5:
                 response = _context3.sent;
@@ -101705,7 +101537,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee3, null, [[1, 10]]);
       }))();
     },
-    update: function update(_ref5, payload) {
+    add_v2: function add_v2(_ref5, payload) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var dispatch, response, _response2;
 
@@ -101716,7 +101548,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 dispatch = _ref5.dispatch;
                 _context4.prev = 1;
                 _context4.next = 4;
-                return axios.post("api/product/" + payload.id + "/edit", payload);
+                return axios.post("/api/product/v2/store", payload);
 
               case 4:
                 response = _context4.sent;
@@ -101736,6 +101568,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee4, null, [[1, 9]]);
       }))();
+    },
+    update: function update(_ref7, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var dispatch, response, _response3;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                dispatch = _ref7.dispatch;
+                _context5.prev = 1;
+                _context5.next = 4;
+                return axios.post("/api/product/" + payload.id + "/edit", payload);
+
+              case 4:
+                response = _context5.sent;
+                dispatch("get");
+                return _context5.abrupt("return", response);
+
+              case 9:
+                _context5.prev = 9;
+                _context5.t0 = _context5["catch"](1);
+                _response3 = _context5.t0.response;
+                return _context5.abrupt("return", _response3);
+
+              case 13:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, null, [[1, 9]]);
+      }))();
     }
   }
 });
@@ -101754,6 +101618,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
+
+function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -101801,7 +101667,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 commit = _ref.commit;
                 _context.next = 3;
-                return axios.get("api/product/category");
+                return axios.get("/api/product/category");
 
               case 3:
                 response = _context.sent;
@@ -101825,7 +101691,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 commit = _ref2.commit;
                 _context2.next = 3;
-                return axios.get("api/product/category/useonly");
+                return axios.get("/api/product/category/useonly");
 
               case 3:
                 response = _context2.sent;
@@ -101851,7 +101717,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 commit = _ref3.commit;
                 _context3.prev = 1;
                 _context3.next = 4;
-                return axios.post("api/product/category/store", payload);
+                return axios.post("/api/product/category/store", payload);
 
               case 4:
                 response = _context3.sent;
@@ -101883,7 +101749,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 dispatch = _ref5.dispatch;
                 _context4.prev = 1;
                 _context4.next = 4;
-                return axios.post("api/product/category/" + payload.id + "/edit", payload);
+                return axios.post("/api/product/category/" + payload.id + "/edit", payload);
 
               case 4:
                 response = _context4.sent;
@@ -101913,7 +101779,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 commit = _ref7.commit;
                 _context5.next = 3;
-                return axios.get("api/product/category/useonly/with/subs");
+                return axios.get("/api/product/category/useonly/with/subs");
 
               case 3:
                 response = _context5.sent;
@@ -101926,6 +101792,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee5);
+      }))();
+    },
+    getSubByID: function getSubByID(_ref8, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                _objectDestructuringEmpty(_ref8);
+
+                _context6.next = 3;
+                return axios.get("/api/product/category/" + payload + "/subs");
+
+              case 3:
+                response = _context6.sent;
+                return _context6.abrupt("return", response);
+
+              case 5:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
       }))();
     }
   }
@@ -101985,7 +101875,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 commit = _ref.commit;
                 _context.next = 3;
-                return axios.get("api/product/category/sub");
+                return axios.get("/api/product/category/sub");
 
               case 3:
                 response = _context.sent;
@@ -102011,7 +101901,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 dispatch = _ref2.dispatch;
                 _context2.prev = 1;
                 _context2.next = 4;
-                return axios.post("api/product/category/sub/store", payload);
+                return axios.post("/api/product/category/sub/store", payload);
 
               case 4:
                 response = _context2.sent;
@@ -102044,7 +101934,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 dispatch = _ref4.dispatch;
                 _context3.prev = 1;
                 _context3.next = 4;
-                return axios.post("api/product/category/sub/" + payload.id + "/edit", payload);
+                return axios.post("/api/product/category/sub/" + payload.id + "/edit", payload);
 
               case 4:
                 response = _context3.sent;
@@ -102074,7 +101964,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 commit = _ref6.commit;
                 _context4.next = 3;
-                return axios.get("api/product/category/sub/useonly");
+                return axios.get("/api/product/category/sub/useonly");
 
               case 3:
                 response = _context4.sent;
@@ -102140,7 +102030,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 commit = _ref.commit;
                 _context.next = 3;
-                return axios.get("api/product/image/");
+                return axios.get("/api/product/image/");
 
               case 3:
                 response = _context.sent;
@@ -102164,7 +102054,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 commit = _ref2.commit;
                 _context2.next = 3;
-                return axios.get("api/product/image/useonly");
+                return axios.get("/api/product/image/useonly");
 
               case 3:
                 response = _context2.sent;
@@ -102190,7 +102080,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 commit = _ref3.commit;
                 _context3.prev = 1;
                 _context3.next = 4;
-                return axios.post("api/product/image/store", payload);
+                return axios.post("/api/product/image/store", payload);
 
               case 4:
                 response = _context3.sent;
@@ -102222,7 +102112,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context4.prev = 1;
                 console.log(payload);
                 _context4.next = 5;
-                return axios.post("api/product/image/" + payload.id + "/update", payload.formData);
+                return axios.post("/api/product/image/" + payload.id + "/update", payload.formData);
 
               case 5:
                 response = _context4.sent;
@@ -102254,7 +102144,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 commit = _ref7.commit;
                 _context5.prev = 1;
                 _context5.next = 4;
-                return axios.post("api/product/image/" + payload + "/destroy");
+                return axios.post("/api/product/image/" + payload + "/destroy");
 
               case 4:
                 response = _context5.sent;
@@ -102328,7 +102218,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 commit = _ref.commit;
                 _context.next = 3;
-                return axios.get("api/product/tag/" + payload);
+                return axios.get("/api/product/tag/" + payload);
 
               case 3:
                 response = _context.sent;
@@ -102352,7 +102242,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 dispatch = _ref2.dispatch;
                 _context2.next = 3;
-                return axios.post("api/product/tag/store", payload);
+                return axios.post("/api/product/tag/store", payload);
 
               case 3:
                 response = _context2.sent;
@@ -102376,7 +102266,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 commit = _ref3.commit;
                 _context3.next = 3;
-                return axios.get("api/product/tag/" + payload + "/isProductTags", payload);
+                return axios.get("/api/product/tag/" + payload + "/isProductTags", payload);
 
               case 3:
                 response = _context3.sent;
@@ -102504,7 +102394,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _objectDestructuringEmpty(_ref);
 
                 _context.next = 3;
-                return axios.post("api/v1/otp/store", payload);
+                return axios.post("/api/v1/otp/store", payload);
 
               case 3:
                 res = _context.sent;
@@ -102528,7 +102418,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _objectDestructuringEmpty(_ref2);
 
                 _context2.next = 3;
-                return axios.post("api/v1/otp/verify", payload);
+                return axios.post("/api/v1/otp/verify", payload);
 
               case 3:
                 res = _context2.sent;

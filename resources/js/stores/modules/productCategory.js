@@ -26,19 +26,19 @@ export default {
     },
     actions: {
         async get({ commit }) {
-            const response = await axios.get("api/product/category");
+            const response = await axios.get("/api/product/category");
             commit("get", response.data);
             return response;
         },
         async getUseOnly({ commit }) {
-            const response = await axios.get("api/product/category/useonly");
+            const response = await axios.get("/api/product/category/useonly");
             commit("getUseOnly", response.data);
             return response;
         },
         async add({ commit }, payload) {
             try {
                 const response = await axios.post(
-                    "api/product/category/store",
+                    "/api/product/category/store",
                     payload
                 );
                 commit("add", response.data);
@@ -50,7 +50,7 @@ export default {
         async update({ dispatch }, payload) {
             try {
                 const response = await axios.post(
-                    "api/product/category/" + payload.id + "/edit",
+                    "/api/product/category/" + payload.id + "/edit",
                     payload
                 );
                 dispatch("get");
@@ -61,9 +61,13 @@ export default {
         },
         async getUseOnlyWithSubs({ commit }) {
             const response = await axios.get(
-                "api/product/category/useonly/with/subs"
+                "/api/product/category/useonly/with/subs"
             );
             commit("getUseOnlyWithSubs", response.data);
+            return response;
+        },
+        async getSubByID({ }, payload) {
+            const response = await axios.get("/api/product/category/" + payload + "/subs");
             return response;
         }
     }

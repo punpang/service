@@ -52,4 +52,10 @@ class ProductCategoryController extends Controller
 
         return response()->json($id, 200);
     }
+
+    public function getSubsByID($id)
+    {
+        $data = ProductCategorySub::UseOnly()->whereProductCategoryId($id)->get();
+        return response()->json($data, 200);
+    }
 }

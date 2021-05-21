@@ -22,14 +22,14 @@ export default {
     },
     actions: {
         async get({ commit }) {
-            const response = await axios.get("api/product/category/sub");
+            const response = await axios.get("/api/product/category/sub");
             commit("get", response.data);
             return response;
         },
         async add({ dispatch }, payload) {
             try {
                 const response = await axios.post(
-                    "api/product/category/sub/store",
+                    "/api/product/category/sub/store",
                     payload
                 );
                 dispatch("get");
@@ -42,7 +42,7 @@ export default {
         async update({ dispatch }, payload) {
             try {
                 const response = await axios.post(
-                    "api/product/category/sub/" + payload.id + "/edit",
+                    "/api/product/category/sub/" + payload.id + "/edit",
                     payload
                 );
                 dispatch("get");
@@ -52,7 +52,7 @@ export default {
             }
         },
         async getUseOnly({ commit }) {
-            const response = await axios.get("api/product/category/sub/useonly");
+            const response = await axios.get("/api/product/category/sub/useonly");
             commit("getUseOnly", response.data);
             return response;
         }

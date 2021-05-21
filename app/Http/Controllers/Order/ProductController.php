@@ -39,6 +39,25 @@ class ProductController extends Controller
         return response()->json(['success' => true], 200);
     }
 
+    public function v2store()
+    {
+        request()->validate([
+            'name' => 'required',
+            'price_normal' => 'required|numeric',
+            'status' => 'required|boolean',
+            'image_status' => "required|boolean",
+            'product_image_id' => "required|numeric"
+        ]);
+
+        $input = request()->all();
+        $input["price_special_status"] = 0;
+        $input["price_special"] = 0;
+
+        Product::create($input);
+
+        return response()->json(['success' => true], 200);
+    }
+
     public function update(Product $id)
     {
         $id->update(request()->all());

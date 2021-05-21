@@ -5,11 +5,11 @@ export default {
     getters: {},
     actions: {
         async sendOTP({ }, payload) {
-            const res = await axios.post("api/v1/otp/store", payload);
+            const res = await axios.post("/api/v1/otp/store", payload);
             return res;
         },
         async verify({ }, payload) {
-            const res = await axios.post("api/v1/otp/verify", payload);
+            const res = await axios.post("/api/v1/otp/verify", payload);
             return res;
         }
     }

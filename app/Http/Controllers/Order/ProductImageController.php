@@ -13,9 +13,10 @@ class ProductImageController extends Controller
 {
     public function store()
     {
-        request()->validate([
-            'image'  => 'required|image|mimes:jpeg,png,jpg|max:9999'
-        ]);
+
+        //request()->validate([
+          //  'image'  => 'required|image|mimes:jpeg,png,jpg|max:9999'
+        //]);
 
         $fileName = request()->file('image')->store('', 'google');
 

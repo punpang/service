@@ -66,7 +66,7 @@ export default {
         async checkDateTimeForGet({ commit }, payload) {
             try {
                 const response = await axios.post(
-                    "api/order/checkDateTimeForGet",
+                    "/api/order/checkDateTimeForGet",
                     { dateTime_get: payload }
                 );
                 return response;
@@ -76,7 +76,7 @@ export default {
         },
         async all({ commit }) {
             try {
-                const response = await axios.get("api/order/all");
+                const response = await axios.get("/api/order/all");
                 commit("all", response.data);
             } catch (e) {
                 return e;
@@ -84,7 +84,7 @@ export default {
         },
         async timeGets() {
             try {
-                const { data } = await axios.get("api/order/timeGets");
+                const { data } = await axios.get("/api/order/timeGets");
                 return data;
             } catch (e) {
                 return e;
@@ -92,7 +92,7 @@ export default {
         },
         async createOrder({}, payload) {
             try {
-                const response = await axios.post("api/order/create", payload);
+                const response = await axios.post("/api/order/create", payload);
                 //dispatch('all');
                 return response;
             } catch (e) {
@@ -102,7 +102,7 @@ export default {
         async getByID({ commit }, payload) {
             try {
                 const response = await axios.get(
-                    "api/order/" + payload + "/getByID"
+                    "/api/order/" + payload + "/getByID"
                 );
                 commit("getByID", response.data);
                 return response;

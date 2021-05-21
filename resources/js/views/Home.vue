@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h2>V Data Table</h2>
+    <h2>HOME PAGE</h2>
+    <!---
     <v-text-field
       v-model="search"
       label="ค้นหา"
@@ -72,6 +73,7 @@
 
     {{ selected }}
     <hr>
+    -->
   </div>
 </template>
 

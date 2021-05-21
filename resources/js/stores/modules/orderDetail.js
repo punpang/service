@@ -28,13 +28,13 @@ export default {
     },
     actions: {
         async store({ dispatch }, payload) {
-            const res = await axios.post("api/order/detail/store", payload);
+            const res = await axios.post("/api/order/detail/store", payload);
             //dispatch("getByOrderID", payload.order_id);
             return res;
         },
         async update({ dispatch }, payload) {
             const res = await axios.post(
-                "api/order/detail/" + payload.id + "/update",
+                "/api/order/detail/" + payload.id + "/update",
                 payload
             );
             //dispatch("getByOrderID", payload.order_id);
@@ -42,27 +42,27 @@ export default {
         },
         async delete({ dispatch }, payload) {
             const res = await axios.post(
-                "api/order/detail/" + payload.detail_id + "/delete"
+                "/api/order/detail/" + payload.detail_id + "/delete"
             );
             //dispatch("getByOrderID", payload.order_id);
             return res;
         },
         async redelete({ dispatch }, payload) {
             const res = await axios.post(
-                "api/order/detail/" + payload.detail_id + "/redelete"
+                "/api/order/detail/" + payload.detail_id + "/redelete"
             );
             //dispatch("getByOrderID", payload.order_id);
             return res;
         },
         async UseOnly({ commit }, payload) {
             const response = await axios.post(
-                "api/order/detail/" + payload + "useonly"
+                "/api/order/detail/" + payload + "useonly"
             );
             commit("dataUseOnly", response.data);
         },
         async getByOrderID({ commit, dispatch }, payload) {
             const response = await axios.get(
-                "api/order/detail/" + payload + "/getByOrderID"
+                "/api/order/detail/" + payload + "/getByOrderID"
             );
             commit("sum", response.data.sum);
             commit("count", response.data.count);

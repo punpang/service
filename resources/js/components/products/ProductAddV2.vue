@@ -13,72 +13,15 @@
                 <v-card-title>
                     <span class="headline">เพิ่มสินค้าใหม่ V2</span>
                     <v-spacer></v-spacer>
-                    <v-icon color="error" @click="dialog = false">close</v-icon>
+                    <v-icon color="error" @click="(dialog = false), start()"
+                        >close</v-icon
+                    >
                 </v-card-title>
                 <v-divider></v-divider>
                 <v-card-text class="pb-0">
                     <v-form ref="form" lazy-validation>
                         <v-row>
-                            <v-col
-                                class="mb-4"
-                                cols="12"
-                                md="5"
-                                v-show="
-                                    form.image_status === true && !imagePreview
-                                "
-                            >
-                                <v-file-input
-                                    label="อัปโหลดรูป"
-                                    v-model="file"
-                                    v-show="
-                                        form.image_status === true &&
-                                            !imagePreview
-                                    "
-                                    :rules="Rules.image"
-                                    prepend-icon="image"
-                                    @change="changeImage"
-                                    accept="image/*"
-                                >
-                                </v-file-input>
-                                <v-btn
-                                    color="info"
-                                    @click="clickUploadImage"
-                                    v-show="
-                                        form.image_status == true &&
-                                            !imagePreview
-                                    "
-                                    :loading="loadUploadImage"
-                                    block
-                                >
-                                    <v-icon left>cloud_upload</v-icon>
-                                    อัปโหลดรูปภาพ
-                                </v-btn>
-                                <v-btn
-                                    color="error"
-                                    @click="clickRemoveImage"
-                                    v-show="imagePreview"
-                                    :loading="loadUploadImage"
-                                >
-                                    <v-icon left>delete</v-icon>
-                                    ลบรูปภาพ
-                                </v-btn>
-                                <v-row>
-                                    <v-col
-                                        cols="12"
-                                        md="6"
-                                        v-show="
-                                            form.image_status === true &&
-                                                imagePreview
-                                        "
-                                    >
-                                        <v-card>
-                                            <v-img :src="imagePreview"></v-img>
-                                        </v-card>
-                                    </v-col>
-                                </v-row>
-                            </v-col>
-
-                            <v-col cols="12" :md="mdText">
+                            <v-col cols="12" :md="mdText" class="pb-0">
                                 <v-text-field
                                     v-model="form.name"
                                     :rules="Rules.name"
@@ -114,15 +57,77 @@
                                     inset
                                     class="mt-0"
                                     label="อัปโหลดรูป"
-                                    @change="changeImageStatus"
+                                    @change="changeImageStatus(form.image_status)"
                                 ></v-switch>
+                            </v-col>
+
+                            <v-col
+                                cols="12"
+                                md="5"
+                                class="mb-8"
+                                v-show="uploadTemplate"
+                            >
+                                <v-file-input
+                                    label="อัปโหลดรูป"
+                                    v-model="file"
+                                    v-show="
+                                        form.image_status === true &&
+                                            !imagePreview
+                                    "
+                                    :rules="Rules.image"
+                                    prepend-icon="image"
+                                    @change="changeImage"
+                                    accept="image/*"
+                                >
+                                </v-file-input>
+                                <v-btn
+                                    color="info"
+                                    @click="clickUploadImage"
+                                    v-show="
+                                        form.image_status == true &&
+                                            !imagePreview
+                                    "
+                                    :loading="loadUploadImage"
+                                    block
+                                >
+                                    <v-icon left>cloud_upload</v-icon>
+                                    อัปโหลดรูปภาพ
+                                </v-btn>
+
+                                <v-row>
+                                    <v-col
+                                        cols="12"
+                                        md="12"
+                                        v-show="
+                                            form.image_status === true &&
+                                                imagePreview
+                                        "
+                                    >
+                                        <v-card>
+                                            <v-img :src="imagePreview">
+                                                <v-btn
+                                                    class="mt-1 ml-1"
+                                                    color="error"
+                                                    @click="clickRemoveImage"
+                                                    v-show="imagePreview"
+                                                    :loading="loadUploadImage"
+                                                    fab
+                                                    small
+                                                >
+                                                    <v-icon>delete</v-icon>
+                                                </v-btn>
+                                            </v-img>
+                                        </v-card>
+                                    </v-col>
+                                </v-row>
                             </v-col>
                         </v-row>
                     </v-form>
                 </v-card-text>
+                <v-divider></v-divider>
 
                 <v-card-actions>
-                    <v-container class="text-right">
+                    <v-container class="text-right pa-0">
                         <v-btn color="success" @click="save" :loading="loading">
                             <v-icon left>save</v-icon>
                             สร้างสินค้าใหม่
@@ -155,24 +160,15 @@ export default {
             image: "",
             imagePreview: "",
             loadUploadImage: false,
-            mdText: 7,
+            mdText: 12,
+            uploadTemplate: false,
             form: {
                 name: "",
                 price_normal: "",
                 price_special_status: true,
                 price_special: "",
                 status: "1",
-                image_status: true,
-                product_image_id: "1",
-                product_show: 1
-            },
-            formDefault: {
-                name: "",
-                price_normal: "",
-                price_special_status: true,
-                price_special: "",
-                status: "1",
-                image_status: true,
+                image_status: false,
                 product_image_id: "1",
                 product_show: 1
             },
@@ -202,6 +198,7 @@ export default {
             this.overlay = true;
             const formData = new FormData();
             formData.append("image", this.image);
+            console.log(formData);
             const response = await this.$store.dispatch(
                 "productImage/store",
                 formData
@@ -247,12 +244,15 @@ export default {
             }
         },
         changeImageStatus(value) {
-            this.mdText = !this.mdText;
+            if (value == true) {
+                this.mdText = 7;
+            } else {
+                this.mdText = 12;
+            }
+            this.uploadTemplate = !this.uploadTemplate;
             if (value === false && this.file === "") {
                 this.file = "image.jpg";
-                this.mdText = 12;
             } else if (value === true && this.file === "image.jpg") {
-                this.mdText = 7;
                 this.file = "";
             }
         },
@@ -264,17 +264,17 @@ export default {
                 this.loading = true;
                 this.overlay = true;
                 const response = await this.$store.dispatch(
-                    "product/add",
+                    "product/add_v2",
                     this.form
                 );
                 if (response.status === 200) {
                     this.loading = false;
-                    this.form = this.formDefault;
                     this.image = "";
                     this.imagePreview = "";
                     this.file = "";
                     this.$toast.success("เพิ่มสินค้าใหม่สำเร็จ");
                     this.dialog = false;
+                    this.start();
                     this.overlay = false;
                 }
             } else {
@@ -284,7 +284,19 @@ export default {
         },
         reset() {
             this.$toast.success("ล้างข้อมูลสำเร็จ");
+            this.start();
+        },
+        start() {
+            this.mdText = 12;
+            this.uploadTemplate = false;
             this.form.name = "";
+            this.form.price_normal = "";
+            this.form.price_special_status = false;
+            this.form.price_special = "0";
+            this.form.status = "1";
+            this.form.image_status = false;
+            this.form.product_image_id = "1";
+            this.form.product_show = 1;
         }
     }
 };

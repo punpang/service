@@ -31,7 +31,7 @@ export default {
     data() {
         return {
             menus: [
-                { icon: "home", title: "หน้าแรก", to: "/" },
+                { icon: "home", title: "หน้าแรก", to: "/admin" },
             ],
         };
     },

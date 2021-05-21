@@ -16,59 +16,64 @@ const routes = [
         path: "/",
         name: "Home",
         component: Home,
+    },
+    {
+        path: "/admin/index",
+        name: "adminpage",
+        component: Home,
         meta: { requiresAuth: true }
     },
     {
-        path: "/customer",
+        path: "/admin/customer",
         name: "Customer",
         component: () => import("@/js/pages/orders/customer"),
         meta: { requiresAuth: true }
     },
     {
-        path: "/product",
+        path: "/admin/product",
         name: "Product",
         component: () => import("@/js/pages/orders/product"),
         meta: { requiresAuth: true }
     },
     {
-        path: "/order",
+        path: "/admin/order",
         name: "Order",
         component: () => import("@/js/pages/orders/order"),
         meta: { requiresAuth: true }
     },
     {
-        path: "/about",
+        path: "/admin/about",
         name: "About",
         component: () =>
             import(/* webpackChunkName: "about" */ "@/js/views/About"),
         meta: { requiresAuth: true }
     },
     {
-        path: "/form",
+        path: "/admin/form",
         name: "Form",
         component: Form,
         meta: { requiresAuth: true }
     },
     {
-        path: "/order/test",
+        path: "/admin/order/test",
         name: "OrderTest",
         component: () =>
             import(/* webpackChunkName: "about" */ "@/js/views/Orders"),
         meta: { requiresAuth: true }
     },
     {
-        path: "/dashboard",
+        path: "/admin/dashboard",
         name: "dashboard",
         component: DashboardComponent,
         meta: { requiresAuth: true }
     },
     {
-        path: "/login",
+        path: "/admin/login",
         name: "login",
         component: LoginComponent
     },
     {
-        path: "/logout",
+        path: "/admin/logout",
         name: "logout",
         component: LogoutComponent
     },//SYSTEM

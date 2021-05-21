@@ -21,19 +21,29 @@ export default {
     },
     actions: {
         async get({ commit }) {
-            const response = await axios.get("api/product/");
+            const response = await axios.get("/api/product/");
             commit("get", response.data);
             return response;
         },
         async getUseOnly({ commit }) {
-            const response = await axios.get("api/product/useonly");
+            const response = await axios.get("/api/product/useonly");
             commit("getUseOnly", response.data);
             return response;
         },
         async add({ dispatch }, payload) {
             try {
                 console.log(payload);
-                const response = await axios.post("api/product/store", payload);
+                const response = await axios.post("/api/product/store", payload);
+                dispatch("get");
+                return response;
+            } catch ({ response }) {
+                return response;
+            }
+        },
+        async add_v2({ dispatch }, payload) {
+            try {
+                //console.log(payload);
+                const response = await axios.post("/api/product/v2/store", payload);
                 dispatch("get");
                 return response;
             } catch ({ response }) {
@@ -43,7 +53,7 @@ export default {
         async update({ dispatch }, payload) {
             try {
                 const response = await axios.post(
-                    "api/product/" + payload.id + "/edit",
+                    "/api/product/" + payload.id + "/edit",
                     payload
                 );
                 dispatch("get");

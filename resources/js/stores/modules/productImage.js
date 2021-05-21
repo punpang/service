@@ -17,19 +17,19 @@ export default {
     },
     actions: {
         async get({ commit }) {
-            const response = await axios.get("api/product/image/");
+            const response = await axios.get("/api/product/image/");
             commit("get", response.data);
             return response;
         },
         async getUseOnly({ commit }) {
-            const response = await axios.get("api/product/image/useonly");
+            const response = await axios.get("/api/product/image/useonly");
             commit("getUseOnly", response.data);
             return response;
         },
         async store({ commit }, payload) {
             try {
                 const response = await axios.post(
-                    "api/product/image/store",
+                    "/api/product/image/store",
                     payload
                 );
                 return response;
@@ -41,7 +41,7 @@ export default {
             try {
                 console.log(payload);
                 const response = await axios.post(
-                    "api/product/image/" + payload.id + "/update",
+                    "/api/product/image/" + payload.id + "/update",
                     payload.formData
                 );
                 dispatch("product/get");
@@ -54,7 +54,7 @@ export default {
         async destroy({ commit }, payload) {
             try {
                 const response = await axios.post(
-                    "api/product/image/" + payload + "/destroy"
+                    "/api/product/image/" + payload + "/destroy"
                 );
                 return response;
             } catch ({ response }) {

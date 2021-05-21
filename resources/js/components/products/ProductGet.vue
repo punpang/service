@@ -59,6 +59,7 @@
                             :data="item"
                             class="mr-2"
                         ></ProductTagMain>
+                        <TagOptionMain :data="item"></TagOptionMain>
                     </v-row>
                 </v-container>
             </template>
@@ -72,6 +73,7 @@
 <script>
 import ProductUpdate from "@/js/components/products/ProductEdit";
 import ProductTagMain from "@/js/components/products/ProductTagMain";
+import TagOptionMain from "@/js/components/products/TagOptionMain";
 
 export default {
     props:[
@@ -79,7 +81,8 @@ export default {
     ],
     components: {
         ProductUpdate,
-        ProductTagMain
+        ProductTagMain,
+        TagOptionMain
     },
     data() {
         return {

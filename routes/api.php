@@ -98,7 +98,9 @@ Route::middleware('admin')->group(function () { //สำหรับ admin
     Route::prefix('product')->group(function () { // api/product/...
         Route::get('/', 'Order\ProductController@get');
         Route::get('useonly', 'Order\ProductController@useOnly');
+
         Route::post('store', 'Order\ProductController@store');
+        Route::post('v2/store', 'Order\ProductController@v2store');
 
         Route::post('/{id}/edit', 'Order\ProductController@update');
 
@@ -123,6 +125,7 @@ Route::middleware('admin')->group(function () { //สำหรับ admin
             Route::post('/{id}/edit', 'Order\ProductCategoryController@update');
 
             Route::get('/useonly/with/subs', 'Order\ProductCategoryController@UseOnlyWithSubs');
+            Route::get('/{id}/subs', "Order\ProductCategoryController@getSubsByID");
 
             Route::prefix('sub')->group(function () { // api/product/category/sub/...
                 Route::get('/', 'Order\ProductCategorySubController@get');

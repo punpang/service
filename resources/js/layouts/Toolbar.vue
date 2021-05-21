@@ -43,7 +43,7 @@ export default {
     data() {
         return {
             MenuProfiles: [
-                { icon: "exit_to_app", title: "ออกจากระบบ", to: "/logout" }
+                { icon: "exit_to_app", title: "ออกจากระบบ", to: "/admin/logout" }
             ]
         };
     },

@@ -18,18 +18,18 @@ export default {
     },
     actions: {
         async get({ commit }, payload) {
-            const response = await axios.get("api/product/tag/" + payload);
+            const response = await axios.get("/api/product/tag/" + payload);
             commit("data", response.data);
             return response;
         },
         async store({ dispatch }, payload) {
-            const response = await axios.post("api/product/tag/store", payload);            
+            const response = await axios.post("/api/product/tag/store", payload);            
             dispatch("get",payload.product_id);
             return response;
         },
         async isProductTags({ commit }, payload) {
             const response = await axios.get(
-                "api/product/tag/" + payload + "/isProductTags",
+                "/api/product/tag/" + payload + "/isProductTags",
                 payload
             );
             commit("isProductTags", response.data);
