@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Order\ProductCategorySub;
 use App\Order\ProductTag;
+use URL;
 
 class ProductCategoryController extends Controller
 {
@@ -57,5 +58,21 @@ class ProductCategoryController extends Controller
     {
         $data = ProductCategorySub::UseOnly()->whereProductCategoryId($id)->get();
         return response()->json($data, 200);
+    }
+
+    public function link()
+    {
+        $addMiutes = \Carbon\Carbon::now()->addMinutes(1);
+        $url_sms = URL::temporarySignedRoute('testlink',$addMiutes);
+
+        return $url_sms.$addMiutes;
+
+    }
+
+    public function link2()
+    {
+
+        return "ผ่านนนนน";
+
     }
 }

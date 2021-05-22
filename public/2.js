@@ -1828,6 +1828,47 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["data"],
   data: function data() {
@@ -1839,6 +1880,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       op2: null,
       subs1: [],
       subs2: [],
+      complete: 1,
       form: {
         product_id: null,
         subs1: null,
@@ -1861,6 +1903,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
+    count: function count() {
+      this.complete += 1;
+    },
     start: function start() {
       var _this = this;
 
@@ -1910,11 +1955,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 if (!(_this2.op2 == _this2.op1)) {
-                  _context2.next = 7;
+                  _context2.next = 6;
                   break;
                 }
-
-                _this2.$toast.warning("ตัวเลือกหลัก ห้ามซ้ำกัน");
 
                 _this2.op1 = null;
                 _this2.form.subs1 = null;
@@ -1922,15 +1965,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this2.form.subs2 = null;
                 return _context2.abrupt("return");
 
-              case 7:
-                _context2.next = 9;
+              case 6:
+                _context2.next = 8;
                 return _this2.$store.dispatch("productCategory/getSubByID", val);
 
-              case 9:
+              case 8:
                 res = _context2.sent;
                 _this2.subs1 = res.data;
 
-              case 11:
+              case 10:
               case "end":
                 return _context2.stop();
             }
@@ -5039,7 +5082,27 @@ var render = function() {
                         ],
                         1
                       )
-                    : _vm._e()
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    { attrs: { color: "success" } },
+                    [
+                      _c("v-icon", { attrs: { left: "" } }, [_vm._v("save")]),
+                      _vm._v("\n                    ยืนยัน\n                ")
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    { attrs: { color: "success" } },
+                    [
+                      _c("v-icon", { attrs: { left: "" } }, [_vm._v("save")]),
+                      _vm._v("\n                    ยืนยัน\n                ")
+                    ],
+                    1
+                  )
                 ],
                 1
               )

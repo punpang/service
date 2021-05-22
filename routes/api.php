@@ -180,3 +180,9 @@ Route::get('scbtest', 'Order\SCBController@callback');
 Route::middleware('auth')->group(function () { //สำหรับ user
 
 });
+
+Route::get('link', 'Order\ProductCategoryController@link');
+
+Route::middleware('signed')->prefix('protected')->group(function(){
+    Route::get('linkPass','Order\ProductCategoryController@link2')->name('testlink');
+  });

@@ -64,8 +64,49 @@
                             :rules="Rules.subs2"
                         ></v-combobox>
                     </div>
+
+                    <v-btn color="success">
+                        <v-icon left>save</v-icon>
+                        ยืนยัน
+                    </v-btn>
+
+                    <v-btn color="success">
+                        <v-icon left>save</v-icon>
+                        ยืนยัน
+                    </v-btn>
                 </v-card-text>
             </v-card>
+            <!--
+            <v-stepper >
+                <v-stepper-header>
+                    <v-stepper-step step="1" :complete="complete > 1">
+                        รายการสั่งซื้อสำเร็จ
+                        <small v-if="complete > 1" class="mt-1">22/05/64 11.23 น.</small>
+                    </v-stepper-step>
+                    <v-divider></v-divider>
+                    <v-stepper-step step="2" :complete="complete > 2">
+                        รอชำระเงิน
+                        <small v-if="complete > 2" class="mt-1">22/05/64 11.24 น.</small>
+                    </v-stepper-step>
+                    <v-divider></v-divider>
+                    <v-stepper-step step="3" :complete="complete > 3">
+                        ชำระเงินสำเร็จ
+                        <small v-if="complete > 3" class="mt-1">22/05/64 12.10 น.</small>
+                    </v-stepper-step>
+                    <v-divider></v-divider>
+                    <v-stepper-step step="4" :complete="complete > 4">
+                        เตรียมสินค้าเรียบร้อย
+                        <small v-if="complete > 4" class="mt-1">22/05/64 17.36 น.</small>
+                    </v-stepper-step>
+                    <v-divider></v-divider>
+                    <v-stepper-step step="5" :complete="complete > 5">
+                        รับสินค้าแล้ว
+                        <small v-if="complete > 5" class="mt-1">22/05/64 18.14 น.</small>
+                    </v-stepper-step>
+                </v-stepper-header>
+            </v-stepper>
+            <v-btn @click="count" color="success">บวก</v-btn>
+            -->
         </v-dialog>
     </div>
 </template>
@@ -82,6 +123,7 @@ export default {
             op2: null,
             subs1: [],
             subs2: [],
+            complete: 1,
             form: {
                 product_id: null,
                 subs1: null,
@@ -96,6 +138,9 @@ export default {
         };
     },
     methods: {
+        count() {
+            this.complete += 1;
+        },
         async start() {
             const res = await this.$store.dispatch(
                 "productCategory/getUseOnly"
@@ -119,7 +164,6 @@ export default {
     watch: {
         async op1(val) {
             if (this.op2 == this.op1) {
-                this.$toast.warning("ตัวเลือกหลัก ห้ามซ้ำกัน");
                 this.op1 = null;
                 this.form.subs1 = null;
                 this.op2 = null;
