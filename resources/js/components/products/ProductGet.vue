@@ -44,7 +44,10 @@
                 <v-img
                     v-show="item.image_status == true"
                     width="100"
-                    :src="'https://drive.google.com/thumbnail?id=' + item.product_image.src_name"
+                    :src="
+                        'https://drive.google.com/thumbnail?id=' +
+                            item.product_image.src_name
+                    "
                 ></v-img>
             </template>
 
@@ -65,7 +68,10 @@
             </template>
         </v-data-table>
         <v-overlay :value="overlay">
-            <v-progress-circular indeterminate :size="this.$store.getters['main/sizeOverlay']"></v-progress-circular>
+            <v-progress-circular
+                indeterminate
+                :size="this.$store.getters['main/sizeOverlay']"
+            ></v-progress-circular>
         </v-overlay>
     </div>
 </template>
@@ -76,9 +82,7 @@ import ProductTagMain from "@/js/components/products/ProductTagMain";
 import TagOptionMain from "@/js/components/products/TagOptionMain";
 
 export default {
-    props:[
-        'selectProduct'
-    ],
+    props: ["selectProduct"],
     components: {
         ProductUpdate,
         ProductTagMain,
@@ -107,10 +111,10 @@ export default {
             };
             const response = await this.$store.dispatch("product/update", form);
             if (response.status == 200) {
-                this.$toast.success("เปลี่ยนแปลงสถานะเรียบร้อย")
+                this.$toast.success("เปลี่ยนแปลงสถานะเรียบร้อย");
                 this.overlay = false;
             } else {
-                this.$toast.error("เกิดข้อผิดพลาดบางอย่าง กรุณาลองใหม่ภายหลัง")
+                this.$toast.error("เกิดข้อผิดพลาดบางอย่าง กรุณาลองใหม่ภายหลัง");
                 this.overlay = false;
             }
         }

@@ -100103,6 +100103,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_stores_modules_slip__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/js/stores/modules/slip */ "./resources/js/stores/modules/slip.js");
 /* harmony import */ var _js_stores_modules_punpang__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/js/stores/modules/punpang */ "./resources/js/stores/modules/punpang.js");
 /* harmony import */ var _js_stores_modules_smsOTP__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/js/stores/modules/smsOTP */ "./resources/js/stores/modules/smsOTP.js");
+/* harmony import */ var _js_stores_modules_optionMain__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/js/stores/modules/optionMain */ "./resources/js/stores/modules/optionMain.js");
+
 
 
 
@@ -100140,6 +100142,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     orderPaymentMethod: _js_stores_modules_orderPaymentMethod__WEBPACK_IMPORTED_MODULE_15__["default"],
     slip: _js_stores_modules_slip__WEBPACK_IMPORTED_MODULE_16__["default"],
     smsOTP: _js_stores_modules_smsOTP__WEBPACK_IMPORTED_MODULE_18__["default"],
+    optionMain: _js_stores_modules_optionMain__WEBPACK_IMPORTED_MODULE_19__["default"],
     //
     punpang: _js_stores_modules_punpang__WEBPACK_IMPORTED_MODULE_17__["default"]
   }
@@ -100483,6 +100486,108 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   actions: {}
+});
+
+/***/ }),
+
+/***/ "./resources/js/stores/modules/optionMain.js":
+/*!***************************************************!*\
+  !*** ./resources/js/stores/modules/optionMain.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  state: {},
+  mutations: {},
+  getters: {},
+  actions: {
+    productCheck: function productCheck(_ref, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _objectDestructuringEmpty(_ref);
+
+                _context.next = 3;
+                return axios.get("/api/product/option/" + payload + "/productCheck");
+
+              case 3:
+                res = _context.sent;
+                return _context.abrupt("return", res);
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    check: function check(_ref2, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _objectDestructuringEmpty(_ref2);
+
+                _context2.next = 3;
+                return axios.get("/api/product/option/" + payload.product_id + "/" + payload.subs1 + "/check");
+
+              case 3:
+                res = _context2.sent;
+                return _context2.abrupt("return", res);
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    store: function store(_ref3, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _objectDestructuringEmpty(_ref3);
+
+                _context3.next = 3;
+                return axios.post("/api/product/option/store", payload);
+
+              case 3:
+                res = _context3.sent;
+                return _context3.abrupt("return", res);
+
+              case 5:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    }
+  }
 });
 
 /***/ }),

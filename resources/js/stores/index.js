@@ -18,6 +18,7 @@ import orderPaymentMethod from "@/js/stores/modules/orderPaymentMethod";
 import slip from "@/js/stores/modules/slip";
 import punpang from "@/js/stores/modules/punpang";
 import smsOTP from "@/js/stores/modules/smsOTP";
+import optionMain from "@/js/stores/modules/optionMain";
 
 Vue.use(Vuex);
 
@@ -38,6 +39,7 @@ export default new Vuex.Store({
         orderPaymentMethod,
         slip,
         smsOTP,
+        optionMain,
         //
         punpang,
     }

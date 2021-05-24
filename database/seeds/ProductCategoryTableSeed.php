@@ -12,7 +12,10 @@ class ProductCategoryTableSeed extends Seeder
      */
     public function run()
     {
-        $datas = [["name" => "น้ำหนัก", "status" => 1], ["name" => "เนื้อเค้ก", "status" => 1]];
+        $datas = [
+            ["id"=>"20001","name" => "น้ำหนัก", "status" => 1],
+            ["id"=>"20002","name" => "เนื้อเค้ก", "status" => 1]
+        ];
 
         foreach ($datas as $data) {
             ProductCategory::create($data);

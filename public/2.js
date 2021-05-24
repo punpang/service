@@ -1340,11 +1340,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['selectProduct'],
+  props: ["selectProduct"],
   components: {
     ProductUpdate: _js_components_products_ProductEdit__WEBPACK_IMPORTED_MODULE_1__["default"],
     ProductTagMain: _js_components_products_ProductTagMain__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -1869,13 +1875,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["data"],
   data: function data() {
     return {
       dialog: false,
-      readonly: false,
-      items: [],
+      items1: [],
+      items2: [],
       op1: null,
       op2: null,
       subs1: [],
@@ -1884,7 +1897,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       form: {
         product_id: null,
         subs1: null,
-        subs2: null
+        op1: null,
+        subs2: null,
+        product_category_id: null,
+        status: null
       },
       Rules: {
         op1: [function (v) {
@@ -1910,20 +1926,41 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var res;
+        var resProduct, res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return _this.$store.dispatch("productCategory/getUseOnly");
+                return _this.$store.dispatch("optionMain/productCheck", _this.data.id);
 
               case 2:
-                res = _context.sent;
-                _this.items = res.data;
-                _this.form.product_id = _this.data.id;
+                resProduct = _context.sent;
+                _context.next = 5;
+                return _this.$store.dispatch("productCategory/getUseOnly");
 
               case 5:
+                res = _context.sent;
+
+                if (resProduct.data == false) {
+                  _this.items1 = [{
+                    id: _this.data.id,
+                    name: _this.data.name
+                  }];
+                  _this.op1 = _this.data.id;
+                  _this.subs1 = [{
+                    id: _this.data.id,
+                    name: _this.data.name
+                  }];
+                  _this.form.subs1 = _this.data.id;
+                } else {
+                  _this.items1 = res.data;
+                }
+
+                _this.items2 = res.data;
+                _this.form.product_id = _this.data.id;
+
+              case 9:
               case "end":
                 return _context.stop();
             }
@@ -1942,10 +1979,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.op2 = null;
       this.subs1 = [];
       this.subs2 = [];
-    }
-  },
-  watch: {
-    op1: function op1(val) {
+    },
+    SaveOP12: function SaveOP12() {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
@@ -1954,26 +1989,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                if (!(_this2.op2 == _this2.op1)) {
+                if (!_this2.$refs.formOP12.validate()) {
                   _context2.next = 6;
                   break;
                 }
 
-                _this2.op1 = null;
-                _this2.form.subs1 = null;
-                _this2.op2 = null;
-                _this2.form.subs2 = null;
-                return _context2.abrupt("return");
+                _context2.next = 3;
+                return _this2.$store.dispatch("optionMain/store", _this2.form);
+
+              case 3:
+                res = _context2.sent;
+                console.log(res);
+
+                if (res.status === 200) {
+                  _this2.$toast.success("ทำรายการสำเร็จ");
+                }
 
               case 6:
-                _context2.next = 8;
-                return _this2.$store.dispatch("productCategory/getSubByID", val);
-
-              case 8:
-                res = _context2.sent;
-                _this2.subs1 = res.data;
-
-              case 10:
               case "end":
                 return _context2.stop();
             }
@@ -1981,7 +2013,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
-    op2: function op2(val) {
+    changeOp1: function changeOp1() {
       var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
@@ -1991,33 +2023,122 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context3.prev = _context3.next) {
               case 0:
                 if (!(_this3.op2 == _this3.op1)) {
-                  _context3.next = 5;
+                  _context3.next = 6;
                   break;
                 }
 
-                _this3.$toast.warning("ตัวเลือกหลัก ห้ามซ้ำกัน");
-
+                _this3.op1 = null;
+                _this3.form.subs1 = null;
                 _this3.op2 = null;
                 _this3.form.subs2 = null;
                 return _context3.abrupt("return");
 
-              case 5:
-                _context3.next = 7;
-                return _this3.$store.dispatch("productCategory/getSubByID", val);
+              case 6:
+                _context3.next = 8;
+                return _this3.$store.dispatch("productCategory/getSubByID", _this3.op1);
 
-              case 7:
+              case 8:
                 res = _context3.sent;
-                _this3.subs2 = res.data;
+                _this3.subs1 = res.data;
+                _this3.form.subs1 = null;
 
-              case 9:
+              case 11:
               case "end":
                 return _context3.stop();
             }
           }
         }, _callee3);
       }))();
+    },
+    formSubs1: function formSubs1() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var dataCheck, resCheck, i;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                dataCheck = {
+                  subs1: _this4.form.subs1,
+                  product_id: _this4.data.id
+                };
+                _context4.next = 3;
+                return _this4.$store.dispatch("optionMain/check", dataCheck);
+
+              case 3:
+                resCheck = _context4.sent;
+
+                if (!(resCheck.data.status == false)) {
+                  _context4.next = 8;
+                  break;
+                }
+
+                _this4.form.subs1 = null;
+
+                _this4.$toast.error("โปรดเลือกใหม่");
+
+                return _context4.abrupt("return");
+
+              case 8:
+                _this4.form.subs2 = [];
+
+                for (i = 0; i < resCheck.data.data.sub.length; i++) {
+                  _this4.form.subs2[i] = resCheck.data.data.sub[i].op2;
+                }
+
+                _this4.op2 = resCheck.data.data.product_category_id;
+                _this4.form.op1 = resCheck.data.data.id;
+
+                _this4.changeOp2();
+
+              case 13:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    },
+    changeOp2: function changeOp2() {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                if (!(_this5.op2 == _this5.op1)) {
+                  _context5.next = 5;
+                  break;
+                }
+
+                _this5.$toast.warning("ตัวเลือกหลัก ห้ามซ้ำกัน");
+
+                _this5.op2 = null;
+                _this5.form.subs2 = null;
+                return _context5.abrupt("return");
+
+              case 5:
+                _this5.form.product_category_id = _this5.op2;
+                _context5.next = 8;
+                return _this5.$store.dispatch("productCategory/getSubByID", _this5.op2);
+
+              case 8:
+                res = _context5.sent;
+                _this5.subs2 = res.data;
+
+              case 10:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
     }
-  }
+  },
+  watch: {}
 });
 
 /***/ }),
@@ -4991,115 +5112,135 @@ var render = function() {
               _c("v-divider"),
               _vm._v(" "),
               _c(
-                "v-card-text",
+                "v-form",
+                { ref: "formOP12", attrs: { "lazy-validation": "" } },
                 [
-                  _c("v-autocomplete", {
-                    attrs: {
-                      items: _vm.items,
-                      "item-text": "name",
-                      "item-value": "id",
-                      label: "ตัวเลือกหลัก",
-                      outlined: "",
-                      rules: _vm.Rules.op1
-                    },
-                    model: {
-                      value: _vm.op1,
-                      callback: function($$v) {
-                        _vm.op1 = $$v
-                      },
-                      expression: "op1"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-select", {
-                    attrs: {
-                      outlined: "",
-                      items: _vm.subs1,
-                      "item-text": "name",
-                      "item-value": "id",
-                      label: "ตัวเลือกหลัก (ย่อย)",
-                      rules: _vm.Rules.subs1
-                    },
-                    model: {
-                      value: _vm.form.subs1,
-                      callback: function($$v) {
-                        _vm.$set(_vm.form, "subs1", $$v)
-                      },
-                      expression: "form.subs1"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.op1 && _vm.form.subs1
-                    ? _c(
-                        "div",
-                        [
-                          _c("v-divider", { staticClass: "mt-0" }),
-                          _vm._v(" "),
-                          _c("h4", { staticClass: "mb-4" }, [
-                            _vm._v("เชื่อมต่อกับ")
-                          ]),
-                          _vm._v(" "),
-                          _c("v-autocomplete", {
-                            attrs: {
-                              items: _vm.items,
-                              "item-text": "name",
-                              "item-value": "id",
-                              label: "ตัวเลือกหลัก",
-                              outlined: "",
-                              rules: _vm.Rules.op2,
-                              readonly: _vm.readonly
-                            },
-                            model: {
-                              value: _vm.op2,
-                              callback: function($$v) {
-                                _vm.op2 = $$v
-                              },
-                              expression: "op2"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm.op2 && _vm.op1 != _vm.op2
-                            ? _c("v-combobox", {
+                  _c(
+                    "v-card-text",
+                    [
+                      _c("v-autocomplete", {
+                        attrs: {
+                          items: _vm.items1,
+                          "item-text": "name",
+                          "item-value": "id",
+                          label: "ตัวเลือกหลัก",
+                          outlined: "",
+                          rules: _vm.Rules.op1
+                        },
+                        on: { change: _vm.changeOp1 },
+                        model: {
+                          value: _vm.op1,
+                          callback: function($$v) {
+                            _vm.op1 = $$v
+                          },
+                          expression: "op1"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("v-select", {
+                        attrs: {
+                          outlined: "",
+                          items: _vm.subs1,
+                          "item-text": "name",
+                          "item-value": "id",
+                          label: "ตัวเลือกหลัก (ย่อย)",
+                          rules: _vm.Rules.subs1
+                        },
+                        on: { change: _vm.formSubs1 },
+                        model: {
+                          value: _vm.form.subs1,
+                          callback: function($$v) {
+                            _vm.$set(_vm.form, "subs1", $$v)
+                          },
+                          expression: "form.subs1"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.op1 && _vm.form.subs1
+                        ? _c(
+                            "div",
+                            [
+                              _c("v-divider", { staticClass: "mt-0" }),
+                              _vm._v(" "),
+                              _c("h4", { staticClass: "mb-4" }, [
+                                _vm._v("เชื่อมต่อกับ")
+                              ]),
+                              _vm._v(" "),
+                              _c("v-autocomplete", {
                                 attrs: {
-                                  multiple: "",
-                                  outlined: "",
-                                  "small-chips": "",
-                                  "item-value": "id",
+                                  items: _vm.items2,
                                   "item-text": "name",
-                                  label: "ตัวเลือกหลัก (ย่อย)",
-                                  items: _vm.subs2,
-                                  rules: _vm.Rules.subs2
+                                  "item-value": "id",
+                                  label: "ตัวเลือกหลัก",
+                                  outlined: "",
+                                  rules: _vm.Rules.op2
                                 },
+                                on: { change: _vm.changeOp2 },
                                 model: {
-                                  value: _vm.form.subs2,
+                                  value: _vm.op2,
                                   callback: function($$v) {
-                                    _vm.$set(_vm.form, "subs2", $$v)
+                                    _vm.op2 = $$v
                                   },
-                                  expression: "form.subs2"
+                                  expression: "op2"
                                 }
-                              })
-                            : _vm._e()
+                              }),
+                              _vm._v(" "),
+                              _vm.op2 && _vm.op1 != _vm.op2
+                                ? _c("v-select", {
+                                    attrs: {
+                                      multiple: "",
+                                      outlined: "",
+                                      "small-chips": "",
+                                      "item-value": "id",
+                                      "item-text": "name",
+                                      label: "ตัวเลือกหลัก (ย่อย)",
+                                      items: _vm.subs2,
+                                      rules: _vm.Rules.subs2
+                                    },
+                                    model: {
+                                      value: _vm.form.subs2,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.form, "subs2", $$v)
+                                      },
+                                      expression: "form.subs2"
+                                    }
+                                  })
+                                : _vm._e()
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "success" },
+                          on: { click: _vm.SaveOP12 }
+                        },
+                        [
+                          _c("v-icon", { attrs: { left: "" } }, [
+                            _vm._v("save")
+                          ]),
+                          _vm._v(
+                            "\n                        ยืนยัน OP\n                    "
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        { attrs: { color: "success" } },
+                        [
+                          _c("v-icon", { attrs: { left: "" } }, [
+                            _vm._v("save")
+                          ]),
+                          _vm._v(
+                            "\n                        ยืนยัน PO\n                    "
+                          )
                         ],
                         1
                       )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    { attrs: { color: "success" } },
-                    [
-                      _c("v-icon", { attrs: { left: "" } }, [_vm._v("save")]),
-                      _vm._v("\n                    ยืนยัน\n                ")
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    { attrs: { color: "success" } },
-                    [
-                      _c("v-icon", { attrs: { left: "" } }, [_vm._v("save")]),
-                      _vm._v("\n                    ยืนยัน\n                ")
                     ],
                     1
                   )
@@ -5108,7 +5249,9 @@ var render = function() {
               )
             ],
             1
-          )
+          ),
+          _vm._v(" "),
+          _vm._v("\n\n        " + _vm._s(_vm.op2) + "\n    ")
         ],
         1
       )

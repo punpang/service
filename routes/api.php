@@ -135,6 +135,14 @@ Route::middleware('admin')->group(function () { //สำหรับ admin
                 Route::post('/{id}/edit', 'Order\ProductCategorySubController@update');
             });
         });
+
+        Route::prefix('option')->group(function () { // api/product/tag/...
+            
+            Route::get('{id}/productCheck', 'Order\OptionMainController@productCheck');
+            Route::get('{product_id}/{op1}/check', 'Order\OptionMainController@check');
+
+            Route::post("store", "Order\OptionMainController@store");
+        });
     });
 
     /*
@@ -181,8 +189,8 @@ Route::middleware('auth')->group(function () { //สำหรับ user
 
 });
 
-Route::get('link', 'Order\ProductCategoryController@link');
+//Route::get('link', 'Order\ProductCategoryController@link');
 
-Route::middleware('signed')->prefix('protected')->group(function(){
-    Route::get('linkPass','Order\ProductCategoryController@link2')->name('testlink');
-  });
+Route::middleware('signed')->prefix('protected')->group(function () {
+    Route::get('linkPass', 'Order\ProductCategoryController@link2')->name('testlink');
+});

@@ -45,7 +45,7 @@ class ProductCategoryController extends Controller
         $id->save();
 
         $subs = ProductCategorySub::where('product_category_id', $id->id)->get();
-        
+
         foreach ($subs as $sub) {
             $sub->update(['status' => $id->status]);
             ProductTag::where('product_category_sub_id', $sub->id)->update(['status' => $sub->status]);
@@ -63,16 +63,14 @@ class ProductCategoryController extends Controller
     public function link()
     {
         $addMiutes = \Carbon\Carbon::now()->addMinutes(1);
-        $url_sms = URL::temporarySignedRoute('testlink',$addMiutes);
+        $url_sms = URL::temporarySignedRoute('testlink', $addMiutes);
 
-        return $url_sms.$addMiutes;
-
+        return $url_sms . $addMiutes;
     }
 
     public function link2()
     {
 
         return "ผ่านนนนน";
-
     }
 }

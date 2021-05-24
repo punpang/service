@@ -18,6 +18,8 @@ class CreateOptionMainsTable extends Migration
             $table->integer("op1");
             $table->integer("op2");
             $table->integer("product_id");
+            $table->integer("product_category_id");
+            $table->integer("status");
             $table->timestamps();
         });
     }
