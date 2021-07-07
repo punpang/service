@@ -8,9 +8,17 @@
             </template>
             <v-card>
                 <v-card-title class="pb-0">
-                    <h3>ชื่อสินค้า : {{ data.name }}</h3>
+                    <h3 @click="clickProduct">ชื่อสินค้า : {{ data.name }}</h3>
                     <v-spacer></v-spacer>
-                    <v-btn fab x-small class="red--text" @click="close">
+                    <v-btn fab x-small class="success--text" @click="start()">
+                        <v-icon>refresh</v-icon>
+                    </v-btn>
+                    <v-btn
+                        fab
+                        x-small
+                        class="red--text"
+                        @click="reset(), (dialog = false)"
+                    >
                         <v-icon>close</v-icon>
                     </v-btn>
                 </v-card-title>
@@ -152,6 +160,7 @@ export default {
             this.complete += 1;
         },
         async start() {
+            this.reset();
             const resProduct = await this.$store.dispatch(
                 "optionMain/productCheck",
                 this.data.id
@@ -168,11 +177,18 @@ export default {
             } else {
                 this.items1 = res.data;
             }
+
             this.items2 = res.data;
             this.form.product_id = this.data.id;
         },
-        close() {
-            this.dialog = false;
+        async clickProduct() {
+            this.items1 = [{ id: this.data.id, name: this.data.name }];
+            this.op1 = this.data.id;
+            this.subs1 = [{ id: this.data.id, name: this.data.name }];
+            this.form.subs1 = this.data.id;
+            this.form.product_id = this.data.id;
+        },
+        reset() {
             this.form = {
                 product_id: null,
                 op1: null,
@@ -190,10 +206,10 @@ export default {
                     this.form
                 );
 
-                console.log(res);
-
                 if (res.status === 200) {
                     this.$toast.success("ทำรายการสำเร็จ");
+                    this.start();
+                    this.reset();
                 }
             }
         },

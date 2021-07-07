@@ -18,6 +18,36 @@ const routes = [
         component: Home,
     },
     {
+        path: "/todos/:id",
+        name: "todos",
+        component: () => import("@/js/components/todos/TodoApp"),
+    },
+    {
+        path: "/todos2",
+        name: "todos2",
+        component: () => import("@/js/components/todos/TodoApp2"),
+    },
+    {
+        path: "/admin/dashboard",
+        name: "adminDashboard",
+        component: () => import("@/js/pages/admin/dashboard"),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: "/admin/product",
+        name: "adminProduct",
+        component: () => import("@/js/pages/admin/product"),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: "/admin/product/group",
+        name: "adminProductGroup",
+        component: () => import("@/js/pages/admin/product/group"),
+        meta: { requiresAuth: true }
+    },
+
+    /////////////////////////////////////////
+    {
         path: "/admin/index",
         name: "adminpage",
         component: Home,
@@ -30,7 +60,7 @@ const routes = [
         meta: { requiresAuth: true }
     },
     {
-        path: "/admin/product",
+        path: "/admin/products",
         name: "Product",
         component: () => import("@/js/pages/orders/product"),
         meta: { requiresAuth: true }
@@ -99,6 +129,7 @@ const routes = [
         name: "orderTokenUploadImage",
         component: () => import("@/js/pages/punpang/orders/uploadImage")
     },
+    /////////////////////////////
     { path: "*", name: "PageNotFound", component: PageNotFound }
 ];
 

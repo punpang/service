@@ -3,6 +3,7 @@ import Vue from "vue";
 import Vuetify from "vuetify";
 import "material-design-icons-iconfont/dist/material-design-icons.css";
 import store from "@/js/stores";
+window.Vue = require('vue');
 
 Vue.use(Vuetify);
 
@@ -75,7 +76,7 @@ const app = new Vue({
             iconfont: "md"
         },
         theme: {
-            dark: true
+            dark: false
         }
     }),
     render: h => h(App)

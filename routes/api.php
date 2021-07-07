@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,6 +15,10 @@ return $request->user();
 });
  */
 
+Route::get('todos/{id}', 'TaskController@fetchAll');
+Route::post('todos', 'TaskController@store');
+Route::delete('todos/{id}', 'TaskController@delete');
+
 Route::group([
 
     'middleware' => 'api',
@@ -29,10 +32,28 @@ Route::group([
     Route::post('me', 'AuthController@me');
 });
 
+//Route::middleware(["admin","cashier"])->get('user', 'AuthController@me');
+Route::get('user', 'AuthController@me');
+
+Route::middleware("admin")->group(function () { //สำหรับ admin
+    //Route::get('user', 'AuthController@me');
+    //Route::get('dashboard', 'AuthController@me');
+    //Route::get('test', 'Order\AOrderController@DashboardToday');
+
+    Route::prefix('product')->group(function () { // api/product/...
+        Route::post('group', 'ShabuNooNee\ProductGroupController@store');
+        Route::post('group/{id}/switchStatus', 'ShabuNooNee\ProductGroupController@switchStatus');
+        Route::post('group/{id}/update', 'ShabuNooNee\ProductGroupController@update');
+        Route::get('group/all', 'ShabuNooNee\ProductGroupController@all');
+    });
+});
+
+
+//////////
 Route::middleware('admin')->group(function () { //สำหรับ admin
-    Route::get('user', 'AuthController@me');
-    Route::get('dashboard', 'AuthController@me');
-    Route::get('test', 'Order\AOrderController@DashboardToday');
+    //Route::get('user', 'AuthController@me');
+    //Route::get('dashboard', 'AuthController@me');
+    //Route::get('test', 'Order\AOrderController@DashboardToday');
 
     Route::prefix('customer')->group(function () { // api/customer/...
 
@@ -137,7 +158,7 @@ Route::middleware('admin')->group(function () { //สำหรับ admin
         });
 
         Route::prefix('option')->group(function () { // api/product/tag/...
-            
+
             Route::get('{id}/productCheck', 'Order\OptionMainController@productCheck');
             Route::get('{product_id}/{op1}/check', 'Order\OptionMainController@check');
 

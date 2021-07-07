@@ -13,16 +13,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UsersTableSeeder::class,
-            ChannelOfPurchasesTableSeeder::class,
-            OrderStatusTableSeeder::class,
-            LinesKeyTableSeeder::class,
-            CustomerTableSeeder::class,
-            ProductCategorySubTableSeed::class,
-            ProductCategoryTableSeed::class,
-            ProductTableSeed::class,
-            OrderPaymentMethodTableSeed::class,
-            SlipVerifyTableSeed::class,
-            SlipUnVerifyReasoningTableSeed::class,            
+            UserTypeSeeder::class,
         ]);
     }
 }

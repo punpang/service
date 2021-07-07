@@ -20,6 +20,11 @@ import punpang from "@/js/stores/modules/punpang";
 import smsOTP from "@/js/stores/modules/smsOTP";
 import optionMain from "@/js/stores/modules/optionMain";
 
+////
+import pusher from "@/js/stores/modules/pusher";
+import productGroup from "@/js/stores/modules/shabuNooNee/productGroup";
+
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -42,5 +47,8 @@ export default new Vuex.Store({
         optionMain,
         //
         punpang,
+        ////
+        pusher,
+        productGroup
     }
 });

@@ -43,7 +43,11 @@ class AuthController extends Controller
     {
         //return hash_hmac('sha256', "EAADs9Pa2orYBAJWkcpHyNcSF7ZBDkZAyWZCB79ZA3ZCLe4rNCMnNoMvngx7EVrv97y8ZANHIyg7g44sba4g4r2MelePr7dVY6U7tCZAbv2SRyedMvOWZAXzJbpZAlOlsMikwLnG8opZCcT27jusUXfEyz8xNdmahZClBO7shlBZAHkYePMMZBpMZADiFOZALSHzF4GVtMs24oZCgftx35gZDZD", "45bf99a1675babbadc7033159fed9ee4"); 
 
-        return response()->json(auth()->user());
+        if (Auth::check()) {
+            return response()->json(auth()->user());
+        } else {
+            abort(403,"ไม่มีสิทธิ์เข้าถึง");
+        }
     }
 
     /**

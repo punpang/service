@@ -12,6 +12,8 @@ class User extends Authenticatable implements JWTSubject
     use Notifiable;
     const ADMIN_TYPE = 1;
     const DEFAULT_TYPE = 0;
+    const CASHIER_TYPE = 2;
+    const WAITRESS_TYPE = 3;
     /**
      * The attributes that are mass assignable.
      *
@@ -43,6 +45,10 @@ class User extends Authenticatable implements JWTSubject
         return $this->type === self::ADMIN_TYPE;
     }
 
+    public function isCashier(){
+        return $this->type === self::CASHIER_TYPE;
+    }
+
     public function member()
     {
       return $this->belongsTo(Member::class);
@@ -62,4 +68,6 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+
 }

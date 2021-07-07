@@ -28,17 +28,19 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
+        "@websanova/vue-auth": "^2.21.17-beta",
         "colorette": "^1.2.0",
         "es6-promise": "^4.2.8",
+        "laravel-echo": "^1.11.0",
+        "pusher-js": "^7.0.3",
         "vue-axios": "^2.1.5",
         "vue-clipboard2": "^0.3.1",
         "vue-currency-input": "^1.18.3",
-        "vuelidate": "^0.7.5",
         "vue-loading-overlay": "^3.3.2",
         "vue-router": "^3.2.0",
-        "vuetify": "^2.2.29",
         "vue-toast-notification": "^0.3.0",
-        "vuex": "^3.4.0",
-        "@websanova/vue-auth": "^2.21.17-beta"
+        "vuelidate": "^0.7.5",
+        "vuetify": "^2.2.29",
+        "vuex": "^3.6.2"
     }
 }
