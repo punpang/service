@@ -13,19 +13,19 @@ import PageNotFound from "@/js/components/PageNotFound";
 
 const routes = [
     {
-        path: "/",
-        name: "Home",
-        component: Home,
+        path: "/home",
+        name: "home",
+        component: Home
     },
     {
         path: "/todos/:id",
         name: "todos",
-        component: () => import("@/js/components/todos/TodoApp"),
+        component: () => import("@/js/components/todos/TodoApp")
     },
     {
         path: "/todos2",
         name: "todos2",
-        component: () => import("@/js/components/todos/TodoApp2"),
+        component: () => import("@/js/components/todos/TodoApp2")
     },
     {
         path: "/admin/dashboard",
@@ -43,6 +43,12 @@ const routes = [
         path: "/admin/product/group",
         name: "adminProductGroup",
         component: () => import("@/js/pages/admin/product/group"),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: "/admin/menuBar",
+        name: "adminMenuBar",
+        component: () => import("@/js/pages/admin/menuBar/"),
         meta: { requiresAuth: true }
     },
 
@@ -106,7 +112,7 @@ const routes = [
         path: "/admin/logout",
         name: "logout",
         component: LogoutComponent
-    },//SYSTEM
+    }, //SYSTEM
     {
         path: "/testModule",
         name: "testModule",

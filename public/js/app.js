@@ -1966,6 +1966,10 @@ __webpack_require__.r(__webpack_exports__);
           }).then(function (res) {
             _this.$store.commit("main/User", res.data);
 
+            if (_this.$route.query.from == null) {
+              _this.$router.replace("/home");
+            }
+
             _this.$router.replace(_this.$route.query.from);
           });
         })["catch"](function (error) {
@@ -2240,7 +2244,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_layouts_Toolbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/layouts/Toolbar */ "./resources/js/layouts/Toolbar.vue");
 /* harmony import */ var _js_layouts_Navbar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/layouts/Navbar */ "./resources/js/layouts/Navbar.vue");
 /* harmony import */ var _js_layouts_NavbarAdmin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/js/layouts/NavbarAdmin */ "./resources/js/layouts/NavbarAdmin.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -2270,6 +2281,42 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -2283,7 +2330,66 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       Profile: {},
-      drawer: false
+      drawer: false,
+      menus: [{
+        icon: "home",
+        title: "หน้าแรก",
+        to: "/admin/index"
+      }],
+      items: [{
+        action: "shop",
+        title: "จัดการสินค้า",
+        items: [{
+          title: "สินค้า",
+          to: "/admin/product"
+        }, {
+          title: "กลุ่มสินค้า",
+          to: "/admin/product/group"
+        }] //active: true,
+
+      }, {
+        action: "home",
+        title: "แคชเชียร์",
+        items: [{
+          title: "รอปรับปรุง",
+          to: ""
+        }]
+      }, {
+        action: "home",
+        title: "เสิร์ฟอาหาร",
+        items: [{
+          title: "รอปรับปรุง",
+          to: ""
+        }]
+      }, {
+        action: "home",
+        title: "ห้องครัว",
+        items: [{
+          title: "รอปรับปรุง",
+          to: ""
+        }]
+      }, {
+        action: "home",
+        title: "ลูกค้า",
+        items: [{
+          title: "รอปรับปรุง",
+          to: ""
+        }]
+      }, {
+        action: "home",
+        title: "รายงาน",
+        items: [{
+          title: "รอปรับปรุง",
+          to: ""
+        }]
+      }, {
+        action: "home",
+        title: "ส่วนตัว",
+        items: [{
+          title: "รอปรับปรุง",
+          to: ""
+        }]
+      }]
     };
   },
   methods: {
@@ -2291,7 +2397,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.drawer = !this.drawer;
     }
   },
-  beforeCreate: function beforeCreate() {
+  mounted: function mounted() {
     var _this = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -2299,26 +2405,48 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              _context.next = 2;
+              return _this.$store.dispatch("menuBar/lists");
+
+            case 2:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapGetters"])({
+    menuMain: "menuBar/lists"
+  })),
+  beforeCreate: function beforeCreate() {
+    var _this2 = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
               if (!localStorage.token) {
-                _context.next = 3;
+                _context2.next = 3;
                 break;
               }
 
-              _context.next = 3;
+              _context2.next = 3;
               return axios.get("/api/user", {
                 headers: {
                   Authorization: "Bearer " + localStorage.getItem("token")
                 }
               }).then(function (response) {
                 //this.$store.commit("main/loginUser");
-                _this.$store.commit("main/User", response.data);
+                _this2.$store.commit("main/User", response.data);
               })["catch"](function (error) {
                 if (error.response.status == 400 || error.response.status === 401 || error.response.status === 403) {
-                  _this.$store.commit("main/logoutUser");
+                  _this2.$store.commit("main/logoutUser");
 
                   localStorage.setItem("token", "");
 
-                  _this.$router.replace({
+                  _this2.$router.replace({
                     name: "login"
                   });
                 }
@@ -2326,10 +2454,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
             case 3:
             case "end":
-              return _context.stop();
+              return _context2.stop();
           }
         }
-      }, _callee);
+      }, _callee2);
     }))();
   }
 });
@@ -7171,7 +7299,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.v-application {\n    font-family: \"Sarabun\", sans-serif;\n}\n", ""]);
+exports.push([module.i, "\n.v-application {\n  font-family: \"Sarabun\", sans-serif;\n}\n", ""]);
 
 // exports
 
@@ -47184,9 +47312,118 @@ var render = function() {
         on: { emitDialogNavbar: _vm.emitDialogNavbar }
       }),
       _vm._v(" "),
-      this.$store.getters["main/User"].type == 1
-        ? _c("NavbarAdmin", { attrs: { drawer: _vm.drawer } })
-        : _c("Navbar", { attrs: { drawer: _vm.drawer } }),
+      this.$store.getters["main/isLoggedIn"] == true
+        ? _c(
+            "v-navigation-drawer",
+            {
+              attrs: { app: "" },
+              model: {
+                value: _vm.drawer,
+                callback: function($$v) {
+                  _vm.drawer = $$v
+                },
+                expression: "drawer"
+              }
+            },
+            [
+              _c(
+                "v-list",
+                { staticClass: "pb-0" },
+                _vm._l(_vm.menus, function(menu) {
+                  return _c(
+                    "v-list-item",
+                    { key: menu.name, attrs: { link: "", to: menu.to } },
+                    [
+                      _c(
+                        "v-list-item-icon",
+                        [_c("v-icon", [_vm._v(_vm._s(menu.icon))])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item-content",
+                        [_c("v-list-item-title", [_vm._v(_vm._s(menu.title))])],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                }),
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-list",
+                { staticClass: "pt-0" },
+                _vm._l(_vm.menuMain, function(item) {
+                  return _c(
+                    "v-list-group",
+                    {
+                      key: item.title,
+                      attrs: { "prepend-icon": item.action, "no-action": "" },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "activator",
+                            fn: function() {
+                              return [
+                                _c(
+                                  "v-list-item-content",
+                                  [
+                                    _c("v-list-item-title", {
+                                      domProps: {
+                                        textContent: _vm._s(item.title)
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ]
+                            },
+                            proxy: true
+                          }
+                        ],
+                        null,
+                        true
+                      ),
+                      model: {
+                        value: item.active,
+                        callback: function($$v) {
+                          _vm.$set(item, "active", $$v)
+                        },
+                        expression: "item.active"
+                      }
+                    },
+                    [
+                      _vm._v(" "),
+                      _vm._l(item.menu_subs, function(child) {
+                        return _c(
+                          "v-list-item",
+                          { key: child.title, attrs: { to: child.to } },
+                          [
+                            _c(
+                              "v-list-item-content",
+                              [
+                                _c("v-list-item-title", {
+                                  domProps: { textContent: _vm._s(child.title) }
+                                })
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      })
+                    ],
+                    2
+                  )
+                }),
+                1
+              )
+            ],
+            1
+          )
+        : _vm._e(),
       _vm._v(" "),
       _c(
         "v-content",
@@ -105697,7 +105934,7 @@ _js_routes_js__WEBPACK_IMPORTED_MODULE_5__["default"].beforeEach(function (to, f
 
   if (to.path === "/admin/login" && _js_stores__WEBPACK_IMPORTED_MODULE_4__["default"].getters["main/isLoggedIn"]) {
     next({
-      name: "dashboard"
+      name: "home"
     });
     return;
   }
@@ -106347,26 +106584,26 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 
 
 var routes = [{
-  path: "/",
-  name: "Home",
+  path: "/home",
+  name: "home",
   component: _js_views_Home__WEBPACK_IMPORTED_MODULE_2__["default"]
 }, {
   path: "/todos/:id",
   name: "todos",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(9)]).then(__webpack_require__.bind(null, /*! @/js/components/todos/TodoApp */ "./resources/js/components/todos/TodoApp.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(10)]).then(__webpack_require__.bind(null, /*! @/js/components/todos/TodoApp */ "./resources/js/components/todos/TodoApp.vue"));
   }
 }, {
   path: "/todos2",
   name: "todos2",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(10)]).then(__webpack_require__.bind(null, /*! @/js/components/todos/TodoApp2 */ "./resources/js/components/todos/TodoApp2.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(11)]).then(__webpack_require__.bind(null, /*! @/js/components/todos/TodoApp2 */ "./resources/js/components/todos/TodoApp2.vue"));
   }
 }, {
   path: "/admin/dashboard",
   name: "adminDashboard",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 12).then(__webpack_require__.bind(null, /*! @/js/pages/admin/dashboard */ "./resources/js/pages/admin/dashboard.vue"));
+    return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! @/js/pages/admin/dashboard */ "./resources/js/pages/admin/dashboard.vue"));
   },
   meta: {
     requiresAuth: true
@@ -106375,7 +106612,7 @@ var routes = [{
   path: "/admin/product",
   name: "adminProduct",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! @/js/pages/admin/product */ "./resources/js/pages/admin/product.vue"));
+    return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! @/js/pages/admin/product */ "./resources/js/pages/admin/product.vue"));
   },
   meta: {
     requiresAuth: true
@@ -106385,6 +106622,15 @@ var routes = [{
   name: "adminProductGroup",
   component: function component() {
     return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! @/js/pages/admin/product/group */ "./resources/js/pages/admin/product/group.vue"));
+  },
+  meta: {
+    requiresAuth: true
+  }
+}, {
+  path: "/admin/menuBar",
+  name: "adminMenuBar",
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! @/js/pages/admin/menuBar/ */ "./resources/js/pages/admin/menuBar.vue"));
   },
   meta: {
     requiresAuth: true
@@ -106469,7 +106715,7 @@ var routes = [{
   path: "/testModule",
   name: "testModule",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! @/js/pages/testModule */ "./resources/js/pages/testModule.vue"));
+    return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! @/js/pages/testModule */ "./resources/js/pages/testModule.vue"));
   }
 },
 /* punpang */
@@ -106477,7 +106723,7 @@ var routes = [{
   path: "/punpang/order/:token",
   name: "orderToken",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 11).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/orders/show */ "./resources/js/pages/punpang/orders/show.vue"));
+    return __webpack_require__.e(/*! import() */ 12).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/orders/show */ "./resources/js/pages/punpang/orders/show.vue"));
   }
 }, {
   path: "/punpang/order/:token/:amount/payment",
@@ -106490,7 +106736,7 @@ var routes = [{
   path: "/punpang/order/:token/uploadImage",
   name: "orderTokenUploadImage",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/orders/uploadImage */ "./resources/js/pages/punpang/orders/uploadImage.vue"));
+    return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/orders/uploadImage */ "./resources/js/pages/punpang/orders/uploadImage.vue"));
   }
 }, /////////////////////////////
 {
@@ -106521,370 +106767,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _js_stores_modules_main__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/js/stores/modules/main */ "./resources/js/stores/modules/main.js");
-/* harmony import */ var _js_stores_modules_customer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/js/stores/modules/customer */ "./resources/js/stores/modules/customer.js");
-/* harmony import */ var _js_stores_modules_product__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/js/stores/modules/product */ "./resources/js/stores/modules/product.js");
-/* harmony import */ var _js_stores_modules_productImage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/js/stores/modules/productImage */ "./resources/js/stores/modules/productImage.js");
-/* harmony import */ var _js_stores_modules_productTag__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/js/stores/modules/productTag */ "./resources/js/stores/modules/productTag.js");
-/* harmony import */ var _js_stores_modules_productCategory__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/js/stores/modules/productCategory */ "./resources/js/stores/modules/productCategory.js");
-/* harmony import */ var _js_stores_modules_productCategorySub__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/js/stores/modules/productCategorySub */ "./resources/js/stores/modules/productCategorySub.js");
-/* harmony import */ var _js_stores_modules_channelOfPurchase__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/js/stores/modules/channelOfPurchase */ "./resources/js/stores/modules/channelOfPurchase.js");
-/* harmony import */ var _js_stores_modules_order__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/js/stores/modules/order */ "./resources/js/stores/modules/order.js");
-/* harmony import */ var _js_stores_modules_orderDetail__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/js/stores/modules/orderDetail */ "./resources/js/stores/modules/orderDetail.js");
-/* harmony import */ var _js_stores_modules_snackbar__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/js/stores/modules/snackbar */ "./resources/js/stores/modules/snackbar.js");
-/* harmony import */ var _js_stores_modules_payment__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/js/stores/modules/payment */ "./resources/js/stores/modules/payment.js");
-/* harmony import */ var _js_stores_modules_orderPaymentMethod__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/js/stores/modules/orderPaymentMethod */ "./resources/js/stores/modules/orderPaymentMethod.js");
-/* harmony import */ var _js_stores_modules_slip__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/js/stores/modules/slip */ "./resources/js/stores/modules/slip.js");
-/* harmony import */ var _js_stores_modules_punpang__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/js/stores/modules/punpang */ "./resources/js/stores/modules/punpang.js");
-/* harmony import */ var _js_stores_modules_smsOTP__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/js/stores/modules/smsOTP */ "./resources/js/stores/modules/smsOTP.js");
-/* harmony import */ var _js_stores_modules_optionMain__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/js/stores/modules/optionMain */ "./resources/js/stores/modules/optionMain.js");
-/* harmony import */ var _js_stores_modules_pusher__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @/js/stores/modules/pusher */ "./resources/js/stores/modules/pusher.js");
-/* harmony import */ var _js_stores_modules_shabuNooNee_productGroup__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @/js/stores/modules/shabuNooNee/productGroup */ "./resources/js/stores/modules/shabuNooNee/productGroup.js");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* harmony import */ var _js_stores_modules_main__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/stores/modules/main */ "./resources/js/stores/modules/main.js");
+/* harmony import */ var _js_stores_modules_pusher__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/js/stores/modules/pusher */ "./resources/js/stores/modules/pusher.js");
+/* harmony import */ var _js_stores_modules_shabuNooNee_productGroup__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/js/stores/modules/shabuNooNee/productGroup */ "./resources/js/stores/modules/shabuNooNee/productGroup.js");
+/* harmony import */ var _js_stores_modules_shabuNooNee_menuBar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/js/stores/modules/shabuNooNee/menuBar */ "./resources/js/stores/modules/shabuNooNee/menuBar.js");
 
 
  ////
 
 
 
+
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   modules: {
-    main: _js_stores_modules_main__WEBPACK_IMPORTED_MODULE_3__["default"],
-    customer: _js_stores_modules_customer__WEBPACK_IMPORTED_MODULE_4__["default"],
-    product: _js_stores_modules_product__WEBPACK_IMPORTED_MODULE_5__["default"],
-    productImage: _js_stores_modules_productImage__WEBPACK_IMPORTED_MODULE_6__["default"],
-    productTag: _js_stores_modules_productTag__WEBPACK_IMPORTED_MODULE_7__["default"],
-    productCategory: _js_stores_modules_productCategory__WEBPACK_IMPORTED_MODULE_8__["default"],
-    productCategorySub: _js_stores_modules_productCategorySub__WEBPACK_IMPORTED_MODULE_9__["default"],
-    channelOfPurchase: _js_stores_modules_channelOfPurchase__WEBPACK_IMPORTED_MODULE_10__["default"],
-    order: _js_stores_modules_order__WEBPACK_IMPORTED_MODULE_11__["default"],
-    orderDetail: _js_stores_modules_orderDetail__WEBPACK_IMPORTED_MODULE_12__["default"],
-    snackbar: _js_stores_modules_snackbar__WEBPACK_IMPORTED_MODULE_13__["default"],
-    payment: _js_stores_modules_payment__WEBPACK_IMPORTED_MODULE_14__["default"],
-    orderPaymentMethod: _js_stores_modules_orderPaymentMethod__WEBPACK_IMPORTED_MODULE_15__["default"],
-    slip: _js_stores_modules_slip__WEBPACK_IMPORTED_MODULE_16__["default"],
-    smsOTP: _js_stores_modules_smsOTP__WEBPACK_IMPORTED_MODULE_18__["default"],
-    optionMain: _js_stores_modules_optionMain__WEBPACK_IMPORTED_MODULE_19__["default"],
-    //
-    punpang: _js_stores_modules_punpang__WEBPACK_IMPORTED_MODULE_17__["default"],
+    main: _js_stores_modules_main__WEBPACK_IMPORTED_MODULE_2__["default"],
     ////
-    pusher: _js_stores_modules_pusher__WEBPACK_IMPORTED_MODULE_20__["default"],
-    productGroup: _js_stores_modules_shabuNooNee_productGroup__WEBPACK_IMPORTED_MODULE_21__["default"]
+    pusher: _js_stores_modules_pusher__WEBPACK_IMPORTED_MODULE_3__["default"],
+    productGroup: _js_stores_modules_shabuNooNee_productGroup__WEBPACK_IMPORTED_MODULE_4__["default"],
+    menuBar: _js_stores_modules_shabuNooNee_menuBar__WEBPACK_IMPORTED_MODULE_5__["default"]
   }
 }));
-
-/***/ }),
-
-/***/ "./resources/js/stores/modules/channelOfPurchase.js":
-/*!**********************************************************!*\
-  !*** ./resources/js/stores/modules/channelOfPurchase.js ***!
-  \**********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  namespaced: true,
-  state: {
-    UseOnly: []
-  },
-  mutations: {
-    UseOnly: function UseOnly(state, data) {
-      state.UseOnly = data;
-    }
-  },
-  getters: {
-    UseOnly: function UseOnly(state) {
-      return state.UseOnly;
-    }
-  },
-  actions: {
-    UseOnly: function UseOnly(_ref) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var commit, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                commit = _ref.commit;
-                _context.prev = 1;
-                _context.next = 4;
-                return axios.get("/api/channelOfPurchase/useonly");
-
-              case 4:
-                response = _context.sent;
-                commit("UseOnly", response.data);
-                return _context.abrupt("return", response);
-
-              case 9:
-                _context.prev = 9;
-                _context.t0 = _context["catch"](1);
-
-              case 11:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, null, [[1, 9]]);
-      }))();
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./resources/js/stores/modules/customer.js":
-/*!*************************************************!*\
-  !*** ./resources/js/stores/modules/customer.js ***!
-  \*************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  namespaced: true,
-  state: {
-    customers: [],
-    selectCustomerByPhone: {},
-    phoneOnly: [],
-    selectCustomerInGetForOrder: {}
-  },
-  mutations: {
-    // Customer
-    getCustomers: function getCustomers(state, data) {
-      state.customers = data;
-    },
-    addCustomer: function addCustomer(state, data) {
-      state.customers.push(data);
-    },
-    editCustomer: function editCustomer(state, data) {
-      state.customers.splice(data, 1);
-      state.customers.push(data);
-    },
-    getPhoneOnly: function getPhoneOnly(state, data) {
-      state.phoneOnly = data;
-    },
-    selectCustomerByPhone: function selectCustomerByPhone(state, data) {
-      state.selectCustomerByPhone = data;
-    },
-    selectCustomerInGetForOrder: function selectCustomerInGetForOrder(state, data) {
-      state.selectCustomerInGetForOrder = data;
-    }
-  },
-  getters: {
-    getCustomers: function getCustomers(state) {
-      return state.customers;
-    },
-    getPhoneOnly: function getPhoneOnly(state) {
-      return state.phoneOnly;
-    },
-    selectCustomerByPhone: function selectCustomerByPhone(state) {
-      return state.selectCustomerByPhone;
-    },
-    selectCustomerInGetForOrder: function selectCustomerInGetForOrder(state) {
-      return state.selectCustomerInGetForOrder;
-    }
-  },
-  actions: {
-    get: function get(_ref) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var commit, response, _response;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                commit = _ref.commit;
-                _context.prev = 1;
-                _context.next = 4;
-                return axios.get("/api/customer");
-
-              case 4:
-                response = _context.sent;
-                commit("getCustomers", response.data);
-                return _context.abrupt("return", response);
-
-              case 9:
-                _context.prev = 9;
-                _context.t0 = _context["catch"](1);
-                _response = _context.t0.response;
-                return _context.abrupt("return", _response);
-
-              case 13:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, null, [[1, 9]]);
-      }))();
-    },
-    add: function add(_ref3, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var commit, response, _response2;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                commit = _ref3.commit;
-                _context2.prev = 1;
-                _context2.next = 4;
-                return axios.post("/api/customer/store", payload);
-
-              case 4:
-                response = _context2.sent;
-                commit("addCustomer", response.data);
-                return _context2.abrupt("return", response);
-
-              case 9:
-                _context2.prev = 9;
-                _context2.t0 = _context2["catch"](1);
-                _response2 = _context2.t0.response;
-                return _context2.abrupt("return", _response2);
-
-              case 13:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, null, [[1, 9]]);
-      }))();
-    },
-    edit: function edit(_ref5, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var dispatch, response, _response3;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                dispatch = _ref5.dispatch;
-                _context3.prev = 1;
-                _context3.next = 4;
-                return axios.post("/api/customer/" + payload.id + "/edit", payload);
-
-              case 4:
-                response = _context3.sent;
-                dispatch("get");
-                return _context3.abrupt("return", response);
-
-              case 9:
-                _context3.prev = 9;
-                _context3.t0 = _context3["catch"](1);
-                _response3 = _context3.t0.response;
-                return _context3.abrupt("return", _response3);
-
-              case 13:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, null, [[1, 9]]);
-      }))();
-    },
-    getPhoneOnly: function getPhoneOnly(_ref7) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var commit, response, _response4;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                commit = _ref7.commit;
-                _context4.prev = 1;
-                _context4.next = 4;
-                return axios.get("/api/customer/phoneOnly");
-
-              case 4:
-                response = _context4.sent;
-                commit("getPhoneOnly", response.data);
-                return _context4.abrupt("return", response);
-
-              case 9:
-                _context4.prev = 9;
-                _context4.t0 = _context4["catch"](1);
-                _response4 = _context4.t0.response;
-                return _context4.abrupt("return", _response4);
-
-              case 13:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4, null, [[1, 9]]);
-      }))();
-    },
-    selectCustomerByPhone: function selectCustomerByPhone(_ref9, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        var commit, response, _response5;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                commit = _ref9.commit;
-                _context5.prev = 1;
-                _context5.next = 4;
-                return axios.get("/api/customer/" + payload + "/selectCustomerByPhone");
-
-              case 4:
-                response = _context5.sent;
-                commit("selectCustomerByPhone", response.data);
-                return _context5.abrupt("return", response);
-
-              case 9:
-                _context5.prev = 9;
-                _context5.t0 = _context5["catch"](1);
-                _response5 = _context5.t0.response;
-                return _context5.abrupt("return", _response5);
-
-              case 13:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5, null, [[1, 9]]);
-      }))();
-    }
-  }
-});
 
 /***/ }),
 
@@ -106930,1961 +106833,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   actions: {}
-});
-
-/***/ }),
-
-/***/ "./resources/js/stores/modules/optionMain.js":
-/*!***************************************************!*\
-  !*** ./resources/js/stores/modules/optionMain.js ***!
-  \***************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  namespaced: true,
-  state: {},
-  mutations: {},
-  getters: {},
-  actions: {
-    productCheck: function productCheck(_ref, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _objectDestructuringEmpty(_ref);
-
-                _context.next = 3;
-                return axios.get("/api/product/option/" + payload + "/productCheck");
-
-              case 3:
-                res = _context.sent;
-                return _context.abrupt("return", res);
-
-              case 5:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    check: function check(_ref2, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _objectDestructuringEmpty(_ref2);
-
-                _context2.next = 3;
-                return axios.get("/api/product/option/" + payload.product_id + "/" + payload.subs1 + "/check");
-
-              case 3:
-                res = _context2.sent;
-                return _context2.abrupt("return", res);
-
-              case 5:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
-    },
-    store: function store(_ref3, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _objectDestructuringEmpty(_ref3);
-
-                _context3.next = 3;
-                return axios.post("/api/product/option/store", payload);
-
-              case 3:
-                res = _context3.sent;
-                return _context3.abrupt("return", res);
-
-              case 5:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      }))();
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./resources/js/stores/modules/order.js":
-/*!**********************************************!*\
-  !*** ./resources/js/stores/modules/order.js ***!
-  \**********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  namespaced: true,
-  state: {
-    all: [],
-    getByID: {
-      data: {
-        id: "",
-        customer_id: "",
-        dateTime_get: "",
-        channel_of_purchase_id: "",
-        order_status_id: "",
-        permission_to_publish: "",
-        token: "",
-        created_at: "",
-        updated_at: "",
-        customer: {
-          id: "",
-          name: "",
-          phone: "",
-          fbid: "",
-          psid: ""
-        },
-        channel_of_purchase: {
-          id: "",
-          name: "",
-          status: ""
-        },
-        order_status: {
-          id: "",
-          name: "",
-          style: ""
-        },
-        order_detail: [],
-        payment: []
-      },
-      sum: {
-        total: "",
-        deposit: "",
-        balance: ""
-      },
-      count: {
-        product: {
-          use: 0
-        },
-        slipNotVerify: 0,
-        slipNotVerifyOnly: 0
-      }
-    },
-    selected: {}
-  },
-  mutations: {
-    all: function all(state, data) {
-      state.all = data;
-    },
-    getByID: function getByID(state, data) {
-      state.getByID = data;
-    },
-    selected: function selected(state, data) {
-      state.selected = data;
-    }
-  },
-  getters: {
-    all: function all(state) {
-      return state.all;
-    },
-    getByID: function getByID(state) {
-      return state.getByID;
-    },
-    selected: function selected(state) {
-      return state.selected;
-    }
-  },
-  actions: {
-    checkDateTimeForGet: function checkDateTimeForGet(_ref, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var commit, response, _response;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                commit = _ref.commit;
-                _context.prev = 1;
-                _context.next = 4;
-                return axios.post("/api/order/checkDateTimeForGet", {
-                  dateTime_get: payload
-                });
-
-              case 4:
-                response = _context.sent;
-                return _context.abrupt("return", response);
-
-              case 8:
-                _context.prev = 8;
-                _context.t0 = _context["catch"](1);
-                _response = _context.t0.response;
-                return _context.abrupt("return", _response);
-
-              case 12:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, null, [[1, 8]]);
-      }))();
-    },
-    all: function all(_ref3) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var commit, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                commit = _ref3.commit;
-                _context2.prev = 1;
-                _context2.next = 4;
-                return axios.get("/api/order/all");
-
-              case 4:
-                response = _context2.sent;
-                commit("all", response.data);
-                _context2.next = 11;
-                break;
-
-              case 8:
-                _context2.prev = 8;
-                _context2.t0 = _context2["catch"](1);
-                return _context2.abrupt("return", _context2.t0);
-
-              case 11:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, null, [[1, 8]]);
-      }))();
-    },
-    timeGets: function timeGets() {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var _yield$axios$get, data;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _context3.prev = 0;
-                _context3.next = 3;
-                return axios.get("/api/order/timeGets");
-
-              case 3:
-                _yield$axios$get = _context3.sent;
-                data = _yield$axios$get.data;
-                return _context3.abrupt("return", data);
-
-              case 8:
-                _context3.prev = 8;
-                _context3.t0 = _context3["catch"](0);
-                return _context3.abrupt("return", _context3.t0);
-
-              case 11:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, null, [[0, 8]]);
-      }))();
-    },
-    createOrder: function createOrder(_ref4, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                _objectDestructuringEmpty(_ref4);
-
-                _context4.prev = 1;
-                _context4.next = 4;
-                return axios.post("/api/order/create", payload);
-
-              case 4:
-                response = _context4.sent;
-                return _context4.abrupt("return", response);
-
-              case 8:
-                _context4.prev = 8;
-                _context4.t0 = _context4["catch"](1);
-                return _context4.abrupt("return", _context4.t0);
-
-              case 11:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4, null, [[1, 8]]);
-      }))();
-    },
-    getByID: function getByID(_ref5, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        var commit, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                commit = _ref5.commit;
-                _context5.prev = 1;
-                _context5.next = 4;
-                return axios.get("/api/order/" + payload + "/getByID");
-
-              case 4:
-                response = _context5.sent;
-                commit("getByID", response.data);
-                return _context5.abrupt("return", response);
-
-              case 9:
-                _context5.prev = 9;
-                _context5.t0 = _context5["catch"](1);
-                return _context5.abrupt("return", _context5.t0);
-
-              case 12:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5, null, [[1, 9]]);
-      }))();
-    },
-    changeDateTimeGet: function changeDateTimeGet(_ref6, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        var res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
-          while (1) {
-            switch (_context6.prev = _context6.next) {
-              case 0:
-                _objectDestructuringEmpty(_ref6);
-
-                _context6.next = 3;
-                return axios.post("/api/order/" + payload.order_id + "/changeDateTimeGet", payload);
-
-              case 3:
-                res = _context6.sent;
-                return _context6.abrupt("return", res);
-
-              case 5:
-              case "end":
-                return _context6.stop();
-            }
-          }
-        }, _callee6);
-      }))();
-    },
-    goodsDone: function goodsDone(_ref7, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-        var res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
-          while (1) {
-            switch (_context7.prev = _context7.next) {
-              case 0:
-                _objectDestructuringEmpty(_ref7);
-
-                _context7.next = 3;
-                return axios.post("/api/order/" + payload.order_id + "/goodsDone", payload);
-
-              case 3:
-                res = _context7.sent;
-                return _context7.abrupt("return", res);
-
-              case 5:
-              case "end":
-                return _context7.stop();
-            }
-          }
-        }, _callee7);
-      }))();
-    },
-    productReceived: function productReceived(_ref8, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
-        var res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
-          while (1) {
-            switch (_context8.prev = _context8.next) {
-              case 0:
-                _objectDestructuringEmpty(_ref8);
-
-                _context8.next = 3;
-                return axios.post("/api/order/" + payload.order_id + "/productReceived", payload);
-
-              case 3:
-                res = _context8.sent;
-                return _context8.abrupt("return", res);
-
-              case 5:
-              case "end":
-                return _context8.stop();
-            }
-          }
-        }, _callee8);
-      }))();
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./resources/js/stores/modules/orderDetail.js":
-/*!****************************************************!*\
-  !*** ./resources/js/stores/modules/orderDetail.js ***!
-  \****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  namespaced: true,
-  state: {
-    dataUseOnly: [],
-    getByOrderId: [],
-    sum: "",
-    count: ""
-  },
-  mutations: {
-    dataUseOnly: function dataUseOnly(state, data) {
-      state.dataUseOnly = data;
-    },
-    getByOrderId: function getByOrderId(state, data) {
-      state.getByOrderId = data;
-    },
-    sum: function sum(state, data) {
-      state.sum = data;
-    },
-    count: function count(state, data) {
-      state.count = data;
-    }
-  },
-  getters: {
-    dataUseOnly: function dataUseOnly(state) {
-      return state.dataUseOnly;
-    },
-    getByOrderId: function getByOrderId(state) {
-      return state.getByOrderId;
-    },
-    sum: function sum(state) {
-      return state.sum;
-    },
-    count: function count(state) {
-      return state.count;
-    }
-  },
-  actions: {
-    store: function store(_ref, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var dispatch, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                dispatch = _ref.dispatch;
-                _context.next = 3;
-                return axios.post("/api/order/detail/store", payload);
-
-              case 3:
-                res = _context.sent;
-                return _context.abrupt("return", res);
-
-              case 5:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    update: function update(_ref2, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var dispatch, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                dispatch = _ref2.dispatch;
-                _context2.next = 3;
-                return axios.post("/api/order/detail/" + payload.id + "/update", payload);
-
-              case 3:
-                res = _context2.sent;
-                return _context2.abrupt("return", res);
-
-              case 5:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
-    },
-    "delete": function _delete(_ref3, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var dispatch, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                dispatch = _ref3.dispatch;
-                _context3.next = 3;
-                return axios.post("/api/order/detail/" + payload.detail_id + "/delete");
-
-              case 3:
-                res = _context3.sent;
-                return _context3.abrupt("return", res);
-
-              case 5:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      }))();
-    },
-    redelete: function redelete(_ref4, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var dispatch, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                dispatch = _ref4.dispatch;
-                _context4.next = 3;
-                return axios.post("/api/order/detail/" + payload.detail_id + "/redelete");
-
-              case 3:
-                res = _context4.sent;
-                return _context4.abrupt("return", res);
-
-              case 5:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4);
-      }))();
-    },
-    UseOnly: function UseOnly(_ref5, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        var commit, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                commit = _ref5.commit;
-                _context5.next = 3;
-                return axios.post("/api/order/detail/" + payload + "useonly");
-
-              case 3:
-                response = _context5.sent;
-                commit("dataUseOnly", response.data);
-
-              case 5:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5);
-      }))();
-    },
-    getByOrderID: function getByOrderID(_ref6, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        var commit, dispatch, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
-          while (1) {
-            switch (_context6.prev = _context6.next) {
-              case 0:
-                commit = _ref6.commit, dispatch = _ref6.dispatch;
-                _context6.next = 3;
-                return axios.get("/api/order/detail/" + payload + "/getByOrderID");
-
-              case 3:
-                response = _context6.sent;
-                commit("sum", response.data.sum);
-                commit("count", response.data.count);
-                commit("getByOrderId", response.data.data);
-
-              case 7:
-              case "end":
-                return _context6.stop();
-            }
-          }
-        }, _callee6);
-      }))();
-    },
-    getByOrderIDReset: function getByOrderIDReset(_ref7) {
-      var commit = _ref7.commit;
-      commit("getByOrderId", []);
-    },
-    sentLinkForUploadImage: function sentLinkForUploadImage(_ref8, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-        var res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
-          while (1) {
-            switch (_context7.prev = _context7.next) {
-              case 0:
-                _objectDestructuringEmpty(_ref8);
-
-                _context7.next = 3;
-                return axios.post("/api/order/detail/" + payload.detail_id + "/sentLinkForUploadImage", payload.form);
-
-              case 3:
-                res = _context7.sent;
-                return _context7.abrupt("return", res);
-
-              case 5:
-              case "end":
-                return _context7.stop();
-            }
-          }
-        }, _callee7);
-      }))();
-    },
-    downloadImage: function downloadImage(_ref9, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
-          while (1) {
-            switch (_context8.prev = _context8.next) {
-              case 0:
-                _objectDestructuringEmpty(_ref9);
-
-                _context8.next = 3;
-                return axios.get("/api/order/detail/" + payload + "/downloadImage");
-
-              case 3:
-              case "end":
-                return _context8.stop();
-            }
-          }
-        }, _callee8);
-      }))();
-    },
-    uploadFinishedProductImage: function uploadFinishedProductImage(_ref10, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
-        var res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
-          while (1) {
-            switch (_context9.prev = _context9.next) {
-              case 0:
-                _objectDestructuringEmpty(_ref10);
-
-                _context9.next = 3;
-                return axios.post("/api/order/detail/" + payload.detail_id + "/uploadFinishedProductImage", payload.formData);
-
-              case 3:
-                res = _context9.sent;
-                return _context9.abrupt("return", res);
-
-              case 5:
-              case "end":
-                return _context9.stop();
-            }
-          }
-        }, _callee9);
-      }))();
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./resources/js/stores/modules/orderPaymentMethod.js":
-/*!***********************************************************!*\
-  !*** ./resources/js/stores/modules/orderPaymentMethod.js ***!
-  \***********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  namespaced: true,
-  state: {
-    all: [],
-    useonly: []
-  },
-  mutations: {
-    all: function all(state, data) {
-      state.all = data;
-    },
-    useonly: function useonly(state, data) {
-      state.useonly = data;
-    }
-  },
-  getters: {
-    all: function all(state) {
-      return state.all;
-    },
-    useonly: function useonly(state) {
-      return state.useonly;
-    }
-  },
-  actions: {
-    all: function all(_ref) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var commit, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                commit = _ref.commit;
-                _context.next = 3;
-                return axios.get("/api/payment/method/all");
-
-              case 3:
-                res = _context.sent;
-                commit("all", res.data);
-
-              case 5:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    useonly: function useonly(_ref2) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var commit, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                commit = _ref2.commit;
-                _context2.next = 3;
-                return axios.get("/api/payment/method/useonly");
-
-              case 3:
-                res = _context2.sent;
-                commit("useonly", res.data);
-
-              case 5:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./resources/js/stores/modules/payment.js":
-/*!************************************************!*\
-  !*** ./resources/js/stores/modules/payment.js ***!
-  \************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  namespaced: true,
-  state: {
-    unVerifyReasoning: []
-  },
-  mutations: {
-    unVerifyReasoning: function unVerifyReasoning(state, data) {
-      state.unVerifyReasoning = data;
-    }
-  },
-  getters: {
-    unVerifyReasoning: function unVerifyReasoning(state) {
-      return state.unVerifyReasoning;
-    }
-  },
-  actions: {
-    create: function create(_ref, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _objectDestructuringEmpty(_ref);
-
-                _context.next = 3;
-                return axios.post("/api/payment/create", payload);
-
-              case 3:
-                response = _context.sent;
-                return _context.abrupt("return", response);
-
-              case 5:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    cancel: function cancel(_ref2, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _objectDestructuringEmpty(_ref2);
-
-                _context2.prev = 1;
-                _context2.next = 4;
-                return axios.post("/api/payment/" + payload + "/cancel");
-
-              case 4:
-                response = _context2.sent;
-                return _context2.abrupt("return", response);
-
-              case 8:
-                _context2.prev = 8;
-                _context2.t0 = _context2["catch"](1);
-                return _context2.abrupt("return", _context2.t0);
-
-              case 11:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, null, [[1, 8]]);
-      }))();
-    },
-    alert: function alert(_ref3, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _objectDestructuringEmpty(_ref3);
-
-                _context3.next = 3;
-                return axios.post("/api/payment/alert", payload);
-
-              case 3:
-                response = _context3.sent;
-                return _context3.abrupt("return", response);
-
-              case 5:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      }))();
-    },
-    checkRef: function checkRef(_ref4, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                _objectDestructuringEmpty(_ref4);
-
-                _context4.next = 3;
-                return axios.post("/api/payment/checkRef", payload);
-
-              case 3:
-                response = _context4.sent;
-                return _context4.abrupt("return", response);
-
-              case 5:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4);
-      }))();
-    },
-    unVerifySlip: function unVerifySlip(_ref5, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                _objectDestructuringEmpty(_ref5);
-
-                console.log(payload);
-                _context5.next = 4;
-                return axios.post("/api/payment/" + payload.slip_id + "/unVerifySlip", payload);
-
-              case 4:
-                response = _context5.sent;
-                return _context5.abrupt("return", response);
-
-              case 6:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5);
-      }))();
-    },
-    unVerifyReasoning: function unVerifyReasoning(_ref6) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        var commit, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
-          while (1) {
-            switch (_context6.prev = _context6.next) {
-              case 0:
-                commit = _ref6.commit;
-                _context6.next = 3;
-                return axios.get("/api/payment/unVerifyReasoning");
-
-              case 3:
-                response = _context6.sent;
-                commit('unVerifyReasoning', response.data);
-                return _context6.abrupt("return", response);
-
-              case 6:
-              case "end":
-                return _context6.stop();
-            }
-          }
-        }, _callee6);
-      }))();
-    },
-    notPayDeposit: function notPayDeposit(_ref7, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
-          while (1) {
-            switch (_context7.prev = _context7.next) {
-              case 0:
-                _objectDestructuringEmpty(_ref7);
-
-                _context7.next = 3;
-                return axios.post("/api/payment/notPayDeposit", payload);
-
-              case 3:
-                response = _context7.sent;
-                return _context7.abrupt("return", response);
-
-              case 5:
-              case "end":
-                return _context7.stop();
-            }
-          }
-        }, _callee7);
-      }))();
-    },
-    scb: function scb(_ref8, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
-          while (1) {
-            switch (_context8.prev = _context8.next) {
-              case 0:
-                _objectDestructuringEmpty(_ref8);
-
-                _context8.next = 3;
-                return axios.post("/api/payment/scb", payload);
-
-              case 3:
-                response = _context8.sent;
-                console.log(response);
-                return _context8.abrupt("return", response);
-
-              case 6:
-              case "end":
-                return _context8.stop();
-            }
-          }
-        }, _callee8);
-      }))();
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./resources/js/stores/modules/product.js":
-/*!************************************************!*\
-  !*** ./resources/js/stores/modules/product.js ***!
-  \************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  namespaced: true,
-  state: {
-    data: [],
-    dataUseOnly: []
-  },
-  mutations: {
-    add: function add(state, data) {
-      state.data.push(data);
-    },
-    get: function get(state, data) {
-      state.data = data;
-    },
-    getUseOnly: function getUseOnly(state, data) {
-      state.dataUseOnly = data;
-    }
-  },
-  getters: {
-    data: function data(state) {
-      return state.data;
-    },
-    dataUseOnly: function dataUseOnly(state) {
-      return state.dataUseOnly;
-    }
-  },
-  actions: {
-    get: function get(_ref) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var commit, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                commit = _ref.commit;
-                _context.next = 3;
-                return axios.get("/api/product/");
-
-              case 3:
-                response = _context.sent;
-                commit("get", response.data);
-                return _context.abrupt("return", response);
-
-              case 6:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    getUseOnly: function getUseOnly(_ref2) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var commit, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                commit = _ref2.commit;
-                _context2.next = 3;
-                return axios.get("/api/product/useonly");
-
-              case 3:
-                response = _context2.sent;
-                commit("getUseOnly", response.data);
-                return _context2.abrupt("return", response);
-
-              case 6:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
-    },
-    add: function add(_ref3, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var dispatch, response, _response;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                dispatch = _ref3.dispatch;
-                _context3.prev = 1;
-                console.log(payload);
-                _context3.next = 5;
-                return axios.post("/api/product/store", payload);
-
-              case 5:
-                response = _context3.sent;
-                dispatch("get");
-                return _context3.abrupt("return", response);
-
-              case 10:
-                _context3.prev = 10;
-                _context3.t0 = _context3["catch"](1);
-                _response = _context3.t0.response;
-                return _context3.abrupt("return", _response);
-
-              case 14:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, null, [[1, 10]]);
-      }))();
-    },
-    add_v2: function add_v2(_ref5, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var dispatch, response, _response2;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                dispatch = _ref5.dispatch;
-                _context4.prev = 1;
-                _context4.next = 4;
-                return axios.post("/api/product/v2/store", payload);
-
-              case 4:
-                response = _context4.sent;
-                dispatch("get");
-                return _context4.abrupt("return", response);
-
-              case 9:
-                _context4.prev = 9;
-                _context4.t0 = _context4["catch"](1);
-                _response2 = _context4.t0.response;
-                return _context4.abrupt("return", _response2);
-
-              case 13:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4, null, [[1, 9]]);
-      }))();
-    },
-    update: function update(_ref7, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        var dispatch, response, _response3;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                dispatch = _ref7.dispatch;
-                _context5.prev = 1;
-                _context5.next = 4;
-                return axios.post("/api/product/" + payload.id + "/edit", payload);
-
-              case 4:
-                response = _context5.sent;
-                dispatch("get");
-                return _context5.abrupt("return", response);
-
-              case 9:
-                _context5.prev = 9;
-                _context5.t0 = _context5["catch"](1);
-                _response3 = _context5.t0.response;
-                return _context5.abrupt("return", _response3);
-
-              case 13:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5, null, [[1, 9]]);
-      }))();
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./resources/js/stores/modules/productCategory.js":
-/*!********************************************************!*\
-  !*** ./resources/js/stores/modules/productCategory.js ***!
-  \********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  namespaced: true,
-  state: {
-    data: [],
-    dataUseOnly: [],
-    dataUseOnlyWithSubs: []
-  },
-  mutations: {
-    add: function add(state, data) {
-      state.data.push(data);
-    },
-    get: function get(state, data) {
-      state.data = data;
-    },
-    getUseOnly: function getUseOnly(state, data) {
-      state.dataUseOnly = data;
-    },
-    getUseOnlyWithSubs: function getUseOnlyWithSubs(state, data) {
-      state.dataUseOnlyWithSubs = data;
-    }
-  },
-  getters: {
-    data: function data(state) {
-      return state.data;
-    },
-    dataUseOnly: function dataUseOnly(state) {
-      return state.dataUseOnly;
-    },
-    dataUseOnlyWithSubs: function dataUseOnlyWithSubs(state) {
-      return state.dataUseOnlyWithSubs;
-    }
-  },
-  actions: {
-    get: function get(_ref) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var commit, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                commit = _ref.commit;
-                _context.next = 3;
-                return axios.get("/api/product/category");
-
-              case 3:
-                response = _context.sent;
-                commit("get", response.data);
-                return _context.abrupt("return", response);
-
-              case 6:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    getUseOnly: function getUseOnly(_ref2) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var commit, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                commit = _ref2.commit;
-                _context2.next = 3;
-                return axios.get("/api/product/category/useonly");
-
-              case 3:
-                response = _context2.sent;
-                commit("getUseOnly", response.data);
-                return _context2.abrupt("return", response);
-
-              case 6:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
-    },
-    add: function add(_ref3, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var commit, response, _response;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                commit = _ref3.commit;
-                _context3.prev = 1;
-                _context3.next = 4;
-                return axios.post("/api/product/category/store", payload);
-
-              case 4:
-                response = _context3.sent;
-                commit("add", response.data);
-                return _context3.abrupt("return", response);
-
-              case 9:
-                _context3.prev = 9;
-                _context3.t0 = _context3["catch"](1);
-                _response = _context3.t0.response;
-                return _context3.abrupt("return", _response);
-
-              case 13:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, null, [[1, 9]]);
-      }))();
-    },
-    update: function update(_ref5, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var dispatch, response, _response2;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                dispatch = _ref5.dispatch;
-                _context4.prev = 1;
-                _context4.next = 4;
-                return axios.post("/api/product/category/" + payload.id + "/edit", payload);
-
-              case 4:
-                response = _context4.sent;
-                dispatch("get");
-                return _context4.abrupt("return", response);
-
-              case 9:
-                _context4.prev = 9;
-                _context4.t0 = _context4["catch"](1);
-                _response2 = _context4.t0.response;
-                return _context4.abrupt("return", _response2);
-
-              case 13:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4, null, [[1, 9]]);
-      }))();
-    },
-    getUseOnlyWithSubs: function getUseOnlyWithSubs(_ref7) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        var commit, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                commit = _ref7.commit;
-                _context5.next = 3;
-                return axios.get("/api/product/category/useonly/with/subs");
-
-              case 3:
-                response = _context5.sent;
-                commit("getUseOnlyWithSubs", response.data);
-                return _context5.abrupt("return", response);
-
-              case 6:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5);
-      }))();
-    },
-    getSubByID: function getSubByID(_ref8, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
-          while (1) {
-            switch (_context6.prev = _context6.next) {
-              case 0:
-                _objectDestructuringEmpty(_ref8);
-
-                _context6.next = 3;
-                return axios.get("/api/product/category/" + payload + "/subs");
-
-              case 3:
-                response = _context6.sent;
-                return _context6.abrupt("return", response);
-
-              case 5:
-              case "end":
-                return _context6.stop();
-            }
-          }
-        }, _callee6);
-      }))();
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./resources/js/stores/modules/productCategorySub.js":
-/*!***********************************************************!*\
-  !*** ./resources/js/stores/modules/productCategorySub.js ***!
-  \***********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  namespaced: true,
-  state: {
-    data: [],
-    dataUseOnly: []
-  },
-  mutations: {
-    add: function add(state, data) {
-      state.data.push(data);
-    },
-    get: function get(state, data) {
-      state.data = data;
-    },
-    getUseOnly: function getUseOnly(state, data) {
-      state.dataUseOnly = data;
-    }
-  },
-  getters: {
-    data: function data(state) {
-      return state.data;
-    },
-    dataUseOnly: function dataUseOnly(state) {
-      return state.dataUseOnly;
-    }
-  },
-  actions: {
-    get: function get(_ref) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var commit, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                commit = _ref.commit;
-                _context.next = 3;
-                return axios.get("/api/product/category/sub");
-
-              case 3:
-                response = _context.sent;
-                commit("get", response.data);
-                return _context.abrupt("return", response);
-
-              case 6:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    add: function add(_ref2, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var dispatch, response, _response;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                dispatch = _ref2.dispatch;
-                _context2.prev = 1;
-                _context2.next = 4;
-                return axios.post("/api/product/category/sub/store", payload);
-
-              case 4:
-                response = _context2.sent;
-                dispatch("get");
-                return _context2.abrupt("return", response);
-
-              case 9:
-                _context2.prev = 9;
-                _context2.t0 = _context2["catch"](1);
-                _response = _context2.t0.response;
-                console.log(_response);
-                return _context2.abrupt("return", _response);
-
-              case 14:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, null, [[1, 9]]);
-      }))();
-    },
-    update: function update(_ref4, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var dispatch, response, _response2;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                dispatch = _ref4.dispatch;
-                _context3.prev = 1;
-                _context3.next = 4;
-                return axios.post("/api/product/category/sub/" + payload.id + "/edit", payload);
-
-              case 4:
-                response = _context3.sent;
-                dispatch("get");
-                return _context3.abrupt("return", response);
-
-              case 9:
-                _context3.prev = 9;
-                _context3.t0 = _context3["catch"](1);
-                _response2 = _context3.t0.response;
-                return _context3.abrupt("return", _response2);
-
-              case 13:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, null, [[1, 9]]);
-      }))();
-    },
-    getUseOnly: function getUseOnly(_ref6) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var commit, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                commit = _ref6.commit;
-                _context4.next = 3;
-                return axios.get("/api/product/category/sub/useonly");
-
-              case 3:
-                response = _context4.sent;
-                commit("getUseOnly", response.data);
-                return _context4.abrupt("return", response);
-
-              case 6:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4);
-      }))();
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./resources/js/stores/modules/productImage.js":
-/*!*****************************************************!*\
-  !*** ./resources/js/stores/modules/productImage.js ***!
-  \*****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  namespaced: true,
-  state: {
-    data: {},
-    dataUseOnly: []
-  },
-  mutations: {
-    add: function add(state, data) {
-      state.data = data;
-    },
-    get: function get(state, data) {
-      state.data = data;
-    }
-  },
-  getters: {
-    data: function data(state) {
-      return state.data;
-    }
-  },
-  actions: {
-    get: function get(_ref) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var commit, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                commit = _ref.commit;
-                _context.next = 3;
-                return axios.get("/api/product/image/");
-
-              case 3:
-                response = _context.sent;
-                commit("get", response.data);
-                return _context.abrupt("return", response);
-
-              case 6:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    getUseOnly: function getUseOnly(_ref2) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var commit, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                commit = _ref2.commit;
-                _context2.next = 3;
-                return axios.get("/api/product/image/useonly");
-
-              case 3:
-                response = _context2.sent;
-                commit("getUseOnly", response.data);
-                return _context2.abrupt("return", response);
-
-              case 6:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
-    },
-    store: function store(_ref3, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var commit, response, _response;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                commit = _ref3.commit;
-                _context3.prev = 1;
-                _context3.next = 4;
-                return axios.post("/api/product/image/store", payload);
-
-              case 4:
-                response = _context3.sent;
-                return _context3.abrupt("return", response);
-
-              case 8:
-                _context3.prev = 8;
-                _context3.t0 = _context3["catch"](1);
-                _response = _context3.t0.response;
-                return _context3.abrupt("return", _response);
-
-              case 12:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, null, [[1, 8]]);
-      }))();
-    },
-    update: function update(_ref5, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var dispatch, response, _response2;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                dispatch = _ref5.dispatch;
-                _context4.prev = 1;
-                console.log(payload);
-                _context4.next = 5;
-                return axios.post("/api/product/image/" + payload.id + "/update", payload.formData);
-
-              case 5:
-                response = _context4.sent;
-                dispatch("product/get");
-                return _context4.abrupt("return", response);
-
-              case 10:
-                _context4.prev = 10;
-                _context4.t0 = _context4["catch"](1);
-                _response2 = _context4.t0.response;
-                return _context4.abrupt("return", _response2);
-
-              case 14:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4, null, [[1, 10]]);
-      }))();
-    },
-    destroy: function destroy(_ref7, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        var commit, response, _response3;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                commit = _ref7.commit;
-                _context5.prev = 1;
-                _context5.next = 4;
-                return axios.post("/api/product/image/" + payload + "/destroy");
-
-              case 4:
-                response = _context5.sent;
-                return _context5.abrupt("return", response);
-
-              case 8:
-                _context5.prev = 8;
-                _context5.t0 = _context5["catch"](1);
-                _response3 = _context5.t0.response;
-                return _context5.abrupt("return", _response3);
-
-              case 12:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5, null, [[1, 8]]);
-      }))();
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./resources/js/stores/modules/productTag.js":
-/*!***************************************************!*\
-  !*** ./resources/js/stores/modules/productTag.js ***!
-  \***************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  namespaced: true,
-  state: {
-    isProductTags: [],
-    data: []
-  },
-  mutations: {
-    data: function data(state, _data) {
-      state.data = _data;
-    },
-    isProductTags: function isProductTags(state, data) {
-      state.isProductTags = data;
-    }
-  },
-  getters: {
-    data: function data(state) {
-      return state.data;
-    },
-    isProductTags: function isProductTags(state) {
-      return state.isProductTags;
-    }
-  },
-  actions: {
-    get: function get(_ref, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var commit, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                commit = _ref.commit;
-                _context.next = 3;
-                return axios.get("/api/product/tag/" + payload);
-
-              case 3:
-                response = _context.sent;
-                commit("data", response.data);
-                return _context.abrupt("return", response);
-
-              case 6:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    store: function store(_ref2, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var dispatch, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                dispatch = _ref2.dispatch;
-                _context2.next = 3;
-                return axios.post("/api/product/tag/store", payload);
-
-              case 3:
-                response = _context2.sent;
-                dispatch("get", payload.product_id);
-                return _context2.abrupt("return", response);
-
-              case 6:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
-    },
-    isProductTags: function isProductTags(_ref3, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var commit, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                commit = _ref3.commit;
-                _context3.next = 3;
-                return axios.get("/api/product/tag/" + payload + "/isProductTags", payload);
-
-              case 3:
-                response = _context3.sent;
-                commit("isProductTags", response.data);
-                return _context3.abrupt("return", response);
-
-              case 6:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      }))();
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./resources/js/stores/modules/punpang.js":
-/*!************************************************!*\
-  !*** ./resources/js/stores/modules/punpang.js ***!
-  \************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  namespaced: true,
-  state: {},
-  mutations: {},
-  getters: {},
-  actions: {
-    getUploadImageByToken: function getUploadImageByToken(_ref, token) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _objectDestructuringEmpty(_ref);
-
-                _context.next = 3;
-                return axios.get("/api/v1/guest/order/" + token + "/uploadImageByToken");
-
-              case 3:
-                res = _context.sent;
-                return _context.abrupt("return", res);
-
-              case 5:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    }
-  }
 });
 
 /***/ }),
@@ -108961,6 +106909,204 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         console.log(err);
       });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/stores/modules/shabuNooNee/menuBar.js":
+/*!************************************************************!*\
+  !*** ./resources/js/stores/modules/shabuNooNee/menuBar.js ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  state: {
+    lists: [],
+    all: [],
+    selectMain: {}
+  },
+  mutations: {
+    lists: function lists(state, data) {
+      state.lists = data;
+    },
+    all: function all(state, data) {
+      state.all = data;
+    },
+    storeMain: function storeMain(state, data) {
+      state.all.push(data);
+    },
+    selectMain: function selectMain(state, data) {
+      state.selectMain = data;
+    }
+  },
+  getters: {
+    lists: function lists(state) {
+      return state.lists;
+    },
+    all: function all(state) {
+      return state.all;
+    },
+    selectMain: function selectMain(state) {
+      return state.selectMain;
+    }
+  },
+  actions: {
+    lists: function lists(_ref) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var commit, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                commit = _ref.commit;
+                _context.next = 3;
+                return axios.get("/api/menuBar/lists");
+
+              case 3:
+                res = _context.sent;
+                commit("lists", res.data);
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    all: function all(_ref2) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var commit, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                commit = _ref2.commit;
+                _context2.next = 3;
+                return axios.get("/api/menuBar/all");
+
+              case 3:
+                res = _context2.sent;
+                commit("all", res.data);
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    storeMain: function storeMain(_ref3, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var commit, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                commit = _ref3.commit;
+                _context3.next = 3;
+                return axios.post("/api/menuBar/storeMain", payload);
+
+              case 3:
+                res = _context3.sent;
+                commit("storeMain", res.data.data);
+                return _context3.abrupt("return", res);
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+    changeSub: function changeSub(_ref4, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _objectDestructuringEmpty(_ref4);
+
+                _context4.next = 3;
+                return axios.post("/api/menuBar/" + payload.id + "/changeSub", payload);
+
+              case 3:
+                res = _context4.sent;
+                return _context4.abrupt("return", res);
+
+              case 5:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    },
+    changeMain: function changeMain(_ref5, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _objectDestructuringEmpty(_ref5);
+
+                _context5.next = 3;
+                return axios.post("/api/menuBar/" + payload.id + "/changeMain", payload);
+
+              case 3:
+                res = _context5.sent;
+                return _context5.abrupt("return", res);
+
+              case 5:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
+    },
+    selectMain: function selectMain(_ref6) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        var commit, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                commit = _ref6.commit;
+                _context6.next = 3;
+                return axios.get("/api/menuBar/selectMain");
+
+              case 3:
+                res = _context6.sent;
+                commit("selectMain", res.data.data);
+
+              case 5:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }))();
     }
   }
 });
@@ -109102,144 +107248,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     }
   }
-});
-
-/***/ }),
-
-/***/ "./resources/js/stores/modules/slip.js":
-/*!*********************************************!*\
-  !*** ./resources/js/stores/modules/slip.js ***!
-  \*********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ({
-  namespaced: true,
-  state: {},
-  mutations: {},
-  getters: {},
-  actions: {}
-});
-
-/***/ }),
-
-/***/ "./resources/js/stores/modules/smsOTP.js":
-/*!***********************************************!*\
-  !*** ./resources/js/stores/modules/smsOTP.js ***!
-  \***********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  namespaced: true,
-  state: {},
-  mutations: {},
-  getters: {},
-  actions: {
-    sendOTP: function sendOTP(_ref, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _objectDestructuringEmpty(_ref);
-
-                _context.next = 3;
-                return axios.post("/api/v1/otp/store", payload);
-
-              case 3:
-                res = _context.sent;
-                return _context.abrupt("return", res);
-
-              case 5:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    verify: function verify(_ref2, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _objectDestructuringEmpty(_ref2);
-
-                _context2.next = 3;
-                return axios.post("/api/v1/otp/verify", payload);
-
-              case 3:
-                res = _context2.sent;
-                return _context2.abrupt("return", res);
-
-              case 5:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./resources/js/stores/modules/snackbar.js":
-/*!*************************************************!*\
-  !*** ./resources/js/stores/modules/snackbar.js ***!
-  \*************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ({
-  namespaced: true,
-  state: {
-    snackbar: {
-      text: {
-        error: {
-          status: true,
-          color: "error",
-          text: "เกิดข้อผิดพลาดบางอย่าง กรุณาลองอีกครั้ง"
-        },
-        success: {
-          status: true,
-          color: "success",
-          text: "ทำรายการสำเร็จ"
-        }
-      }
-    }
-  },
-  mutations: {},
-  getters: {
-    error: function error(state) {
-      return state.snackbar.text.error;
-    },
-    success: function success(state) {
-      return state.snackbar.text.success;
-    }
-  },
-  actions: {}
 });
 
 /***/ }),

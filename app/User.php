@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\ShabuNoonee\UserType;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -41,17 +42,19 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
-    public function isAdmin(){
+    public function isAdmin()
+    {
         return $this->type === self::ADMIN_TYPE;
     }
 
-    public function isCashier(){
+    public function isCashier()
+    {
         return $this->type === self::CASHIER_TYPE;
     }
 
     public function member()
     {
-      return $this->belongsTo(Member::class);
+        return $this->belongsTo(Member::class);
     }
 
     public function getJWTIdentifier()
@@ -69,5 +72,8 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-
+    public function userType()
+    {
+        return $this->belongsTo(UserType::class, "type", "id");
+    }
 }

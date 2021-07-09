@@ -3,7 +3,7 @@ import Vue from "vue";
 import Vuetify from "vuetify";
 import "material-design-icons-iconfont/dist/material-design-icons.css";
 import store from "@/js/stores";
-window.Vue = require('vue');
+window.Vue = require("vue");
 
 Vue.use(Vuetify);
 
@@ -25,7 +25,7 @@ Routers.beforeEach((to, from, next) => {
 
     // if logged in redirect to dashboard
     if (to.path === "/admin/login" && store.getters["main/isLoggedIn"]) {
-        next({ name: "dashboard" });
+        next({ name: "home" });
         return;
     }
 
@@ -53,7 +53,7 @@ Vue.use(VueClipboard);
 import VueToast from "vue-toast-notification";
 // Import one of available themes
 //import "vue-toast-notification/dist/theme-default.css";
-import 'vue-toast-notification/dist/theme-sugar.css';
+import "vue-toast-notification/dist/theme-sugar.css";
 Vue.use(VueToast, {
     // One of options
     position: "bottom",
@@ -61,9 +61,9 @@ Vue.use(VueToast, {
 });
 
 // overlay
-import Loading from 'vue-loading-overlay';
+import Loading from "vue-loading-overlay";
 // Import stylesheet
-import 'vue-loading-overlay/dist/vue-loading.css';
+import "vue-loading-overlay/dist/vue-loading.css";
 // Init plugin
 Vue.use(Loading);
 

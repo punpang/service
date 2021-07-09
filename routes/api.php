@@ -34,6 +34,7 @@ Route::group([
 
 //Route::middleware(["admin","cashier"])->get('user', 'AuthController@me');
 Route::get('user', 'AuthController@me');
+Route::get('menuBar/lists', 'ShabuNooNee\MenuMainController@lists');
 
 Route::middleware("admin")->group(function () { //สำหรับ admin
     //Route::get('user', 'AuthController@me');
@@ -45,6 +46,18 @@ Route::middleware("admin")->group(function () { //สำหรับ admin
         Route::post('group/{id}/switchStatus', 'ShabuNooNee\ProductGroupController@switchStatus');
         Route::post('group/{id}/update', 'ShabuNooNee\ProductGroupController@update');
         Route::get('group/all', 'ShabuNooNee\ProductGroupController@all');
+    });
+
+    Route::prefix('menuBar')->group(function () { // api/menuBar/...
+        Route::get('all', 'ShabuNooNee\MenuMainController@all');
+
+        Route::post('storeMain', 'ShabuNooNee\MenuMainController@storeMain');
+
+        Route::get('selectMain', 'ShabuNooNee\MenuMainController@selectMain');
+
+
+        Route::post('{id}/changeMain', 'ShabuNooNee\MenuMainController@changeMain');
+        Route::post('{id}/changeSub', 'ShabuNooNee\MenuSubController@changeSub');
     });
 });
 

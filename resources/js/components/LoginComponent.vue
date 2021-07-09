@@ -80,6 +80,9 @@ export default {
                             })
                             .then(res => {
                                 this.$store.commit("main/User", res.data);
+                                if(this.$route.query.from == null){
+                                    this.$router.replace("/home");
+                                }
                                 this.$router.replace(this.$route.query.from);
                             });
                     })
