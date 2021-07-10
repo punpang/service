@@ -42,10 +42,18 @@ Route::middleware("admin")->group(function () { //สำหรับ admin
     //Route::get('test', 'Order\AOrderController@DashboardToday');
 
     Route::prefix('product')->group(function () { // api/product/...
+
+        Route::post('store', 'ShabuNooNee\ProductController@store');
+        Route::get('all', 'ShabuNooNee\ProductController@all');
+
         Route::post('group', 'ShabuNooNee\ProductGroupController@store');
         Route::post('group/{id}/switchStatus', 'ShabuNooNee\ProductGroupController@switchStatus');
         Route::post('group/{id}/update', 'ShabuNooNee\ProductGroupController@update');
         Route::get('group/all', 'ShabuNooNee\ProductGroupController@all');
+    });
+
+    Route::prefix('google')->group(function () { // api/product/...
+        Route::post('uploadImage', 'ShabuNooNee\GoogleImageController@store');
     });
 
     Route::prefix('menuBar')->group(function () { // api/menuBar/...
@@ -63,7 +71,9 @@ Route::middleware("admin")->group(function () { //สำหรับ admin
 
 
 //////////
-Route::middleware('admin')->group(function () { //สำหรับ admin
+
+
+Route::middleware('admin')->prefix("old")->group(function () { //สำหรับ admin
     //Route::get('user', 'AuthController@me');
     //Route::get('dashboard', 'AuthController@me');
     //Route::get('test', 'Order\AOrderController@DashboardToday');

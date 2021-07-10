@@ -130,7 +130,7 @@ var render = function() {
         ) {
           return null
         }
-        return _vm.addTodo($event)
+        return _vm.addTodo.apply(null, arguments)
       }
     },
     model: {

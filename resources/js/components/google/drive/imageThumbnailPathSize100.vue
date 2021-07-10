@@ -1,7 +1,7 @@
 <template>
   <v-img
-    :src="'https://drive.google.com/uc?id=' + path"
-    :lazy-src="'https://drive.google.com/uc?id=' + path"
+    :src="'https://drive.google.com/thumbnail?id=' + path + '&sz=w100-h100'"
+    :lazy-src="'https://drive.google.com/thumbnail?id=' + path + '&sz=w100-h100'"
   >
     <template v-slot:placeholder>
       <v-row class="fill-height ma-0" align="center" justify="center">
@@ -9,8 +9,9 @@
           indeterminate
           color="grey lighten-5"
         ></v-progress-circular>
-      </v-row> </template
-  ></v-img>
+      </v-row>
+    </template>
+  </v-img>
 </template>
 
 <script>

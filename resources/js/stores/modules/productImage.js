@@ -26,7 +26,7 @@ export default {
             commit("getUseOnly", response.data);
             return response;
         },
-        async store({ commit }, payload) {
+        async store({}, payload) {
             try {
                 const response = await axios.post(
                     "/api/product/image/store",

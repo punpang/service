@@ -18,7 +18,6 @@
         <v-divider></v-divider>
         <v-form ref="form" lazy-validation>
           <v-card-text>
-            {{ form }}
             <v-text-field
               outlined
               label="หัวข้อ"

@@ -36,7 +36,7 @@ const routes = [
     {
         path: "/admin/product",
         name: "adminProduct",
-        component: () => import("@/js/pages/admin/product"),
+        component: () => import("@/js/pages/admin/product/product"),
         meta: { requiresAuth: true }
     },
     {

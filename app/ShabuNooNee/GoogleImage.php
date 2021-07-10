@@ -1,19 +1,16 @@
 <?php
 
-namespace App\Order;
+namespace App\ShabuNooNee;
 
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 
-class ProductImage extends Model implements Auditable
+class GoogleImage extends Model
 {
-    //auditing
-    use \OwenIt\Auditing\Auditable;
     protected $auditInclude = [
         'scr'
     ];
 
-    protected $table = "product_images";
+    protected $table = "google_images";
     protected $fillable = ['src_name'];
     protected $hidden = ['created_at','updated_at'];
 
