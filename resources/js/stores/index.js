@@ -10,6 +10,10 @@ import productGroup from "@/js/stores/modules/shabuNooNee/productGroup";
 import menuBar from "@/js/stores/modules/shabuNooNee/menuBar";
 import product from "@/js/stores/modules/shabuNooNee/products";
 import googleImage from "@/js/stores/modules/shabuNooNee/googleImage";
+import diningTable from "@/js/stores/modules/shabuNooNee/diningTable";
+import priceRange from "@/js/stores/modules/shabuNooNee/priceRange";
+
+
 
 Vue.use(Vuex);
 
@@ -22,6 +26,8 @@ export default new Vuex.Store({
         productGroup,
         product,
         menuBar,
-        googleImage
+        googleImage,
+        diningTable,
+        priceRange
     }
 });

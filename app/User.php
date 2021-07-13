@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\ShabuNooNee\DiningTable;
 use App\ShabuNoonee\UserType;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -75,5 +76,10 @@ class User extends Authenticatable implements JWTSubject
     public function userType()
     {
         return $this->belongsTo(UserType::class, "type", "id");
+    }
+
+    public function table()
+    {
+        return $this->hasOne(DiningTable::class, "user_id", "id")->whereIn("status_id",[1,2,3]);
     }
 }

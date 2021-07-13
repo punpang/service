@@ -52,6 +52,13 @@ const routes = [
         meta: { requiresAuth: true }
     },
 
+    {
+        path: "/diningtable/manage",
+        name: "diningTableManage",
+        component: () => import("@/js/pages/diningTable/manage"),
+        meta: { requiresAuth: true }
+    },
+
     /////////////////////////////////////////
     {
         path: "/admin/index",

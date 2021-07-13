@@ -12,7 +12,13 @@
     >
     </v-file-input>
     <v-card v-show="propUploadImange.imagePreview">
-      <v-img :src="propUploadImange.imagePreview" class="mb-4">
+      <v-img
+    :src="'https://drive.google.com/thumbnail?id=' + propUploadImange.imagePreview + '&sz=w800-h800'"
+    :lazy-src="
+      'https://drive.google.com/thumbnail?id=' + propUploadImange.imagePreview + '&sz=w800-h800'
+    "
+        class="mb-4"
+      >
         <v-btn
           class="mt-1 ml-1"
           color="error"
@@ -58,8 +64,7 @@ export default {
         formData
       );
       if (response.status == 200) {
-        this.propUploadImange.imagePreview =
-          "https://drive.google.com/thumbnail?id=" + response.data.src_name;
+        this.propUploadImange.imagePreview = response.data.src_name;
         this.$toast.success("อัปโหลดรูปสำเร็จ");
         //this.form.product_propImageId = response.data.id;
         this.$emit("emitImageId", response.data.id);

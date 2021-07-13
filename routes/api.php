@@ -44,6 +44,7 @@ Route::middleware("admin")->group(function () { //สำหรับ admin
     Route::prefix('product')->group(function () { // api/product/...
 
         Route::post('store', 'ShabuNooNee\ProductController@store');
+        Route::post('/{id}/update', 'ShabuNooNee\ProductController@update');
         Route::get('all', 'ShabuNooNee\ProductController@all');
 
         Route::post('group', 'ShabuNooNee\ProductGroupController@store');
@@ -69,9 +70,16 @@ Route::middleware("admin")->group(function () { //สำหรับ admin
     });
 });
 
+Route::middleware("cashier")->group(function () { //สำหรับ cashier
+    Route::prefix('diningTable')->group(function () { // api/diningTable/...
+        Route::get('allTable', 'ShabuNooNee\DiningTableController@allTable');
+        Route::post('store', 'ShabuNooNee\DiningTableController@store');
+    });
 
-//////////
-
+    Route::prefix('priceRange')->group(function () { // api/diningTable/...
+        Route::get('all', 'ShabuNooNee\PriceRangeController@all');
+    });
+});
 
 Route::middleware('admin')->prefix("old")->group(function () { //สำหรับ admin
     //Route::get('user', 'AuthController@me');

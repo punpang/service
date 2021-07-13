@@ -15,10 +15,18 @@ class MenuBarSeeder extends Seeder
     {
         $datas = [
             [
+                // จัดการสินค้า
                 "title" => "จัดการสินค้า", "action" => "shop", "admin" => 1, "cashier" => 0, "waitress" => 0, "kitchen" => 0, "customer" => 0,
                 "subs" => [
                     ["title" => "สินค้า", "to" => "/admin/product", "admin" => 1, "cashier" => 0, "waitress" => 0, "kitchen" => 0, "customer" => 0],
                     ["title" => "กลุ่มสินค้า", "to" => "/admin/product/group", "admin" => 1, "cashier" => 0, "waitress" => 0, "kitchen" => 0, "customer" => 0]
+                ]
+            ],
+            [
+                // จัดการโต๊ะ
+                "title" => "จัดการโต๊ะ", "action" => "storefront", "admin" => 1, "cashier" => 1, "waitress" => 0, "kitchen" => 0, "customer" => 0,
+                "subs" => [
+                    ["title" => "บริหารโต๊ะ", "to" => "/diningtable/manage", "admin" => 1, "cashier" => 1, "waitress" => 0, "kitchen" => 0, "customer" => 0],
                 ]
             ]
         ];

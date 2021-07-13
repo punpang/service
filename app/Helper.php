@@ -10,7 +10,7 @@ class Helper extends Model
     public static function generateToken($length = 30)
     {
         return Str::random(60);
-        
+
         $timestamp = str_split(\Carbon\Carbon::now()->timestamp);
 
         $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -29,7 +29,7 @@ class Helper extends Model
     }
 
     public static function randomNumber($length = 30)
-    {        
+    {
         $timestamp = str_split(\Carbon\Carbon::now()->timestamp);
 
         $chars = '0123456789';
@@ -45,5 +45,14 @@ class Helper extends Model
         }
 
         return $data;
+    }
+
+    public static function backBoolean($boolean)
+    {
+        if($boolean == true or $boolean == 1){
+            return 1;
+        }else{
+            return 0;
+        }
     }
 }
