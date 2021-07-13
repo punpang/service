@@ -21,7 +21,7 @@ class CreatePriceRangesTable extends Migration
             $table->float("price_Adolescence");
             $table->float("price_Adult");
             $table->float("price_Elder");
-            $table->integer("status");
+            $table->integer("status")->default(1);
             $table->timestamps();
         });
     }
