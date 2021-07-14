@@ -2,6 +2,7 @@
 
 namespace App\ShabuNooNee;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 
@@ -26,6 +27,8 @@ class DiningTable extends Model implements Auditable
     ];
 
     protected $table = "dining_tables";
+    protected $hidden = ['created_at', 'updated_at'];
+
     protected $fillable = [
         "user_id",
         "status_id",
@@ -52,5 +55,25 @@ class DiningTable extends Model implements Auditable
     public static function checkTable($tableNumber)
     {
         return self::whereUserId($tableNumber)->whereIn("status_id", [1, 2, 3])->first();
+    }
+
+    public function priceRange()
+    {
+        return $this->belongsTo(PriceRange::class, "priceRange_id", "id");
+    }
+
+    public function detailTable()
+    {
+        return $this->belongsTo(User::class, "user_id", "id");
+    }
+
+    public static function table($id)
+    {
+        return self::whereId($id)->with("detailTable", "diningTableStatus", "priceRange")->first();
+    }
+
+    public static function sumPrice($count, $price)
+    {
+        
     }
 }

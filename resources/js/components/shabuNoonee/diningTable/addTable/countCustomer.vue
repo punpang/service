@@ -76,7 +76,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 export default {
   props: ["propformCount"],
   data() {
@@ -123,11 +122,7 @@ export default {
       return sum;
     },
   },
-  async mounted() {
-    await this.$store.dispatch("priceRange/all");
-  },
-  computed: {
-    ...mapGetters({ priceRanges: "priceRange/all" }),
-  },
+  async mounted() {},
+  computed: {},
 };
 </script>

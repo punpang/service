@@ -110548,19 +110548,19 @@ var routes = [{
   path: "/todos/:id",
   name: "todos",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(10)]).then(__webpack_require__.bind(null, /*! @/js/components/todos/TodoApp */ "./resources/js/components/todos/TodoApp.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(11)]).then(__webpack_require__.bind(null, /*! @/js/components/todos/TodoApp */ "./resources/js/components/todos/TodoApp.vue"));
   }
 }, {
   path: "/todos2",
   name: "todos2",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(11)]).then(__webpack_require__.bind(null, /*! @/js/components/todos/TodoApp2 */ "./resources/js/components/todos/TodoApp2.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(12)]).then(__webpack_require__.bind(null, /*! @/js/components/todos/TodoApp2 */ "./resources/js/components/todos/TodoApp2.vue"));
   }
 }, {
   path: "/admin/dashboard",
   name: "adminDashboard",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! @/js/pages/admin/dashboard */ "./resources/js/pages/admin/dashboard.vue"));
+    return __webpack_require__.e(/*! import() */ 14).then(__webpack_require__.bind(null, /*! @/js/pages/admin/dashboard */ "./resources/js/pages/admin/dashboard.vue"));
   },
   meta: {
     requiresAuth: true
@@ -110569,7 +110569,7 @@ var routes = [{
   path: "/admin/product",
   name: "adminProduct",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! @/js/pages/admin/product/product */ "./resources/js/pages/admin/product/product.vue"));
+    return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! @/js/pages/admin/product/product */ "./resources/js/pages/admin/product/product.vue"));
   },
   meta: {
     requiresAuth: true
@@ -110578,7 +110578,7 @@ var routes = [{
   path: "/admin/product/group",
   name: "adminProductGroup",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! @/js/pages/admin/product/group */ "./resources/js/pages/admin/product/group.vue"));
+    return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! @/js/pages/admin/product/group */ "./resources/js/pages/admin/product/group.vue"));
   },
   meta: {
     requiresAuth: true
@@ -110587,7 +110587,7 @@ var routes = [{
   path: "/admin/menuBar",
   name: "adminMenuBar",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! @/js/pages/admin/menuBar/ */ "./resources/js/pages/admin/menuBar.vue"));
+    return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! @/js/pages/admin/menuBar/ */ "./resources/js/pages/admin/menuBar.vue"));
   },
   meta: {
     requiresAuth: true
@@ -110596,7 +110596,7 @@ var routes = [{
   path: "/diningtable/manage",
   name: "diningTableManage",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 14).then(__webpack_require__.bind(null, /*! @/js/pages/diningTable/manage */ "./resources/js/pages/diningTable/manage.vue"));
+    return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! @/js/pages/diningTable/manage */ "./resources/js/pages/diningTable/manage.vue"));
   },
   meta: {
     requiresAuth: true
@@ -110681,7 +110681,7 @@ var routes = [{
   path: "/testModule",
   name: "testModule",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! @/js/pages/testModule */ "./resources/js/pages/testModule.vue"));
+    return __webpack_require__.e(/*! import() */ 10).then(__webpack_require__.bind(null, /*! @/js/pages/testModule */ "./resources/js/pages/testModule.vue"));
   }
 },
 /* punpang */
@@ -110689,20 +110689,20 @@ var routes = [{
   path: "/punpang/order/:token",
   name: "orderToken",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 12).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/orders/show */ "./resources/js/pages/punpang/orders/show.vue"));
+    return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/orders/show */ "./resources/js/pages/punpang/orders/show.vue"));
   }
 }, {
   path: "/punpang/order/:token/:amount/payment",
   name: "orderTokenPayment",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/orders/payment */ "./resources/js/pages/punpang/orders/payment.vue"));
+    return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/orders/payment */ "./resources/js/pages/punpang/orders/payment.vue"));
   }
 }, {
   // ส่งลิงก์อัปโหลดรูป
   path: "/punpang/order/:token/uploadImage",
   name: "orderTokenUploadImage",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/orders/uploadImage */ "./resources/js/pages/punpang/orders/uploadImage.vue"));
+    return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/orders/uploadImage */ "./resources/js/pages/punpang/orders/uploadImage.vue"));
   }
 }, /////////////////////////////
 {
@@ -111021,7 +111021,7 @@ __webpack_require__.r(__webpack_exports__);
     todos: [],
     toRemove: null,
     newTodo: {
-      title: '',
+      title: "",
       completed: false
     }
   },
@@ -111054,8 +111054,8 @@ __webpack_require__.r(__webpack_exports__);
   actions: {
     ADD_TODO: function ADD_TODO(_ref, todo) {
       var commit = _ref.commit;
-      axios.post('/api/todos', todo).then(function (res) {
-        if (res.data === "added") console.log('ok');
+      axios.post("/api/todos", todo).then(function (res) {
+        if (res.data === "added") console.log("ok");
       })["catch"](function (err) {
         console.log(err);
       });
@@ -111063,17 +111063,17 @@ __webpack_require__.r(__webpack_exports__);
     DELETE_TODO: function DELETE_TODO(_ref2, todo) {
       var commit = _ref2.commit;
       axios["delete"]("/api/todos/".concat(todo.id)).then(function (res) {
-        if (res.data === 'deleted') console.log('deleted');
+        if (res.data === "deleted") console.log("deleted");
       })["catch"](function (err) {
         console.log(err);
       });
     },
     GET_TODOS: function GET_TODOS(_ref3, payload) {
       var commit = _ref3.commit;
-      axios.get('/api/todos/' + payload).then(function (res) {
+      axios.get("/api/todos/" + payload).then(function (res) {
         {
           console.log(res.data);
-          commit('GET_TODOS', res.data);
+          commit("GET_TODOS", res.data);
         }
       })["catch"](function (err) {
         console.log(err);
@@ -111104,16 +111104,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ __webpack_exports__["default"] = ({
   namespaced: true,
   state: {
-    allTable: []
+    allTable: [],
+    table: {}
   },
   mutations: {
     allTable: function allTable(state, data) {
       state.allTable = data;
+    },
+    table: function table(state, data) {
+      state.table = data;
     }
   },
   getters: {
     allTable: function allTable(state) {
       return state.allTable;
+    },
+    table: function table(state) {
+      return state.table;
     }
   },
   actions: {
@@ -111163,6 +111170,80 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee2);
+      }))();
+    },
+    table: function table(_ref3, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var commit, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                commit = _ref3.commit;
+                commit("table", {});
+                _context3.next = 4;
+                return axios.get("/api/diningTable/" + payload + "/table");
+
+              case 4:
+                res = _context3.sent;
+                commit("table", res.data);
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+    tableUpdate: function tableUpdate(_ref4, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var commit, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                commit = _ref4.commit;
+                commit("table", {});
+                _context4.next = 4;
+                return axios.post("/api/diningTable/" + payload.id + "/tableUpdate", payload);
+
+              case 4:
+                res = _context4.sent;
+                commit("table", res.data.data);
+                return _context4.abrupt("return", res);
+
+              case 7:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    },
+    tableChangePriceRange: function tableChangePriceRange(_ref5, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var commit, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                commit = _ref5.commit;
+                commit("table", {});
+                _context5.next = 4;
+                return axios.post("/api/diningTable/" + payload.id + "/tableChangePriceRange", payload);
+
+              case 4:
+                res = _context5.sent;
+                commit("table", res.data.data);
+                return _context5.abrupt("return", res);
+
+              case 7:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
       }))();
     }
   }

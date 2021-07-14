@@ -17,11 +17,12 @@ class CreateDiningTablesTable extends Migration
             $table->bigIncrements('id');
             $table->integer("user_id");
             $table->integer("status_id")->default("1");
-            $table->integer("count_Infant");
-            $table->integer("count_Children");
-            $table->integer("count_Adolescence");
-            $table->integer("count_Adult");
-            $table->integer("count_Elder");
+            $table->float("count_Infant");
+            $table->float("count_Children");
+            $table->float("count_Adolescence");
+            $table->float("count_Adult");
+            $table->float("count_Elder");
+            $table->float("sum_customer");            
             $table->dateTime("time_end");
             $table->float("price_Infant");
             $table->float("price_Children");

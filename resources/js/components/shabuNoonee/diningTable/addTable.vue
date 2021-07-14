@@ -18,9 +18,12 @@
       <v-divider> </v-divider>
       <v-form ref="form" lazy-validation>
         <v-card-text>
-          <countCustomer :propformCount="formCount"></countCustomer>
+          <countCustomer :propformCount="form"></countCustomer>
           <v-divider></v-divider>
-          <selectPriceRange @emitPriceRange="emitPriceRange"></selectPriceRange>
+          <selectPriceRange
+            @emitPriceRange="emitPriceRange"
+            :propFormPriceRange="form"
+          ></selectPriceRange>
         </v-card-text>
       </v-form>
       <v-divider class="ma-0"></v-divider>
@@ -57,26 +60,26 @@ export default {
   data() {
     return {
       dialog: false,
-      formCount: {
+      form: {
         count_Infant: 0, //1
         count_Children: 0, //2
         count_Adolescence: 0, //3
         count_Adult: 0, //4
         count_Elder: 0, //5
         sumCountCustomer: 0,
+        priceRange_id: null,
       },
-      formPriceRange: null,
     };
   },
   methods: {
     async save() {
       let loader = this.$loading.show();
       const form = {
-        count: this.formCount,
-        priceRange: this.formPriceRange,
+        count: this.form,
         tableNumber: this.dataTable.id,
       };
-      if (this.$refs.form.validate() && this.formCount.sumCountCustomer > 0) {
+
+      if (this.$refs.form.validate() && this.form.sumCountCustomer > 0) {
         const res = await this.$store.dispatch("diningTable/store", form);
         if (res.status === 200) {
           this.$toast.success(res.data.message);
@@ -90,19 +93,19 @@ export default {
       loader.hide();
     },
     exit() {
-      this.formCount = {
+      this.form = {
         count_Infant: 0, //1
         count_Children: 0, //2
         count_Adolescence: 0, //3
         count_Adult: 0, //4
         count_Elder: 0, //5
         sumCountCustomer: 0,
+        priceRange_id: null,
       };
-      this.formPriceRange = null;
       this.dialog = false;
     },
     emitPriceRange(v) {
-      this.formPriceRange = v;
+      this.form.priceRange_id = v;
     },
   },
 };

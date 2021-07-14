@@ -3,7 +3,8 @@
     <h4 class="font-weight-black mb-4">
       เลือกเซทบุฟเฟต์ <v-icon @click="ClickDetailPriceRange()">details</v-icon>
     </h4>
-    <v-radio-group v-model="formPriceRange" :rules="rules.priceRange">
+
+    <v-radio-group v-model="propFormPriceRange.priceRange_id" :rules="rules.priceRange">
       <v-radio
         v-for="priceRange in priceRanges"
         :key="priceRange.id"
@@ -40,9 +41,9 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
+  props: ["propFormPriceRange"],
   data() {
     return {
-      formPriceRange: null,
       ShowDetailPriceRange: false,
       rules: {
         priceRange: [(v) => !!v || "ห้ามเว้นว่าง"],
@@ -51,7 +52,7 @@ export default {
   },
   methods: {
     clickPriceRange() {
-      this.$emit("emitPriceRange", this.formPriceRange);
+      this.$emit("emitPriceRange", this.propFormPriceRange.priceRange_id);
     },
     ClickDetailPriceRange() {
       this.ShowDetailPriceRange = !this.ShowDetailPriceRange;

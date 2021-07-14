@@ -2,7 +2,9 @@
   <div>
     <v-row>
       <v-col cols="12" md="4" sm="4" v-for="table in allTable" :key="table.id">
+       
         <addTable v-if="table.table === null" :dataTable="table"></addTable>
+        
         <useTable
           v-else-if="table.table.status_id === 1"
           :dataTable="table"

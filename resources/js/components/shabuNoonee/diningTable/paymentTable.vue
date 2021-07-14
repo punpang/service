@@ -1,7 +1,7 @@
 <template>
-  <v-dialog v-model="dialog" persistent width="100%">
+  <v-dialog v-model="dialog" persistent width="500">
     <template v-slot:activator="{ on }">
-      <v-card v-on="on" color="orange darken-3" @click="start()">
+      <v-card v-on="on" color="green accent-3" @click="start()">
         <v-card-text class="white--text text-center">
           <h1 class="ma-4">{{ dataTable.name }}</h1>
         </v-card-text>
@@ -9,7 +9,9 @@
     </template>
     <v-card>
       <v-card-title>
-        <h1>ทดสอบ</h1>
+        <h3>
+          {{ dataTable.name }} :: {{ dataTable.table.dining_table_status.title }}
+        </h3>
         <v-spacer></v-spacer>
         <v-btn icon fab x-small @click="dialog = false">
           <v-icon color="error">close</v-icon>

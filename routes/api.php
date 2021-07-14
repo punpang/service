@@ -73,9 +73,12 @@ Route::middleware("admin")->group(function () { //สำหรับ admin
 Route::middleware("cashier")->group(function () { //สำหรับ cashier
     Route::prefix('diningTable')->group(function () { // api/diningTable/...
         Route::get('allTable', 'ShabuNooNee\DiningTableController@allTable');
+        Route::get('{id}/table', 'ShabuNooNee\DiningTableController@table');
+        Route::post('{id}/tableUpdate', 'ShabuNooNee\DiningTableController@tableUpdate');
+        Route::post('{id}/tableChangePriceRange', 'ShabuNooNee\DiningTableController@tableChangePriceRange');
         Route::post('store', 'ShabuNooNee\DiningTableController@store');
     });
-
+    
     Route::prefix('priceRange')->group(function () { // api/diningTable/...
         Route::get('all', 'ShabuNooNee\PriceRangeController@all');
     });
