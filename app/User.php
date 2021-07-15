@@ -12,10 +12,12 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
-    const ADMIN_TYPE = 1;
     const DEFAULT_TYPE = 0;
+    const ADMIN_TYPE = 1;
     const CASHIER_TYPE = 2;
     const WAITRESS_TYPE = 3;
+    const KITCHEN_TYPE = 4;
+    const CUSTOMER_TYPE = 5;
     /**
      * The attributes that are mass assignable.
      *
@@ -47,10 +49,15 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->type === self::ADMIN_TYPE;
     }
-
+    
     public function isCashier()
     {
         return $this->type === self::CASHIER_TYPE;
+    }
+
+    public function isCustomer()
+    {
+        return $this->type === self::CUSTOMER_TYPE;
     }
 
     public function member()
@@ -80,6 +87,6 @@ class User extends Authenticatable implements JWTSubject
 
     public function table()
     {
-        return $this->hasOne(DiningTable::class, "user_id", "id")->whereIn("status_id",[1,2,3]);
+        return $this->hasOne(DiningTable::class, "user_id", "id")->whereIn("status_id", [1, 2, 3]);
     }
 }

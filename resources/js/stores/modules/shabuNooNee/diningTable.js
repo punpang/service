@@ -43,13 +43,12 @@ export default {
             commit("table", res.data.data);
             return res;
         },
-        async tableChangePriceRange({ commit }, payload) {
-            commit("table", {});
+        async tableChangePriceRange({ dispatch }, payload) {
             const res = await axios.post(
                 "/api/diningTable/" + payload.id + "/tableChangePriceRange",
                 payload
             );
-            commit("table", res.data.data);
+            dispatch("table", payload.id);
             return res;
         }
     }

@@ -84,6 +84,13 @@ Route::middleware("cashier")->group(function () { //สำหรับ cashier
     });
 });
 
+Route::middleware("customer")->group(function () { //สำหรับ cashier
+    Route::prefix('tableOrder')->group(function () { // api/diningTable/...
+        Route::get('self', 'ShabuNooNee\TableOrderController@self');
+    });
+
+});
+
 Route::middleware('admin')->prefix("old")->group(function () { //สำหรับ admin
     //Route::get('user', 'AuthController@me');
     //Route::get('dashboard', 'AuthController@me');

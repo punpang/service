@@ -110601,6 +110601,15 @@ var routes = [{
   meta: {
     requiresAuth: true
   }
+}, {
+  path: "/table",
+  name: "tableOrder",
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ 16).then(__webpack_require__.bind(null, /*! @/js/pages/tableOrder/table */ "./resources/js/pages/tableOrder/table.vue"));
+  },
+  meta: {
+    requiresAuth: true
+  }
 }, /////////////////////////////////////////
 {
   path: "/admin/index",
@@ -110742,10 +110751,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_stores_modules_shabuNooNee_googleImage__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/js/stores/modules/shabuNooNee/googleImage */ "./resources/js/stores/modules/shabuNooNee/googleImage.js");
 /* harmony import */ var _js_stores_modules_shabuNooNee_diningTable__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/js/stores/modules/shabuNooNee/diningTable */ "./resources/js/stores/modules/shabuNooNee/diningTable.js");
 /* harmony import */ var _js_stores_modules_shabuNooNee_priceRange__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/js/stores/modules/shabuNooNee/priceRange */ "./resources/js/stores/modules/shabuNooNee/priceRange.js");
+/* harmony import */ var _js_stores_modules_shabuNooNee_tableOrder__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/js/stores/modules/shabuNooNee/tableOrder */ "./resources/js/stores/modules/shabuNooNee/tableOrder.js");
 
 
 
  ////
+
 
 
 
@@ -110766,7 +110777,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     menuBar: _js_stores_modules_shabuNooNee_menuBar__WEBPACK_IMPORTED_MODULE_6__["default"],
     googleImage: _js_stores_modules_shabuNooNee_googleImage__WEBPACK_IMPORTED_MODULE_8__["default"],
     diningTable: _js_stores_modules_shabuNooNee_diningTable__WEBPACK_IMPORTED_MODULE_9__["default"],
-    priceRange: _js_stores_modules_shabuNooNee_priceRange__WEBPACK_IMPORTED_MODULE_10__["default"]
+    priceRange: _js_stores_modules_shabuNooNee_priceRange__WEBPACK_IMPORTED_MODULE_10__["default"],
+    tableOrder: _js_stores_modules_shabuNooNee_tableOrder__WEBPACK_IMPORTED_MODULE_12__["default"]
   }
 }));
 
@@ -111223,22 +111235,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     tableChangePriceRange: function tableChangePriceRange(_ref5, payload) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        var commit, res;
+        var dispatch, res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                commit = _ref5.commit;
-                commit("table", {});
-                _context5.next = 4;
+                dispatch = _ref5.dispatch;
+                _context5.next = 3;
                 return axios.post("/api/diningTable/" + payload.id + "/tableChangePriceRange", payload);
 
-              case 4:
+              case 3:
                 res = _context5.sent;
-                commit("table", res.data.data);
+                dispatch("table", payload.id);
                 return _context5.abrupt("return", res);
 
-              case 7:
+              case 6:
               case "end":
                 return _context5.stop();
             }
@@ -111817,6 +111828,56 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee3);
+      }))();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/stores/modules/shabuNooNee/tableOrder.js":
+/*!***************************************************************!*\
+  !*** ./resources/js/stores/modules/shabuNooNee/tableOrder.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  state: {},
+  mutations: {},
+  getters: {},
+  actions: {
+    self: function self(_ref) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var commit, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                commit = _ref.commit;
+                _context.next = 3;
+                return axios.get("/api/tableOrder/self");
+
+              case 3:
+                res = _context.sent;
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
       }))();
     }
   }

@@ -100,6 +100,24 @@ class DiningTableController extends Controller
     {
         //dd(request("priceRange_id"));
         $data = $id;
+        //ดาวน์เกรด
+        if ($data->priceRange_id > request("priceRange_id")) {
+            //เกิน 15 นาที ถดาวเกรดไม่ได้
+            if (\Carbon\Carbon::parse($data->created_at)->addMinutes(15)->timestamp < \Carbon\Carbon::now()->timestamp) {
+                return response()->json([
+                    "status" => "success",
+                    "message" => "ไม่สามารถลดแพ็คเกจได้ (เกิน 15 นาที)"
+                ], 201);
+            }
+
+            //สั่งอาหารหมวดที่ดาวน์เกรดไม่ได้
+            if (\Carbon\Carbon::parse($data->created_at)->addMinutes(15)->timestamp < \Carbon\Carbon::now()->timestamp) {
+                return response()->json([
+                    "status" => "success",
+                    "message" => "ไม่สามารถลดแพ็คเกจได้ (สั่งอาหารกลุ่มที่สูงกว่า)"
+                ], 201);
+            }
+        }
 
         $getPriceRange = PriceRange::getPriceRange(request("priceRange_id"));
 
@@ -122,7 +140,6 @@ class DiningTableController extends Controller
         $data = DiningTable::Table($id->id);
 
         return response()->json([
-            "data" => $data,
             "status" => "success",
             "message" => "เปลี่ยนแปลงเซทบุฟเฟต์สำเร็จ"
         ], 200);

@@ -892,6 +892,10 @@ _js_components_shabuNoonee_diningTable_addTable_selectPriceRange__WEBPACK_IMPORT
                   _this2.dialog = false;
 
                   _this2.$toast.success(res.data.message);
+                } else if (res.status === 201) {
+                  _this2.dialog = false;
+
+                  _this2.$toast.warning(res.data.message);
                 } else {
                   _this2.$toast.error("ระบบทำงานไม่สำเร็จ");
                 }

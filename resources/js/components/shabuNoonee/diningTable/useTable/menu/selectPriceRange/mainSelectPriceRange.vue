@@ -35,7 +35,7 @@
 
 <script>
 import selectPriceRange from "@/js/components/shabuNoonee/diningTable/addTable/selectPriceRange";
-selectPriceRange
+selectPriceRange;
 export default {
   components: {
     selectPriceRange,
@@ -63,6 +63,9 @@ export default {
         if (res.status === 200) {
           this.dialog = false;
           this.$toast.success(res.data.message);
+        } else if (res.status === 201) {
+          this.dialog = false;
+          this.$toast.warning(res.data.message);
         } else {
           this.$toast.error("ระบบทำงานไม่สำเร็จ");
         }

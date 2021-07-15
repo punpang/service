@@ -59,6 +59,13 @@ const routes = [
         meta: { requiresAuth: true }
     },
 
+    {
+        path: "/table",
+        name: "tableOrder",
+        component: () => import("@/js/pages/tableOrder/table"),
+        meta: { requiresAuth: true }
+    },
+
     /////////////////////////////////////////
     {
         path: "/admin/index",
