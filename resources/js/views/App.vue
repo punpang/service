@@ -51,7 +51,8 @@
         <router-view></router-view>
       </v-container>
     </v-main>
-    <v-footer app>
+
+    <v-footer >
       <!-- -->
     </v-footer>
   </v-app>
@@ -127,7 +128,7 @@ export default {
     await this.$store.dispatch("menuBar/lists");
   },
   computed: {
-    ...mapGetters({menuMain : "menuBar/lists"}),
+    ...mapGetters({ menuMain: "menuBar/lists" }),
   },
   async beforeCreate() {
     if (localStorage.token) {

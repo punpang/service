@@ -75,7 +75,7 @@ class TableOrderController extends Controller
         $newTableOrder->save();
 
         //เก็บสินค้าที่หมด
-        $productOutOfStock = [];
+        $productOutOfStock = "";
 
         // สร้างรายละเอียดของรายการอาหาร
         foreach (request("products") as $product) {
@@ -93,10 +93,24 @@ class TableOrderController extends Controller
                     $newTableOrderDetail->save();
                 }
             } else {
-                $productOutOfStock[] = $product["title"];
+                $productOutOfStock = $productOutOfStock . " " . $product["title"];
             }
         }
 
-        dd($productOutOfStock);
+        // ต่อข้อความสำหรับสินค้าที่หมดชั่วคราว สำหรับแจ้งไปยังลูกค้า
+        if ($productOutOfStock != "") {
+            $messageProductOutOfStock = "สินค้าที่หมดชั่วคราวและอาจไม่ได้รับ : " . $productOutOfStock;
+        } else {
+            $messageProductOutOfStock = "";
+        }
+
+        return response()->json(
+            [
+                "message" => "สั่งอาหารสำเร็จ",
+                "queue" => "#8",
+                "messageProductOutOfStock" => $messageProductOutOfStock
+            ],
+            200
+        );
     }
 }

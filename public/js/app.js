@@ -2314,6 +2314,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -47576,7 +47577,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("v-footer", { attrs: { app: "" } })
+      _c("v-footer")
     ],
     1
   )
@@ -112015,8 +112016,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 3:
                 res = _context3.sent;
+                return _context3.abrupt("return", res);
 
-              case 4:
+              case 5:
               case "end":
                 return _context3.stop();
             }

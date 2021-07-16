@@ -117,6 +117,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -142,18 +158,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return 0;
     },
     clickAddProduct: function clickAddProduct(data) {
-      this.$swal({
-        icon: "success",
-        confirmButtonColor: "#3085d6",
-        confirmButtonText: "รับทราบ",
-        title: "สั่งอาหารสำเร็จ",
-        text: "คิวของคุณ #8",
-        footer: "สินค้าหมดชั่วคราว : หมูสามชั้นสไลด์",
-        allowOutsideClick: false
-      });
-
       if (this.sumCountProduct === 20) {
-        this.$toast.error("สามารถสั่งได้ครั้งละ 20 ถาด");
+        this.$swal({
+          icon: "warning",
+          title: "สามารถสั่งได้ครั้งละ 20 ถาด",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "ปิด",
+          allowOutsideClick: false
+        });
         return;
       }
 
@@ -226,11 +238,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 3:
                 res = _context.sent;
 
+                if (res.status === 200) {
+                  _this.$swal({
+                    icon: "success",
+                    confirmButtonColor: "#3085d6",
+                    confirmButtonText: "รับทราบ",
+                    title: res.data.message,
+                    text: res.data.queue,
+                    footer: res.data.messageProductOutOfStock,
+                    allowOutsideClick: false
+                  });
+                }
+
                 _this.reset();
 
                 console.log(res);
 
-              case 6:
+              case 7:
               case "end":
                 return _context.stop();
             }
@@ -262,10 +286,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }, _callee2);
     }))();
   },
-  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
+  computed: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
     self: "tableOrder/self"
   })), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
     productGroupAllow: "tableOrder/productGroupAllow"
+  })), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
+    tableUser: "main/User"
   }))
 });
 
@@ -345,20 +371,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("h1", [_vm._v(_vm._s(_vm.self.detail_table))]),
-      _vm._v("\n  " + _vm._s(_vm.products) + "\n  "),
-      _c(
-        "v-btn",
-        {
-          attrs: { color: "success" },
-          on: {
-            click: function($event) {
-              return _vm.save()
-            }
-          }
-        },
-        [_vm._v("save")]
-      ),
+      _c("h1", [_vm._v(_vm._s(_vm.tableUser.name))]),
       _vm._v(" "),
       _vm._l(_vm.productGroupAllow, function(product) {
         return _c(
@@ -440,7 +453,7 @@ var render = function() {
                                       _c(
                                         "v-btn",
                                         {
-                                          attrs: { outlined: "" },
+                                          attrs: { small: "", outlined: "" },
                                           on: {
                                             click: function($event) {
                                               return _vm.clickCutProduct(
@@ -452,24 +465,28 @@ var render = function() {
                                         [_c("h3", [_vm._v("-")])]
                                       ),
                                       _vm._v(" "),
-                                      _c("v-btn", { attrs: { disabled: "" } }, [
-                                        _c("h3", { staticClass: "mb-1" }, [
-                                          _vm._v(
-                                            "\n                  " +
-                                              _vm._s(
-                                                _vm.countProduct(
-                                                  item_product.id
-                                                )
-                                              ) +
-                                              "\n                "
-                                          )
-                                        ])
-                                      ]),
+                                      _c(
+                                        "v-btn",
+                                        { attrs: { small: "", disabled: "" } },
+                                        [
+                                          _c("h3", { staticClass: "mb-1" }, [
+                                            _vm._v(
+                                              "\n                  " +
+                                                _vm._s(
+                                                  _vm.countProduct(
+                                                    item_product.id
+                                                  )
+                                                ) +
+                                                "\n                "
+                                            )
+                                          ])
+                                        ]
+                                      ),
                                       _vm._v(" "),
                                       _c(
                                         "v-btn",
                                         {
-                                          attrs: { outlined: "" },
+                                          attrs: { small: "", outlined: "" },
                                           on: {
                                             click: function($event) {
                                               return _vm.clickAddProduct(
@@ -500,7 +517,65 @@ var render = function() {
           ],
           2
         )
-      })
+      }),
+      _vm._v(" "),
+      _c(
+        "v-bottom-navigation",
+        { staticClass: "yellow darken-4", attrs: { app: "", grow: "" } },
+        [
+          _c(
+            "v-btn",
+            [
+              _c("span", { staticClass: "white--text" }, [
+                _vm._v("เรียกเก็บเงิน")
+              ]),
+              _vm._v(" "),
+              _c("v-icon", { staticClass: "white--text" }, [
+                _vm._v("attach_money")
+              ])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            [
+              _c(
+                "span",
+                {
+                  staticClass: "white--text",
+                  on: {
+                    click: function($event) {
+                      return _vm.save()
+                    }
+                  }
+                },
+                [_vm._v("สั่งอาหาร")]
+              ),
+              _vm._v(" "),
+              _c("v-icon", { staticClass: "white--text" }, [
+                _vm._v("restaurant_menu")
+              ])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            [
+              _c("span", { staticClass: "white--text" }, [
+                _vm._v("เรียกพนักงาน")
+              ]),
+              _vm._v(" "),
+              _c("v-icon", { staticClass: "white--text" }, [
+                _vm._v("people_alt")
+              ])
+            ],
+            1
+          )
+        ],
+        1
+      )
     ],
     2
   )

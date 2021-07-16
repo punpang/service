@@ -1,8 +1,6 @@
 <template>
   <div>
-    <h1>{{ self.detail_table }}</h1>
-    {{ products }}
-    <v-btn color="success" @click="save()">save</v-btn>
+    <h1>{{ tableUser.name }}</h1>
     <div v-for="product in productGroupAllow" :key="product.id">
       <v-divider></v-divider>
       <h3>{{ product.name }}</h3>
@@ -33,17 +31,17 @@
               </v-alert>
 
               <div v-if="item_product.status">
-                <v-btn outlined @click="clickCutProduct(item_product)">
+                <v-btn small outlined @click="clickCutProduct(item_product)">
                   <h3>-</h3>
                 </v-btn>
 
-                <v-btn disabled>
+                <v-btn small disabled>
                   <h3 class="mb-1">
                     {{ countProduct(item_product.id) }}
                   </h3>
                 </v-btn>
 
-                <v-btn outlined @click="clickAddProduct(item_product)">
+                <v-btn small outlined @click="clickAddProduct(item_product)">
                   <h3>+</h3>
                 </v-btn>
               </div>
@@ -52,6 +50,24 @@
         </v-card-text>
       </v-card>
     </div>
+
+    <v-bottom-navigation app class="yellow darken-4" grow>
+      <v-btn>
+        <span class="white--text">เรียกเก็บเงิน</span>
+
+        <v-icon class="white--text">attach_money</v-icon>
+      </v-btn>
+      <v-btn>
+        <span class="white--text" @click="save()">สั่งอาหาร</span>
+
+        <v-icon class="white--text">restaurant_menu</v-icon>
+      </v-btn>
+      <v-btn>
+        <span class="white--text">เรียกพนักงาน</span>
+
+        <v-icon class="white--text">people_alt</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
   </div>
 </template>
 
@@ -81,17 +97,14 @@ export default {
       return 0;
     },
     clickAddProduct(data) {
-      this.$swal({
-        icon: "success",
-        confirmButtonColor:"#3085d6",
-        confirmButtonText: "รับทราบ",
-        title:"สั่งอาหารสำเร็จ",
-        text:"คิวของคุณ #8",
-        footer:"สินค้าหมดชั่วคราว : หมูสามชั้นสไลด์",
-        allowOutsideClick: false,
-      });
       if (this.sumCountProduct === 20) {
-        this.$toast.error("สามารถสั่งได้ครั้งละ 20 ถาด");
+        this.$swal({
+          icon: "warning",
+          title: "สามารถสั่งได้ครั้งละ 20 ถาด",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "ปิด",
+          allowOutsideClick: false,
+        });
         return;
       }
 
@@ -152,6 +165,17 @@ export default {
       };
 
       const res = await this.$store.dispatch("tableOrder/store", form);
+      if (res.status === 200) {
+        this.$swal({
+          icon: "success",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "รับทราบ",
+          title: res.data.message,
+          text: res.data.queue,
+          footer: res.data.messageProductOutOfStock,
+          allowOutsideClick: false,
+        });
+      }
 
       this.reset();
       console.log(res);
@@ -167,6 +191,7 @@ export default {
   computed: {
     ...mapGetters({ self: "tableOrder/self" }),
     ...mapGetters({ productGroupAllow: "tableOrder/productGroupAllow" }),
+    ...mapGetters({ tableUser: "main/User" }),
   },
 };
 </script>

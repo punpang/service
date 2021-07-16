@@ -38,6 +38,7 @@ export default {
         },
         async store({}, payload) {
             const res = await axios.post("/api/tableOrder/store" , payload);
+            return res;
         }
     }
 };
