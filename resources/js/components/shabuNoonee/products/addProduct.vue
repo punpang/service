@@ -57,6 +57,8 @@ export default {
         product_group_id: "",
         status: true,
         image_id: "",
+        price: 0,
+        status_free: 1,
       },
     };
   },

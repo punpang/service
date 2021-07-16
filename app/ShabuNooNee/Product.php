@@ -9,8 +9,10 @@ class Product extends Model
     protected $table = "products";
 
     protected $fillable = [
-        "title", "product_group_id", "image_id", "status"
+        "title", "product_group_id", "image_id", "status", "price", "status_free"
     ];
+    protected $hidden = ['created_at', 'updated_at'];
+
 
     public function productGroup()
     {
@@ -26,5 +28,16 @@ class Product extends Model
     public static function afterStore($id)
     {
         return self::whereId($id)->with("productGroup", "googlgImage")->first();
+    }
+
+    public static function checkProductUse($product_id)
+    {
+        $product = Product::whereId($product_id)->whereStatus(1)->first();
+
+        if ($product === null) {
+            return false;
+        }
+
+        return true;
     }
 }

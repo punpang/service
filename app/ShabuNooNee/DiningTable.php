@@ -64,7 +64,7 @@ class DiningTable extends Model implements Auditable
 
     public function detailTable()
     {
-        return $this->belongsTo(User::class, "user_id", "id");
+        return $this->belongsTo(User::class, "user_id", "id")->select("id","name");
     }
 
     public static function table($id)

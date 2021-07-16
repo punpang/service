@@ -20,7 +20,8 @@ class PriceRangeSeeder extends Seeder
                 "price_Children" => 119,
                 "price_Adolescence" => 249,
                 "price_Adult" => 249,
-                "price_Elder" => 119
+                "price_Elder" => 119,
+                "product_group_allow" => "1,2,5"
             ],
             [
                 "title" => "บุฟเฟต์หมู+เนื้อวัว",
@@ -28,7 +29,9 @@ class PriceRangeSeeder extends Seeder
                 "price_Children" => 149,
                 "price_Adolescence" => 299,
                 "price_Adult" => 299,
-                "price_Elder" => 149
+                "price_Elder" => 149,
+                "product_group_allow" => "1,2,3,4,5"
+
             ],
         ];
 

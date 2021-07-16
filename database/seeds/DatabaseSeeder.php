@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
             UserTypeSeeder::class,
             MenuBarSeeder::class,
             PriceRangeSeeder::class,
-            DiningTableStatusSeeder::class
+            DiningTableStatusSeeder::class,
+            ProductGroupSeeder::class
 
         ]);
     }

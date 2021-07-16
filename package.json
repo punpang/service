@@ -38,6 +38,7 @@
         "vue-currency-input": "^1.22.6",
         "vue-loading-overlay": "^3.4.2",
         "vue-router": "^3.5.2",
+        "vue-sweetalert2": "^5.0.2",
         "vue-toast-notification": "^0.6.2",
         "vuelidate": "^0.7.6",
         "vuetify": "^2.5.6",

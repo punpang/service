@@ -87,7 +87,11 @@ Route::middleware("cashier")->group(function () { //สำหรับ cashier
 Route::middleware("customer")->group(function () { //สำหรับ cashier
     Route::prefix('tableOrder')->group(function () { // api/diningTable/...
         Route::get('self', 'ShabuNooNee\TableOrderController@self');
-    });
+        Route::post('productGroupAllow', 'ShabuNooNee\TableOrderController@productGroupAllow');
+        Route::post('store', 'ShabuNooNee\TableOrderController@store');
+        Route::post('testStore', 'ShabuNooNee\TableOrderController@testStore');
+   
+         });
 
 });
 

@@ -231,6 +231,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -245,6 +254,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           return !!v || "ห้ามเว้นว่าง";
         }],
         product_group_id: [function (v) {
+          return !!v || "ห้ามเว้นว่าง";
+        }],
+        price: [function (v) {
           return !!v || "ห้ามเว้นว่าง";
         }]
       }
@@ -340,7 +352,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         title: "",
         product_group_id: "",
         status: true,
-        image_id: ""
+        image_id: "",
+        price: 0,
+        status_free: 1
       }
     };
   },
@@ -902,14 +916,42 @@ var render = function() {
         }
       }),
       _vm._v(" "),
+      _c("v-text-field", {
+        attrs: {
+          outlined: "",
+          label: "ราคา/หน่วย",
+          rules: _vm.rules.price,
+          type: "number",
+          pattern: "\\d*"
+        },
+        model: {
+          value: _vm.propForm.price,
+          callback: function($$v) {
+            _vm.$set(_vm.propForm, "price", $$v)
+          },
+          expression: "propForm.price"
+        }
+      }),
+      _vm._v(" "),
       _c("v-switch", {
-        attrs: { label: "สถานะ" },
+        attrs: { label: "สถานะ : สินค้า" },
         model: {
           value: _vm.propForm.status,
           callback: function($$v) {
             _vm.$set(_vm.propForm, "status", $$v)
           },
           expression: "propForm.status"
+        }
+      }),
+      _vm._v(" "),
+      _c("v-switch", {
+        attrs: { label: "สถานะ : ไม่มีค่าใช้จ่ายสำหรับบุฟเฟต์" },
+        model: {
+          value: _vm.propForm.status_free,
+          callback: function($$v) {
+            _vm.$set(_vm.propForm, "status_free", $$v)
+          },
+          expression: "propForm.status_free"
         }
       })
     ],

@@ -18,7 +18,9 @@ class CreateProductsTable extends Migration
             $table->string("title");
             $table->integer("product_group_id");
             $table->integer("image_id");
+            $table->float("price");
             $table->boolean("status");
+            $table->boolean("status_free");
             $table->timestamps();
         });
     }
