@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[10],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[17],{
 
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/google/drive/imageThumbnailPathSize800WH200.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************************************************************************************!*\
@@ -48,7 +48,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _js_components_google_drive_imageThumbnailPathSize800WH200__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/components/google/drive/imageThumbnailPathSize800WH200 */ "./resources/js/components/google/drive/imageThumbnailPathSize800WH200.vue");
-/* harmony import */ var vue_qrcode_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-qrcode-component */ "./node_modules/vue-qrcode-component/src/QRCode.vue");
 
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
@@ -146,14 +145,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
-
+ //import qrCode from 'vue-qrcode-component'
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    imageThumbnailPathSize800WH200: _js_components_google_drive_imageThumbnailPathSize800WH200__WEBPACK_IMPORTED_MODULE_2__["default"],
-    qrCode: vue_qrcode_component__WEBPACK_IMPORTED_MODULE_3__["default"]
+    imageThumbnailPathSize800WH200: _js_components_google_drive_imageThumbnailPathSize800WH200__WEBPACK_IMPORTED_MODULE_2__["default"] //qrCode <qrCode text="http://192.168.1.103:8000/table"></qrCode>
+
   },
   data: function data() {
     return {
@@ -466,8 +464,6 @@ var render = function() {
         },
         [_vm._v("TESTCLOSE")]
       ),
-      _vm._v(" "),
-      _c("qrCode", { attrs: { text: "http://192.168.1.103:8000/table" } }),
       _vm._v(" "),
       _vm._l(_vm.productGroupAllow, function(product) {
         return _c(

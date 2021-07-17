@@ -110631,7 +110631,7 @@ var routes = [{
   path: "/admin/dashboard",
   name: "adminDashboard",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 15).then(__webpack_require__.bind(null, /*! @/js/pages/admin/dashboard */ "./resources/js/pages/admin/dashboard.vue"));
+    return __webpack_require__.e(/*! import() */ 16).then(__webpack_require__.bind(null, /*! @/js/pages/admin/dashboard */ "./resources/js/pages/admin/dashboard.vue"));
   },
   meta: {
     requiresAuth: true
@@ -110676,7 +110676,7 @@ var routes = [{
   path: "/table",
   name: "tableOrder",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 10).then(__webpack_require__.bind(null, /*! @/js/pages/tableOrder/table */ "./resources/js/pages/tableOrder/table.vue"));
+    return __webpack_require__.e(/*! import() */ 17).then(__webpack_require__.bind(null, /*! @/js/pages/tableOrder/table */ "./resources/js/pages/tableOrder/table.vue"));
   },
   meta: {
     requiresAuth: true
@@ -110685,7 +110685,7 @@ var routes = [{
   path: "/table/close",
   name: "tableClose",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 16).then(__webpack_require__.bind(null, /*! @/js/pages/tableOrder/close */ "./resources/js/pages/tableOrder/close.vue"));
+    return __webpack_require__.e(/*! import() */ 15).then(__webpack_require__.bind(null, /*! @/js/pages/tableOrder/close */ "./resources/js/pages/tableOrder/close.vue"));
   }
 }, /////////////////////////////////////////
 {

@@ -3,6 +3,7 @@
     <h1>{{ tableUser.name }}</h1>
     <v-btn @click="test()">TEST</v-btn>
     <v-btn @click="TableClose()">TESTCLOSE</v-btn>
+
     <div v-for="product in productGroupAllow" :key="product.id">
       <v-divider></v-divider>
       <h3>{{ product.name }}</h3>
@@ -84,12 +85,13 @@
 
 <script>
 import { mapGetters } from "vuex";
-
 import imageThumbnailPathSize800WH200 from "@/js/components/google/drive/imageThumbnailPathSize800WH200";
+//import qrCode from 'vue-qrcode-component'
 
 export default {
   components: {
     imageThumbnailPathSize800WH200,
+    //qrCode <qrCode text="http://192.168.1.103:8000/table"></qrCode>
   },
   data() {
     return {
