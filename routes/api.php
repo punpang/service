@@ -32,6 +32,8 @@ Route::group([
     Route::post('me', 'AuthController@me');
 });
 
+Route::post('/test/logOut', 'AuthController@testLogOut');
+
 //Route::middleware(["admin","cashier"])->get('user', 'AuthController@me');
 Route::get('user', 'AuthController@me');
 Route::get('menuBar/lists', 'ShabuNooNee\MenuMainController@lists');

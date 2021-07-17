@@ -133,6 +133,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -146,6 +157,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
+    colorCardByCountProduct: function colorCardByCountProduct(c) {
+      if (c == 0) {
+        return;
+      }
+
+      return "lime lighten-5";
+    },
+    colorBadgeSumProduct: function colorBadgeSumProduct(c) {
+      if (c >= 20) {
+        return "deep-orange darken-4";
+      } else if (c >= 15) {
+        return "yellow darken-3";
+      } else if (c > 0) {
+        return "green";
+      }
+    },
     countProduct: function countProduct(v) {
       var length = this.products.length;
 
@@ -218,48 +245,86 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }
       }
     },
-    save: function save() {
+    test: function test() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var form, res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                form = {
-                  diningTableId: _this.self.id,
-                  products: _this.products,
-                  sumCountProduct: _this.sumCountProduct
-                };
-                _context.next = 3;
-                return _this.$store.dispatch("tableOrder/store", form);
+                _context.next = 2;
+                return _this.$store.dispatch("tableOrder/productGroupAllow", _this.self.price_range.product_group_allow);
 
-              case 3:
-                res = _context.sent;
-
-                if (res.status === 200) {
-                  _this.$swal({
-                    icon: "success",
-                    confirmButtonColor: "#3085d6",
-                    confirmButtonText: "รับทราบ",
-                    title: res.data.message,
-                    text: res.data.queue,
-                    footer: res.data.messageProductOutOfStock,
-                    allowOutsideClick: false
-                  });
-                }
-
-                _this.reset();
-
-                console.log(res);
-
-              case 7:
+              case 2:
               case "end":
                 return _context.stop();
             }
           }
         }, _callee);
+      }))();
+    },
+    TableClose: function TableClose() {
+      this.$router.replace("/table/close");
+    },
+    save: function save() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var form, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                if (!(_this2.sumCountProduct <= 0)) {
+                  _context2.next = 3;
+                  break;
+                }
+
+                _this2.$swal({
+                  icon: "warning",
+                  title: "โปรดเพิ่มอาหารอย่างน้อย 1 รายการ",
+                  confirmButtonColor: "#3085d6",
+                  confirmButtonText: "ปิด",
+                  allowOutsideClick: false
+                });
+
+                return _context2.abrupt("return");
+
+              case 3:
+                form = {
+                  diningTableId: _this2.self.id,
+                  products: _this2.products,
+                  sumCountProduct: _this2.sumCountProduct
+                };
+                _context2.next = 6;
+                return _this2.$store.dispatch("tableOrder/store", form);
+
+              case 6:
+                res = _context2.sent;
+
+                if (res.status === 200) {
+                  _this2.$swal({
+                    icon: "success",
+                    confirmButtonColor: "#3085d6",
+                    timer: 5000,
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                    title: res.data.message,
+                    text: "คิวของคุณ " + res.data.queue,
+                    footer: res.data.messageProductOutOfStock,
+                    allowOutsideClick: false
+                  });
+                }
+
+                _this2.reset();
+
+              case 9:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
       }))();
     },
     reset: function reset() {
@@ -268,22 +333,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   mounted: function mounted() {
-    var _this2 = this;
+    var _this3 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context3.prev = _context3.next) {
             case 0:
-              _context2.next = 2;
-              return _this2.$store.dispatch("tableOrder/self");
+              _context3.next = 2;
+              return _this3.$store.dispatch("tableOrder/self");
 
             case 2:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
           }
         }
-      }, _callee2);
+      }, _callee3);
     }))();
   },
   computed: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
@@ -373,6 +438,30 @@ var render = function() {
     [
       _c("h1", [_vm._v(_vm._s(_vm.tableUser.name))]),
       _vm._v(" "),
+      _c(
+        "v-btn",
+        {
+          on: {
+            click: function($event) {
+              return _vm.test()
+            }
+          }
+        },
+        [_vm._v("TEST")]
+      ),
+      _vm._v(" "),
+      _c(
+        "v-btn",
+        {
+          on: {
+            click: function($event) {
+              return _vm.TableClose()
+            }
+          }
+        },
+        [_vm._v("TESTCLOSE")]
+      ),
+      _vm._v(" "),
       _vm._l(_vm.productGroupAllow, function(product) {
         return _c(
           "div",
@@ -387,7 +476,19 @@ var render = function() {
             _vm._l(product.product, function(item_product) {
               return _c(
                 "v-card",
-                { key: item_product.id, staticClass: "mb-4" },
+                {
+                  key: item_product.id,
+                  staticClass: "mb-4",
+                  attrs: {
+                    outlined: "",
+                    disabled: item_product.status == false,
+                    shaped: "",
+                    elevation: "2",
+                    color: _vm.colorCardByCountProduct(
+                      _vm.countProduct(item_product.id)
+                    )
+                  }
+                },
                 [
                   _c(
                     "v-card-text",
@@ -412,15 +513,11 @@ var render = function() {
                             "v-col",
                             { attrs: { cols: "8" } },
                             [
-                              _c("h5", [
-                                _vm._v(
-                                  "\n              " +
-                                    _vm._s(item_product.title) +
-                                    "\n            "
-                                )
+                              _c("h5", { staticClass: "mb-4" }, [
+                                _c("strong", [
+                                  _vm._v(_vm._s(item_product.title))
+                                ])
                               ]),
-                              _vm._v(" "),
-                              _c("v-divider"),
                               _vm._v(" "),
                               item_product.status
                                 ? _c(
@@ -539,23 +636,32 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-btn",
+            {
+              on: {
+                click: function($event) {
+                  return _vm.save()
+                }
+              }
+            },
             [
+              _c("span", { staticClass: "white--text" }, [_vm._v("สั่งอาหาร")]),
+              _vm._v(" "),
               _c(
-                "span",
+                "v-badge",
                 {
-                  staticClass: "white--text",
-                  on: {
-                    click: function($event) {
-                      return _vm.save()
-                    }
+                  attrs: {
+                    content: _vm.sumCountProduct,
+                    value: _vm.sumCountProduct,
+                    color: _vm.colorBadgeSumProduct(_vm.sumCountProduct)
                   }
                 },
-                [_vm._v("สั่งอาหาร")]
-              ),
-              _vm._v(" "),
-              _c("v-icon", { staticClass: "white--text" }, [
-                _vm._v("restaurant_menu")
-              ])
+                [
+                  _c("v-icon", { staticClass: "white--text" }, [
+                    _vm._v("restaurant_menu")
+                  ])
+                ],
+                1
+              )
             ],
             1
           ),

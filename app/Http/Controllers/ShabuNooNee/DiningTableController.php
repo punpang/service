@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\ShabuNooNee\DiningTable;
 use App\ShabuNooNee\PriceRange;
+use Illuminate\Support\Str;
 use App\User;
 
 class DiningTableController extends Controller
@@ -59,6 +60,7 @@ class DiningTableController extends Controller
         $data->price_Elder = $getPriceRange->price_Elder;
         $data->sumPrice = $sumPrice;
         $data->priceRange_id = $getPriceRange->id;
+        $data->checkAuth = Str::uuid();
         $data->save();
 
         return response()->json([

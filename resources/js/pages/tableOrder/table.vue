@@ -1,6 +1,8 @@
 <template>
   <div>
     <h1>{{ tableUser.name }}</h1>
+    <v-btn @click="test()">TEST</v-btn>
+    <v-btn @click="TableClose()">TESTCLOSE</v-btn>
     <div v-for="product in productGroupAllow" :key="product.id">
       <v-divider></v-divider>
       <h3>{{ product.name }}</h3>
@@ -9,6 +11,11 @@
         v-for="item_product in product.product"
         :key="item_product.id"
         class="mb-4"
+        outlined
+        :disabled="item_product.status == false"
+        shaped
+        elevation="2"
+        :color="colorCardByCountProduct(countProduct(item_product.id))"
       >
         <v-card-text>
           <v-row>
@@ -18,10 +25,9 @@
               ></imageThumbnailPathSize800WH200>
             </v-col>
             <v-col cols="8">
-              <h5>
-                {{ item_product.title }}
+              <h5 class="mb-4">
+                <strong>{{ item_product.title }}</strong>
               </h5>
-              <v-divider></v-divider>
               <v-alert v-if="item_product.status" dense text type="success">
                 <strong>มีสินค้า</strong>
               </v-alert>
@@ -57,10 +63,15 @@
 
         <v-icon class="white--text">attach_money</v-icon>
       </v-btn>
-      <v-btn>
-        <span class="white--text" @click="save()">สั่งอาหาร</span>
-
-        <v-icon class="white--text">restaurant_menu</v-icon>
+      <v-btn @click="save()">
+        <span class="white--text">สั่งอาหาร</span>
+        <v-badge
+          :content="sumCountProduct"
+          :value="sumCountProduct"
+          :color="colorBadgeSumProduct(sumCountProduct)"
+        >
+          <v-icon class="white--text">restaurant_menu</v-icon>
+        </v-badge>
       </v-btn>
       <v-btn>
         <span class="white--text">เรียกพนักงาน</span>
@@ -87,6 +98,21 @@ export default {
     };
   },
   methods: {
+    colorCardByCountProduct(c) {
+      if (c == 0) {
+        return;
+      }
+      return "lime lighten-5";
+    },
+    colorBadgeSumProduct(c) {
+      if (c >= 20) {
+        return "deep-orange darken-4";
+      } else if (c >= 15) {
+        return "yellow darken-3";
+      } else if (c > 0) {
+        return "green";
+      }
+    },
     countProduct(v) {
       const length = this.products.length;
       for (let i = 0; i < length; i++) {
@@ -157,7 +183,26 @@ export default {
         }
       }
     },
+    async test() {
+      await this.$store.dispatch(
+        "tableOrder/productGroupAllow",
+        this.self.price_range.product_group_allow
+      );
+    },
+    TableClose() {
+      this.$router.replace("/table/close");
+    },
     async save() {
+      if (this.sumCountProduct <= 0) {
+        this.$swal({
+          icon: "warning",
+          title: "โปรดเพิ่มอาหารอย่างน้อย 1 รายการ",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "ปิด",
+          allowOutsideClick: false,
+        });
+        return;
+      }
       const form = {
         diningTableId: this.self.id,
         products: this.products,
@@ -169,16 +214,17 @@ export default {
         this.$swal({
           icon: "success",
           confirmButtonColor: "#3085d6",
-          confirmButtonText: "รับทราบ",
+          timer: 5000,
+          timerProgressBar: true,
+          showConfirmButton: false,
           title: res.data.message,
-          text: res.data.queue,
+          text: "คิวของคุณ " + res.data.queue,
           footer: res.data.messageProductOutOfStock,
           allowOutsideClick: false,
         });
       }
 
       this.reset();
-      console.log(res);
     },
     reset() {
       this.products = [];

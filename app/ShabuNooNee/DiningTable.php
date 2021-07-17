@@ -23,7 +23,11 @@ class DiningTable extends Model implements Auditable
         "price_Adult",
         "price_Elder",
         "sumPrice",
-        "priceRange_id"
+        "priceRange_id",
+        //
+        "time_end",
+        "checkAuth",
+        //
     ];
 
     protected $table = "dining_tables";
@@ -44,7 +48,10 @@ class DiningTable extends Model implements Auditable
         "price_Elder",
         "sumPrice",
         "priceRange_id",
-        "time_end"
+        //
+        "time_end",
+        "checkAuth",
+        //
     ];
 
     public function diningTableStatus()
@@ -64,7 +71,7 @@ class DiningTable extends Model implements Auditable
 
     public function detailTable()
     {
-        return $this->belongsTo(User::class, "user_id", "id")->select("id","name");
+        return $this->belongsTo(User::class, "user_id", "id")->select("id", "name");
     }
 
     public static function table($id)
@@ -74,6 +81,5 @@ class DiningTable extends Model implements Auditable
 
     public static function sumPrice($count, $price)
     {
-        
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\User;
 
 class AuthController extends Controller
 {
@@ -46,7 +47,7 @@ class AuthController extends Controller
         if (Auth::check()) {
             return response()->json(auth()->user());
         } else {
-            abort(403,"ไม่มีสิทธิ์เข้าถึง");
+            abort(403, "ไม่มีสิทธิ์เข้าถึง");
         }
     }
 
@@ -72,6 +73,12 @@ class AuthController extends Controller
         return $this->respondWithToken(auth()->refresh());
     }
 
+    public function testLogout()
+    {
+        Auth::logout();
+        return "logOut Success";
+    }
+
     /**
      * Get the token array structure.
      *
@@ -84,7 +91,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => Auth::factory()->getTTL()
         ]);
     }
 }

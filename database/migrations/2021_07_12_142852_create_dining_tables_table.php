@@ -31,6 +31,7 @@ class CreateDiningTablesTable extends Migration
             $table->float("price_Elder");
             $table->float("sumPrice");
             $table->integer("priceRange_id");
+            $table->uuid('checkAuth');
             $table->timestamps();
         });
     }

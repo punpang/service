@@ -110681,6 +110681,12 @@ var routes = [{
   meta: {
     requiresAuth: true
   }
+}, {
+  path: "/table/close",
+  name: "tableClose",
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ 16).then(__webpack_require__.bind(null, /*! @/js/pages/tableOrder/close */ "./resources/js/pages/tableOrder/close.vue"));
+  }
 }, /////////////////////////////////////////
 {
   path: "/admin/index",
@@ -110749,7 +110755,7 @@ var routes = [{
     requiresAuth: true
   }
 }, {
-  path: "/admin/login",
+  path: "/login",
   name: "login",
   component: _js_components_LoginComponent__WEBPACK_IMPORTED_MODULE_5__["default"]
 }, {
@@ -111917,7 +111923,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
 
 function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
@@ -111925,7 +111930,6 @@ function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   namespaced: true,

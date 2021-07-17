@@ -66,6 +66,11 @@ const routes = [
         meta: { requiresAuth: true }
     },
 
+    {
+        path: "/table/close",
+        name: "tableClose",
+        component: () => import("@/js/pages/tableOrder/close"),
+    },
     /////////////////////////////////////////
     {
         path: "/admin/index",
@@ -118,7 +123,7 @@ const routes = [
         meta: { requiresAuth: true }
     },
     {
-        path: "/admin/login",
+        path: "/login",
         name: "login",
         component: LoginComponent
     },

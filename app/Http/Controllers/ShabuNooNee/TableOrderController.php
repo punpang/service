@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\ShabuNooNee;
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\ShabuNooNee\TableOrder;
@@ -10,7 +11,7 @@ use App\ShabuNooNee\TableOrderDetail;
 use App\ShabuNooNee\ProductGroup;
 use App\ShabuNooNee\Product;
 use Auth;
-use Illuminate\Support\Arr;
+use App\User;
 
 class TableOrderController extends Controller
 {
@@ -56,8 +57,6 @@ class TableOrderController extends Controller
 
     public function store() // เพิ่มรายการสั่งอาหาร และ รายละเอียด
     {
-        // $input = request()->all();
-
         // ตรวจสอบว่า รายการอาหารเกิน 20 ถาดไหม
         if (request("sumCountProduct") > 20) {
             return response()->json(
@@ -67,7 +66,6 @@ class TableOrderController extends Controller
                 201
             );
         }
-        //dd($input);
 
         //สร้างรายการอาหารใหม่
         $newTableOrder = new TableOrder;
