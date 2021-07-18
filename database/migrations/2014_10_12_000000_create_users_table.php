@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
+            $table->string('pw')->default('free');
             $table->rememberToken();
             $table->boolean('type')->default(0);
             $table->boolean('logout')->default(false);

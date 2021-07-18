@@ -400,7 +400,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         title: "",
         product_group_id: "",
         status: true,
-        image_id: ""
+        image_id: "",
+        price: 0,
+        status_free: 1
       };
       this.uploadImange = {
         imagePreview: "",

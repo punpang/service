@@ -13,6 +13,7 @@ import googleImage from "@/js/stores/modules/shabuNooNee/googleImage";
 import diningTable from "@/js/stores/modules/shabuNooNee/diningTable";
 import priceRange from "@/js/stores/modules/shabuNooNee/priceRange";
 import tableOrder from "@/js/stores/modules/shabuNooNee/tableOrder";
+import loginByQrCode from "@/js/stores/modules/shabuNooNee/loginByQrCode";
 
 Vue.use(Vuex);
 
@@ -28,6 +29,7 @@ export default new Vuex.Store({
         googleImage,
         diningTable,
         priceRange,
-        tableOrder
+        tableOrder,
+        loginByQrCode
     }
 });

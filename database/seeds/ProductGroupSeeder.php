@@ -13,7 +13,13 @@ class ProductGroupSeeder extends Seeder
     public function run()
     {
         $datas = [
-            "หมู", "ไก่", "วัว", "กุ้ง", "ผัก"
+            "หมู", //1
+            "ไก่", //2
+            "วัว", //3
+            "กุ้ง", //4
+            "ผัก", //5
+            "น้ำซุป", //6
+            "อาหารนอกบุฟเฟต์" //7
         ];
 
         foreach ($datas as $data) {

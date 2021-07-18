@@ -35,10 +35,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/tableOrder/table.vue?vue&type=script&lang=js&":
-/*!**********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/tableOrder/table.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/shabuNoonee/tableOrder/useTableOrder.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/shabuNoonee/tableOrder/useTableOrder.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -143,10 +143,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 
- //import qrCode from 'vue-qrcode-component'
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -202,14 +199,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var length = this.products.length;
 
       if (length == 0) {
-        this.products.push({
-          id: data.id,
-          title: data.title,
-          quantity: 1,
-          price: data.price,
-          sumPrice: data.price * 1,
-          status_free: data.status_free
-        });
+        this.productPush(data);
         this.sumCountProduct = 1;
       } else {
         for (var i = 0; i < length; i++) {
@@ -221,16 +211,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }
 
-        this.products.push({
-          id: data.id,
-          title: data.title,
-          quantity: 1,
-          price: data.price,
-          sumPrice: data.price * 1,
-          status_free: data.status_free
-        });
+        this.productPush(data);
         this.sumCountProduct = ++this.sumCountProduct;
       }
+    },
+    productPush: function productPush(data) {
+      this.products.push({
+        id: data.id,
+        title: data.title,
+        product_group_id: data.product_group_id,
+        quantity: 1,
+        price: data.price,
+        sumPrice: data.price * 1,
+        status_free: data.status_free
+      });
     },
     clickCutProduct: function clickCutProduct(data) {
       var length = this.products.length;
@@ -248,43 +242,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }
       }
     },
-    test: function test() {
+    save: function save() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var form, res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return _this.$store.dispatch("tableOrder/productGroupAllow", _this.self.price_range.product_group_allow);
-
-              case 2:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    TableClose: function TableClose() {
-      this.$router.replace("/table/close");
-    },
-    save: function save() {
-      var _this2 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var form, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                if (!(_this2.sumCountProduct <= 0)) {
-                  _context2.next = 3;
+                if (!(_this.sumCountProduct <= 0)) {
+                  _context.next = 3;
                   break;
                 }
 
-                _this2.$swal({
+                _this.$swal({
                   icon: "warning",
                   title: "โปรดเพิ่มอาหารอย่างน้อย 1 รายการ",
                   confirmButtonColor: "#3085d6",
@@ -292,42 +264,72 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   allowOutsideClick: false
                 });
 
-                return _context2.abrupt("return");
+                return _context.abrupt("return");
 
               case 3:
                 form = {
-                  diningTableId: _this2.self.id,
-                  products: _this2.products,
-                  sumCountProduct: _this2.sumCountProduct
+                  diningTableId: _this.self.id,
+                  products: _this.products,
+                  sumCountProduct: _this.sumCountProduct
                 };
-                _context2.next = 6;
-                return _this2.$store.dispatch("tableOrder/store", form);
+                _context.next = 6;
+                return _this.$store.dispatch("tableOrder/store", form);
 
               case 6:
-                res = _context2.sent;
+                res = _context.sent;
 
-                if (res.status === 200) {
-                  _this2.$swal({
-                    icon: "success",
-                    confirmButtonColor: "#3085d6",
-                    timer: 5000,
-                    timerProgressBar: true,
-                    showConfirmButton: false,
-                    title: res.data.message,
-                    text: "คิวของคุณ " + res.data.queue,
-                    footer: res.data.messageProductOutOfStock,
-                    allowOutsideClick: false
-                  });
+                if (!(res.status === 200)) {
+                  _context.next = 11;
+                  break;
                 }
 
-                _this2.reset();
+                _this.$swal({
+                  icon: "success",
+                  confirmButtonColor: "#3085d6",
+                  timer: 5000,
+                  timerProgressBar: true,
+                  showConfirmButton: false,
+                  title: res.data.message,
+                  text: "คิวของคุณ " + res.data.queue,
+                  footer: res.data.messageProductOutOfStock,
+                  allowOutsideClick: false
+                });
 
-              case 9:
+                _context.next = 16;
+                break;
+
+              case 11:
+                if (!(res.status === 201)) {
+                  _context.next = 16;
+                  break;
+                }
+
+                _this.$swal({
+                  icon: "error",
+                  title: res.data.message,
+                  text: res.data.messageText,
+                  confirmButtonColor: "#3085d6",
+                  confirmButtonText: "ปิด",
+                  allowOutsideClick: false
+                });
+
+                if (!res.data.resetStatus) {
+                  _context.next = 16;
+                  break;
+                }
+
+                _context.next = 16;
+                return _this.$store.dispatch("tableOrder/self");
+
+              case 16:
+                _this.reset();
+
+              case 17:
               case "end":
-                return _context2.stop();
+                return _context.stop();
             }
           }
-        }, _callee2);
+        }, _callee);
       }))();
     },
     reset: function reset() {
@@ -336,28 +338,112 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   mounted: function mounted() {
-    var _this3 = this;
+    var _this2 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context2.prev = _context2.next) {
             case 0:
-              _context3.next = 2;
-              return _this3.$store.dispatch("tableOrder/self");
+              _context2.next = 2;
+              return _this2.$store.dispatch("tableOrder/productGroupAllow", _this2.self.price_range.product_group_allow);
 
             case 2:
             case "end":
-              return _context3.stop();
+              return _context2.stop();
           }
         }
-      }, _callee3);
+      }, _callee2);
     }))();
   },
-  computed: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
     self: "tableOrder/self"
   })), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
     productGroupAllow: "tableOrder/productGroupAllow"
+  }))
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/tableOrder/table.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/tableOrder/table.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _js_components_shabuNoonee_tableOrder_useTableOrder__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/components/shabuNoonee/tableOrder/useTableOrder */ "./resources/js/components/shabuNoonee/tableOrder/useTableOrder.vue");
+/* harmony import */ var _js_components_shabuNoonee_tableOrder_emptyTableOrder__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/js/components/shabuNoonee/tableOrder/emptyTableOrder */ "./resources/js/components/shabuNoonee/tableOrder/emptyTableOrder.vue");
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+ //import qrCode from 'vue-qrcode-component'
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    useTableOrder: _js_components_shabuNoonee_tableOrder_useTableOrder__WEBPACK_IMPORTED_MODULE_2__["default"],
+    emptyTableOrder: _js_components_shabuNoonee_tableOrder_emptyTableOrder__WEBPACK_IMPORTED_MODULE_3__["default"]
+  },
+  data: function data() {
+    return {};
+  },
+  methods: {},
+  mounted: function mounted() {
+    var _this = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      var loader;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              loader = _this.$loading.show();
+              _context.next = 3;
+              return _this.$store.dispatch("tableOrder/self");
+
+            case 3:
+              loader.hide();
+              window.Echo.channel("DiningTableStatusOn").listen(".DiningTableStatusAs", function (e) {
+                if (_this.tableUser.id === e.task.user_id) {
+                  _this.$store.dispatch("tableOrder/self");
+                }
+              });
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
+    self: "tableOrder/self"
   })), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
     tableUser: "main/User"
   }))
@@ -421,10 +507,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/tableOrder/table.vue?vue&type=template&id=621ab9f0&":
-/*!**************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/tableOrder/table.vue?vue&type=template&id=621ab9f0& ***!
-  \**************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/shabuNoonee/tableOrder/emptyTableOrder.vue?vue&type=template&id=5ce72599&":
+/*!*****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/shabuNoonee/tableOrder/emptyTableOrder.vue?vue&type=template&id=5ce72599& ***!
+  \*****************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -439,32 +525,38 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("h1", [_vm._v(_vm._s(_vm.tableUser.name))]),
-      _vm._v(" "),
-      _c(
-        "v-btn",
-        {
-          on: {
-            click: function($event) {
-              return _vm.test()
-            }
-          }
-        },
-        [_vm._v("TEST")]
-      ),
-      _vm._v(" "),
-      _c(
-        "v-btn",
-        {
-          on: {
-            click: function($event) {
-              return _vm.TableClose()
-            }
-          }
-        },
-        [_vm._v("TESTCLOSE")]
-      ),
-      _vm._v(" "),
+      _c("v-row", { staticClass: "mt-16", attrs: { justify: "center" } }, [
+        _c("h1", [_vm._v("โต๊ะว่าง")])
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/shabuNoonee/tableOrder/useTableOrder.vue?vue&type=template&id=42b2f553&":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/shabuNoonee/tableOrder/useTableOrder.vue?vue&type=template&id=42b2f553& ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
       _vm._l(_vm.productGroupAllow, function(product) {
         return _c(
           "div",
@@ -519,7 +611,17 @@ var render = function() {
                               _c("h5", { staticClass: "mb-4" }, [
                                 _c("strong", [
                                   _vm._v(_vm._s(item_product.title))
-                                ])
+                                ]),
+                                _vm._v(" "),
+                                item_product.status_free === 0
+                                  ? _c("strong", [
+                                      _vm._v(
+                                        "( " +
+                                          _vm._s(item_product.price) +
+                                          " บาท )"
+                                      )
+                                    ])
+                                  : _vm._e()
                               ]),
                               _vm._v(" "),
                               item_product.status
@@ -696,6 +798,44 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/tableOrder/table.vue?vue&type=template&id=621ab9f0&":
+/*!**************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/tableOrder/table.vue?vue&type=template&id=621ab9f0& ***!
+  \**************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _vm.self === null
+        ? _c("emptyTableOrder", [_vm._v("โต๊ะว่าง")])
+        : _vm.self.status_id === 1
+        ? _c("useTableOrder")
+        : _vm.self.status_id === 2
+        ? _c("div", [_vm._v("สถานะ 2 :: ชำระเงิน")])
+        : _vm.self.status_id === 3
+        ? _c("div", [_vm._v("สถานะ 3 :: กำลังทำความสะอาด")])
+        : _vm._e()
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/google/drive/imageThumbnailPathSize800WH200.vue":
 /*!*********************************************************************************!*\
   !*** ./resources/js/components/google/drive/imageThumbnailPathSize800WH200.vue ***!
@@ -760,6 +900,128 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_imageThumbnailPathSize800WH200_vue_vue_type_template_id_afa4f700___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_imageThumbnailPathSize800WH200_vue_vue_type_template_id_afa4f700___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/shabuNoonee/tableOrder/emptyTableOrder.vue":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/shabuNoonee/tableOrder/emptyTableOrder.vue ***!
+  \****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _emptyTableOrder_vue_vue_type_template_id_5ce72599___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./emptyTableOrder.vue?vue&type=template&id=5ce72599& */ "./resources/js/components/shabuNoonee/tableOrder/emptyTableOrder.vue?vue&type=template&id=5ce72599&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
+  _emptyTableOrder_vue_vue_type_template_id_5ce72599___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _emptyTableOrder_vue_vue_type_template_id_5ce72599___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/shabuNoonee/tableOrder/emptyTableOrder.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/shabuNoonee/tableOrder/emptyTableOrder.vue?vue&type=template&id=5ce72599&":
+/*!***********************************************************************************************************!*\
+  !*** ./resources/js/components/shabuNoonee/tableOrder/emptyTableOrder.vue?vue&type=template&id=5ce72599& ***!
+  \***********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_emptyTableOrder_vue_vue_type_template_id_5ce72599___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./emptyTableOrder.vue?vue&type=template&id=5ce72599& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/shabuNoonee/tableOrder/emptyTableOrder.vue?vue&type=template&id=5ce72599&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_emptyTableOrder_vue_vue_type_template_id_5ce72599___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_emptyTableOrder_vue_vue_type_template_id_5ce72599___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/shabuNoonee/tableOrder/useTableOrder.vue":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/shabuNoonee/tableOrder/useTableOrder.vue ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _useTableOrder_vue_vue_type_template_id_42b2f553___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./useTableOrder.vue?vue&type=template&id=42b2f553& */ "./resources/js/components/shabuNoonee/tableOrder/useTableOrder.vue?vue&type=template&id=42b2f553&");
+/* harmony import */ var _useTableOrder_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./useTableOrder.vue?vue&type=script&lang=js& */ "./resources/js/components/shabuNoonee/tableOrder/useTableOrder.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _useTableOrder_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _useTableOrder_vue_vue_type_template_id_42b2f553___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _useTableOrder_vue_vue_type_template_id_42b2f553___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/shabuNoonee/tableOrder/useTableOrder.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/shabuNoonee/tableOrder/useTableOrder.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/shabuNoonee/tableOrder/useTableOrder.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_useTableOrder_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./useTableOrder.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/shabuNoonee/tableOrder/useTableOrder.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_useTableOrder_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/shabuNoonee/tableOrder/useTableOrder.vue?vue&type=template&id=42b2f553&":
+/*!*********************************************************************************************************!*\
+  !*** ./resources/js/components/shabuNoonee/tableOrder/useTableOrder.vue?vue&type=template&id=42b2f553& ***!
+  \*********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_useTableOrder_vue_vue_type_template_id_42b2f553___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./useTableOrder.vue?vue&type=template&id=42b2f553& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/shabuNoonee/tableOrder/useTableOrder.vue?vue&type=template&id=42b2f553&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_useTableOrder_vue_vue_type_template_id_42b2f553___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_useTableOrder_vue_vue_type_template_id_42b2f553___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

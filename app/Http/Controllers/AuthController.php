@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\ShabuNooNee\DiningTable;
 
 class AuthController extends Controller
 {
@@ -16,7 +17,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login', "loginByQrCode"]]);
     }
 
     /**
@@ -34,6 +35,7 @@ class AuthController extends Controller
 
         return $this->respondWithToken($token);
     }
+
 
     /**
      * Get the authenticated User.
@@ -77,6 +79,29 @@ class AuthController extends Controller
     {
         Auth::logout();
         return "logOut Success";
+    }
+
+    public function loginByQrCode()
+    {
+        
+        $user = DiningTable::where("checkAuth", request("uuid"))
+            ->whereIn("status_id",[1,2])
+            //->whereDate("created_at", \Carbon\Carbon::now())
+            ->select("user_id")
+            ->with("userProfile")
+            ->first();
+
+        if(!$user){
+            return response()->json([],201);
+        }
+
+        $credentials = ["id" => $user->user_id, "password" => $user->userProfile->pw];
+
+        if (!$token = auth()->attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        return $this->respondWithToken($token);
     }
 
     /**

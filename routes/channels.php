@@ -21,3 +21,7 @@ Broadcast::channel('newTask', function(){
 Broadcast::channel('taskRemoved', function(){
     return true;
 });
+
+Broadcast::channel('DiningTableStatus', function(){
+    return true;
+});

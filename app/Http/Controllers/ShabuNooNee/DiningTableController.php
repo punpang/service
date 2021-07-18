@@ -8,6 +8,8 @@ use App\ShabuNooNee\DiningTable;
 use App\ShabuNooNee\PriceRange;
 use Illuminate\Support\Str;
 use App\User;
+use App\Events\DiningTableStatus;
+use Auth;
 
 class DiningTableController extends Controller
 {
@@ -62,6 +64,8 @@ class DiningTableController extends Controller
         $data->priceRange_id = $getPriceRange->id;
         $data->checkAuth = Str::uuid();
         $data->save();
+
+        broadcast(new DiningTableStatus($data));
 
         return response()->json([
             "status" => "success",
@@ -145,5 +149,25 @@ class DiningTableController extends Controller
             "status" => "success",
             "message" => "เปลี่ยนแปลงเซทบุฟเฟต์สำเร็จ"
         ], 200);
+    }
+
+    public function checkUUID()
+    {
+       // dd(request()->all());
+        $check = DiningTable::where("checkAuth", request("uuid"))
+            ->whereIn("status_id", [1, 2])
+            ->whereDate("created_at", \Carbon\Carbon::now())
+            ->first();
+
+            
+        if ($check === null) {
+            //dd($check);
+            Auth::logout();
+            return response()->json([
+                "status" => "logOut"
+            ], 200);
+        }
+
+        //return "true";
     }
 }

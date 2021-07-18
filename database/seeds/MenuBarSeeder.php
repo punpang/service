@@ -24,9 +24,10 @@ class MenuBarSeeder extends Seeder
             ],
             [
                 // จัดการโต๊ะ
-                "title" => "จัดการโต๊ะ", "action" => "storefront", "admin" => 1, "cashier" => 1, "waitress" => 0, "kitchen" => 0, "customer" => 0,
+                "title" => "จัดการโต๊ะ", "action" => "storefront", "admin" => 1, "cashier" => 1, "waitress" => 0, "kitchen" => 0, "customer" => 1,
                 "subs" => [
                     ["title" => "บริหารโต๊ะ", "to" => "/diningtable/manage", "admin" => 1, "cashier" => 1, "waitress" => 0, "kitchen" => 0, "customer" => 0],
+                    ["title" => "โต๊ะ", "to" => "/table", "admin" => 0, "cashier" => 0, "waitress" => 0, "kitchen" => 0, "customer" => 1],
                 ]
             ]
         ];

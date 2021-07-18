@@ -17,11 +17,15 @@ export default {
         productGroupAllow: state => state.productGroupAllow
     },
     actions: {
-        async self({ commit, dispatch }) {
+        async self({ commit }) {
             commit("self", {});
             const res = await axios.get("/api/tableOrder/self");
             commit("self", res.data.data);
-            console.log(res.data.data.price_range.product_group_allow);
+        },
+        async selfUUID({ commit, dispatch }, payload) {
+            commit("self", {});
+            const res = await axios.post("/api/tableOrder/selfUUID", payload);
+            commit("self", res.data.data);
             dispatch(
                 "productGroupAllow",
                 res.data.data.price_range.product_group_allow
@@ -35,7 +39,7 @@ export default {
             commit("productGroupAllow", res.data.data);
         },
         async store({}, payload) {
-            const res = await axios.post("/api/tableOrder/store" , payload);
+            const res = await axios.post("/api/tableOrder/store", payload);
             return res;
         }
     }

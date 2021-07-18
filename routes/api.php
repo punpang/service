@@ -34,6 +34,8 @@ Route::group([
 
 Route::post('/test/logOut', 'AuthController@testLogOut');
 
+Route::post('/loginByQrCode', 'AuthController@loginByQrCode');
+
 //Route::middleware(["admin","cashier"])->get('user', 'AuthController@me');
 Route::get('user', 'AuthController@me');
 Route::get('menuBar/lists', 'ShabuNooNee\MenuMainController@lists');
@@ -88,7 +90,10 @@ Route::middleware("cashier")->group(function () { //สำหรับ cashier
 
 Route::middleware("customer")->group(function () { //สำหรับ cashier
     Route::prefix('tableOrder')->group(function () { // api/diningTable/...
+        Route::post('checkUUID', 'ShabuNooNee\DiningTableController@checkUUID');
+
         Route::get('self', 'ShabuNooNee\TableOrderController@self');
+        Route::post('selfUUID', 'ShabuNooNee\TableOrderController@selfUUID');
         Route::post('productGroupAllow', 'ShabuNooNee\TableOrderController@productGroupAllow');
         Route::post('store', 'ShabuNooNee\TableOrderController@store');
         Route::post('testStore', 'ShabuNooNee\TableOrderController@testStore');

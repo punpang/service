@@ -25,6 +25,7 @@ class UsersTableSeeder extends Seeder
         'email' => 'table1',
         //'phone' => '0864735562',
         'password' => Hash::make('123456'),
+        'pw' => '123456',
         'type' => 5,
       ],
       [
@@ -32,6 +33,7 @@ class UsersTableSeeder extends Seeder
         'email' => 'table2',
         //'phone' => '0864735562',
         'password' => Hash::make('123456'),
+        'pw' => '123456',
         'type' => 5,
       ],
       [
@@ -39,6 +41,7 @@ class UsersTableSeeder extends Seeder
         'email' => 'table3',
         //'phone' => '0864735562',
         'password' => Hash::make('123456'),
+        'pw' => '123456',
         'type' => 5,
       ],
       [
@@ -46,6 +49,7 @@ class UsersTableSeeder extends Seeder
         'email' => 'table4',
         //'phone' => '0864735562',
         'password' => Hash::make('123456'),
+        'pw' => '123456',
         'type' => 5,
       ],
       [
@@ -53,6 +57,7 @@ class UsersTableSeeder extends Seeder
         'email' => 'table5',
         //'phone' => '0864735562',
         'password' => Hash::make('123456'),
+        'pw' => '123456',
         'type' => 5,
       ]
       ,
@@ -61,6 +66,7 @@ class UsersTableSeeder extends Seeder
         'email' => 'table6',
         //'phone' => '0864735562',
         'password' => Hash::make('123456'),
+        'pw' => '123456',
         'type' => 5,
       ]
       ,
@@ -69,6 +75,7 @@ class UsersTableSeeder extends Seeder
         'email' => 'table7',
         //'phone' => '0864735562',
         'password' => Hash::make('123456'),
+        'pw' => '123456',
         'type' => 5,
       ]
       ,
@@ -77,6 +84,7 @@ class UsersTableSeeder extends Seeder
         'email' => 'table8',
         //'phone' => '0864735562',
         'password' => Hash::make('123456'),
+        'pw' => '123456',
         'type' => 5,
       ]
     ];

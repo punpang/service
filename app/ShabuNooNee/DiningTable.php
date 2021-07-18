@@ -5,6 +5,7 @@ namespace App\ShabuNooNee;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Auth;
 
 class DiningTable extends Model implements Auditable
 {
@@ -74,12 +75,59 @@ class DiningTable extends Model implements Auditable
         return $this->belongsTo(User::class, "user_id", "id")->select("id", "name");
     }
 
+    public function userProfile()
+    {
+        return $this->belongsTo(User::class, "user_id", "id")->select("id", "email", "pw");
+    }
+
     public static function table($id)
     {
-        return self::whereId($id)->with("detailTable", "diningTableStatus", "priceRange")->first();
+        return self::whereId($id)
+            ->with("detailTable", "diningTableStatus", "priceRange")
+            ->first();
     }
+
 
     public static function sumPrice($count, $price)
     {
+    }
+
+    public static function checkUUID($uuid = null)
+    {
+        $check = DiningTable::where("checkAuth", $uuid)
+            ->whereIn("status_id", [1, 2])
+            ->whereDate("created_at", \Carbon\Carbon::now())
+            ->first();
+
+        if ($check === null && $uuid != null) {
+            Auth::logout();
+            return false;
+        }
+
+        return true;
+    }
+
+    public static function findByUserID()
+    {
+        $data = DiningTable::whereUserId(Auth::user()->id)
+            ->whereIn("status_id", [1, 2, 3])
+            ->with("detailTable", "priceRange")
+            ->first();
+
+        return $data;
+    }
+
+
+    public static function findByUserIDStatusUse()
+    {
+        $data = DiningTable::whereUserId(Auth::user()->id)
+            ->whereIn("status_id", [1])
+            ->first();
+
+        if ($data === null) {
+            return false;
+        }
+
+        return true;
     }
 }
