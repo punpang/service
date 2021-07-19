@@ -27,8 +27,21 @@
       type="number"
       pattern="\d*"
     ></v-text-field>
-    <v-switch label="สถานะ : สินค้า" v-model="propForm.status"></v-switch>
-    <v-switch label="สถานะ : ไม่มีค่าใช้จ่ายสำหรับบุฟเฟต์" v-model="propForm.status_free"></v-switch>
+    <v-select
+      outlined
+      label="ส่งงานต่อ"
+      v-model="propForm.next_to"
+      :items="nextTos"
+      item-text="name"
+      item-value="id"
+      :rules="rules.next_to"
+    ></v-select>
+
+    <v-switch label="ใช้งาน" v-model="propForm.status"></v-switch>
+    <v-switch
+      label="ไม่มีค่าใช้จ่ายสำหรับบุฟเฟต์"
+      v-model="propForm.status_free"
+    ></v-switch>
   </div>
 </template>
 
@@ -46,14 +59,17 @@ export default {
         title: [(v) => !!v || "ห้ามเว้นว่าง"],
         product_group_id: [(v) => !!v || "ห้ามเว้นว่าง"],
         price: [(v) => !!v || "ห้ามเว้นว่าง"],
+        next_to: [(v) => !!v || "ห้ามเว้นว่าง"],
       },
     };
   },
-  mounted() {
-    this.$store.dispatch("productGroup/all");
+  async mounted() {
+    await this.$store.dispatch("productGroup/all");
+    await this.$store.dispatch("userType/nextTo");
   },
   computed: {
     ...mapGetters({ productGroups: "productGroup/all" }),
+    ...mapGetters({ nextTos: "userType/nextTo" }),
   },
   methods: {
     emitImageId(v) {

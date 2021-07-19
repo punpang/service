@@ -8,6 +8,7 @@ use App\ShabuNooNee\Product;
 class TableOrderDetail extends Model
 {
     protected $table = "table_order_details";
+
     protected $fillable = [
         "table_order_id",
         "product_id",
@@ -16,4 +17,14 @@ class TableOrderDetail extends Model
         "sum_price",
         "status_free",
     ];
+
+    protected $hidden = [
+        "created_at",
+        "updated_at"
+    ];
+
+    public function products()
+    {
+        return $this->belongsTo(Product::class, "product_id", "id");
+    }
 }

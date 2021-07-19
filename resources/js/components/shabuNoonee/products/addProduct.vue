@@ -59,6 +59,7 @@ export default {
         image_id: "",
         price: 0,
         status_free: 1,
+        next_to: 4,
       },
     };
   },
@@ -82,6 +83,7 @@ export default {
         image_id: "",
         price: 0,
         status_free: 1,
+        next_to: 4,
       };
       this.uploadImange = {
         imagePreview: "",

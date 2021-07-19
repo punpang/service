@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->float("price");
             $table->boolean("status");
             $table->boolean("status_free");
+            $table->integer("next_to")->default(4);
             $table->timestamps();
         });
     }

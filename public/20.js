@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[16],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[20],{
 
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/kitchen/kitchenQueueOrder.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************************!*\
@@ -43,7 +43,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      countDown: 0
+      countDown: 100
     };
   },
   methods: {
@@ -55,7 +55,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
         _this.countDownTimer();
       }, 1000);
-      console.log(this.countDown);
     }
   },
   mounted: function mounted() {
@@ -70,9 +69,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               return _this2.$store.dispatch("kitchenQueueOrder/self");
 
             case 2:
-              _this2.countDown = 100;
-
-            case 3:
             case "end":
               return _context.stop();
           }

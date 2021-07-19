@@ -17,6 +17,7 @@ class CreateWaitressQueueOrdersTable extends Migration
             $table->bigIncrements('id');
             $table->integer("queue_id");
             $table->integer("user_id")->default(0);
+            $table->integer("waitress_channal")->default(0);
             $table->integer("format_id")->default(1);
             $table->boolean("status_done")->default(false);
             $table->timestamps();

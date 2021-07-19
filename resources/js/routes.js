@@ -68,7 +68,7 @@ const routes = [
 
     {
         path: "/table/:uuid",
-        name: "tableOrder",
+        name: "tableOrderId",
         component: () => import("@/js/pages/tableOrder/tableUUID"),
         meta: { requiresAuth: true }
     },
@@ -77,6 +77,13 @@ const routes = [
         path: "/table/close",
         name: "tableClose",
         component: () => import("@/js/pages/tableOrder/close")
+    },
+
+    {
+        path: "/kitchen/QueueOrder",
+        name: "kitchenQueueOrder",
+        component: () => import("@/js/pages/kitchen/kitchenQueueOrder"),
+        meta: { requiresAuth: true }
     },
 
     {

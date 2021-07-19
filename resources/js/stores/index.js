@@ -14,6 +14,8 @@ import diningTable from "@/js/stores/modules/shabuNooNee/diningTable";
 import priceRange from "@/js/stores/modules/shabuNooNee/priceRange";
 import tableOrder from "@/js/stores/modules/shabuNooNee/tableOrder";
 import loginByQrCode from "@/js/stores/modules/shabuNooNee/loginByQrCode";
+import userType from "@/js/stores/modules/shabuNooNee/userType";
+import kitchenQueueOrder from "@/js/stores/modules/shabuNooNee/kitchenQueueOrder";
 
 Vue.use(Vuex);
 
@@ -30,6 +32,8 @@ export default new Vuex.Store({
         diningTable,
         priceRange,
         tableOrder,
-        loginByQrCode
+        loginByQrCode,
+        userType,
+        kitchenQueueOrder
     }
 });

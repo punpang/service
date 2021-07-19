@@ -60,6 +60,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->type === self::CUSTOMER_TYPE;
     }
 
+    public function isKitchen()
+    {
+        return $this->type === self::KITCHEN_TYPE;
+    }
+
     public function member()
     {
         return $this->belongsTo(Member::class);

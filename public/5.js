@@ -198,14 +198,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _js_components_google_drive_uploadImage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/google/drive/uploadImage */ "./resources/js/components/google/drive/uploadImage.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _js_components_google_drive_uploadImage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/components/google/drive/uploadImage */ "./resources/js/components/google/drive/uploadImage.vue");
+
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -245,7 +266,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["propForm", "propUploadImange"],
   components: {
-    uploadImage: _js_components_google_drive_uploadImage__WEBPACK_IMPORTED_MODULE_1__["default"]
+    uploadImage: _js_components_google_drive_uploadImage__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
@@ -258,15 +279,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }],
         price: [function (v) {
           return !!v || "ห้ามเว้นว่าง";
+        }],
+        next_to: [function (v) {
+          return !!v || "ห้ามเว้นว่าง";
         }]
       }
     };
   },
   mounted: function mounted() {
-    this.$store.dispatch("productGroup/all");
+    var _this = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return _this.$store.dispatch("productGroup/all");
+
+            case 2:
+              _context.next = 4;
+              return _this.$store.dispatch("userType/nextTo");
+
+            case 4:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
     productGroups: "productGroup/all"
+  })), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
+    nextTos: "userType/nextTo"
   })),
   methods: {
     emitImageId: function emitImageId(v) {
@@ -354,7 +400,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         status: true,
         image_id: "",
         price: 0,
-        status_free: 1
+        status_free: 1,
+        next_to: 4
       }
     };
   },
@@ -402,7 +449,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         status: true,
         image_id: "",
         price: 0,
-        status_free: 1
+        status_free: 1,
+        next_to: 4
       };
       this.uploadImange = {
         imagePreview: "",
@@ -441,10 +489,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//
-//
-//
-//
 //
 //
 //
@@ -935,8 +979,26 @@ var render = function() {
         }
       }),
       _vm._v(" "),
+      _c("v-select", {
+        attrs: {
+          outlined: "",
+          label: "ส่งงานต่อ",
+          items: _vm.nextTos,
+          "item-text": "name",
+          "item-value": "id",
+          rules: _vm.rules.next_to
+        },
+        model: {
+          value: _vm.propForm.next_to,
+          callback: function($$v) {
+            _vm.$set(_vm.propForm, "next_to", $$v)
+          },
+          expression: "propForm.next_to"
+        }
+      }),
+      _vm._v(" "),
       _c("v-switch", {
-        attrs: { label: "สถานะ : สินค้า" },
+        attrs: { label: "ใช้งาน" },
         model: {
           value: _vm.propForm.status,
           callback: function($$v) {
@@ -947,7 +1009,7 @@ var render = function() {
       }),
       _vm._v(" "),
       _c("v-switch", {
-        attrs: { label: "สถานะ : ไม่มีค่าใช้จ่ายสำหรับบุฟเฟต์" },
+        attrs: { label: "ไม่มีค่าใช้จ่ายสำหรับบุฟเฟต์" },
         model: {
           value: _vm.propForm.status_free,
           callback: function($$v) {

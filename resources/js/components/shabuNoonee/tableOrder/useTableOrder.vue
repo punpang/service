@@ -157,7 +157,7 @@ export default {
       this.products.push({
         id: data.id,
         title: data.title,
-        product_group_id: data.product_group_id,
+        next_to: data.next_to,
         quantity: 1,
         price: data.price,
         sumPrice: data.price * 1,
@@ -207,7 +207,7 @@ export default {
           timerProgressBar: true,
           showConfirmButton: false,
           title: res.data.message,
-          text: "คิวของคุณ " + res.data.queue,
+          text: res.data.queue,
           footer: res.data.messageProductOutOfStock,
           allowOutsideClick: false,
         });

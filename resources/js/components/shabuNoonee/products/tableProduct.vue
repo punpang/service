@@ -1,9 +1,6 @@
 <template>
   <div>
-    <v-text-field
-      v-model="search"
-      label="ค้นหา"
-    ></v-text-field>
+    <v-text-field v-model="search" label="ค้นหา"></v-text-field>
     <v-data-table
       :headers="headers"
       :items="products"
@@ -17,7 +14,6 @@
       <template v-slot:top>
         <v-toolbar flat>
           <v-toolbar-title>
-              
             <h2>สินค้า</h2>
           </v-toolbar-title>
 

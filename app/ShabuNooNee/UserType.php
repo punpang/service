@@ -13,4 +13,6 @@ class UserType extends Model implements Auditable
     protected $fillable = [
         'name'
     ];
+
+    protected $hidden = ["created_at" , "updated_at"];
 }

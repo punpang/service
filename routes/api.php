@@ -45,6 +45,12 @@ Route::middleware("admin")->group(function () { //สำหรับ admin
     //Route::get('dashboard', 'AuthController@me');
     //Route::get('test', 'Order\AOrderController@DashboardToday');
 
+    Route::prefix('admin')->group(function () { // api/product/...
+        Route::prefix('userType')->group(function () { // api/product/...
+            Route::get('nextTo', 'ShabuNooNee\UserTypeController@nextTo');
+        });
+    });
+
     Route::prefix('product')->group(function () { // api/product/...
 
         Route::post('store', 'ShabuNooNee\ProductController@store');
@@ -82,10 +88,17 @@ Route::middleware("cashier")->group(function () { //สำหรับ cashier
         Route::post('{id}/tableChangePriceRange', 'ShabuNooNee\DiningTableController@tableChangePriceRange');
         Route::post('store', 'ShabuNooNee\DiningTableController@store');
     });
-    
+
     Route::prefix('priceRange')->group(function () { // api/diningTable/...
         Route::get('all', 'ShabuNooNee\PriceRangeController@all');
     });
+});
+
+Route::middleware("kitchen")->group(function () { //สำหรับ kitchen
+    Route::prefix('kitchen')->group(function () { // api/kitchen/...
+        Route::get('self', 'ShabuNooNee\KinchenQueueOrderController@self');
+    });
+
 });
 
 Route::middleware("customer")->group(function () { //สำหรับ cashier
@@ -97,9 +110,7 @@ Route::middleware("customer")->group(function () { //สำหรับ cashier
         Route::post('productGroupAllow', 'ShabuNooNee\TableOrderController@productGroupAllow');
         Route::post('store', 'ShabuNooNee\TableOrderController@store');
         Route::post('testStore', 'ShabuNooNee\TableOrderController@testStore');
-   
-         });
-
+    });
 });
 
 Route::middleware('admin')->prefix("old")->group(function () { //สำหรับ admin
