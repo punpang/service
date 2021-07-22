@@ -29,8 +29,20 @@ class MenuBarSeeder extends Seeder
                     ["title" => "บริหารโต๊ะ", "to" => "/diningtable/manage", "admin" => 1, "cashier" => 1, "waitress" => 0, "kitchen" => 0, "customer" => 0],
                     ["title" => "โต๊ะ", "to" => "/table", "admin" => 0, "cashier" => 0, "waitress" => 0, "kitchen" => 0, "customer" => 1],
                 ]
+
+
+            ],
+            [
+                // จัดการโต๊ะ
+                "title" => "จัดการครัว", "action" => "kitchen", "admin" => 0, "cashier" => 0, "waitress" => 0, "kitchen" => 1, "customer" => 0,
+                "subs" => [
+                    ["title" => "บริหารโต๊ะ", "to" => "/kitchen/QueueOrder", "admin" => 0, "cashier" => 0, "waitress" => 0, "kitchen" => 1, "customer" => 0],
+                ]
+
             ]
         ];
+
+
 
         foreach ($datas as $data) {
             $m = new MenuMain;

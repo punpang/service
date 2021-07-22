@@ -16,6 +16,7 @@ import tableOrder from "@/js/stores/modules/shabuNooNee/tableOrder";
 import loginByQrCode from "@/js/stores/modules/shabuNooNee/loginByQrCode";
 import userType from "@/js/stores/modules/shabuNooNee/userType";
 import kitchenQueueOrder from "@/js/stores/modules/shabuNooNee/kitchenQueueOrder";
+import WaitressQueueOrder from "@/js/stores/modules/shabuNooNee/WaitressQueueOrder";
 
 Vue.use(Vuex);
 
@@ -34,6 +35,7 @@ export default new Vuex.Store({
         tableOrder,
         loginByQrCode,
         userType,
-        kitchenQueueOrder
+        kitchenQueueOrder,
+        WaitressQueueOrder
     }
 });

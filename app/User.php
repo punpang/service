@@ -9,6 +9,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
+
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
@@ -49,7 +50,7 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->type === self::ADMIN_TYPE;
     }
-    
+
     public function isCashier()
     {
         return $this->type === self::CASHIER_TYPE;
@@ -64,6 +65,12 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->type === self::KITCHEN_TYPE;
     }
+
+    public function isWaitress()
+    {
+        return $this->type === self::WAITRESS_TYPE;
+    }
+
 
     public function member()
     {

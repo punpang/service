@@ -94,9 +94,18 @@ Route::middleware("cashier")->group(function () { //สำหรับ cashier
     });
 });
 
+Route::middleware("waitress")->group(function () { //สำหรับ waitress
+    Route::prefix('waitress')->group(function () { // api/waitress/...
+        Route::get('self', 'ShabuNooNee\WaitressQueueOrderController@self');
+        Route::post('{waitress}/finished', 'ShabuNooNee\WaitressQueueOrderController@finished');
+    });
+
+});
+
 Route::middleware("kitchen")->group(function () { //สำหรับ kitchen
     Route::prefix('kitchen')->group(function () { // api/kitchen/...
-        Route::get('self', 'ShabuNooNee\KinchenQueueOrderController@self');
+        Route::get('self', 'ShabuNooNee\KitchenQueueOrderController@self');
+        Route::post('{kitchen}/nextToWaitress', 'ShabuNooNee\KitchenQueueOrderController@nextToWaitress');
     });
 
 });

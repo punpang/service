@@ -13,4 +13,19 @@ class WaitressChannel extends Model
     {
         return $this->hasMany(WaitressQueueOrder::class, 'waitress_channal', "id")->where("status_done", 0);
     }
+
+    public static function findQueue()
+    {
+        return  WaitressChannel::whereStatus(1)
+            ->orderBy('count', "asc")
+            ->orderBy("updated_at", "desc")
+            ->first();
+    }
+
+    public static function QueueFree()
+    {
+        return  WaitressChannel::orderBy('count', "asc")
+            ->orderBy("updated_at", "desc")
+            ->first();
+    }
 }

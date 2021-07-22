@@ -4,6 +4,7 @@ namespace App\ShabuNooNee;
 
 use Illuminate\Database\Eloquent\Model;
 use App\ShabuNooNee\Product;
+use App\ShabuNooNee\TableOrder;
 
 class TableOrderDetail extends Model
 {
@@ -23,8 +24,13 @@ class TableOrderDetail extends Model
         "updated_at"
     ];
 
-    public function products()
+    public function product()
     {
         return $this->belongsTo(Product::class, "product_id", "id");
+    }
+
+    public function tableOrderId()
+    {
+        return $this->belongsTo(TableOrder::class, "table_order_id", "id");
     }
 }

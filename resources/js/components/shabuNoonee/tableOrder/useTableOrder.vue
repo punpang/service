@@ -192,6 +192,7 @@ export default {
         return;
       }
 
+      let loader = this.$loading.show();
       const form = {
         diningTableId: this.self.id,
         products: this.products,
@@ -211,6 +212,7 @@ export default {
           footer: res.data.messageProductOutOfStock,
           allowOutsideClick: false,
         });
+        this.reset();
       } else if (res.status === 201) {
         this.$swal({
           icon: "error",
@@ -225,8 +227,7 @@ export default {
           await this.$store.dispatch("tableOrder/self");
         }
       }
-
-      this.reset();
+      loader.hide();
     },
     reset() {
       this.products = [];

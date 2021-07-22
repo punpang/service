@@ -87,6 +87,13 @@ const routes = [
     },
 
     {
+        path: "/waitress/QueueOrder",
+        name: "waitressQueueOrder",
+        component: () => import("@/js/pages/waitress/queueOrder"),
+        meta: { requiresAuth: true }
+    },
+
+    {
         path: "/login/:uuid", //http://127.0.0.1:8000/loginByQrCode/7c201879-c1fe-4fdb-a49d-8212f4f21ab7
         name: "loginByQrCode",
         component: () => import("@/js/pages/guest/loginByQrCode")

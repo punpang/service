@@ -1,42 +1,57 @@
 <template>
   <div>
-    <v-card>
+    <v-card class="mb-4">
       <v-card-title>
-        <h3># {{ self.id }}</h3>
+        <h3>ห้องครัว</h3>
         <v-spacer></v-spacer>
-        <h5>จำนวน {{ sumQuantity }} ถาด</h5>
+        <v-switch inset v-model="status" @click="start()"></v-switch>
       </v-card-title>
-      <v-card-subtitle>
-        <h5>ใช้เวลาไป : {{ countDown }} วินาที</h5>
-      </v-card-subtitle>
     </v-card>
+
+    <nextToWaitress :propStatus="status"></nextToWaitress>
   </div>
 </template>
 
 <script>
+import nextToWaitress from "@/js/components/shabuNoonee/kitchen/queueOrder/nextToWaitress";
 import { mapGetters } from "vuex";
+
 export default {
+  components: {
+    nextToWaitress,
+  },
   data() {
     return {
-      countDown: 0,
+      status: false,
     };
   },
   methods: {
-    countDownTimer() {
-      setTimeout(() => {
-        this.countDown -= 1;
-        this.countDownTimer();
-      }, 1000);
-      console.log(this.countDown);
+    async start() {
+      if (this.status) {
+        await this.$store.dispatch("kitchenQueueOrder/self");
+      }
+    },
+    async playSound() {
+      const soundurl =
+        "https://soundbible.com/mp3/Fire_pager-jason-1283464858.mp3";
+      var audio = new Audio(soundurl);
+      await audio.play();
     },
   },
-  async mounted() {
-    await this.$store.dispatch("kitchenQueueOrder/self");
-    this.countDown = 100;
+  mounted() {
+    window.Echo.channel("KitchenQueueOrderFetchOn").listen(
+      ".KitchenQueueOrderFetchAs",
+      (e) => {
+        if (this.status === true && !this.self.id) {
+          this.playSound();
+          //console.log(this.playSound());
+          this.start();
+        }
+      }
+    );
   },
   computed: {
     ...mapGetters({ self: "kitchenQueueOrder/self" }),
-    ...mapGetters({ sumQuantity: "kitchenQueueOrder/sumQuantity" }),
   },
 };
 </script>

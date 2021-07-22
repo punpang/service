@@ -19,9 +19,21 @@ export default {
     actions: {
         async self({ commit }) {
             commit("self", {});
-            const res = await axios.get("/api/kitchen/self");
-            commit("self", res.data.data);
-            commit("sumQuantity", res.data.sumQuantity);
+            await axios
+                .get("/api/kitchen/self")
+                .then(res => {
+                    commit("self", res.data.data);
+                    commit("sumQuantity", res.data.sumQuantity);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+        async nextToWaitress({}, payload) {
+            const res = await axios.post(
+                "/api/kitchen/" + payload + "/nextToWaitress"
+            );
+            return res;
         }
     }
 };

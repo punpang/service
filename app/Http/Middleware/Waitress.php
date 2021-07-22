@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Auth;
 
 class Waitress
 {
@@ -15,6 +16,19 @@ class Waitress
      */
     public function handle($request, Closure $next)
     {
-        return $next($request);
+        if (Auth::check() && Auth::user()->isWaitress() || Auth::user()->isAdmin()) {
+            return $next($request);
+        } else {
+            abort(403, 'ไม่มีสิทธิ์เข้าถึง');
+            //return redirect('/');
+            return response()->json(
+                [
+                    "error" => "ไม่มีสิทธิ์เข้าถึง",
+                    "status" => 9999
+                ],
+                403
+            );
+            // abort(403, 'Unauthorized action.');
+        }
     }
 }

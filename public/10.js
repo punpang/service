@@ -246,7 +246,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var form, res;
+        var loader, form, res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -267,19 +267,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context.abrupt("return");
 
               case 3:
+                loader = _this.$loading.show();
                 form = {
                   diningTableId: _this.self.id,
                   products: _this.products,
                   sumCountProduct: _this.sumCountProduct
                 };
-                _context.next = 6;
+                _context.next = 7;
                 return _this.$store.dispatch("tableOrder/store", form);
 
-              case 6:
+              case 7:
                 res = _context.sent;
 
                 if (!(res.status === 200)) {
-                  _context.next = 11;
+                  _context.next = 13;
                   break;
                 }
 
@@ -295,12 +296,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   allowOutsideClick: false
                 });
 
-                _context.next = 16;
+                _this.reset();
+
+                _context.next = 18;
                 break;
 
-              case 11:
+              case 13:
                 if (!(res.status === 201)) {
-                  _context.next = 16;
+                  _context.next = 18;
                   break;
                 }
 
@@ -314,17 +317,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
                 if (!res.data.resetStatus) {
-                  _context.next = 16;
+                  _context.next = 18;
                   break;
                 }
 
-                _context.next = 16;
+                _context.next = 18;
                 return _this.$store.dispatch("tableOrder/self");
 
-              case 16:
-                _this.reset();
+              case 18:
+                loader.hide();
 
-              case 17:
+              case 19:
               case "end":
                 return _context.stop();
             }

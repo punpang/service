@@ -16,6 +16,8 @@ use App\ShaBuNooNee\WaitressChannel;
 use App\ShabuNooNee\WaitressQueueOrder;
 use Auth;
 use App\User;
+use App\Events\KitchenQueueOrderFetch;
+use App\Events\WaitressQueueOrderProcessing;
 
 class TableOrderController extends Controller
 {
@@ -77,8 +79,7 @@ class TableOrderController extends Controller
 
     public function store() // เพิ่มรายการสั่งอาหาร และ รายละเอียด
     {
-
-       // dd(request()->all());
+        // dd(request()->all());
         // ตรวจสอบว่า รายการอาหารเกิน 20 ถาดไหม
         if (request("sumCountProduct") > 20) {
             return response()->json(
@@ -133,9 +134,9 @@ class TableOrderController extends Controller
                         $newTableOrderDetail->sum_price = $product["sumPrice"];
                         $newTableOrderDetail->status_free = $product["status_free"];
                         $newTableOrderDetail->save();
-                    } 
+                    }
                     // next_to = 3 คือ เสิร์ฟ
-                    else if($product["next_to"] === 3) {
+                    else if ($product["next_to"] === 3) {
                         // สร้างใหม่ ถ้ายังไม่มี สำหรับเสิร์ฟ
                         if ($newTableOrderToWaitress === "") {
                             $newTableOrderToWaitress = new TableOrder;
@@ -165,49 +166,48 @@ class TableOrderController extends Controller
             $messageProductOutOfStock = "";
         }
 
-        // ส่งงานให้กับแผนกต่อไป (ครัว)
-        $queueMessageKitchen = "";
+        //ส่งงานให้กับแผนกต่อไป (ครัว)
+        //$queueMessageKitchen = "";
         if ($newTableOrderToKitChen) {
 
             $kitchen = new KitchenQueueOrder;
             $kitchen->queue_id = $newTableOrderToKitChen->id;
             $kitchen->save();
 
+            broadcast(new KitchenQueueOrderFetch("alert"));
+
             //ค้นหาคิวแรกที่ยังไม่ยังไม่เสร็จ :: คิวครัว
-            $queueCountKitchen = KitchenQueueOrder::where("status_done", 0)->first();
-            $queueKitchen = 1 + $kitchen->id - $queueCountKitchen->id;
-            $queueMessageKitchen = "ครัว #" . $queueKitchen;
+            // $queueCountKitchen = KitchenQueueOrder::where("status_done", 0)->first();
+            // $queueKitchen = 1 + $kitchen->id - $queueCountKitchen->id;
+            // $queueMessageKitchen = "ครัว #" . $queueKitchen;
         }
 
         // ส่งงานให้กับแผนกต่อไป (เสิร์ฟ)
-        $queueMessageWaitress = "";
+        //$queueMessageWaitress = "";
         if ($newTableOrderToWaitress) {
             //หาช่องเสิร์ฟที่คิวงานน้อยที่สุด และ อัปเดทล่าสุด
-            $channel = WaitressChannel::whereStatus(1)->orderBy('count',"asc")->orderBy("updated_at","desc")->first();
+            $channel = WaitressChannel::findQueue();
 
             // สร้างคิวงานเสิร์ฟ
-            $Waitress = new WaitressQueueOrder;
-            $Waitress->queue_id = $newTableOrderToWaitress->id;
-            $Waitress->waitress_channal = $channel->id;
-            $Waitress->save();
+            WaitressQueueOrder::Waitress($newTableOrderToWaitress->id, $channel->id);
 
-            // นับจำนวนงานเสิร์ฟของแต่ละช่องเสิร์ฟ
-            $countWaitressForChannel = WaitressQueueOrder::where("waitress_channal", $channel->id)->where("status_done",0)->count();
-            // อัปเดทจำนวนงานเสิร์ฟแต่ละช่อง
-            $channel->count = $countWaitressForChannel;
+            // นับจำนวนงานเสิร์ฟของแต่ละช่องเสิร์ฟ // อัปเดทจำนวนงานเสิร์ฟแต่ละช่อง
+            $channel->count = WaitressQueueOrder::countWaitressForChannel($channel);
             $channel->save();
 
+            broadcast(new WaitressQueueOrderProcessing("alert"));
+            
             //ค้นหาคิวแรกที่ยังไม่ยังไม่เสร็จ :: คิวเสิร์ฟ
-            $queueMessageWaitress = "เสิร์ฟ #" . $channel->count;
+            //$queueMessageWaitress = "เสิร์ฟ #" . $channel->count;
         }
 
         //ข้อความคิว ครัว / เสิร์ฟ
-        $queue = "คิวของคุณ : " . $queueMessageKitchen . " " . $queueMessageWaitress;
+        // $queue = "คิวของคุณ : " . $queueMessageKitchen . " " . $queueMessageWaitress;
 
         return response()->json(
             [
                 "message" => "สั่งอาหารสำเร็จ",
-                "queue" => $queue,
+                //"queue" => $queue,
                 "messageProductOutOfStock" => $messageProductOutOfStock
             ],
             200

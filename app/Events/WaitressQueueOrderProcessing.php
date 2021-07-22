@@ -9,8 +9,9 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
-class WaitressQueueOrderProcessing
+class WaitressQueueOrderProcessing implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -19,9 +20,10 @@ class WaitressQueueOrderProcessing
      *
      * @return void
      */
-    public function __construct()
+    public $data;
+    public function __construct($data)
     {
-        //
+        $this->data = $data;
     }
 
     /**
@@ -31,6 +33,11 @@ class WaitressQueueOrderProcessing
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-name');
+        return new Channel('WaitressQueueOrderProcessingOn');
+    }
+
+    public function broadcastAs()
+    {
+        return 'WaitressQueueOrderProcessingAs';
     }
 }

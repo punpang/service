@@ -25,3 +25,13 @@ Broadcast::channel('taskRemoved', function(){
 Broadcast::channel('DiningTableStatus', function(){
     return true;
 });
+
+Broadcast::channel('KitchenQueueOrderFetch', function (){
+    return true;
+});
+
+Broadcast::channel('WaitressQueueOrderProcessing', function (){
+    return true;
+});
+
+

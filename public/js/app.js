@@ -110706,6 +110706,15 @@ var routes = [{
     requiresAuth: true
   }
 }, {
+  path: "/waitress/QueueOrder",
+  name: "waitressQueueOrder",
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ 20).then(__webpack_require__.bind(null, /*! @/js/pages/waitress/queueOrder */ "./resources/js/pages/waitress/queueOrder.vue"));
+  },
+  meta: {
+    requiresAuth: true
+  }
+}, {
   path: "/login/:uuid",
   //http://127.0.0.1:8000/loginByQrCode/7c201879-c1fe-4fdb-a49d-8212f4f21ab7
   name: "loginByQrCode",
@@ -110857,10 +110866,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_stores_modules_shabuNooNee_loginByQrCode__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/js/stores/modules/shabuNooNee/loginByQrCode */ "./resources/js/stores/modules/shabuNooNee/loginByQrCode.js");
 /* harmony import */ var _js_stores_modules_shabuNooNee_userType__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/js/stores/modules/shabuNooNee/userType */ "./resources/js/stores/modules/shabuNooNee/userType.js");
 /* harmony import */ var _js_stores_modules_shabuNooNee_kitchenQueueOrder__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/js/stores/modules/shabuNooNee/kitchenQueueOrder */ "./resources/js/stores/modules/shabuNooNee/kitchenQueueOrder.js");
+/* harmony import */ var _js_stores_modules_shabuNooNee_WaitressQueueOrder__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/js/stores/modules/shabuNooNee/WaitressQueueOrder */ "./resources/js/stores/modules/shabuNooNee/WaitressQueueOrder.js");
 
 
 
  ////
+
 
 
 
@@ -110889,7 +110900,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     tableOrder: _js_stores_modules_shabuNooNee_tableOrder__WEBPACK_IMPORTED_MODULE_11__["default"],
     loginByQrCode: _js_stores_modules_shabuNooNee_loginByQrCode__WEBPACK_IMPORTED_MODULE_12__["default"],
     userType: _js_stores_modules_shabuNooNee_userType__WEBPACK_IMPORTED_MODULE_13__["default"],
-    kitchenQueueOrder: _js_stores_modules_shabuNooNee_kitchenQueueOrder__WEBPACK_IMPORTED_MODULE_14__["default"]
+    kitchenQueueOrder: _js_stores_modules_shabuNooNee_kitchenQueueOrder__WEBPACK_IMPORTED_MODULE_14__["default"],
+    WaitressQueueOrder: _js_stores_modules_shabuNooNee_WaitressQueueOrder__WEBPACK_IMPORTED_MODULE_15__["default"]
   }
 }));
 
@@ -111207,6 +111219,102 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/stores/modules/shabuNooNee/WaitressQueueOrder.js":
+/*!***********************************************************************!*\
+  !*** ./resources/js/stores/modules/shabuNooNee/WaitressQueueOrder.js ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  state: {
+    self: {},
+    sumQuantity: 0
+  },
+  mutations: {
+    self: function self(state, data) {
+      state.self = data;
+    },
+    sumQuantity: function sumQuantity(state, data) {
+      state.sumQuantity = data;
+    }
+  },
+  getters: {
+    self: function self(state) {
+      return state.self;
+    },
+    sumQuantity: function sumQuantity(state) {
+      return state.sumQuantity;
+    }
+  },
+  actions: {
+    self: function self(_ref) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var commit;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                commit = _ref.commit;
+                commit("self", {});
+                _context.next = 4;
+                return axios.get("/api/waitress/self").then(function (res) {
+                  commit("self", res.data.data);
+                  commit("sumQuantity", res.data.sumQuantity);
+                })["catch"](function (error) {
+                  console.log(error);
+                });
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    finished: function finished(_ref2, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _objectDestructuringEmpty(_ref2);
+
+                _context2.next = 3;
+                return axios.post("/api/waitress/" + payload + "/finished");
+
+              case 3:
+                res = _context2.sent;
+                return _context2.abrupt("return", res);
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/stores/modules/shabuNooNee/diningTable.js":
 /*!****************************************************************!*\
   !*** ./resources/js/stores/modules/shabuNooNee/diningTable.js ***!
@@ -111448,6 +111556,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
 
+function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -111477,7 +111587,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   actions: {
     self: function self(_ref) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var commit, res;
+        var commit;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -111485,19 +111595,43 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 commit = _ref.commit;
                 commit("self", {});
                 _context.next = 4;
-                return axios.get("/api/kitchen/self");
+                return axios.get("/api/kitchen/self").then(function (res) {
+                  commit("self", res.data.data);
+                  commit("sumQuantity", res.data.sumQuantity);
+                })["catch"](function (error) {
+                  console.log(error);
+                });
 
               case 4:
-                res = _context.sent;
-                commit("self", res.data.data);
-                commit("sumQuantity", res.data.sumQuantity);
-
-              case 7:
               case "end":
                 return _context.stop();
             }
           }
         }, _callee);
+      }))();
+    },
+    nextToWaitress: function nextToWaitress(_ref2, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _objectDestructuringEmpty(_ref2);
+
+                _context2.next = 3;
+                return axios.post("/api/kitchen/" + payload + "/nextToWaitress");
+
+              case 3:
+                res = _context2.sent;
+                return _context2.abrupt("return", res);
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
       }))();
     }
   }
