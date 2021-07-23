@@ -2,6 +2,7 @@
 
 namespace App\ShabuNooNee;
 
+use App\ShaBuNooNee\WaitressChannel;
 use Illuminate\Database\Eloquent\Model;
 
 class WaitressQueueOrder extends Model
@@ -22,6 +23,11 @@ class WaitressQueueOrder extends Model
         return $Waitress;
     }
 
+    public  function waitressChannal()
+    {
+        return $this->belongsTo(WaitressChannel::class, "waitress_channal", "id");
+    }
+
     public function tableOrderDetails()
     {
         return $this->hasMany(TableOrderDetail::class, "table_order_id", "queue_id");
@@ -35,5 +41,10 @@ class WaitressQueueOrder extends Model
     public function sumQuantity()
     {
         return $this->tableOrderDetails()->sum("quantity");
+    }
+
+    public function tableOrder()
+    {
+        return $this->belongsTo(TableOrder::class, "queue_id", "id");
     }
 }

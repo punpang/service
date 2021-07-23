@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h4 class="font-weight-black mb-4">
+    <h4 class="font-weight-black mb-3">
       เลือกเซทบุฟเฟต์ <v-icon @click="ClickDetailPriceRange()">details</v-icon>
     </h4>
 

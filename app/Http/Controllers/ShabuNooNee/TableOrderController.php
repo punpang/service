@@ -187,7 +187,6 @@ class TableOrderController extends Controller
         if ($newTableOrderToWaitress) {
             //หาช่องเสิร์ฟที่คิวงานน้อยที่สุด และ อัปเดทล่าสุด
             $channel = WaitressChannel::findQueue();
-
             // สร้างคิวงานเสิร์ฟ
             WaitressQueueOrder::Waitress($newTableOrderToWaitress->id, $channel->id);
 
@@ -196,7 +195,7 @@ class TableOrderController extends Controller
             $channel->save();
 
             broadcast(new WaitressQueueOrderProcessing("alert"));
-            
+
             //ค้นหาคิวแรกที่ยังไม่ยังไม่เสร็จ :: คิวเสิร์ฟ
             //$queueMessageWaitress = "เสิร์ฟ #" . $channel->count;
         }

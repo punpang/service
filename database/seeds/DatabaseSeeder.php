@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             DiningTableStatusSeeder::class,
             ProductGroupSeeder::class,
             WaitressChannelSeeder::class,
+            CookingTypeSeeder::class,
 
         ]);
     }

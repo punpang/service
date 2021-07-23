@@ -1,7 +1,8 @@
 export default {
     namespaced: true,
     state: {
-        all: []
+        all: [],
+        broths: []
     },
     mutations: {
         all(state, data) {
@@ -9,10 +10,14 @@ export default {
         },
         add(state, data) {
             state.all.unshift(data);
+        },
+        broths(state, data) {
+            state.broths = data;
         }
     },
     getters: {
-        all: state => state.all
+        all: state => state.all,
+        broths: state => state.broths
     },
     actions: {
         async store({ commit }, payload) {
@@ -40,6 +45,15 @@ export default {
             );
             dispatch("all");
             return res;
+        },
+
+        async broths({ commit }) {
+            commit("broths", []);
+            await axios
+                .get("/api/cashier/productGroup/broths")
+                .then(response => {
+                    commit("broths", response.data);
+                });
         }
     }
 };

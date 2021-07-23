@@ -35,7 +35,7 @@ class ProductGroupController extends Controller
         //update(["product_categormy_id" => $product_category_id]);
         return response()->json([
             "status" => "success",
-            "message" => "เปลี่ยนสถานะของ - ".$id->name." - สำเร็จ"
+            "message" => "เปลี่ยนสถานะของ - " . $id->name . " - สำเร็จ"
         ], 200);
     }
 
@@ -47,5 +47,12 @@ class ProductGroupController extends Controller
             "status" => "success",
             "message" => "เปลี่ยนชื่อกลุ่มสำเร็จ"
         ], 200);
+    }
+
+    public function broths()
+    {
+        $data = ProductGroup::with("productUseOnly")->find(6);
+
+        return response()->json($data, 200);
     }
 }

@@ -9,6 +9,7 @@ use App\ShabuNooNee\PriceRange;
 use Illuminate\Support\Str;
 use App\User;
 use App\Events\DiningTableStatus;
+use App\ShabuNoonee\BillSale;
 use Auth;
 
 class DiningTableController extends Controller
@@ -29,6 +30,7 @@ class DiningTableController extends Controller
 
     public function store()
     {
+        // ตรวจสอบว่าโต๊ะเปิดอยู่ไหม
         if (DiningTable::checkTable(request("tableNumber"))) {
             return response()->json([
                 "status" => "success",
@@ -66,6 +68,11 @@ class DiningTableController extends Controller
         $data->save();
 
         broadcast(new DiningTableStatus($data));
+
+        $billSale = new BillSale;
+        $billSale->dining_table_id = $data->id;
+        $billSale->user_id = Auth::user()->id;
+        $billSale->save();
 
         return response()->json([
             "status" => "success",

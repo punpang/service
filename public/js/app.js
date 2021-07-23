@@ -110619,19 +110619,19 @@ var routes = [{
   path: "/todos/:id",
   name: "todos",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(13)]).then(__webpack_require__.bind(null, /*! @/js/components/todos/TodoApp */ "./resources/js/components/todos/TodoApp.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(15)]).then(__webpack_require__.bind(null, /*! @/js/components/todos/TodoApp */ "./resources/js/components/todos/TodoApp.vue"));
   }
 }, {
   path: "/todos2",
   name: "todos2",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(14)]).then(__webpack_require__.bind(null, /*! @/js/components/todos/TodoApp2 */ "./resources/js/components/todos/TodoApp2.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(16)]).then(__webpack_require__.bind(null, /*! @/js/components/todos/TodoApp2 */ "./resources/js/components/todos/TodoApp2.vue"));
   }
 }, {
   path: "/admin/dashboard",
   name: "adminDashboard",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 19).then(__webpack_require__.bind(null, /*! @/js/pages/admin/dashboard */ "./resources/js/pages/admin/dashboard.vue"));
+    return __webpack_require__.e(/*! import() */ 20).then(__webpack_require__.bind(null, /*! @/js/pages/admin/dashboard */ "./resources/js/pages/admin/dashboard.vue"));
   },
   meta: {
     requiresAuth: true
@@ -110694,13 +110694,13 @@ var routes = [{
   path: "/table/close",
   name: "tableClose",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 18).then(__webpack_require__.bind(null, /*! @/js/pages/tableOrder/close */ "./resources/js/pages/tableOrder/close.vue"));
+    return __webpack_require__.e(/*! import() */ 19).then(__webpack_require__.bind(null, /*! @/js/pages/tableOrder/close */ "./resources/js/pages/tableOrder/close.vue"));
   }
 }, {
   path: "/kitchen/QueueOrder",
   name: "kitchenQueueOrder",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 16).then(__webpack_require__.bind(null, /*! @/js/pages/kitchen/kitchenQueueOrder */ "./resources/js/pages/kitchen/kitchenQueueOrder.vue"));
+    return __webpack_require__.e(/*! import() */ 12).then(__webpack_require__.bind(null, /*! @/js/pages/kitchen/kitchenQueueOrder */ "./resources/js/pages/kitchen/kitchenQueueOrder.vue"));
   },
   meta: {
     requiresAuth: true
@@ -110709,7 +110709,7 @@ var routes = [{
   path: "/waitress/QueueOrder",
   name: "waitressQueueOrder",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 20).then(__webpack_require__.bind(null, /*! @/js/pages/waitress/queueOrder */ "./resources/js/pages/waitress/queueOrder.vue"));
+    return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! @/js/pages/waitress/queueOrder */ "./resources/js/pages/waitress/queueOrder.vue"));
   },
   meta: {
     requiresAuth: true
@@ -110719,7 +110719,7 @@ var routes = [{
   //http://127.0.0.1:8000/loginByQrCode/7c201879-c1fe-4fdb-a49d-8212f4f21ab7
   name: "loginByQrCode",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 15).then(__webpack_require__.bind(null, /*! @/js/pages/guest/loginByQrCode */ "./resources/js/pages/guest/loginByQrCode.vue"));
+    return __webpack_require__.e(/*! import() */ 17).then(__webpack_require__.bind(null, /*! @/js/pages/guest/loginByQrCode */ "./resources/js/pages/guest/loginByQrCode.vue"));
   }
 }, /////////////////////////////////////////
 {
@@ -110801,7 +110801,7 @@ var routes = [{
   path: "/testModule",
   name: "testModule",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 12).then(__webpack_require__.bind(null, /*! @/js/pages/testModule */ "./resources/js/pages/testModule.vue"));
+    return __webpack_require__.e(/*! import() */ 14).then(__webpack_require__.bind(null, /*! @/js/pages/testModule */ "./resources/js/pages/testModule.vue"));
   }
 },
 /* punpang */
@@ -110809,7 +110809,7 @@ var routes = [{
   path: "/punpang/order/:token",
   name: "orderToken",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 17).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/orders/show */ "./resources/js/pages/punpang/orders/show.vue"));
+    return __webpack_require__.e(/*! import() */ 18).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/orders/show */ "./resources/js/pages/punpang/orders/show.vue"));
   }
 }, {
   path: "/punpang/order/:token/:amount/payment",
@@ -110867,10 +110867,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_stores_modules_shabuNooNee_userType__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/js/stores/modules/shabuNooNee/userType */ "./resources/js/stores/modules/shabuNooNee/userType.js");
 /* harmony import */ var _js_stores_modules_shabuNooNee_kitchenQueueOrder__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/js/stores/modules/shabuNooNee/kitchenQueueOrder */ "./resources/js/stores/modules/shabuNooNee/kitchenQueueOrder.js");
 /* harmony import */ var _js_stores_modules_shabuNooNee_WaitressQueueOrder__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/js/stores/modules/shabuNooNee/WaitressQueueOrder */ "./resources/js/stores/modules/shabuNooNee/WaitressQueueOrder.js");
+/* harmony import */ var _js_stores_modules_shabuNooNee_cookingType__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/js/stores/modules/shabuNooNee/cookingType */ "./resources/js/stores/modules/shabuNooNee/cookingType.js");
 
 
 
  ////
+
 
 
 
@@ -110901,7 +110903,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     loginByQrCode: _js_stores_modules_shabuNooNee_loginByQrCode__WEBPACK_IMPORTED_MODULE_12__["default"],
     userType: _js_stores_modules_shabuNooNee_userType__WEBPACK_IMPORTED_MODULE_13__["default"],
     kitchenQueueOrder: _js_stores_modules_shabuNooNee_kitchenQueueOrder__WEBPACK_IMPORTED_MODULE_14__["default"],
-    WaitressQueueOrder: _js_stores_modules_shabuNooNee_WaitressQueueOrder__WEBPACK_IMPORTED_MODULE_15__["default"]
+    WaitressQueueOrder: _js_stores_modules_shabuNooNee_WaitressQueueOrder__WEBPACK_IMPORTED_MODULE_15__["default"],
+    cookingType: _js_stores_modules_shabuNooNee_cookingType__WEBPACK_IMPORTED_MODULE_16__["default"]
   }
 }));
 
@@ -111308,6 +111311,66 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee2);
+      }))();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/stores/modules/shabuNooNee/cookingType.js":
+/*!****************************************************************!*\
+  !*** ./resources/js/stores/modules/shabuNooNee/cookingType.js ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  state: {
+    self: {}
+  },
+  mutations: {
+    self: function self(state, data) {
+      state.self = data;
+    }
+  },
+  getters: {
+    self: function self(state) {
+      return state.self;
+    }
+  },
+  actions: {
+    self: function self(_ref) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var commit;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                commit = _ref.commit;
+                commit("self", {});
+                _context.next = 4;
+                return axios.get("/api/cashier/cookingType").then(function (response) {
+                  commit("self", response.data);
+                });
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
       }))();
     }
   }
@@ -111974,7 +112037,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ __webpack_exports__["default"] = ({
   namespaced: true,
   state: {
-    all: []
+    all: [],
+    broths: []
   },
   mutations: {
     all: function all(state, data) {
@@ -111982,11 +112046,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     add: function add(state, data) {
       state.all.unshift(data);
+    },
+    broths: function broths(state, data) {
+      state.broths = data;
     }
   },
   getters: {
     all: function all(state) {
       return state.all;
+    },
+    broths: function broths(state) {
+      return state.broths;
     }
   },
   actions: {
@@ -112084,6 +112154,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee4);
+      }))();
+    },
+    broths: function broths(_ref5) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var commit;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                commit = _ref5.commit;
+                commit("broths", []);
+                _context5.next = 4;
+                return axios.get("/api/cashier/productGroup/broths").then(function (response) {
+                  commit("broths", response.data);
+                });
+
+              case 4:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
       }))();
     }
   }

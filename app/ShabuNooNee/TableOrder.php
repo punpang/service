@@ -4,6 +4,7 @@ namespace App\ShabuNooNee;
 
 use Illuminate\Database\Eloquent\Model;
 use App\ShabuNooNee\DiningTable;
+use App\ShabuNooNee\TableOrderDetail;
 
 class TableOrder extends Model
 {
@@ -11,6 +12,21 @@ class TableOrder extends Model
 
     public function diningTableId()
     {
-        return $this->belongsTo(DiningTable::class,"dining_table_id","id");
+        return $this->belongsTo(DiningTable::class, "dining_table_id", "id");
+    }
+
+    public function billSale()
+    {
+        return $this->belongsTo(billSale::class, "dining_table_id", "dining_table_id");
+    }
+
+    public function detailOrderTables()
+    {
+        return $this->hasMany(TableOrderDetail::class, "table_order_id", "id");
+    }
+
+    public function sumQuantity()
+    {
+        return $this->tableOrderDetail()->sum("quantity");
     }
 }

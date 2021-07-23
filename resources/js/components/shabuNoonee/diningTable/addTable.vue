@@ -15,7 +15,7 @@
           <v-icon color="error">close</v-icon>
         </v-btn>
       </v-card-title>
-      <v-divider> </v-divider>
+      <v-divider class="mb-0"> </v-divider>
       <v-form ref="form" lazy-validation>
         <v-card-text>
           <countCustomer :propformCount="form"></countCustomer>
@@ -24,6 +24,11 @@
             @emitPriceRange="emitPriceRange"
             :propFormPriceRange="form"
           ></selectPriceRange>
+          <v-divider class="mt-0"></v-divider>
+          <cookingType
+            :propSumCountCustomer="form.sumCountCustomer"
+            :propCookingType="form.cookingType"
+          ></cookingType>
         </v-card-text>
       </v-form>
       <v-divider class="ma-0"></v-divider>
@@ -50,15 +55,18 @@
 <script>
 import countCustomer from "@/js/components/shabuNoonee/diningTable/addTable/countCustomer";
 import selectPriceRange from "@/js/components/shabuNoonee/diningTable/addTable/selectPriceRange";
+import cookingType from "@/js/components/shabuNoonee/diningTable/addTable/cookingType";
 
 export default {
   components: {
     countCustomer,
     selectPriceRange,
+    cookingType,
   },
   props: ["dataTable"],
   data() {
     return {
+      dtest: 0,
       dialog: false,
       form: {
         count_Infant: 0, //1
@@ -68,6 +76,7 @@ export default {
         count_Elder: 0, //5
         sumCountCustomer: 0,
         priceRange_id: null,
+        cookingType: [],
       },
     };
   },

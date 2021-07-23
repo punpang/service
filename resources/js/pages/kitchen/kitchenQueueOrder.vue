@@ -44,7 +44,6 @@ export default {
       (e) => {
         if (this.status === true && !this.self.id) {
           this.playSound();
-          //console.log(this.playSound());
           this.start();
         }
       }

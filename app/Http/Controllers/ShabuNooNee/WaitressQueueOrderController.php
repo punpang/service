@@ -4,6 +4,9 @@ namespace App\Http\Controllers\ShabuNooNee;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\ShabuNoonee\BillSaleDetail;
+use App\ShabuNooNee\TableOrder;
+use App\ShabuNooNee\TableOrderDetail;
 use App\ShabuNooNee\WaitressQueueOrder;
 use Auth;
 
@@ -55,6 +58,51 @@ class WaitressQueueOrderController extends Controller
 
     public function finished(WaitressQueueOrder $waitress)
     {
+        // $datas = TableOrder::where('dining_table_id', 1)->with("detailOrderTables")->get();
+        // //return $datas;
+        // foreach ($datas as $data) {
+
+        //     foreach ($data->detailOrderTables as $key => $value) {
+        //         //return $key->product_id;
+        //         $products[] =
+        //             [
+        //                 "product_id" => $value->product_id,
+        //                 "quantity" => $value->quantity
+        //             ];
+        //         // if (!isset($products[$value->product_id])) {
+        //         //     $products[] =
+        //         //         [
+        //         //             "product_id" => $value->product_id,
+        //         //             "quantity" => $value->quantity
+        //         //         ];
+        //         //     //$products[$value->product_id] = $value->quantity;
+        //         // } else {
+        //         //     //$products[$value->product_id] += $value->quantity;
+        //         // }
+        //     }
+        // }
+
+        // $das = collect($products);
+
+        // $scaknl = $das->groupBy("product_id");
+
+        // foreach ($scaknl  as $scakn) {
+        // }
+        // return $scaknl;
+        // dd("sds");
+
+        // เวลาเฉลี่ยทำงาน
+        // $datas = WaitressQueueOrder::where('user_id', 1)
+        //     ->whereDate("created_at", now()->format("Y-m-d"))
+        //     ->select("user_id", "updated_at", "created_at")
+        //     ->get();
+        // $count = $datas->count();
+        // $sum = 0;
+        // foreach ($datas as $data) {
+        //     $sum += $data->updated_at->timestamp - $data->created_at->timestamp;
+        // }
+        // $avgTime = ($sum / $count) / 60;
+        // return $avgTime;
 
         // $waitress = WaitressQueueOrder::where("id", $waitress->id)
         //     ->where("status_done", 0)
@@ -77,18 +125,53 @@ class WaitressQueueOrderController extends Controller
 
         $waitress->status_done = true;
         $waitress->save();
+        
 
-        $useTime = \Carbon\Carbon::parse($waitress->updated_at)->diff($waitress->created_at);
-        $messageUseTime = "ใช้เวลาไป " . $useTime->i . " นาที ";
+        if ($waitress->format_id === 1) { // format 1
+            foreach ($waitress->tableOrderDetails as $tableOrderDetail) {
+                //ตรวจสอบว่ามีสินค้าในบิลหรือยัง
+                $BillSaleDetail = BillSaleDetail::where("bill_sale_id", $waitress->tableOrder->billSale->id)
+                    ->where("product_id", $tableOrderDetail->product_id)
+                    ->where("status", 1)
+                    ->first();
 
-        $numberTable = $waitress->tableOrderDetail->tableOrderId->diningTableId->detailTable->name;
+                if ($BillSaleDetail) //อัปเดท //มี
+                {
+                    $BillSaleDetail->bill_sale_id = $waitress->tableOrder->billSale->id;
+                    $BillSaleDetail->quantity += $tableOrderDetail->quantity;
+                    $BillSaleDetail->sum_price += $tableOrderDetail->sum_price;
+                    $BillSaleDetail->save();
+                } else { //เพิ่ม //ไม่มี
+                    $BillSaleDetail = new BillSaleDetail();
+                    $BillSaleDetail->bill_sale_id = $waitress->tableOrder->billSale->id;
+                    $BillSaleDetail->product_id = $tableOrderDetail->product_id;
+                    $BillSaleDetail->price = $tableOrderDetail->price;
+                    $BillSaleDetail->quantity = $tableOrderDetail->quantity;
+                    $BillSaleDetail->sum_price = $tableOrderDetail->sum_price;
+                    $BillSaleDetail->status_free = $tableOrderDetail->status_free;
+                    $BillSaleDetail->save();
+                }
+            }
 
-        return response()->json(
-            [
-                "message" => "เสิร์ฟ" . $numberTable,
-                "messageText" => $messageUseTime
-            ],
-            200
-        );
+            $useTime = \Carbon\Carbon::parse($waitress->updated_at)->diff($waitress->created_at);
+
+            if ($useTime->h > 0) {
+                $messageUseTime = "ใช้เวลาไป " .  $useTime->h . " ชั่วโมง " . $useTime->i . " นาที " . $useTime->s . " วินาที ";
+            } else if ($useTime->i > 0) {
+                $messageUseTime = "ใช้เวลาไป " .  $useTime->i . " นาที " . $useTime->s . " วินาที ";
+            } else {
+                $messageUseTime = "ใช้เวลาไป " . $useTime->s . " วินาที ";
+            }
+
+            $numberTable = $waitress->tableOrderDetail->tableOrderId->diningTableId->detailTable->name;
+            $nuberChannel = $waitress->waitressChannal->title;
+            return response()->json(
+                [
+                    "message" => $nuberChannel . " ไปยัง " . $numberTable,
+                    "messageText" => $messageUseTime
+                ],
+                200
+            );
+        }
     }
 }

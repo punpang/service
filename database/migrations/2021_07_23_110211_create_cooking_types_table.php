@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateKitchenQueueOrdersTable extends Migration
+class CreateCookingTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateKitchenQueueOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('kitchen_queue_orders', function (Blueprint $table) {
+        Schema::create('cooking_types', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer("queue_id")->unique();
-            $table->integer("user_id")->default(0);
-            $table->integer("format_id")->default(1);
-            $table->boolean("status_done")->default(false);
+            $table->string('title');
+            $table->boolean('status');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateKitchenQueueOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kitchen_queue_orders');
+        Schema::dropIfExists('cooking_types');
     }
 }

@@ -33,4 +33,9 @@ class TableOrderDetail extends Model
     {
         return $this->belongsTo(TableOrder::class, "table_order_id", "id");
     }
+
+    public function dasdl()
+    {
+        return $this->groupBy("product_id");
+    }
 }
