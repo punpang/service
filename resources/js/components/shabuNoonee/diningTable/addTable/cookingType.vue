@@ -1,16 +1,21 @@
 <template>
   <div>
-    <h4 class="font-weight-black mb-3">เลือกเตา</h4>
-    <addCookingType
-      @emitAddCookingType="emitAddCookingType"
-      v-if="
-        propSumCountCustomer > 0 &&
-        propSumCountCustomer / 4 > cookingTypes.length
-      "
-    ></addCookingType>
+    <v-row class="px-4 pt-2 mb-1">
+      <h4 class="font-weight-black my-1">เลือกเตา</h4>
+      <v-spacer></v-spacer>
+      <addCookingType
+        @emitAddCookingType="emitAddCookingType"
+        v-if="
+          propSumCountCustomer > 0 &&
+          propSumCountCustomer / 4 > propCookingType.length
+        "
+        :propCookingType="propCookingType"
+      ></addCookingType>
+    </v-row>
+
     <v-simple-table>
       <tbody>
-        <tr v-for="cookingType in cookingTypes" :key="cookingType.key">
+        <tr v-for="cookingType in propCookingType" :key="cookingType.key">
           <td class="py-2">
             <h5>{{ cookingType.cookingTypeTitle }}</h5>
             <p
@@ -30,14 +35,14 @@
       </tbody>
     </v-simple-table>
 
-    {{ checkCookingType(cookingTypes.length, propSumCountCustomer) }}
+    {{ checkCookingType(propCookingType.length, propSumCountCustomer) }}
   </div>
 </template>
 
 <script>
 import addCookingType from "@/js/components/shabuNoonee/diningTable/addTable/cookingType/addCookingType";
 export default {
-  props: ["propSumCountCustomer"],
+  props: ["propSumCountCustomer", "propCookingType"],
   components: {
     addCookingType,
   },
@@ -48,16 +53,16 @@ export default {
   },
   methods: {
     emitAddCookingType(v) {
-      this.cookingTypes.push(v);
+      this.propCookingType.push(v);
     },
     clickRemoveCookingType(v) {
-      this.cookingTypes.splice(this.cookingTypes.indexOf(v), 1);
+      this.propCookingType.splice(this.propCookingType.indexOf(v), 1);
     },
     checkCookingType(c, s) {
       const a = c * 4 - 3; // 2 * 4 - 3 = 5
       // 4 < 5
       if (s < a) {
-        this.cookingTypes.splice(-1,1);
+        this.propCookingType.splice(-1, 1);
       }
     },
   },

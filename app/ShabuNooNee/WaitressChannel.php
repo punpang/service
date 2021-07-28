@@ -28,4 +28,9 @@ class WaitressChannel extends Model
             ->orderBy("updated_at", "desc")
             ->first();
     }
+
+    public static function selectTitle()
+    {
+        return self::select("id","title");
+    }
 }

@@ -15,6 +15,7 @@ class CreateWaitressQueueOrdersTable extends Migration
     {
         Schema::create('waitress_queue_orders', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer("dining_table_id");
             $table->integer("queue_id");
             $table->integer("user_id")->default(0);
             $table->integer("waitress_channal")->default(0);

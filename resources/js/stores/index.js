@@ -18,6 +18,7 @@ import userType from "@/js/stores/modules/shabuNooNee/userType";
 import kitchenQueueOrder from "@/js/stores/modules/shabuNooNee/kitchenQueueOrder";
 import WaitressQueueOrder from "@/js/stores/modules/shabuNooNee/WaitressQueueOrder";
 import cookingType from "@/js/stores/modules/shabuNooNee/cookingType";
+import cookingDetail from "@/js/stores/modules/shabuNooNee/cookingDetail";
 
 Vue.use(Vuex);
 
@@ -38,6 +39,7 @@ export default new Vuex.Store({
         userType,
         kitchenQueueOrder,
         WaitressQueueOrder,
-        cookingType
+        cookingType,
+        cookingDetail
     }
 });

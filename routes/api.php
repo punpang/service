@@ -95,7 +95,12 @@ Route::middleware("cashier")->group(function () { //สำหรับ cashier
 
     Route::prefix('cashier')->group(function () { // api/cashier/...
         Route::get('cookingType', 'ShabuNooNee\CookingTypeController@get');
+        Route::post('cookingDetail', 'ShabuNooNee\CookingDetailController@store');
+        Route::get('{dining_table_id}/cookingDetail', 'ShabuNooNee\CookingDetailController@fetchDiningTableId');
+        Route::delete('/cookingDetail/{cooking_detail_id}', 'ShabuNooNee\CookingDetailController@cancelCookingDetail');
+       
         Route::get('productGroup/broths', 'ShabuNooNee\ProductGroupController@broths');
+    
     });
 });
 
@@ -103,6 +108,7 @@ Route::middleware("waitress")->group(function () { //สำหรับ waitress
     Route::prefix('waitress')->group(function () { // api/waitress/...
         Route::get('self', 'ShabuNooNee\WaitressQueueOrderController@self');
         Route::post('{waitress}/finished', 'ShabuNooNee\WaitressQueueOrderController@finished');
+        Route::post('{waitress}/finishedCookingDetail', 'ShabuNooNee\WaitressQueueOrderController@finishedCookingDetail');
     });
 });
 

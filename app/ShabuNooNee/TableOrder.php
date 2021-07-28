@@ -29,4 +29,11 @@ class TableOrder extends Model
     {
         return $this->tableOrderDetail()->sum("quantity");
     }
+
+    public static function setStatus($table_order_id, $status)
+    {
+        $update = self::find($table_order_id);
+        $update->status = $status;
+        $update->save();
+    }
 }

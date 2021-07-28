@@ -22,9 +22,8 @@ export default {
             const res = await axios.get("/api/diningTable/allTable");
             commit("allTable", res.data);
         },
-        async store({ dispatch }, payload) {
+        async store({}, payload) {
             const res = await axios.post("/api/diningTable/store", payload);
-            dispatch("allTable");
             return res;
         },
         async table({ commit }, payload) {

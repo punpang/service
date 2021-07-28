@@ -1,9 +1,9 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[13],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/shabuNoonee/waitress/finished.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/shabuNoonee/waitress/finished.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/shabuNoonee/kitchen/queueOrder/nextToWaitress.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/shabuNoonee/kitchen/queueOrder/nextToWaitress.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -96,7 +96,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return _this.$store.dispatch("WaitressQueueOrder/finished", _this.self.id);
+                return _this.$store.dispatch("kitchenQueueOrder/nextToWaitress", _this.self.id);
 
               case 2:
                 res = _context.sent;
@@ -107,7 +107,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 _context.next = 6;
-                return _this.$store.dispatch("WaitressQueueOrder/self");
+                return _this.$store.dispatch("kitchenQueueOrder/self");
 
               case 6:
                 if (res.status === 200) {
@@ -153,18 +153,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }))();
   },
   computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
-    self: "WaitressQueueOrder/self"
+    self: "kitchenQueueOrder/self"
   })), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
-    sumQuantity: "WaitressQueueOrder/sumQuantity"
+    sumQuantity: "kitchenQueueOrder/sumQuantity"
   }))
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/waitress/queueOrder.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/waitress/queueOrder.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/kitchen/kitchenQueueOrder.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/kitchen/kitchenQueueOrder.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -172,7 +172,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _js_components_shabuNoonee_waitress_finished__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/shabuNoonee/waitress/finished */ "./resources/js/components/shabuNoonee/waitress/finished.vue");
+/* harmony import */ var _js_components_shabuNoonee_kitchen_queueOrder_nextToWaitress__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/shabuNoonee/kitchen/queueOrder/nextToWaitress */ "./resources/js/components/shabuNoonee/kitchen/queueOrder/nextToWaitress.vue");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
 
@@ -204,7 +204,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    finished: _js_components_shabuNoonee_waitress_finished__WEBPACK_IMPORTED_MODULE_1__["default"]
+    nextToWaitress: _js_components_shabuNoonee_kitchen_queueOrder_nextToWaitress__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
@@ -220,11 +220,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (_this.status) {
-                  _this.$store.dispatch("WaitressQueueOrder/self");
+                if (!_this.status) {
+                  _context.next = 3;
+                  break;
                 }
 
-              case 1:
+                _context.next = 3;
+                return _this.$store.dispatch("kitchenQueueOrder/self");
+
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -256,8 +260,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   mounted: function mounted() {
     var _this2 = this;
 
-    window.Echo.channel("WaitressQueueOrderProcessingOn").listen(".WaitressQueueOrderProcessingAs", function (e) {
-      if (_this2.status) {
+    window.Echo.channel("KitchenQueueOrderFetchOn").listen(".KitchenQueueOrderFetchAs", function (e) {
+      if (_this2.status === true && !_this2.self.id) {
         _this2.playSound();
 
         _this2.start();
@@ -265,16 +269,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     });
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])({
-    self: "WaitressQueueOrder/self"
+    self: "kitchenQueueOrder/self"
   }))
 });
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/shabuNoonee/waitress/finished.vue?vue&type=template&id=16f509ee&":
-/*!********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/shabuNoonee/waitress/finished.vue?vue&type=template&id=16f509ee& ***!
-  \********************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/shabuNoonee/kitchen/queueOrder/nextToWaitress.vue?vue&type=template&id=57c540b2&":
+/*!************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/shabuNoonee/kitchen/queueOrder/nextToWaitress.vue?vue&type=template&id=57c540b2& ***!
+  \************************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -384,10 +388,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/waitress/queueOrder.vue?vue&type=template&id=031d1a8b&":
-/*!*****************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/waitress/queueOrder.vue?vue&type=template&id=031d1a8b& ***!
-  \*****************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/kitchen/kitchenQueueOrder.vue?vue&type=template&id=13cbfc86&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/kitchen/kitchenQueueOrder.vue?vue&type=template&id=13cbfc86& ***!
+  \***********************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -409,7 +413,7 @@ var render = function() {
           _c(
             "v-card-title",
             [
-              _c("h3", [_vm._v("เสิร์ฟ")]),
+              _c("h3", [_vm._v("ห้องครัว")]),
               _vm._v(" "),
               _c("v-spacer"),
               _vm._v(" "),
@@ -435,7 +439,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("finished", { attrs: { propStatus: _vm.status } })
+      _c("nextToWaitress", { attrs: { propStatus: _vm.status } })
     ],
     1
   )
@@ -447,18 +451,18 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./resources/js/components/shabuNoonee/waitress/finished.vue":
-/*!*******************************************************************!*\
-  !*** ./resources/js/components/shabuNoonee/waitress/finished.vue ***!
-  \*******************************************************************/
+/***/ "./resources/js/components/shabuNoonee/kitchen/queueOrder/nextToWaitress.vue":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/shabuNoonee/kitchen/queueOrder/nextToWaitress.vue ***!
+  \***********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _finished_vue_vue_type_template_id_16f509ee___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./finished.vue?vue&type=template&id=16f509ee& */ "./resources/js/components/shabuNoonee/waitress/finished.vue?vue&type=template&id=16f509ee&");
-/* harmony import */ var _finished_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./finished.vue?vue&type=script&lang=js& */ "./resources/js/components/shabuNoonee/waitress/finished.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _nextToWaitress_vue_vue_type_template_id_57c540b2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./nextToWaitress.vue?vue&type=template&id=57c540b2& */ "./resources/js/components/shabuNoonee/kitchen/queueOrder/nextToWaitress.vue?vue&type=template&id=57c540b2&");
+/* harmony import */ var _nextToWaitress_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./nextToWaitress.vue?vue&type=script&lang=js& */ "./resources/js/components/shabuNoonee/kitchen/queueOrder/nextToWaitress.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -467,9 +471,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _finished_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _finished_vue_vue_type_template_id_16f509ee___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _finished_vue_vue_type_template_id_16f509ee___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _nextToWaitress_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _nextToWaitress_vue_vue_type_template_id_57c540b2___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _nextToWaitress_vue_vue_type_template_id_57c540b2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -479,54 +483,54 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/shabuNoonee/waitress/finished.vue"
+component.options.__file = "resources/js/components/shabuNoonee/kitchen/queueOrder/nextToWaitress.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/shabuNoonee/waitress/finished.vue?vue&type=script&lang=js&":
-/*!********************************************************************************************!*\
-  !*** ./resources/js/components/shabuNoonee/waitress/finished.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************************/
+/***/ "./resources/js/components/shabuNoonee/kitchen/queueOrder/nextToWaitress.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************!*\
+  !*** ./resources/js/components/shabuNoonee/kitchen/queueOrder/nextToWaitress.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_finished_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./finished.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/shabuNoonee/waitress/finished.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_finished_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_nextToWaitress_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./nextToWaitress.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/shabuNoonee/kitchen/queueOrder/nextToWaitress.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_nextToWaitress_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/shabuNoonee/waitress/finished.vue?vue&type=template&id=16f509ee&":
-/*!**************************************************************************************************!*\
-  !*** ./resources/js/components/shabuNoonee/waitress/finished.vue?vue&type=template&id=16f509ee& ***!
-  \**************************************************************************************************/
+/***/ "./resources/js/components/shabuNoonee/kitchen/queueOrder/nextToWaitress.vue?vue&type=template&id=57c540b2&":
+/*!******************************************************************************************************************!*\
+  !*** ./resources/js/components/shabuNoonee/kitchen/queueOrder/nextToWaitress.vue?vue&type=template&id=57c540b2& ***!
+  \******************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_finished_vue_vue_type_template_id_16f509ee___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./finished.vue?vue&type=template&id=16f509ee& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/shabuNoonee/waitress/finished.vue?vue&type=template&id=16f509ee&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_finished_vue_vue_type_template_id_16f509ee___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_nextToWaitress_vue_vue_type_template_id_57c540b2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./nextToWaitress.vue?vue&type=template&id=57c540b2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/shabuNoonee/kitchen/queueOrder/nextToWaitress.vue?vue&type=template&id=57c540b2&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_nextToWaitress_vue_vue_type_template_id_57c540b2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_finished_vue_vue_type_template_id_16f509ee___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_nextToWaitress_vue_vue_type_template_id_57c540b2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
 /***/ }),
 
-/***/ "./resources/js/pages/waitress/queueOrder.vue":
-/*!****************************************************!*\
-  !*** ./resources/js/pages/waitress/queueOrder.vue ***!
-  \****************************************************/
+/***/ "./resources/js/pages/kitchen/kitchenQueueOrder.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/pages/kitchen/kitchenQueueOrder.vue ***!
+  \**********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _queueOrder_vue_vue_type_template_id_031d1a8b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./queueOrder.vue?vue&type=template&id=031d1a8b& */ "./resources/js/pages/waitress/queueOrder.vue?vue&type=template&id=031d1a8b&");
-/* harmony import */ var _queueOrder_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./queueOrder.vue?vue&type=script&lang=js& */ "./resources/js/pages/waitress/queueOrder.vue?vue&type=script&lang=js&");
+/* harmony import */ var _kitchenQueueOrder_vue_vue_type_template_id_13cbfc86___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./kitchenQueueOrder.vue?vue&type=template&id=13cbfc86& */ "./resources/js/pages/kitchen/kitchenQueueOrder.vue?vue&type=template&id=13cbfc86&");
+/* harmony import */ var _kitchenQueueOrder_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./kitchenQueueOrder.vue?vue&type=script&lang=js& */ "./resources/js/pages/kitchen/kitchenQueueOrder.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -536,9 +540,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _queueOrder_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _queueOrder_vue_vue_type_template_id_031d1a8b___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _queueOrder_vue_vue_type_template_id_031d1a8b___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _kitchenQueueOrder_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _kitchenQueueOrder_vue_vue_type_template_id_13cbfc86___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _kitchenQueueOrder_vue_vue_type_template_id_13cbfc86___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -548,38 +552,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/pages/waitress/queueOrder.vue"
+component.options.__file = "resources/js/pages/kitchen/kitchenQueueOrder.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/pages/waitress/queueOrder.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************!*\
-  !*** ./resources/js/pages/waitress/queueOrder.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************/
+/***/ "./resources/js/pages/kitchen/kitchenQueueOrder.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/pages/kitchen/kitchenQueueOrder.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_queueOrder_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./queueOrder.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/waitress/queueOrder.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_queueOrder_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_kitchenQueueOrder_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./kitchenQueueOrder.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/kitchen/kitchenQueueOrder.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_kitchenQueueOrder_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/pages/waitress/queueOrder.vue?vue&type=template&id=031d1a8b&":
-/*!***********************************************************************************!*\
-  !*** ./resources/js/pages/waitress/queueOrder.vue?vue&type=template&id=031d1a8b& ***!
-  \***********************************************************************************/
+/***/ "./resources/js/pages/kitchen/kitchenQueueOrder.vue?vue&type=template&id=13cbfc86&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/pages/kitchen/kitchenQueueOrder.vue?vue&type=template&id=13cbfc86& ***!
+  \*****************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_queueOrder_vue_vue_type_template_id_031d1a8b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./queueOrder.vue?vue&type=template&id=031d1a8b& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/waitress/queueOrder.vue?vue&type=template&id=031d1a8b&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_queueOrder_vue_vue_type_template_id_031d1a8b___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_kitchenQueueOrder_vue_vue_type_template_id_13cbfc86___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./kitchenQueueOrder.vue?vue&type=template&id=13cbfc86& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/kitchen/kitchenQueueOrder.vue?vue&type=template&id=13cbfc86&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_kitchenQueueOrder_vue_vue_type_template_id_13cbfc86___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_queueOrder_vue_vue_type_template_id_031d1a8b___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_kitchenQueueOrder_vue_vue_type_template_id_13cbfc86___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

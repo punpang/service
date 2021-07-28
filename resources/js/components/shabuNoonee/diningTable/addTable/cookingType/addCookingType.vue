@@ -2,16 +2,15 @@
   <div>
     <v-dialog v-model="dialog" persistent width="500">
       <template v-slot:activator="{ on }">
-        <v-btn v-on="on">
+        <v-btn v-on="on" class="success" fab x-small>
           <v-icon>add</v-icon>
-          เพิ่มเตา</v-btn
-        >
+        </v-btn>
       </template>
       <v-card>
         <v-card-title>
           <h4 class="mb-0">เพิ่มเตา</h4>
           <v-spacer></v-spacer>
-          <v-btn fab icon x-small>
+          <v-btn fab icon x-small @click="exit()">
             <v-icon color="error">close</v-icon>
           </v-btn>
         </v-card-title>
@@ -54,7 +53,7 @@
               ></v-col
             >
             <v-col class="px-2">
-              <v-btn color="error" x-large block>
+              <v-btn color="error" x-large block @click="exit()">
                 <v-icon left>exit_to_app</v-icon>
                 ออก</v-btn
               ></v-col
@@ -110,9 +109,14 @@ export default {
         this.dialog = false;
       }
     },
+    exit() {
+      this.dialog = false;
+      this.reset();
+    },
     reset() {
       this.form = {
         cookingType: "",
+        cookingTypeTitle: "",
         broths: [],
       };
     },

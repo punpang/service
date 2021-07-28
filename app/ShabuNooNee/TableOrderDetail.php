@@ -17,6 +17,7 @@ class TableOrderDetail extends Model
         "quantity",
         "sum_price",
         "status_free",
+        "dining_table_id"
     ];
 
     protected $hidden = [

@@ -8,6 +8,9 @@ use App\ShabuNoonee\KitchenQueueOrder;
 use App\ShaBuNooNee\WaitressChannel;
 use App\ShabuNooNee\WaitressQueueOrder;
 use App\Events\WaitressQueueOrderProcessing;
+use App\Helper;
+use App\ShabuNooNee\DiningTable;
+use App\ShabuNooNee\TableOrder;
 use Auth;
 use Carbon\Carbon;
 use App\User;
@@ -26,6 +29,19 @@ class KitchenQueueOrderController extends Controller
             ])
             ->first();
 
+        // ตรวจสอบว่าโต๊ะยังมีสถานะใช้งาน
+        $checkTableStatusOne = DiningTable::checkTableStatusOne($data->dining_table_id);
+        if (!$checkTableStatusOne) {
+            KitchenQueueOrder::where("dining_table_id", $data->dining_table_id)
+                ->where("status_done", 0)->delete();
+            return response()->json(
+                [
+                    "message" => "โต๊ะนี้ ชำะเงินไปแล้ว"
+                ],
+                201
+            );
+        }
+
         $data->user_id = Auth::user()->id;
         $data->save();
 
@@ -39,6 +55,9 @@ class KitchenQueueOrderController extends Controller
             ])
             ->with("tableOrderDetails", "tableOrderDetails.product")
             ->first();
+
+        // อัปเดทสถานะรายการสั่งซื้อเป็น 2 (อยู่ในครัว)
+        TableOrder::setStatus($data->queue_id, 2);
 
         if ($data) {
             return response()->json(
@@ -60,9 +79,23 @@ class KitchenQueueOrderController extends Controller
 
     public function nextToWaitress(KitchenQueueOrder $kitchen)
     {
+        // ตรวจสอบว่าโต๊ะยังมีสถานะใช้งาน
+        $checkTableStatusOne = DiningTable::checkTableStatusOne($kitchen->dining_table_id);
+        if (!$checkTableStatusOne) {
+            KitchenQueueOrder::where("dining_table_id", $kitchen->dining_table_id)
+                ->where("status_done", 0)->delete();
+            return response()->json(
+                [
+                    "message" => "โต๊ะนี้ ชำะเงินไปแล้ว"
+                ],
+                201
+            );
+        }
 
         // ค้นหามีหรือยัง
-        $checkInsert = WaitressQueueOrder::where("queue_id", $kitchen->queue_id)->first();
+        $checkInsert = WaitressQueueOrder::where("queue_id", $kitchen->queue_id)
+            ->where("id", $kitchen->id)
+            ->first();
 
         //หากมีแล้ว
         if ($checkInsert) {
@@ -76,7 +109,11 @@ class KitchenQueueOrderController extends Controller
 
         $channel = WaitressChannel::findQueue();
 
-        WaitressQueueOrder::Waitress($kitchen->queue_id, $channel->id);
+        WaitressQueueOrder::Waitress(
+            $kitchen->dining_table_id,
+            $kitchen->queue_id,
+            $channel->id
+        );
 
         $channel->count = WaitressQueueOrder::countWaitressForChannel($channel);
         $channel->save();
@@ -84,8 +121,7 @@ class KitchenQueueOrderController extends Controller
         $kitchen->status_done = true;
         $kitchen->save();
 
-        $useTime = \Carbon\Carbon::parse($kitchen->updated_at)->diff($kitchen->created_at);
-        $messageUseTime = "ใช้เวลาไป " . $useTime->i . " นาที ";
+        $messageUseTime = Helper::messageUseTime($kitchen->created_at, $kitchen->updated_at);
 
         broadcast(new WaitressQueueOrderProcessing("alert"));
 

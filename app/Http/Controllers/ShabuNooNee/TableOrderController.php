@@ -4,7 +4,6 @@ namespace App\Http\Controllers\ShabuNooNee;
 
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use App\Http\Controllers\Controller;
 use App\ShabuNooNee\TableOrder;
 use App\ShabuNooNee\DiningTable;
@@ -79,7 +78,7 @@ class TableOrderController extends Controller
 
     public function store() // เพิ่มรายการสั่งอาหาร และ รายละเอียด
     {
-        // dd(request()->all());
+         //dd(request()->all());
         // ตรวจสอบว่า รายการอาหารเกิน 20 ถาดไหม
         if (request("sumCountProduct") > 20) {
             return response()->json(
@@ -171,6 +170,7 @@ class TableOrderController extends Controller
         if ($newTableOrderToKitChen) {
 
             $kitchen = new KitchenQueueOrder;
+            $kitchen->dining_table_id = request("diningTableId");
             $kitchen->queue_id = $newTableOrderToKitChen->id;
             $kitchen->save();
 
@@ -188,7 +188,7 @@ class TableOrderController extends Controller
             //หาช่องเสิร์ฟที่คิวงานน้อยที่สุด และ อัปเดทล่าสุด
             $channel = WaitressChannel::findQueue();
             // สร้างคิวงานเสิร์ฟ
-            WaitressQueueOrder::Waitress($newTableOrderToWaitress->id, $channel->id);
+            WaitressQueueOrder::Waitress(request("diningTableId"), $newTableOrderToWaitress->id, $channel->id);
 
             // นับจำนวนงานเสิร์ฟของแต่ละช่องเสิร์ฟ // อัปเดทจำนวนงานเสิร์ฟแต่ละช่อง
             $channel->count = WaitressQueueOrder::countWaitressForChannel($channel);

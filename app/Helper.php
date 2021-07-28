@@ -49,10 +49,24 @@ class Helper extends Model
 
     public static function backBoolean($boolean)
     {
-        if($boolean == true or $boolean == 1){
+        if ($boolean == true or $boolean == 1) {
             return 1;
-        }else{
+        } else {
             return 0;
         }
+    }
+
+    public static function messageUseTime($created_at, $updated_at)
+    {
+        $useTime = \Carbon\Carbon::parse($updated_at)->diff($created_at);
+        if ($useTime->h > 0) {
+            $messageUseTime = "ใช้เวลาไป " .  $useTime->h . " ชั่วโมง " . $useTime->i . " นาที " . $useTime->s . " วินาที ";
+        } else if ($useTime->i > 0) {
+            $messageUseTime = "ใช้เวลาไป " .  $useTime->i . " นาที " . $useTime->s . " วินาที ";
+        } else {
+            $messageUseTime = "ใช้เวลาไป " . $useTime->s . " วินาที ";
+        }
+
+        return $messageUseTime;
     }
 }

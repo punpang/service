@@ -65,6 +65,11 @@ class DiningTable extends Model implements Auditable
         return self::whereUserId($tableNumber)->whereIn("status_id", [1, 2, 3])->first();
     }
 
+    public static function checkTableStatusOne($tableNumber)
+    {
+        return self::whereId($tableNumber)->where("status_id", 1)->first();
+    }
+
     public function priceRange()
     {
         return $this->belongsTo(PriceRange::class, "priceRange_id", "id");

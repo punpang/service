@@ -30,6 +30,11 @@ class Product extends Model
         return self::whereId($id)->with("productGroup", "googlgImage")->first();
     }
 
+    public static function cookingDetail($broths)
+    {
+        return self::whereIn("id", $broths)->get();
+    }
+
     public static function checkProductUse($product_id)
     {
         $product = Product::whereId($product_id)->whereStatus(1)->first();

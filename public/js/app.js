@@ -110676,7 +110676,7 @@ var routes = [{
   path: "/table",
   name: "tableOrder",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 10).then(__webpack_require__.bind(null, /*! @/js/pages/tableOrder/table */ "./resources/js/pages/tableOrder/table.vue"));
+    return __webpack_require__.e(/*! import() */ 11).then(__webpack_require__.bind(null, /*! @/js/pages/tableOrder/table */ "./resources/js/pages/tableOrder/table.vue"));
   },
   meta: {
     requiresAuth: true
@@ -110685,7 +110685,7 @@ var routes = [{
   path: "/table/:uuid",
   name: "tableOrderId",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 11).then(__webpack_require__.bind(null, /*! @/js/pages/tableOrder/tableUUID */ "./resources/js/pages/tableOrder/tableUUID.vue"));
+    return __webpack_require__.e(/*! import() */ 12).then(__webpack_require__.bind(null, /*! @/js/pages/tableOrder/tableUUID */ "./resources/js/pages/tableOrder/tableUUID.vue"));
   },
   meta: {
     requiresAuth: true
@@ -110700,7 +110700,7 @@ var routes = [{
   path: "/kitchen/QueueOrder",
   name: "kitchenQueueOrder",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 12).then(__webpack_require__.bind(null, /*! @/js/pages/kitchen/kitchenQueueOrder */ "./resources/js/pages/kitchen/kitchenQueueOrder.vue"));
+    return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! @/js/pages/kitchen/kitchenQueueOrder */ "./resources/js/pages/kitchen/kitchenQueueOrder.vue"));
   },
   meta: {
     requiresAuth: true
@@ -110709,7 +110709,7 @@ var routes = [{
   path: "/waitress/QueueOrder",
   name: "waitressQueueOrder",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! @/js/pages/waitress/queueOrder */ "./resources/js/pages/waitress/queueOrder.vue"));
+    return __webpack_require__.e(/*! import() */ 10).then(__webpack_require__.bind(null, /*! @/js/pages/waitress/queueOrder */ "./resources/js/pages/waitress/queueOrder.vue"));
   },
   meta: {
     requiresAuth: true
@@ -110868,10 +110868,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_stores_modules_shabuNooNee_kitchenQueueOrder__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/js/stores/modules/shabuNooNee/kitchenQueueOrder */ "./resources/js/stores/modules/shabuNooNee/kitchenQueueOrder.js");
 /* harmony import */ var _js_stores_modules_shabuNooNee_WaitressQueueOrder__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/js/stores/modules/shabuNooNee/WaitressQueueOrder */ "./resources/js/stores/modules/shabuNooNee/WaitressQueueOrder.js");
 /* harmony import */ var _js_stores_modules_shabuNooNee_cookingType__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/js/stores/modules/shabuNooNee/cookingType */ "./resources/js/stores/modules/shabuNooNee/cookingType.js");
+/* harmony import */ var _js_stores_modules_shabuNooNee_cookingDetail__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/js/stores/modules/shabuNooNee/cookingDetail */ "./resources/js/stores/modules/shabuNooNee/cookingDetail.js");
 
 
 
  ////
+
 
 
 
@@ -110904,7 +110906,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     userType: _js_stores_modules_shabuNooNee_userType__WEBPACK_IMPORTED_MODULE_13__["default"],
     kitchenQueueOrder: _js_stores_modules_shabuNooNee_kitchenQueueOrder__WEBPACK_IMPORTED_MODULE_14__["default"],
     WaitressQueueOrder: _js_stores_modules_shabuNooNee_WaitressQueueOrder__WEBPACK_IMPORTED_MODULE_15__["default"],
-    cookingType: _js_stores_modules_shabuNooNee_cookingType__WEBPACK_IMPORTED_MODULE_16__["default"]
+    cookingType: _js_stores_modules_shabuNooNee_cookingType__WEBPACK_IMPORTED_MODULE_16__["default"],
+    cookingDetail: _js_stores_modules_shabuNooNee_cookingDetail__WEBPACK_IMPORTED_MODULE_17__["default"]
   }
 }));
 
@@ -111312,6 +111315,132 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee2);
       }))();
+    },
+    finishedCookingDetail: function finishedCookingDetail(_ref3, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _objectDestructuringEmpty(_ref3);
+
+                _context3.next = 3;
+                return axios.post("/api/waitress/" + payload + "/finishedCookingDetail").then(function (response) {})["catch"](function (error) {});
+
+              case 3:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/stores/modules/shabuNooNee/cookingDetail.js":
+/*!******************************************************************!*\
+  !*** ./resources/js/stores/modules/shabuNooNee/cookingDetail.js ***!
+  \******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  state: {
+    self: []
+  },
+  mutations: {
+    self: function self(state, data) {
+      state.self = data;
+    }
+  },
+  getters: {
+    self: function self(state) {
+      return state.self;
+    }
+  },
+  actions: {
+    store: function store(_ref, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _objectDestructuringEmpty(_ref);
+
+                _context.next = 3;
+                return axios.post("/api/cashier/cookingDetail", payload);
+
+              case 3:
+                return _context.abrupt("return", _context.sent);
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    self: function self(_ref2, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var commit;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                commit = _ref2.commit;
+                _context2.next = 3;
+                return axios.get("/api/cashier/".concat(payload, "/cookingDetail")).then(function (response) {
+                  commit("self", response.data.data);
+                })["catch"](function (error) {
+                  console.log("[cookingDetail/self]", error);
+                });
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    cancelCookingDetail: function cancelCookingDetail(_ref3, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _objectDestructuringEmpty(_ref3);
+
+                _context3.next = 3;
+                return axios["delete"]("/api/cashier/cookingDetail/".concat(payload));
+
+              case 3:
+                return _context3.abrupt("return", _context3.sent);
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
     }
   }
 });
@@ -111391,6 +111520,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
 
+function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -111444,21 +111575,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     store: function store(_ref2, payload) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var dispatch, res;
+        var res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                dispatch = _ref2.dispatch;
+                _objectDestructuringEmpty(_ref2);
+
                 _context2.next = 3;
                 return axios.post("/api/diningTable/store", payload);
 
               case 3:
                 res = _context2.sent;
-                dispatch("allTable");
                 return _context2.abrupt("return", res);
 
-              case 6:
+              case 5:
               case "end":
                 return _context2.stop();
             }

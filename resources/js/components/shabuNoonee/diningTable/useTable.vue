@@ -20,10 +20,13 @@
       <v-card-text>
         <v-row>
           <v-col cols="12" md="6">
-            <mainCountCustmer :table="table"></mainCountCustmer>
+            <mainCountCustomer :table="table"></mainCountCustomer>
           </v-col>
           <v-col cols="12" md="6">
             <mainSelectPriceRange :table="table"></mainSelectPriceRange>
+          </v-col>
+          <v-col cols="12" md="6">
+            <mainCookingDetail :table="table"></mainCookingDetail>
           </v-col>
         </v-row>
       </v-card-text>
@@ -33,16 +36,18 @@
 </template>
 
 <script>
-import mainCountCustmer from "@/js/components/shabuNoonee/diningTable/useTable/menu/countCustmer/mainCountCustmer";
+import mainCountCustomer from "@/js/components/shabuNoonee/diningTable/useTable/menu/countCustomer/mainCountCustomer";
 import mainSelectPriceRange from "@/js/components/shabuNoonee/diningTable/useTable/menu/selectPriceRange/mainSelectPriceRange";
+import mainCookingDetail from "@/js/components/shabuNoonee/diningTable/useTable/menu/cookingDetail/mainCookingDetail";
 
 import { mapGetters } from "vuex";
 
 export default {
   props: ["dataTable"],
   components: {
-    mainCountCustmer,
+    mainCountCustomer,
     mainSelectPriceRange,
+    mainCookingDetail
   },
   data() {
     return {

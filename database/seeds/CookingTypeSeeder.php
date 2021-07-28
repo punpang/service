@@ -14,7 +14,7 @@ class CookingTypeSeeder extends Seeder
     {
         $datas = [
             ["id" => 1, "title" => "หม้อชาบู"],
-            ["id" => 2, "title" => "เต๋าย่าง"],
+            ["id" => 2, "title" => "เตาย่าง"],
         ];
 
         foreach ($datas as $data) {

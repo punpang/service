@@ -82,20 +82,69 @@ export default {
   },
   methods: {
     async save() {
+      if (this.form.sumCountCustomer <= 0) {
+        this.$swal({
+          title: "จำนวนลูกค้าอย่างน้อย 1 คน",
+          icon: "warning",
+          confirmButtonText: "รับทราบ",
+          confirmButtonColor: "#1E88E5",
+        });
+        return;
+      }
+
+      if (
+        this.form.count_Adolescence +
+          this.form.count_Adult +
+          this.form.count_Elder <=
+        0
+      ) {
+        this.$swal({
+          title: "ต้องมีเด็กโต, ผู้ใหญ่ , ผู้สูงอายุ รวมกันอย่างน้อย 1 คน",
+          icon: "warning",
+          confirmButtonText: "รับทราบ",
+          confirmButtonColor: "#1E88E5",
+        });
+        return;
+      }
+
+      if (this.form.cookingType.length <= 0) {
+        this.$swal({
+          title: "โปรดเพิ่มเตาอย่างน้อย 1 รายการ",
+          icon: "warning",
+          confirmButtonText: "รับทราบ",
+          confirmButtonColor: "#1E88E5",
+        });
+        return;
+      }
+
       let loader = this.$loading.show();
       const form = {
-        count: this.form,
+        data: this.form,
         tableNumber: this.dataTable.id,
       };
 
-      if (this.$refs.form.validate() && this.form.sumCountCustomer > 0) {
-        const res = await this.$store.dispatch("diningTable/store", form);
-        if (res.status === 200) {
-          this.$toast.success(res.data.message);
-        } else if (res.status === 201) {
-          this.$toast.warning(res.data.message);
-        }
-        this.dialog = false;
+      if (this.$refs.form.validate()) {
+        await this.$store
+          .dispatch("diningTable/store", form)
+          .then((response) => {
+            if (response.status === 200) {
+              this.$store.dispatch("diningTable/allTable");
+              this.$toast.success(response.data.message);
+            } else if (response.status === 201) {
+              this.$toast.warning(response.data.message);
+            } else if (response.status === 202) {
+              this.dialog = false;
+              this.$swal({
+                icon: "error",
+                title: response.data.message,
+                confirmButtonText: "รับทราบ",
+                confirmButtonColor: "#1E88E5",
+              });
+            }
+          })
+          .catch((errors) => {
+            this.$toast.error(errors);
+          });
       } else {
         this.$toast.error("โปรดกรอกข้อมูลให้ครบถ้วน");
       }
@@ -110,6 +159,7 @@ export default {
         count_Elder: 0, //5
         sumCountCustomer: 0,
         priceRange_id: null,
+        cookingType: [],
       };
       this.dialog = false;
     },

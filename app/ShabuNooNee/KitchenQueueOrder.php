@@ -2,6 +2,7 @@
 
 namespace App\ShabuNoonee;
 
+use App\ShabuNooNee\TableOrder;
 use App\ShabuNooNee\TableOrderDetail;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,5 +23,10 @@ class KitchenQueueOrder extends Model
     public function sumQuantity()
     {
         return $this->tableOrderDetails()->sum("quantity");
+    }
+
+    public function OrderTable()
+    {
+        return $this->belongsTo(TableOrder::class, "queue_id", "id");
     }
 }

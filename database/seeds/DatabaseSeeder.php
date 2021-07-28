@@ -20,7 +20,9 @@ class DatabaseSeeder extends Seeder
             ProductGroupSeeder::class,
             WaitressChannelSeeder::class,
             CookingTypeSeeder::class,
-
+            ProductSeeder::class,
+            ImageSeeder::class,
+            CookingDetailStatusStepSeeder::class,
         ]);
     }
 }

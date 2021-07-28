@@ -8,17 +8,26 @@
       </v-card-title>
     </v-card>
 
-    <finished :propStatus="status"></finished>
+    <finished v-if="self.format_id === 1" :propStatus="status"></finished>
+
+    <cookingDetail v-else-if="self.format_id === 2" :propStatus="status"></cookingDetail>
+
+    <v-alert dense type="info" v-else>
+      <strong>ยังไม่มีรายการอาหาร</strong>
+    </v-alert>
   </div>
 </template>
 
 <script>
 import finished from "@/js/components/shabuNoonee/waitress/finished";
+import cookingDetail from "@/js/components/shabuNoonee/waitress/cookingDetail";
+
 import { mapGetters } from "vuex";
 
 export default {
   components: {
     finished,
+    cookingDetail,
   },
   data() {
     return {
@@ -42,7 +51,7 @@ export default {
     window.Echo.channel("WaitressQueueOrderProcessingOn").listen(
       ".WaitressQueueOrderProcessingAs",
       (e) => {
-        if (this.status) {
+        if (this.status && !this.self.id) {
           this.playSound();
           this.start();
         }

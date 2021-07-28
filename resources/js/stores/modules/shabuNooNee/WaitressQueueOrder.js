@@ -34,6 +34,14 @@ export default {
                 "/api/waitress/" + payload + "/finished"
             );
             return res;
+        },
+        async finishedCookingDetail({}, payload) {
+            await axios
+                .post("/api/waitress/" + payload + "/finishedCookingDetail")
+                .then(response => {
+                    
+                })
+                .catch(error => {});
         }
     }
 };

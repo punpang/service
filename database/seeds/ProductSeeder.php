@@ -1,5 +1,6 @@
 <?php
 
+use App\ShabuNooNee\Product;
 use Illuminate\Database\Seeder;
 
 class ProductSeeder extends Seeder
@@ -13,65 +14,72 @@ class ProductSeeder extends Seeder
     {
         $datas = [
             [
-                "id" => 1,
                 "title" => "หมูสามชั้นสไลด์",
                 "product_group_id" => 1,
-                "image_id" => 3,
+                "image_id" => 1,
                 "status" => 1,
-                "created_at" => "2021-07-11 11=>48=>13",
-                "updated_at" => "2021-07-11 16=>42=>39",
-                "product_group" => [
-                    "id" => 1,
-                    "name" => "หมู",
-                    "status" => 0,
-                    "created_at" => "2021-07-11 11=>47=>54",
-                    "updated_at" => "2021-07-11 13=>50=>21"
-                ],
-                "googlg_image" => [
-                    "id" => 3,
-                    "src_name" => "1KkyhMPomd5EwBXmg3VBc4AQ9TYQ_zANb"
-                ]
+                "price" => 29,
+                "status_free" => 1,
+                "next_to" => 4,
             ],
             [
-                "id" => 2,
                 "title" => "อกไก่",
                 "product_group_id" => 2,
-                "image_id" => 2,
+                "image_id" => 1,
                 "status" => 1,
-                "created_at" => "2021-07-11 13=>40=>13",
-                "updated_at" => "2021-07-11 16=>42=>52",
-                "product_group" => [
-                    "id" => 2,
-                    "name" => "ไก่",
-                    "status" => 1,
-                    "created_at" => "2021-07-11 13=>39=>18",
-                    "updated_at" => "2021-07-11 13=>39=>18"
-                ],
-                "googlg_image" => [
-                    "id" => 2,
-                    "src_name" => "19ZUBQRD56a6xOR3HIoIMNSqGM1ILM9pR"
-                ]
+                "price" => 29,
+                "status_free" => 1,
+                "next_to" => 4,
             ],
             [
-                "id" => 3,
                 "title" => "สันนอกหมูสไลด์",
                 "product_group_id" => 1,
-                "image_id" => 4,
+                "image_id" => 1,
                 "status" => 1,
-                "created_at" => "2021-07-11 18=>30=>42",
-                "updated_at" => "2021-07-11 18=>30=>42",
-                "product_group" => [
-                    "id" => 1,
-                    "name" => "หมู",
-                    "status" => 0,
-                    "created_at" => "2021-07-11 11=>47=>54",
-                    "updated_at" => "2021-07-11 13=>50=>21"
-                ],
-                "googlg_image" => [
-                    "id" => 4,
-                    "src_name" => "1fq6fH9S_bzDLsAlb1qurOOVXLSEcUMCi"
-                ]
-            ]
+                "price" => 29,
+                "status_free" => 1,
+                "next_to" => 4,
+            ],
+            [
+                "title" => "น้ำดำ",
+                "product_group_id" => 6,
+                "image_id" => 1,
+                "status" => 1,
+                "price" => 29,
+                "status_free" => 0,
+                "next_to" => 3,
+            ],
+            [
+                "title" => "น้ำต้มยำ",
+                "product_group_id" => 6,
+                "image_id" => 1,
+                "status" => 1,
+                "price" => 29,
+                "status_free" => 0,
+                "next_to" => 3,
+            ],
+            [
+                "title" => "น้ำหม่าล่า",
+                "product_group_id" => 6,
+                "image_id" => 1,
+                "status" => 1,
+                "price" => 29,
+                "status_free" => 0,
+                "next_to" => 3,
+            ],
+            [
+                "title" => "หอยนางรมญี่ปุ่น",
+                "product_group_id" => 7,
+                "image_id" => 1,
+                "status" => 1,
+                "price" => 49,
+                "status_free" => 0,
+                "next_to" => 3,
+            ],
         ];
+
+        foreach ($datas as $data) {
+            Product::create($data);
+        }
     }
 }

@@ -18,9 +18,9 @@ class WaitressChannelSeeder extends Seeder
             "ช่องเสิร์ฟที่ 3",
         ];
         foreach ($datas as $data) {
-            $new = new WaitressChannel;
-;
+            $new = new WaitressChannel;;
             $new->title = $data;
+            $new->status = 1;
             $new->save();
         }
     }
