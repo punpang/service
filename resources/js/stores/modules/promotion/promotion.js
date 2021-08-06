@@ -2,7 +2,8 @@ export default {
     namespaced: true,
     state: {
         fetchAll: [],
-        fetchAllByID: []
+        fetchAllByID: [],
+        countProduct: []
     },
     mutations: {
         fetchAll(state, data) {
@@ -10,11 +11,15 @@ export default {
         },
         fetchAllByID(state, data) {
             state.fetchAllByID = data;
+        },
+        countProduct(state, data) {
+            state.countProduct = data;
         }
     },
     getters: {
         fetchAll: state => state.fetchAll,
-        fetchAllByID: state => state.fetchAllByID
+        fetchAllByID: state => state.fetchAllByID,
+        countProduct: state => state.countProduct
     },
     actions: {
         async fetchAll({ commit }) {
@@ -29,6 +34,13 @@ export default {
                 `/api/admin/promotions/${payload.id}/fetchAllByID`
             );
             commit("fetchAllByID", res.data);
+        },
+        async countProduct({ commit }, payload) {
+            commit("countProduct", {});
+            const res = await axios.get(
+                `/api/admin/promotions/${payload.promotion_id}/${payload.order_status_id}/countProduct`
+            );
+            commit("countProduct", res.data);
         }
     }
 };

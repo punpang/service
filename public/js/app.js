@@ -109387,13 +109387,13 @@ var routes = [{
   path: "/promotion/:promotion_id",
   name: "promotionsId",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! @/js/pages/promotions/promotionId */ "./resources/js/pages/promotions/promotionId.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(8), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! @/js/pages/promotions/promotionId */ "./resources/js/pages/promotions/promotionId.vue"));
   }
 }, {
   path: "/order/:uuid",
   name: "orderUUID",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! @/js/pages/promotions/orderUUID */ "./resources/js/pages/promotions/orderUUID.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(8), __webpack_require__.e(1), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! @/js/pages/promotions/orderUUID */ "./resources/js/pages/promotions/orderUUID.vue"));
   }
 }, {
   path: "/manages/payment/check",
@@ -109408,7 +109408,7 @@ var routes = [{
   path: "/manages/promotion/:id",
   name: "managesPromotionID",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! @/js/pages/promotions/manages/promotionId */ "./resources/js/pages/promotions/manages/promotionId.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(8), __webpack_require__.e(1), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! @/js/pages/promotions/manages/promotionId */ "./resources/js/pages/promotions/manages/promotionId.vue"));
   },
   meta: {
     requiresAuth: true
@@ -109424,7 +109424,7 @@ var routes = [{
   path: "/menu",
   name: "menuCake",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(7)]).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/menu */ "./resources/js/pages/punpang/menu.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(8), __webpack_require__.e(7)]).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/menu */ "./resources/js/pages/punpang/menu.vue"));
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
@@ -110147,7 +110147,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   namespaced: true,
   state: {
     fetchAll: [],
-    fetchAllByID: []
+    fetchAllByID: [],
+    countProduct: []
   },
   mutations: {
     fetchAll: function fetchAll(state, data) {
@@ -110155,6 +110156,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     fetchAllByID: function fetchAllByID(state, data) {
       state.fetchAllByID = data;
+    },
+    countProduct: function countProduct(state, data) {
+      state.countProduct = data;
     }
   },
   getters: {
@@ -110163,6 +110167,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     fetchAllByID: function fetchAllByID(state) {
       return state.fetchAllByID;
+    },
+    countProduct: function countProduct(state) {
+      return state.countProduct;
     }
   },
   actions: {
@@ -110211,6 +110218,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee2);
+      }))();
+    },
+    countProduct: function countProduct(_ref3, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var commit, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                commit = _ref3.commit;
+                commit("countProduct", {});
+                _context3.next = 4;
+                return axios.get("/api/admin/promotions/".concat(payload.promotion_id, "/").concat(payload.order_status_id, "/countProduct"));
+
+              case 4:
+                res = _context3.sent;
+                commit("countProduct", res.data);
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
       }))();
     }
   }

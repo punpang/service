@@ -90,10 +90,14 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
         
         Route::prefix('promotions')->group(function () { // api/gueœst/order/
             Route::get('{promotion_id}/fetchAllByID', 'Momday\PromotionController@fetchAllByID');
+            Route::get('{promotion_id}/{order_status_id}/countProduct', 'Momday\PromotionController@countProduct');
         });
-
+        
     });
 });
+
+Route::get('{promotion_id}/test', 'Momday\PromotionController@test');
+
 
 Route::get('/clear-cache', function () {
     Artisan::call('optimize:clear');

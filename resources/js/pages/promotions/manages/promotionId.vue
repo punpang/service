@@ -7,6 +7,9 @@
         <v-btn icon fab x-small @click="start()">
           <v-icon color="info">refresh</v-icon>
         </v-btn>
+        <dialogDetail
+          :propOrderStatus="fetchAllByID.order_status"
+        ></dialogDetail>
       </v-card-title>
     </v-card>
 
@@ -101,9 +104,11 @@
 <script>
 import { mapGetters } from "vuex";
 import cardManages from "@/js/components/promotions/manage/cardManages";
+import dialogDetail from "@/js/components/promotions/manage/dialogDetail";
 export default {
   components: {
     cardManages,
+    dialogDetail,
   },
   data() {
     return {
@@ -156,6 +161,7 @@ export default {
   },
   async mounted() {
     this.start();
+    // await axios.get(`/api/${this.$route.params.id}/test`);
   },
   computed: {
     ...mapGetters({ fetchAllByID: "promotion/fetchAllByID" }),
