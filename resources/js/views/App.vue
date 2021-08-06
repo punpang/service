@@ -125,10 +125,10 @@ export default {
     },
   },
   async mounted() {
-    // await this.$store.dispatch("menuBar/lists");
+    await this.$store.dispatch("menuBar/lists");
   },
   computed: {
-    // ...mapGetters({ menuMain: "menuBar/lists" }),
+    ...mapGetters({ menuMain: "menuBar/lists" }),
   },
   async beforeCreate() {
     if (localStorage.token) {

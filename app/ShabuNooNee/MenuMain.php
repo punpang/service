@@ -10,6 +10,7 @@ class MenuMain extends Model
     protected $table = "menu_mains";
 
     protected $fillable = ["title", "action", "admin", "cashier", "waitress", "kitchen", "customer"];
+    
     public function menuSubs()
     {
         return $this->hasMany(MenuSub::class, "menu_main_id", "id")->select("id", "title", "to", "menu_main_id")->where(Auth::user()->userType->name, 1);
