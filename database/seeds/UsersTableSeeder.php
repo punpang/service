@@ -17,7 +17,7 @@ class UsersTableSeeder extends Seeder
         'name' => 'AdminNiCKSiT',
         'email' => 'admin',
         //'phone' => '0864735562',
-        'password' => Hash::make('123456'),
+        'password' => Hash::make('PansitSR4931'),
         'type' => User::ADMIN_TYPE,
       ],
       [

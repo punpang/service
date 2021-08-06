@@ -7,9 +7,20 @@ use App\ShabuNooNee\Product;
 use App\ShabuNooNee\WaitressQueueOrder;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class CookingDetail extends Model
+class CookingDetail extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+    protected $auditInclude = [
+        'dining_table_id',
+        'cooking_type_id',
+        "status_free",
+        "count_of_dining_equipment",
+        "status_step",
+        "status_use"
+    ];
+
     protected $table = "cooking_details";
 
     protected $fillable = ['status_step', "status_use"];
@@ -65,5 +76,32 @@ class CookingDetail extends Model
     public function orderQueueWaitress()
     {
         return $this->belongsTo(WaitressQueueOrder::class, "id", "queue_id");
+    }
+
+    public static function fetchDiningTableId($dining_table_id)
+    {
+        return CookingDetail::where([
+            ["dining_table_id", $dining_table_id],
+            ["cooking_type_id", ">", 0]
+        ])
+            ->with(
+                "typeCooking",
+                "brothDetails.product",
+                "statusStepDetailCooking",
+                "waitressUser.idUser"
+            )
+            ->orderBy("id", "desc")
+            ->get();
+    }
+
+    public static function store($dining_table_id, $cooking_type_id)
+    {
+
+        $cookingDetail = new CookingDetail();
+        $cookingDetail->dining_table_id = $dining_table_id;
+        $cookingDetail->cooking_type_id = $cooking_type_id;
+        $cookingDetail->save();
+
+        return $cookingDetail;
     }
 }

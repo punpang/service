@@ -23,6 +23,10 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
             ImageSeeder::class,
             CookingDetailStatusStepSeeder::class,
+            PromotionProductSeeder::class,
+            PromotionSeeder::class,
+            OrderStatusSeeder::class,
+            PaymentStatusSeeder::class,
         ]);
     }
 }

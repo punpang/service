@@ -150,6 +150,8 @@ class WaitressQueueOrderController extends Controller
         $waitress->status_done = true;
         $waitress->save();
 
+        WaitressQueueOrder::countWaitressForChannelAll();
+
         //หมายเลขโต๊ะ
         $numberTable = $waitress->tableDining->detailTable->name;
 

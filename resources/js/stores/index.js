@@ -8,7 +8,7 @@ import productImage from "@/js/stores/modules/productImage";
 import pusher from "@/js/stores/modules/pusher";
 import productGroup from "@/js/stores/modules/shabuNooNee/productGroup";
 import menuBar from "@/js/stores/modules/shabuNooNee/menuBar";
-import product from "@/js/stores/modules/shabuNooNee/products";
+// import product from "@/js/stores/modules/shabuNooNee/products";
 import googleImage from "@/js/stores/modules/shabuNooNee/googleImage";
 import diningTable from "@/js/stores/modules/shabuNooNee/diningTable";
 import priceRange from "@/js/stores/modules/shabuNooNee/priceRange";
@@ -19,6 +19,15 @@ import kitchenQueueOrder from "@/js/stores/modules/shabuNooNee/kitchenQueueOrder
 import WaitressQueueOrder from "@/js/stores/modules/shabuNooNee/WaitressQueueOrder";
 import cookingType from "@/js/stores/modules/shabuNooNee/cookingType";
 import cookingDetail from "@/js/stores/modules/shabuNooNee/cookingDetail";
+import tableOrderDetail from "@/js/stores/modules/shabuNooNee/tableOrderDetail";
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+import promotion from "@/js/stores/modules/promotion/promotion";
+import product from "@/js/stores/modules/promotion/product";
+import order from "@/js/stores/modules/promotion/order";
+import payment from "@/js/stores/modules/promotion/payment";
+import punpangProduct from "@/js/stores/modules/punpang/product";
+//
 
 Vue.use(Vuex);
 
@@ -26,7 +35,7 @@ export default new Vuex.Store({
     modules: {
         main,
         productImage,
-        ////
+        // ////
         pusher,
         productGroup,
         product,
@@ -40,6 +49,13 @@ export default new Vuex.Store({
         kitchenQueueOrder,
         WaitressQueueOrder,
         cookingType,
-        cookingDetail
+        cookingDetail,
+        tableOrderDetail,
+        promotion,
+        product,
+        order,
+        payment,
+        /////
+        punpangProduct
     }
 });

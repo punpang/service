@@ -4,8 +4,6 @@
     :lazy-src="
       'https://drive.google.com/thumbnail?id=' + path + '&sz=w800-h800'
     "
-    max-height="200"
-    max-width="200"
   >
     <template v-slot:placeholder>
       <v-row class="fill-height ma-0" align="center" justify="center">

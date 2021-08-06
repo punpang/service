@@ -5,9 +5,16 @@ namespace App\ShabuNooNee;
 use Illuminate\Database\Eloquent\Model;
 use App\ShabuNooNee\DiningTable;
 use App\ShabuNooNee\TableOrderDetail;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class TableOrder extends Model
+class TableOrder extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+    protected $auditInclude = [
+        'dining_table_id',
+        'status',
+    ];
+
     protected $table = "table_orders";
 
     public function diningTableId()

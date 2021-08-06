@@ -1,8 +1,12 @@
 <template>
   <div>
     <v-bottom-navigation app class="yellow darken-4" grow>
+      <!-- <v-btn :disabled="!self.id">
+        <span class="white--text"> รายการก่อนหน้า </span>
+        <v-icon class="white--text">arrow_back_ios</v-icon>
+      </v-btn> -->
       <v-btn block @click="save()" :disabled="!self.id">
-        <span class="white--text"> ต่อไป </span>
+        <span class="white--text"> รายการถัดไป </span>
         <v-icon class="white--text">arrow_forward_ios</v-icon>
       </v-btn>
     </v-bottom-navigation>

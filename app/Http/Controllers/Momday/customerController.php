@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Punpang;
+namespace App\Http\Controllers\Momday;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class PriceController extends Controller
+class customerController extends Controller
 {
     //
 }

@@ -5,9 +5,19 @@ namespace App\ShabuNoonee;
 use App\ShabuNooNee\TableOrder;
 use App\ShabuNooNee\TableOrderDetail;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class KitchenQueueOrder extends Model
+class KitchenQueueOrder extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+    protected $auditInclude = [
+        'dining_table_id',
+        'queue_id',
+        "user_id",
+        "format_id",
+        "status_done",
+    ];
+
     protected $table = "kitchen_queue_orders";
 
     protected $hidden = [

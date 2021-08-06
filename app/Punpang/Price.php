@@ -6,14 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Price extends Model
 {
-  protected $table = 'price';
+    protected $table = 'price';
 
-  protected $connection = 'punpang';
+    protected $connection = 'punpang';
 
-  public $timestamps = false;
-
-  public function Size()
-  {
-    return $this->hasOne(Size::class,'id','size');
-  }
+    public function size()
+    {
+        return $this->belongsTo(Size::class, "size", "id");
+    }
 }

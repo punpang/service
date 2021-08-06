@@ -8,14 +8,41 @@ use App\Shabunoonee\CookingType;
 use App\ShaBuNooNee\WaitressChannel;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class WaitressQueueOrder extends Model
+class WaitressQueueOrder extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+    protected $auditInclude = [
+        'dining_table_id',
+        'queue_id',
+        "user_id",
+        "waitress_channal",
+        "format_id",
+        "status_done",
+        "status_use"
+    ];
+
     protected $hidden = ["created_at", "updated_at"];
 
     public static function countWaitressForChannel($channel)
     {
         return WaitressQueueOrder::where("waitress_channal", $channel->id)->where("status_done", 0)->count();
+    }
+
+    public static function countWaitressForChannelAll()
+    {
+        WaitressChannel::where('status', 1)->update(["count" => 0]);
+
+        $countChannel = WaitressQueueOrder::where("status_done", 0)->get();
+        $groupBys = $countChannel->groupBy("waitress_channal");
+
+        foreach ($groupBys as $key => $value) {
+            $WaitressChannel = WaitressChannel::where("id", $key)
+                ->where("status", 1)->first();
+            $WaitressChannel->count = $value->count();
+            $WaitressChannel->save();
+        }
     }
 
     public static function Waitress($dining_table_id, $queue_id, $channel_id, $format_id = 1)
@@ -30,19 +57,32 @@ class WaitressQueueOrder extends Model
         return $Waitress;
     }
 
-    public static function waitressCreate($dining_table_id, $queue_id, $format_id = 1, $msgBroadcast = "alert")
+    public static function waitressCreate($dining_table_id, $queue_id, $format_id = 1, $broadcast = "alert")
     {
         //หาช่องเสิร์ฟที่คิวงานน้อยที่สุด และ อัปเดทล่าสุด
         $channel = WaitressChannel::findQueue();
         // สร้างคิวงานเสิร์ฟ
-        self::Waitress($dining_table_id, $queue_id, $channel->id, $format_id);
+        $Waitress = self::Waitress($dining_table_id, $queue_id, $channel->id, $format_id);
 
         // นับจำนวนงานเสิร์ฟของแต่ละช่องเสิร์ฟ // อัปเดทจำนวนงานเสิร์ฟแต่ละช่อง
-        $channel->count = WaitressQueueOrder::countWaitressForChannel($channel);
-        $channel->save();
+        // $channel->count = WaitressQueueOrder::countWaitressForChannel($channel);
+        // $channel->save();
+
+        // อัปเดทจำนวนคิวงานทุกช่องเสิร์ฟ
+        self::countWaitressForChannelAll();
 
         // pusher ไปยัง เสิร์ฟ
-        broadcast(new WaitressQueueOrderProcessing($msgBroadcast));
+        broadcast(new WaitressQueueOrderProcessing($broadcast));
+
+        return $Waitress;
+    }
+
+    public static function checkInsert($queue_id, $format_id = 1)
+    {
+        return WaitressQueueOrder::where("queue_id", $queue_id)
+            //->where("id", $kitchen->id)
+            ->where("format_id", $format_id)
+            ->first();
     }
 
     public  function waitressChannal()

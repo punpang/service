@@ -4,9 +4,16 @@ namespace App\ShaBuNooNee;
 
 use App\ShabuNooNee\WaitressQueueOrder;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class WaitressChannel extends Model
+class WaitressChannel extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+    protected $auditInclude = [
+        'title',
+        'status',
+    ];
+
     protected $table = "waitress_channels";
 
     public function waitressQueued()
@@ -31,6 +38,6 @@ class WaitressChannel extends Model
 
     public static function selectTitle()
     {
-        return self::select("id","title");
+        return self::select("id", "title");
     }
 }

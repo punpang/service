@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('pw')->default('free');
             $table->rememberToken();
             $table->boolean('type')->default(0);
-            $table->boolean('logout')->default(false);
+            $table->boolean('limit_cooking')->default(1);
             $table->timestamps();
         });
     }

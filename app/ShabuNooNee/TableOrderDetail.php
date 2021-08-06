@@ -5,9 +5,20 @@ namespace App\ShabuNooNee;
 use Illuminate\Database\Eloquent\Model;
 use App\ShabuNooNee\Product;
 use App\ShabuNooNee\TableOrder;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class TableOrderDetail extends Model
+class TableOrderDetail extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+    protected $auditInclude = [
+        "table_order_id",
+        "product_id",
+        "price",
+        "quantity",
+        "sum_price",
+        "status_free",
+    ];
+
     protected $table = "table_order_details";
 
     protected $fillable = [
@@ -17,7 +28,6 @@ class TableOrderDetail extends Model
         "quantity",
         "sum_price",
         "status_free",
-        "dining_table_id"
     ];
 
     protected $hidden = [

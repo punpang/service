@@ -93,10 +93,7 @@ class KitchenQueueOrderController extends Controller
         }
 
         // ค้นหามีหรือยัง
-        $checkInsert = WaitressQueueOrder::where("queue_id", $kitchen->queue_id)
-            ->where("id", $kitchen->id)
-            ->first();
-
+        $checkInsert = WaitressQueueOrder::checkInsert($kitchen->queue_id, 1);
         //หากมีแล้ว
         if ($checkInsert) {
             return response()->json(
@@ -107,27 +104,17 @@ class KitchenQueueOrderController extends Controller
             );
         }
 
-        $channel = WaitressChannel::findQueue();
 
-        WaitressQueueOrder::Waitress(
-            $kitchen->dining_table_id,
-            $kitchen->queue_id,
-            $channel->id
-        );
-
-        $channel->count = WaitressQueueOrder::countWaitressForChannel($channel);
-        $channel->save();
+        $waitressCreate = WaitressQueueOrder::waitressCreate($kitchen->dining_table_id, $kitchen->queue_id, 1);
 
         $kitchen->status_done = true;
         $kitchen->save();
 
         $messageUseTime = Helper::messageUseTime($kitchen->created_at, $kitchen->updated_at);
 
-        broadcast(new WaitressQueueOrderProcessing("alert"));
-
         return response()->json(
             [
-                "message" => $channel->title,
+                "message" => $waitressCreate->waitressChannal->title,
                 "messageText" => $messageUseTime
             ],
             200

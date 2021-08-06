@@ -6,7 +6,7 @@
         v-show="this.$store.getters['main/isLoggedIn'] == true"
       ></v-app-bar-nav-icon>
 
-      <v-toolbar-title>SHABU NOONEE</v-toolbar-title>
+      <v-toolbar-title>PUNPANG</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn text v-if="this.$store.getters['main/isLoggedIn'] == true">{{
         this.$store.getters["main/User"].name

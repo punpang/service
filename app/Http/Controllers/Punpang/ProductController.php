@@ -8,15 +8,10 @@ use App\Punpang\Product;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function fetchAllUse()
     {
-      $products = Product::orderBy('type','ASC')->get();
-      return view('punpang/product/index' , compact('products'));
-    }
+        $data = Product::with("prices.size", "productDetail")->orderBy("type", "asc")->get();
 
-    public function ProductId($id)
-    {
-      $product = Product::findOrfail($id);
-      return view('punpang/product/show' , compact('product'));
+        return response()->json($data, 200);
     }
 }

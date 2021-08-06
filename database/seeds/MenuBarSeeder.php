@@ -33,10 +33,19 @@ class MenuBarSeeder extends Seeder
 
             ],
             [
-                // จัดการโต๊ะ
+                // จัดการครัว
                 "title" => "จัดการครัว", "action" => "kitchen", "admin" => 0, "cashier" => 0, "waitress" => 0, "kitchen" => 1, "customer" => 0,
                 "subs" => [
-                    ["title" => "บริหารโต๊ะ", "to" => "/kitchen/QueueOrder", "admin" => 0, "cashier" => 0, "waitress" => 0, "kitchen" => 1, "customer" => 0],
+                    ["title" => "รายการครัว", "to" => "/kitchen/QueueOrder", "admin" => 0, "cashier" => 0, "waitress" => 0, "kitchen" => 1, "customer" => 0],
+                ]
+
+            ]
+            ,
+            [
+                // จัดการเสิร์ฟ
+                "title" => "จัดการเสิร์ฟ", "action" => "kitchen", "admin" => 0, "cashier" => 0, "waitress" => 1, "kitchen" => 0, "customer" => 0,
+                "subs" => [
+                    ["title" => "รายการเสิร์ฟ", "to" => "/waitress/QueueOrder", "admin" => 0, "cashier" => 0, "waitress" => 1, "kitchen" => 0, "customer" => 0],
                 ]
 
             ]

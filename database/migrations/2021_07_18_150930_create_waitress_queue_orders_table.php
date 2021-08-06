@@ -21,6 +21,7 @@ class CreateWaitressQueueOrdersTable extends Migration
             $table->integer("waitress_channal")->default(0);
             $table->integer("format_id")->default(1);
             $table->boolean("status_done")->default(false);
+            $table->boolean("status_use")->default(true);
             $table->timestamps();
         });
     }

@@ -1,11 +1,11 @@
 <?php
 
-Route::get('/clear-cache', function () {
-  Artisan::call('config:clear');
-  Artisan::call('cache:clear');
-  Artisan::call('config:cache');
-  return 'FINISHED';
-});
+// Route::get('/clear-cache', function () {
+//   Artisan::call('config:clear');
+//   Artisan::call('cache:clear');
+//   Artisan::call('config:cache');
+//   return 'FINISHED';
+// });
 
 
 Route::get('/{any?}', function () {

@@ -17,6 +17,8 @@ class Linenotify extends Model
 
     protected function routeNotificationForLine()
     {
+      return "NAWpRL0qfXJk3YgnvRhQWWNqDrC8j6xK2XvQlGNjrHO";
+
       if (Request::is('admin/best-express/*') or Request::is('best-express/*')) {
         $target = 'best';
         // ScJ97aIdk3Lk9PvKWsjsFfzaJtSqU0A5EoEAggH19Ja //ทดสอบ BEST Express Test

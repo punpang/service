@@ -2,9 +2,9 @@
   <div>
     <v-card v-if="self.id">
       <v-card-title>
-        <h3># {{ self.id }}</h3>
+        <h3 class="mb-0"># {{ self.id }}</h3>
         <v-spacer></v-spacer>
-        <h5>ทั้งหมด {{ sumQuantity }} ถาด</h5>
+        <h5 class="mb-0">ทั้งหมด {{ sumQuantity }} ถาด</h5>
       </v-card-title>
       <v-divider class="ma-0"></v-divider>
       <v-card-text>
@@ -14,11 +14,15 @@
               v-for="table_order_detail in self.table_order_details"
               :key="table_order_detail.id"
             >
-              <td>
-                <h2 class="mt-2">{{ table_order_detail.product.title }}</h2>
+              <td class="px-0">
+                <h3 class="mt-2">
+                  {{ table_order_detail.product.title }}
+                  <!-- <v-icon color="warning" right>edit</v-icon> -->
+                </h3>
+                <downQuantity :propTableOrderDetail="table_order_detail"></downQuantity>
               </td>
-              <td class="text-right">
-                <h2 class="mt-2">{{ table_order_detail.quantity }}</h2>
+              <td class="text-right px-0">
+                <h3 class="mt-2 mb-9">X {{ table_order_detail.quantity }}</h3>
               </td>
             </tr>
           </tbody>
@@ -38,11 +42,13 @@
 <script>
 import { mapGetters } from "vuex";
 import btnSave from "@/js/components/shabuNoonee/waitress/btnSave";
+import downQuantity from "@/js/components/shabuNoonee/waitress/finished/downQuantity";
 
 export default {
   props: ["propStatus"],
   components: {
     btnSave,
+    downQuantity
   },
   data() {
     return {

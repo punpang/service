@@ -3,9 +3,19 @@
 namespace App\ShabuNooNee;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Product extends Model
+class Product extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+    protected $auditInclude = [
+        'dining_table_id',
+        'queue_id',
+        "user_id",
+        "format_id",
+        "status_done",
+    ];
+
     protected $table = "products";
 
     protected $fillable = [
@@ -44,5 +54,10 @@ class Product extends Model
         }
 
         return true;
+    }
+
+    public static function outOfStockByID($product_id)
+    {
+        self::where("id", $product_id)->update(['stauts' => 0]);
     }
 }

@@ -1,8 +1,12 @@
 <template>
   <div>
-    <v-card>
+    <v-card class="mb-4">
       <v-card-title>
-        <h3># {{ self.id }}</h3>
+        <h1 class="mb-0 pt-2">
+          <strong>{{
+            self.table_dining_select_user_id.detail_table.name
+          }}</strong>
+        </h1>
       </v-card-title>
       <v-divider class="ma-0"></v-divider>
       <v-card-text>
@@ -10,19 +14,16 @@
           <tbody>
             <tr>
               <td>
-                <h2
-                  class="mt-2"
-                  v-if="self.detail_cooking.count_of_dining_equipment > 0"
-                >
+                <h2 v-if="self.detail_cooking.count_of_dining_equipment > 0">
                   จานช้อน x
                   {{ self.detail_cooking.count_of_dining_equipment }} ชุด
                 </h2>
-                <h2 class="mt-3 mb-3" v-if="self.detail_cooking.type_cooking">
+                <h2 class="mb-1" v-if="self.detail_cooking.type_cooking">
                   {{ self.detail_cooking.type_cooking.title }}
                 </h2>
 
                 <h5
-                  class="pl-4"
+                  class="pl-6 mb-0 pt-3"
                   v-for="broth_detail in self.detail_cooking.broth_details"
                   :key="broth_detail.id"
                   v-if="self.detail_cooking.broth_details"
@@ -37,6 +38,8 @@
       <v-divider class="ma-0"></v-divider>
     </v-card>
 
+    <v-btn block x-large color="error"> ยกเลิกรายการ </v-btn>
+
     <btnSave :propStatus="propStatus"></btnSave>
   </div>
 </template>
@@ -44,6 +47,7 @@
 <script>
 import { mapGetters } from "vuex";
 import btnSave from "@/js/components/shabuNoonee/waitress/btnSave";
+
 export default {
   props: ["propStatus"],
   components: {

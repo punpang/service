@@ -39,11 +39,11 @@ axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
 //
 
 // crrency
-import VueCurrencyInput from "vue-currency-input";
-const pluginOptions = {
-    globalOptions: { currency: null }
-};
-Vue.use(VueCurrencyInput, pluginOptions);
+// import VueCurrencyInput from "vue-currency-input";
+// const pluginOptions = {
+//     globalOptions: { currency: null }
+// };
+// Vue.use(VueCurrencyInput, pluginOptions);
 
 // clipboard
 import VueClipboard from "vue-clipboard2";
@@ -71,6 +71,16 @@ Vue.use(Loading);
 import VueSweetalert2 from "vue-sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 Vue.use(VueSweetalert2);
+
+// vue-numeric
+// import Vue from 'vue'
+// import VueNumeric from 'vue-numeric'
+// Vue.use(VueNumeric);
+
+// // vue-filter-number-format
+// import numeral from "numeral";
+// import numFormat from "vue-filter-number-format";
+// Vue.filter("numFormat", numFormat(numeral));
 
 const app = new Vue({
     el: "#app",
