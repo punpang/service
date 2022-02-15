@@ -161,7 +161,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Collective\Html\HtmlServiceProvider::class,
+        // Collective\Html\HtmlServiceProvider::class,
         //Yugo\SMSGateway\Providers\SmsServiceProvider::class,
         Hinaloe\LineNotify\LineNotifyServiceProvider::class,
         //Maatwebsite\Excel\ExcelServiceProvider::class,
@@ -169,7 +169,7 @@ return [
         OwenIt\Auditing\AuditingServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Shivella\Bitly\BitlyServiceProvider::class,
-        JD\Cloudder\CloudderServiceProvider::class,
+        // JD\Cloudder\CloudderServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -236,12 +236,12 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Form' => Collective\Html\FormFacade::class,
-        'Html' => Collective\Html\HtmlFacade::class,
+        // 'Html' => Collective\Html\HtmlFacade::class,
         //'Sms' => Facades\Yugo\SMSGateway\Interfaces\SMS::class,
         //'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Bitly' => Shivella\Bitly\Facade\Bitly::class,
-        'Cloudder' => JD\Cloudder\Facades\Cloudder::class,
+        // 'Cloudder' => JD\Cloudder\Facades\Cloudder::class,
     ],
 
 ];

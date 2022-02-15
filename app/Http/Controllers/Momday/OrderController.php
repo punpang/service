@@ -15,6 +15,12 @@ use App\URL;
 
 class OrderController extends Controller
 {
+
+    public function mainWeb()
+    {
+        return view('app');
+    }
+
     public function store(Request $request)
     {
         //return $request;
@@ -27,6 +33,7 @@ class OrderController extends Controller
         }
 
         $overDateEnd = promotion::overDateEnd($request->promotion_id);
+
         if ($overDateEnd) {
             return response()->json(
                 [
@@ -70,6 +77,7 @@ class OrderController extends Controller
             " #ทางร้านขอสงวนสิทธิ์ในการจัดลำดับการมอบสินค้าให้ท่านที่ชำระเงินก่อน
             #หากชำระตอนนี้ คุณอาจได้รับคิว " . $order->time_get . " น.
             #หากพบปัญหาโทร. 091-885-3402";
+
         MSms::Sms($customer->phone_number, $msgSms);
 
         return response()->json(
@@ -84,40 +92,112 @@ class OrderController extends Controller
 
     public function fetchByUUID($uuid)
     {
+
         $order = Order::where("uuid", $uuid)
             ->with(
                 "customer",
                 "promotion",
                 "orderStatus",
-                "orderDetails",
                 "payment.paymentStatus",
-                "orderDetails.product",
-                "orderDetails.product.promotion"
+                "orderDetails.product"
             )
             ->first();
 
-        $overDateEnd = Order::overDateEnd($order->promotion->date_end, $order->order_status_id);
-        if ($overDateEnd) {
+        if ($order->status_use === 1) {
+            $overDateEnd = Order::overDateEnd($order->promotion->date_end);
+            if ($overDateEnd) {
+                $order->status_use = 0;
+                $order->order_status_id = 6;
+                $order->save();
 
-            $order->status_use = 0;
-            $order->order_status_id = 6;
-            $order->save();
-
-            $order = Order::where("uuid", $uuid)
-                ->with(
-                    "customer",
-                    "promotion",
-                    "orderStatus",
-                    "orderDetails",
-                    "payment.paymentStatus",
-                    "orderDetails.product",
-                    "orderDetails.product.promotion"
-                )
-                ->first();
+                return $this->fetchByUUID($uuid);
+            }
         }
 
+        return response()->json(
+            $order,
+            200
+        );
+    }
+
+    public function fetchByID($order_id)
+    {
+
+        $order = Order::where("id", $order_id)
+            ->with(
+                "customer",
+                // "promotion",
+                "orderStatus",
+                // "orderDetails",
+                // "payment.paymentStatus",
+                "orderDetails.product",
+                // "orderDetails.product.promotion"
+            )
+            ->first();
+
+        return response()->json(
+            $order,
+            200
+        );
+    }
+
+    public function updateStatusGoodsDone(Order $order)
+    {
+        if ($order->order_status_id !== 3) {
+            return response()->json([
+                "msgTitle" => "ผิดพลาด",
+                "msgText" => "ไม่อยู่ในสถานะสั่งซื้อสำเร็จ"
+            ], 200);
+        }
+
+        if ($order->status_use === 0) {
+            return response()->json([
+                "msgTitle" => "ผิดพลาด",
+                "msgText" => "สถานะ : ไม่ได้ใช้งานแล้ว",
+                "icon" => "warning"
+            ], 200);
+        }
+
+        $order->order_status_id = 4;
+        $order->save();
+
+        $msgSms = "เราจัดเตรียมสินค้าสำหรับคุณเรียบร้อยแล้ว สามารถรับสินค้าได้ทันที โปรดแจ้งชื่อหรือเบอร์โทรเพื่อรับสินค้าของคุณ";
+        MSms::Sms($order->customer->phone_number, $msgSms);
+
         return response()->json([
-            "data" => $order
+            "msgTitle" => "สำเร็จ",
+            "msgText" => "แจ้งลูกค้าเรียบร้อย",
+            "icon" => "success"
+        ], 200);
+    }
+
+    public function updateStatusGoodsGet(Order $order)
+    {
+        if ($order->order_status_id !== 4) {
+            return response()->json([
+                "msgTitle" => "ผิดพลาด",
+                "msgText" => "ไม่อยู่ในสถานะสั่งซื้อสำเร็จ"
+            ], 200);
+        }
+
+        if ($order->status_use === 0) {
+            return response()->json([
+                "msgTitle" => "ผิดพลาด",
+                "msgText" => "สถานะ : ไม่ได้ใช้งานแล้ว",
+                "icon" => "warning"
+            ], 200);
+        }
+
+        $order->order_status_id = 5;
+        $order->save();
+
+        $msgSms = "ท่านรับสินค้าเรียบร้อยแล้ว ขอบพระคุณค่ะ";
+        MSms::Sms($order->customer->phone_number, $msgSms);
+
+        return response()->json([
+            "msgTitle" => "สำเร็จ",
+            "msgText" => "แจ้งลูกค้าเรียบร้อย",
+            "icon" => "success"
         ], 200);
     }
 }

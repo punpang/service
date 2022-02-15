@@ -26,7 +26,7 @@ export default {
         },
         async storeCash({}, payload) {
             const res = await axios.post(
-                `/api/v1/guest/payment/cash/store`,
+                `/api/admin/payment/cash/store`,
                 payload
             );
             return res;
@@ -56,6 +56,12 @@ export default {
             const res = await axios.post(
                 `/api/admin/payment/${payload.id}/confirmOnline`,
                 payload
+            );
+            return res;
+        },
+        async confirmCash({}, payload) {
+            const res = await axios.post(
+                `/api/admin/payment/${payload}/confirmCash`
             );
             return res;
         },

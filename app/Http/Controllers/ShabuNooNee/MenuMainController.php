@@ -4,15 +4,15 @@ namespace App\Http\Controllers\ShabuNooNee;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\ShabuNoonee\MenuMain;
-use Auth;
+use App\Order\MenuMain;
+use Illuminate\Support\Facades\Auth;
 
 class MenuMainController extends Controller
 {
     public function lists()
     {
         if (Auth::check()) {
-            $lists = MenuMain::where(Auth::user()->userType->name, 1)->select("id", "title", "action")->with("menuSubs")->get();
+            $lists = MenuMain::where(Auth::user()->userType->name, "1")->select("id", "title", "action")->with("menuSubs")->get();
             return response()->json($lists, 200);
         }
     }

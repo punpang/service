@@ -1,0 +1,53 @@
+<template>
+  <div>
+    <v-card class="mb-2" outlined>
+      <v-card-title class="text-h6 white--text warning">
+        ข้อมูลรายการสั่งซื้อ
+      </v-card-title>
+      <v-card-text>
+        <v-simple-table>
+          <tbody>
+            <tr>
+              <td>
+                <strong>หมายเลขคำสั่งซื้อ</strong>
+              </td>
+              <td class="text-right">
+                <strong>{{ order.id }}</strong>
+              </td>
+            </tr>
+            <!-- / -->
+            <tr>
+              <td>
+                <strong>วัน-เวลารับสินค้า</strong>
+              </td>
+              <td class="text-right">
+                <strong>{{ order.date_get }} {{ order.time_get }}</strong>
+              </td>
+            </tr>
+            <!-- / -->
+            <tr>
+              <td>
+                <strong>วัน-เวลาที่สั่งซื้อ</strong>
+              </td>
+              <td class="text-right">
+                <strong>{{ order.date_order }}</strong>
+              </td>
+            </tr>
+            <!-- / -->
+          </tbody>
+        </v-simple-table>
+      </v-card-text>
+    </v-card>
+  </div>
+</template>
+
+<script>
+import { mapGetters } from "vuex";
+export default {
+  computed: {
+    ...mapGetters({
+      order: "orderIndex/order",
+    }),
+  },
+};
+</script>

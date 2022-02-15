@@ -17,6 +17,8 @@ class GoogleImageController extends Controller
         //  'image'  => 'required|image|mimes:jpeg,png,jpg|max:9999'
         //]);
 
+
+
         $fileName = request()->file('image')->store('', 'google');
 
         $listContents = Storage::disk('google')->listContents();
@@ -35,6 +37,7 @@ class GoogleImageController extends Controller
 
     public function storeNotAuth()
     {
+        // dd(request()->all());
 
         //request()->validate([
         //  'image'  => 'required|image|mimes:jpeg,png,jpg|max:9999'
@@ -46,12 +49,25 @@ class GoogleImageController extends Controller
 
         foreach ($listContents as $listContent) {
             if ($listContent['name'] == $fileName) {
-                $src_name = $listContent['path'];
+
+                $data = new GoogleImage;
+                $data->src_name = $listContent['path'];
+                $data->save();
             }
         }
 
+        // foreach ($listContents as $listContent) {
+        //     if ($listContent['name'] == $fileName) {
+        //         $src_name = $listContent['path'];
+        //     }
+        // }
+
         return response()->json([
-            "src_name" => $src_name
+            "image" => [
+                "id" => $data->id,
+                "src_name" => $data->src_name,
+            ],
+            "success" => true
         ], 200);
     }
 

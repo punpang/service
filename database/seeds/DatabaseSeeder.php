@@ -12,14 +12,24 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            UsersTableSeeder::class,
-            UserTypeSeeder::class,
-            MenuBarSeeder::class,
-            ImageSeeder::class,
-            PromotionProductSeeder::class,
-            PromotionSeeder::class,
-            OrderStatusSeeder::class,
-            PaymentStatusSeeder::class,
+            // UsersTableSeeder::class,
+            // UserTypeSeeder::class,
+            // MenuBarSeeder::class,
+            // ChannelPaymentSeeder::class,
+            //KsherChannelPaymentsSeeder::class,
+            // ImageSeeder::class,
+            // PromotionProductSeeder::class,
+            // PromotionSeeder::class,
+            // OrderStatusSeeder::class,
+            // PaymentStatusSeeder::class,
+            // OrderCategorySeeder::class,
+            // OrderCategoryDetailSeeder::class,
+            // OrderCategoryRelationshipSeeder::class,
+            // OrderCategoryTypeSeeder::class,
+            // OrderCategorySubSeeder::class,
+            // OrderCategorySubDetailSeeder::class,
+            // OrderChannelSeeder::class,
+            // RewardLabelSeeder::class,
         ]);
     }
 }

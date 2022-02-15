@@ -1,10 +1,21 @@
 <template>
   <div>
     <h2>รายการสินค้า</h2>
-    <p class="text-subtitle-2">สั่งซื้อวันนี้ รับราคาพิเศษ</p>
+    <p class="text-subtitle-2 mb-1">สั่งซื้อวันนี้ รับราคาพิเศษ</p>
+    <p class="text-subtitle-2">
+      <strong>*ไม่มีนโยบายคืนเงินทุกกรณี*</strong>
+    </p>
 
     <v-row>
-      <v-col cols="12" sm="4" v-for="product in products" :key="product.id">
+      <v-col
+        cols="12"
+        sm="6"
+        md="4"
+        lg="4"
+        xl="4"
+        v-for="product in products"
+        :key="product.id"
+      >
         <v-card>
           <v-img :src="path + product.img"></v-img>
           <v-card-title>
@@ -42,7 +53,7 @@
               </tbody>
             </v-simple-table>
           </v-card-text>
-        <!-- <v-card-actions v-if="product.product_detail">
+          <!-- <v-card-actions v-if="product.product_detail">
             {{ product.product_detail.detail }}
         </v-card-actions> -->
         </v-card>
@@ -62,11 +73,13 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      path: "https://www.punpang.me/admin_system/home/product/img-products/",
+      path: "https://www.punpangsv.com/admin_system/home/product/img-products/",
     };
   },
   async mounted() {
+    let loader = this.$loading.show();
     await this.$store.dispatch("punpangProduct/fetchAllUse");
+    loader.hide();
   },
   computed: {
     ...mapGetters({ products: "punpangProduct/fetchAllUse" }),

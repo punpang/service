@@ -90,13 +90,17 @@ export default {
       loader.hide();
     },
     titleProduct(product_id) {
-      const products = this.countProducts.products;
+      const [{ title }] = this.countProducts.products.filter(
+        (e) => e.id === parseInt(product_id)
+      );
 
-      for (let index = 0; index < products.length; index++) {
-        if (parseInt(product_id) === parseInt(products[index].id)) {
-          return products[index].title;
-        }
-      }
+      return title;
+
+      // for (let index = 0; index < products.length; index++) {
+      //   if (parseInt(product_id) === parseInt(products[index].id)) {
+      //     return products[index].title;
+      //   }
+      // }
     },
     sumCount() {
       const count = Object.values(this.countProducts.count);

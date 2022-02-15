@@ -46,6 +46,33 @@ const routes = [
         component: () => import("@/js/pages/promotions/manages/promotionId"),
         meta: { requiresAuth: true }
     },
+
+    {
+        path: "/manages/order/newOrder",
+        name: "managesOrderNew",
+        component: () => import("@/js/pages/order/newOrder"),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: "/manages/order/:id/alertPayment",
+        name: "managesOrderIDAlertPayment",
+        component: () => import("@/js/pages/order/alertPaymentByOrderID"),
+        meta: { requiresAuth: true }
+    },
+
+    {
+        path: "/manages/order/:id/paymentOrderByID",
+        name: "managesOrderIDpromptPaymentOrderByID",
+        component: () => import("@/js/pages/order/paymentOrderByID"),
+        meta: { requiresAuth: true }
+    },
+
+    {
+        path: "/manages/order/checkNoticeOfPaymentFromCustomer",
+        name: "managesOrderCheckNoticeOfPaymentFromCustomer",
+        component: () => import("@/js/pages/order/checkNoticeOfPaymentFromCustomer.vue"),
+        meta: { requiresAuth: true }
+    },
     // {
     //     path: "/manages/order/run",
     //     name: "managesOrderID",
@@ -54,9 +81,55 @@ const routes = [
     // },
     ////
     {
+        path: "/manages/menuBar",
+        name: "managesLuckyRegister",
+        component: () => import("@/js/pages/admin/menuBar"),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: "/manages/lucky/register",
+        name: "managesLuckyRegister",
+        component: () => import("@/js/pages/lucky/register"),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: "/manages/lucky/redeem-code",
+        name: "managesLuckyRedeemCode",
+        component: () => import("@/js/pages/lucky/redeem-code"),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: "/manages/lucky/getLink",
+        name: "managesLuckyGetLink",
+        component: () => import("@/js/pages/lucky/getLink"),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: "/lucky/reward/:uuid",
+        name: "managesLuckyRedeemCode",
+        component: () => import("@/js/pages/lucky/rewardUUID"),
+    },
+
+    // guest
+    {
         path: "/menu",
         name: "menuCake",
         component: () => import("@/js/pages/punpang/menu"),
+    },
+    {
+        path: "/guest/order/auth/:uuid",
+        name: "guestOrderAuthUuid",
+        component: () => import("@/js/pages/guest/orders/uuid"),
+    },
+    {
+        path: "/o/:uuid",
+        name: "guestOrderAuthUuid",
+        component: () => import("@/js/pages/guest/orders/uuid"),
+    },
+    {
+        path: "/ksher/successfully",
+        name: "guestOrderKsherSuccessfully",
+        component: () => import("@/js/pages/guest/orders/ksher/successfully"),
     }
 ];
 

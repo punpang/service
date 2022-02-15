@@ -3,7 +3,7 @@
 namespace App;
 
 use App\ShabuNooNee\DiningTable;
-use App\ShabuNoonee\UserType;
+use App\Order\UserType;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -15,10 +15,7 @@ class User extends Authenticatable implements JWTSubject
     use Notifiable;
     const DEFAULT_TYPE = 0;
     const ADMIN_TYPE = 1;
-    const CASHIER_TYPE = 2;
-    const WAITRESS_TYPE = 3;
-    const KITCHEN_TYPE = 4;
-    const CUSTOMER_TYPE = 5;
+    const CUSTOMER_TYPE = 2;
     /**
      * The attributes that are mass assignable.
      *
@@ -35,6 +32,7 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $hidden = [
         'password', 'remember_token',
+        "type_name", "type"
     ];
 
     /**
@@ -51,26 +49,10 @@ class User extends Authenticatable implements JWTSubject
         return $this->type === self::ADMIN_TYPE;
     }
 
-    public function isCashier()
-    {
-        return $this->type === self::CASHIER_TYPE;
-    }
-
     public function isCustomer()
     {
         return $this->type === self::CUSTOMER_TYPE;
     }
-
-    public function isKitchen()
-    {
-        return $this->type === self::KITCHEN_TYPE;
-    }
-
-    public function isWaitress()
-    {
-        return $this->type === self::WAITRESS_TYPE;
-    }
-
 
     public function member()
     {

@@ -143,13 +143,16 @@ export default {
       return id;
     },
     order_status_name(key) {
-      const status = this.fetchAllByID.order_status;
+      const [{ title }] = this.fetchAllByID.order_status.filter(
+        (e) => e.id === parseInt(key)
+      );
+      return title;
 
-      for (let index = 0; index < status.length; index++) {
-        if (status[index].id === parseInt(key)) {
-          return status[index].title;
-        }
-      }
+      // for (let index = 0; index < status.length; index++) {
+      //   if (status[index].id === parseInt(key)) {
+      //     return status[index].title;
+      //   }
+      // }
     },
     async start() {
       let loader = this.$loading.show();

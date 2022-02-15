@@ -28,6 +28,24 @@ import order from "@/js/stores/modules/promotion/order";
 import payment from "@/js/stores/modules/promotion/payment";
 import punpangProduct from "@/js/stores/modules/punpang/product";
 //
+import orderText from "@/js/stores/modules/order/text";
+import orderIndex from "@/js/stores/modules/order/order";
+import orderKsher from "@/js/stores/modules/order/ksher";
+import orderGuestUuid from "@/js/stores/modules/order/guestUuid";
+import orderCategory from "@/js/stores/modules/order/category";
+import orderCategorySub from "@/js/stores/modules/order/categorySub";
+import orderCustomer from "@/js/stores/modules/order/customer";
+import orderDateTimeGet from "@/js/stores/modules/order/dateTimeGet";
+import orderChannel from "@/js/stores/modules/order/orderChannel";
+import orderProductCake from "@/js/stores/modules/order/productCake";
+import orderNoticeOfPaymentFromCustomer from "@/js/stores/modules/order/noticeOfPaymentFromCustomer";
+import orderDetailTemp from "@/js/stores/modules/order/orderDetailTemp";
+import orderTemp from "@/js/stores/modules/order/orderTemp";
+
+/////////////////////////
+/// LUCKY REWAYD START ///
+import orderLuckyReward from "@/js/stores/modules/order/luckyReward";
+/// LUCKY REWAYD END ///
 
 Vue.use(Vuex);
 
@@ -56,6 +74,21 @@ export default new Vuex.Store({
         order,
         payment,
         /////
-        punpangProduct
-    }
+        punpangProduct,
+        ///
+        orderCategory,
+        orderCategorySub,
+        orderCustomer,
+        orderDateTimeGet,
+        orderChannel,
+        orderProductCake,
+        orderGuestUuid,
+        orderLuckyReward,
+        orderText,
+        orderIndex,
+        orderKsher,
+        orderNoticeOfPaymentFromCustomer,
+        orderDetailTemp,
+        orderTemp
+    },
 });

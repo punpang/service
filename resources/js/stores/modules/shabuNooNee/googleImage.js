@@ -7,7 +7,7 @@ export default {
         async store({}, payload) {
             try {
                 const response = await axios.post(
-                    "/api/google/uploadImage",
+                    "/api/v1/guest/google/uploadImage",
                     payload
                 );
                 return response;

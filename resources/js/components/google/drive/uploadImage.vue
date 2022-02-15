@@ -9,14 +9,21 @@
       @change="changeImage"
       accept="image/*"
       outlined
+      hide-details
     >
     </v-file-input>
     <v-card v-show="propUploadImange.imagePreview">
       <v-img
-    :src="'https://drive.google.com/thumbnail?id=' + propUploadImange.imagePreview + '&sz=w800-h800'"
-    :lazy-src="
-      'https://drive.google.com/thumbnail?id=' + propUploadImange.imagePreview + '&sz=w800-h800'
-    "
+        :src="
+          'https://drive.google.com/thumbnail?id=' +
+          propUploadImange.imagePreview +
+          '&sz=w800-h800'
+        "
+        :lazy-src="
+          'https://drive.google.com/thumbnail?id=' +
+          propUploadImange.imagePreview +
+          '&sz=w800-h800'
+        "
         class="mb-4"
       >
         <v-btn
@@ -67,7 +74,8 @@ export default {
         this.propUploadImange.imagePreview = response.data.src_name;
         this.$toast.success("อัปโหลดรูปสำเร็จ");
         //this.form.product_propImageId = response.data.id;
-        this.$emit("emitImageId", response.data.id);
+        // console.log(response,"response");
+        this.$emit("emitImageId", response);
         loader.hide();
       } else {
         this.$toast.error("อัปโหลดรูปไม่สำเร็จ เกิดข้อผิดพลาดบางอย่าง");

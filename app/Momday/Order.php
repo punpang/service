@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    protected $hidden = ['updated_at'];
 
     public function customer()
     {
@@ -48,14 +49,21 @@ class Order extends Model
         return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $date)->addYears(543)->format('d-m-Y H:i:s');
     }
 
-    public static function queue($promotion_id, $perHour = 13, $timeStart = 10)
+    public static function queue($promotion_id, $paid = false, $perHour = 13, $timeStart = 10)
     {
-        $orders = Order::where("promotion_id", $promotion_id)
-            ->whereIn("order_status_id", [2, 3, 4, 5])
-            ->where("status_use", 1)
-            ->count();
+        $order_status_id = [2, 3, 4, 5];
+        if ($paid) {
+            $order_status_id = [3, 4, 5];
+        }
 
-        $time_get_before = number_format(($orders / $perHour) + $timeStart, 2);
+        $orders = Order::where("promotion_id", $promotion_id)
+            ->whereIn("order_status_id", $order_status_id)
+            ->where("status_use", 1)
+            ->get();
+
+        $collectOrderDetail = self::collectOrderDetail($orders);
+
+        $time_get_before = number_format(($collectOrderDetail->count() / $perHour) + $timeStart, 2);
         $time_get_explode = explode(".", $time_get_before);
 
         $H = $time_get_explode[0];
@@ -69,13 +77,26 @@ class Order extends Model
         return $H . ":" . $i . ":00";
     }
 
-    public static function overDateEnd($date_end, $order_status_id)
+    public static function overDateEnd($date_end, $order_status_id = 1 )
     {
         if (
             $date_end < now()->format("d-m-Y") //เวลาสิ้นสุดโปรโมชัน < วันนี้
-            && $order_status_id === 1 // สถานะออร์เดอร์ === 1 (สร้างรายการสั่งซื้อแล้ว)
+            // && $order_status_id === 1 // สถานะออร์เดอร์ === 1 (สร้างรายการสั่งซื้อแล้ว)
+            // || $promotion_status_use === 0
         ) {
             return true;
         }
+    }
+
+    public static function collectOrderDetail($orders)
+    {
+        $count = [];
+        foreach ($orders as $order) {
+            foreach ($order->orderDetails2 as $orderDetail) {
+                $count[] = $orderDetail;
+            }
+        }
+
+        return collect($count);
     }
 }

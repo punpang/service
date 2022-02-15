@@ -30,6 +30,7 @@ class PromotionController extends Controller
 
         $orders = Order::where("promotion_id", $promotion_id)
             ->with("orderDetails.product", "orderStatus", "customer")
+            ->orderBy("updated_at", "asc")
             ->get();
 
         $order_status = OrderStatus::get();

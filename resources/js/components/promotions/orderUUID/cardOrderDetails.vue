@@ -5,9 +5,9 @@
       <v-card-text>
         <v-row v-for="orderDetail in propOrderDetails" :key="orderDetail.key">
           <v-col cols="4" class="pa-2">
-            <imageThumbnailPathSize800
+            <imageThumbnailPathSize200
               :path="orderDetail.product.image"
-            ></imageThumbnailPathSize800>
+            ></imageThumbnailPathSize200>
           </v-col>
           <v-col cols="8" class="pa-2">
             <h5 class="black--text mb-1">{{ orderDetail.product.title }}</h5>
@@ -25,11 +25,11 @@
 </template>
 
 <script>
-import imageThumbnailPathSize800 from "@/js/components/google/drive/imageThumbnailPathSize800";
+import imageThumbnailPathSize200 from "@/js/components/google/drive/imageThumbnailPathSize200";
 export default {
   props: ["propOrderDetails"],
   components: {
-    imageThumbnailPathSize800,
+    imageThumbnailPathSize200,
   },
 };
 </script>

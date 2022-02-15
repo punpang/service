@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Momday;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Linenotify;
+use App\MSms;
 use App\Momday\Order;
 use App\Momday\payment;
-use App\MSms;
 
 class paymentController extends Controller
 {
@@ -57,6 +57,8 @@ class paymentController extends Controller
         $payment->save();
 
         $order->order_status_id = 2;
+        $order->save();
+
         $order->time_get = Order::queue($request->order["promotion_id"]);
         $order->save();
 
@@ -122,19 +124,24 @@ class paymentController extends Controller
         $payment->status_payment = 2;
         $payment->save();
 
-        $order->order_status_id = 3;
+        $order->order_status_id = 2;
+        $order->save();
+
         $order->time_get = Order::queue($order->promotion->id);
         $order->save();
 
-        $msgSms = "เราตรวจสอบการชำระเงินเรียบร้อย คิวรับสินค้าของท่าน คือ " .
-            $order->promotion->date_get . " " . $order->time_get . " น. สามารถรับสินค้าได้ตั้งแต่เวลาที่เราแจ้งจนถึง 19.00 น. รายละเอียดคลิกลิงก์ [ " . $order->url . " ]";
+        $msgSms = "ขอบคุณที่ชำระเงินค่ะ เราจะแจ้งคิวรับสินค้าให้ท่านทราบอีกครั้งภายหลัง โดยท่านอาจได้รับคิว" .
+            $order->promotion->date_get . " " . $order->time_get . " น. เป็นต้นไป รายละเอียดคลิกลิงก์ [ " . $order->url . " ]";
+
+        // $msgSms = "เราตรวจสอบการชำระเงินเรียบร้อย คิวรับสินค้าของท่าน คือ " .
+        //     $order->promotion->date_get . " " . $order->time_get . " น. สามารถรับสินค้าได้ตั้งแต่เวลาที่เราแจ้งจนถึง 19.00 น. รายละเอียดคลิกลิงก์ [ " . $order->url . " ]";
 
         MSms::Sms($order->customer->phone_number, $msgSms);
 
         return response()->json(
             [
                 "msgTitle" => "เสร็จสิ้น",
-                "msgText" => "คิวรับสินค้า " . $order->promotion->date_get . " " . $order->time_get . " น."
+                "msgText" => "อาจได้รับคิว " . $order->promotion->date_get . " " . $order->time_get . " น."
             ],
             200
         );
@@ -153,7 +160,7 @@ class paymentController extends Controller
     {
         $payment = payment::where("order_id", $order_id)
             ->where("status_use", 1)
-            ->where("status_payment", 1)
+            ->whereIn("status_payment", [1, 2])
             ->first();
 
         return response()->json($payment, 200);
@@ -214,7 +221,9 @@ class paymentController extends Controller
         $payment->save();
 
         $order->order_status_id = 3;
-        $order->time_get = Order::queue($order->promotion_id);
+        $order->save();
+
+        $order->time_get = Order::queue($order->promotion_id, true);
         $order->save();
 
         $msgSms = "เราตรวจสอบการชำระเงินเรียบร้อย คิวรับสินค้าของท่าน คือ " .
@@ -240,8 +249,6 @@ class paymentController extends Controller
             );
         }
 
-        if ($payment->status_payment != 1) {
-        }
 
         if ($payment->status_use == 0) {
             return response()->json(
@@ -290,7 +297,70 @@ class paymentController extends Controller
         $payment->save();
 
         $order->order_status_id = 3;
-        $order->time_get = Order::queue($order->promotion_id);
+        $order->save();
+
+        $order->time_get = Order::queue($order->promotion_id, true);
+        $order->save();
+
+        $msgSms = "เราตรวจสอบการชำระเงินเรียบร้อย คิวรับสินค้าของท่าน คือ " .
+            $order->promotion->date_get . " " . $order->time_get . " น. สามารถรับสินค้าได้ตั้งแต่เวลาที่เราแจ้งจนถึง 19.00 น. รายละเอียดคลิกลิงก์ [ " . $order->url . " ]";
+
+        MSms::Sms($order->customer->phone_number, $msgSms);
+
+        return response()->json(
+            ["msgTitle" => "เสร็จสิ้น"],
+            200
+        );
+    }
+
+    public function confirmCash(payment $payment, Request $request)
+    {
+        // dd($request->payment_amount, $payment->sum_price);
+
+        if ($payment->status_use == 0) {
+            return response()->json(
+                [
+                    "msgTitle" => "ยกเลิกรายการไปแล้ว"
+                ],
+                201
+            );
+        }
+
+        $order = Order::where("id", $payment->order_id)->first();
+
+        if ($order->order_status_id != 2) {
+            return response()->json(
+                [
+                    "msgTitle" => "ไม่ได้อยู่สถานะการแจ้งชำระเงิน"
+                ],
+                201
+            );
+        }
+
+        if ($order->status_use == 0) {
+            return response()->json(
+                [
+                    "msgTitle" => "รายการถูกยกเลิกไปแล้ว"
+                ],
+                201
+            );
+        }
+
+        $checkRef = payment::whereIn("ref1", [$request->ref1, $request->ref2])
+            ->whereIn("ref2", [$request->ref1, $request->ref2])
+            ->where("status_use", 1)
+            ->first();
+
+        if ($checkRef) {
+            return response()->json([
+                "msgTitle" => "อ้างอิงซ้ำ"
+            ], 201);
+        }
+
+        $order->order_status_id = 3;
+        $order->save();
+
+        $order->time_get = Order::queue($order->promotion_id, true);
         $order->save();
 
         $msgSms = "เราตรวจสอบการชำระเงินเรียบร้อย คิวรับสินค้าของท่าน คือ " .

@@ -28,6 +28,7 @@
             :propProducts="propProducts"
             :propSum="propSum"
           ></cardProducts>
+          <!-- <sumPriceFreeCount :propSum="propSum" :propProducts="propProducts"></sumPriceFreeCount> -->
           <sumPrice :propSum="propSum" :propProducts="propProducts"></sumPrice>
           <v-form ref="formCustomer" lazy-validation>
             <cardCustomer :propCustomer="customer"></cardCustomer>
@@ -46,12 +47,14 @@
 <script>
 import cardProducts from "@/js/components/promotions/shoppingCart/cardProducts";
 import sumPrice from "@/js/components/promotions/shoppingCart/sumPrice";
+import sumPriceFreeCount from "@/js/components/promotions/shoppingCart/sumPriceFreeCount";
 import cardCustomer from "@/js/components/promotions/shoppingCart/cardCustomer";
 export default {
   components: {
     cardProducts,
     sumPrice,
     cardCustomer,
+    sumPriceFreeCount
   },
   props: ["propProducts", "propSum", "propPromotionID"],
   data() {
@@ -101,6 +104,20 @@ export default {
           });
 
           loader.hide();
+        } else if (res.status === 201) {
+          loader.hide();
+          this.$swal({
+            icon: "warning",
+            title: res.data.msgTitle,
+            text: res.data.msgText,
+            allowOutsideClick: false,
+            confirmButtonText: "รับทราบ",
+            confirmButtonColor: "#3085d6",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.$router.replace("/promotions");
+            }
+          });
         }
       }
     },

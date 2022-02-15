@@ -14,79 +14,22 @@ class UsersTableSeeder extends Seeder
   {
     $datas = [
       [
-        'name' => 'AdminNiCKSiT',
-        'email' => 'admin',
+        'name' => 'admin',
+        'email' => 'adminnicksit',
         //'phone' => '0864735562',
         'password' => Hash::make('PansitSR4931'),
         'type' => User::ADMIN_TYPE,
+        // "type_name" => "admin"
       ],
       [
-        'name' => 'โต๊ะที่ 1',
-        'email' => 'table1',
+        'name' => 'testcustomer',
+        'email' => 'testcustomer',
         //'phone' => '0864735562',
         'password' => Hash::make('123456'),
-        'pw' => '123456',
-        'type' => 5,
+        // 'pw' => '123456',
+        'type' => 2,
+        // "type_name" => "customer"
       ],
-      [
-        'name' => 'โต๊ะที่ 2',
-        'email' => 'table2',
-        //'phone' => '0864735562',
-        'password' => Hash::make('123456'),
-        'pw' => '123456',
-        'type' => 5,
-      ],
-      [
-        'name' => 'โต๊ะที่ 3',
-        'email' => 'table3',
-        //'phone' => '0864735562',
-        'password' => Hash::make('123456'),
-        'pw' => '123456',
-        'type' => 5,
-      ],
-      [
-        'name' => 'โต๊ะที่ 4',
-        'email' => 'table4',
-        //'phone' => '0864735562',
-        'password' => Hash::make('123456'),
-        'pw' => '123456',
-        'type' => 5,
-      ],
-      [
-        'name' => 'โต๊ะที่ 5',
-        'email' => 'table5',
-        //'phone' => '0864735562',
-        'password' => Hash::make('123456'),
-        'pw' => '123456',
-        'type' => 5,
-      ]
-      ,
-      [
-        'name' => 'โต๊ะที่ 6',
-        'email' => 'table6',
-        //'phone' => '0864735562',
-        'password' => Hash::make('123456'),
-        'pw' => '123456',
-        'type' => 5,
-      ]
-      ,
-      [
-        'name' => 'โต๊ะที่ 7',
-        'email' => 'table7',
-        //'phone' => '0864735562',
-        'password' => Hash::make('123456'),
-        'pw' => '123456',
-        'type' => 5,
-      ]
-      ,
-      [
-        'name' => 'โต๊ะที่ 8',
-        'email' => 'table8',
-        //'phone' => '0864735562',
-        'password' => Hash::make('123456'),
-        'pw' => '123456',
-        'type' => 5,
-      ]
     ];
 
     foreach ($datas as $data) {

@@ -1,0 +1,11 @@
+<?php
+
+namespace App\Order;
+
+use Illuminate\Database\Eloquent\Model;
+
+class AM2 extends Model
+{
+    protected $table = "a_m2";
+    protected $connection = "order";
+}

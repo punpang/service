@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\ShabuNoonee\UserType;
+use App\Order\UserType;
 
 class UserTypeSeeder extends Seeder
 {
@@ -12,7 +12,7 @@ class UserTypeSeeder extends Seeder
      */
     public function run()
     {
-        $datas = ['admin', 'cashier', 'waitress', 'kitchen', 'customer'];
+        $datas = ['admin', 'customer'];
 
         foreach ($datas as $data) {
             $query = new UserType;

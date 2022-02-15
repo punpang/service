@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class promotion extends Model
 {
+    protected $hidden = ['created_at','updated_at'];
+
     public function getDateGetAttribute($date)
     {
         // return \Carbon\Carbon::createFromFormat('Y-m-d', $date)->diffForHumans();
@@ -26,8 +28,16 @@ class promotion extends Model
 
     public static function overDateEnd($promotion_id)
     {
-        $payment = self::where("id", $promotion_id)
-            ->where("date_end", "<", now()->format("d-m-Y"))
+        $payment = self::where([
+            ["id", $promotion_id],
+            ["date_end", "<", now()->format("d-m-Y")]
+        ])
+            ->orWhere(
+                [
+                    ["id", $promotion_id],
+                    ["status_use", 0]
+                ]
+            )
             ->first();
 
         return $payment;
@@ -48,6 +58,7 @@ class promotion extends Model
         $payment = self::where("id", $promotion_id)
             ->where('date_start', "<", now()->format("Y-m-d")) // 3 > 4
             ->where("date_end", ">", now()->format("d-m-Y")) //3 > 3
+            ->where("status_use", 1)
             ->first();
 
         return $payment;

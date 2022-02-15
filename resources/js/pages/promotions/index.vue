@@ -3,12 +3,13 @@
     <h3>โปรโมชั่นวันนี้</h3>
     <hr />
 
-    <v-card class="mx-auto" v-for="promotion in promotions" :key="promotion.id">
+    <v-card class="mx-auto mb-4" v-for="promotion in promotions" :key="promotion.id">
       <imageThumbnailPathSize800
         :path="promotion.image"
       ></imageThumbnailPathSize800>
       <v-card-title> {{ promotion.title }} </v-card-title>
 
+      <v-card-subtitle> {{ promotion.content }} </v-card-subtitle>
       <v-card-subtitle> วันรับสินค้า {{ promotion.date_get }} </v-card-subtitle>
       <v-card-actions>
         <v-btn

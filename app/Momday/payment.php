@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class payment extends Model
 {
+    protected $hidden = ['created_at','updated_at'];
+
     public function paymentStatus()
     {
         return $this->belongsTo(PaymentStatus::class, "status_payment", "id");
