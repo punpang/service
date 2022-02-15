@@ -8,9 +8,16 @@ class OrderDetailTemp extends Model
 {
     protected $table = "order_detail_temps";
     protected $primaryKey = "id";
+    protected $guarded = [];
 
     public function getTempAttribute($data)
     {
         return json_decode($data);
     }
+    public function setTempAttribute($data)
+    {
+        return $this->attributes["temp"] = json_encode($data);
+    }
+
+
 }

@@ -33,8 +33,8 @@
         <!-- {{ dataSuccess() }} -->
 
         <tableListProductSelected v-if="dataSuccess"></tableListProductSelected>
-        <v-row v-if="dataSuccess">
-            <!-- <v-col cols="12" md="4">
+        <!-- <v-row v-if="dataSuccess">
+            <v-col cols="12" md="4">
                 <v-card
                     :height="heightAddProduct"
                     class="d-flex align-center text-center"
@@ -43,7 +43,7 @@
                         <productSelectCake></productSelectCake>
                     </v-card-text>
                 </v-card>
-            </v-col> -->
+            </v-col>
 
             <v-col
                 cols="12"
@@ -73,41 +73,41 @@
                                                 {{ temp.data.name_goods }}
                                             </td>
                                         </tr>
-                                        <!-- <tr>
+                                        <tr>
                                             <td>{{ msg.text.op1 }}</td>
                                             <td class="text-right">
                                                 {{ temp.am1.m1 }}
                                             </td>
-                                        </tr> -->
-                                        <!-- // -->
-                                        <!-- <tr>
+                                        </tr>
+
+                                         <tr>
                                             <td>{{ msg.text.op2 }}</td>
                                             <td class="text-right">
                                                 {{ temp.am2.m2 }}
                                             </td>
-                                        </tr> -->
-                                        <!-- // -->
-                                        <!-- <tr>
+                                        </tr>
+
+                                        <tr>
                                             <td>{{ msg.text.op3 }}</td>
                                             <td class="text-right">
                                                 {{ temp.am3.m3 }}
                                             </td>
-                                        </tr> -->
-                                        <!-- // -->
-                                        <!-- <tr>
+                                        </tr>
+
+                                       <tr>
                                             <td>{{ msg.text.op4 }}</td>
                                             <td class="text-right">
                                                 {{ temp.am4.m4 }}
                                             </td>
-                                        </tr> -->
-                                        <!-- // -->
+                                        </tr>
+
                                         <tr>
                                             <td>{{ msg.text.price }}</td>
                                             <td class="text-right">
                                                 {{ temp.price | formatNumber }}
                                             </td>
                                         </tr>
-                                        <!-- // -->
+
                                         <tr v-if="temp.message != '-'">
                                             <td colspan="2">
                                                 <p class="my-2">
@@ -120,7 +120,7 @@
                                                 </p>
                                             </td>
                                         </tr>
-                                        <!-- // -->
+
                                         <tr v-if="temp.detail != '-'">
                                             <td colspan="2">
                                                 <p class="my-2">
@@ -169,8 +169,8 @@
                     </v-card-text>
                 </v-card>
             </v-col>
-            <!-- // -->
-        </v-row>
+
+        </v-row> -->
 
         <v-bottom-navigation
             app

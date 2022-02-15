@@ -1,12 +1,12 @@
 <template>
     <div>
         <v-card
-            v-for="{ temp, index } in detailTemps"
-            :key="index"
+            v-for="detailTemp in detailTemps"
+            :key="detailTemp.id"
             class="mb-2"
         >
             <!-- <v-card-title>
-                <strong>{{ temp.data.name_goods }}</strong>
+                <strong>{{ temp.a_price.name_goods }}</strong>
             </v-card-title> -->
             <v-card-text>
                 <v-row>
@@ -15,30 +15,33 @@
                             src="https://www.punpangsv.com/admin_system/home/product/img-products/3FE0FF85-F7DE-4ED2-A5EF-77C4955186C1_1_201_a.png"
                         ></v-img>
                     </v-col>
-                    <v-col cols="9" md="6" class="pa-2">
+                    <v-col cols="9" md="9" class="pa-2">
                         <p class="mb-0">
-                            <strong>{{ temp.data.name_goods }}</strong>
+                            <strong>{{
+                                detailTemp.temp.a_price.name_goods
+                            }}</strong>
                         </p>
-                        <p class="mb-0" v-if="temp.message != '-'">
+                        <p class="mb-0" v-if="detailTemp.temp.message != '-'">
                             <strong>ข้อความ </strong>
                             <strong class="text-subtitle-1">{{
-                                temp.message
+                                detailTemp.temp.message
                             }}</strong>
                         </p>
-                        <p class="mb-0" v-if="temp.detail != '-'">
+                        <p class="mb-0" v-if="detailTemp.temp.detail != '-'">
                             <strong>รายละเอียด </strong>
                             <strong class="text-subtitle-1">{{
-                                temp.detail
+                                detailTemp.temp.detail
                             }}</strong>
                         </p>
                         <p class="mb-0">
-                            + {{ temp.data.price | formatNumber }}
+                            <strong>ราคา </strong>
+                            {{ detailTemp.temp.a_price.price }} บาท
                         </p>
                         <v-divider class="my-1"></v-divider>
                         <p
                             class="mb-0"
-                            v-for="addOn in temp.addOns"
-                            :key="addOn.index"
+                            v-for="(addOn, index) in detailTemp.temp.add_ons"
+                            :key="index"
                         >
                             + {{ addOn.price | formatNumber }}
                             {{ addOn.goods_add_on.name }}
@@ -46,7 +49,7 @@
                         <!-- <v-divider class="my-1"></v-divider> -->
                         <!-- <p>
                             <strong>{{
-                                (temp.sumAddOn + temp.data.price) | formatNumber
+                                (temp.sumAddOn + temp.a_price.price) | formatNumber
                             }}</strong>
                         </p> -->
                     </v-col>
@@ -60,18 +63,20 @@
             </v-card-text>
             <v-divider class="my-0"></v-divider>
             <v-card-text class="pa-1">
-                <v-btn elevation="0" class="white">
-                    <v-icon left>edit</v-icon>
-                    แก้ไขสินค้า</v-btn
-                >
-                <v-btn elevation="0" class="white">
-                    <v-icon left>playlist_add</v-icon>
-                    ตัวเลือกเพิ่มเติม</v-btn
-                >
-                <v-btn class="white" elevation="0">
-                    <v-icon left>delete</v-icon>
-                    ลบสินค้า</v-btn
-                >
+                <v-container>
+                    <v-row>
+                        <editCake :propDetailTemp="detailTemp"></editCake>
+
+                        <cardManageAddOn
+                            :propDetailTemp="detailTemp"
+                        ></cardManageAddOn>
+
+                        <v-btn class="white" elevation="0">
+                            <v-icon left>delete</v-icon>
+                            ลบสินค้า</v-btn
+                        >
+                    </v-row>
+                </v-container>
             </v-card-text>
         </v-card>
         <!-- <v-simple-table>
@@ -80,7 +85,7 @@
                     <td>รูปภาพ</td>
                     td
                     <td>
-                        <p>{{ temp.data.name_goods }}</p>
+                        <p>{{ temp.a_price.name_goods }}</p>
 
                         <p class="my-2" v-if="temp.message != null">
                             <strong>{{ msg.text.message }}</strong>
@@ -112,12 +117,14 @@ Vue.filter("formatNumber", function (value) {
 });
 import { mapGetters } from "vuex";
 import productSelectCake from "@/js/components/order/product/select/cake";
-import showAddOns from "@/js/components/order/product/select/showAddOns";
+import cardManageAddOn from "@/js/components/order/product/select/cardManageAddOn";
+import editCake from "@/js/components/order/product/select/editCake";
 
 export default {
     components: {
         productSelectCake,
-        showAddOns,
+        cardManageAddOn,
+        editCake,
     },
     data() {
         return {};
@@ -127,6 +134,11 @@ export default {
             msg: "orderProductCake/msg",
             detailTemps: "orderDetailTemp/temps",
         }),
+        // sumAddOn() {
+        //     return this.add_ons.reduce((sum, { price }) => {
+        //         return parseInt(sum + price);
+        //     }, 0);
+        // },
     },
 };
 </script>

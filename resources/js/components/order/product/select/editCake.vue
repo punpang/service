@@ -1,29 +1,31 @@
 <template>
-    <div>
+    <div v-if="propDetailTemp != null">
         <v-dialog persistent width="400" v-model="dialog" scrollable>
             <template v-slot:activator="{ on }">
-                <!-- <v-btn v-on="on" class="orange white--text">เพิ่มสินค้า</v-btn> -->
-                <v-list-item v-on="on" @click="start()">
-                    <v-list-item-title>เพิ่มสินค้า</v-list-item-title>
-                </v-list-item>
+                <v-btn elevation="0" class="white" v-on="on">
+                    <v-icon left>edit</v-icon>
+                    แก้ไขสินค้า</v-btn
+                >
             </template>
             <v-card>
-                <v-card-title>
-                    <h3>เพิ่มสินค้า</h3>
+                <v-card-title class="text-h6">
+                    แก้ไขสินค้า
                     <v-spacer></v-spacer>
                     <v-btn fab x-small icon color="error" @click="close()">
                         <v-icon>close</v-icon>
                     </v-btn>
                 </v-card-title>
-                <v-card-text v-if="a_price.id != null">
-                    <cardAPrice :propAPrice="a_price"></cardAPrice>
+                <v-card-text>
+                    <cardAPrice
+                        :propAPrice="propDetailTemp.temp.a_price"
+                    ></cardAPrice>
                     <v-form lazy-validation ref="form">
                         <v-text-field
                             :label="msg.text.message"
                             outlined
                             hide-details
                             class="mb-3"
-                            v-model="message"
+                            v-model="propDetailTemp.temp.message"
                             :rules="rules.message"
                         ></v-text-field>
                         <v-textarea
@@ -31,14 +33,14 @@
                             outlined
                             hide-details
                             class="mb-3"
-                            v-model="detail"
+                            v-model="propDetailTemp.temp.detail"
                             :rules="rules.detail"
                         ></v-textarea>
                     </v-form>
                 </v-card-text>
                 <v-card-actions>
                     <selectCake
-                        :propCheckProduct="a_price"
+                        :propCheckProduct="propDetailTemp.temp.a_price"
                         @emitAPrice="emitAPrice"
                         class="mb-3"
                     ></selectCake>
@@ -49,11 +51,7 @@
                         </v-icon>
                         {{ msg.text.clear }}
                     </v-btn>
-                    <v-btn
-                        class="success"
-                        @click="save()"
-                        :disabled="a_price.id == null"
-                    >
+                    <v-btn class="success" @click="save()">
                         <v-icon left>
                             {{ msg.icon.save }}
                         </v-icon>
@@ -73,81 +71,63 @@ Vue.filter("formatNumber", function (value) {
 });
 
 import selectCake from "@/js/components/order/product/select/selectCake";
-import cardMessage from "@/js/components/order/product/select/cardMessage";
-import cardDetail from "@/js/components/order/product/select/cardDetail";
+// import cardMessage from "@/js/components/order/product/select/cardMessage";
+// import cardDetail from "@/js/components/order/product/select/cardDetail";
 import cardAPrice from "@/js/components/order/product/select/cardAPirce";
 
 import { mapGetters } from "vuex";
 export default {
-    props: ["propProduct"],
+    props: ["propDetailTemp"],
     components: {
         selectCake,
-        cardMessage,
-        cardDetail,
+        // cardMessage,
+        // cardDetail,
         cardAPrice,
     },
     data() {
         return {
             dialog: false,
-            a_price: {},
-            message: "",
-            detail: "",
         };
     },
     methods: {
         emitAPrice(v) {
-            this.a_price = v;
+            this.propDetailTemp.temp.a_price = v;
         },
-        // emitProduct(v) {
-        //     const product = this.product;
-        //     this.product = v;
-        //     this.product.message = product.message;
-        //     this.product.detail = product.detail;
+        // start() {
+        //     this.old_detail_temp = this.propDetailTemp;
+        //     this.detail_temp = this.propDetailTemp;
         // },
-
         async save() {
-            if (!this.$refs.form.validate() || this.a_price.id == null) {
+            if (
+                !this.$refs.form.validate() ||
+                this.propDetailTemp.temp.a_price == {}
+            ) {
                 this.$toast.warning("โปรดกรอกข้อมูลให้ครบถ้วน");
                 return;
             }
-
+            let loader = this.$loading.show();
             const payload = {
-                product: {
-                    a_price: this.a_price,
-                    message: this.message,
-                    detail: this.detail,
-                },
-                order_temp: this.temp,
+                order_detail_temp: this.propDetailTemp,
             };
-
-            await this.$store.dispatch("orderDetailTemp/create", payload);
-            // this.$emit("emitProducts", this.product);
+            await this.$store.dispatch("orderDetailTemp/update", payload);
+            loader.hide();
+            this.$toast.success("แก้ไขเรียบร้อย");
             this.close();
         },
-        start() {
-            // console.log(this.propProduct);
-            if (this.propProduct) {
-                this.$store.commit(
-                    "orderProductCake/setProduct",
-                    this.propProduct
-                );
-            } else {
-                this.resetProduct();
-            }
-        },
-        close() {
+        async close() {
+            let loader = this.$loading.show();
+            const payload = {
+                order_temp: { id: this.propDetailTemp.order_temp_id },
+            };
+            await this.$store.dispatch("orderDetailTemp/fetch", payload);
+            loader.hide();
             this.dialog = false;
-        },
-        resetProduct() {
-            this.$store.commit("orderProductCake/resetProduct");
         },
     },
     computed: {
         ...mapGetters({
             msg: "orderProductCake/msg",
             rules: "orderProductCake/rules",
-            temp: "orderTemp/temp",
-            product: "orderProductCake/product",
         }),
     },
 };

@@ -11,7 +11,13 @@ class APrice extends Model
     protected $primaryKey = "id";
     protected $appends = ["name_goods"];
 
-    protected $filable = ["code", "price", "m1", "m2", "m3", "m4"];
+    //protected $filable = ["code", "price", "m1", "m2", "m3", "m4"];
+    protected $guards = [];
+
+    public function getPriceAttribute($price)
+    {
+        return number_format($price, 2);
+    }
 
     public function am1()
     {

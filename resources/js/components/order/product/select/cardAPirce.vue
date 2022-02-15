@@ -1,19 +1,16 @@
 <template>
-    <div>
-        <p class="mb-0">
-            <strong>{{ propAPrice.name_goods }}</strong>
-        </p>
-        <p class="mb-0">
-            <strong>{{ propAPrice.price | formatNumber }}</strong>
-        </p>
+    <div v-if="propAPrice.id != null" class="mb-2">
+        <div class="text-subtitle-2 font-weight-bold">ชื่อสินค้า</div>
+        <div class="pl-2">
+            {{ propAPrice.name_goods }}
+        </div>
+        <div class="text-subtitle-2 font-weight-bold">
+            ราคา {{ propAPrice.price }} บาท
+        </div>
     </div>
 </template>
 
 <script>
-var numeral = require("numeral");
-Vue.filter("formatNumber", function (value) {
-    return numeral(value).format("0,0.00");
-});
 export default {
     props: ["propAPrice"],
 };

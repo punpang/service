@@ -13,7 +13,7 @@ class OrderDetailTempController extends Controller
         // dd(request()->all());
         $temp = new OrderDetailTemp;
         $temp->order_temp_id = request("order_temp.id");
-        $temp->temp = json_encode(request("product"));
+        $temp->temp = request("product");
         $temp->save();
 
         return response()->json([
@@ -26,5 +26,16 @@ class OrderDetailTempController extends Controller
     {
         $temps = OrderDetailTemp::whereOrderTempId($order_temp_id)->get();
         return $temps;
+    }
+
+    public function update(OrderDetailTemp $id, Request $request)
+    {
+        $id->update([
+            "temp" => $request->order_detail_temp["temp"]
+        ]);
+
+        return response()->json([
+            "status" => "success",
+        ]);
     }
 }

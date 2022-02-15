@@ -458,14 +458,19 @@ class AOrderController extends Controller
 
     public function updateRatingByUuid()
     {
-        $order = AOrder::whereAuthOrder(request("uuid"))->first();
-        $order->rating = request("rating");
-        $order->save();
+        // $order = AOrder::whereAuthOrder(request("uuid"))->first();
+        // $order->rating = request("rating");
+        // $order->save();
+
+        AOrder::whereAuthOrder(request("uuid"))
+            ->update(
+                ['rating' => request("rating")]
+            );
 
         return response()->json([
             "status" => "success",
             "title" => "อัปเดทคะแนนเรียบร้อย",
-            "text" => "ขอบคุณร่วมให้คะแนนทางร้านค่ะ"
+            "text" => "ขอบคุณที่ร่วมให้คะแนนทางร้านค่ะ"
         ], 200);
     }
 
@@ -473,7 +478,6 @@ class AOrderController extends Controller
     {
         $orderTemp = OrderTemp::whereId($request->temp["id"])->first();
 
-        // return $orderTemp->orderDetailTemps;
         $order = AOrder::create(
             [
                 "id_customer" => $orderTemp->customer_id,
@@ -489,11 +493,12 @@ class AOrderController extends Controller
         $orderDetailTemps = $orderTemp->orderDetailTemps;
         foreach ($orderDetailTemps as $orderDetailTemp) {
             $order->orderDetails()->create([
-                "a_price_id" => $orderDetailTemp->temp->data->id,
-                "price" => $orderDetailTemp->temp->data->price,
-                "message" => $orderDetailTemp->temp->data->message,
-                "detail" => $orderDetailTemp->temp->data->detail
+                "a_price_id" => $orderDetailTemp->temp->a_price->id,
+                "price" => $orderDetailTemp->temp->a_price->price,
+                "message" => $orderDetailTemp->temp->message,
+                "detail" => $orderDetailTemp->temp->detail
             ]);
+            
             $orderDetailTemp->delete();
         }
         $orderTemp->delete();
