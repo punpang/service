@@ -119,7 +119,7 @@ export default {
                 },
                 order_temp: this.temp,
             };
-            console.log(payload);
+            // console.log(payload);
             return;
             await this.$store.dispatch("orderDetailTemp/create", payload);
             // this.$emit("emitProducts", this.product);
