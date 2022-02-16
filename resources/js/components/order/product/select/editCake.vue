@@ -4,8 +4,8 @@
             <template v-slot:activator="{ on }">
                 <v-btn elevation="0" class="white" v-on="on">
                     <v-icon left>edit</v-icon>
-                    แก้ไขสินค้า</v-btn
-                >
+                    <div class="d-none d-sm-flex">แก้ไขสินค้า</div>
+                </v-btn>
             </template>
             <v-card>
                 <v-card-title class="text-h6">

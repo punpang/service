@@ -14,8 +14,9 @@ use App\Order\AHistoryPayed;
 use App\Order\AlertMessages;
 use Illuminate\Http\Request;
 use App\Order\ImageFromCustomer;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-
+use Exception;
 
 class AOrderController extends Controller
 {
@@ -476,37 +477,39 @@ class AOrderController extends Controller
 
     public function newOrder(Request $request)
     {
-        $orderTemp = OrderTemp::whereId($request->temp["id"])->first();
+        DB::transaction(function () use ($request) {
 
-        $order = AOrder::create(
-            [
-                "id_customer" => $orderTemp->customer_id,
-                "date_get" => $orderTemp->temp->dateTimeGet->dateGet,
-                "time_get" => $orderTemp->temp->dateTimeGet->timeGet,
-                "channel" => $orderTemp->temp->channel,
-                "status" => 1,
-                "date_order" => \Carbon\Carbon::now()->format("Y-m-d H:i:s"),
-                "auth_order" => Str::uuid(),
-            ]
-        );
+            $orderTemp = OrderTemp::whereId($request->temp["id"])->first();
 
-        $orderDetailTemps = $orderTemp->orderDetailTemps;
-        foreach ($orderDetailTemps as $orderDetailTemp) {
-            $order->orderDetails()->create([
-                "a_price_id" => $orderDetailTemp->temp->a_price->id,
-                "price" => $orderDetailTemp->temp->a_price->price,
-                "message" => $orderDetailTemp->temp->message,
-                "detail" => $orderDetailTemp->temp->detail
-            ]);
-            
-            $orderDetailTemp->delete();
-        }
-        $orderTemp->delete();
+            $order = AOrder::create(
+                [
+                    "id_customer" => $orderTemp->customer_id,
+                    "date_get" => $orderTemp->temp->dateTimeGet->dateGet,
+                    "time_get" => $orderTemp->temp->dateTimeGet->timeGet,
+                    "channel" => $orderTemp->temp->channel,
+                    "status" => 1,
+                    "date_order" => \Carbon\Carbon::now()->format("Y-m-d H:i:s"),
+                    "auth_order" => Str::uuid(),
+                ]
+            );
+            throw new Exception("djskofjl");
+            $orderDetailTemps = $orderTemp->orderDetailTemps;
+            foreach ($orderDetailTemps as $orderDetailTemp) {
+                $order->orderDetails()->create([
+                    "a_price_id" => $orderDetailTemp->temp->a_price->id,
+                    "priced" => $orderDetailTemp->temp->a_price->price,
+                    "message" => $orderDetailTemp->temp->message,
+                    "detail" => $orderDetailTemp->temp->detail
+                ]);
 
-        return response()->json([
-            "order" => $order,
-            "status" => "success",
-            "message" => "สร้างรายการสั่งซื้อสำเร็จ"
-        ], 200);
+                $orderDetailTemp->delete();
+            }
+            $orderTemp->delete();
+            return response()->json([
+                "order" => $order,
+                "status" => "success",
+                "message" => "สร้างรายการสั่งซื้อสำเร็จ"
+            ], 200);
+        });
     }
 }

@@ -45,6 +45,23 @@ export default {
                     console.error(err);
                 });
         },
+        async delete({ dispatch }, payload) {
+            return await axios
+                .post(
+                    `/api/admin/v1/order/detail/temp/${payload.order_detail_temp.id}/delete`,
+                    payload
+                )
+                .then((response) => {
+                    dispatch("fetch", {
+                        order_temp: {
+                            id: payload.order_detail_temp.order_temp_id,
+                        },
+                    });
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        },
         async fetch({ commit }, payload) {
             return await axios
                 .get(

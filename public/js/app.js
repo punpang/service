@@ -112055,17 +112055,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
-    fetch: function fetch(_ref3, payload) {
+    "delete": function _delete(_ref3, payload) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var commit;
+        var dispatch;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                commit = _ref3.commit;
+                dispatch = _ref3.dispatch;
                 _context3.next = 3;
-                return axios.get("/api/admin/v1/order/detail/temp/".concat(payload.order_temp.id, "/fetch")).then(function (response) {
-                  commit("temps", response.data);
+                return axios.post("/api/admin/v1/order/detail/temp/".concat(payload.order_detail_temp.id, "/delete"), payload).then(function (response) {
+                  dispatch("fetch", {
+                    order_temp: {
+                      id: payload.order_detail_temp.order_temp_id
+                    }
+                  });
                 })["catch"](function (err) {
                   console.error(err);
                 });
@@ -112079,6 +112083,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee3);
+      }))();
+    },
+    fetch: function fetch(_ref4, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var commit;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                commit = _ref4.commit;
+                _context4.next = 3;
+                return axios.get("/api/admin/v1/order/detail/temp/".concat(payload.order_temp.id, "/fetch")).then(function (response) {
+                  commit("temps", response.data);
+                })["catch"](function (err) {
+                  console.error(err);
+                });
+
+              case 3:
+                return _context4.abrupt("return", _context4.sent);
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
       }))();
     }
   }

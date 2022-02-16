@@ -71,10 +71,7 @@
                             :propDetailTemp="detailTemp"
                         ></cardManageAddOn>
 
-                        <v-btn class="white" elevation="0">
-                            <v-icon left>delete</v-icon>
-                            ลบสินค้า</v-btn
-                        >
+                        <removeCake :propDetailTemp="detailTemp"></removeCake>
                     </v-row>
                 </v-container>
             </v-card-text>
@@ -119,12 +116,14 @@ import { mapGetters } from "vuex";
 import productSelectCake from "@/js/components/order/product/select/cake";
 import cardManageAddOn from "@/js/components/order/product/select/cardManageAddOn";
 import editCake from "@/js/components/order/product/select/editCake";
+import removeCake from "@/js/components/order/product/select/removeCake";
 
 export default {
     components: {
         productSelectCake,
         cardManageAddOn,
         editCake,
+        removeCake,
     },
     data() {
         return {};

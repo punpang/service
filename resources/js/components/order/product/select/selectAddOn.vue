@@ -1,35 +1,58 @@
 <template>
     <div>
         <v-row>
-            <v-col cols="9" md="9" class="pr-1">
-                <v-text-field
+            <v-col cols="9" md="10" class="pr-1">
+                <!-- <v-text-field
                     label="ชื่อตัวเลือก"
                     outlined
                     v-model="addOnName"
                     autofocus
                 ></v-text-field>
+                {{ value_addOns }} -->
+                <v-autocomplete
+                    v-model="value_addOns"
+                    :items="fetchAddOn"
+                    outlined
+                    chips
+                    item-text="goods_add_on.name"
+                    item-value="id"
+                    clearable
+                    deletable-chips
+                    small-chips
+                    multiple
+                    label="ตัวเลือก"
+                    hide-details
+                    @change="changeAddOns()"
+                >
+                    <template v-slot:selection="data">
+                        <v-chip close @click:close="remove(data.item)">
+                            +{{ data.item.price }}
+                            {{ data.item.goods_add_on.name }}
+                        </v-chip>
+                    </template>
+
+                    <template v-slot:item="data">
+                        <template>
+                            <v-list-item-content>
+                                <v-list-item-title
+                                    v-html="data.item.goods_add_on.name"
+                                ></v-list-item-title>
+                                <v-list-item-subtitle
+                                    v-html="`+ ${data.item.price} บาท`"
+                                ></v-list-item-subtitle>
+                            </v-list-item-content>
+                        </template>
+                    </template>
+                </v-autocomplete>
             </v-col>
-            <v-col cols="3" md="3" class="text-right pl-1">
+            <v-col cols="3" md="2" class="text-right pl-1">
                 <v-btn fab outlined color="info" @click="clickSearch()">
                     <v-icon> search </v-icon>
                 </v-btn>
             </v-col>
         </v-row>
-        {{ values }}
-        <v-autocomplete
-            v-model="values"
-            :items="fetchAddOn"
-            outlined
-            chips
-            item-text="goods_add_on.name"
-            item-value="id"
-            clearable
-            deletable-chips
-            small-chips
-            multiple
-        ></v-autocomplete>
 
-        <v-simple-table>
+        <!-- <v-simple-table>
             <tbody>
                 <tr v-for="addOn in fetchAddOn" :key="addOn.id">
                     <td class="px-1">
@@ -54,22 +77,26 @@
                     </td>
                 </tr>
             </tbody>
-        </v-simple-table>
+        </v-simple-table> -->
     </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 export default {
-    props: ["propAm4"],
+    props: ["propAm4", "propAddOns"],
     data() {
         return {
             addOnName: "",
             dialog: false,
-            values: [],
+            value_addOns: [],
         };
     },
     methods: {
+        async start() {
+            await this.clickSearch();
+            await this.getValueAddOns();
+        },
         async clickSearch() {
             let loader = this.$loading.show();
             const payload = {
@@ -84,6 +111,32 @@ export default {
         clickSelect(v) {
             this.$emit("emitPushAddOn", v);
         },
+        changeAddOns() {
+            let selected = [];
+            this.value_addOns.forEach((v) => {
+                selected.push(
+                    this.fetchAddOn.find((d) => {
+                        return d.id == v;
+                    })
+                );
+            });
+            this.$emit("emitPushAddOn", selected);
+        },
+        getValueAddOns() {
+            let goods_add_on_id = [];
+            this.propAddOns.forEach((v) => {
+                goods_add_on_id.push(v.id);
+            });
+            this.value_addOns = goods_add_on_id;
+        },
+        remove(item) {
+            const index = this.value_addOns.indexOf(item.id);
+            if (index >= 0) this.value_addOns.splice(index, 1);
+            this.changeAddOns();
+        },
+    },
+    async mounted() {
+        await this.start();
     },
     computed: {
         ...mapGetters({

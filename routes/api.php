@@ -157,6 +157,7 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                     Route::prefix('temp')->group(function () { // api/admin/v1/order/detail/temp/...
                         Route::post('create', 'Order\OrderDetailTempController@create');
                         Route::post('{id}/update', 'Order\OrderDetailTempController@update');
+                        Route::post('{id}/delete', 'Order\OrderDetailTempController@delete');
                         Route::get('{order_temp_id}/fetch', 'Order\OrderDetailTempController@fetch');
                     });
                     Route::get('getUse', 'Order\ChannelPaymentController@getUse');

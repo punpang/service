@@ -38,4 +38,13 @@ class OrderDetailTempController extends Controller
             "status" => "success",
         ]);
     }
+
+    public function delete(OrderDetailTemp $id)
+    {
+        $id->delete();
+
+        return response()->json([
+            "status" => "success",
+        ]);
+    }
 }

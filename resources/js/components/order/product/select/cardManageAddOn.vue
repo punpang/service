@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-dialog persistent width="400" v-model="dialog" scrollable>
+        <v-dialog persistent width="600" v-model="dialog" scrollable>
             <template v-slot:activator="{ on }">
                 <v-btn elevation="0" class="white" v-on="on" @click="start()">
                     <v-icon left>playlist_add</v-icon>
@@ -9,24 +9,29 @@
             </template>
             <v-card>
                 <v-card-title class="text-h6">
-                    ตัวเลือกเพิ่มเติม {{ sumAddOn }}
+                    ตัวเลือกเพิ่มเติม
                     <v-spacer></v-spacer>
                     <v-btn icon from x-small @click="exit()">
                         <v-icon color="error">close</v-icon>
                     </v-btn>
                 </v-card-title>
-                <v-card-text class="pt-2">
-                    <cardTableAddOns
+                <v-card-text class="py-2 text-right">
+                    <!-- <cardTableAddOns
                         :propAddOns="add_ons"
                         :propAm4="propDetailTemp.temp.a_price.m4"
                         @emitRemoveAddOn="emitRemoveAddOn"
-                    ></cardTableAddOns>
+                    ></cardTableAddOns> -->
                     <selectAddOn
+                        class="mb-2"
                         :propAm4="propDetailTemp.temp.a_price.m4"
                         @emitPushAddOn="emitPushAddOn"
+                        :propAddOns="propDetailTemp.temp.add_ons"
                     ></selectAddOn>
                 </v-card-text>
                 <v-card-actions>
+                    <div class="text-h6 font-weight-bold">
+                        รวม {{ sumAddOn }} บาท
+                    </div>
                     <v-spacer></v-spacer>
                     <v-btn color="error" @click="exit()">
                         <v-icon left>exit_to_app</v-icon> ออก
@@ -66,7 +71,7 @@ export default {
             }
         },
         emitPushAddOn(v) {
-            this.add_ons.push(v);
+            this.add_ons = v;
         },
         emitRemoveAddOn(v) {
             this.add_ons.splice(v, 1);
@@ -74,9 +79,11 @@ export default {
         async save() {
             let loader = this.$loading.show();
             this.propDetailTemp.temp.sumAddOn = this.sumAddOn;
+            this.propDetailTemp.temp.add_ons = this.add_ons;
             const payload = {
                 order_detail_temp: this.propDetailTemp,
             };
+
             await this.$store.dispatch("orderDetailTemp/update", payload);
             loader.hide();
             this.dialog = false;
