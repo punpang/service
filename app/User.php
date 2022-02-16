@@ -32,8 +32,10 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $hidden = [
         'password', 'remember_token',
-        "type_name", "type"
+        // "type"
     ];
+
+    // protected $appends = ["type_name"];
 
     /**
      * The attributes that should be cast to native types.
@@ -77,6 +79,11 @@ class User extends Authenticatable implements JWTSubject
     public function userType()
     {
         return $this->belongsTo(UserType::class, "type", "id");
+    }
+
+    public function getTypeNameAttribute()
+    {
+        return $this->userType->name;
     }
 
     public function table()

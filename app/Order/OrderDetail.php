@@ -3,6 +3,7 @@
 namespace App\Order;
 
 use App\Order\APrice;
+use App\Order\OrderDetailAddOn;
 use Illuminate\Database\Eloquent\Model;
 
 class OrderDetail extends Model
@@ -20,8 +21,38 @@ class OrderDetail extends Model
         "is_show_public"
     ];
 
+    protected $appends = ["sum_all"];
+
     public function aPrice()
     {
-        return $this->belongsTo(APrice::class,);
+        return $this->belongsTo(APrice::class);
+    }
+
+    public function addOns()
+    {
+        return $this->hasMany(OrderDetailAddOn::class);
+    }
+
+    public function addOn()
+    {
+        return $this->hasOne(OrderDetailAddOn::class)->orderBy("created_at", "desc");
+    }
+
+    public function getSumAllAttribute()
+    {
+        return [
+            "total" => $this->sum_total,
+            "add_on" => $this->sum_add_on,
+        ];
+    }
+
+    public function getSumAddOnAttribute()
+    {
+        return number_format($this->addOns()->sum("price"), 2);
+    }
+
+    public function getSumTotalAttribute()
+    {
+        return number_format($this->price + $this->sum_add_on, 2);
     }
 }

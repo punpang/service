@@ -31,7 +31,10 @@ class AOrder extends Model
         "payment_deadline"
     ];
 
-    protected $appends = ["sum_all"];
+    protected $appends = [
+        "sum_all",
+        // "sum_add_on"
+    ];
 
     public function getDateGetAttribute($date)
     {
@@ -150,6 +153,17 @@ class AOrder extends Model
         return $this->orderDetails()->sum("price");
     }
 
+    // public function getSumAddOnAttribute()
+    // {
+    //     return $this->orderDetails->addOns();
+    // }
+
+    public function sumAddOn()
+    {
+
+        return $this->orderDetails->sum("sum_add_on");
+    }
+
     public function sumDeposited()
     {
         return $this->sumHistoryPayed();
@@ -166,6 +180,7 @@ class AOrder extends Model
             "sumAccessory" => $this->sumAccessory(),
             "sumService" => $this->sumService(),
             "sumDiscount" => $this->sumDiscount(),
+            "sumAddOn" => $this->sumAddOn(),
             // "sumHistoryPayed" => $this->sumHistoryPayed()
         ];
     }
@@ -174,7 +189,6 @@ class AOrder extends Model
     {
         return $this->sumAll();
     }
-
 
     public function sumBalance()
     {
@@ -238,7 +252,7 @@ class AOrder extends Model
 
     public function sumAccessoryServiceDiscount()
     {
-        return ($this->sumAccessory() + $this->sumService()) -
+        return ($this->sumAddOn() + $this->sumAccessory() + $this->sumService()) -
             $this->sumDiscount();
     }
 
@@ -340,6 +354,11 @@ class AOrder extends Model
     public function orderDetails()
     {
         return $this->hasMany(OrderDetail::class, "order_id", "id");
+    }
+
+    public function orderDetail()
+    {
+        return $this->hasOne(OrderDetail::class, "order_id", "id")->orderBy("created_at", "desc");
     }
 
     public function alertMessages()

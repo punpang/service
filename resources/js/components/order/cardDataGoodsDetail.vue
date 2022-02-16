@@ -8,75 +8,57 @@
                 <v-card
                     outlined
                     class="mb-2"
-                    v-for="order in order.order_details"
-                    :key="order.id"
+                    v-for="detail in order.order_details"
+                    :key="detail.id"
                 >
                     <v-card-text>
-                        <p>
-                            <strong>{{ order.a_price.name_goods }}</strong>
-                        </p>
-
-                        <p>
-                            <strong>เขียนข้อความ</strong>
-                        </p>
-
-
+                        <v-row>
+                            <v-col cols="3" md="3" class="pa-2">
+                                <v-img
+                                    src="https://www.punpangsv.com/admin_system/home/product/img-products/3FE0FF85-F7DE-4ED2-A5EF-77C4955186C1_1_201_a.png"
+                                ></v-img>
+                            </v-col>
+                            <v-col cols="9" md="9" class="pa-2">
+                                <p class="mb-0">
+                                    <strong>{{
+                                        detail.a_price.name_goods
+                                    }}</strong>
+                                </p>
+                                <p class="mb-0" v-if="detail.message != '-'">
+                                    <strong>ข้อความ </strong>
+                                    <strong class="text-subtitle-1">{{
+                                        detail.message
+                                    }}</strong>
+                                </p>
+                                <p class="mb-0" v-if="detail.detail != '-'">
+                                    <strong>รายละเอียด </strong>
+                                    <strong class="text-subtitle-1">{{
+                                        detail.detail
+                                    }}</strong>
+                                </p>
+                                <p class="mb-0">
+                                    <strong>ราคา </strong>
+                                    {{ detail.a_price.price }} บาท
+                                </p>
+                                <v-divider class="my-1"></v-divider>
+                                <p
+                                    class="mb-0"
+                                    v-for="(addOn, index) in detail.add_ons"
+                                    :key="index"
+                                >
+                                    + {{ addOn.price | formatNumber }}
+                                    {{ addOn.product_add_on.goods_add_on.name }}
+                                </p>
+                                <p class="mb-0">
+                                    รวมตัวเลือกเพิ่มเติม
+                                    {{ detail.sum_all.add_on }} บาท
+                                </p>
+                                <v-divider class="my-1"></v-divider>
+                                <p>รวมทั้งหมด {{ detail.sum_all.total }} บาท</p>
+                            </v-col>
+                        </v-row>
                     </v-card-text>
                 </v-card>
-                <v-simple-table>
-                    <tbody>
-                        <div
-                            v-for="order in order.order_details"
-                            :key="order.id"
-                        >
-                            <!-- {{ order }} -->
-                            <tr
-                                v-if="
-                                    order.m1 !== 99 ||
-                                    order.m2 !== 99 ||
-                                    order.m3 !== 99 ||
-                                    order.m4 !== 99
-                                "
-                            >
-                                <td colspan="2">
-                                    <strong
-                                        >{{ order.a_price.name_goods }}
-                                    </strong>
-                                </td>
-                            </tr>
-                            <!-- / -->
-                            <tr v-if="order.detail !== null">
-                                <td>
-                                    <strong>ข้อมูลเพิ่มเติม</strong>
-                                </td>
-                                <td class="text-right">
-                                    <strong>
-                                        {{ order.detail }}
-                                    </strong>
-                                </td>
-                            </tr>
-                            <!-- / -->
-                            <tr v-if="order.message !== null">
-                                <td>
-                                    <strong>เขียนข้อความ</strong>
-                                </td>
-                                <td class="text-right">
-                                    <strong>{{ order.message }}</strong>
-                                </td>
-                            </tr>
-                            <!-- / -->
-                            <!-- <tr v-if="order.other !== '-'">
-                                <td>
-                                    <strong>หมายเหตุ</strong>
-                                </td>
-                                <td class="text-right">
-                                    <strong>{{ order.other }}</strong>
-                                </td>
-                            </tr> -->
-                            <!-- / -->
-                        </div>
-                    </tbody>
-                </v-simple-table>
             </v-card-text>
         </v-card>
     </div>

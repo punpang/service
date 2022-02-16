@@ -2979,18 +2979,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 var numeral = __webpack_require__(/*! numeral */ "./node_modules/numeral/numeral.js");
 
 Vue.filter("formatNumber", function (value) {
@@ -3013,7 +3001,8 @@ Vue.filter("formatNumber", function (value) {
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
     msg: "orderProductCake/msg",
-    detailTemps: "orderDetailTemp/temps"
+    detailTemps: "orderDetailTemp/temps",
+    user: "main/User"
   }))
 });
 
@@ -6698,34 +6687,38 @@ var render = function () {
           _vm._v(" "),
           _c("v-divider", { staticClass: "my-0" }),
           _vm._v(" "),
-          _c(
-            "v-card-text",
-            { staticClass: "pa-1" },
-            [
-              _c(
-                "v-container",
+          _vm.user.type === 1
+            ? _c(
+                "v-card-text",
+                { staticClass: "pa-1" },
                 [
                   _c(
-                    "v-row",
+                    "v-container",
                     [
-                      _c("editCake", { attrs: { propDetailTemp: detailTemp } }),
-                      _vm._v(" "),
-                      _c("cardManageAddOn", {
-                        attrs: { propDetailTemp: detailTemp },
-                      }),
-                      _vm._v(" "),
-                      _c("removeCake", {
-                        attrs: { propDetailTemp: detailTemp },
-                      }),
+                      _c(
+                        "v-row",
+                        [
+                          _c("editCake", {
+                            attrs: { propDetailTemp: detailTemp },
+                          }),
+                          _vm._v(" "),
+                          _c("cardManageAddOn", {
+                            attrs: { propDetailTemp: detailTemp },
+                          }),
+                          _vm._v(" "),
+                          _c("removeCake", {
+                            attrs: { propDetailTemp: detailTemp },
+                          }),
+                        ],
+                        1
+                      ),
                     ],
                     1
                   ),
                 ],
                 1
-              ),
-            ],
-            1
-          ),
+              )
+            : _vm._e(),
         ],
         1
       )

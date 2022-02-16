@@ -14,9 +14,7 @@ use App\Order\AHistoryPayed;
 use App\Order\AlertMessages;
 use Illuminate\Http\Request;
 use App\Order\ImageFromCustomer;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Exception;
 
 class AOrderController extends Controller
 {
@@ -147,9 +145,10 @@ class AOrderController extends Controller
                 "aStatus",
                 "imageFromCustomers.googleImage",
                 "ntpfcsForCustomer",
-                "orderDetails.aPrice"
+                "orderDetails.aPrice",
 
             )
+            ->with("orderDetails.addOns.productAddOn.goodsAddOn")
             ->first();
 
         return response()->json([
@@ -477,39 +476,47 @@ class AOrderController extends Controller
 
     public function newOrder(Request $request)
     {
-        DB::transaction(function () use ($request) {
+        $orderTemp = OrderTemp::whereId($request->temp["id"])->first();
 
-            $orderTemp = OrderTemp::whereId($request->temp["id"])->first();
+        $order = AOrder::create(
+            [
+                "id_customer" => $orderTemp->customer_id,
+                "date_get" => $orderTemp->temp->dateTimeGet->dateGet,
+                "time_get" => $orderTemp->temp->dateTimeGet->timeGet,
+                "channel" => $orderTemp->temp->channel,
+                "status" => 1,
+                "date_order" => \Carbon\Carbon::now()->format("Y-m-d H:i:s"),
+                "auth_order" => Str::uuid(),
+            ]
+        );
 
-            $order = AOrder::create(
-                [
-                    "id_customer" => $orderTemp->customer_id,
-                    "date_get" => $orderTemp->temp->dateTimeGet->dateGet,
-                    "time_get" => $orderTemp->temp->dateTimeGet->timeGet,
-                    "channel" => $orderTemp->temp->channel,
-                    "status" => 1,
-                    "date_order" => \Carbon\Carbon::now()->format("Y-m-d H:i:s"),
-                    "auth_order" => Str::uuid(),
-                ]
-            );
-            throw new Exception("djskofjl");
-            $orderDetailTemps = $orderTemp->orderDetailTemps;
-            foreach ($orderDetailTemps as $orderDetailTemp) {
-                $order->orderDetails()->create([
-                    "a_price_id" => $orderDetailTemp->temp->a_price->id,
-                    "priced" => $orderDetailTemp->temp->a_price->price,
-                    "message" => $orderDetailTemp->temp->message,
-                    "detail" => $orderDetailTemp->temp->detail
-                ]);
+        $orderDetailTemps = $orderTemp->orderDetailTemps;
+        foreach ($orderDetailTemps as $orderDetailTemp) {
 
-                $orderDetailTemp->delete();
+            $add_ons = [];
+            foreach ($orderDetailTemp->temp->add_ons as $add_on) {
+                $add_ons[] = [
+                    "product_add_on_id" => $add_on->id,
+                    "price" => $add_on->price,
+                ];
             }
-            $orderTemp->delete();
-            return response()->json([
-                "order" => $order,
-                "status" => "success",
-                "message" => "สร้างรายการสั่งซื้อสำเร็จ"
-            ], 200);
-        });
+
+            $order->orderDetail()->create([
+                "a_price_id" => $orderDetailTemp->temp->a_price->id,
+                "price" => $orderDetailTemp->temp->a_price->price,
+                "message" => $orderDetailTemp->temp->message,
+                "detail" => $orderDetailTemp->temp->detail
+            ])->addOn()->createMany(
+                $add_ons
+            );
+            // $orderDetailTemp->delete();
+        }
+        // $orderTemp->delete();
+
+        // return response()->json([
+        //     "order" => $order,
+        //     "status" => "success",
+        //     "message" => "สร้างรายการสั่งซื้อสำเร็จ"
+        // ], 200);
     }
 }

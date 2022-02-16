@@ -2108,24 +2108,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
@@ -4478,85 +4460,136 @@ var render = function () {
           _c(
             "v-card-text",
             { staticClass: "pt-4" },
-            [
-              _vm._l(_vm.order.order_details, function (order) {
-                return _c(
-                  "v-card",
-                  {
-                    key: order.id,
-                    staticClass: "mb-2",
-                    attrs: { outlined: "" },
-                  },
-                  [
-                    _c("v-card-text", [
-                      _c("p", [
-                        _c("strong", [
-                          _vm._v(_vm._s(order.a_price.name_goods)),
-                        ]),
-                      ]),
-                      _vm._v(" "),
-                      _c("p", [_c("strong", [_vm._v("เขียนข้อความ")])]),
-                    ]),
-                  ],
-                  1
-                )
-              }),
-              _vm._v(" "),
-              _c("v-simple-table", [
-                _c(
-                  "tbody",
-                  _vm._l(_vm.order.order_details, function (order) {
-                    return _c("div", { key: order.id }, [
-                      order.m1 !== 99 ||
-                      order.m2 !== 99 ||
-                      order.m3 !== 99 ||
-                      order.m4 !== 99
-                        ? _c("tr", [
-                            _c("td", { attrs: { colspan: "2" } }, [
-                              _c("strong", [
+            _vm._l(_vm.order.order_details, function (detail) {
+              return _c(
+                "v-card",
+                {
+                  key: detail.id,
+                  staticClass: "mb-2",
+                  attrs: { outlined: "" },
+                },
+                [
+                  _c(
+                    "v-card-text",
+                    [
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            {
+                              staticClass: "pa-2",
+                              attrs: { cols: "3", md: "3" },
+                            },
+                            [
+                              _c("v-img", {
+                                attrs: {
+                                  src: "https://www.punpangsv.com/admin_system/home/product/img-products/3FE0FF85-F7DE-4ED2-A5EF-77C4955186C1_1_201_a.png",
+                                },
+                              }),
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            {
+                              staticClass: "pa-2",
+                              attrs: { cols: "9", md: "9" },
+                            },
+                            [
+                              _c("p", { staticClass: "mb-0" }, [
+                                _c("strong", [
+                                  _vm._v(_vm._s(detail.a_price.name_goods)),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              detail.message != "-"
+                                ? _c("p", { staticClass: "mb-0" }, [
+                                    _c("strong", [_vm._v("ข้อความ ")]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "strong",
+                                      { staticClass: "text-subtitle-1" },
+                                      [_vm._v(_vm._s(detail.message))]
+                                    ),
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              detail.detail != "-"
+                                ? _c("p", { staticClass: "mb-0" }, [
+                                    _c("strong", [_vm._v("รายละเอียด ")]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "strong",
+                                      { staticClass: "text-subtitle-1" },
+                                      [_vm._v(_vm._s(detail.detail))]
+                                    ),
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _c("p", { staticClass: "mb-0" }, [
+                                _c("strong", [_vm._v("ราคา ")]),
                                 _vm._v(
-                                  _vm._s(order.a_price.name_goods) +
-                                    "\n                                "
+                                  "\n                                " +
+                                    _vm._s(detail.a_price.price) +
+                                    " บาท\n                            "
                                 ),
                               ]),
-                            ]),
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      order.detail !== null
-                        ? _c("tr", [
-                            _c("td", [
-                              _c("strong", [_vm._v("ข้อมูลเพิ่มเติม")]),
-                            ]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "text-right" }, [
-                              _c("strong", [
+                              _vm._v(" "),
+                              _c("v-divider", { staticClass: "my-1" }),
+                              _vm._v(" "),
+                              _vm._l(detail.add_ons, function (addOn, index) {
+                                return _c(
+                                  "p",
+                                  { key: index, staticClass: "mb-0" },
+                                  [
+                                    _vm._v(
+                                      "\n                                + " +
+                                        _vm._s(
+                                          _vm._f("formatNumber")(addOn.price)
+                                        ) +
+                                        "\n                                " +
+                                        _vm._s(
+                                          addOn.product_add_on.goods_add_on.name
+                                        ) +
+                                        "\n                            "
+                                    ),
+                                  ]
+                                )
+                              }),
+                              _vm._v(" "),
+                              _c("p", { staticClass: "mb-0" }, [
                                 _vm._v(
-                                  "\n                                    " +
-                                    _vm._s(order.detail) +
-                                    "\n                                "
+                                  "\n                                รวมตัวเลือกเพิ่มเติม\n                                " +
+                                    _vm._s(detail.sum_all.add_on) +
+                                    " บาท\n                            "
                                 ),
                               ]),
-                            ]),
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      order.message !== null
-                        ? _c("tr", [
-                            _c("td", [_c("strong", [_vm._v("เขียนข้อความ")])]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "text-right" }, [
-                              _c("strong", [_vm._v(_vm._s(order.message))]),
-                            ]),
-                          ])
-                        : _vm._e(),
-                    ])
-                  }),
-                  0
-                ),
-              ]),
-            ],
-            2
+                              _vm._v(" "),
+                              _c("v-divider", { staticClass: "my-1" }),
+                              _vm._v(" "),
+                              _c("p", [
+                                _vm._v(
+                                  "รวมทั้งหมด " +
+                                    _vm._s(detail.sum_all.total) +
+                                    " บาท"
+                                ),
+                              ]),
+                            ],
+                            2
+                          ),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              )
+            }),
+            1
           ),
         ],
         1

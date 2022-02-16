@@ -14,7 +14,7 @@ class ProductAddOn extends Model
 
     public function goodsAddOn()
     {
-        return $this->hasOne(GoodsAddOn::class, "id", "goods_add_on_id");
+        return $this->belongsTo(GoodsAddOn::class, "goods_add_on_id", "id");
     }
 
     // public function getNameAddOnAttribute()

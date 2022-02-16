@@ -46,23 +46,11 @@
                             + {{ addOn.price | formatNumber }}
                             {{ addOn.goods_add_on.name }}
                         </p>
-                        <!-- <v-divider class="my-1"></v-divider> -->
-                        <!-- <p>
-                            <strong>{{
-                                (temp.sumAddOn + temp.a_price.price) | formatNumber
-                            }}</strong>
-                        </p> -->
                     </v-col>
-                    <!-- <v-col cols="12" md="3" class="pa-2">
-                        <showAddOns :propAddOns="temp.addOns"></showAddOns>
-                        <productSelectCake
-                            :propProduct="temp"
-                        ></productSelectCake>
-                    </v-col> -->
                 </v-row>
             </v-card-text>
             <v-divider class="my-0"></v-divider>
-            <v-card-text class="pa-1">
+            <v-card-text class="pa-1" v-if="user.type === 1">
                 <v-container>
                     <v-row>
                         <editCake :propDetailTemp="detailTemp"></editCake>
@@ -132,6 +120,7 @@ export default {
         ...mapGetters({
             msg: "orderProductCake/msg",
             detailTemps: "orderDetailTemp/temps",
+            user: "main/User",
         }),
         // sumAddOn() {
         //     return this.add_ons.reduce((sum, { price }) => {
