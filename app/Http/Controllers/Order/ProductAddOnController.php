@@ -25,4 +25,22 @@ class ProductAddOnController extends Controller
 
         return $producAddOn->with("goodsAddOn")->get();
     }
+
+    public function create(Request $request)
+    {
+        ProductAddOn::updateOrCreate(
+            [
+                "goods_add_on_id" => $request->goods_add_on["id"],
+                "am4_id" => $request->m4,
+
+            ],
+            [
+                "price" => $request->price
+            ]
+        );
+
+        return  response()->json([
+            "status" => "success"
+        ], 200);
+    }
 }

@@ -7,12 +7,12 @@
             <strong>{{ paymentSummary.text.totalGoods }}</strong>
           </td>
           <td class="text-right">
-            <strong>{{ order.sumAll.sumGoods | formatNumber }}</strong>
+            <strong>{{ order.sum_all.sumGoods | formatNumber }}</strong>
           </td>
         </tr>
         <!-- / -->
 
-        <tr v-if="order.sumAll.sumAccessory > 0">
+        <tr v-if="order.sum_all.sumAccessory > 0">
           <td>
             <strong>{{ paymentSummary.text.accessory }}</strong>
             <p class="text-caption pl-4 mt-1 mb-2">
@@ -20,12 +20,12 @@
             </p>
           </td>
           <td class="text-right">
-            <strong>{{ order.sumAll.sumAccessory | formatNumber }}</strong>
+            <strong>{{ order.sum_all.sumAccessory | formatNumber }}</strong>
           </td>
         </tr>
         <!-- / -->
 
-        <tr v-if="order.sumAll.sumService > 0">
+        <tr v-if="order.sum_all.sumService > 0">
           <td>
             <strong>{{ paymentSummary.text.service }}</strong>
             <p class="text-caption pl-4 mt-1 mb-2">
@@ -33,17 +33,17 @@
             </p>
           </td>
           <td class="text-right">
-            <strong>{{ order.sumAll.sumService | formatNumber }}</strong>
+            <strong>{{ order.sum_all.sumService | formatNumber }}</strong>
           </td>
         </tr>
         <!-- / -->
 
-        <tr v-if="order.sumAll.sumDiscount > 0">
+        <tr v-if="order.sum_all.sumDiscount > 0">
           <td>
             <strong>{{ paymentSummary.text.discount }}</strong>
           </td>
           <td class="text-right error--text">
-            <strong>- {{ order.sumAll.sumDiscount | formatNumber }}</strong>
+            <strong>- {{ order.sum_all.sumDiscount | formatNumber }}</strong>
           </td>
         </tr>
         <!-- / -->
@@ -53,7 +53,7 @@
             <strong>{{ paymentSummary.text.sumTASC }}</strong>
           </td>
           <td class="text-right">
-            <strong>{{ order.sumAll.sumTASC | formatNumber }}</strong>
+            <strong>{{ order.sum_all.sumTASC | formatNumber }}</strong>
           </td>
         </tr>
         <!-- / -->
@@ -62,7 +62,7 @@
             <strong>{{ paymentSummary.text.deposited }}</strong>
           </td>
           <td class="text-right">
-            <strong>{{ order.sumAll.sumDeposited | formatNumber }}</strong>
+            <strong>{{ order.sum_all.sumDeposited | formatNumber }}</strong>
           </td>
         </tr>
         <!-- / -->
@@ -71,7 +71,7 @@
             <strong>{{ paymentSummary.text.balance }}</strong>
           </td>
           <td class="text-right">
-            <strong>{{ order.sumAll.sumBalance | formatNumber }}</strong>
+            <strong>{{ order.sum_all.sumBalance | formatNumber }}</strong>
           </td>
         </tr>
         <!-- / -->

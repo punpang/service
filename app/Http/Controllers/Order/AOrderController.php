@@ -25,7 +25,9 @@ class AOrderController extends Controller
         $orders = AOrder::whereDateGet(request("dateGet"))
             ->whereTimeGet(request("timeGet") . ":00")
             ->whereIn("status", [0, 1, 2, 3, 4, 5, 6, 7])
-            ->get();
+            // ->select("id","")
+            ->get()
+            ->makeHidden(['sum_all']);
 
         return $orders;
     }
@@ -200,10 +202,23 @@ class AOrderController extends Controller
             "aHistoryPayed.channelPayment",
             "aHistoryPayed.ntpfc",
             "aHistoryPayed.ksherPay",
-            "orderDetails.aPrice"
+            "orderDetails.aPrice",
+            "orderDetailsOnlyTrashed"
         )
-
+            ->with("orderDetails.addOns.productAddOn.goodsAddOn")
             ->findOrFail($order_id);
+        // ->with(
+        //     "customer",
+
+        //     "aStatus",
+        //     "imageFromCustomers.googleImage",
+        //     "ntpfcsForCustomer",
+        //     "orderDetails.aPrice",
+
+        // )
+        // ->with("orderDetails.addOns.productAddOn.goodsAddOn")
+        // ->first();
+
 
         // dd($order->totalGoods());
         // if ($order->balance == 0 && $order->deposit == 0) {
@@ -476,8 +491,8 @@ class AOrderController extends Controller
 
     public function newOrder(Request $request)
     {
-        $orderTemp = OrderTemp::whereId($request->temp["id"])->first();
 
+        $orderTemp = OrderTemp::whereId($request->temp["id"])->first();
         $order = AOrder::create(
             [
                 "id_customer" => $orderTemp->customer_id,
@@ -488,17 +503,19 @@ class AOrderController extends Controller
                 "date_order" => \Carbon\Carbon::now()->format("Y-m-d H:i:s"),
                 "auth_order" => Str::uuid(),
             ]
-        );
+        )->makeHidden(["sum_all"]);
 
         $orderDetailTemps = $orderTemp->orderDetailTemps;
         foreach ($orderDetailTemps as $orderDetailTemp) {
 
-            $add_ons = [];
-            foreach ($orderDetailTemp->temp->add_ons as $add_on) {
-                $add_ons[] = [
-                    "product_add_on_id" => $add_on->id,
-                    "price" => $add_on->price,
-                ];
+            if (isset($orderDetailTemp->temp->add_ons)) {
+                $add_ons = [];
+                foreach ($orderDetailTemp->temp->add_ons as $add_on) {
+                    $add_ons[] = [
+                        "product_add_on_id" => $add_on->id,
+                        "price" => $add_on->price,
+                    ];
+                }
             }
 
             $order->orderDetail()->create([
@@ -506,17 +523,29 @@ class AOrderController extends Controller
                 "price" => $orderDetailTemp->temp->a_price->price,
                 "message" => $orderDetailTemp->temp->message,
                 "detail" => $orderDetailTemp->temp->detail
-            ])->addOn()->createMany(
-                $add_ons
-            );
+            ]);
+
+            // if (isset($orderDetailTemp->temp->add_ons)) {
+            //     $add_ons = [];
+            //     foreach ($orderDetailTemp->temp->add_ons as $add_on) {
+            //         $add_ons[] = [
+            //             "product_add_on_id" => $add_on->id,
+            //             "price" => $add_on->price,
+            //         ];
+            //     }
+            //     $order->addOn()->createMany(
+            //         $add_ons
+            //     );
+            // }
+
             // $orderDetailTemp->delete();
         }
         // $orderTemp->delete();
 
-        // return response()->json([
-        //     "order" => $order,
-        //     "status" => "success",
-        //     "message" => "สร้างรายการสั่งซื้อสำเร็จ"
-        // ], 200);
+        return response()->json([
+            "order" => $order,
+            "status" => "success",
+            "message" => "สร้างรายการสั่งซื้อสำเร็จ"
+        ], 200);
     }
 }

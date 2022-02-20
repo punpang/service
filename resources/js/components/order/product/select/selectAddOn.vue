@@ -1,6 +1,7 @@
 <template>
     <div>
         <v-row>
+            {{ value_addOns }}
             <v-col cols="9" md="10" class="pr-1">
                 <!-- <v-text-field
                     label="ชื่อตัวเลือก"
@@ -112,6 +113,7 @@ export default {
             this.$emit("emitPushAddOn", v);
         },
         changeAddOns() {
+            console.log(this.fetchAddOn);
             let selected = [];
             this.value_addOns.forEach((v) => {
                 selected.push(
@@ -123,11 +125,13 @@ export default {
             this.$emit("emitPushAddOn", selected);
         },
         getValueAddOns() {
+            // console.log(this.propAddOns);
             let goods_add_on_id = [];
             this.propAddOns.forEach((v) => {
-                goods_add_on_id.push(v.id);
+                goods_add_on_id.push(v.product_add_on.goods_add_on_id);
             });
             this.value_addOns = goods_add_on_id;
+            this.changeAddOns();
         },
         remove(item) {
             const index = this.value_addOns.indexOf(item.id);

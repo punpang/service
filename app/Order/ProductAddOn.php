@@ -10,6 +10,8 @@ class ProductAddOn extends Model
     protected $table = "product_add_ons";
     protected $primaryKey = "id";
 
+    protected $guarded = [];
+
     // protected $appends = ["name_add_on"];
 
     public function goodsAddOn()

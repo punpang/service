@@ -33,6 +33,7 @@ class AOrder extends Model
 
     protected $appends = [
         "sum_all",
+        "payment_deadline_th"
         // "sum_add_on"
     ];
 
@@ -55,13 +56,13 @@ class AOrder extends Model
     }
 
 
-    public function getPaymentDeadlineAttribute($date)
+    public function getPaymentDeadlineThAttribute()
     {
         // return \Carbon\Carbon::createFromFormat('Y-m-d', $date)->diffForHumans();
-        if ($date == null) {
-            return $date;
+        if ($this->payment_deadline == null) {
+            return $this->payment_deadline;
         }
-        return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $date)->addYears(543)->format('d/m/Y H:i:s');
+        return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $this->payment_deadline)->addYears(543)->format('d/m/Y H:i:s');
     }
 
     public function dateGetTimeFormat()
@@ -354,6 +355,11 @@ class AOrder extends Model
     public function orderDetails()
     {
         return $this->hasMany(OrderDetail::class, "order_id", "id");
+    }
+
+    public function orderDetailsOnlyTrashed()
+    {
+        return $this->orderDetails()->onlyTrashed();
     }
 
     public function orderDetail()

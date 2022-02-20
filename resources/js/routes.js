@@ -61,6 +61,13 @@ const routes = [
     },
 
     {
+        path: "/manages/order/:id/showOrderByID",
+        name: "managesOrderShowOrderByID",
+        component: () => import("@/js/pages/order/showOrderByID"),
+        meta: { requiresAuth: true }
+    },
+
+    {
         path: "/manages/order/:id/paymentOrderByID",
         name: "managesOrderIDpromptPaymentOrderByID",
         component: () => import("@/js/pages/order/paymentOrderByID"),

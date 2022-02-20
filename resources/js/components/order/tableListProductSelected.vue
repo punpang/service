@@ -37,7 +37,7 @@
                             <strong>ราคา </strong>
                             {{ detailTemp.temp.a_price.price }} บาท
                         </p>
-                        <v-divider class="my-1"></v-divider>
+                        <!-- <v-divider class="my-1"></v-divider>
                         <p
                             class="mb-0"
                             v-for="(addOn, index) in detailTemp.temp.add_ons"
@@ -45,7 +45,7 @@
                         >
                             + {{ addOn.price | formatNumber }}
                             {{ addOn.goods_add_on.name }}
-                        </p>
+                        </p> -->
                     </v-col>
                 </v-row>
             </v-card-text>
@@ -55,9 +55,9 @@
                     <v-row>
                         <editCake :propDetailTemp="detailTemp"></editCake>
 
-                        <cardManageAddOn
+                        <!-- <cardManageAddOn
                             :propDetailTemp="detailTemp"
-                        ></cardManageAddOn>
+                        ></cardManageAddOn> -->
 
                         <removeCake :propDetailTemp="detailTemp"></removeCake>
                     </v-row>

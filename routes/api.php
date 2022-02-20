@@ -153,6 +153,10 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                     Route::get('getUse', 'Order\ChannelPaymentController@getUse');
                 });
 
+                Route::prefix('productAddOn')->group(function () { // api/admin/v1/order/productAddOn/...
+                    Route::post('create', 'Order\ProductAddOnController@create');
+                });
+
                 Route::prefix('detail')->group(function () { // api/admin/v1/order/detail/...
                     Route::prefix('temp')->group(function () { // api/admin/v1/order/detail/temp/...
                         Route::post('create', 'Order\OrderDetailTempController@create');
@@ -161,6 +165,16 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                         Route::get('{order_temp_id}/fetch', 'Order\OrderDetailTempController@fetch');
                     });
                     Route::get('getUse', 'Order\ChannelPaymentController@getUse');
+
+                    Route::post('{id}/delete', 'Order\OrderDetailController@delete');
+                    Route::post('{id}/update', 'Order\OrderDetailController@update');
+
+                    Route::prefix('addOn')->group(function () { // api/admin/v1/order/detail/addOn
+                        Route::post('{id}/autoUpdateAddOns', 'Order\OrderDetailController@autoUpdateAddOns');
+                        Route::post('{id}/create', 'Order\OrderDetailController@createAddOn');
+                        Route::post('{id}/delete', 'Order\OrderDetailController@deleteAddOn');
+
+                    });
                 });
 
                 Route::prefix('temp')->group(function () { // api/admin/v1/order/detail/...

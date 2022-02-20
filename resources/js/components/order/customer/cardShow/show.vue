@@ -1,5 +1,6 @@
 <template>
     <div>
+        {{ propCustomer }}
         <v-card>
             <v-card-title>
                 <v-icon left>
@@ -60,7 +61,7 @@ export default {
     components: { customerSearch },
     data() {
         return {
-            // customer: "",
+            // customer: this.propCustomer,
         };
     },
     methods: {

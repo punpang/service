@@ -32,7 +32,7 @@ export default {
                         denyButtonColor: "#3F51B5"
                     }).then((resultSwal) => {
                         if (resultSwal.isConfirmed) {
-                            window.location.href = `/manages/order/${result.data.order.id}/show`;
+                            window.location.href = `/manages/order/${result.data.order.id}/showOrderByID`;
                         } else {
                             location.reload();
                         }
