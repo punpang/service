@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Order;
 
+use App\Order\ProductAddOn;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Order\ProductAddOn;
 
 class ProductAddOnController extends Controller
 {
@@ -24,6 +24,25 @@ class ProductAddOnController extends Controller
         }
 
         return $producAddOn->with("goodsAddOn")->get();
+    }
+
+    public function fetch(Request $request)
+    {
+        $product_add_on = ProductAddOn::query();
+
+        if ($request->get("goods_add_on_id") != "undefined") {
+            $product_add_on->where("goods_add_on_id", $request->get("goods_add_on_id"));
+        }
+
+        if ($request->get("am4_id") != "undefined") {
+            $product_add_on->where("am4_id", $request->get("am4_id"));
+        }
+
+        if ($request->get("isFirst") != "undefined" && $request->get("isFirst")) {
+            return $product_add_on->first();
+        } else {
+            return $product_add_on->get();
+        }
     }
 
     public function create(Request $request)

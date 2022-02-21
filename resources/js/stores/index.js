@@ -41,7 +41,9 @@ import orderProductCake from "@/js/stores/modules/order/productCake";
 import orderNoticeOfPaymentFromCustomer from "@/js/stores/modules/order/noticeOfPaymentFromCustomer";
 import orderDetailTemp from "@/js/stores/modules/order/orderDetailTemp";
 import orderTemp from "@/js/stores/modules/order/orderTemp";
-
+import orderProductAddOn from "@/js/stores/modules/order/productAddOn";
+import orderGoodsAddOn from "@/js/stores/modules/order/goodsAddOn";
+import orderM4 from "@/js/stores/modules/order/m4";
 /////////////////////////
 /// LUCKY REWAYD START ///
 import orderLuckyReward from "@/js/stores/modules/order/luckyReward";
@@ -89,6 +91,9 @@ export default new Vuex.Store({
         orderKsher,
         orderNoticeOfPaymentFromCustomer,
         orderDetailTemp,
-        orderTemp
+        orderTemp,
+        orderProductAddOn,
+        orderGoodsAddOn,
+        orderM4,
     },
 });

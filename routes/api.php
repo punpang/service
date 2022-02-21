@@ -154,7 +154,15 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                 });
 
                 Route::prefix('productAddOn')->group(function () { // api/admin/v1/order/productAddOn/...
+                    Route::get('fetch', 'Order\ProductAddOnController@fetch');
                     Route::post('create', 'Order\ProductAddOnController@create');
+                });
+
+                Route::prefix('goodsAddOn')->group(function () { // api/admin/v1/order/productAddOn/...
+                    Route::get('fetch', 'Order\GoodsAddOnController@fetch');
+                });
+                Route::prefix('m4')->group(function () { // api/admin/v1/order/productAddOn/...
+                    Route::get('fetch', 'Order\AM4Controller@fetch');
                 });
 
                 Route::prefix('detail')->group(function () { // api/admin/v1/order/detail/...
@@ -173,14 +181,12 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                         Route::post('{id}/autoUpdateAddOns', 'Order\OrderDetailController@autoUpdateAddOns');
                         Route::post('{id}/create', 'Order\OrderDetailController@createAddOn');
                         Route::post('{id}/delete', 'Order\OrderDetailController@deleteAddOn');
-
                     });
                 });
 
                 Route::prefix('temp')->group(function () { // api/admin/v1/order/detail/...
                     Route::post('setTemp', 'Order\OrderTempController@setTemp');
                     Route::get('{customer_id}/fetch', 'Order\OrderTempController@fetch');
-
                 });
 
                 Route::post('alertPaymentByOrderID', 'Order\AOrderController@alertPaymentByOrderID');

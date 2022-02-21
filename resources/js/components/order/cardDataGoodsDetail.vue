@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import cardFormGoodsDetail from "@/js/components/order/cardFormGoodsDetail";
+import cardFormGoodsDetail from "@/js/components/order/manages/goods/cake/cardFormGoodsDetail";
 export default {
     components: {
         cardFormGoodsDetail,
