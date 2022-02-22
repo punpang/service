@@ -162,236 +162,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/google/drive/uploadImageMultiple.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/google/drive/uploadImageMultiple.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["propUploadImange"],
-  // propUploadImange = uploadImange: { imagePreview: "", file: null,},
-  data: function data() {
-    return {
-      rules: {
-        image: [function (v) {
-          return !!v || "ห้ามเว้นว่าง";
-        }]
-      },
-      limitUpload: 13
-    };
-  },
-  methods: {
-    clickUploadImage: function clickUploadImage() {
-      this.image = event.target.files[0];
-    },
-    changeImage: function changeImage(images) {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var count, diff, loader, Images, formData, res, imagePreview, i;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                if (!(images.length < 1)) {
-                  _context.next = 2;
-                  break;
-                }
-
-                return _context.abrupt("return");
-
-              case 2:
-                if (!(_this.propUploadImange.length !== undefined)) {
-                  _context.next = 8;
-                  break;
-                }
-
-                count = images.length + _this.propUploadImange.length;
-
-                if (!(count > _this.limitUpload)) {
-                  _context.next = 8;
-                  break;
-                }
-
-                diff = _this.limitUpload - _this.propUploadImange.length;
-
-                _this.$swal({
-                  title: "จำนวนรูปภาพมากเกินไป",
-                  text: "คุณสามารถอัปโหลดเพิ่มได้อีก " + diff + " รูป",
-                  allowOutsideClick: false,
-                  confirmButtonText: "รับทราบ",
-                  icon: "warning"
-                });
-
-                return _context.abrupt("return");
-
-              case 8:
-                if (!(images.length > _this.limitUpload)) {
-                  _context.next = 11;
-                  break;
-                }
-
-                _this.$swal({
-                  title: "จำนวนรูปภาพมากเกินไป",
-                  text: "อัปโหลดได้สูงสุด 13 รูป",
-                  allowOutsideClick: false,
-                  confirmButtonText: "รับทราบ",
-                  icon: "error"
-                });
-
-                return _context.abrupt("return");
-
-              case 11:
-                loader = _this.$loading.show();
-                Images = event.target.files;
-                formData = new FormData();
-
-                _this.$swal({
-                  title: "กำลังอัปโหลดรูป " + images.length + " รูป",
-                  text: "อย่าออกจากหน้านี้ ในขณะอัปโหลด",
-                  allowOutsideClick: false,
-                  showConfirmButton: false,
-                  icon: "info"
-                }); // this.$toast.warning("กำลังอัปโหลดรูป " + images.length + " รูป");
-
-
-                res = {};
-                imagePreview = []; // let imagesID = [];
-
-                i = 0;
-
-              case 18:
-                if (!(i < images.length)) {
-                  _context.next = 28;
-                  break;
-                }
-
-                formData.append("image", Images[i]);
-                _context.next = 22;
-                return _this.$store.dispatch("googleImage/store", formData);
-
-              case 22:
-                res = _context.sent;
-                imagePreview.push(res.data.image); // imagesID.push(res.data.id);
-
-                if (res.data.success) {
-                  _this.$swal({
-                    title: "อัปโหลดไปแล้ว " + (i + 1) + "/" + images.length + " รูป",
-                    text: "อย่าออกจากหน้านี้ ในขณะอัปโหลด",
-                    allowOutsideClick: false,
-                    showConfirmButton: false,
-                    icon: "success"
-                  });
-                } else {
-                  i = images.length;
-
-                  _this.$swal({
-                    title: "คุณไม่มีสิทธิ์อัปโหลดส่วนนี้ ",
-                    allowOutsideClick: false,
-                    confirmButtonText: "รับทราบ",
-                    icon: "error"
-                  });
-                }
-
-              case 25:
-                i++;
-                _context.next = 18;
-                break;
-
-              case 28:
-                loader.hide();
-
-                _this.$emit("emitImagesId", imagePreview); // เก่า
-                // formData.append("image", this.image);
-                // //console.log(formData);
-                // const response = await this.$store.dispatch(
-                //   "googleImage/store",
-                //   formData
-                // );
-                // if (response.status == 200) {
-                //   this.propUploadImange.imagePreview = response.data.src_name;
-                //   this.$toast.success("อัปโหลดรูปสำเร็จ");
-                //   //this.form.product_propImageId = response.data.id;
-                //   this.$emit("emitImageId", response.data.id);
-                //   loader.hide();
-                // } else {
-                //   this.$toast.error("อัปโหลดรูปไม่สำเร็จ เกิดข้อผิดพลาดบางอย่าง");
-                //   loader.hide();
-                // }
-
-
-              case 30:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    clickRemoveImage: function clickRemoveImage(imageId) {
-      this.$emit("emitRemoveImage", imageId);
-    }
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/guest/cardFormDetailBank.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/guest/cardFormDetailBank.vue?vue&type=script&lang=js& ***!
@@ -2209,11 +1979,26 @@ Vue.filter("formatNumber", function (value) {
         }, _callee);
       }))();
     },
-    status_payment_deadline: function status_payment_deadline() {
-      var now = new Date();
-      var deadlineParse = new Date(this.order.payment_deadline);
-      return deadlineParse.valueOf() > now.valueOf();
-    },
+    // status_payment_deadline() {
+    //     const now = new Date();
+    //     const nowParse = Date.parse(now.toLocaleString());
+    //     const deadlineParse = Date.parse(this.order.payment_deadline);
+    //     return deadlineParse > nowParse;
+    // },
+    // status_payment_deadline(payment_deadline) {
+    //     const now = new Date();
+    //     console.log(now.getTime());
+    //     let deadlineParse = new Date(payment_deadline);
+    //     if (isNaN(deadlineParse.getTime())) {
+    //         deadlineParse = now;
+    //     }
+    //     console.log(deadlineParse.getTime());
+    //     return deadlineParse.getTime() > now.getTime();
+    //     // if (deadlineParse.valueOf() > now.valueOf()) {
+    //     //     return true;
+    //     // }
+    //     // return false;
+    // },
     ntpfcsLength: function ntpfcsLength(v) {
       var ntpfcs = v.filter(function (v) {
         return v.status;
@@ -2395,112 +2180,6 @@ var render = function () {
             1
           ),
         ],
-        1
-      ),
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/google/drive/uploadImageMultiple.vue?vue&type=template&id=3363a47a&":
-/*!***********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/google/drive/uploadImageMultiple.vue?vue&type=template&id=3363a47a& ***!
-  \***********************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function () {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("v-file-input", {
-        attrs: {
-          multiple: "",
-          label: "อัปโหลดรูป",
-          rules: _vm.rules.image,
-          "prepend-icon": "image",
-          accept: "image/*",
-          outlined: "",
-        },
-        on: { change: _vm.changeImage },
-        model: {
-          value: _vm.propUploadImange.file,
-          callback: function ($$v) {
-            _vm.$set(_vm.propUploadImange, "file", $$v)
-          },
-          expression: "propUploadImange.file",
-        },
-      }),
-      _vm._v(" "),
-      _c(
-        "v-card",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.propUploadImange,
-              expression: "propUploadImange",
-            },
-          ],
-        },
-        _vm._l(_vm.propUploadImange, function (img) {
-          return _c(
-            "v-img",
-            {
-              key: img.id,
-              staticClass: "mb-4",
-              attrs: {
-                src:
-                  "https://drive.google.com/thumbnail?id=" +
-                  img.google_image.src_name +
-                  "&sz=w800-h800",
-                "lazy-src":
-                  "https://drive.google.com/thumbnail?id=" +
-                  img.google_image.src_name +
-                  "&sz=w800-h800",
-              },
-            },
-            [
-              _c(
-                "v-btn",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: img,
-                      expression: "img",
-                    },
-                  ],
-                  staticClass: "mt-2 ml-2",
-                  attrs: { color: "error", fab: "", small: "" },
-                  on: {
-                    click: function ($event) {
-                      return _vm.clickRemoveImage(img.id)
-                    },
-                  },
-                },
-                [_c("v-icon", [_vm._v("delete")])],
-                1
-              ),
-            ],
-            1
-          )
-        }),
         1
       ),
     ],
@@ -4278,10 +3957,10 @@ var render = function () {
                   name: "show",
                   rawName: "v-show",
                   value:
-                    !_vm.status_payment_deadline() &&
+                    !_vm.order.status_payment_deadline &&
                     _vm.order.sumAll.sumDeposited === 0,
                   expression:
-                    "\n                !status_payment_deadline() &&\n                order.sumAll.sumDeposited === 0\n            ",
+                    "\n                !order.status_payment_deadline &&\n                order.sumAll.sumDeposited === 0\n            ",
                 },
               ],
               staticClass: "mb-0",
@@ -4302,7 +3981,7 @@ var render = function () {
           _vm._v(" "),
           _c("v-spacer"),
           _vm._v(" "),
-          (_vm.status_payment_deadline() &&
+          (_vm.order.status_payment_deadline &&
             _vm.order.sumAll.sumDeposited === 0) ||
           (_vm.order.sumAll.sumDeposited > 0 && _vm.order.sumAll.sumBalance > 0)
             ? _c("formPayment", { staticClass: "mt-1" })
@@ -4469,75 +4148,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_uploadImage_vue_vue_type_template_id_71cd044a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_uploadImage_vue_vue_type_template_id_71cd044a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/google/drive/uploadImageMultiple.vue":
-/*!**********************************************************************!*\
-  !*** ./resources/js/components/google/drive/uploadImageMultiple.vue ***!
-  \**********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _uploadImageMultiple_vue_vue_type_template_id_3363a47a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./uploadImageMultiple.vue?vue&type=template&id=3363a47a& */ "./resources/js/components/google/drive/uploadImageMultiple.vue?vue&type=template&id=3363a47a&");
-/* harmony import */ var _uploadImageMultiple_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./uploadImageMultiple.vue?vue&type=script&lang=js& */ "./resources/js/components/google/drive/uploadImageMultiple.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _uploadImageMultiple_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _uploadImageMultiple_vue_vue_type_template_id_3363a47a___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _uploadImageMultiple_vue_vue_type_template_id_3363a47a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/google/drive/uploadImageMultiple.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/google/drive/uploadImageMultiple.vue?vue&type=script&lang=js&":
-/*!***********************************************************************************************!*\
-  !*** ./resources/js/components/google/drive/uploadImageMultiple.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_uploadImageMultiple_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./uploadImageMultiple.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/google/drive/uploadImageMultiple.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_uploadImageMultiple_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/google/drive/uploadImageMultiple.vue?vue&type=template&id=3363a47a&":
-/*!*****************************************************************************************************!*\
-  !*** ./resources/js/components/google/drive/uploadImageMultiple.vue?vue&type=template&id=3363a47a& ***!
-  \*****************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_uploadImageMultiple_vue_vue_type_template_id_3363a47a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./uploadImageMultiple.vue?vue&type=template&id=3363a47a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/google/drive/uploadImageMultiple.vue?vue&type=template&id=3363a47a&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_uploadImageMultiple_vue_vue_type_template_id_3363a47a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_uploadImageMultiple_vue_vue_type_template_id_3363a47a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

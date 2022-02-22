@@ -203,7 +203,8 @@ class AOrderController extends Controller
             "aHistoryPayed.ntpfc",
             "aHistoryPayed.ksherPay",
             "orderDetails.aPrice",
-            "orderDetailsOnlyTrashed"
+            "orderDetailsOnlyTrashed",
+            "orderDetails.productPrototypes.googleImage"
         )
             ->with("orderDetails.addOns.productAddOn.goodsAddOn")
             ->findOrFail($order_id);

@@ -13,7 +13,7 @@
             <p
                 class="mb-0"
                 v-show="
-                    !status_payment_deadline() &&
+                    !order.status_payment_deadline &&
                     order.sumAll.sumDeposited === 0
                 "
             >
@@ -26,7 +26,7 @@
             <formPayment
                 class="mt-1"
                 v-if="
-                    (status_payment_deadline() &&
+                    (order.status_payment_deadline &&
                         order.sumAll.sumDeposited === 0) ||
                     (order.sumAll.sumDeposited > 0 &&
                         order.sumAll.sumBalance > 0)
@@ -34,7 +34,7 @@
             ></formPayment>
         </v-alert>
 
-    <v-sheet class="mx-auto pa-2 mb-2" outlined>
+        <v-sheet class="mx-auto pa-2 mb-2" outlined>
             <v-slide-group show-arrows>
                 <v-slide-item>
                     <cardFormNoticeOfPaymentByCustomer
@@ -162,11 +162,26 @@ export default {
             // this.data = datas.data.order;
             loader.hide();
         },
-        status_payment_deadline() {
-            const now = new Date();
-            const deadlineParse = new Date(this.order.payment_deadline);
-            return deadlineParse.valueOf() > now.valueOf();
-        },
+        // status_payment_deadline() {
+        //     const now = new Date();
+        //     const nowParse = Date.parse(now.toLocaleString());
+        //     const deadlineParse = Date.parse(this.order.payment_deadline);
+        //     return deadlineParse > nowParse;
+        // },
+        // status_payment_deadline(payment_deadline) {
+        //     const now = new Date();
+        //     console.log(now.getTime());
+        //     let deadlineParse = new Date(payment_deadline);
+        //     if (isNaN(deadlineParse.getTime())) {
+        //         deadlineParse = now;
+        //     }
+        //     console.log(deadlineParse.getTime());
+        //     return deadlineParse.getTime() > now.getTime();
+        //     // if (deadlineParse.valueOf() > now.valueOf()) {
+        //     //     return true;
+        //     // }
+        //     // return false;
+        // },
         ntpfcsLength(v) {
             const ntpfcs = v.filter((v) => {
                 return v.status;
@@ -211,6 +226,7 @@ export default {
         await this.ksherPaySuccess();
         // await axios.get(`/api/${this.$route.params.id}/test`);
     },
+
     computed: {
         ...mapGetters({
             order: "orderIndex/order",

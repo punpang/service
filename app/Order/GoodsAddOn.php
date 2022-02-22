@@ -8,4 +8,6 @@ class GoodsAddOn extends Model
 {
     protected $table = "goods_add_ons";
     protected $primaryKey = "id";
+
+    protected $guarded = ["id"];
 }

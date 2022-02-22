@@ -5,6 +5,7 @@ namespace App\Order;
 use App\Order\AOrder;
 use App\Order\APrice;
 use App\Order\OrderDetailAddOn;
+use App\Order\OrderProductPrototype;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -50,6 +51,11 @@ class OrderDetail extends Model implements Auditable
     public function addOn()
     {
         return $this->hasOne(OrderDetailAddOn::class)->orderBy("created_at", "desc");
+    }
+
+    public function productPrototypes()
+    {
+        return $this->hasMany(OrderProductPrototype::class);
     }
 
     public function getSumAllAttribute()

@@ -160,6 +160,7 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
 
                 Route::prefix('goodsAddOn')->group(function () { // api/admin/v1/order/productAddOn/...
                     Route::get('fetch', 'Order\GoodsAddOnController@fetch');
+                    Route::post('updateOrCreate', 'Order\GoodsAddOnController@updateOrCreate');
                 });
                 Route::prefix('m4')->group(function () { // api/admin/v1/order/productAddOn/...
                     Route::get('fetch', 'Order\AM4Controller@fetch');
@@ -181,6 +182,11 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                         Route::post('{id}/autoUpdateAddOns', 'Order\OrderDetailController@autoUpdateAddOns');
                         Route::post('{id}/create', 'Order\OrderDetailController@createAddOn');
                         Route::post('{id}/delete', 'Order\OrderDetailController@deleteAddOn');
+                    });
+
+                    Route::prefix('productPrototype')->group(function () { // api/admin/v1/order/detail/addOn
+                        Route::post('{detail_id}/store', 'Order\OrderProductPrototypeController@store');
+                        Route::post('{detail_id}/delete', 'Order\OrderProductPrototypeController@delete');
                     });
                 });
 

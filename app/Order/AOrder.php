@@ -33,7 +33,8 @@ class AOrder extends Model
 
     protected $appends = [
         "sum_all",
-        "payment_deadline_th"
+        "payment_deadline_th",
+        "status_payment_deadline"
         // "sum_add_on"
     ];
 
@@ -63,6 +64,13 @@ class AOrder extends Model
             return $this->payment_deadline;
         }
         return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $this->payment_deadline)->addYears(543)->format('d/m/Y H:i:s');
+    }
+
+    public function getStatusPaymentDeadlineAttribute()
+    {
+        $now = \Carbon\Carbon::now();
+        $payment_deadline = \Carbon\Carbon::parse($this->payment_deadline);
+        return $payment_deadline->timestamp > $now->timestamp;
     }
 
     public function dateGetTimeFormat()
