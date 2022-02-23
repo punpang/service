@@ -5,6 +5,7 @@ namespace App\Order;
 use App\Order\AOrder;
 use App\Order\APrice;
 use App\Order\OrderDetailAddOn;
+use App\Order\ImageFromCustomer;
 use App\Order\OrderProductPrototype;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -51,6 +52,11 @@ class OrderDetail extends Model implements Auditable
     public function addOn()
     {
         return $this->hasOne(OrderDetailAddOn::class)->orderBy("created_at", "desc");
+    }
+
+    public function imageFromCustomers()
+    {
+        return $this->hasMany(ImageFromCustomer::class);
     }
 
     public function productPrototypes()

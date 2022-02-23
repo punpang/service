@@ -9,9 +9,10 @@
             @change="changeImage"
             accept="image/*"
             outlined
+            hide-details
         >
         </v-file-input>
-        <v-card v-show="propUploadImange">
+        <!-- <v-card v-show="propUploadImange">
             <v-img
                 v-for="img in propUploadImange"
                 :key="img.id"
@@ -38,7 +39,7 @@
                     <v-icon>delete</v-icon>
                 </v-btn>
             </v-img>
-        </v-card>
+        </v-card> -->
     </div>
 </template>
 

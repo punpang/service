@@ -110277,7 +110277,7 @@ var routes = [{
   path: "/manages/order/:id/showOrderByID",
   name: "managesOrderShowOrderByID",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(26), __webpack_require__.e(16)]).then(__webpack_require__.bind(null, /*! @/js/pages/order/showOrderByID */ "./resources/js/pages/order/showOrderByID.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(25), __webpack_require__.e(16)]).then(__webpack_require__.bind(null, /*! @/js/pages/order/showOrderByID */ "./resources/js/pages/order/showOrderByID.vue"));
   },
   meta: {
     requiresAuth: true
@@ -110360,13 +110360,13 @@ var routes = [{
   path: "/guest/order/auth/:uuid",
   name: "guestOrderAuthUuid",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(26), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! @/js/pages/guest/orders/uuid */ "./resources/js/pages/guest/orders/uuid.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(25), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! @/js/pages/guest/orders/uuid */ "./resources/js/pages/guest/orders/uuid.vue"));
   }
 }, {
   path: "/o/:uuid",
   name: "guestOrderAuthUuid",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(26), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! @/js/pages/guest/orders/uuid */ "./resources/js/pages/guest/orders/uuid.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(25), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! @/js/pages/guest/orders/uuid */ "./resources/js/pages/guest/orders/uuid.vue"));
   }
 }, {
   path: "/ksher/successfully",
@@ -111170,7 +111170,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     uploadImagesByUUID: function uploadImagesByUUID(_ref2, payload) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -111178,13 +111177,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _objectDestructuringEmpty(_ref2);
 
                 _context2.next = 3;
-                return axios.post("/api/v1/guest/order/uploadImagesByUUID/".concat(payload.uuid), payload.imagesData);
+                return axios.post("/api/v1/guest/order/uploadImagesByUUID", payload).then(function (response) {
+                  return response;
+                })["catch"](function (err) {
+                  console.error(err);
+                });
 
               case 3:
-                res = _context2.sent;
-                return _context2.abrupt("return", res);
+                return _context2.abrupt("return", _context2.sent);
 
-              case 5:
+              case 4:
               case "end":
                 return _context2.stop();
             }
@@ -111201,7 +111203,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _objectDestructuringEmpty(_ref3);
 
                 _context3.next = 3;
-                return axios.post("/api/v1/guest/order/".concat(payload.imageId, "/").concat(payload.uuid, "/removeImageIdByUUID"), payload);
+                return axios.post("/api/v1/guest/order/removeImageIdByUUID", payload).then(function (response) {
+                  return response;
+                })["catch"](function (err) {
+                  console.error(err);
+                });
 
               case 3:
                 return _context3.abrupt("return", _context3.sent);

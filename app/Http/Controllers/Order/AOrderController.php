@@ -9,6 +9,7 @@ use App\Helper;
 use App\Linenotify;
 use App\Order\AOrder;
 use App\Order\OrderTemp;
+use App\Order\OrderDetail;
 use Illuminate\Support\Str;
 use App\Order\AHistoryPayed;
 use App\Order\AlertMessages;
@@ -145,10 +146,10 @@ class AOrderController extends Controller
                 // "am3",
                 // "am4",
                 "aStatus",
-                "imageFromCustomers.googleImage",
                 "ntpfcsForCustomer",
                 "orderDetails.aPrice",
-
+                "orderDetails.productPrototypes.googleImage",
+                "orderDetails.imageFromCustomers.googleImage"
             )
             ->with("orderDetails.addOns.productAddOn.goodsAddOn")
             ->first();
@@ -161,32 +162,37 @@ class AOrderController extends Controller
         ]);
     }
 
-    public function uploadImagesByUUID($uuid)
+    public function uploadImagesByUUID(Request $request)
     {
-        $images = request()->all();
-        $order = AOrder::whereAuthOrder($uuid)->first();
 
-        foreach ($images as $image) {
-            $create = new ImageFromCustomer();
-            $create->order_id = $order->id;
-            $create->google_image_id = $image["id"];
-            $create->save();
+        $detail = OrderDetail::whereHas("aOrder", function ($query) use ($request) {
+            return $query->where("auth_order", $request->uuid);
+        })->findOrFail($request->order_detail_id);
+
+        $images = [];
+        foreach ($request->imagesData as $image) {
+            $images[] = [
+                "google_image_id" => $image["id"]
+            ];
         }
 
-        return response()->json([], 200);
-    }
-
-    public function removeImageIdByUUID($imageId, $uuid)
-    {
-        $order = AOrder::whereAuthOrder($uuid)->first();
-
-        $image = ImageFromCustomer::whereId($imageId)->whereOrderId($order->id)->first();
-        $image->status_use = 0;
-        $image->save();
+        $detail->imageFromCustomers()->createMany($images);
 
         return response()->json([
-            "success" => true,
-            "message" => "ลบรูปภาพเรียบร้อย"
+            "status" => "success"
+        ], 200);
+    }
+
+    public function removeImageIdByUUID(Request $request)
+    {
+        $detail = OrderDetail::whereHas("aOrder", function ($query) use ($request) {
+            return $query->where("auth_order", $request->uuid);
+        })->findOrFail($request->order_detail_id);
+
+        $detail->imageFromCustomers()->where("id", $request->image_from_customer_id)->delete();
+
+        return response()->json([
+            "status" => "success"
         ], 200);
     }
 
@@ -204,7 +210,8 @@ class AOrderController extends Controller
             "aHistoryPayed.ksherPay",
             "orderDetails.aPrice",
             "orderDetailsOnlyTrashed",
-            "orderDetails.productPrototypes.googleImage"
+            "orderDetails.productPrototypes.googleImage",
+            "orderDetails.imageFromCustomers.googleImage"
         )
             ->with("orderDetails.addOns.productAddOn.goodsAddOn")
             ->findOrFail($order_id);

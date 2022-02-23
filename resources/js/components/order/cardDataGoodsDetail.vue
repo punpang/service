@@ -4,7 +4,7 @@
             <v-card-title class="text-h6 white--text warning">
                 ข้อมูลสินค้า
             </v-card-title>
-            <v-card-text class="pt-4">
+            <v-card-text class="pa-0">
                 <cardFormGoodsDetail></cardFormGoodsDetail>
             </v-card-text>
         </v-card>

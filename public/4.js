@@ -3890,7 +3890,7 @@ var render = function () {
           _vm._v(" "),
           _c(
             "v-card-text",
-            { staticClass: "pt-4" },
+            { staticClass: "pa-0" },
             [_c("cardFormGoodsDetail")],
             1
           ),

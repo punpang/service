@@ -65,8 +65,8 @@ Route::prefix('v1')->group(function () { // api/v1/...
 
         Route::prefix('order')->group(function () { // api/v1/guest/
             Route::get('fetchByUUID/{uuid}', 'Order\AOrderController@fetchByUUID');
-            Route::post('uploadImagesByUUID/{uuid}', 'Order\AOrderController@uploadImagesByUUID');
-            Route::post('{imageId}/{uuid}/removeImageIdByUUID', 'Order\AOrderController@removeImageIdByUUID');
+            Route::post('uploadImagesByUUID', 'Order\AOrderController@uploadImagesByUUID');
+            Route::post('removeImageIdByUUID', 'Order\AOrderController@removeImageIdByUUID');
             Route::post('store', 'Momday\OrderController@store');
             Route::get('{uuid}/fetchByUUID', 'Momday\OrderController@fetchByUUID');
             Route::post('confirmConsentConditions', 'Order\ACustomerController@confirmConsentConditions');
