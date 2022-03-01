@@ -5,6 +5,7 @@ export default {
     getters: {},
     actions: {
         async store({}, payload) {
+            console.log(payload);
             try {
                 const response = await axios.post(
                     "/api/v1/guest/google/uploadImage",

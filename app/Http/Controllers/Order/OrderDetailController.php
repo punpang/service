@@ -79,4 +79,27 @@ class OrderDetailController extends Controller
             "status" => "success",
         ], 200);
     }
+
+    public function switchStatusUploadImagesFromCustomer(OrderDetail $detail, Request $request)
+    {
+        $detail->status_upload_images_from_customer = $request->status_upload_images_from_customer;
+        $detail->update();
+
+        return response()->json([
+            "status" => "success",
+        ], 200);
+    }
+
+
+    public function switchIsTakeAPhoto(OrderDetail $detail, Request $request)
+    {
+        $detail->is_take_a_photo = $request->is_take_a_photo;
+        $detail->update();
+
+        return response()->json([
+            "status" => "success",
+        ], 200);
+    }
+
+
 }

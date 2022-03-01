@@ -9,6 +9,8 @@ class OrderDetailAddOn extends Model
 {
     protected $table = "order_detail_add_ons";
     protected $guarded = [];
+    protected $hidden = ['created_at', 'updated_at'];
+
 
     public function productAddOn()
     {

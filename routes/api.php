@@ -188,6 +188,15 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                         Route::post('{detail_id}/store', 'Order\OrderProductPrototypeController@store');
                         Route::post('{detail_id}/delete', 'Order\OrderProductPrototypeController@delete');
                     });
+
+                    Route::post('{detail}/switchStatusUploadImagesFromCustomer', 'Order\OrderDetailController@switchStatusUploadImagesFromCustomer');
+                    Route::post('{detail}/switchIsTakeAPhoto', 'Order\OrderDetailController@switchIsTakeAPhoto');
+
+                    Route::prefix("imageGoodsReviewToCustomer")->group(function () {
+                        Route::post('{detail_id}/store', 'Order\ImageGoodsReviewToCustomerController@store');
+                        Route::post('{detail_id}/delete', 'Order\ImageGoodsReviewToCustomerController@delete');
+                    });
+
                 });
 
                 Route::prefix('temp')->group(function () { // api/admin/v1/order/detail/...
@@ -212,6 +221,10 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                     Route::post('{product}/editPrice', 'Order\APriceController@editPrice');
                     Route::post('/addPrice', 'Order\APriceController@addPrice');
                 });
+
+
+
+
 
                 Route::post('checkDateTimeGet', 'Order\AOrderController@checkDateTimeGet');
 

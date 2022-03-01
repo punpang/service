@@ -1580,163 +1580,6 @@ Vue.filter("formatNumber", function (value) {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/guest/uploadImagesForOrder.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/guest/uploadImagesForOrder.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _js_components_google_drive_uploadImageMultiple__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/google/drive/uploadImageMultiple */ "./resources/js/components/google/drive/uploadImageMultiple.vue");
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["propImages"],
-  components: {
-    uploadImageMultiple: _js_components_google_drive_uploadImageMultiple__WEBPACK_IMPORTED_MODULE_1__["default"]
-  },
-  data: function data() {
-    return {
-      dialog: false,
-      uploadImange: {
-        imagePreview: "",
-        file: null
-      }
-    };
-  },
-  methods: {
-    exit: function exit() {
-      this.dialog = false;
-    },
-    start: function start() {
-      this.$emit("emitStart");
-    },
-    emitImagesId: function emitImagesId(imagesData) {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var loader, data, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                loader = _this.$loading.show();
-                data = {
-                  uuid: _this.$route.params.uuid,
-                  imagesData: imagesData
-                };
-                res = _this.$store.dispatch("orderGuestUuid/uploadImagesByUUID", data);
-
-                _this.start(); //   console.log(res);
-
-
-                _this.$swal({
-                  title: "อัปโหลดรูปทั้งหมดเรียบร้อย",
-                  allowOutsideClick: false,
-                  confirmButtonText: "รับทราบ",
-                  icon: "success"
-                });
-
-                loader.hide();
-
-              case 6:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    emitRemoveImage: function emitRemoveImage(imageId) {
-      var _this2 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var loader, data, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                loader = _this2.$loading.show();
-                data = {
-                  uuid: _this2.$route.params.uuid,
-                  imageId: imageId
-                };
-                _context2.next = 4;
-                return _this2.$store.dispatch("orderGuestUuid/removeImageIdByUUID", data);
-
-              case 4:
-                res = _context2.sent;
-
-                if (res.status == 200) {
-                  _this2.start();
-
-                  _this2.$swal({
-                    title: res.data.message,
-                    icon: "success",
-                    allowOutsideClick: false,
-                    confirmButtonText: "รับทราบ"
-                  });
-                } else {
-                  _this2.$swal({
-                    title: "เกิดข้อผิดพลาดบางอย่าง",
-                    icon: "error",
-                    allowOutsideClick: false,
-                    confirmButtonText: "รับทราบ"
-                  });
-                }
-
-                loader.hide();
-
-              case 7:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
-    }
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/order/cardDataGoodsDetail.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/order/cardDataGoodsDetail.vue?vue&type=script&lang=js& ***!
@@ -1780,15 +1623,14 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _js_components_guest_uploadImagesForOrder__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/guest/uploadImagesForOrder */ "./resources/js/components/guest/uploadImagesForOrder.vue");
-/* harmony import */ var _js_components_guest_formPayment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/components/guest/formPayment */ "./resources/js/components/guest/formPayment.vue");
-/* harmony import */ var _js_components_order_cardPaymentSummary__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/js/components/order/cardPaymentSummary */ "./resources/js/components/order/cardPaymentSummary.vue");
-/* harmony import */ var _js_components_order_cardDataCustomer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/js/components/order/cardDataCustomer */ "./resources/js/components/order/cardDataCustomer.vue");
-/* harmony import */ var _js_components_order_cardDataOrderDetail__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/js/components/order/cardDataOrderDetail */ "./resources/js/components/order/cardDataOrderDetail.vue");
-/* harmony import */ var _js_components_order_cardDataGoodsDetail__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/js/components/order/cardDataGoodsDetail */ "./resources/js/components/order/cardDataGoodsDetail.vue");
-/* harmony import */ var _js_components_guest_formConditionPayment__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/js/components/guest/formConditionPayment */ "./resources/js/components/guest/formConditionPayment.vue");
-/* harmony import */ var _js_components_guest_cardFormNoticeOfPaymentByCustomer__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/js/components/guest/cardFormNoticeOfPaymentByCustomer */ "./resources/js/components/guest/cardFormNoticeOfPaymentByCustomer.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _js_components_guest_formPayment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/guest/formPayment */ "./resources/js/components/guest/formPayment.vue");
+/* harmony import */ var _js_components_order_cardPaymentSummary__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/components/order/cardPaymentSummary */ "./resources/js/components/order/cardPaymentSummary.vue");
+/* harmony import */ var _js_components_order_cardDataCustomer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/js/components/order/cardDataCustomer */ "./resources/js/components/order/cardDataCustomer.vue");
+/* harmony import */ var _js_components_order_cardDataOrderDetail__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/js/components/order/cardDataOrderDetail */ "./resources/js/components/order/cardDataOrderDetail.vue");
+/* harmony import */ var _js_components_order_cardDataGoodsDetail__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/js/components/order/cardDataGoodsDetail */ "./resources/js/components/order/cardDataGoodsDetail.vue");
+/* harmony import */ var _js_components_guest_formConditionPayment__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/js/components/guest/formConditionPayment */ "./resources/js/components/guest/formConditionPayment.vue");
+/* harmony import */ var _js_components_guest_cardFormNoticeOfPaymentByCustomer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/js/components/guest/cardFormNoticeOfPaymentByCustomer */ "./resources/js/components/guest/cardFormNoticeOfPaymentByCustomer.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -1926,7 +1768,7 @@ var numeral = __webpack_require__(/*! numeral */ "./node_modules/numeral/numeral
 
 Vue.filter("formatNumber", function (value) {
   return numeral(value).format("0,0.00"); // displaying other groupings/separators is possible, look at the docs
-});
+}); // import uploadImagesForOrder from "@/js/components/guest/uploadImagesForOrder";
 
 
 
@@ -1938,14 +1780,14 @@ Vue.filter("formatNumber", function (value) {
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    uploadImagesForOrder: _js_components_guest_uploadImagesForOrder__WEBPACK_IMPORTED_MODULE_1__["default"],
-    formPayment: _js_components_guest_formPayment__WEBPACK_IMPORTED_MODULE_2__["default"],
-    cardPaymentSummary: _js_components_order_cardPaymentSummary__WEBPACK_IMPORTED_MODULE_3__["default"],
-    cardDataCustomer: _js_components_order_cardDataCustomer__WEBPACK_IMPORTED_MODULE_4__["default"],
-    cardDataOrderDetail: _js_components_order_cardDataOrderDetail__WEBPACK_IMPORTED_MODULE_5__["default"],
-    cardDataGoodsDetail: _js_components_order_cardDataGoodsDetail__WEBPACK_IMPORTED_MODULE_6__["default"],
-    formConditionPayment: _js_components_guest_formConditionPayment__WEBPACK_IMPORTED_MODULE_7__["default"],
-    cardFormNoticeOfPaymentByCustomer: _js_components_guest_cardFormNoticeOfPaymentByCustomer__WEBPACK_IMPORTED_MODULE_8__["default"]
+    // uploadImagesForOrder,
+    formPayment: _js_components_guest_formPayment__WEBPACK_IMPORTED_MODULE_1__["default"],
+    cardPaymentSummary: _js_components_order_cardPaymentSummary__WEBPACK_IMPORTED_MODULE_2__["default"],
+    cardDataCustomer: _js_components_order_cardDataCustomer__WEBPACK_IMPORTED_MODULE_3__["default"],
+    cardDataOrderDetail: _js_components_order_cardDataOrderDetail__WEBPACK_IMPORTED_MODULE_4__["default"],
+    cardDataGoodsDetail: _js_components_order_cardDataGoodsDetail__WEBPACK_IMPORTED_MODULE_5__["default"],
+    formConditionPayment: _js_components_guest_formConditionPayment__WEBPACK_IMPORTED_MODULE_6__["default"],
+    cardFormNoticeOfPaymentByCustomer: _js_components_guest_cardFormNoticeOfPaymentByCustomer__WEBPACK_IMPORTED_MODULE_7__["default"]
   },
   data: function data() {
     return {};
@@ -2077,7 +1919,7 @@ Vue.filter("formatNumber", function (value) {
       }, _callee3);
     }))();
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_9__["mapGetters"])({
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_8__["mapGetters"])({
     order: "orderIndex/order"
   }))
 });
@@ -3758,110 +3600,6 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/guest/uploadImagesForOrder.vue?vue&type=template&id=23821240&":
-/*!*****************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/guest/uploadImagesForOrder.vue?vue&type=template&id=23821240& ***!
-  \*****************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function () {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c(
-        "v-dialog",
-        {
-          attrs: { persistent: "", width: "350" },
-          scopedSlots: _vm._u([
-            {
-              key: "activator",
-              fn: function (ref) {
-                var on = ref.on
-                return [
-                  _c(
-                    "v-btn",
-                    _vm._g({}, on),
-                    [
-                      _c("span", { staticClass: "white--text" }, [
-                        _vm._v(" อัปโหลดรูปภาพ "),
-                      ]),
-                      _vm._v(" "),
-                      _c("v-icon", { staticClass: "white--text" }, [
-                        _vm._v("file_upload"),
-                      ]),
-                    ],
-                    1
-                  ),
-                ]
-              },
-            },
-          ]),
-          model: {
-            value: _vm.dialog,
-            callback: function ($$v) {
-              _vm.dialog = $$v
-            },
-            expression: "dialog",
-          },
-        },
-        [
-          _vm._v(" "),
-          _c(
-            "v-card",
-            [
-              _c(
-                "v-card-title",
-                [
-                  _vm._v("\n        อัปโหลดรูปภาพ\n        "),
-                  _c("v-spacer"),
-                  _vm._v(" "),
-                  _c(
-                    "v-icon",
-                    { attrs: { color: "error" }, on: { click: _vm.exit } },
-                    [_vm._v("close")]
-                  ),
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-card-text",
-                [
-                  _c("uploadImageMultiple", {
-                    attrs: { propUploadImange: _vm.propImages },
-                    on: {
-                      emitImagesId: _vm.emitImagesId,
-                      emitRemoveImage: _vm.emitRemoveImage,
-                    },
-                  }),
-                ],
-                1
-              ),
-            ],
-            1
-          ),
-        ],
-        1
-      ),
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/order/cardDataGoodsDetail.vue?vue&type=template&id=615e1211&":
 /*!****************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/order/cardDataGoodsDetail.vue?vue&type=template&id=615e1211& ***!
@@ -4562,75 +4300,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_paymentToCheckOut_vue_vue_type_template_id_df055316___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_paymentToCheckOut_vue_vue_type_template_id_df055316___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/guest/uploadImagesForOrder.vue":
-/*!****************************************************************!*\
-  !*** ./resources/js/components/guest/uploadImagesForOrder.vue ***!
-  \****************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _uploadImagesForOrder_vue_vue_type_template_id_23821240___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./uploadImagesForOrder.vue?vue&type=template&id=23821240& */ "./resources/js/components/guest/uploadImagesForOrder.vue?vue&type=template&id=23821240&");
-/* harmony import */ var _uploadImagesForOrder_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./uploadImagesForOrder.vue?vue&type=script&lang=js& */ "./resources/js/components/guest/uploadImagesForOrder.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _uploadImagesForOrder_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _uploadImagesForOrder_vue_vue_type_template_id_23821240___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _uploadImagesForOrder_vue_vue_type_template_id_23821240___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/guest/uploadImagesForOrder.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/guest/uploadImagesForOrder.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************************!*\
-  !*** ./resources/js/components/guest/uploadImagesForOrder.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_uploadImagesForOrder_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./uploadImagesForOrder.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/guest/uploadImagesForOrder.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_uploadImagesForOrder_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/guest/uploadImagesForOrder.vue?vue&type=template&id=23821240&":
-/*!***********************************************************************************************!*\
-  !*** ./resources/js/components/guest/uploadImagesForOrder.vue?vue&type=template&id=23821240& ***!
-  \***********************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_uploadImagesForOrder_vue_vue_type_template_id_23821240___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./uploadImagesForOrder.vue?vue&type=template&id=23821240& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/guest/uploadImagesForOrder.vue?vue&type=template&id=23821240&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_uploadImagesForOrder_vue_vue_type_template_id_23821240___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_uploadImagesForOrder_vue_vue_type_template_id_23821240___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

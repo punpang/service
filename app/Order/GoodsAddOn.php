@@ -10,4 +10,7 @@ class GoodsAddOn extends Model
     protected $primaryKey = "id";
 
     protected $guarded = ["id"];
+
+    protected $hidden = ['created_at', 'updated_at'];
+
 }

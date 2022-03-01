@@ -110277,7 +110277,7 @@ var routes = [{
   path: "/manages/order/:id/showOrderByID",
   name: "managesOrderShowOrderByID",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(25), __webpack_require__.e(16)]).then(__webpack_require__.bind(null, /*! @/js/pages/order/showOrderByID */ "./resources/js/pages/order/showOrderByID.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(3), __webpack_require__.e(16)]).then(__webpack_require__.bind(null, /*! @/js/pages/order/showOrderByID */ "./resources/js/pages/order/showOrderByID.vue"));
   },
   meta: {
     requiresAuth: true
@@ -110360,13 +110360,13 @@ var routes = [{
   path: "/guest/order/auth/:uuid",
   name: "guestOrderAuthUuid",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(25), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! @/js/pages/guest/orders/uuid */ "./resources/js/pages/guest/orders/uuid.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(3), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! @/js/pages/guest/orders/uuid */ "./resources/js/pages/guest/orders/uuid.vue"));
   }
 }, {
   path: "/o/:uuid",
   name: "guestOrderAuthUuid",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(25), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! @/js/pages/guest/orders/uuid */ "./resources/js/pages/guest/orders/uuid.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(3), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! @/js/pages/guest/orders/uuid */ "./resources/js/pages/guest/orders/uuid.vue"));
   }
 }, {
   path: "/ksher/successfully",
@@ -110436,7 +110436,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_stores_modules_order_goodsAddOn__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! @/js/stores/modules/order/goodsAddOn */ "./resources/js/stores/modules/order/goodsAddOn.js");
 /* harmony import */ var _js_stores_modules_order_m4__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! @/js/stores/modules/order/m4 */ "./resources/js/stores/modules/order/m4.js");
 /* harmony import */ var _js_stores_modules_order_orderProductPrototype__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! @/js/stores/modules/order/orderProductPrototype */ "./resources/js/stores/modules/order/orderProductPrototype.js");
-/* harmony import */ var _js_stores_modules_order_luckyReward__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! @/js/stores/modules/order/luckyReward */ "./resources/js/stores/modules/order/luckyReward.js");
+/* harmony import */ var _js_stores_modules_order_imageGoodsReviewToCustomer__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! @/js/stores/modules/order/imageGoodsReviewToCustomer */ "./resources/js/stores/modules/order/imageGoodsReviewToCustomer.js");
+/* harmony import */ var _js_stores_modules_order_luckyReward__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! @/js/stores/modules/order/luckyReward */ "./resources/js/stores/modules/order/luckyReward.js");
 var _modules;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -110484,6 +110485,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
  /////////////////////////
 /// LUCKY REWAYD START ///
 
@@ -110511,7 +110513,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     cookingDetail: _js_stores_modules_shabuNooNee_cookingDetail__WEBPACK_IMPORTED_MODULE_16__["default"],
     tableOrderDetail: _js_stores_modules_shabuNooNee_tableOrderDetail__WEBPACK_IMPORTED_MODULE_17__["default"],
     promotion: _js_stores_modules_promotion_promotion__WEBPACK_IMPORTED_MODULE_18__["default"]
-  }, _defineProperty(_modules, "product", _js_stores_modules_promotion_product__WEBPACK_IMPORTED_MODULE_19__["default"]), _defineProperty(_modules, "order", _js_stores_modules_promotion_order__WEBPACK_IMPORTED_MODULE_20__["default"]), _defineProperty(_modules, "payment", _js_stores_modules_promotion_payment__WEBPACK_IMPORTED_MODULE_21__["default"]), _defineProperty(_modules, "punpangProduct", _js_stores_modules_punpang_product__WEBPACK_IMPORTED_MODULE_22__["default"]), _defineProperty(_modules, "orderCategory", _js_stores_modules_order_category__WEBPACK_IMPORTED_MODULE_27__["default"]), _defineProperty(_modules, "orderCategorySub", _js_stores_modules_order_categorySub__WEBPACK_IMPORTED_MODULE_28__["default"]), _defineProperty(_modules, "orderCustomer", _js_stores_modules_order_customer__WEBPACK_IMPORTED_MODULE_29__["default"]), _defineProperty(_modules, "orderDateTimeGet", _js_stores_modules_order_dateTimeGet__WEBPACK_IMPORTED_MODULE_30__["default"]), _defineProperty(_modules, "orderChannel", _js_stores_modules_order_orderChannel__WEBPACK_IMPORTED_MODULE_31__["default"]), _defineProperty(_modules, "orderProductCake", _js_stores_modules_order_productCake__WEBPACK_IMPORTED_MODULE_32__["default"]), _defineProperty(_modules, "orderGuestUuid", _js_stores_modules_order_guestUuid__WEBPACK_IMPORTED_MODULE_26__["default"]), _defineProperty(_modules, "orderLuckyReward", _js_stores_modules_order_luckyReward__WEBPACK_IMPORTED_MODULE_40__["default"]), _defineProperty(_modules, "orderText", _js_stores_modules_order_text__WEBPACK_IMPORTED_MODULE_23__["default"]), _defineProperty(_modules, "orderIndex", _js_stores_modules_order_order__WEBPACK_IMPORTED_MODULE_24__["default"]), _defineProperty(_modules, "orderKsher", _js_stores_modules_order_ksher__WEBPACK_IMPORTED_MODULE_25__["default"]), _defineProperty(_modules, "orderNoticeOfPaymentFromCustomer", _js_stores_modules_order_noticeOfPaymentFromCustomer__WEBPACK_IMPORTED_MODULE_33__["default"]), _defineProperty(_modules, "orderDetailTemp", _js_stores_modules_order_orderDetailTemp__WEBPACK_IMPORTED_MODULE_34__["default"]), _defineProperty(_modules, "orderTemp", _js_stores_modules_order_orderTemp__WEBPACK_IMPORTED_MODULE_35__["default"]), _defineProperty(_modules, "orderProductAddOn", _js_stores_modules_order_productAddOn__WEBPACK_IMPORTED_MODULE_36__["default"]), _defineProperty(_modules, "orderGoodsAddOn", _js_stores_modules_order_goodsAddOn__WEBPACK_IMPORTED_MODULE_37__["default"]), _defineProperty(_modules, "orderM4", _js_stores_modules_order_m4__WEBPACK_IMPORTED_MODULE_38__["default"]), _defineProperty(_modules, "orderProductPrototype", _js_stores_modules_order_orderProductPrototype__WEBPACK_IMPORTED_MODULE_39__["default"]), _modules)
+  }, _defineProperty(_modules, "product", _js_stores_modules_promotion_product__WEBPACK_IMPORTED_MODULE_19__["default"]), _defineProperty(_modules, "order", _js_stores_modules_promotion_order__WEBPACK_IMPORTED_MODULE_20__["default"]), _defineProperty(_modules, "payment", _js_stores_modules_promotion_payment__WEBPACK_IMPORTED_MODULE_21__["default"]), _defineProperty(_modules, "punpangProduct", _js_stores_modules_punpang_product__WEBPACK_IMPORTED_MODULE_22__["default"]), _defineProperty(_modules, "orderCategory", _js_stores_modules_order_category__WEBPACK_IMPORTED_MODULE_27__["default"]), _defineProperty(_modules, "orderCategorySub", _js_stores_modules_order_categorySub__WEBPACK_IMPORTED_MODULE_28__["default"]), _defineProperty(_modules, "orderCustomer", _js_stores_modules_order_customer__WEBPACK_IMPORTED_MODULE_29__["default"]), _defineProperty(_modules, "orderDateTimeGet", _js_stores_modules_order_dateTimeGet__WEBPACK_IMPORTED_MODULE_30__["default"]), _defineProperty(_modules, "orderChannel", _js_stores_modules_order_orderChannel__WEBPACK_IMPORTED_MODULE_31__["default"]), _defineProperty(_modules, "orderProductCake", _js_stores_modules_order_productCake__WEBPACK_IMPORTED_MODULE_32__["default"]), _defineProperty(_modules, "orderGuestUuid", _js_stores_modules_order_guestUuid__WEBPACK_IMPORTED_MODULE_26__["default"]), _defineProperty(_modules, "orderLuckyReward", _js_stores_modules_order_luckyReward__WEBPACK_IMPORTED_MODULE_41__["default"]), _defineProperty(_modules, "orderText", _js_stores_modules_order_text__WEBPACK_IMPORTED_MODULE_23__["default"]), _defineProperty(_modules, "orderIndex", _js_stores_modules_order_order__WEBPACK_IMPORTED_MODULE_24__["default"]), _defineProperty(_modules, "orderKsher", _js_stores_modules_order_ksher__WEBPACK_IMPORTED_MODULE_25__["default"]), _defineProperty(_modules, "orderNoticeOfPaymentFromCustomer", _js_stores_modules_order_noticeOfPaymentFromCustomer__WEBPACK_IMPORTED_MODULE_33__["default"]), _defineProperty(_modules, "orderDetailTemp", _js_stores_modules_order_orderDetailTemp__WEBPACK_IMPORTED_MODULE_34__["default"]), _defineProperty(_modules, "orderTemp", _js_stores_modules_order_orderTemp__WEBPACK_IMPORTED_MODULE_35__["default"]), _defineProperty(_modules, "orderProductAddOn", _js_stores_modules_order_productAddOn__WEBPACK_IMPORTED_MODULE_36__["default"]), _defineProperty(_modules, "orderGoodsAddOn", _js_stores_modules_order_goodsAddOn__WEBPACK_IMPORTED_MODULE_37__["default"]), _defineProperty(_modules, "orderM4", _js_stores_modules_order_m4__WEBPACK_IMPORTED_MODULE_38__["default"]), _defineProperty(_modules, "orderProductPrototype", _js_stores_modules_order_orderProductPrototype__WEBPACK_IMPORTED_MODULE_39__["default"]), _defineProperty(_modules, "orderImageGoodsReviewToCustomer", _js_stores_modules_order_imageGoodsReviewToCustomer__WEBPACK_IMPORTED_MODULE_40__["default"]), _modules)
 }));
 
 /***/ }),
@@ -111218,6 +111220,88 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee3);
+      }))();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/stores/modules/order/imageGoodsReviewToCustomer.js":
+/*!*************************************************************************!*\
+  !*** ./resources/js/stores/modules/order/imageGoodsReviewToCustomer.js ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  state: {},
+  mutations: {},
+  getters: {},
+  actions: {
+    store: function store(_ref, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _objectDestructuringEmpty(_ref);
+
+                _context.next = 3;
+                return axios.post("/api/admin/v1/order/detail/imageGoodsReviewToCustomer/".concat(payload.order_detail_id, "/store"), payload).then(function (response) {
+                  return response;
+                })["catch"](function (err) {
+                  console.error(err);
+                });
+
+              case 3:
+                return _context.abrupt("return", _context.sent);
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    "delete": function _delete(_ref2, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _objectDestructuringEmpty(_ref2);
+
+                _context2.next = 3;
+                return axios.post("/api/admin/v1/order/detail/imageGoodsReviewToCustomer/".concat(payload.order_detail_id, "/delete"), payload).then(function (response) {
+                  return response;
+                })["catch"](function (err) {
+                  console.error(err);
+                });
+
+              case 3:
+                return _context2.abrupt("return", _context2.sent);
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
       }))();
     }
   }
@@ -112236,6 +112320,58 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee15);
+      }))();
+    },
+    switchStatusUploadImagesFromCustomer: function switchStatusUploadImagesFromCustomer(_ref16, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee16$(_context16) {
+          while (1) {
+            switch (_context16.prev = _context16.next) {
+              case 0:
+                _objectDestructuringEmpty(_ref16);
+
+                _context16.next = 3;
+                return axios.post("/api/admin/v1/order/detail/".concat(payload.order_detail_id, "/switchStatusUploadImagesFromCustomer"), payload).then(function (response) {
+                  return response;
+                })["catch"](function (err) {
+                  console.error(err);
+                });
+
+              case 3:
+                return _context16.abrupt("return", _context16.sent);
+
+              case 4:
+              case "end":
+                return _context16.stop();
+            }
+          }
+        }, _callee16);
+      }))();
+    },
+    switchIsTakeAPhoto: function switchIsTakeAPhoto(_ref17, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
+          while (1) {
+            switch (_context17.prev = _context17.next) {
+              case 0:
+                _objectDestructuringEmpty(_ref17);
+
+                _context17.next = 3;
+                return axios.post("/api/admin/v1/order/detail/".concat(payload.order_detail_id, "/switchIsTakeAPhoto"), payload).then(function (response) {
+                  return response;
+                })["catch"](function (err) {
+                  console.error(err);
+                });
+
+              case 3:
+                return _context17.abrupt("return", _context17.sent);
+
+              case 4:
+              case "end":
+                return _context17.stop();
+            }
+          }
+        }, _callee17);
       }))();
     }
   }
@@ -114533,26 +114669,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _objectDestructuringEmpty(_ref);
 
-                _context.prev = 1;
-                _context.next = 4;
+                console.log(payload);
+                _context.prev = 2;
+                _context.next = 5;
                 return axios.post("/api/v1/guest/google/uploadImage", payload);
 
-              case 4:
+              case 5:
                 response = _context.sent;
                 return _context.abrupt("return", response);
 
-              case 8:
-                _context.prev = 8;
-                _context.t0 = _context["catch"](1);
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](2);
                 _response = _context.t0.response;
                 return _context.abrupt("return", _response);
 
-              case 12:
+              case 13:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[1, 8]]);
+        }, _callee, null, [[2, 9]]);
       }))();
     },
     storeNotAuth: function storeNotAuth(_ref3, payload) {

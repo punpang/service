@@ -14,6 +14,9 @@ class CustomerScore extends Model
         "point", "customer_id", "expiration_date"
     ];
 
+    protected $hidden = ['created_at', 'updated_at'];
+
+
     public $divisor = 50;
 
     public function setPointAttribute($point)

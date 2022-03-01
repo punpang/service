@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\ShabuNooNee;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\ShabuNooNee\GoogleImage;
 use Image;
-use Storage;
+use Illuminate\Http\Request;
+use App\ShabuNooNee\GoogleImage;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+//use Storage;
 
 class GoogleImageController extends Controller
 {
@@ -16,6 +17,7 @@ class GoogleImageController extends Controller
         //request()->validate([
         //  'image'  => 'required|image|mimes:jpeg,png,jpg|max:9999'
         //]);
+        // dd(request()->all());
 
 
 
@@ -37,30 +39,24 @@ class GoogleImageController extends Controller
 
     public function storeNotAuth()
     {
-        // dd(request()->all());
+        // request()->validate([
+        //  'image'  => 'required|image|mimes:jpeg,png,jpg|max:10'
+        // ]);
 
-        //request()->validate([
-        //  'image'  => 'required|image|mimes:jpeg,png,jpg|max:9999'
-        //]);
+        // dd(request("is_deleted") != null ? true : true);
 
         $fileName = request()->file('image')->store('', 'google');
 
-        $listContents = Storage::disk('google')->listContents();
+        //$listContents = collect(Storage::disk("google_temps")->listContents());
+        $listContents = collect(Storage::cloud()->listContents());
 
-        foreach ($listContents as $listContent) {
-            if ($listContent['name'] == $fileName) {
+        $content = $listContents->where("name", $fileName)->first();
 
-                $data = new GoogleImage;
-                $data->src_name = $listContent['path'];
-                $data->save();
-            }
-        }
 
-        // foreach ($listContents as $listContent) {
-        //     if ($listContent['name'] == $fileName) {
-        //         $src_name = $listContent['path'];
-        //     }
-        // }
+        $data = GoogleImage::create([
+            "src_name" => $content['path'],
+            "is_deleted" => request("is_deleted") != null ? request("is_deleted") : false,
+        ]);
 
         return response()->json([
             "image" => [

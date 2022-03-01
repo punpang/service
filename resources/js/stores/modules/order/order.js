@@ -178,9 +178,7 @@ export default {
             //     add_ons: this.propOrderDetail.add_ons,
             // };
             const filter_add_ons = payload.add_ons.filter((e) => {
-                return (
-                    e.product_add_on.am4_id != payload.m4
-                );
+                return e.product_add_on.am4_id != payload.m4;
             });
             if (filter_add_ons.length > 0) {
                 payload.add_ons = filter_add_ons;
@@ -228,6 +226,34 @@ export default {
                 `/api/admin/v1/order/productAddOn/create`,
                 payload
             );
+        },
+
+        async switchStatusUploadImagesFromCustomer({}, payload) {
+            return await axios
+                .post(
+                    `/api/admin/v1/order/detail/${payload.order_detail_id}/switchStatusUploadImagesFromCustomer`,
+                    payload
+                )
+                .then((response) => {
+                    return response;
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        },
+
+        async switchIsTakeAPhoto({}, payload) {
+            return await axios
+                .post(
+                    `/api/admin/v1/order/detail/${payload.order_detail_id}/switchIsTakeAPhoto`,
+                    payload
+                )
+                .then((response) => {
+                    return response;
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
         },
     },
 };

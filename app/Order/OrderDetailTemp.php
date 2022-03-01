@@ -9,6 +9,8 @@ class OrderDetailTemp extends Model
     protected $table = "order_detail_temps";
     protected $primaryKey = "id";
     protected $guarded = [];
+    protected $hidden = ['created_at', 'updated_at'];
+
 
     public function getTempAttribute($data)
     {

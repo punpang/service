@@ -126,7 +126,7 @@ Vue.filter("formatNumber", function (value) {
     return numeral(value).format("0,0.00"); // displaying other groupings/separators is possible, look at the docs
 });
 
-import uploadImagesForOrder from "@/js/components/guest/uploadImagesForOrder";
+// import uploadImagesForOrder from "@/js/components/guest/uploadImagesForOrder";
 import formPayment from "@/js/components/guest/formPayment";
 import cardPaymentSummary from "@/js/components/order/cardPaymentSummary";
 import cardDataCustomer from "@/js/components/order/cardDataCustomer";
@@ -138,7 +138,7 @@ import cardFormNoticeOfPaymentByCustomer from "@/js/components/guest/cardFormNot
 import { mapGetters } from "vuex";
 export default {
     components: {
-        uploadImagesForOrder,
+        // uploadImagesForOrder,
         formPayment,
         cardPaymentSummary,
         cardDataCustomer,

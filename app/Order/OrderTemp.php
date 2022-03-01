@@ -8,6 +8,8 @@ class OrderTemp extends Model
 {
     protected $table = "order_temps";
     protected $primaryKey = "id";
+    protected $hidden = ['created_at', 'updated_at'];
+
 
     protected $fillable = [
         "customer_id", "temp"

@@ -353,7 +353,6 @@ class AOrder extends Model
 
     public static function genlinkUuid($order_id)
     {
-
         $order = AOrder::findOrFail($order_id);
         $link = URL::base() . "/o/" . $order->auth_order;
         $bitly = Bitly::getUrl($link);

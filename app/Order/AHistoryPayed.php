@@ -17,6 +17,8 @@ class AHistoryPayed extends Model
     public $timestamps = false;
 
     protected $primaryKey = "id";
+    protected $hidden = ['created_at', 'updated_at'];
+
 
     protected $fillable = [
         'value',

@@ -3,15 +3,19 @@
 namespace App\ShabuNooNee;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class GoogleImage extends Model
 {
-    protected $auditInclude = [
-        'scr'
-    ];
+    use softDeletes;
+
+    // protected $auditInclude = [
+    //     'scr'
+    // ];
 
     protected $table = "google_images";
-    protected $fillable = ['src_name'];
+    protected $guarded = ["id"];
+    // protected $fillable = ['src_name'];
     protected $hidden = ['created_at','updated_at'];
 
     public function scopeUseOnly()

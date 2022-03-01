@@ -13,6 +13,8 @@ class ImageFromCustomer extends Model
     // protected $connection = "order";
 
     protected $guarded = ["id"];
+    protected $hidden = ['created_at', 'updated_at'];
+
 
     public function googleImage()
     {

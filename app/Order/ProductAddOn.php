@@ -9,6 +9,8 @@ class ProductAddOn extends Model
 {
     protected $table = "product_add_ons";
     protected $primaryKey = "id";
+    protected $hidden = ['created_at', 'updated_at'];
+
 
     protected $guarded = [];
 

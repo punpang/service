@@ -17,6 +17,8 @@ class NoticeOfPaymentFromCustomer extends Model
         "src_name",
         "status"
     ];
+    protected $hidden = ['created_at', 'updated_at'];
+
 
     public function getCreatedAtAttribute($date)
     {

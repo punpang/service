@@ -9,6 +9,8 @@ class MenuMain extends Model
 {
     protected $table = "menu_mains";
     protected $connection = "order";
+    protected $hidden = ['created_at', 'updated_at'];
+
 
     protected $fillable = ["title", "action", "admin", "customer"];
 

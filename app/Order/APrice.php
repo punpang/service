@@ -10,6 +10,7 @@ class APrice extends Model
     protected $connection = "order";
     protected $primaryKey = "id";
     protected $appends = ["name_goods"];
+    protected $hidden = ['created_at', 'updated_at'];
 
     //protected $filable = ["code", "price", "m1", "m2", "m3", "m4"];
     protected $guards = [];

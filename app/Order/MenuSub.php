@@ -8,7 +8,9 @@ class MenuSub extends Model
 {
     protected $table = "menu_subs";
     protected $connection = "order";
-    
+    protected $hidden = ['created_at', 'updated_at'];
+
+
     protected $fillable = ["title", "to", "menu_main_id", "admin", "customer"];
 
     public function menuMain()

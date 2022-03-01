@@ -19,6 +19,8 @@ class OrderDetail extends Model implements Auditable
     protected $auditInclude = [];
     protected $table = "order_details";
     protected $primaryKey = "id";
+    protected $hidden = ['created_at', 'updated_at'];
+
 
     protected $fillable = [
         "order_id",
@@ -62,6 +64,11 @@ class OrderDetail extends Model implements Auditable
     public function productPrototypes()
     {
         return $this->hasMany(OrderProductPrototype::class);
+    }
+
+    public function imageGoodsReviewToCustomers()
+    {
+        return $this->hasMany(ImageGoodsReviewToCustomer::class);
     }
 
     public function getSumAllAttribute()

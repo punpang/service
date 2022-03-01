@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'cloud' => env('FILESYSTEM_CLOUD', 's3'),
+    'cloud' => env('FILESYSTEM_CLOUD', 'google'),
 
     /*
     |--------------------------------------------------------------------------
@@ -51,7 +51,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
         ],
 
@@ -70,7 +70,15 @@ return [
             'clientSecret' => env('GOOGLE_DRIVE_CLIENT_SECRET'),
             'refreshToken' => env('GOOGLE_DRIVE_REFRESHTOKEN'),
             'folderId' => env('GOOGLE_DRIVE_FOLDER_ID')
-        ]
+        ],
+
+        'google_temps' => [
+            'driver' => 'google',
+            'clientId' => env('BACKUP_GOOGLE_DRIVE_CLIENT_ID_TEMPS'),
+            'clientSecret' => env('BACKUP_GOOGLE_DRIVE_CLIENT_SECRET_TEMPS'),
+            'refreshToken' => env('BACKUP_GOOGLE_DRIVE_REFRESH_TOKEN_TEMPS'),
+            'folderId' => env('BACKUP_GOOGLE_DRIVE_FOLDER_ID_TEMPS'),
+        ],
 
     ],
 

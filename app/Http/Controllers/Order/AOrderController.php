@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
 use App\Order\AHistoryPayed;
 use App\Order\AlertMessages;
 use Illuminate\Http\Request;
-use App\Order\ImageFromCustomer;
+// use App\Order\ImageFromCustomer;
 use App\Http\Controllers\Controller;
 
 class AOrderController extends Controller
@@ -149,7 +149,8 @@ class AOrderController extends Controller
                 "ntpfcsForCustomer",
                 "orderDetails.aPrice",
                 "orderDetails.productPrototypes.googleImage",
-                "orderDetails.imageFromCustomers.googleImage"
+                "orderDetails.imageFromCustomers.googleImage",
+                "orderDetails.imageGoodsReviewToCustomers.googleImage"
             )
             ->with("orderDetails.addOns.productAddOn.goodsAddOn")
             ->first();
@@ -211,7 +212,8 @@ class AOrderController extends Controller
             "orderDetails.aPrice",
             "orderDetailsOnlyTrashed",
             "orderDetails.productPrototypes.googleImage",
-            "orderDetails.imageFromCustomers.googleImage"
+            "orderDetails.imageFromCustomers.googleImage",
+            "orderDetails.imageGoodsReviewToCustomers.googleImage"
         )
             ->with("orderDetails.addOns.productAddOn.goodsAddOn")
             ->findOrFail($order_id);

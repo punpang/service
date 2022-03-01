@@ -112,7 +112,7 @@ export default {
                 res = await this.$store.dispatch("googleImage/store", formData);
                 imagePreview.push(res.data.image);
                 // imagesID.push(res.data.id);
-                if (res.data.success) {
+                if (res.status == 200) {
                     this.$swal({
                         title:
                             "อัปโหลดไปแล้ว " +
@@ -128,7 +128,8 @@ export default {
                 } else {
                     i = images.length;
                     this.$swal({
-                        title: "คุณไม่มีสิทธิ์อัปโหลดส่วนนี้ ",
+                        title: "เกิดข้อผิดพลาดบางประการ",
+                        text: "โปรดติดต่อทางร้าน 091-885-3402",
                         allowOutsideClick: false,
                         confirmButtonText: "รับทราบ",
                         icon: "error",

@@ -157,4 +157,11 @@ class AlertMessages extends Model
         Linenotify::send($msgLine);
         MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
     }
+
+    public static function smsImageGoodsReviewToCustomer($order, $alertSMS = true)
+    {
+        $bitly = AOrder::genlinkUuid($order->id);
+        $msgSms = "รูปภาพสินค้าของท่าน [ ".$bitly." ]";
+        return MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
+    }
 }
