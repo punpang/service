@@ -16,6 +16,7 @@ use App\Order\AlertMessages;
 use Illuminate\Http\Request;
 // use App\Order\ImageFromCustomer;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class AOrderController extends Controller
 {
@@ -190,7 +191,9 @@ class AOrderController extends Controller
             return $query->where("auth_order", $request->uuid);
         })->findOrFail($request->order_detail_id);
 
-        $detail->imageFromCustomers()->where("id", $request->image_from_customer_id)->delete();
+        $imageFromCustomer = $detail->imageFromCustomers()->where("id", $request->image_from_customer_id)->first();
+        Storage::cloud()->delete($imageFromCustomer->googleImage->src_name);
+        $imageFromCustomer->delete();
 
         return response()->json([
             "status" => "success"
@@ -238,9 +241,10 @@ class AOrderController extends Controller
 
         return response()->json([
             "order" => $order,
+
             // "sumAll" => $order->sumAll(),
             // "setNameGoods" => $order->setNameGoods()
-        ]);
+        ], 200);
     }
 
     public function promptPayQrCodeSCB()
@@ -298,9 +302,9 @@ class AOrderController extends Controller
 
     public function paymentByOrderID(Request $request)
     {
-        $order = AOrder::find($request->orderID);
+        // ----$order = AOrder::find($request->orderID);
         // $order->testPaymentByOrderID();
-        $order->testPaymentByOrderID($request);
+        // ----$order->testPaymentByOrderID($request);
         // ->historyPaid()->create([
         //     'value' => $request->amount,
         //     'channel_payment_id' => $request->channel["id"],
@@ -314,7 +318,7 @@ class AOrderController extends Controller
         //     "expiration_date" => \Carbon\Carbon::now()
         // ])->testAddScore();
 
-        return $order;
+        // ---- return $order;
         // $order->where("status", "<=", 2)->update([
         //     "status" => 3
         // ]);

@@ -109642,6 +109642,7 @@ axios.defaults.headers.post["Content-Type"] = "multipart/form-data"; //
 // clipboard
 
 
+vue_clipboard2__WEBPACK_IMPORTED_MODULE_7___default.a.config.autoSetContainer = true;
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_clipboard2__WEBPACK_IMPORTED_MODULE_7___default.a); // notification
 
  // Import one of available themes
@@ -110229,13 +110230,13 @@ var routes = [{
   path: "/promotion/:promotion_id",
   name: "promotionsId",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(9)]).then(__webpack_require__.bind(null, /*! @/js/pages/promotions/promotionId */ "./resources/js/pages/promotions/promotionId.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(25), __webpack_require__.e(9)]).then(__webpack_require__.bind(null, /*! @/js/pages/promotions/promotionId */ "./resources/js/pages/promotions/promotionId.vue"));
   }
 }, {
   path: "/order/:uuid",
   name: "orderUUID",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(5), __webpack_require__.e(11)]).then(__webpack_require__.bind(null, /*! @/js/pages/promotions/orderUUID */ "./resources/js/pages/promotions/orderUUID.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(25), __webpack_require__.e(5), __webpack_require__.e(11)]).then(__webpack_require__.bind(null, /*! @/js/pages/promotions/orderUUID */ "./resources/js/pages/promotions/orderUUID.vue"));
   }
 }, {
   path: "/manages/payment/check",
@@ -110250,7 +110251,7 @@ var routes = [{
   path: "/manages/promotion/:id",
   name: "managesPromotionID",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(5), __webpack_require__.e(6), __webpack_require__.e(8)]).then(__webpack_require__.bind(null, /*! @/js/pages/promotions/manages/promotionId */ "./resources/js/pages/promotions/manages/promotionId.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(25), __webpack_require__.e(5), __webpack_require__.e(6), __webpack_require__.e(8)]).then(__webpack_require__.bind(null, /*! @/js/pages/promotions/manages/promotionId */ "./resources/js/pages/promotions/manages/promotionId.vue"));
   },
   meta: {
     requiresAuth: true
@@ -110259,7 +110260,7 @@ var routes = [{
   path: "/manages/order/newOrder",
   name: "managesOrderNew",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(7)]).then(__webpack_require__.bind(null, /*! @/js/pages/order/newOrder */ "./resources/js/pages/order/newOrder.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(25), __webpack_require__.e(1), __webpack_require__.e(7)]).then(__webpack_require__.bind(null, /*! @/js/pages/order/newOrder */ "./resources/js/pages/order/newOrder.vue"));
   },
   meta: {
     requiresAuth: true
@@ -110277,7 +110278,7 @@ var routes = [{
   path: "/manages/order/:id/showOrderByID",
   name: "managesOrderShowOrderByID",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(3), __webpack_require__.e(16)]).then(__webpack_require__.bind(null, /*! @/js/pages/order/showOrderByID */ "./resources/js/pages/order/showOrderByID.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(25), __webpack_require__.e(18), __webpack_require__.e(1), __webpack_require__.e(3), __webpack_require__.e(16), __webpack_require__.e(10), __webpack_require__.e(26)]).then(__webpack_require__.bind(null, /*! @/js/pages/order/showOrderByID */ "./resources/js/pages/order/showOrderByID.vue"));
   },
   meta: {
     requiresAuth: true
@@ -110286,7 +110287,7 @@ var routes = [{
   path: "/manages/order/:id/paymentOrderByID",
   name: "managesOrderIDpromptPaymentOrderByID",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(18), __webpack_require__.e(2), __webpack_require__.e(10)]).then(__webpack_require__.bind(null, /*! @/js/pages/order/paymentOrderByID */ "./resources/js/pages/order/paymentOrderByID.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(25), __webpack_require__.e(18), __webpack_require__.e(3), __webpack_require__.e(10), __webpack_require__.e(27)]).then(__webpack_require__.bind(null, /*! @/js/pages/order/paymentOrderByID */ "./resources/js/pages/order/paymentOrderByID.vue"));
   },
   meta: {
     requiresAuth: true
@@ -110295,7 +110296,7 @@ var routes = [{
   path: "/manages/order/checkNoticeOfPaymentFromCustomer",
   name: "managesOrderCheckNoticeOfPaymentFromCustomer",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(15)]).then(__webpack_require__.bind(null, /*! @/js/pages/order/checkNoticeOfPaymentFromCustomer.vue */ "./resources/js/pages/order/checkNoticeOfPaymentFromCustomer.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(25), __webpack_require__.e(15)]).then(__webpack_require__.bind(null, /*! @/js/pages/order/checkNoticeOfPaymentFromCustomer.vue */ "./resources/js/pages/order/checkNoticeOfPaymentFromCustomer.vue"));
   },
   meta: {
     requiresAuth: true
@@ -110354,19 +110355,19 @@ var routes = [{
   path: "/menu",
   name: "menuCake",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(24)]).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/menu */ "./resources/js/pages/punpang/menu.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(25), __webpack_require__.e(24)]).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/menu */ "./resources/js/pages/punpang/menu.vue"));
   }
 }, {
   path: "/guest/order/auth/:uuid",
   name: "guestOrderAuthUuid",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(3), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! @/js/pages/guest/orders/uuid */ "./resources/js/pages/guest/orders/uuid.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(25), __webpack_require__.e(1), __webpack_require__.e(3), __webpack_require__.e(16), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! @/js/pages/guest/orders/uuid */ "./resources/js/pages/guest/orders/uuid.vue"));
   }
 }, {
   path: "/o/:uuid",
   name: "guestOrderAuthUuid",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(3), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! @/js/pages/guest/orders/uuid */ "./resources/js/pages/guest/orders/uuid.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(25), __webpack_require__.e(1), __webpack_require__.e(3), __webpack_require__.e(16), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! @/js/pages/guest/orders/uuid */ "./resources/js/pages/guest/orders/uuid.vue"));
   }
 }, {
   path: "/ksher/successfully",
@@ -112065,7 +112066,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     alertPaymentByOrderID: function alertPaymentByOrderID(_ref7, payload) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-        var res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
@@ -112073,13 +112073,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _objectDestructuringEmpty(_ref7);
 
                 _context7.next = 3;
-                return axios.post("/api/admin/v1/order/alertPaymentByOrderID", payload);
+                return axios.post("/api/admin/v1/order/alertPaymentByOrderID", payload).then(function (response) {
+                  return response;
+                })["catch"](function (err) {
+                  log.error(err);
+                });
 
               case 3:
-                res = _context7.sent;
-                return _context7.abrupt("return", res);
+                return _context7.abrupt("return", _context7.sent);
 
-              case 5:
+              case 4:
               case "end":
                 return _context7.stop();
             }

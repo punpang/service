@@ -10,9 +10,11 @@ class CustomerScore extends Model
 {
     protected $table = "customer_scores";
 
-    protected $fillable = [
-        "point", "customer_id", "expiration_date"
-    ];
+    // protected $fillable = [
+    //     "point", "customer_id", "expiration_date"
+    // ];
+
+    protected $guarded = [];
 
     protected $hidden = ['created_at', 'updated_at'];
 
@@ -46,7 +48,7 @@ class CustomerScore extends Model
         //AHistoryPayed
     }
 
-    public function addScore($customer, $amount, $can_refund = 0, $history_payed_id = null, $expiration_date = 365)
+    public static function addScore($customer, $amount, $can_refund = 0, $history_payed_id = null, $expiration_date = 365)
     {
         $score = new CustomerScore;
         $score->customer_id = $customer->id;

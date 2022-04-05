@@ -47,6 +47,7 @@ axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
 
 // clipboard
 import VueClipboard from "vue-clipboard2";
+VueClipboard.config.autoSetContainer = true
 Vue.use(VueClipboard);
 
 // notification

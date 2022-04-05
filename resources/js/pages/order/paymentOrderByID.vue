@@ -40,7 +40,7 @@
         <cardPickupOrder
           @emitPickUpSuccess="emitPickUpSuccess"
           :propLarge="true"
-          v-if="order.status === 8 && order.sumAll.sumBalance === 0"
+          v-if="order.status === 8 && order.sum_all.sumBalance === 0"
         ></cardPickupOrder></v-row
     ></v-container>
     <!-- ///// -->
@@ -72,7 +72,7 @@
         ></v-col>
         <v-col
           cols="6"
-          v-if="order.status === 8 && order.sumAll.sumBalance === 0"
+          v-if="order.status === 8 && order.sum_all.sumBalance === 0"
         >
           <cardPickupOrder></cardPickupOrder>
         </v-col>
@@ -116,9 +116,9 @@ export default {
       await this.$store.dispatch("orderIndex/getOrderByID", {
         orderID: this.$route.params.id,
       });
-      // if (this.order.sumAll.sumBalance === 0 ) {
+      // if (this.order.sum_all.sumBalance === 0 ) {
       //   this.$swal({
-      //     title: "ชำระเงินครบจำนวนแล้ว",
+      //     title: "ชำระเงินครบจำนวนแล้ว",a
       //     icon: "info",
       //     allowOutsideClick: false,
       //     confirmButtonText: "รับทราบ",
@@ -134,7 +134,7 @@ export default {
         html: `<b>ช่องทางชำระเงิน</b> : ${data.channel.text}<br>
         <b>จำนวนเงิน</b> : ${this.amount} บาท<br>
         <b>ยอดคงเหลือหลังชำระ</b> : ${
-          this.order.sumAll.sumBalance - this.amount
+          this.order.sum_all.sumBalance - this.amount
         } บาท`,
         allowOutsideClick: false,
         confirmButtonColor: "#3085d6",
@@ -215,10 +215,10 @@ export default {
       loader.hide();
     },
     setAmount() {
-      const deposited = this.order.sumAll.sumDeposited;
-      const total = this.order.sumAll.sumTASC;
+      const deposited = this.order.sum_all.sumDeposited;
+      const total = this.order.sum_all.sumTASC;
       if (this.order.status === 8) {
-        this.amount = parseInt(this.order.sumAll.sumBalance);
+        this.amount = parseInt(this.order.sum_all.sumBalance);
         return;
       }
       if (deposited === 0) {

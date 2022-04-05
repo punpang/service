@@ -104,11 +104,14 @@ export default {
             return res;
         },
         async alertPaymentByOrderID({}, payload) {
-            const res = await axios.post(
-                `/api/admin/v1/order/alertPaymentByOrderID`,
-                payload
-            );
-            return res;
+            return await axios
+                .post(`/api/admin/v1/order/alertPaymentByOrderID`, payload)
+                .then((response) => {
+                    return response;
+                })
+                .catch((err) => {
+                    log.error(err);
+                });
         },
         async updateRatingByUuid({}, payload) {
             const res = await axios.post(
