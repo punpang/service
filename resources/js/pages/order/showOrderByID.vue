@@ -24,6 +24,7 @@
                 </template>
                 <v-list>
                     <v-subheader>การจัดการ</v-subheader>
+                    <btnAddGoods></btnAddGoods>
                     <btnAlertPayment></btnAlertPayment>
                     <btnPayment></btnPayment>
                     <!-- <v-list-item v-for="tile in tiles" :key="tile.title">
@@ -42,6 +43,7 @@ import cardDataOrderDetail from "@/js/components/order/cardDataOrderDetail";
 import cardManagesGoodsDetail from "@/js/components/order/cardManagesGoodsDetail";
 import cardPaymentSummary from "@/js/components/order/cardPaymentSummary";
 
+import btnAddGoods from "@/js/components/order/addGoods/btnAddGoods";
 import btnAlertPayment from "@/js/components/order/manages/alertPayment/btnAlertPayment";
 import btnPayment from "@/js/components/order/manages/payment/btnPayment";
 
@@ -53,6 +55,7 @@ export default {
         cardManagesGoodsDetail,
         cardPaymentSummary,
 
+        btnAddGoods,
         btnAlertPayment,
         btnPayment,
     },

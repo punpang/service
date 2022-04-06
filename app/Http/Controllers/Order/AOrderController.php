@@ -503,6 +503,21 @@ class AOrderController extends Controller
         ], 200);
     }
 
+    public function addGoodsCake(AOrder $order, Request $request)
+    {
+        $order->orderDetail()->create([
+            "a_price_id" => $request->a_price["id"],
+            "price" => $request->a_price["price"],
+            "message" => $request->a_price["message"],
+            "detail" => $request->a_price["detail"]
+        ]);
+
+        return response()->json([
+            "status" => "success",
+            "message" => "สร้างสินค้าใหม่เรียบร้อย (CAKE)"
+        ], 200);
+    }
+
     public function newOrder(Request $request)
     {
 

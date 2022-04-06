@@ -148,6 +148,7 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
 
             Route::prefix("order")->group(function () {
                 Route::post('newOrder', 'Order\AOrderController@newOrder');
+                Route::post('{order}/addGoodsCake', 'Order\AOrderController@addGoodsCake');
 
                 Route::prefix('channelPayment')->group(function () { // api/admin/v1/...
                     Route::get('getUse', 'Order\ChannelPaymentController@getUse');
@@ -196,7 +197,6 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                         Route::post('{detail_id}/store', 'Order\ImageGoodsReviewToCustomerController@store');
                         Route::post('{detail_id}/delete', 'Order\ImageGoodsReviewToCustomerController@delete');
                     });
-
                 });
 
                 Route::prefix('temp')->group(function () { // api/admin/v1/order/detail/...

@@ -258,5 +258,19 @@ export default {
                     console.error(err);
                 });
         },
+
+        async addGoodsCake({}, payload) {
+            return await axios
+                .post(
+                    `/api/admin/v1/order/${payload.order_id}/addGoodsCake`,
+                    payload
+                )
+                .then((response) => {
+                    return response;
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        },
     },
 };

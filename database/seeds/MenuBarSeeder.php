@@ -15,6 +15,15 @@ class MenuBarSeeder extends Seeder
     {
         $datas = [
             [
+                // จัดการออร์เดอร์
+                "title" => "จัดการออร์เดอร์", "action" => "shop", "admin" => 1, "customer" => 0,
+                "subs" => [
+                    ["title" => "รายการใหม่", "to" => "/manages/order/newOrder", "admin" => 1, "customer" => 0],
+                    ["title" => "รายการสั่งซื้อ", "to" => "/manages/order", "admin" => 1, "customer" => 0],
+                    ["title" => "ตรวจสอบสลิป", "to" => "/manages/order/checkNoticeOfPaymentFromCustomer", "admin" => 1, "customer" => 0],
+                ]
+            ],
+            [
                 // จัดการลุ้นโชค
                 "title" => "จัดการลุ้นโชค", "action" => "shop", "admin" => 1, "customer" => 0,
                 "subs" => [
