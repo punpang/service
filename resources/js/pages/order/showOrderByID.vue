@@ -23,8 +23,11 @@
                     </v-btn>
                 </template>
                 <v-list>
-                    <v-subheader>การจัดการ</v-subheader>
+                    <v-subheader>สินค้า</v-subheader>
                     <btnAddGoods></btnAddGoods>
+                    <v-subheader>เปลี่ยนแปลงข้อมูล</v-subheader>
+                    <btnChangeCustomer></btnChangeCustomer>
+                    <v-subheader>การชำระเงิน</v-subheader>
                     <btnAlertPayment></btnAlertPayment>
                     <btnPayment></btnPayment>
                     <!-- <v-list-item v-for="tile in tiles" :key="tile.title">
@@ -46,6 +49,7 @@ import cardPaymentSummary from "@/js/components/order/cardPaymentSummary";
 import btnAddGoods from "@/js/components/order/addGoods/btnAddGoods";
 import btnAlertPayment from "@/js/components/order/manages/alertPayment/btnAlertPayment";
 import btnPayment from "@/js/components/order/manages/payment/btnPayment";
+import btnChangeCustomer from "@/js/components/order/changeCustomer/btnChangeCustomer";
 
 export default {
     components: {
@@ -58,6 +62,7 @@ export default {
         btnAddGoods,
         btnAlertPayment,
         btnPayment,
+        btnChangeCustomer,
     },
     data() {
         return {

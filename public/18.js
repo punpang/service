@@ -1,1 +1,987 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[18],{55:function(t,e,r){"use strict";r.r(e);var a=r(0),s=r.n(a);function o(t,e,r,a,s,o,n){try{var i=t[o](n),d=i.value}catch(t){return void r(t)}i.done?e(d):Promise.resolve(d).then(a,s)}var n={props:["propOpenReward","propUuid"],data:function(){return{dialog:!1}},methods:{openReward:function(){var t,e=this;return(t=s.a.mark((function t(){var r,a,o;return s.a.wrap((function(t){for(;;)switch(t.prev=t.next){case 0:if(0!==e.propOpenReward.status_open){t.next=8;break}return r=e.$loading.show(),a={reward_label_id:e.propOpenReward.id,reward_customer_id:e.propOpenReward.reward_customer_id,reward_id:e.propOpenReward.reward_id,uuid:e.propUuid},t.next=5,e.$store.dispatch("orderLuckyReward/openReward",a);case 5:200===(o=t.sent).status&&!0===o.data.success?(e.propOpenReward.status_open=1,e.$swal({title:"เปิดรางวัลแล้ว",text:'รางวัลของคุณ คือ " '+e.propOpenReward.reward.name+' "',icon:"success",allowOutsideClick:!1,confirmButtonText:"รับทราบ"})):201===o.status&&!0===o.data.error&&e.$swal({title:o.data.message,icon:"error",allowOutsideClick:!1,confirmButtonText:"รับทราบ"}),r.hide();case 8:case"end":return t.stop()}}),t)})),function(){var e=this,r=arguments;return new Promise((function(a,s){var n=t.apply(e,r);function i(t){o(n,a,s,i,d,"next",t)}function d(t){o(n,a,s,i,d,"throw",t)}i(void 0)}))})()},close:function(){this.dialog=!1}}},i=r(1);function d(t,e,r,a,s,o,n){try{var i=t[o](n),d=i.value}catch(t){return void r(t)}i.done?e(d):Promise.resolve(d).then(a,s)}var c={props:["propGetRedeemCode","propUuid"],data:function(){return{dialog:!1}},methods:{getRedeemCode:function(){var t,e=this;return(t=s.a.mark((function t(){var r,a,o;return s.a.wrap((function(t){for(;;)switch(t.prev=t.next){case 0:if(1!==e.propGetRedeemCode.status_open||0!==e.propGetRedeemCode.status_use_redeem_code){t.next=9;break}return r=e.$loading.show(),a={reward_label_id:e.propGetRedeemCode.id,reward_customer_id:e.propGetRedeemCode.reward_customer_id,reward_id:e.propGetRedeemCode.reward_id,uuid:e.propUuid},t.next=5,e.$store.dispatch("orderLuckyReward/getRedeemCode",a);case 5:200===(o=t.sent).status&&!0===o.data.success?(e.propGetRedeemCode.status_open=1,e.$swal({title:"รับรหัสลับ Redeem Code",text:o.data.message,icon:"success",allowOutsideClick:!1,confirmButtonText:"รับทราบ"})):201===o.status&&!0===o.data.error&&e.$swal({title:o.data.message,icon:"error",allowOutsideClick:!1,confirmButtonText:"รับทราบ"}),e.close(),r.hide();case 9:case"end":return t.stop()}}),t)})),function(){var e=this,r=arguments;return new Promise((function(a,s){var o=t.apply(e,r);function n(t){d(o,a,s,n,i,"next",t)}function i(t){d(o,a,s,n,i,"throw",t)}n(void 0)}))})()},close:function(){this.dialog=!1}}};function l(t,e,r,a,s,o,n){try{var i=t[o](n),d=i.value}catch(t){return void r(t)}i.done?e(d):Promise.resolve(d).then(a,s)}function u(t){return function(){var e=this,r=arguments;return new Promise((function(a,s){var o=t.apply(e,r);function n(t){l(o,a,s,n,i,"next",t)}function i(t){l(o,a,s,n,i,"throw",t)}n(void 0)}))}}var p={components:{openReward:Object(i.a)(n,(function(){var t=this,e=t.$createElement,r=t._self._c||e;return r("div",[r("v-dialog",{attrs:{width:"350",persistent:""},scopedSlots:t._u([{key:"activator",fn:function(e){var a=e.on;return[r("v-btn",t._g({attrs:{color:"info","x-large":"",block:""}},a),[r("strong",[t._v("เปิดรางวัล")])])]}}]),model:{value:t.dialog,callback:function(e){t.dialog=e},expression:"dialog"}},[t._v(" "),r("v-sheet",{staticClass:"px-7 pt-7 pb-4 mx-auto text-center d-inline-block",attrs:{color:"blue-grey darken-3",dark:""}},[r("div",{staticClass:"grey--text text--lighten-1 text-body-2 mb-4"},[r("strong",[t._v("คุณต้องการเปิดรางวัลใช่ไหม ?")])]),t._v(" "),r("v-btn",{staticClass:"ma-1",attrs:{color:"success",plain:""},on:{click:t.openReward}},[t._v("\n        เปิด\n      ")]),t._v(" "),r("v-btn",{staticClass:"ma-1",attrs:{color:"error",plain:""},on:{click:t.close}},[t._v(" ออก ")])],1)],1)],1)}),[],!1,null,null,null).exports,getRedeemCode:Object(i.a)(c,(function(){var t=this,e=t.$createElement,r=t._self._c||e;return r("div",[r("v-dialog",{attrs:{width:"350",persistent:""},scopedSlots:t._u([{key:"activator",fn:function(e){var a=e.on;return[r("v-btn",t._g({staticClass:"mt-3",attrs:{color:"warning","x-large":"",block:""}},a),[r("strong",[t._v("รับรหัส Redeem Code")])])]}}]),model:{value:t.dialog,callback:function(e){t.dialog=e},expression:"dialog"}},[t._v(" "),r("v-sheet",{staticClass:"px-7 pt-7 pb-4 mx-auto text-center d-inline-block",attrs:{color:"blue-grey darken-3",dark:""}},[r("div",{staticClass:"grey--text text--lighten-1 text-body-2 mb-4"},[r("strong",[t._v("คุณต้องการรับรหัส Redeem Code ใช่ไหม ?")])]),t._v(" "),r("v-btn",{staticClass:"ma-1",attrs:{color:"success",plain:""},on:{click:t.getRedeemCode}},[t._v("\n        รับรหัส\n      ")]),t._v(" "),r("v-btn",{staticClass:"ma-1",attrs:{color:"error",plain:""},on:{click:t.close}},[t._v(" ออก ")])],1)],1)],1)}),[],!1,null,null,null).exports},data:function(){return{datas:{labels:[]},uuid:""}},methods:{start:function(){var t=this;return u(s.a.mark((function e(){var r,a;return s.a.wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return r=t.$loading.show(),e.next=3,t.$store.dispatch("orderLuckyReward/getByUUID",{uuid:t.$route.params.uuid});case 3:204===(a=e.sent).status&&t.$swal({title:"ลิงก์หมดอายุ",icon:"error",text:"โปรดติดต่อ 091-885-3402 เพื่อขอลิงก์ใหม่",allowOutsideClick:!1,showConfirmButton:!1}),t.datas=a.data,t.uuid=t.$route.params.uuid,r.hide();case 8:case"end":return e.stop()}}),e)})))()}},mounted:function(){var t=this;return u(s.a.mark((function e(){return s.a.wrap((function(e){for(;;)switch(e.prev=e.next){case 0:t.start();case 1:case"end":return e.stop()}}),e)})))()}},v=Object(i.a)(p,(function(){var t=this,e=t.$createElement,r=t._self._c||e;return r("div",[r("v-card",{staticClass:"mb-4"},[r("v-card-title",{staticClass:"pb-0"},[r("h2",[t._v("ลุ้นรางวัล (สำหรับลูกค้า)")])]),t._v(" "),r("v-divider",{staticClass:"mb-0"}),t._v(" "),r("v-card-text",[r("v-row",{attrs:{justify:"center"}},[r("v-col",{attrs:{md:"4",cols:"12"}},[r("h5",{staticClass:"mb-0"},[t._v("ชื่อ : "+t._s(t.datas.name))])]),t._v(" "),r("v-col",{attrs:{md:"4",cols:"12"}},[r("h5",{staticClass:"mb-0"},[r("p",{staticClass:"mb-0"},[t._v("เบอร์โทรศัพท์ : "+t._s(t.datas.phone))])])]),t._v(" "),r("v-col",{attrs:{md:"4",cols:"12"}},[r("h5",{staticClass:"mb-0"},[t._v("จำนวน "+t._s(t.datas.labels.length)+" รางวัล")])])],1)],1)],1),t._v(" "),r("v-row",t._l(t.datas.labels,(function(e){return r("v-col",{key:e.key,attrs:{md:"4",cols:"12"}},[r("v-card",{attrs:{height:"100%"}},[0===e.status_open?r("v-card-text",{staticClass:"text-center"},[r("openReward",{attrs:{propOpenReward:e,propUuid:t.uuid}})],1):r("v-card-text",{staticClass:"text-center"},[1===e.reward_id?r("div",[r("strong",[t._v("วัน-เวลาทำรายการ : "+t._s(e.updated_at))]),t._v(" "),r("v-alert",{attrs:{type:"error"}},[r("strong",[t._v("ไม่ได้รางวัล")])])],1):r("div",[r("v-simple-table",[r("tbody",[r("tr",[r("td",{staticClass:"text-left"},[r("strong",[t._v("ชื่อของรางวัล")])]),t._v(" "),r("td",{staticClass:"text-right"},[r("strong",[t._v(t._s(e.reward.name))])])]),t._v(" "),r("tr",[r("td",{staticClass:"text-left"},[r("strong",[t._v("มูลค่า")])]),t._v(" "),r("td",{staticClass:"text-right"},[r("strong",[t._v(t._s(e.reward.value)+" บาท")])])])])]),t._v(" "),0===e.status_use_redeem_code?r("getRedeemCode",{attrs:{propGetRedeemCode:e,propUuid:t.uuid}}):r("v-alert",{staticClass:"mt-3 mb-0",attrs:{type:"success"}},[r("strong",[t._v("แลกของรางวัลแล้ว")])])],1)])],1)],1)})),1)],1)}),[],!1,null,null,null);e.default=v.exports}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[18],{
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/order/cardCheckSlip.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/order/cardCheckSlip.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["propNtpfc"],
+  data: function data() {
+    return {
+      dialog: false,
+      ref: "",
+      amount: 0,
+      status: "",
+      ntpfc: {},
+      sumAll: {}
+    };
+  },
+  methods: {
+    clickCheckSlip: function clickCheckSlip() {
+      var _this = this;
+
+      if (this.amount > this.sumAll.sumBalance) {
+        this.$swal({
+          title: "โปรดอ่าน",
+          icon: "warning",
+          text: "ยอดชำระเงิน มากกว่า ยอดคงเหลือ",
+          allowOutsideClick: false,
+          denyButtonText: "ไม่ถูกต้อง",
+          confirmButtonText: "ถูกต้อง",
+          showDenyButton: true
+        }).then(function (result) {
+          if (result.isConfirmed) {
+            _this.checkSlip();
+          } else if (result.isDenied) {
+            return;
+          }
+        });
+      } else {
+        this.checkSlip();
+      }
+    },
+    checkSlip: function checkSlip() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var loader, payload, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                loader = _this2.$loading.show();
+                payload = {
+                  ntpfc: _this2.ntpfc,
+                  ref: _this2.ref,
+                  amount: _this2.amount
+                };
+                _context.next = 4;
+                return _this2.$store.dispatch("orderNoticeOfPaymentFromCustomer/postCheckSlip", payload);
+
+              case 4:
+                res = _context.sent;
+
+                if (res.status === 200) {
+                  _this2.$swal({
+                    title: res.data.title,
+                    text: res.data.text,
+                    icon: res.data.status,
+                    allowOutsideClick: false,
+                    confirmButtonText: "รับทราบ"
+                  }).then(function (result) {
+                    if (result.isConfirmed) {
+                      _this2.$emit("emitStart");
+
+                      _this2.dialog = false;
+                    }
+                  });
+                } else {
+                  _this2.$swal({
+                    title: "Error 500",
+                    icon: "error",
+                    allowOutsideClick: false,
+                    confirmButtonText: "รับทราบ"
+                  });
+                }
+
+                loader.hide();
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    clickAppealSlip: function clickAppealSlip() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var loader, payload, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                loader = _this3.$loading.show();
+                payload = {
+                  ntpfc: _this3.ntpfc
+                };
+                _context2.next = 4;
+                return _this3.$store.dispatch("orderNoticeOfPaymentFromCustomer/postAppealSlip", payload);
+
+              case 4:
+                res = _context2.sent;
+
+                if (res.status === 200) {
+                  _this3.$swal({
+                    title: res.data.title,
+                    text: res.data.text,
+                    icon: res.data.status,
+                    allowOutsideClick: false,
+                    confirmButtonText: "รับทราบ"
+                  }).then(function (result) {
+                    if (result.isConfirmed) {
+                      _this3.$emit("emitStart");
+
+                      _this3.dialog = false;
+                    }
+                  });
+                } else {
+                  _this3.$swal({
+                    title: "Error 500",
+                    icon: "error",
+                    allowOutsideClick: false,
+                    confirmButtonText: "รับทราบ"
+                  });
+                }
+
+                loader.hide();
+
+              case 7:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    clickUpdateSlip: function clickUpdateSlip() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var loader, payload, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                if (!(_this4.amount > _this4.sumAll.sumBalance + _this4.ntpfc.amount)) {
+                  _context3.next = 3;
+                  break;
+                }
+
+                _this4.$toast.warning("ยอดชำระเงิน มากกว่า ยอดคงเหลือ");
+
+                return _context3.abrupt("return");
+
+              case 3:
+                loader = _this4.$loading.show();
+                payload = {
+                  ntpfc: _this4.ntpfc,
+                  amount: _this4.amount
+                };
+                _context3.next = 7;
+                return _this4.$store.dispatch("orderNoticeOfPaymentFromCustomer/postUpdateSlip", payload);
+
+              case 7:
+                res = _context3.sent;
+
+                if (res.status === 200) {
+                  _this4.$swal({
+                    title: res.data.title,
+                    text: res.data.text,
+                    icon: res.data.status,
+                    allowOutsideClick: false,
+                    confirmButtonText: "รับทราบ"
+                  }).then(function (result) {
+                    if (result.isConfirmed) {
+                      _this4.$emit("emitStart");
+
+                      _this4.dialog = false;
+                    }
+                  });
+                } else {
+                  _this4.$swal({
+                    title: "Error 500",
+                    icon: "error",
+                    allowOutsideClick: false,
+                    confirmButtonText: "รับทราบ"
+                  });
+                }
+
+                loader.hide();
+
+              case 10:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+    clickStart: function clickStart() {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var payload, res, notice;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                payload = {
+                  ntpfc: _this5.propNtpfc
+                };
+                _context4.next = 3;
+                return _this5.$store.dispatch("orderNoticeOfPaymentFromCustomer/getCheckSlip", payload);
+
+              case 3:
+                res = _context4.sent;
+                //   this.ref = "012029151143828695";
+                notice = res.data.notice;
+                _this5.ref = notice.ref;
+                _this5.ntpfc = notice;
+                _this5.amount = notice.amount;
+                _this5.status = notice.status;
+                _this5.sumAll = res.data.sumAll;
+
+              case 10:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/order/checkNoticeOfPaymentFromCustomer.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/order/checkNoticeOfPaymentFromCustomer.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _js_components_order_cardCheckSlip__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/order/cardCheckSlip */ "./resources/js/components/order/cardCheckSlip.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+var numeral = __webpack_require__(/*! numeral */ "./node_modules/numeral/numeral.js");
+
+Vue.filter("formatNumber", function (value) {
+  return numeral(value).format("0,0.00"); // displaying other groupings/separators is possible, look at the docs
+});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    cardCheckSlip: _js_components_order_cardCheckSlip__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {};
+  },
+  methods: {
+    emitStart: function emitStart() {
+      this.start();
+    },
+    start: function start() {
+      this.getNoticeOfPaymentFromCustomer();
+    },
+    getNoticeOfPaymentFromCustomer: function getNoticeOfPaymentFromCustomer() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var loader;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                loader = _this.$loading.show();
+                _context.next = 3;
+                return _this.$store.dispatch("orderNoticeOfPaymentFromCustomer/getAllByAdmin");
+
+              case 3:
+                loader.hide();
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    classNtpfc: function classNtpfc(v) {
+      switch (v) {
+        case "create":
+          return "blue lighten-1";
+
+        case "success":
+          return "green lighten-1";
+
+        case "cancel":
+          return "red lighten-1";
+      }
+    }
+  },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return _this2.start();
+
+            case 2:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])({
+    ntpfcs: "orderNoticeOfPaymentFromCustomer/data"
+  }))
+});
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/order/cardCheckSlip.vue?vue&type=template&id=078cd2bc&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/order/cardCheckSlip.vue?vue&type=template&id=078cd2bc& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "v-dialog",
+        {
+          attrs: { persistent: "", width: "800", scrollable: "" },
+          scopedSlots: _vm._u([
+            {
+              key: "activator",
+              fn: function (ref) {
+                var on = ref.on
+                return [
+                  _c(
+                    "v-btn",
+                    _vm._g(
+                      {
+                        attrs: { elevation: "0" },
+                        on: { click: _vm.clickStart },
+                      },
+                      on
+                    ),
+                    [
+                      _c("v-icon", { attrs: { left: "" } }, [_vm._v("list")]),
+                      _vm._v(" "),
+                      _c("strong", [_vm._v("รายละเอียด")]),
+                    ],
+                    1
+                  ),
+                ]
+              },
+            },
+          ]),
+          model: {
+            value: _vm.dialog,
+            callback: function ($$v) {
+              _vm.dialog = $$v
+            },
+            expression: "dialog",
+          },
+        },
+        [
+          _vm._v(" "),
+          _c(
+            "v-card",
+            [
+              _c(
+                "v-card-title",
+                { staticClass: "text-h6 white--text warning" },
+                [
+                  _vm._v("\n        ตรวจสอบสลิปชำระเงิน\n        "),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "white",
+                      attrs: { icon: "", fab: "", "x-small": "" },
+                      on: {
+                        click: function ($event) {
+                          _vm.dialog = false
+                        },
+                      },
+                    },
+                    [
+                      _c("v-icon", { attrs: { color: "error" } }, [
+                        _vm._v("close"),
+                      ]),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                { staticClass: "pt-4" },
+                [
+                  _c(
+                    "v-row",
+                    [
+                      _c(
+                        "v-col",
+                        { attrs: { cols: "12", sm: "6", md: "6" } },
+                        [
+                          _c("v-img", {
+                            attrs: {
+                              src:
+                                "https://drive.google.com/thumbnail?id=" +
+                                _vm.propNtpfc.src_name +
+                                "&sz=w800-h800",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { attrs: { cols: "12", sm: "6", md: "6" } },
+                        [
+                          _c("v-text-field", {
+                            staticClass: "mb-3",
+                            attrs: {
+                              label: "ยอดคงเหลือ",
+                              "hide-details": "",
+                              readonly: "",
+                              outlined: "",
+                              suffix: "บาท",
+                              required: "",
+                            },
+                            model: {
+                              value: _vm.sumAll.sumBalance,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.sumAll, "sumBalance", $$v)
+                              },
+                              expression: "sumAll.sumBalance",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            staticClass: "mb-3",
+                            attrs: {
+                              label: "จำนวนเงิน",
+                              "hide-details": "",
+                              type: "number",
+                              pattern: "/d*",
+                              outlined: "",
+                              suffix: "บาท",
+                              required: "",
+                            },
+                            model: {
+                              value: _vm.amount,
+                              callback: function ($$v) {
+                                _vm.amount = $$v
+                              },
+                              expression: "amount",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              label: "ref",
+                              "hide-details": "",
+                              outlined: "",
+                              disabled: _vm.status !== "create",
+                            },
+                            model: {
+                              value: _vm.ref,
+                              callback: function ($$v) {
+                                _vm.ref = $$v
+                              },
+                              expression: "ref",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-divider"),
+                          _vm._v(" "),
+                          _vm.status === "create"
+                            ? _c(
+                                "v-btn",
+                                {
+                                  staticClass: "success",
+                                  attrs: {
+                                    "x-large": "",
+                                    disabled: !_vm.ref || !_vm.amount,
+                                  },
+                                  on: { click: _vm.clickCheckSlip },
+                                },
+                                [
+                                  _c("v-icon", { attrs: { left: "" } }, [
+                                    _vm._v("check_circle"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("strong", [_vm._v("ตรวจสอบ")]),
+                                ],
+                                1
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.status === "success"
+                            ? _c(
+                                "v-btn",
+                                {
+                                  staticClass: "success",
+                                  attrs: {
+                                    "x-large": "",
+                                    disabled: !_vm.ref || !_vm.amount,
+                                  },
+                                  on: { click: _vm.clickUpdateSlip },
+                                },
+                                [
+                                  _c("v-icon", { attrs: { left: "" } }, [
+                                    _vm._v("check_circle"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("strong", [_vm._v("ปรับปรุงรายการ")]),
+                                ],
+                                1
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.status === "cancel"
+                            ? _c(
+                                "v-btn",
+                                {
+                                  staticClass: "success",
+                                  attrs: { "x-large": "" },
+                                  on: { click: _vm.clickAppealSlip },
+                                },
+                                [
+                                  _c("v-icon", { attrs: { left: "" } }, [
+                                    _vm._v("check_circle"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("strong", [_vm._v("อุทธรณ์")]),
+                                ],
+                                1
+                              )
+                            : _vm._e(),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+        ],
+        1
+      ),
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/order/checkNoticeOfPaymentFromCustomer.vue?vue&type=template&id=644be6a1&":
+/*!************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/order/checkNoticeOfPaymentFromCustomer.vue?vue&type=template&id=644be6a1& ***!
+  \************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("v-simple-table", [
+        _c("thead", [
+          _c("tr", [
+            _c("th", [_vm._v("Order No.")]),
+            _vm._v(" "),
+            _c("th", { staticClass: "text-center" }, [_vm._v("จำนวนเงิน")]),
+            _vm._v(" "),
+            _c("th", { staticClass: "text-center", attrs: { width: "40%" } }, [
+              _vm._v("การจัดการ"),
+            ]),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.ntpfcs, function (ntpfc) {
+            return _c(
+              "tr",
+              {
+                key: ntpfc.id,
+                staticClass: "white--text",
+                class: _vm.classNtpfc(ntpfc.status),
+              },
+              [
+                _c("td", [
+                  _c("strong", [_vm._v("#" + _vm._s(ntpfc.order_id))]),
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-center" }, [
+                  _c("strong", [
+                    _vm._v(
+                      _vm._s(_vm._f("formatNumber")(ntpfc.amount)) + " บาท"
+                    ),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  { staticClass: "text-right" },
+                  [
+                    _c("cardCheckSlip", {
+                      attrs: { propNtpfc: ntpfc },
+                      on: { emitStart: _vm.emitStart },
+                    }),
+                  ],
+                  1
+                ),
+              ]
+            )
+          }),
+          0
+        ),
+      ]),
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/order/cardCheckSlip.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/order/cardCheckSlip.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _cardCheckSlip_vue_vue_type_template_id_078cd2bc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./cardCheckSlip.vue?vue&type=template&id=078cd2bc& */ "./resources/js/components/order/cardCheckSlip.vue?vue&type=template&id=078cd2bc&");
+/* harmony import */ var _cardCheckSlip_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./cardCheckSlip.vue?vue&type=script&lang=js& */ "./resources/js/components/order/cardCheckSlip.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _cardCheckSlip_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _cardCheckSlip_vue_vue_type_template_id_078cd2bc___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _cardCheckSlip_vue_vue_type_template_id_078cd2bc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/order/cardCheckSlip.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/order/cardCheckSlip.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/order/cardCheckSlip.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_cardCheckSlip_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./cardCheckSlip.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/order/cardCheckSlip.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_cardCheckSlip_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/order/cardCheckSlip.vue?vue&type=template&id=078cd2bc&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/order/cardCheckSlip.vue?vue&type=template&id=078cd2bc& ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_cardCheckSlip_vue_vue_type_template_id_078cd2bc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./cardCheckSlip.vue?vue&type=template&id=078cd2bc& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/order/cardCheckSlip.vue?vue&type=template&id=078cd2bc&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_cardCheckSlip_vue_vue_type_template_id_078cd2bc___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_cardCheckSlip_vue_vue_type_template_id_078cd2bc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/pages/order/checkNoticeOfPaymentFromCustomer.vue":
+/*!***********************************************************************!*\
+  !*** ./resources/js/pages/order/checkNoticeOfPaymentFromCustomer.vue ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _checkNoticeOfPaymentFromCustomer_vue_vue_type_template_id_644be6a1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./checkNoticeOfPaymentFromCustomer.vue?vue&type=template&id=644be6a1& */ "./resources/js/pages/order/checkNoticeOfPaymentFromCustomer.vue?vue&type=template&id=644be6a1&");
+/* harmony import */ var _checkNoticeOfPaymentFromCustomer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./checkNoticeOfPaymentFromCustomer.vue?vue&type=script&lang=js& */ "./resources/js/pages/order/checkNoticeOfPaymentFromCustomer.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _checkNoticeOfPaymentFromCustomer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _checkNoticeOfPaymentFromCustomer_vue_vue_type_template_id_644be6a1___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _checkNoticeOfPaymentFromCustomer_vue_vue_type_template_id_644be6a1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/order/checkNoticeOfPaymentFromCustomer.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/pages/order/checkNoticeOfPaymentFromCustomer.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/pages/order/checkNoticeOfPaymentFromCustomer.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_checkNoticeOfPaymentFromCustomer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./checkNoticeOfPaymentFromCustomer.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/order/checkNoticeOfPaymentFromCustomer.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_checkNoticeOfPaymentFromCustomer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/pages/order/checkNoticeOfPaymentFromCustomer.vue?vue&type=template&id=644be6a1&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/pages/order/checkNoticeOfPaymentFromCustomer.vue?vue&type=template&id=644be6a1& ***!
+  \******************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_checkNoticeOfPaymentFromCustomer_vue_vue_type_template_id_644be6a1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./checkNoticeOfPaymentFromCustomer.vue?vue&type=template&id=644be6a1& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/order/checkNoticeOfPaymentFromCustomer.vue?vue&type=template&id=644be6a1&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_checkNoticeOfPaymentFromCustomer_vue_vue_type_template_id_644be6a1___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_checkNoticeOfPaymentFromCustomer_vue_vue_type_template_id_644be6a1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ })
+
+}]);

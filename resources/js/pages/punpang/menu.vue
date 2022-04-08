@@ -17,7 +17,7 @@
         :key="product.id"
       >
         <v-card>
-          <v-img :src="path + product.img"></v-img>
+          <v-img :src="`images/menu/${product.img}`"></v-img>
           <v-card-title>
             <h5 class="mb-1">{{ product.products }}</h5>
           </v-card-title>
@@ -73,7 +73,8 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      path: "https://www.punpangsv.com/admin_system/home/product/img-products/",
+    //   path: "https://www.punpang.online/images/menu/",
+    //   path: "http://192.168.1.103/images/menu/",
     };
   },
   async mounted() {

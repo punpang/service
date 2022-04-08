@@ -9,7 +9,7 @@
         >
             <template v-slot:activator="{ on }">
                 <v-list-item v-on="on">
-                    <v-list-item-title> การชำระเงิน </v-list-item-title>
+                    <v-list-item-title> รับชำระเงิน </v-list-item-title>
                 </v-list-item>
             </template>
 

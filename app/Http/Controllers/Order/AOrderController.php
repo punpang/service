@@ -577,4 +577,14 @@ class AOrderController extends Controller
             "message" => "สร้างรายการสั่งซื้อสำเร็จ"
         ], 200);
     }
+
+    public function changeCustomer(AOrder $order, Request $request)
+    {
+        $order->update(["id_customer" => $request->customer_id]);
+
+        return response()->json([
+            "status" => "success",
+            "message" => "เปลี่ยนลูกค้าสำเร็จ"
+        ], 200);
+    }
 }

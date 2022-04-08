@@ -96,8 +96,8 @@ Vue.filter("formatNumber", function (value) {
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {
-      path: "https://www.punpangsv.com/admin_system/home/product/img-products/"
+    return {//   path: "https://www.punpang.online/images/menu/",
+      //   path: "http://192.168.1.103/images/menu/",
     };
   },
   mounted: function mounted() {
@@ -170,7 +170,7 @@ var render = function () {
               _c(
                 "v-card",
                 [
-                  _c("v-img", { attrs: { src: _vm.path + product.img } }),
+                  _c("v-img", { attrs: { src: "images/menu/" + product.img } }),
                   _vm._v(" "),
                   _c("v-card-title", [
                     _c("h5", { staticClass: "mb-1" }, [

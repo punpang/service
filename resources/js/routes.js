@@ -121,7 +121,7 @@ const routes = [
     {
         path: "/menu",
         name: "menuCake",
-        component: () => import("@/js/pages/punpang/menu"),
+    component: () => import("@/js/pages/punpang/menu"),
     },
     {
         path: "/guest/order/auth/:uuid",

@@ -149,6 +149,7 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
             Route::prefix("order")->group(function () {
                 Route::post('newOrder', 'Order\AOrderController@newOrder');
                 Route::post('{order}/addGoodsCake', 'Order\AOrderController@addGoodsCake');
+                Route::post('{order}/changeCustomer', 'Order\AOrderController@changeCustomer');
 
                 Route::prefix('channelPayment')->group(function () { // api/admin/v1/...
                     Route::get('getUse', 'Order\ChannelPaymentController@getUse');

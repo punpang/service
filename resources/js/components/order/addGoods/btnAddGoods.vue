@@ -8,7 +8,7 @@
         >
             <template v-slot:activator="{ on }">
                 <v-list-item v-on="on">
-                    <v-list-item-title>{{ text.header }} </v-list-item-title>
+                    <v-list-item-title class="py-1">{{ text.header }} </v-list-item-title>
                 </v-list-item>
             </template>
 
