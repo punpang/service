@@ -43,6 +43,7 @@ Route::prefix('v1')->group(function () { // api/v1/...
         Route::prefix('ksher')->group(function () { // api/v1/guest/ksher
             Route::get('getUseKsherChannelPayment', 'Order\KsherChannelPaymentController@getUseKsherChannelPayment');
             Route::post('orderCreate', 'Order\KsherPayController@orderCreate');
+            Route::get('{ksher}/checkStatusPaid', 'Order\KsherPayController@checkStatusPaid');
         });
         Route::prefix('noticeOfPaymentFromCustomer')->group(function () { // api/v1/guest/ksher
             Route::post('createByUuid', 'Order\NoticeOfPaymentFromCustomerController@createByUuid');

@@ -205,19 +205,41 @@ export default {
                     console.error(error.message);
                 });
         },
-        ksherPaySuccess() {
+        async ksherPaySuccess() {
             if (this.$route.query.mch_order_no) {
-                this.$swal({
-                    title: "ชำระเงินสำเร็จ",
-                    text: "ขอบคุณที่ชำระเงิน",
-                    icon: "success",
-                    allowOutsideClick: false,
-                    confirmButtonText: "เรียบร้อย",
-                }).then((response) => {
-                    if (response.isConfirmed) {
-                        this.start();
+                let loader = this.$loading.show();
+                const result = await this.$store.dispatch(
+                    "orderKsher/checkStatusPaid",
+                    {
+                        mch_order_no: this.$route.query.mch_order_no,
                     }
-                });
+                );
+                if (result.status == 200) {
+                    this.$swal({
+                        title: result.data.message.title,
+                        text: result.data.message.text,
+                        icon: result.data.message.icon,
+                        allowOutsideClick: false,
+                        confirmButtonText: "เรียบร้อย",
+                    }).then((response) => {
+                        if (response.isConfirmed) {
+                            this.start();
+                        }
+                    });
+                } else {
+                    this.$swal({
+                        title: "เกิดข้อผิดพลาดบางประการ",
+                        text: "โปรดลองอีกครั้งภายหลัง",
+                        icon: "error",
+                        allowOutsideClick: false,
+                        confirmButtonText: "รับทราบ",
+                    }).then((response) => {
+                        if (response.isConfirmed) {
+                            this.start();
+                        }
+                    });
+                }
+                loader.hide();
             }
         },
     },

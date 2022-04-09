@@ -8,6 +8,10 @@ use App\Order\AOrder;
 
 class KsherPay extends Model
 {
+    protected $primaryKey = 'mch_order_no';
+    protected $table = "ksher_pays";
+    protected $guarded = [];
+
     public $time;
     public $appid; //ksher appid
     public $privatekey; // 私钥
@@ -42,7 +46,7 @@ EOD;
     {
         if ($result == "SUCCESS") {
             $ksher = KsherPay::where("mch_order_no", $mch_order_no)->first();
-            $ksher->result = "success";            
+            $ksher->result = "success";
             $ksher->update();
             return ["ksher" => $ksher, "result" => "success"];
         }
@@ -102,7 +106,7 @@ dngzyREYS67mZQI9AKxZ0orgm9+NgoRoPVOzDJonzyUmaK0vjNs7JFUXz25yak05
 PQCSbRGaGa90I2aylVkdBi57vbyYhGREVvSlwT5h6QO7gwtbJwEQtWNl/nKW3vkr
 KKDJi0I3HCduEjcCF28CRGCz9H2TME4xZIszWhw7dr3uXx/9TJjoS5Xw3KBre6F5
 S7SFjO/PeBwNryxbs0Bp/bq7sgfe/CFHuW8kxDPUhUhoMK7i
------END RSA PRIVATE KEY-----        
+-----END RSA PRIVATE KEY-----
 EOD;
     }
 

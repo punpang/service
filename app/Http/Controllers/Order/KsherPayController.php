@@ -156,4 +156,35 @@ class KsherPayController extends Controller
         AlertMessages::lineAlertGeneral("รับชำระเงินKSHER ไม่สำเร็จ #" . $mch_order_no);
         return ["result" => "fail", "msg" => "NO"];
     }
+
+    public function checkStatusPaid(KsherPay $ksher)
+    {
+        if ($ksher->result == "create") {
+            $message = [
+                "title" => "ยังไม่ได้ชำระเงิน",
+                "text" => "โปรดชำระเงิน",
+                "icon" => "info"
+            ];
+        } else if ($ksher->result == "success") {
+            $message = [
+                "title" => "ชำระเงินสำเร็จ",
+                "text" => "ขอบคุณที่ชำระเงิน",
+                "icon" => "success"
+            ];
+        } else {
+            $message = [
+                "title" => "ชำระเงินไม่สำเร็จ",
+                "text" => "โปรดชำระเงินอีกครั้ง หรือ ติดต่อทางร้าน 091-885-3402",
+                "icon" => "error"
+            ];
+        }
+
+        return response()->json(
+            [
+                'status' => "success",
+                "message" => $message
+            ],
+            200
+        );
+    }
 }

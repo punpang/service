@@ -1881,42 +1881,84 @@ Vue.filter("formatNumber", function (value) {
     ksherPaySuccess: function ksherPaySuccess() {
       var _this3 = this;
 
-      if (this.$route.query.mch_order_no) {
-        this.$swal({
-          title: "ชำระเงินสำเร็จ",
-          text: "ขอบคุณที่ชำระเงิน",
-          icon: "success",
-          allowOutsideClick: false,
-          confirmButtonText: "เรียบร้อย"
-        }).then(function (response) {
-          if (response.isConfirmed) {
-            _this3.start();
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var loader, result;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                if (!_this3.$route.query.mch_order_no) {
+                  _context3.next = 7;
+                  break;
+                }
+
+                loader = _this3.$loading.show();
+                _context3.next = 4;
+                return _this3.$store.dispatch("orderKsher/checkStatusPaid", {
+                  mch_order_no: _this3.$route.query.mch_order_no
+                });
+
+              case 4:
+                result = _context3.sent;
+
+                if (result.status == 200) {
+                  _this3.$swal({
+                    title: result.data.message.title,
+                    text: result.data.message.text,
+                    icon: result.data.message.icon,
+                    allowOutsideClick: false,
+                    confirmButtonText: "เรียบร้อย"
+                  }).then(function (response) {
+                    if (response.isConfirmed) {
+                      _this3.start();
+                    }
+                  });
+                } else {
+                  _this3.$swal({
+                    title: "เกิดข้อผิดพลาดบางประการ",
+                    text: "โปรดลองอีกครั้งภายหลัง",
+                    icon: "error",
+                    allowOutsideClick: false,
+                    confirmButtonText: "รับทราบ"
+                  }).then(function (response) {
+                    if (response.isConfirmed) {
+                      _this3.start();
+                    }
+                  });
+                }
+
+                loader.hide();
+
+              case 7:
+              case "end":
+                return _context3.stop();
+            }
           }
-        });
-      }
+        }, _callee3);
+      }))();
     }
   },
   mounted: function mounted() {
     var _this4 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context4.prev = _context4.next) {
             case 0:
-              _context3.next = 2;
+              _context4.next = 2;
               return _this4.start();
 
             case 2:
-              _context3.next = 4;
+              _context4.next = 4;
               return _this4.ksherPaySuccess();
 
             case 4:
             case "end":
-              return _context3.stop();
+              return _context4.stop();
           }
         }
-      }, _callee3);
+      }, _callee4);
     }))();
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_8__["mapGetters"])({

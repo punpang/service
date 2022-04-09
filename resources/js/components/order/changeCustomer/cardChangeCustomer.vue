@@ -85,6 +85,7 @@ export default {
 
             if (result.status == 200) {
                 this.$toast.success(result.data.message);
+                this.newCustomer = {};
                 let loader = this.$loading.show();
                 await this.$store.dispatch("orderIndex/getOrderByID", {
                     orderID: this.order.id,
