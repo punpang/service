@@ -20,6 +20,12 @@ export default {
         temp(state, data) {
             state.temp = data;
         },
+        setDateGet(state, data) {
+            state.temp.temp.dateTimeGet.dateGet = data;
+        },
+        setTimeGet(state, data) {
+            state.temp.temp.dateTimeGet.timeGet = data;
+        },
     },
     getters: {
         temp: (state) => state.temp,

@@ -587,4 +587,22 @@ class AOrderController extends Controller
             "message" => "เปลี่ยนลูกค้าสำเร็จ"
         ], 200);
     }
+
+    public function changeDateTimeGet(AOrder $order, Request $request)
+    {
+        $order->update([
+            "date_get" => $request->date_time_get["date_get"],
+            "time_get" => $request->date_time_get["time_get"]
+        ]);
+
+        AlertMessages::lineChangeDateTimeGet($order);
+        AlertMessages::smsChangeDateTimeGet($order, $request->alert_sms);
+
+        return response()->json([
+            "status" => "success",
+            "title" => "สำเร็จ",
+            "icon" => "success",
+            "message" => "เปลี่ยนวัน-เวลานัดรับสำเร็จ"
+        ], 200);
+    }
 }

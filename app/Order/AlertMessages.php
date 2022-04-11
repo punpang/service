@@ -161,7 +161,22 @@ class AlertMessages extends Model
     public static function smsImageGoodsReviewToCustomer($order, $alertSMS = true)
     {
         $bitly = AOrder::genlinkUuid($order->id);
-        $msgSms = "รูปภาพสินค้าของท่าน [ ".$bitly." ]";
+        $msgSms = "รูปภาพสินค้าของท่าน [ " . $bitly . " ]";
+        return MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
+    }
+
+    public static function lineChangeDateTimeGet($order)
+    {
+        $msgLine = 'เปลี่ยนแปลงวัน-เวลารับ => #' . $order->id . " | " . $order->date_get . " " . $order->time_get;
+        return Linenotify::send($msgLine);
+    }
+
+    public static function smsChangeDateTimeGet($order, $alertSMS = true)
+    {
+        $link = URL::base() . "/o/" . $order->auth_order;
+        $bitly = Bitly::getUrl($link);
+
+        $msgSms = 'หมายเลขคำสั่งซื้อ #' . $order->id . " ของคุณ ได้เปลี่ยนแปลงวัน-เวลานัดรับเป็น " . $order->date_get . " " . $order->time_get . " น. รายละเอียดคำสั่งซื้อคลิกลิงก์ [ " . $bitly . " ]";
         return MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
     }
 }

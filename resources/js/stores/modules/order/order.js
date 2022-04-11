@@ -286,5 +286,19 @@ export default {
                     console.error(err);
                 });
         },
+
+        async changeDateTimeGet({}, payload) {
+            return await axios
+                .post(
+                    `/api/admin/v1/order/${payload.order_id}/changeDateTimeGet`,
+                    payload
+                )
+                .then((response) => {
+                    return response;
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        },
     },
 };

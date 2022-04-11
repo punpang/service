@@ -34,7 +34,8 @@ class AOrder extends Model
     protected $appends = [
         "sum_all",
         "payment_deadline_th",
-        "status_payment_deadline"
+        "status_payment_deadline",
+        "date_get_default"
         // "sum_add_on"
     ];
 
@@ -42,6 +43,11 @@ class AOrder extends Model
     {
         // return \Carbon\Carbon::createFromFormat('Y-m-d', $date)->diffForHumans();
         return \Carbon\Carbon::createFromFormat('Y-m-d', $date)->addYears(543)->format('d-m-Y');
+    }
+
+    public function getDateGetDefaultAttribute()
+    {
+        return \Carbon\Carbon::parse($this->date_get)->subYears(543)->format('Y-m-d');
     }
 
     public function getTimeGetAttribute($date)
