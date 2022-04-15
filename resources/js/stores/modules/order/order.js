@@ -67,13 +67,16 @@ export default {
             return res;
         },
         async getOrderByID({ commit }, payload) {
-            const res = await axios.get(
-                `/api/admin/v1/order/${payload.orderID}/getOrderByID`
-            );
-            commit("order", res.data.order);
-            // commit("sumAll", res.data.order.sum_all);
-            commit("setNameGoods", res.data.order.name_goods);
-            return res;
+            return await axios
+                .get(`/api/admin/v1/order/${payload.orderID}/getOrderByID`)
+                .then((response) => {
+                    commit("order", response.data.order);
+                    commit("setNameGoods", response.data.order.name_goods);
+                    return response;
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
         },
         async paymentByOrderID({}, payload) {
             const res = await axios.post(

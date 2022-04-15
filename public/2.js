@@ -107,6 +107,37 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 var numeral = __webpack_require__(/*! numeral */ "./node_modules/numeral/numeral.js");
@@ -215,9 +246,9 @@ var render = function () {
                   _vm._v(" "),
                   _c("p", { staticClass: "text-caption pl-4 mt-1 mb-2" }, [
                     _vm._v(
-                      "\n            " +
+                      "\n                        " +
                         _vm._s(_vm.order.a_accessory.detail) +
-                        "\n          "
+                        "\n                    "
                     ),
                   ]),
                 ]),
@@ -243,9 +274,9 @@ var render = function () {
                   _vm._v(" "),
                   _c("p", { staticClass: "text-caption pl-4 mt-1 mb-2" }, [
                     _vm._v(
-                      "\n            " +
+                      "\n                        " +
                         _vm._s(_vm.order.a_service.detail) +
-                        "\n          "
+                        "\n                    "
                     ),
                   ]),
                 ]),
@@ -273,9 +304,28 @@ var render = function () {
                 _c("td", { staticClass: "text-right error--text" }, [
                   _c("strong", [
                     _vm._v(
-                      "- " +
+                      "-\n                        " +
                         _vm._s(
                           _vm._f("formatNumber")(_vm.order.sum_all.sumDiscount)
+                        )
+                    ),
+                  ]),
+                ]),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.order.sum_all.sumDeliverService > 0
+            ? _c("tr", [
+                _c("td", [_c("strong", [_vm._v("ค่าบริการจัดส่ง")])]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-right" }, [
+                  _c("strong", [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(
+                          _vm._f("formatNumber")(
+                            _vm.order.sum_all.sumDeliverService
+                          )
                         )
                     ),
                   ]),
@@ -330,7 +380,7 @@ var render = function () {
               _c("strong", [
                 _vm._v(
                   _vm._s(_vm.paymentSummary.text.status) +
-                    " :\n            " +
+                    " :\n                        " +
                     _vm._s(_vm.order.a_status.status)
                 ),
               ]),

@@ -216,7 +216,8 @@ class AOrderController extends Controller
             "orderDetailsOnlyTrashed",
             "orderDetails.productPrototypes.googleImage",
             "orderDetails.imageFromCustomers.googleImage",
-            "orderDetails.imageGoodsReviewToCustomers.googleImage"
+            "orderDetails.imageGoodsReviewToCustomers.googleImage",
+            "orderDeliveryService"
         )
             ->with("orderDetails.addOns.productAddOn.goodsAddOn")
             ->findOrFail($order_id);

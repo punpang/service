@@ -139,6 +139,13 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                 Route::get('{mch_order_no}/orderQuery', 'Order\KsherPayController@orderQuery');
             });
 
+            Route::prefix('delivery_service')->group(function () { // api/admin/v1/...
+                Route::post('{order}/store', 'Order\DeliveryServiceController@store');
+                Route::post('{delivery_service}/update', 'Order\DeliveryServiceController@update');
+                Route::post('{delivery_service}/remove', 'Order\DeliveryServiceController@remove');
+            });
+
+
             Route::prefix('noticeOfPaymentFromCustomer')->group(function () { // api/admin/v1/...
                 Route::get('getAllByAdmin', 'Order\NoticeOfPaymentFromCustomerController@getAllByAdmin');
                 Route::get('{id}/getCheckSlip', 'Order\NoticeOfPaymentFromCustomerController@getCheckSlip');

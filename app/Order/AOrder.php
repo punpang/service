@@ -8,6 +8,7 @@ use App\Order\OrderDetail;
 use Illuminate\Support\Str;
 use App\Order\AHistoryPayed;
 use App\Order\AlertMessages;
+use App\Order\DeliveryService;
 use Illuminate\Database\Eloquent\Model;
 use App\Order\NoticeOfPaymentFromCustomer;
 
@@ -196,6 +197,7 @@ class AOrder extends Model
             "sumService" => $this->sumService(),
             "sumDiscount" => $this->sumDiscount(),
             "sumAddOn" => $this->sumAddOn(),
+            "sumDeliverService" => $this->sumDeliverService()
             // "sumHistoryPayed" => $this->sumHistoryPayed()
         ];
     }
@@ -212,7 +214,7 @@ class AOrder extends Model
 
     public function sumTASC()
     {
-        return  $this->sumGoods() + $this->sumAccessoryServiceDiscount();
+        return  $this->sumGoods() + $this->sumAccessoryServiceDiscount() + $this->sumDeliverService();
     }
 
     public function getSumTascAttribute()
@@ -378,6 +380,16 @@ class AOrder extends Model
     public function orderDetail()
     {
         return $this->hasOne(OrderDetail::class, "order_id", "id")->orderBy("created_at", "desc");
+    }
+
+    public function orderDeliveryService()
+    {
+        return $this->hasOne(DeliveryService::class, "order_id", "id");
+    }
+
+    public function sumDeliverService()
+    {
+        return $this->orderDeliveryService()->sum("delivery_fee");
     }
 
     public function alertMessages()

@@ -46,6 +46,7 @@ import orderGoodsAddOn from "@/js/stores/modules/order/goodsAddOn";
 import orderM4 from "@/js/stores/modules/order/m4";
 import orderProductPrototype from "@/js/stores/modules/order/orderProductPrototype";
 import orderImageGoodsReviewToCustomer from "@/js/stores/modules/order/imageGoodsReviewToCustomer";
+import orderDeliveryService from "@/js/stores/modules/order/deliveryService";
 
 /////////////////////////
 /// LUCKY REWAYD START ///
@@ -100,5 +101,6 @@ export default new Vuex.Store({
         orderM4,
         orderProductPrototype,
         orderImageGoodsReviewToCustomer,
+        orderDeliveryService,
     },
 });

@@ -3,6 +3,7 @@
         <v-row>
             <v-col cols="12" md="8">
                 <cardManagesGoodsDetail></cardManagesGoodsDetail>
+                <cardDeliveryShow></cardDeliveryShow>
             </v-col>
             <v-col cols="12" md="4">
                 <cardDataCustomer></cardDataCustomer>
@@ -31,6 +32,7 @@
                     <v-subheader>การชำระเงิน</v-subheader>
                     <btnAlertPayment></btnAlertPayment>
                     <btnPayment></btnPayment>
+                    <btnDelivery></btnDelivery>
                     <!-- <v-list-item v-for="tile in tiles" :key="tile.title">
                         <v-list-item-title>{{ tile.title }}</v-list-item-title>
                     </v-list-item> -->
@@ -46,6 +48,7 @@ import cardDataCustomer from "@/js/components/order/cardDataCustomer";
 import cardDataOrderDetail from "@/js/components/order/cardDataOrderDetail";
 import cardManagesGoodsDetail from "@/js/components/order/cardManagesGoodsDetail";
 import cardPaymentSummary from "@/js/components/order/cardPaymentSummary";
+import cardDeliveryShow from "@/js/components/order/delivery/show/cardDeliveryShow";
 
 import btnAddGoods from "@/js/components/order/addGoods/btnAddGoods";
 
@@ -53,6 +56,8 @@ import btnAlertPayment from "@/js/components/order/manages/alertPayment/btnAlert
 import btnPayment from "@/js/components/order/manages/payment/btnPayment";
 import btnChangeCustomer from "@/js/components/order/changeCustomer/btnChangeCustomer";
 import btnChangeDateTimeGet from "@/js/components/order/changeDateTimeGet/btnChangeDateTimeGet";
+import btnDelivery from "@/js/components/order/delivery/btnDelivery";
+
 export default {
     components: {
         cardDataCustomer,
@@ -60,12 +65,14 @@ export default {
 
         cardManagesGoodsDetail,
         cardPaymentSummary,
+        cardDeliveryShow,
 
         btnAddGoods,
         btnAlertPayment,
         btnPayment,
         btnChangeCustomer,
         btnChangeDateTimeGet,
+        btnDelivery,
     },
     data() {
         return {
