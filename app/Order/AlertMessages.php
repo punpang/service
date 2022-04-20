@@ -179,4 +179,19 @@ class AlertMessages extends Model
         $msgSms = 'หมายเลขคำสั่งซื้อ #' . $order->id . " ของคุณ ได้เปลี่ยนแปลงวัน-เวลานัดรับเป็น " . $order->date_get . " " . $order->time_get . " น. รายละเอียดคำสั่งซื้อคลิกลิงก์ [ " . $bitly . " ]";
         return MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
     }
+
+    public static function linePrepareGoods($order)
+    {
+        $msgLine = 'จัดเตรียมสินค้า => #' . $order->id;
+        return Linenotify::send($msgLine);
+    }
+
+    public static function smsPrepareGoods($order, $alertSMS = true)
+    {
+        $link = URL::base() . "/o/" . $order->auth_order;
+        $bitly = Bitly::getUrl($link);
+
+        $msgSms = 'หมายเลขคำสั่งซื้อ #' . $order->id . " ของคุณ สินค้าจัดเตรียมเรียบร้อยแล้ว สามารถเข้ารับสินค้าได้ทันที *ไม่สามารถรับสินค้าหลังเวลาร้านปิดได้ รายละเอียดคำสั่งซื้อคลิกลิงก์ [ " . $bitly . " ]";
+        return MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
+    }
 }

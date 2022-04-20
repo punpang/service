@@ -38,7 +38,7 @@
             <v-slide-group show-arrows>
                 <v-slide-item>
                     <cardFormNoticeOfPaymentByCustomer
-                        v-if="order.ntpfcs_for_customer.length > 0"
+                        v-if="order.ntpfcs_for_customer"
                         class="mx-1"
                     ></cardFormNoticeOfPaymentByCustomer>
                 </v-slide-item>

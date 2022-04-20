@@ -3,10 +3,17 @@ export default {
     state: {
         setNameGoods: "",
         order: {
-            sumAll: {
+            sum_all: {
                 sumASC: 0,
                 sumGoods: 0,
                 sumTASC: 0,
+                sumBalance: 0,
+                sumDeposited: 0,
+                sumAccessory: 0,
+                sumService: 0,
+                sumDiscount: 0,
+                sumAddOn: 0,
+                sumDeliverService: 0,
             },
             customer: {
                 status_consent_condition: 1,
@@ -294,6 +301,20 @@ export default {
             return await axios
                 .post(
                     `/api/admin/v1/order/${payload.order_id}/changeDateTimeGet`,
+                    payload
+                )
+                .then((response) => {
+                    return response;
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        },
+
+        async prepareGoods({}, payload) {
+            return await axios
+                .post(
+                    `/api/admin/v1/order/${payload.order_id}/prepareGoods`,
                     payload
                 )
                 .then((response) => {

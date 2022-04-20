@@ -8,59 +8,138 @@
                     <v-icon>more_horiz</v-icon>
                 </v-btn>
             </v-card-title>
-            <v-card-text class="pa-4">
-                <div>
-                    <strong>ชื่อผู้รับ</strong>
-                    <strong class="text-subtitle-1">{{
-                        order.order_delivery_service.recipient_name
-                    }}</strong>
-                </div>
-                <div>
-                    <strong>เบอร์โทรผู้รับ</strong>
-                    <strong class="text-subtitle-1">
-                        {{ order.order_delivery_service.recipient_phone }}
-                    </strong>
-                </div>
-                <div>
-                    <strong>ค่าบริการจัดส่ง</strong>
-                    <strong class="text-subtitle-1"
-                        >{{
-                            order.order_delivery_service.delivery_fee
-                        }}
-                        บาท</strong
-                    >
-                </div>
-                <div v-if="order.order_delivery_service.detail">
-                    <strong>หมายเหตุ</strong>
-                    <strong class="text-subtitle-1">{{
-                        order.order_delivery_service.detail
-                    }}</strong>
-                </div>
-                <v-btn
-                    small
-                    class="info"
-                    :href="order.order_delivery_service.link_google_maps"
-                >
-                    <v-icon left>location_on</v-icon>
-                    Link Google Map</v-btn
-                >
-                <v-divider></v-divider>
-                <v-btn class="success">
-                    <v-icon left>local_shipping</v-icon>
-                    ทำการจัดส่ง</v-btn
-                >
-                <v-btn class="error" @click="clickRemove()">
-                    <v-icon left>delete</v-icon>
-                    ลบ</v-btn
-                >
+            <v-card-text class="pa-3">
+                <v-row>
+                    <v-col cols="12" md="6">
+                        <v-card outlined height="100%">
+                            <v-card-text class="pa-4"
+                                ><strong class="text-h6 black--text"
+                                    >ข้อมูลผู้รับ</strong
+                                >
+                                <div class="mt-2">
+                                    <strong>ชื่อผู้รับ ::</strong>
+                                    <strong class="text-subtitle-1">{{
+                                        order.order_delivery_service
+                                            .recipient_name
+                                    }}</strong>
+                                </div>
+                                <div>
+                                    <strong>เบอร์โทรผู้รับ ::</strong>
+                                    <strong class="text-subtitle-1">
+                                        {{
+                                            order.order_delivery_service
+                                                .recipient_phone
+                                        }}
+                                    </strong>
+                                </div>
+                                <div>
+                                    <strong>ค่าบริการจัดส่ง ::</strong>
+                                    <strong class="text-subtitle-1"
+                                        >{{
+                                            order.order_delivery_service
+                                                .delivery_fee
+                                        }}
+                                        บาท</strong
+                                    >
+                                </div>
+                                <div>
+                                    <strong>หมายเหตุ ::</strong>
+                                    <strong class="text-subtitle-1">{{
+                                        order.order_delivery_service.detail
+                                    }}</strong>
+                                </div>
+                                <v-btn
+                                    small
+                                    class="info mt-2"
+                                    :href="
+                                        order.order_delivery_service
+                                            .link_google_maps
+                                    "
+                                >
+                                    <v-icon left>location_on</v-icon>
+                                    Link Google Map</v-btn
+                                ></v-card-text
+                            >
+                        </v-card>
+                    </v-col>
+                    <v-col cols="12" md="6">
+                        <v-card outlined height="100%">
+                            <v-card-text class="pa-4">
+                                <strong class="text-h6 black--text"
+                                    >ข้อมูลไรเดอร์</strong
+                                >
+                                <div class="mt-2">
+                                    <strong>ชื่อไรเดอร์ ::</strong>
+                                    <strong class="text-subtitle-1">{{
+                                        order.order_delivery_service.rider_name
+                                    }}</strong>
+                                </div>
+                                <div>
+                                    <strong>เบอร์โทรไรเดอร์ ::</strong>
+                                    <strong class="text-subtitle-1">{{
+                                        order.order_delivery_service.rider_phone
+                                    }}</strong>
+                                </div>
+                                <div>
+                                    <strong>Delivery Platform ::</strong>
+                                    <strong class="text-subtitle-1">{{
+                                        order.order_delivery_service
+                                            .delivery_platform
+                                    }}</strong>
+                                </div>
+                                <div>
+                                    <strong>หมายเหตุ ::</strong>
+                                    <strong class="text-subtitle-1">{{
+                                        order.order_delivery_service
+                                            .rider_remark
+                                    }}</strong>
+                                </div>
+                                <v-btn
+                                    small
+                                    class="info mt-2"
+                                    :href="
+                                        order.order_delivery_service
+                                            .link_google_maps
+                                    "
+                                >
+                                    <v-icon left>link</v-icon>
+                                    Link Rider</v-btn
+                                ></v-card-text
+                            >
+                        </v-card>
+                    </v-col>
+                </v-row>
             </v-card-text>
+            <v-card-actions class="px-3 pb-3" v-if="order.status <= 8">
+                <btnDelivery
+                    v-if="order.status != 8"
+                    :propButton="'btn'"
+                    class="mr-2"
+                ></btnDelivery>
+                <btnRider
+                    v-if="order.status == 8"
+                    :disabled="order.sum_all.sumBalance != 0"
+                ></btnRider>
+                <v-btn
+                    class="error"
+                    @click="clickRemove()"
+                    v-if="order.status < 8"
+                >
+                    <v-icon left>delete</v-icon>
+                    ลบการจัดส่ง</v-btn
+                >
+            </v-card-actions>
         </v-card>
     </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import btnDelivery from "@/js/components/order/delivery/btnDelivery";
+import btnRider from "@/js/components/order/delivery/rider/btnRider";
+
 export default {
+    components: { btnDelivery, btnRider },
     methods: {
         clickRemove() {
             this.$swal({

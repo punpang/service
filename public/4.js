@@ -814,6 +814,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1061,16 +1091,22 @@ Vue.filter("formatNumber", function (value) {
               case 0:
                 loader = _this.$loading.show();
                 _context.next = 3;
-                return _this.$store.dispatch("orderKsher/getUseKsherChannelPayment");
+                return _this.$store.dispatch("orderIndex/getOrderByUUID", {
+                  uuid: _this.$route.params.uuid
+                });
 
               case 3:
                 _context.next = 5;
-                return _this.CaseOptionAmounts();
+                return _this.$store.dispatch("orderKsher/getUseKsherChannelPayment");
 
               case 5:
+                _context.next = 7;
+                return _this.CaseOptionAmounts();
+
+              case 7:
                 loader.hide();
 
-              case 6:
+              case 8:
               case "end":
                 return _context.stop();
             }
@@ -2723,7 +2759,7 @@ var render = function () {
                       _c("v-icon", { attrs: { left: "" } }, [
                         _vm._v("receipt"),
                       ]),
-                      _vm._v("ชำระเงิน\n      "),
+                      _vm._v("ชำระเงิน\n            "),
                     ],
                     1
                   ),
@@ -2751,7 +2787,7 @@ var render = function () {
                   _c("v-icon", { attrs: { left: "", color: "white" } }, [
                     _vm._v("receipt"),
                   ]),
-                  _vm._v("ชำระเงิน\n        "),
+                  _vm._v("ชำระเงิน\n                "),
                   _c("v-spacer"),
                   _vm._v(" "),
                   _c(
@@ -2842,9 +2878,9 @@ var render = function () {
                                 },
                                 [
                                   _vm._v(
-                                    "\n                " +
+                                    "\n                                " +
                                       _vm._s(optionAmount.text) +
-                                      "\n              "
+                                      "\n                            "
                                   ),
                                 ]
                               )
@@ -2855,7 +2891,7 @@ var render = function () {
                           _vm.order.status_full_payment
                             ? _c("strong", { staticClass: "error--text" }, [
                                 _vm._v(
-                                  "ไม่สามารถเปลี่ยนแปลงยอดที่ต้องการชำระเงินได้\n              เนื่องจากท่านต้องชำระเงินเต็มจำนวน"
+                                  "ไม่สามารถเปลี่ยนแปลงยอดที่ต้องการชำระเงินได้\n                            เนื่องจากท่านต้องชำระเงินเต็มจำนวน"
                                 ),
                               ])
                             : _vm._e(),
@@ -3008,7 +3044,7 @@ var render = function () {
                                                                   },
                                                                   [
                                                                     paymentChannel.status_use &&
-                                                                    _vm.deposit >
+                                                                    _vm.deposit >=
                                                                       paymentChannel.minimum
                                                                       ? _c(
                                                                           "strong",
@@ -3046,11 +3082,11 @@ var render = function () {
                                                                           },
                                                                           [
                                                                             _vm._v(
-                                                                              "ยอดชำระขั้นต่ำ\n                              " +
+                                                                              "ยอดชำระขั้นต่ำ\n                                                            " +
                                                                                 _vm._s(
                                                                                   paymentChannel.minimum
                                                                                 ) +
-                                                                                " บาท"
+                                                                                "\n                                                            บาท"
                                                                             ),
                                                                           ]
                                                                         )
@@ -3116,7 +3152,7 @@ var render = function () {
                       _c("v-icon", { attrs: { left: "" } }, [
                         _vm._v("exit_to_app"),
                       ]),
-                      _vm._v("\n          ออกจากหน้านี้"),
+                      _vm._v("\n                    ออกจากหน้านี้"),
                     ],
                     1
                   ),
@@ -3781,7 +3817,7 @@ var render = function () {
               _c(
                 "v-slide-item",
                 [
-                  _vm.order.ntpfcs_for_customer.length > 0
+                  _vm.order.ntpfcs_for_customer
                     ? _c("cardFormNoticeOfPaymentByCustomer", {
                         staticClass: "mx-1",
                       })

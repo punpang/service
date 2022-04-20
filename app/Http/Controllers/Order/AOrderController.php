@@ -606,4 +606,37 @@ class AOrderController extends Controller
             "message" => "เปลี่ยนวัน-เวลานัดรับสำเร็จ"
         ], 200);
     }
+
+    public function prepareGoods(AOrder $order)
+    {
+        // if ($order->sum_all["sumBalance"] != 0) {
+        //     return response()->json([
+        //         "status" => "failed",
+        //         "title" => "ไม่สำเร็จ",
+        //         "icon" => "error",
+        //         "message" => "มียอดคงเหลืิอค้างอยู่"
+        //     ], 201);
+        // }
+
+        if ($order->status != 3) {
+            return response()->json([
+                "status" => "failed",
+                "title" => "ไม่สำเร็จ",
+                "icon" => "error",
+                "message" => "สถานะสินค้าไม่ถูกต้อง"
+            ], 201);
+        }
+
+        $order->update(["status" => "8"]);
+
+        AlertMessages::linePrepareGoods($order);
+        AlertMessages::smsPrepareGoods($order);
+
+        return response()->json([
+            "status" => "success",
+            "title" => "สำเร็จ",
+            "icon" => "success",
+            "message" => "เตรียมสินค้าเรียบร้อย"
+        ], 200);
+    }
 }

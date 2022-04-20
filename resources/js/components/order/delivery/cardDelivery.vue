@@ -3,7 +3,7 @@
         <v-card-title class="text-h6 white--text warning">
             บริการจัดส่ง
             <v-spacer></v-spacer>
-            <v-btn fab icon x-small>
+            <v-btn fab icon x-small @click="exit()">
                 <v-icon class="white--text">close</v-icon>
             </v-btn>
         </v-card-title>
@@ -67,6 +67,18 @@ export default {
         };
     },
     methods: {
+        validURL(str) {
+            var pattern = new RegExp(
+                "^(https?:\\/\\/)?" + // protocol
+                    "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+                    "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+                    "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+                    "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+                    "(\\#[-a-z\\d_]*)?$",
+                "i"
+            ); // fragment locator
+            return !!pattern.test(str);
+        },
         async clickSave() {
             if (
                 this.propDeliveryService.recipient_name == "" ||
@@ -75,6 +87,11 @@ export default {
                 this.propDeliveryService.link_google_maps == ""
             ) {
                 this.$toast.warning("โปรดกรอกข้อมูลให้ครบถ้วน");
+                return;
+            }
+
+            if (!this.validURL(this.propDeliveryService.link_google_maps)) {
+                this.$toast.error("โปรดกรอกลิงก์เท่านั้น");
                 return;
             }
 

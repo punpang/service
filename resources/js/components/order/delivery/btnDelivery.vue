@@ -9,11 +9,27 @@
             transition="dialog-top-transition"
         >
             <template v-slot:activator="{ on }">
-                <v-list-item v-on="on" @click="clickStart()">
-                    <v-list-item-title class="py-1">
-                        บริการจัดส่ง
-                    </v-list-item-title>
-                </v-list-item>
+                <div>
+                    <v-list-item
+                        v-on="on"
+                        @click="clickStart()"
+                        v-if="propButton == 'list'"
+                    >
+                        <v-list-item-title class="py-1">
+                            บริการจัดส่ง
+                        </v-list-item-title>
+                    </v-list-item>
+                    <v-btn
+                        class="warning"
+                        v-if="propButton == 'btn'"
+                        v-on="on"
+                        @click="clickStart()"
+                    >
+                        <v-icon left>edit</v-icon>
+
+                        แก้ไขข้อมูล</v-btn
+                    >
+                </div>
             </template>
 
             <v-card>
@@ -30,6 +46,7 @@
 import cardDelivery from "@/js/components/order/delivery/cardDelivery";
 import { mapGetters } from "vuex";
 export default {
+    props: ["propButton"],
     components: { cardDelivery },
     data() {
         return {

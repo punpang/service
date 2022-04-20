@@ -24,15 +24,29 @@
                     </v-btn>
                 </template>
                 <v-list>
-                    <v-subheader>สินค้า</v-subheader>
-                    <btnAddGoods></btnAddGoods>
-                    <v-subheader>เปลี่ยนแปลงข้อมูล</v-subheader>
-                    <btnChangeCustomer></btnChangeCustomer>
-                    <btnChangeDateTimeGet></btnChangeDateTimeGet>
-                    <v-subheader>การชำระเงิน</v-subheader>
-                    <btnAlertPayment></btnAlertPayment>
-                    <btnPayment></btnPayment>
-                    <btnDelivery></btnDelivery>
+                    <!-- <v-subheader>สินค้า</v-subheader> -->
+                    <btnAddGoods v-if="order.status < 8"></btnAddGoods>
+                    <!-- <v-subheader>เปลี่ยนแปลงข้อมูล</v-subheader> -->
+                    <btnChangeCustomer
+                        v-if="order.status < 8"
+                    ></btnChangeCustomer>
+                    <btnChangeDateTimeGet
+                        v-if="order.status < 8"
+                    ></btnChangeDateTimeGet>
+                    <!-- <v-subheader>การชำระเงิน</v-subheader> -->
+                    <btnAlertPayment
+                        v-if="order.sum_all.sumBalance > 0"
+                    ></btnAlertPayment>
+                    <btnPayment
+                        v-if="order.sum_all.sumBalance > 0"
+                    ></btnPayment>
+                    <!-- <v-subheader></v-subheader> -->
+                    <btnDelivery
+                        :propButton="'list'"
+                        v-if="!order.order_delivery_service && order.status < 8"
+                    ></btnDelivery>
+                    <btnPrepareGoods></btnPrepareGoods>
+
                     <!-- <v-list-item v-for="tile in tiles" :key="tile.title">
                         <v-list-item-title>{{ tile.title }}</v-list-item-title>
                     </v-list-item> -->
@@ -57,7 +71,7 @@ import btnPayment from "@/js/components/order/manages/payment/btnPayment";
 import btnChangeCustomer from "@/js/components/order/changeCustomer/btnChangeCustomer";
 import btnChangeDateTimeGet from "@/js/components/order/changeDateTimeGet/btnChangeDateTimeGet";
 import btnDelivery from "@/js/components/order/delivery/btnDelivery";
-
+import btnPrepareGoods from "@/js/components/order/prepareGoods/btnPrepareGoods";
 export default {
     components: {
         cardDataCustomer,
@@ -73,6 +87,7 @@ export default {
         btnChangeCustomer,
         btnChangeDateTimeGet,
         btnDelivery,
+        btnPrepareGoods,
     },
     data() {
         return {
