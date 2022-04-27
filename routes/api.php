@@ -41,10 +41,12 @@ Route::prefix('v1')->group(function () { // api/v1/...
     Route::prefix('guest')->group(function () { // api/v1/guest/
 
         Route::prefix('ksher')->group(function () { // api/v1/guest/ksher
+            Route::get('fetch', 'Order\KsherChannelPaymentController@fetch');
             Route::get('getUseKsherChannelPayment', 'Order\KsherChannelPaymentController@getUseKsherChannelPayment');
             Route::post('orderCreate', 'Order\KsherPayController@orderCreate');
             Route::get('{ksher}/checkStatusPaid', 'Order\KsherPayController@checkStatusPaid');
         });
+
         Route::prefix('noticeOfPaymentFromCustomer')->group(function () { // api/v1/guest/ksher
             Route::post('createByUuid', 'Order\NoticeOfPaymentFromCustomerController@createByUuid');
         });
@@ -129,7 +131,13 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
         });
 
 
+
         Route::prefix("v1")->group(function () {
+
+            Route::prefix('ksher')->group(function () { // api/v1/guest/ksher
+                Route::get('fetch', 'Order\KsherChannelPaymentController@fetch');
+                Route::post('setDayOff', 'Order\KsherChannelPaymentController@setDayOff');
+            });
 
             Route::prefix('QRCodeGenerator')->group(function () { // api/admin/v1/...
                 Route::post('promptPayQrCodeSCB', 'Order\AOrderController@promptPayQrCodeSCB');

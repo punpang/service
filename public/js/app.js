@@ -110237,13 +110237,13 @@ var routes = [{
   path: "/promotion/:promotion_id",
   name: "promotionsId",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(27), __webpack_require__.e(13)]).then(__webpack_require__.bind(null, /*! @/js/pages/promotions/promotionId */ "./resources/js/pages/promotions/promotionId.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(13)]).then(__webpack_require__.bind(null, /*! @/js/pages/promotions/promotionId */ "./resources/js/pages/promotions/promotionId.vue"));
   }
 }, {
   path: "/order/:uuid",
   name: "orderUUID",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(27), __webpack_require__.e(7), __webpack_require__.e(14)]).then(__webpack_require__.bind(null, /*! @/js/pages/promotions/orderUUID */ "./resources/js/pages/promotions/orderUUID.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(7), __webpack_require__.e(14)]).then(__webpack_require__.bind(null, /*! @/js/pages/promotions/orderUUID */ "./resources/js/pages/promotions/orderUUID.vue"));
   }
 }, {
   path: "/manages/payment/check",
@@ -110258,7 +110258,7 @@ var routes = [{
   path: "/manages/promotion/:id",
   name: "managesPromotionID",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(27), __webpack_require__.e(7), __webpack_require__.e(8), __webpack_require__.e(12)]).then(__webpack_require__.bind(null, /*! @/js/pages/promotions/manages/promotionId */ "./resources/js/pages/promotions/manages/promotionId.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(7), __webpack_require__.e(8), __webpack_require__.e(12)]).then(__webpack_require__.bind(null, /*! @/js/pages/promotions/manages/promotionId */ "./resources/js/pages/promotions/manages/promotionId.vue"));
   },
   meta: {
     requiresAuth: true
@@ -110267,7 +110267,7 @@ var routes = [{
   path: "/manages/order/newOrder",
   name: "managesOrderNew",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(27), __webpack_require__.e(1), __webpack_require__.e(6), __webpack_require__.e(11)]).then(__webpack_require__.bind(null, /*! @/js/pages/order/newOrder */ "./resources/js/pages/order/newOrder.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(6), __webpack_require__.e(11)]).then(__webpack_require__.bind(null, /*! @/js/pages/order/newOrder */ "./resources/js/pages/order/newOrder.vue"));
   },
   meta: {
     requiresAuth: true
@@ -110285,7 +110285,7 @@ var routes = [{
   path: "/manages/order/:id/showOrderByID",
   name: "managesOrderShowOrderByID",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(27), __webpack_require__.e(9), __webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(3), __webpack_require__.e(6), __webpack_require__.e(5), __webpack_require__.e(10)]).then(__webpack_require__.bind(null, /*! @/js/pages/order/showOrderByID */ "./resources/js/pages/order/showOrderByID.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(9), __webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(3), __webpack_require__.e(6), __webpack_require__.e(5), __webpack_require__.e(10)]).then(__webpack_require__.bind(null, /*! @/js/pages/order/showOrderByID */ "./resources/js/pages/order/showOrderByID.vue"));
   },
   meta: {
     requiresAuth: true
@@ -110294,7 +110294,7 @@ var routes = [{
   path: "/manages/order/:id/paymentOrderByID",
   name: "managesOrderIDpromptPaymentOrderByID",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(27), __webpack_require__.e(9), __webpack_require__.e(2), __webpack_require__.e(5), __webpack_require__.e(18)]).then(__webpack_require__.bind(null, /*! @/js/pages/order/paymentOrderByID */ "./resources/js/pages/order/paymentOrderByID.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(9), __webpack_require__.e(2), __webpack_require__.e(5), __webpack_require__.e(18)]).then(__webpack_require__.bind(null, /*! @/js/pages/order/paymentOrderByID */ "./resources/js/pages/order/paymentOrderByID.vue"));
   },
   meta: {
     requiresAuth: true
@@ -110303,7 +110303,16 @@ var routes = [{
   path: "/manages/order/checkNoticeOfPaymentFromCustomer",
   name: "managesOrderCheckNoticeOfPaymentFromCustomer",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(27), __webpack_require__.e(19)]).then(__webpack_require__.bind(null, /*! @/js/pages/order/checkNoticeOfPaymentFromCustomer.vue */ "./resources/js/pages/order/checkNoticeOfPaymentFromCustomer.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(19)]).then(__webpack_require__.bind(null, /*! @/js/pages/order/checkNoticeOfPaymentFromCustomer.vue */ "./resources/js/pages/order/checkNoticeOfPaymentFromCustomer.vue"));
+  },
+  meta: {
+    requiresAuth: true
+  }
+}, {
+  path: "/manages/ksher/dayOff",
+  name: "managesKsherDayOff",
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! @/js/pages/ksher/dayOff.vue */ "./resources/js/pages/ksher/dayOff.vue"));
   },
   meta: {
     requiresAuth: true
@@ -110362,19 +110371,19 @@ var routes = [{
   path: "/menu",
   name: "menuCake",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(27), __webpack_require__.e(26)]).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/menu */ "./resources/js/pages/punpang/menu.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(26)]).then(__webpack_require__.bind(null, /*! @/js/pages/punpang/menu */ "./resources/js/pages/punpang/menu.vue"));
   }
 }, {
   path: "/guest/order/auth/:uuid",
   name: "guestOrderAuthUuid",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(27), __webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(3), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! @/js/pages/guest/orders/uuid */ "./resources/js/pages/guest/orders/uuid.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(3), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! @/js/pages/guest/orders/uuid */ "./resources/js/pages/guest/orders/uuid.vue"));
   }
 }, {
   path: "/o/:uuid",
   name: "guestOrderAuthUuid",
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(27), __webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(3), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! @/js/pages/guest/orders/uuid */ "./resources/js/pages/guest/orders/uuid.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(3), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! @/js/pages/guest/orders/uuid */ "./resources/js/pages/guest/orders/uuid.vue"));
   }
 }, {
   path: "/ksher/successfully",
@@ -111453,7 +111462,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   namespaced: true,
   state: {
     useKsherChannelPayment: {},
-    ksherPay: {}
+    ksherPay: []
   },
   mutations: {
     useKsherChannelPayment: function useKsherChannelPayment(state, data) {
@@ -111469,6 +111478,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     ksherPay: function ksherPay(state) {
       return state.ksherPay;
+    },
+    kshers: function kshers(state) {
+      return state.kshers;
     }
   },
   actions: {
@@ -111567,6 +111579,60 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee4);
+      }))();
+    },
+    fetch: function fetch(_ref5, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var commit, params;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                commit = _ref5.commit;
+                params = payload.params ? payload.params : "";
+                _context5.next = 4;
+                return axios.get("/api/admin/v1/ksher/fetch?".concat(params)).then(function (response) {
+                  commit("ksherPay", response.data);
+                  return response;
+                })["catch"](function (err) {
+                  log.error(err);
+                });
+
+              case 4:
+                return _context5.abrupt("return", _context5.sent);
+
+              case 5:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
+    },
+    setDayOff: function setDayOff(_ref6, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                _objectDestructuringEmpty(_ref6);
+
+                _context6.next = 3;
+                return axios.post("/api/admin/v1/ksher/setDayOff", payload).then(function (response) {
+                  return response;
+                })["catch"](function (err) {
+                  log.error(err);
+                });
+
+              case 3:
+                return _context6.abrupt("return", _context6.sent);
+
+              case 4:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
       }))();
     }
   }

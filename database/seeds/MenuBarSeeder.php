@@ -31,6 +31,14 @@ class MenuBarSeeder extends Seeder
                     ["title" => "แลกของรางวัล", "to" => "/manages/lucky/redeem-code", "admin" => 1, "customer" => 0]
                 ]
             ],
+            [
+                // จัดการ Ksher
+                "title" => "KSHER", "action" => "shop", "admin" => 1, "customer" => 0,
+                "subs" => [
+                    ["title" => "ช่องทางการชำระเงิน", "to" => "/manages/ksher/channel", "admin" => 1, "customer" => 0],
+                    ["title" => "วันที่ปิดใช้งาน", "to" => "/manages/ksher/dayOff", "admin" => 1, "customer" => 0],
+                ]
+            ],
             // [
             //     // จัดการลุ้นโชค
             //     "title" => "จัดการเมนู", "action" => "shop", "admin" => 1, "customer" => 0,

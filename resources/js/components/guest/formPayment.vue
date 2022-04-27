@@ -94,7 +94,8 @@
                                                     :disabled="
                                                         !paymentChannel.status_use ||
                                                         deposit <
-                                                            paymentChannel.minimum
+                                                            paymentChannel.minimum ||
+                                                            paymentChannel.ksher_day_off != null
                                                     "
                                                 >
                                                     <v-scroll-y-transition>

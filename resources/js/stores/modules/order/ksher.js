@@ -2,7 +2,7 @@ export default {
     namespaced: true,
     state: {
         useKsherChannelPayment: {},
-        ksherPay: {},
+        ksherPay: [],
     },
     mutations: {
         useKsherChannelPayment(state, data) {
@@ -15,6 +15,7 @@ export default {
     getters: {
         useKsherChannelPayment: (state) => state.useKsherChannelPayment,
         ksherPay: (state) => state.ksherPay,
+        kshers: (state) => state.kshers,
     },
     actions: {
         async getUseKsherChannelPayment({ commit }) {
@@ -42,6 +43,30 @@ export default {
                 .get(
                     `/api/v1/guest/ksher/${payload.mch_order_no}/checkStatusPaid`
                 )
+                .then((response) => {
+                    return response;
+                })
+                .catch((err) => {
+                    log.error(err);
+                });
+        },
+
+        async fetch({ commit }, payload) {
+            const params = payload.params ? payload.params : "";
+            return await axios
+                .get(`/api/admin/v1/ksher/fetch?${params}`)
+                .then((response) => {
+                    commit("ksherPay", response.data);
+                    return response;
+                })
+                .catch((err) => {
+                    log.error(err);
+                });
+        },
+
+        async setDayOff({}, payload) {
+            return await axios
+                .post(`/api/admin/v1/ksher/setDayOff`, payload)
                 .then((response) => {
                     return response;
                 })

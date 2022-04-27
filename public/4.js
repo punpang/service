@@ -844,6 +844,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -2976,7 +2977,9 @@ var render = function () {
                                                               disabled:
                                                                 !paymentChannel.status_use ||
                                                                 _vm.deposit <
-                                                                  paymentChannel.minimum,
+                                                                  paymentChannel.minimum ||
+                                                                paymentChannel.ksher_day_off !=
+                                                                  null,
                                                             },
                                                             on: {
                                                               click: toggle,
