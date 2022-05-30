@@ -23,9 +23,18 @@ class ACustomer extends Model implements Auditable
 
     protected $hidden = ["created_at", "updated_at"];
 
+    protected $appends = [
+        "phone_format"
+    ];
+
     public function getDateGetAtAttribute($date)
     {
         return \Carbon\Carbon::createFromFormat('Y-m-d', $date)->addYears(543)->format('d-m-Y');
+    }
+
+    public function getPhoneFormatAttribute()
+    {
+        return $this->tel[0] . $this->tel[1] . $this->tel[2] . "-" . $this->tel[3] . $this->tel[4] . $this->tel[5] . "-XXXX";
     }
 
     public function customerScores()

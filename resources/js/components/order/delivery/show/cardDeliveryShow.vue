@@ -4,9 +4,9 @@
             <v-card-title class="text-h6 white--text info">
                 บริการจัดส่ง
                 <v-spacer></v-spacer>
-                <v-btn fab icon x-small class="white--text">
+                <!-- <v-btn fab icon x-small class="white--text">
                     <v-icon>more_horiz</v-icon>
-                </v-btn>
+                </v-btn> -->
             </v-card-title>
             <v-card-text class="pa-3">
                 <v-row>
@@ -110,7 +110,10 @@
                     </v-col>
                 </v-row>
             </v-card-text>
-            <v-card-actions class="px-3 pb-3" v-if="order.status <= 8">
+            <v-card-actions
+                class="px-3 pb-3"
+                v-if="order.status <= 8 && user.type == 1"
+            >
                 <btnDelivery
                     v-if="order.status != 8"
                     :propButton="'btn'"
@@ -119,7 +122,16 @@
                 <btnRider
                     v-if="order.status == 8"
                     :disabled="order.sum_all.sumBalance != 0"
+                    class="mr-2"
                 ></btnRider>
+                <v-btn
+                    class="success mr-2"
+                    @click="saveSuccess()"
+                    v-if="order.order_delivery_service.status == 'shipping'"
+                >
+                    <v-icon left>local_shipping</v-icon>
+                    จัดส่งเรียบร้อย
+                </v-btn>
                 <v-btn
                     class="error"
                     @click="clickRemove()"
@@ -159,9 +171,9 @@ export default {
             });
         },
         async processingRemove() {
-            console.log(this.order.order_delivery_service.id);
+            // console.log(this.order.order_delivery_service.id);
 
-            // let loader = this.$loading.show();
+            let loader = this.$loading.show();
 
             const result = await this.$store.dispatch(
                 "orderDeliveryService/remove",
@@ -176,17 +188,56 @@ export default {
                     orderID: this.order.id,
                 });
                 this.exit();
-                // loader.hide();
+                loader.hide();
             } else {
                 this.$toast.error(result.data.message);
             }
 
             // loader.hide();
         },
+        async saveSuccess() {
+            this.$swal({
+                icon: "warning",
+                title: "คำเตือน",
+                text: "จัดส่งสินค้าถึงลูกค้าแล้วใช่ไหม ?",
+                allowOutsideClick: false,
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "ใช่ , ถึงแล้ว",
+                cancelButtonText: "ไม่ใช่ , ยังไม่ถึง",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.processinSuccess();
+                }
+            });
+        },
+
+        async processinSuccess() {
+            let loader = this.$loading.show();
+
+            const response = await this.$store.dispatch(
+                "orderDeliveryService/success",
+                {
+                    delivery_service_id: this.order.order_delivery_service.id,
+                }
+            );
+
+            loader.hide();
+
+            this.$swal({
+                title: response.data.title,
+                text: response.data.message,
+                icon: response.data.icon,
+                confirmButtonText: "รับทราบ",
+                allowOutsideClick: false,
+            });
+        },
     },
     computed: {
         ...mapGetters({
             order: "orderIndex/order",
+            user: "main/User",
         }),
     },
 };

@@ -16,7 +16,7 @@ class DeliveryService extends Model
 
     public function AOrder()
     {
-        return $this->belongsTo(AOrder::class);
+        return $this->belongsTo(AOrder::class, "order_id", "id");
     }
 
     public function getDeliveryFeeAttribute($data)

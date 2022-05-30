@@ -2,7 +2,7 @@
     <div>
         <v-row class="mb-2">
             <v-col cols="12" md="6">
-                <v-card class="mb-4" height="100%">
+                <v-card class="mb-4" height="100%" elevation="1">
                     <v-card-title class="text-h6 white--text warning">
                         เลือกช่องทางชำระเงิน
                     </v-card-title>

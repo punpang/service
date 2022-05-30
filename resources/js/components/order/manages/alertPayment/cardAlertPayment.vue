@@ -62,6 +62,8 @@
                                 <v-item
                                     v-slot="{ active, toggle }"
                                     @change="changeTimeOption(option)"
+                                    v-clipboard:copy="detailText()"
+                                    v-clipboard:success="onCopy"
                                 >
                                     <v-card
                                         :color="
@@ -134,25 +136,24 @@
           <v-icon left>notifications</v-icon>
           <strong>แจ้งเตือนชำระเงิน</strong>
         </v-btn> -->
-                <v-btn large dark class="error" @click="exit()">
+                <v-btn large class="error" @click="exit()">
                     <v-icon left>exit_to_app</v-icon>
                     <strong>ออก</strong>
                 </v-btn>
                 <v-btn
                     class="success"
                     large
-                    v-clipboard:copy="detailText()"
                     :disabled="dateTimeForPay == ''"
-                    v-clipboard:success="onCopy"
                     @click="clickAlertPaymentByOrderID"
                 >
                     <v-icon left>notifications</v-icon>
-                    <strong>แจ้งเตือนชำระเงิน</strong>
-
-                    <v-icon right>content_copy</v-icon></v-btn
-                >
+                    <strong>แจ้งชำระเงิน</strong>
+                </v-btn>
             </v-card-actions>
         </v-card>
+
+        <!-- <v-textarea label="ทดสอบ" outlined v-model="detailText"></v-textarea>
+        {{ detailText() }} -->
 
         <!-- {{ detailText() }} -->
     </div>
@@ -191,7 +192,7 @@ export default {
             );
             if (result.status == 200) {
                 this.$toast.success("แจ้งเตือนชำระเงินสำเร็จ");
-                this.$emit("emitAlertPayment");
+                this.exit();
             } else {
                 this.$toast.error("แจ้งเตือนชำระเงินไม่สำเร็จ");
             }
@@ -202,7 +203,7 @@ export default {
         },
         detailText() {
             // return "test TEXT";
-            let detail = "";
+            // let detail = "";
             //   if (
             //     this.order.m1 === 99 ||
             //     this.order.m2 === 99 ||
@@ -214,21 +215,25 @@ export default {
             //     detail = `${this.order.am1.m1}:${this.order.am2.m2}:${this.order.am3.m3}:${this.order.am4.m4}`;
             //   }
 
-            let other = `\nthis.order.other`;
-            if (this.order.other === "-") {
-                other = "";
-            }
+            // let other = `\nthis.order.other`;
+            // if (this.order.other === "-") {
+            //     other = "";
+            // }
 
-            let message = `\n\n📌 เขียนข้อความ\n${this.order.msg}`;
-            if (this.order.msg === "-") {
-                message = "";
-            }
+            // let message = `\n\n📌 เขียนข้อความ\n${this.order.msg}`;
+            // if (this.order.msg === "-") {
+            //     message = "";
+            // }
 
-            let sumUp = this.order.total + this.order.add;
+            // let sumUp = this.order.total + this.order.add;
 
             return `
-      📌 หมายเลขคำสั่งซื้อ #${this.order.id}\n\n📌ข้อมูลลูกค้า\nคุณ ${this.order.customer.name}\nหมายเลขโทรศัพท์ ${this.order.customer.tel}\n\n📌 วัน-เวลานัดรับสินค้า\n${this.order.date_get} ${this.order.time_get}\n\n📌 รายละเอียดรายการสั่งซื้อ\n${detail}${other}${message}\n\n📌 ยอดรวมทั้งหมด ${sumUp} บาท\n\n📌 โปรดชำระเงินภายใน\n${this.dateTimeForPay}\n\n📌 วิธีชำระเงิน\nกดที่ลิงก์เพื่อตรวจสอบรายละเอียดและชำระเงินด้านในลิงก์ http://192.168.1.103:8000/o/${this.order.auth_order}\n\n❗️❗️ชำระเงินผ่านระบบหน้าเว็บเท่านั้น❗️❗️
+      📌 หมายเลขคำสั่งซื้อ #${this.order.id}\n\n📌ข้อมูลลูกค้า\nคุณ ${this.order.customer.name}\nหมายเลขโทรศัพท์ ${this.order.customer.tel}\n\n📌 วัน-เวลานัดรับสินค้า\n${this.order.date_get} ${this.order.time_get}\n\n📌 ยอดรวมทั้งหมด ${this.order.sum_all.sumTASC} บาท\n\n📌 โปรดชำระเงินภายใน\n${this.dateTimeForPay} น.\n\n📌 วิธีชำระเงิน\nกดที่ลิงก์เพื่อตรวจสอบรายละเอียดและชำระเงินด้านในลิงก์ ${window.location.hostname}/o/${this.order.auth_order}\n\n❗️❗️ชำระเงินผ่านระบบหน้าเว็บเท่านั้น❗️❗️
       `;
+
+            //         return `
+            //   📌 หมายเลขคำสั่งซื้อ #${this.order.id}\n\n📌ข้อมูลลูกค้า\nคุณ ${this.order.customer.name}\nหมายเลขโทรศัพท์ ${this.order.customer.tel}\n\n📌 วัน-เวลานัดรับสินค้า\n${this.order.date_get} ${this.order.time_get}\n\n📌 รายละเอียดรายการสั่งซื้อ\n${detail}${other}${message}\n\n📌 ยอดรวมทั้งหมด ${sumUp} บาท\n\n📌 โปรดชำระเงินภายใน\n${this.dateTimeForPay}\n\n📌 วิธีชำระเงิน\nกดที่ลิงก์เพื่อตรวจสอบรายละเอียดและชำระเงินด้านในลิงก์ http://192.168.1.103:8000/o/${this.order.auth_order}\n\n❗️❗️ชำระเงินผ่านระบบหน้าเว็บเท่านั้น❗️❗️
+            //   `;
         },
         clickTimeOption(v) {
             const datetime = new Date();
@@ -284,12 +289,25 @@ export default {
             // console.log(res);
         },
         onCopy() {
+            // this.$swal({
+            //     title: "คัดลอกแล้ว",
+            //     icon: "success",
+            //     allowOutsideClick: false,
+            //     // timerProgressBar: true,
+            //     // timer: 3000,
+            //     confirmButtonText: "เรียบร้อย",
+            // }).then((result) => {
+            //     if (result.isConfirmed) {
+            //         this.exit();
+            //     }
+            // });
             this.$swal({
-                title: "คัดลอกแล้ว",
-                icon: "success",
-                allowOutsideClick: false,
-                timerProgressBar: true,
+                toast: true,
                 timer: 3000,
+                timerProgressBar: true,
+                position: "bottom",
+                icon: "success",
+                title: "คัดลอกแล้ว",
                 showConfirmButton: false,
             });
         },

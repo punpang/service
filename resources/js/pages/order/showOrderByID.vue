@@ -1,5 +1,8 @@
 <template>
     <div>
+        <alertAdjustExcessPayment
+            v-if="order.sum_all.sumBalance < 0"
+        ></alertAdjustExcessPayment>
         <v-row>
             <v-col cols="12" md="8">
                 <cardManagesGoodsDetail></cardManagesGoodsDetail>
@@ -46,7 +49,7 @@
                         v-if="!order.order_delivery_service && order.status < 8"
                     ></btnDelivery>
                     <btnPrepareGoods></btnPrepareGoods>
-
+                    <btnPickUpGoods></btnPickUpGoods>
                     <!-- <v-list-item v-for="tile in tiles" :key="tile.title">
                         <v-list-item-title>{{ tile.title }}</v-list-item-title>
                     </v-list-item> -->
@@ -72,6 +75,9 @@ import btnChangeCustomer from "@/js/components/order/changeCustomer/btnChangeCus
 import btnChangeDateTimeGet from "@/js/components/order/changeDateTimeGet/btnChangeDateTimeGet";
 import btnDelivery from "@/js/components/order/delivery/btnDelivery";
 import btnPrepareGoods from "@/js/components/order/prepareGoods/btnPrepareGoods";
+import btnPickUpGoods from "@/js/components/order/pickUpGoods/btnPickUpGoods";
+
+import alertAdjustExcessPayment from "@/js/components/order/adjustExcessPayment/alert";
 export default {
     components: {
         cardDataCustomer,
@@ -88,6 +94,9 @@ export default {
         btnChangeDateTimeGet,
         btnDelivery,
         btnPrepareGoods,
+        btnPickUpGoods,
+
+        alertAdjustExcessPayment,
     },
     data() {
         return {
@@ -103,10 +112,26 @@ export default {
     },
     methods: {
         async start() {
+            let loader = this.$loading.show();
             const payload = {
                 orderID: this.$route.params.id,
             };
-            this.$store.dispatch("orderIndex/getOrderByID", payload);
+            const result = await this.$store.dispatch(
+                "orderIndex/getOrderByID",
+                payload
+            );
+
+            if (result.status != 200) {
+                this.$swal({
+                    title: "ผิดพลาด",
+                    text: "มีบางอย่างขัดข้อง",
+                    icon: "error",
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                });
+            }
+
+            loader.hide();
         },
     },
     async mounted() {
@@ -122,6 +147,7 @@ export default {
     computed: {
         ...mapGetters({
             order: "orderIndex/order",
+            user: "main/User",
         }),
     },
 };

@@ -1,72 +1,58 @@
 <template>
     <div>
-        <v-alert
-            text
-            :type="order.sumAll.sumDeposited === 0 ? 'warning' : 'success'"
-            border="left"
-            class="mb-2"
-        >
-            <strong v-if="order.sumAll.sumDeposited === 0"
-                >โปรดชำระเงินก่อน {{ order.payment_deadline_th }} น.</strong
+        <alertPaymentUUID></alertPaymentUUID>
+        <!-- <div v-if="order.status != 9">
+            <v-alert
+                text
+                :type="order.sumAll.sumDeposited == 0 ? 'warning' : 'success'"
+                border="left"
+                class="mb-2"
             >
-            <strong v-else>ขอบคุณที่ชำระเงินเพื่อยืนยันการสั่งซื้อค่ะ</strong>
-            <p
-                class="mb-0"
-                v-show="
-                    !order.status_payment_deadline &&
-                    order.sumAll.sumDeposited === 0
-                "
-            >
-                เนื่องจากเกินกำหนดชำระเงิน หากท่านยังต้องการสั่งซื้อรายการนี้
-                โปรดติดต่อทางร้านเพื่อขยายเวลาชำระเงินได้ที่
-                <a href="https://m.me/punpangpranburi">FACEBOOK</a> หรือ โทร.
-                <a href="tel:091-885-3402">091-885-3402</a>
-            </p>
-            <v-spacer></v-spacer>
-            <formPayment
-                class="mt-1"
-                v-if="
-                    (order.status_payment_deadline &&
-                        order.sumAll.sumDeposited === 0) ||
-                    (order.sumAll.sumDeposited > 0 &&
-                        order.sumAll.sumBalance > 0)
-                "
-            ></formPayment>
-        </v-alert>
+                <strong v-if="order.sumAll.sumDeposited == 0"
+                    >โปรดชำระเงินก่อน {{ order.payment_deadline_th }} น.</strong
+                >
+                <strong v-else
+                    >ขอบคุณที่ชำระเงินเพื่อยืนยันการสั่งซื้อค่ะ</strong
+                >
+                <p
+                    class="mb-0"
+                    v-show="
+                        !order.status_payment_deadline &&
+                        order.sumAll.sumDeposited == 0
+                    "
+                >
+                    เนื่องจากเกินกำหนดชำระเงิน
+                    หากท่านยังต้องการสั่งซื้อรายการนี้
+                    โปรดติดต่อทางร้านเพื่อขยายเวลาชำระเงินได้ที่
+                    <a href="https://m.me/punpangpranburi">FACEBOOK</a> หรือ
+                    โทร.
+                    <a href="tel:091-885-3402">091-885-3402</a>
+                </p>
+                <v-spacer></v-spacer>
+                <formPayment
+                    class="mt-1"
+                    v-if="
+                        (order.status_payment_deadline &&
+                            order.sumAll.sumDeposited == 0) ||
+                        (order.sumAll.sumDeposited > 0 &&
+                            order.sumAll.sumBalance > 0)
+                    "
+                ></formPayment>
+            </v-alert>
 
-        <v-sheet class="mx-auto pa-2 mb-2" outlined>
-            <v-slide-group show-arrows>
-                <v-slide-item>
-                    <cardFormNoticeOfPaymentByCustomer
-                        v-if="order.ntpfcs_for_customer"
-                        class="mx-1"
-                    ></cardFormNoticeOfPaymentByCustomer>
-                </v-slide-item>
-            </v-slide-group>
-        </v-sheet>
+            <v-sheet class="mx-auto pa-2 mb-2" outlined>
+                <v-slide-group show-arrows>
+                    <v-slide-item>
+                        <cardFormNoticeOfPaymentByCustomer
+                            v-if="order.ntpfcs_for_customer"
+                            class="mx-1"
+                        ></cardFormNoticeOfPaymentByCustomer>
+                    </v-slide-item>
+                </v-slide-group>
+            </v-sheet>
+        </div> -->
 
-        <v-alert
-            border="top"
-            class="pt-5 pl-1 pb-0 mb-2"
-            colored-border
-            color="yellow darken-3"
-            elevation="1"
-            @click="clickUpdateRating()"
-            v-if="order.status === 9"
-        >
-            <strong class="ml-2">ให้คะแนนคำสั่งซื้อนี้ของคุณ</strong>
-            <v-rating
-                empty-icon="star_outline"
-                full-icon="star"
-                half-icon="star_half"
-                hover
-                length="5"
-                size="24"
-                v-model="order.rating"
-                color="yellow darken-3"
-                background-color="yellow darken-3"
-            ></v-rating>
-        </v-alert>
+        <alertRatingUUID></alertRatingUUID>
         <!-- <v-container class="mb-2">
       <v-row justify="space-around">
         <cardFormNoticeOfPaymentByCustomer
@@ -107,6 +93,8 @@
         <cardDataCustomer></cardDataCustomer>
         <cardDataGoodsDetail></cardDataGoodsDetail>
 
+        <cardDeliveryShow v-if="order.status < 8"></cardDeliveryShow>
+
         <cardPaymentSummary></cardPaymentSummary>
 
         <!-- <v-bottom-navigation app class="yellow darken-4">
@@ -127,25 +115,27 @@ Vue.filter("formatNumber", function (value) {
 });
 
 // import uploadImagesForOrder from "@/js/components/guest/uploadImagesForOrder";
-import formPayment from "@/js/components/guest/formPayment";
 import cardPaymentSummary from "@/js/components/order/cardPaymentSummary";
 import cardDataCustomer from "@/js/components/order/cardDataCustomer";
 import cardDataOrderDetail from "@/js/components/order/cardDataOrderDetail";
 import cardDataGoodsDetail from "@/js/components/order/cardDataGoodsDetail";
 import formConditionPayment from "@/js/components/guest/formConditionPayment";
-import cardFormNoticeOfPaymentByCustomer from "@/js/components/guest/cardFormNoticeOfPaymentByCustomer";
+import cardDeliveryShow from "@/js/components/order/delivery/show/cardDeliveryShow";
+import alertRatingUUID from "@/js/components/guest/alertRatingUUID";
+import alertPaymentUUID from "@/js/components/guest/alertPaymentUUID";
 
 import { mapGetters } from "vuex";
 export default {
     components: {
         // uploadImagesForOrder,
-        formPayment,
         cardPaymentSummary,
         cardDataCustomer,
         cardDataOrderDetail,
         cardDataGoodsDetail,
         formConditionPayment,
-        cardFormNoticeOfPaymentByCustomer,
+        cardDeliveryShow,
+        alertRatingUUID,
+        alertPaymentUUID,
     },
     data() {
         return {};
@@ -153,13 +143,20 @@ export default {
     methods: {
         async start() {
             let loader = this.$loading.show();
-            const datas = await this.$store.dispatch(
+            const result = await this.$store.dispatch(
                 "orderIndex/getOrderByUUID",
                 {
                     uuid: this.$route.params.uuid,
                 }
             );
-            // this.data = datas.data.order;
+            if (result.status != 200) {
+                this.$swal({
+                    title: "เกิดข้อผิดพลาด",
+                    icon: "error",
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                });
+            }
             loader.hide();
         },
         // status_payment_deadline() {
@@ -191,20 +188,7 @@ export default {
         emitStart() {
             this.start();
         },
-        async clickUpdateRating() {
-            const payload = {
-                uuid: this.$route.params.uuid,
-                rating: this.order.rating,
-            };
-            await this.$store
-                .dispatch("orderIndex/updateRatingByUuid", payload)
-                .then((result) => {
-                    this.$toast.success(result.data.text);
-                })
-                .catch((error) => {
-                    console.error(error.message);
-                });
-        },
+
         async ksherPaySuccess() {
             if (this.$route.query.mch_order_no) {
                 let loader = this.$loading.show();

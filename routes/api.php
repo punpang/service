@@ -134,6 +134,11 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
 
         Route::prefix("v1")->group(function () {
 
+            Route::prefix('adjustExcessPayment')->group(function () { // api/v1/guest/ksher
+                Route::get('fetchChannels', 'Order\AdjustExcessPaymentChannelController@fetch');
+                Route::post('order/{order}/store', 'Order\AdjustExcessPaymentChannelController@store');
+            });
+
             Route::prefix('ksher')->group(function () { // api/v1/guest/ksher
                 Route::get('fetch', 'Order\KsherChannelPaymentController@fetch');
                 Route::post('setDayOff', 'Order\KsherChannelPaymentController@setDayOff');
@@ -151,6 +156,8 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                 Route::post('{order}/store', 'Order\DeliveryServiceController@store');
                 Route::post('{delivery_service}/update', 'Order\DeliveryServiceController@update');
                 Route::post('{delivery_service}/remove', 'Order\DeliveryServiceController@remove');
+                Route::post('{delivery_service}/shipping', 'Order\DeliveryServiceController@shipping');
+                Route::post('{delivery_service}/success', 'Order\DeliveryServiceController@success');
             });
 
 
@@ -168,6 +175,7 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                 Route::post('{order}/changeCustomer', 'Order\AOrderController@changeCustomer');
                 Route::post('{order}/changeDateTimeGet', 'Order\AOrderController@changeDateTimeGet');
                 Route::post('{order}/prepareGoods', 'Order\AOrderController@prepareGoods');
+                Route::post('{order}/pickUpGoods', 'Order\AOrderController@pickUpGoods');
 
                 Route::prefix('channelPayment')->group(function () { // api/admin/v1/...
                     Route::get('getUse', 'Order\ChannelPaymentController@getUse');

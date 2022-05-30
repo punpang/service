@@ -46,5 +46,35 @@ export default {
                     return error;
                 });
         },
+
+        async shipping({}, payload) {
+            return await axios
+                .post(
+                    `/api/admin/v1/delivery_service/${payload.delivery_service_id}/shipping`,
+                    payload
+                )
+                .then((response) => {
+                    return response;
+                })
+                .catch((error) => {
+                    console.error(error);
+                    return error;
+                });
+        },
+
+        async success({}, payload) {
+            return await axios
+                .post(
+                    `/api/admin/v1/delivery_service/${payload.delivery_service_id}/success`,
+                    payload
+                )
+                .then((response) => {
+                    return response;
+                })
+                .catch((error) => {
+                    console.error(error);
+                    return error;
+                });
+        },
     },
 };

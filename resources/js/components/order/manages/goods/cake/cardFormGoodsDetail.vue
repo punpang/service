@@ -14,17 +14,17 @@
                             </v-col>
                             <v-col cols="3" md="2" class="text-right">
                                 <btnCardManagesCake
-                                    v-if="user.type === 1"
+                                    v-if="user.type === 1 && order.status < 8"
                                     :propOrderDetail="detail"
                                 ></btnCardManagesCake>
                             </v-col>
                         </v-row>
                     </v-col>
-                    <v-col cols="3" md="3" class="pa-2">
+                    <!-- <v-col cols="3" md="3" class="pa-2">
                         <v-img
                             src="https://www.punpangsv.com/admin_system/home/product/img-products/3FE0FF85-F7DE-4ED2-A5EF-77C4955186C1_1_201_a.png"
                         ></v-img>
-                    </v-col>
+                    </v-col> -->
                     <v-col cols="9" md="9" class="pa-2">
                         <p class="mb-0" v-if="detail.message != '-'">
                             <strong>ข้อความ </strong>

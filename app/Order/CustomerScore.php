@@ -21,18 +21,23 @@ class CustomerScore extends Model
 
     public $divisor = 50;
 
-    public function setPointAttribute($point)
-    {
-        if ($point > 0) {
-            $this->attributes['point'] = $point / $this->divisor;
-        } else {
-            $this->attributes['point'] = $point;
-        }
-    }
+    // public function setPointAttribute($point)
+    // {
+    //     if ($point > 0) {
+    //         $this->attributes['point'] = $point / $this->divisor;
+    //     } else {
+    //         $this->attributes['point'] = $point;
+    //     }
+    // }
 
-    public function setExpirationDateAttribute($expiration_date)
+    // public function setExpirationDateAttribute($expiration_date)
+    // {
+    //     return $this->attributes['expiration_date'] = \Carbon\Carbon::parse($expiration_date)->addDays(365)->format("Y-m-d H:i:s");
+    // }
+
+    public function setExpirationDateAttribute($value)
     {
-        $this->attributes['expiration_date'] = \Carbon\Carbon::parse($expiration_date)->addDays(365);
+        $this->attributes['expiration_date'] = \Carbon\Carbon::parse($value)->addDays(365);
     }
 
     public function testAddScore()
@@ -53,7 +58,7 @@ class CustomerScore extends Model
         $score = new CustomerScore;
         $score->customer_id = $customer->id;
         $score->history_payed_id = $history_payed_id;
-        $score->point = $amount;
+        $score->point = $amount / self::divisor();
         $score->can_refund = $can_refund;
         $score->expiration_date = \Carbon\Carbon::now()->addDays($expiration_date);
         $score->save();

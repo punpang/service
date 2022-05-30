@@ -100,7 +100,7 @@ class AHistoryPayed extends Model
         AlertMessages::linePaymentOrder($aHistoryPayed->order, $amount);
 
         // $point = CustomerScore::calculateScore($amount);
-        CustomerScore::addScore($aHistoryPayed->order->customer, $amount, 0, $aHistoryPayed->id);
+        // CustomerScore::addScore($aHistoryPayed->order->customer, $amount, 0, $aHistoryPayed->id);
 
 
         if ($aHistoryPayed) {

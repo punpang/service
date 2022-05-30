@@ -111,7 +111,19 @@ class AlertMessages extends Model
             $sumDiffScore = 0;
         }
 
-        $msgSms = 'คุณได้รับ ' . $amount . ' คะแนน และมีทั้งหมด ' . $sumDiffScore . ' คะแนน';
+        $msgSms = 'คุณได้รับ ' . $amount . ' คะแนน และมีทั้งหมด ' . number_format($sumDiffScore, 0) . ' คะแนน';
+        return MSms::Sms($customer->tel, $msgSms, $alertSMS);
+    }
+
+    public static function lineAdjustExcessPayment($customer, $amount, $option)
+    {
+        $msgLine = 'คืนยอดเงินส่วนเกิน -> #' . $customer->id . " | " . number_format($amount, 2) . " บาท เป็น" . $option["text"];
+        return Linenotify::send($msgLine);
+    }
+
+    public static function smsAdjustExcessPayment($customer, $amount, $option, $alertSMS = true)
+    {
+        $msgSms = "คืนยอดเงินส่วนเกิด " . number_format($amount, 2) . " บาท เป็น" . $option["text"] . " ให้ท่านแล้ว";
         return MSms::Sms($customer->tel, $msgSms, $alertSMS);
     }
 
@@ -188,10 +200,71 @@ class AlertMessages extends Model
 
     public static function smsPrepareGoods($order, $alertSMS = true)
     {
-        $link = URL::base() . "/o/" . $order->auth_order;
-        $bitly = Bitly::getUrl($link);
+        if ($order->orderDeliveryService) {
+            $msgSms = 'หมายเลขคำสั่งซื้อ #' . $order->id . " ของคุณ สินค้าจัดเตรียมเรียบร้อยแล้ว อยู่ระหว่างการจัดส่ง เราจะแจ้งคุณอีกครั้งเมื่อจัดส่ง รายละเอียดคำสั่งซื้อคลิกลิงก์ [ " . $order->link_for_customer . " ]";
+        } else {
+            $msgSms = 'หมายเลขคำสั่งซื้อ #' . $order->id . " ของคุณ สินค้าจัดเตรียมเรียบร้อยแล้ว สามารถเข้ารับสินค้าได้ทันที *ไม่สามารถรับสินค้าหลังเวลาร้านปิดได้ รายละเอียดคำสั่งซื้อคลิกลิงก์ [ " . $order->link_for_customer . " ]";
+        }
+        return MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
+    }
 
-        $msgSms = 'หมายเลขคำสั่งซื้อ #' . $order->id . " ของคุณ สินค้าจัดเตรียมเรียบร้อยแล้ว สามารถเข้ารับสินค้าได้ทันที *ไม่สามารถรับสินค้าหลังเวลาร้านปิดได้ รายละเอียดคำสั่งซื้อคลิกลิงก์ [ " . $bitly . " ]";
+    public static function linePickUpGoods($order)
+    {
+        $msgLine = 'รับสินค้าเรียบร้อย => #' . $order->id;
+        return Linenotify::send($msgLine);
+    }
+
+    public static function smsPickUpGoods($order, $alertSMS = true)
+    {
+        $msgSms = 'คุณได้รับสินค้าหมายเลขคำสั่งซื้อ #' . $order->id . " ของคุณเรียบร้อย ขอบคุณที่ให้ความไว้วางใจกับทางร้าน ทางร้านขอนำภาพสินค้าของท่านใช้งานประชาสัมพันธ์ของทางร้าน หากไม่ยินยอมสามารถแจ้งได้ทุกเมื่อ ให้คะแนนคำสั่งซื้อนี้ได้ที่ [ " . $order->link_for_customer . " ]";
+        return MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
+    }
+
+    public static function lineShippingGoods($order)
+    {
+        $msgLine = 'กำลังจัดส่งสินค้า => #' . $order->id;
+        return Linenotify::send($msgLine);
+    }
+
+    public static function smsShippingGoods($order, $alertSMS = true)
+    {
+        if ($order->orderDeliveryService->rider_name) {
+            $rider_name = "ชื่อไรเดอร์ " . $order->orderDeliveryService->rider_name . " ";
+        } else {
+            $rider_name = "";
+        }
+
+        if ($order->orderDeliveryService->rider_phone) {
+            $rider_phone = "(" . $order->orderDeliveryService->rider_phone . ") ";
+        } else {
+            $rider_phone = "";
+        }
+
+        if ($order->orderDeliveryService->delivery_platform) {
+            $delivery_platform = "จัดส่งโดย " . $order->orderDeliveryService->delivery_platform . " ";
+        } else {
+            $delivery_platform = "";
+        }
+
+        if ($order->orderDeliveryService->rider_link) {
+            $rider_link = "[ " . $order->orderDeliveryService->rider_link . " ] ";
+        } else {
+            $rider_link = "";
+        }
+
+        $msgSms = 'หมายเลขคำสั่งซื้อ #' . $order->id . " ของคุณ ขณะนี้กำลังจัดส่ง " . $delivery_platform . $rider_name . $rider_phone . $rider_link . " รายละเอียดคำสั่งซื้อคลิกลิงก์ [ " . $order->link_for_customer . " ]";
+        return MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
+    }
+
+    public static function lineDeliverySuccessGoods($order)
+    {
+        $msgLine = 'จัดส่งสินค้าเรียบร้อย => #' . $order->id;
+        return Linenotify::send($msgLine);
+    }
+
+    public static function smsDeliverySuccessGoods($order, $alertSMS = true)
+    {
+        $msgSms = 'หมายเลขคำสั่งซื้อ #' . $order->id . " ของคุณ จัดส่งเรียบร้อยแล้ว";
         return MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
     }
 }

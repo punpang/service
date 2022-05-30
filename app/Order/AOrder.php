@@ -10,6 +10,7 @@ use App\Order\AHistoryPayed;
 use App\Order\AlertMessages;
 use App\Order\DeliveryService;
 use Illuminate\Database\Eloquent\Model;
+use App\Order\AdjustExcessPaymentChannel;
 use App\Order\NoticeOfPaymentFromCustomer;
 
 class AOrder extends Model
@@ -21,22 +22,26 @@ class AOrder extends Model
 
     protected $primaryKey = "id";
 
-    protected $fillable = [
-        "id_customer",
-        "date_get",
-        "time_get",
-        "channel",
-        "status",
-        "date_order",
-        "auth_order",
-        "payment_deadline"
-    ];
+    // protected $fillable = [
+    //     "id_customer",
+    //     "date_get",
+    //     "time_get",
+    //     "channel",
+    //     "status",
+    //     "date_order",
+    //     "auth_order",
+    //     "payment_deadline"
+    // ];
 
+    protected $guarded = [];
+    
     protected $appends = [
         "sum_all",
         "payment_deadline_th",
         "status_payment_deadline",
-        "date_get_default"
+        "date_get_default",
+        "created_at_th"
+        //"link_for_customer"
         // "sum_add_on"
     ];
 
@@ -45,6 +50,7 @@ class AOrder extends Model
         // return \Carbon\Carbon::createFromFormat('Y-m-d', $date)->diffForHumans();
         return \Carbon\Carbon::createFromFormat('Y-m-d', $date)->addYears(543)->format('d-m-Y');
     }
+
 
     public function getDateGetDefaultAttribute()
     {
@@ -57,10 +63,14 @@ class AOrder extends Model
         return \Carbon\Carbon::createFromFormat('H:i:s', $date)->format('H:i');
     }
 
-    public function setTimeGetAttribute($time)
+    public function getCreatedAtThAttribute()
     {
-        // return \Carbon\Carbon::createFromFormat('Y-m-d', $date)->diffForHumans();
-        return $this->attributes["time_get"] = $time . ":00";
+        return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->addYears(543)->format('d-m-Y H:i');
+    }
+
+    public function getLinkForCustomerAttribute()
+    {
+        return Bitly::getUrl(URL::base() . "/o/" . $this->auth_order);
     }
 
 
@@ -188,16 +198,17 @@ class AOrder extends Model
     public function sumAll()
     {
         return [
-            "sumGoods" => $this->sumGoods(),
-            "sumASC" => $this->sumAccessoryServiceDiscount(),
-            "sumTASC" => $this->sumTASC(),
-            "sumBalance" => $this->sumBalance(),
-            "sumDeposited" => $this->sumDeposited(),
-            "sumAccessory" => $this->sumAccessory(),
-            "sumService" => $this->sumService(),
-            "sumDiscount" => $this->sumDiscount(),
-            "sumAddOn" => $this->sumAddOn(),
-            "sumDeliverService" => $this->sumDeliverService()
+            "sumGoods" => number_format($this->sumGoods(), 2),
+            "sumASC" => number_format($this->sumAccessoryServiceDiscount(), 2),
+            "sumTASC" => number_format($this->sumTASC(), 2),
+            "sumBalance" => number_format($this->sumBalance(), 2),
+            "sumDeposited" => number_format($this->sumDeposited(), 2),
+            "sumAccessory" => number_format($this->sumAccessory(), 2),
+            "sumService" => number_format($this->sumService(), 2),
+            "sumDiscount" => number_format($this->sumDiscount(), 2),
+            "sumAddOn" => number_format($this->sumAddOn(), 2),
+            "sumDeliverService" => number_format($this->sumDeliverService(), 2),
+            "sumAdjustExcessPayment" => number_format($this->sumAdjustExcessPayment(), 2)
             // "sumHistoryPayed" => $this->sumHistoryPayed()
         ];
     }
@@ -207,9 +218,16 @@ class AOrder extends Model
         return $this->sumAll();
     }
 
+    public function sumAdjustExcessPayment()
+    {
+        return $this->adjustExcessPayments()->sum("amount");
+    }
+
     public function sumBalance()
     {
-        return $this->sumTASC() - $this->sumDeposited();
+        return $this->sumTASC()
+            - $this->sumDeposited()
+            + $this->sumAdjustExcessPayment();
     }
 
     public function sumTASC()
@@ -332,7 +350,7 @@ class AOrder extends Model
         // dd(request()->all());
         $order = self::findOrFail($order_id);
 
-        if ($order->sumTASC() !== $order->sumDeposited() + $order->sumBalance()) {
+        if ($order->sumTASC() !== $order->sumDeposited() + $order->sumBalance() - $order->sumAdjustExcessPayment()) {
             return response()->json([
                 "message" => "จำนวนเงินไม่ถูกต้อง",
                 "status" => "error"
@@ -395,5 +413,10 @@ class AOrder extends Model
     public function alertMessages()
     {
         return AlertMessages::class;
+    }
+
+    public function adjustExcessPayments()
+    {
+        return $this->hasMany(AdjustExcessPayment::class, "order_id", "id");
     }
 }

@@ -95,7 +95,8 @@
                                                         !paymentChannel.status_use ||
                                                         deposit <
                                                             paymentChannel.minimum ||
-                                                            paymentChannel.ksher_day_off != null
+                                                        paymentChannel.ksher_day_off !=
+                                                            null
                                                     "
                                                 >
                                                     <v-scroll-y-transition>
@@ -315,7 +316,7 @@ export default {
     methods: {
         clickChannel(v) {
             this.channel_id = v.id;
-            if (v.payment_code === "notPayment") {
+            if (v.payment_code == "notPayment") {
                 this.$swal({
                     title: "โปรดติดต่อทางร้าน",
                     icon: "info",
@@ -333,7 +334,7 @@ export default {
             return;
         },
         changeChannel(v) {
-            if (v === 4) {
+            if (v == 4) {
                 this.$swal({
                     title: "โปรดติดต่อทางร้าน",
                     icon: "info",
@@ -368,7 +369,7 @@ export default {
         //     return;
         //   }
 
-        //   if (this.channel_id === "") {
+        //   if (this.channel_id == "") {
         //     this.$swal({
         //       icon: "warning",
         //       allowOutsideClick: false,
@@ -380,9 +381,9 @@ export default {
 
         //   const channel = this.paymentChannels[this.channel];
         //   let deposit = 0;
-        //   if (channel.fee_type === "percent") {
+        //   if (channel.fee_type == "percent") {
         //     deposit = this.deposit + (this.deposit * channel.fee_value) / 100;
-        //   } else if (channel.fee_type === "bath") {
+        //   } else if (channel.fee_type == "bath") {
         //     deposit = this.deposit + channel.fee_value;
         //   }
         // },
@@ -419,13 +420,13 @@ export default {
         CaseOptionAmounts() {
             const options = this.amountOptions;
             let group = 0;
-            if (this.sumAll.sumDeposited === 0) {
+            if (this.sumAll.sumDeposited == 0) {
                 group = 1;
             } else {
                 group = 2;
             }
 
-            let option = options.filter((options) => options.group === group);
+            let option = options.filter((options) => options.group == group);
 
             this.optionAmounts = option;
 

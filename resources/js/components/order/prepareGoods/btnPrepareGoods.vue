@@ -14,26 +14,28 @@
                     @click="clickStart()"
                     v-if="order.status >= 3 && order.status <= 7"
                     :disabled="
-                        (order.sum_all.sumBalance != 0 &&
-                            order.order_delivery_service) ||
-                        (order.sum_all.sumBalance != 0 &&
-                            !order.order_delivery_service)
+                        order.sum_all.sumBalance != 0 &&
+                        order.order_delivery_service
                     "
                 >
+                    <!-- ||
+                        (order.sum_all.sumBalance != 0 &&
+                            !order.order_delivery_service) -->
                     <v-list-item-title class="py-1">
                         เตรียมสินค้า
 
                         <div class="text-caption error--text">
                             {{
-                                order.order_delivery_service && order.sum_all.sumBalance != 0
+                                order.order_delivery_service &&
+                                order.sum_all.sumBalance != 0
                                     ? "มีบริการจัดส่ง"
                                     : ""
                             }}
-                            {{
+                            <!-- {{
                                 order.sum_all.sumBalance != 0
                                     ? "ยอดคงเหลือไม่เท่ากับ 0"
                                     : ""
-                            }}
+                            }} -->
                         </div>
                     </v-list-item-title>
                 </v-list-item>

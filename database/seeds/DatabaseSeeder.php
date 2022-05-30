@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             // OrderCategorySubDetailSeeder::class,
             // OrderChannelSeeder::class,
             // RewardLabelSeeder::class,
+            AdjustExcessPaymentChannel::class,
         ]);
     }
 }

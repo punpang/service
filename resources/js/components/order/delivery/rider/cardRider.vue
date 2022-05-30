@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-card-text class="pa-3">
+        <v-card-text class="px-3">
             <v-text-field
                 v-model="propRider.rider_name"
                 outlined
@@ -26,8 +26,8 @@
             ></v-text-field>
             <v-select
                 label="Delivery Platfrom"
-                v-model="propRider.delivery_platfrom"
-                :items="delivery_platfrom"
+                v-model="propRider.delivery_platform"
+                :items="delivery_platform"
                 outlined
                 hide-details
                 class="mb-4"
@@ -48,7 +48,7 @@ export default {
     props: ["propRider"],
     data() {
         return {
-            delivery_platfrom: ["Grab Express", "FoodPanda", "ร้าน"],
+            delivery_platform: ["Grab Express", "FoodPanda", "ร้าน"],
         };
     },
 };

@@ -23,16 +23,16 @@
             </v-col>
         </v-row>
 
-        <v-card v-if="dataSuccess" class="mb-4">
+        <!-- <v-card v-if="dataSuccess" class="mb-4">
             <v-card-title class="text-h6">
                 รายการสั่งซื้อ
                 <v-spacer></v-spacer>
                 <cardManageCake></cardManageCake>
             </v-card-title>
-        </v-card>
+        </v-card> -->
         <!-- {{ dataSuccess() }} -->
 
-        <tableListProductSelected v-if="dataSuccess"></tableListProductSelected>
+        <!-- <tableListProductSelected v-if="dataSuccess"></tableListProductSelected> -->
         <!-- <v-row v-if="dataSuccess">
             <v-col cols="12" md="4">
                 <v-card
@@ -175,8 +175,9 @@
         <v-bottom-navigation
             app
             class="yellow darken-4"
-            v-if="dataSuccess && detailTemps.length > 0"
+            v-if="dataSuccess"
         >
+        <!-- && detailTemps.length > 0 -->
             <btnNewOrderCake class="mt-2"></btnNewOrderCake>
         </v-bottom-navigation>
     </div>

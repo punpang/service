@@ -21,7 +21,7 @@ export default {
         },
         paymentSummary: {
             text: {
-                title: "สรุปยอดทั้งหมด #",
+                title: "สรุปยอดทั้งหมด",
                 amount: "จำนวนเงินที่ชำระ",
                 thb: "บาท",
                 sumTASC: "ยอดทั้งหมด",
@@ -65,13 +65,18 @@ export default {
     },
     actions: {
         async getOrderByUUID({ commit }, payload) {
-            const res = await axios.get(
-                `/api/v1/guest/order/fetchByUUID/${payload.uuid}`
-            );
-            commit("order", res.data.order);
-            commit("sumAll", res.data.order.sum_all);
-            commit("setNameGoods", res.data.order.name_goods);
-            return res;
+            return await axios
+                .get(`/api/v1/guest/order/fetchByUUID/${payload.uuid}`)
+                .then((res) => {
+                    commit("order", res.data.order);
+                    commit("sumAll", res.data.order.sum_all);
+                    commit("setNameGoods", res.data.order.name_goods);
+                    return res;
+                })
+                .catch((error) => {
+                    console.error(error);
+                    return error;
+                });
         },
         async getOrderByID({ commit }, payload) {
             return await axios
@@ -83,6 +88,7 @@ export default {
                 })
                 .catch((err) => {
                     console.error(err);
+                    return err;
                 });
         },
         async paymentByOrderID({}, payload) {
@@ -315,6 +321,20 @@ export default {
             return await axios
                 .post(
                     `/api/admin/v1/order/${payload.order_id}/prepareGoods`,
+                    payload
+                )
+                .then((response) => {
+                    return response;
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        },
+
+        async pickUpGoods({}, payload) {
+            return await axios
+                .post(
+                    `/api/admin/v1/order/${payload.order_id}/pickUpGoods`,
                     payload
                 )
                 .then((response) => {

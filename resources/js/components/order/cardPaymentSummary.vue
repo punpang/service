@@ -2,7 +2,7 @@
     <div>
         <v-card outlined class="mb-3">
             <v-card-title class="text-h6 white--text warning">
-                {{ paymentSummary.text.title }}{{ order.id }}
+                {{ paymentSummary.text.title }}
             </v-card-title>
             <v-card-text>
                 <cardFormPaymentSummary></cardFormPaymentSummary>

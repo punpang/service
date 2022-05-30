@@ -11,7 +11,8 @@ class KsherChannelPaymentController extends Controller
 {
     public function getUseKsherChannelPayment()
     {
-        $kshers = KsherChannelPayment::WhereDoesntHave("ksherDayOff", function ($query) {
+        $kshers = KsherChannelPayment::
+        WhereDoesntHave("ksherDayOff", function ($query) {
             return $query->where("day_off", \Carbon\Carbon::now()->format('Y-m-d'));
         })
             ->whereStatusUse(true)

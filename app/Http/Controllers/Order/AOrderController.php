@@ -13,8 +13,9 @@ use App\Order\OrderDetail;
 use Illuminate\Support\Str;
 use App\Order\AHistoryPayed;
 use App\Order\AlertMessages;
-use Illuminate\Http\Request;
+use App\Order\CustomerScore;
 // use App\Order\ImageFromCustomer;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
@@ -140,6 +141,7 @@ class AOrderController extends Controller
     public function fetchByUUID($uuid)
     {
         $order = AOrder::whereAuthOrder($uuid)
+            ->where("date_get", ">=", \Carbon\Carbon::now()->format("Y-m-d"))
             ->with(
                 "customer",
                 // "am1",
@@ -151,7 +153,8 @@ class AOrderController extends Controller
                 "orderDetails.aPrice",
                 "orderDetails.productPrototypes.googleImage",
                 "orderDetails.imageFromCustomers.googleImage",
-                "orderDetails.imageGoodsReviewToCustomers.googleImage"
+                "orderDetails.imageGoodsReviewToCustomers.googleImage",
+                "orderDeliveryService"
             )
             ->with("orderDetails.addOns.productAddOn.goodsAddOn")
             ->first();
@@ -217,7 +220,8 @@ class AOrderController extends Controller
             "orderDetails.productPrototypes.googleImage",
             "orderDetails.imageFromCustomers.googleImage",
             "orderDetails.imageGoodsReviewToCustomers.googleImage",
-            "orderDeliveryService"
+            "orderDeliveryService",
+            "adjustExcessPayments"
         )
             ->with("orderDetails.addOns.productAddOn.goodsAddOn")
             ->findOrFail($order_id);
@@ -349,9 +353,9 @@ class AOrderController extends Controller
 
         // return $order;
 
-        // dd(request()->all());
         $order = AOrder::paymentByOrderID(request("orderID"), request("amount"));
         if ($order["status"] == "success") {
+            // dd(request()->all());
             $history = AHistoryPayed::paymentByOrderID(
                 request("orderID"),
                 request("amount"),
@@ -492,10 +496,14 @@ class AOrderController extends Controller
         // $order->rating = request("rating");
         // $order->save();
 
-        AOrder::whereAuthOrder(request("uuid"))
-            ->update(
-                ['rating' => request("rating")]
-            );
+        $order = AOrder::whereAuthOrder(request("uuid"))->first();
+
+        if ($order->rating == 0) {
+            CustomerScore::addScore($order->customer, 150);
+        }
+
+        $order->rating = request("rating");
+        $order->save();
 
         return response()->json([
             "status" => "success",
@@ -523,6 +531,9 @@ class AOrderController extends Controller
     {
 
         $orderTemp = OrderTemp::whereId($request->temp["id"])->first();
+        // dd($orderTemp->temp->channel);
+
+
         $order = AOrder::create(
             [
                 "id_customer" => $orderTemp->customer_id,
@@ -533,47 +544,50 @@ class AOrderController extends Controller
                 "date_order" => \Carbon\Carbon::now()->format("Y-m-d H:i:s"),
                 "auth_order" => Str::uuid(),
             ]
-        )->makeHidden(["sum_all"]);
+        );
+        // "date_order" => \Carbon\Carbon::now()->format("Y-m-d H:i:s"),
+        // return $order;
+        // ->makeHidden(["sum_all"]);
 
-        $orderDetailTemps = $orderTemp->orderDetailTemps;
-        foreach ($orderDetailTemps as $orderDetailTemp) {
+        // $orderDetailTemps = $orderTemp->orderDetailTemps;
+        // foreach ($orderDetailTemps as $orderDetailTemp) {
 
-            if (isset($orderDetailTemp->temp->add_ons)) {
-                $add_ons = [];
-                foreach ($orderDetailTemp->temp->add_ons as $add_on) {
-                    $add_ons[] = [
-                        "product_add_on_id" => $add_on->id,
-                        "price" => $add_on->price,
-                    ];
-                }
-            }
+        //     if (isset($orderDetailTemp->temp->add_ons)) {
+        //         $add_ons = [];
+        //         foreach ($orderDetailTemp->temp->add_ons as $add_on) {
+        //             $add_ons[] = [
+        //                 "product_add_on_id" => $add_on->id,
+        //                 "price" => $add_on->price,
+        //             ];
+        //         }
+        //     }
 
-            $order->orderDetail()->create([
-                "a_price_id" => $orderDetailTemp->temp->a_price->id,
-                "price" => $orderDetailTemp->temp->a_price->price,
-                "message" => $orderDetailTemp->temp->message,
-                "detail" => $orderDetailTemp->temp->detail
-            ]);
+        //     $order->orderDetail()->create([
+        //         "a_price_id" => $orderDetailTemp->temp->a_price->id,
+        //         "price" => $orderDetailTemp->temp->a_price->price,
+        //         "message" => $orderDetailTemp->temp->message,
+        //         "detail" => $orderDetailTemp->temp->detail
+        //     ]);
 
-            // if (isset($orderDetailTemp->temp->add_ons)) {
-            //     $add_ons = [];
-            //     foreach ($orderDetailTemp->temp->add_ons as $add_on) {
-            //         $add_ons[] = [
-            //             "product_add_on_id" => $add_on->id,
-            //             "price" => $add_on->price,
-            //         ];
-            //     }
-            //     $order->addOn()->createMany(
-            //         $add_ons
-            //     );
-            // }
+        //     if (isset($orderDetailTemp->temp->add_ons)) {
+        //         $add_ons = [];
+        //         foreach ($orderDetailTemp->temp->add_ons as $add_on) {
+        //             $add_ons[] = [
+        //                 "product_add_on_id" => $add_on->id,
+        //                 "price" => $add_on->price,
+        //             ];
+        //         }
+        //         $order->addOn()->createMany(
+        //             $add_ons
+        //         );
+        //     }
 
-            // $orderDetailTemp->delete();
-        }
-        // $orderTemp->delete();
+        //     $orderDetailTemp->delete();
+        // }
+        $orderTemp->delete();
 
         return response()->json([
-            "order" => $order,
+            "order_id" => $order->id,
             "status" => "success",
             "message" => "สร้างรายการสั่งซื้อสำเร็จ"
         ], 200);
@@ -638,5 +652,51 @@ class AOrderController extends Controller
             "icon" => "success",
             "message" => "เตรียมสินค้าเรียบร้อย"
         ], 200);
+    }
+
+    public function pickUpGoods(AOrder $order)
+    {
+        // dd($order->sum_all["sumBalance"]);
+        if ($order->status != 8) {
+            return response()->json([
+                "status" => "failed",
+                "title" => "ไม่สำเร็จ",
+                "icon" => "error",
+                "message" => "สถานะสินค้าไม่ถูกต้อง"
+            ], 201);
+        }
+
+        if (
+            isset($order->orderDeliveryService) &&
+            $order->orderDeliveryService->status != "success"
+        ) {
+            return response()->json([
+                "status" => "failed",
+                "title" => "ไม่สำเร็จ",
+                "icon" => "error",
+                "message" => "โปรดจัดส่งสินค้าให้เสร็จสิ้นก่อน"
+            ], 201);
+        }
+
+        if ($order->sum_all["sumBalance"] != 0) {
+            return response()->json([
+                "status" => "failed",
+                "title" => "ไม่สำเร็จ",
+                "icon" => "error",
+                "message" => "ยอดคงเหลือ ต้องเท่ากับ 0"
+            ], 201);
+        }
+
+        $order->update(["status" => 9]);
+
+        AlertMessages::linePickUpGoods($order);
+        AlertMessages::smsPickUpGoods($order);
+
+        return response()->json([
+            "status" => "success",
+            "title" => "สำเร็จ",
+            "icon" => "success",
+            "message" => "ลูกค้าได้รับสินค้าเรียบร้อย"
+        ], 201);
     }
 }

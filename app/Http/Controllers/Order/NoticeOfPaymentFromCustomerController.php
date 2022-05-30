@@ -9,7 +9,7 @@ use App\Order\AOrder;
 use App\Order\AHistoryPayed;
 use App\Order\AlertMessages;
 use App\URL;
-use App\Order\CustomerScore;
+// use App\Order\CustomerScore;
 
 class NoticeOfPaymentFromCustomerController extends Controller
 {
@@ -82,14 +82,13 @@ class NoticeOfPaymentFromCustomerController extends Controller
             );
         }
 
-
-
-        if (request("amount") > $notice->aOrder->sumBalance()) {
-            $pointOver = request("amount") - $notice->aOrder->sumBalance();
-            $amount = request("amount") - $pointOver;
-        } else {
-            $amount = request("amount");
-        }
+        // if (request("amount") > $notice->aOrder->sumBalance()) {
+        //     $pointOver = request("amount") - $notice->aOrder->sumBalance();
+        //     $amount = request("amount") - $pointOver;
+        // } else {
+        //     $amount = request("amount");
+        // }
+        $amount = request("amount");
 
         $setStart = NoticeOfPaymentFromCustomer::setStart($notice, $amount, request("ref"));
         if ($setStart["status"] == "error") return AlertMessages::lineError("postCheckSlip");
@@ -104,9 +103,9 @@ class NoticeOfPaymentFromCustomerController extends Controller
                     if ($setSuccess["status"] == "error") return AlertMessages::lineError("postCheckSlip");
                     $notice = $setSuccess["notice"];
 
-                    if (isset($pointOver)) {
-                        CustomerScore::addScore($notice->aOrder->customer, $pointOver, 1, $AHistoryPayed["aHistoryPayed"]->id . "-overPaid");
-                    }
+                    // if (isset($pointOver)) {
+                    //     CustomerScore::addScore($notice->aOrder->customer, $pointOver, 1, $AHistoryPayed["aHistoryPayed"]->id . "-overPaid");
+                    // }
                     return response()->json(
                         [
                             "status" => "success",
@@ -170,8 +169,8 @@ class NoticeOfPaymentFromCustomerController extends Controller
         $notice->aHistoryPayedFindSelfID->customerScore->point = request("amount") / 50;
         $notice->aHistoryPayedFindSelfID->customerScore->save();
 
-        $historyOverPaid = $notice->aHistoryPayedFindSelfID->id . "-overPaid";
-        $pointOver = CustomerScore::where("history_payed_id", $historyOverPaid)->first();
+        // $historyOverPaid = $notice->aHistoryPayedFindSelfID->id . "-overPaid";
+        // $pointOver = CustomerScore::where("history_payed_id", $historyOverPaid)->first();
         if (isset($pointOver)) {
             $pointOver->delete();
         }

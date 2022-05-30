@@ -26,13 +26,13 @@ export default {
                         icon: result.data.status,
                         allowOutsideClick: false,
                         confirmButtonText: "ไปยังรายการใหม่",
-                        denyButtonText: "รับรายการใหม่",
+                        // denyButtonText: "รับรายการใหม่",
                         showDenyButton: true,
                         confirmButtonColor:"#2E7D32",
-                        denyButtonColor: "#3F51B5"
+                        // denyButtonColor: "#3F51B5"
                     }).then((resultSwal) => {
                         if (resultSwal.isConfirmed) {
-                            window.location.href = `/manages/order/${result.data.order.id}/showOrderByID`;
+                            window.location.href = `/manages/order/${result.data.order_id}/showOrderByID`;
                         } else {
                             location.reload();
                         }

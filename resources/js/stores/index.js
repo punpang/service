@@ -47,7 +47,7 @@ import orderM4 from "@/js/stores/modules/order/m4";
 import orderProductPrototype from "@/js/stores/modules/order/orderProductPrototype";
 import orderImageGoodsReviewToCustomer from "@/js/stores/modules/order/imageGoodsReviewToCustomer";
 import orderDeliveryService from "@/js/stores/modules/order/deliveryService";
-
+import orderAdjustExcessPayment from "@/js/stores/modules/order/adjustExcessPayment";
 /////////////////////////
 /// LUCKY REWAYD START ///
 import orderLuckyReward from "@/js/stores/modules/order/luckyReward";
@@ -102,5 +102,6 @@ export default new Vuex.Store({
         orderProductPrototype,
         orderImageGoodsReviewToCustomer,
         orderDeliveryService,
+        orderAdjustExcessPayment,
     },
 });

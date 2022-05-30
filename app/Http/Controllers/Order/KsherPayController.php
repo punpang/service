@@ -28,6 +28,7 @@ class KsherPayController extends Controller
             "mch_order_no" => request("mch_order_no") . "-" . KsherPay::generate_nonce_str(10),
             "total_fee" => round(request("total_fee"), 2) * 100,
             "fee_type" => "THB",
+            "expire_time" => 600
         ];
 
         $url_notify = URL::base() . '/api/callback/ksherPay';

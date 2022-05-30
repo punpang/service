@@ -95,7 +95,19 @@
                     </td>
                 </tr>
                 <!-- / -->
-                <tr>
+                <tr v-if="order.sum_all.sumAdjustExcessPayment > 0">
+                    <td>
+                        <strong>ปรับยอดส่วนเกิน</strong>
+                    </td>
+                    <td class="text-right">
+                        <strong
+                            >-
+                            {{ order.sum_all.sumAdjustExcessPayment }}</strong
+                        >
+                    </td>
+                </tr>
+                <!-- / -->
+                <tr >
                     <td>
                         <strong>{{ paymentSummary.text.balance }}</strong>
                     </td>

@@ -78,7 +78,7 @@ const routes = [
         path: "/manages/order/checkNoticeOfPaymentFromCustomer",
         name: "managesOrderCheckNoticeOfPaymentFromCustomer",
         component: () =>
-            import("@/js/pages/order/checkNoticeOfPaymentFromCustomer.vue"),
+            import("@/js/pages/order/checkNoticeOfPaymentFromCustomer"),
         meta: { requiresAuth: true },
     },
 
