@@ -21,7 +21,7 @@ class APriceController extends Controller
 
 
             $op = request('op1') . request('op2') . request('op3') . request('op4');
-            $data = APrice::whereCode($op)->first();
+            $data = APrice::whereCode($op)->with("googleImage")->first();
 
             if ($data) {
                 if ($data->m1 == 0) {
@@ -31,7 +31,7 @@ class APriceController extends Controller
                     $data->m4 = request('op4');
                     $data->save();
                 }
-                $data = APrice::whereCode($op)->with("am1", "am2", "am3", "am4")->first();
+                $data = APrice::whereCode($op)->with("am1", "am2", "am3", "am4", "googleImage")->first();
             }
 
             DB::commit();
@@ -101,5 +101,34 @@ class APriceController extends Controller
             DB::rollback();
             return "error";
         }
+    }
+
+    public function uploadImageProduct(APrice $product, Request $request)
+    {
+        // dd($product->with("googleImage"));
+        $product->update([
+            "image_id" => $request->images[0]["id"],
+        ]);
+
+
+        $product_like = $product->m1 . $product->m2 . $product->m3;
+
+        $am4 = AM4::get();
+
+        foreach ($am4 as $a) {
+            APrice::where("code", $product_like . $a->id)->update([
+                "image_id" => $request->images[0]["id"],
+            ]);
+        }
+        
+        $product = APrice::with("googleImage")->find($product->id);
+
+        return response()->json([
+            "product" => $product,
+            "status" => "success",
+            "title" => "สำเร็จ",
+            "text" => "อัปโหลดสำเร็จ",
+            "icon" => "success"
+        ], 200);
     }
 }

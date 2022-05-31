@@ -20,11 +20,15 @@
                             </v-col>
                         </v-row>
                     </v-col>
-                    <!-- <v-col cols="3" md="3" class="pa-2">
-                        <v-img
+                    <v-col cols="3" md="3" class="pa-2">
+                        <!-- <v-img
                             src="https://www.punpangsv.com/admin_system/home/product/img-products/3FE0FF85-F7DE-4ED2-A5EF-77C4955186C1_1_201_a.png"
-                        ></v-img>
-                    </v-col> -->
+                        ></v-img> -->
+                        <imageThumbnailPathSizeW200H200
+                            v-if="detail.a_price.google_image"
+                            :path="detail.a_price.google_image.src_name"
+                        ></imageThumbnailPathSizeW200H200>
+                    </v-col>
                     <v-col cols="9" md="9" class="pa-2">
                         <p class="mb-0" v-if="detail.message != '-'">
                             <strong>ข้อความ </strong>
@@ -133,6 +137,8 @@ import btnCardManagesCake from "@/js/components/order/manages/goods/cake/btnCard
 import btnShowProductPrototype from "@/js/components/order/manages/goods/cake/productPrototype/btnShowProductPrototype";
 import btnShowIsTakeAPhoto from "@/js/components/order/manages/goods/cake/btnShowIsTakeAPhoto";
 import btnUploadImagesForOrderDetail from "@/js/components/guest/btnUploadImagesForOrderDetail";
+import imageThumbnailPathSizeW200H200 from "@/js/components/google/drive/imageThumbnailPathSizeW200H200";
+
 export default {
     components: {
         // editCake,
@@ -142,6 +148,7 @@ export default {
         btnShowProductPrototype,
         btnUploadImagesForOrderDetail,
         btnShowIsTakeAPhoto,
+        imageThumbnailPathSizeW200H200,
     },
     computed: {
         ...mapGetters({

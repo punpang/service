@@ -247,11 +247,8 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                     Route::get('fetchAddOn', 'Order\ProductAddOnController@fetchAddOn');
                     Route::post('{product}/editPrice', 'Order\APriceController@editPrice');
                     Route::post('/addPrice', 'Order\APriceController@addPrice');
+                    Route::post('{product}/uploadImageProduct', 'Order\APriceController@uploadImageProduct');
                 });
-
-
-
-
 
                 Route::post('checkDateTimeGet', 'Order\AOrderController@checkDateTimeGet');
 

@@ -2,6 +2,7 @@
 
 namespace App\Order;
 
+use App\ShabuNooNee\GoogleImage;
 use Illuminate\Database\Eloquent\Model;
 
 class APrice extends Model
@@ -9,11 +10,14 @@ class APrice extends Model
     protected $table = "a_price";
     protected $connection = "order";
     protected $primaryKey = "id";
-    protected $appends = ["name_goods"];
+    protected $appends = [
+        "name_goods",
+        "google_image"
+    ];
     protected $hidden = ['created_at', 'updated_at'];
 
     //protected $filable = ["code", "price", "m1", "m2", "m3", "m4"];
-    protected $guards = [];
+    protected $guarded = [];
 
     public function getPriceAttribute($price)
     {
@@ -43,5 +47,15 @@ class APrice extends Model
     public function getNameGoodsAttribute()
     {
         return $this->am1->m1 . ":" . $this->am2->m2 . ":" . $this->am3->m3 . ":" . $this->am4->m4;
+    }
+
+    public function googleImage()
+    {
+        return $this->belongsTo(GoogleImage::class, "image_id", "id");
+    }
+
+    public function getGoogleImageAttribute()
+    {
+        return $this->with("googleImage");
     }
 }

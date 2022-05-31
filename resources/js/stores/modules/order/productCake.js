@@ -229,5 +229,20 @@ export default {
                     console.error(err);
                 });
         },
+
+        async uploadImageProduct({commit}, payload) {
+            return await axios
+                .post(
+                    `/api/admin/v1/order/product/${payload.product_id}/uploadImageProduct`,
+                    payload
+                )
+                .then((response) => {
+                    commit("fetchProduct", response.data.product);
+                    return response.status;
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        },
     },
 };
