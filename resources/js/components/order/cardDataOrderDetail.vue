@@ -22,8 +22,8 @@
                             </td>
                             <td class="text-right">
                                 <strong
-                                    >{{ order.date_get }}
-                                    {{ order.time_get }}</strong
+                                    >{{ order.date_get_th }}
+                                    {{ order.time_get_format }}</strong
                                 >
                             </td>
                         </tr>

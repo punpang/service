@@ -36,7 +36,7 @@
                     @emitCustomer="emitCustomer"
                 ></btnSelectCustomer>
                 <v-spacer></v-spacer>
-                <v-btn class="error" large>
+                <v-btn class="error" large @click="exit()">
                     <v-icon left>exit_to_app</v-icon>ออก</v-btn
                 >
                 <v-btn

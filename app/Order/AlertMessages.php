@@ -153,7 +153,7 @@ class AlertMessages extends Model
 
     public static function smsAlertPayment($order, $bitly, $alertSMS = true)
     {
-        $msgSms = 'แจ้งชำระเงิน สำหรับหมายเลขคำสั่งซื้อ #' . $order->id . " สามารถชำระเงินภายในลิงก์ [ " . $bitly . " ] โปรดชำระก่อน " . $order->payment_deadline . " เพื่อยืนยันรายการสั่งซื้อของท่าน";
+        $msgSms = 'แจ้งชำระเงิน สำหรับหมายเลขคำสั่งซื้อ #' . $order->id . " สามารถชำระเงินภายในลิงก์ [ " . $bitly . " ] โปรดชำระก่อน " . $order->payment_deadline_th . " เพื่อยืนยันรายการสั่งซื้อของท่าน";
         return MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
     }
 
@@ -188,7 +188,7 @@ class AlertMessages extends Model
         $link = URL::base() . "/o/" . $order->auth_order;
         $bitly = Bitly::getUrl($link);
 
-        $msgSms = 'หมายเลขคำสั่งซื้อ #' . $order->id . " ของคุณ ได้เปลี่ยนแปลงวัน-เวลานัดรับเป็น " . $order->date_get . " " . $order->time_get . " น. รายละเอียดคำสั่งซื้อคลิกลิงก์ [ " . $bitly . " ]";
+        $msgSms = 'หมายเลขคำสั่งซื้อ #' . $order->id . " ของคุณ ได้เปลี่ยนแปลงวัน-เวลานัดรับเป็น " . $order->date_get_th . " " . $order->time_get . " น. รายละเอียดคำสั่งซื้อคลิกลิงก์ [ " . $bitly . " ]";
         return MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
     }
 

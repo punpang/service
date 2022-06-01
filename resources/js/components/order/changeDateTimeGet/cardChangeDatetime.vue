@@ -10,21 +10,21 @@
             </v-card-title>
             <v-card-text class="pa-4">
                 <p class="text-h6">วัน-เวลานัดรับสินค้า (เดิม)</p>
-                <p class="ml-4">{{ order.date_get }} {{ order.time_get }}</p>
+                <p class="ml-4">{{ order.date_get_th }} {{ order.time_get_format }} น.</p>
                 <v-divider></v-divider>
                 <p class="text-h6">วัน-เวลานัดรับสินค้า (ใหม่)</p>
                 <v-alert
                     type="warning"
                     dense
                     v-if="
-                        dateTimeGet.date_get == order.date_get_default &&
+                        dateTimeGet.date_get == order.date_get &&
                         dateTimeGet.time_get == order.time_get
                     "
                 >
                     โปรดเลือกวัน-เวลานัดรับใหม่
                 </v-alert>
                 <p class="ml-4" v-else>
-                    {{ formatDate }} {{ dateTimeGet.time_get }}
+                    {{ formatDate }} {{ dateTimeGet.time_get }} น.
                 </p>
                 <v-checkbox
                     label="แจ้งเตือนลูกค้า"
@@ -48,7 +48,7 @@
                     large
                     @click="clickSave()"
                     :disabled="
-                        dateTimeGet.date_get == order.date_get_default &&
+                        dateTimeGet.date_get == order.date_get &&
                         dateTimeGet.time_get == order.time_get
                     "
                 >
@@ -109,7 +109,7 @@ export default {
                 }
             );
             this.dateTimeGet = {
-                date_get: this.order.date_get_default,
+                date_get: this.order.date_get,
                 time_get: this.order.time_get,
             };
         },

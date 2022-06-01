@@ -34,21 +34,29 @@ class AOrder extends Model
     // ];
 
     protected $guarded = [];
-    
+
     protected $appends = [
         "sum_all",
         "payment_deadline_th",
         "status_payment_deadline",
         "date_get_default",
-        "created_at_th"
+        "created_at_th",
+        "date_get_th",
+        "time_get_format"
         //"link_for_customer"
         // "sum_add_on"
     ];
 
-    public function getDateGetAttribute($date)
+    // public function getDateGetAttribute($date)
+    // {
+    //     // return \Carbon\Carbon::createFromFormat('Y-m-d', $date)->diffForHumans();
+    //     return \Carbon\Carbon::createFromFormat('Y-m-d', $date)->addYears(543)->format('d-m-Y');
+    // }
+
+    public function getDateGetThAttribute()
     {
         // return \Carbon\Carbon::createFromFormat('Y-m-d', $date)->diffForHumans();
-        return \Carbon\Carbon::createFromFormat('Y-m-d', $date)->addYears(543)->format('d-m-Y');
+        return \Carbon\Carbon::createFromFormat('Y-m-d', $this->date_get)->addYears(543)->format('d-m-Y');
     }
 
 
@@ -57,10 +65,17 @@ class AOrder extends Model
         return \Carbon\Carbon::parse($this->date_get)->subYears(543)->format('Y-m-d');
     }
 
-    public function getTimeGetAttribute($date)
+    // public function getTimeGetAttribute($date)
+    // {
+    //     // return \Carbon\Carbon::createFromFormat('Y-m-d', $date)->diffForHumans();
+    //     return \Carbon\Carbon::createFromFormat('H:i:s', $date)->format('H:i');
+    // }
+
+
+    public function getTimeGetFormatAttribute($date)
     {
         // return \Carbon\Carbon::createFromFormat('Y-m-d', $date)->diffForHumans();
-        return \Carbon\Carbon::createFromFormat('H:i:s', $date)->format('H:i');
+        return \Carbon\Carbon::createFromFormat('H:i:s', $this->time_get)->format('H:i');
     }
 
     public function getCreatedAtThAttribute()
