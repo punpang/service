@@ -134,6 +134,21 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
 
         Route::prefix("v1")->group(function () {
 
+            Route::prefix('facebook')->group(function () { // api/v1/facebook/
+                Route::prefix('reply')->group(function () { // api/v1/facebook/reply
+                    Route::get('fetch', 'Order\FacebookReplyController@fetch');
+                    Route::post('store', 'Order\FacebookReplyController@store');
+                    Route::post('{reply}/update', 'Order\FacebookReplyController@update');
+                });
+                Route::prefix('webhook')->group(function () { // api/v1/facebook/reply
+                    Route::get('fetch', 'Order\FacebookWebhookController@fetch');
+                    Route::post('store', 'Order\FacebookWebhookController@store');
+                    Route::post('{webhook}/addReply', 'Order\FacebookWebhookController@addReply');
+                    Route::post('{webhook}/removeReply', 'Order\FacebookWebhookController@removeReply');
+                });
+
+            });
+
             Route::prefix('adjustExcessPayment')->group(function () { // api/v1/guest/ksher
                 Route::get('fetchChannels', 'Order\AdjustExcessPaymentChannelController@fetch');
                 Route::post('order/{order}/store', 'Order\AdjustExcessPaymentChannelController@store');
@@ -329,6 +344,11 @@ Route::get('/artisan/df4sd6f41wa6f1f6g8qw3f4as6df4196/migrate/rollback', functio
 
 Route::prefix('callback')->group(function () { // api/callback/...
     Route::post('ksherPay', 'Order\KsherPayController@callBack');
+});
+
+Route::prefix('webhook')->group(function () { // api/callback/...
+    Route::post('facebook', 'Order\FacebookController@webhook');
+    // Route::get('facebook', 'Order\FacebookController@webhook');
 });
 
 

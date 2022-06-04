@@ -88,6 +88,20 @@ const routes = [
         component: () => import("@/js/pages/ksher/dayOff.vue"),
         meta: { requiresAuth: true },
     },
+
+    {
+        path: "/manages/facebook/webhook",
+        name: "managesOrderShowOrderByID",
+        component: () => import("@/js/pages/order/showOrderByID"),
+        meta: { requiresAuth: true },
+    },
+    {
+        path: "/manages/facebook/reply",
+        name: "managesOrderShowOrderByID",
+        component: () => import("@/js/pages/facebook/reply"),
+        meta: { requiresAuth: true },
+    },
+
     // {
     //     path: "/manages/order/run",
     //     name: "managesOrderID",

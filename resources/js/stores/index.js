@@ -48,6 +48,7 @@ import orderProductPrototype from "@/js/stores/modules/order/orderProductPrototy
 import orderImageGoodsReviewToCustomer from "@/js/stores/modules/order/imageGoodsReviewToCustomer";
 import orderDeliveryService from "@/js/stores/modules/order/deliveryService";
 import orderAdjustExcessPayment from "@/js/stores/modules/order/adjustExcessPayment";
+import facebook from "@/js/stores/modules/order/facebook.js";
 /////////////////////////
 /// LUCKY REWAYD START ///
 import orderLuckyReward from "@/js/stores/modules/order/luckyReward";
@@ -103,5 +104,6 @@ export default new Vuex.Store({
         orderImageGoodsReviewToCustomer,
         orderDeliveryService,
         orderAdjustExcessPayment,
+        facebook,
     },
 });
