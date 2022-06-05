@@ -206,7 +206,7 @@ class AOrderController extends Controller
     public function getOrderByID($order_id)
     {
         $order = AOrder::with(
-            "customer",
+            "customer.facebook",
             // "am1",
             // "am2",
             // "am3",

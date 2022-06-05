@@ -135,18 +135,25 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
         Route::prefix("v1")->group(function () {
 
             Route::prefix('facebook')->group(function () { // api/v1/facebook/
+
+                Route::get('search_profile', 'Order\FacebookController@search_profile');
+                Route::post('{profile}/connect_profile', 'Order\FacebookController@connect_profile');
+                Route::post('{profile}/disconnect_profile', 'Order\FacebookController@disconnect_profile');
+
+
                 Route::prefix('reply')->group(function () { // api/v1/facebook/reply
                     Route::get('fetch', 'Order\FacebookReplyController@fetch');
                     Route::post('store', 'Order\FacebookReplyController@store');
                     Route::post('{reply}/update', 'Order\FacebookReplyController@update');
                 });
+
+
                 Route::prefix('webhook')->group(function () { // api/v1/facebook/reply
                     Route::get('fetch', 'Order\FacebookWebhookController@fetch');
                     Route::post('store', 'Order\FacebookWebhookController@store');
                     Route::post('{webhook}/addReply', 'Order\FacebookWebhookController@addReply');
                     Route::post('{webhook}/removeReply', 'Order\FacebookWebhookController@removeReply');
                 });
-
             });
 
             Route::prefix('adjustExcessPayment')->group(function () { // api/v1/guest/ksher
@@ -348,6 +355,7 @@ Route::prefix('callback')->group(function () { // api/callback/...
 
 Route::prefix('webhook')->group(function () { // api/callback/...
     Route::post('facebook', 'Order\FacebookController@webhook');
+    Route::post('line', 'Order\LineController@webhook');
     // Route::get('facebook', 'Order\FacebookController@webhook');
 });
 

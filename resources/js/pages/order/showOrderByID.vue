@@ -33,6 +33,9 @@
                     <btnChangeCustomer
                         v-if="order.status < 8"
                     ></btnChangeCustomer>
+                    <btnConnectSocialProfile
+                        v-if="order.status < 8"
+                    ></btnConnectSocialProfile>
                     <btnChangeDateTimeGet
                         v-if="order.status < 8"
                     ></btnChangeDateTimeGet>
@@ -72,6 +75,7 @@ import btnAddGoods from "@/js/components/order/addGoods/btnAddGoods";
 import btnAlertPayment from "@/js/components/order/manages/alertPayment/btnAlertPayment";
 import btnPayment from "@/js/components/order/manages/payment/btnPayment";
 import btnChangeCustomer from "@/js/components/order/changeCustomer/btnChangeCustomer";
+import btnConnectSocialProfile from "@/js/components/order/connectSocialProfile.vue/button.vue";
 import btnChangeDateTimeGet from "@/js/components/order/changeDateTimeGet/btnChangeDateTimeGet";
 import btnDelivery from "@/js/components/order/delivery/btnDelivery";
 import btnPrepareGoods from "@/js/components/order/prepareGoods/btnPrepareGoods";
@@ -88,6 +92,7 @@ export default {
         cardDeliveryShow,
 
         btnAddGoods,
+        btnConnectSocialProfile,
         btnAlertPayment,
         btnPayment,
         btnChangeCustomer,

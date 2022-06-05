@@ -50,7 +50,7 @@ class ACustomer extends Model implements Auditable
     public function sumAvailableScore()
     {
         return $this->customerScores()
-            ->where("expiration_date", ">", \Carbon\Carbon::now())
+            ->where("expiration_date", ">=", \Carbon\Carbon::now())
             ->where("point", ">", 0)
             ->sum("point");
     }
@@ -58,18 +58,42 @@ class ACustomer extends Model implements Auditable
     public function sumUnavailableScore()
     {
         return $this->customerScores()
-            // ->where("expiration_date", "<", \Carbon\Carbon::now())
+            ->where("expiration_date", "<", \Carbon\Carbon::now())
+            ->where("point", ">", 0)
+            ->sum("point");
+    }
+
+    public function sumUsedScore()
+    {
+        return $this->customerScores()
             ->where("point", "<", 0)
             ->sum("point");
     }
 
     public function sumDiffScore()
     {
-        return $this->sumAvailableScore() - $this->sumUnavailableScore();
+        return number_format($this->customerScores()->sum("point"), 0);
+        // return number_format($this->sumAvailableScore() - $this->sumUnavailableScore(), 0);
+        // $overUsedPoint = $this->sumUnavailableScore() - $this->sumUsedScore();
+        // if ($overUsedPoint < 0) {
+        //     return number_format($this->sumAvailableScore() + $overUsedPoint, 0);
+        // } else {
+        //     return number_format($this->sumAvailableScore(), 0);
+        // }
     }
 
     public function temps()
     {
         return $this->hasMany(OrderDetailTemp::class, "customer_id", "id");
+    }
+
+    public function facebook()
+    {
+        return $this->hasOne(Facebook::class, "customer_id", "id");
+    }
+
+    public function line()
+    {
+        return $this->hasOne(Facebook::class, "customer_id", "id");
     }
 }
