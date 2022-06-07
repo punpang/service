@@ -160,6 +160,13 @@ const routes = [
         name: "guestOrderKsherSuccessfully",
         component: () => import("@/js/pages/guest/orders/ksher/successfully"),
     },
+
+    {
+        path: "/verify_identity/register_member/:token",
+        name: "verify_identityRegister_member",
+        component: () =>
+            import("@/js/pages/guest/verify_identity/register_member"),
+    },
 ];
 
 const router = new VueRouter({

@@ -14,6 +14,7 @@ class ACustomer extends Model implements Auditable
         'tel',
         'status_consent_condition'
     ];
+    protected $guarded = [];
 
     protected $primaryKey = "id";
 

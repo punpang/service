@@ -92,6 +92,10 @@ Route::prefix('v1')->group(function () { // api/v1/...
         });
 
         Route::post('endpoint_payment', 'Order\RewardCustomerController@endpointPayment');
+
+        Route::prefix('verify_identity')->group(function () { // api/gueœst/order/
+            Route::post('{token}/register_member', 'Order\RegisterMemberTempController@update');
+        });
     });
 
 
