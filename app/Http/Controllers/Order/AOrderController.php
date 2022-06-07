@@ -7,14 +7,16 @@ use App\URL;
 use App\MSms;
 use App\Helper;
 use App\Linenotify;
+use App\Order\Line;
 use App\Order\AOrder;
+use App\Order\Facebook;
 use App\Order\OrderTemp;
 use App\Order\OrderDetail;
 use Illuminate\Support\Str;
 use App\Order\AHistoryPayed;
+// use App\Order\ImageFromCustomer;
 use App\Order\AlertMessages;
 use App\Order\CustomerScore;
-// use App\Order\ImageFromCustomer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -207,6 +209,8 @@ class AOrderController extends Controller
     {
         $order = AOrder::with(
             "customer.facebook",
+            "customer.line",
+            "OrderChannel",
             // "am1",
             // "am2",
             // "am3",
@@ -472,6 +476,8 @@ class AOrderController extends Controller
             $bitly = AOrder::genlinkUuid($order->id);
             AlertMessages::lineAlertPayment($order);
             AlertMessages::smsAlertPayment($order, $bitly);
+            Facebook::send($order, "ทดสอบแจ้งชำระเงิน");
+            Line::send($order, "ทดสอบแจ้งชำระเงิน");
 
             return response()->json([
                 "status" => "successs",

@@ -156,6 +156,12 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                 });
             });
 
+            Route::prefix('line')->group(function () { // api/v1/line/
+                Route::get('search', 'Order\LineController@search');
+                Route::post('{profile}/connect_profile', 'Order\LineController@connect_profile');
+                Route::post('{profile}/disconnect_profile', 'Order\LineController@disconnect_profile');
+            });
+
             Route::prefix('adjustExcessPayment')->group(function () { // api/v1/guest/ksher
                 Route::get('fetchChannels', 'Order\AdjustExcessPaymentChannelController@fetch');
                 Route::post('order/{order}/store', 'Order\AdjustExcessPaymentChannelController@store');

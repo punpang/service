@@ -434,4 +434,9 @@ class AOrder extends Model
     {
         return $this->hasMany(AdjustExcessPayment::class, "order_id", "id");
     }
+
+    public function OrderChannel()
+    {
+        return $this->belongsTo(OrderChannel::class, "channel", "id");
+    }
 }

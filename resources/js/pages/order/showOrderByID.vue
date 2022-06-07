@@ -75,7 +75,7 @@ import btnAddGoods from "@/js/components/order/addGoods/btnAddGoods";
 import btnAlertPayment from "@/js/components/order/manages/alertPayment/btnAlertPayment";
 import btnPayment from "@/js/components/order/manages/payment/btnPayment";
 import btnChangeCustomer from "@/js/components/order/changeCustomer/btnChangeCustomer";
-import btnConnectSocialProfile from "@/js/components/order/connectSocialProfile.vue/button.vue";
+import btnConnectSocialProfile from "@/js/components/order/connectSocialProfile/button";
 import btnChangeDateTimeGet from "@/js/components/order/changeDateTimeGet/btnChangeDateTimeGet";
 import btnDelivery from "@/js/components/order/delivery/btnDelivery";
 import btnPrepareGoods from "@/js/components/order/prepareGoods/btnPrepareGoods";

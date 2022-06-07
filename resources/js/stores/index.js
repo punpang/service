@@ -49,6 +49,7 @@ import orderImageGoodsReviewToCustomer from "@/js/stores/modules/order/imageGood
 import orderDeliveryService from "@/js/stores/modules/order/deliveryService";
 import orderAdjustExcessPayment from "@/js/stores/modules/order/adjustExcessPayment";
 import facebook from "@/js/stores/modules/order/facebook.js";
+import line from "@/js/stores/modules/order/line.js";
 /////////////////////////
 /// LUCKY REWAYD START ///
 import orderLuckyReward from "@/js/stores/modules/order/luckyReward";
@@ -105,5 +106,6 @@ export default new Vuex.Store({
         orderDeliveryService,
         orderAdjustExcessPayment,
         facebook,
+        line,
     },
 });

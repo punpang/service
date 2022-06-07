@@ -94,6 +94,6 @@ class ACustomer extends Model implements Auditable
 
     public function line()
     {
-        return $this->hasOne(Facebook::class, "customer_id", "id");
+        return $this->hasOne(Line::class, "customer_id", "id");
     }
 }
