@@ -367,7 +367,7 @@ class AOrderController extends Controller
             );
             if ($history["status"] == "success") {
                 if (request("getGoods")) {
-                    $this->pickUpOrderByID($order->id);
+                    $this->pickUpOrderByID(request("orderID"));
                     return response()->json([
                         "message" => "ชำระเงินสำเร็จและรับสินค้าเรียบร้อย",
                         "result" => "success",
@@ -443,11 +443,15 @@ class AOrderController extends Controller
         $order->status = 9;
         $order->save();
 
-        $msgSms = 'ท่านเข้ารับสินค้าแล้ว หมายเลขคำสั่งซื้อ #' . $order->id . ' หากท่านยังไม่ได้รับสินค้า​ โปรดแจ้งทางร้านทันที โทร. 091-885-3402 หรือ [ https://m.me/punpangpranburi ]';
-        $msgLine = 'ส่งมอบสินค้าแล้ว -> #' . $order->id;
+        // $msgSms = 'ท่านเข้ารับสินค้าแล้ว หมายเลขคำสั่งซื้อ #' . $order->id . ' หากท่านยังไม่ได้รับสินค้า​ โปรดแจ้งทางร้านทันที โทร. 091-885-3402 หรือ [ https://m.me/punpangpranburi ]';
+        //$msgLine = 'ส่งมอบสินค้าแล้ว -> #' . $order->id;
 
-        Linenotify::send($msgLine);
-        MSms::Sms($order->customer->tel, $msgSms);
+        //Linenotify::send($msgLine);
+        //MSms::Sms($order->customer->tel, $msgSms);
+
+        AlertMessages::linePickUpGoods($order);
+        AlertMessages::smsPickUpGoods($order);
+
 
         return response()->json([
             "message" => "รับสินค้าเรียบร้อย",
@@ -473,11 +477,57 @@ class AOrderController extends Controller
 
 
         if ($order) {
-            $bitly = AOrder::genlinkUuid($order->id);
+            // $bitly = AOrder::genlinkUuid($order->id);
             AlertMessages::lineAlertPayment($order);
-            AlertMessages::smsAlertPayment($order, $bitly);
-            Facebook::send($order, "ทดสอบแจ้งชำระเงิน");
-            Line::send($order, "ทดสอบแจ้งชำระเงิน");
+            // AlertMessages::smsAlertPayment($order);
+
+            $message = "
+📌 หมายเลขคำสั่งซื้อ #" . $order->id . "
+
+📌ข้อมูลลูกค้า
+คุณ " . $order->customer->name . "
+หมายเลขโทรศัพท์
+" . $order->customer->tel . "
+
+📌 วัน-เวลานัดรับสินค้า
+" . $order->date_get_th . " " . $order->time_get . " น.
+
+📌 ยอดรวมทั้งหมด
+" . number_format($order->sumTASC(), 2) . " บาท
+
+📌 โปรดชำระเงินภายใน
+" . $order->payment_deadline_th . " น.";
+            Facebook::send_reply_message(
+                $order,
+                $message
+            );
+            $payload = [
+                "keyword" => "not_confirm_payment",
+                "order_id" => $order->id,
+                "link_for_customer" => $order->link_for_customer
+            ];
+            Facebook::send_postback(
+                $order,
+                [
+                    [
+                        "title" => "ชำระเงินและรายละเอียดสินค้า",
+                        "subtitle" => "โปรดชำระเงินโดยกดปุ่ม ชำระเงิน",
+                        "buttons" => [
+                            [
+                                "title" => "ชำระเงิน",
+                                "url" => $order->link_for_customer,
+                                "type" => "web_url"
+                            ],
+                            [
+                                "title" => "ไม่สะดวกชำระเงิน",
+                                "payload" => json_encode($payload),
+                                "type" => "postback"
+                            ]
+                        ]
+                    ]
+                ]
+            );
+            Line::flex_alert_payment($order);
 
             return response()->json([
                 "status" => "successs",
@@ -639,7 +689,7 @@ class AOrderController extends Controller
         //     ], 201);
         // }
 
-        if ($order->status != 3) {
+        if ($order->status != 3 && $order->status != 4) {
             return response()->json([
                 "status" => "failed",
                 "title" => "ไม่สำเร็จ",
@@ -705,5 +755,33 @@ class AOrderController extends Controller
             "icon" => "success",
             "message" => "ลูกค้าได้รับสินค้าเรียบร้อย"
         ], 201);
+    }
+
+    public function customerNoPayment(AOrder $order, Request $request)
+    {
+        if ($order->status != 1) {
+            return response()->json([
+                "status" => "error",
+                "title" => "ไม่สำเร็จ",
+                "icon" => "error",
+                "message" => "สถานะไม่ถูกต้อง"
+            ], 201);
+        }
+
+        $order->where("status", 1)
+            ->update([
+                "status" =>
+                $request->option["status_id"]
+            ]);
+
+            AlertMessages::smsCustomerNoPayment($order,$request->option["waiting_period"]);
+            AlertMessages::lineCustomerNoPayment($order);
+
+        return response()->json([
+            "status" => "success",
+            "title" => "สำเร็จ",
+            "icon" => "success",
+            "text" => "ดำเนินการเรียบร้อย"
+        ], 200);
     }
 }

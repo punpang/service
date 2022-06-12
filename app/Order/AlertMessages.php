@@ -6,6 +6,7 @@ use Bitly;
 use App\URL;
 use App\MSms;
 use App\Linenotify;
+use App\Order\Line;
 use App\Order\AOrder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -37,6 +38,24 @@ class AlertMessages extends Model
         $bitly = AOrder::genlinkUuid($order->id);
         $nbfm_amount = number_format($amount, 2);
         $msgSms = 'ขอบคุณที่ชำระเงิน จำนวน ' . $nbfm_amount  . ' บาท หมายเลขคำสั่งซื้อ #' . $order->id . ' รายละเอียดรายการสั่งซื้อคลิกลิงก์ [ ' . $bitly . ' ]\n\nวัน-เวลานัดรับสินค้า\n' . $order->dateGetTimeFormat();
+
+        Line::flex_receipt($order);
+        Facebook::send_postback(
+            $order,
+            [
+                [
+                    "title" => "ขอบคุณที่ชำระเงิน #$order->id",
+                    "subtitle" => "จำนวน $nbfm_amount บาท",
+                    "buttons" => [
+                        [
+                            "title" => "รายละเอียดเพิ่มเติม",
+                            "url" => $order->link_for_customer,
+                            "type" => "web_url"
+                        ]
+                    ]
+                ]
+            ]
+        );
         return MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
 
         //AHistoryPayed
@@ -151,9 +170,9 @@ class AlertMessages extends Model
         return Linenotify::send($msgLine);
     }
 
-    public static function smsAlertPayment($order, $bitly, $alertSMS = true)
+    public static function smsAlertPayment($order, $alertSMS = true)
     {
-        $msgSms = 'แจ้งชำระเงิน สำหรับหมายเลขคำสั่งซื้อ #' . $order->id . " สามารถชำระเงินภายในลิงก์ [ " . $bitly . " ] โปรดชำระก่อน " . $order->payment_deadline_th . " เพื่อยืนยันรายการสั่งซื้อของท่าน";
+        $msgSms = 'แจ้งชำระเงิน สำหรับหมายเลขคำสั่งซื้อ #' . $order->id . " สามารถชำระเงินภายในลิงก์ [ " . $order->link_for_customer . " ] โปรดชำระก่อน " . $order->payment_deadline_th . " เพื่อยืนยันรายการสั่งซื้อของท่าน";
         return MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
     }
 
@@ -266,5 +285,37 @@ class AlertMessages extends Model
     {
         $msgSms = 'หมายเลขคำสั่งซื้อ #' . $order->id . " ของคุณ จัดส่งเรียบร้อยแล้ว";
         return MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
+    }
+
+    public static function lineCustomerNoPayment($order)
+    {
+        $msgLine = 'ไม่สะดวกชำระเงิน => #' . $order->id;
+        return Linenotify::send($msgLine);
+    }
+
+    public static function smsCustomerNoPayment($order, $waiting_period, $alertSMS = true)
+    {
+        $msgSms = "ทางร้านขอนัดลูกค้าเข้าร้าน " . $order->date_get_th . " " . $order->time_get . " น. เพื่อรอจัดเตรียมสินค้า " . $waiting_period . "
+
+*หากลูกค้าเข้าร้านก่อนหรือหลังเวลาที่นัด อาจใช้เวลาการเตรียมมากว่าปกติ";
+        Line::flex_customer_noPayment($order, $waiting_period);
+        Facebook::send_reply_message($order, $msgSms);
+        Facebook::send_postback(
+            $order,
+            [
+                [
+                    "title" => "รายละเอียดสินค้าและชำระเงิน",
+                    "buttons" => [
+                        [
+                            "title" => "กดที่นี่",
+                            "url" => $order->link_for_customer,
+                            "type" => "web_url"
+                        ]
+                    ]
+                ]
+            ]
+        );
+
+        return MSms::Sms($order->customer->tel, $msgSms . " รายละเอียดคำสั่งซื้อ คลิกลิงก์ [ " . $order->link_for_customer . " ]", $alertSMS);
     }
 }

@@ -208,6 +208,7 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                 Route::post('{order}/changeDateTimeGet', 'Order\AOrderController@changeDateTimeGet');
                 Route::post('{order}/prepareGoods', 'Order\AOrderController@prepareGoods');
                 Route::post('{order}/pickUpGoods', 'Order\AOrderController@pickUpGoods');
+                Route::post('{order}/customerNoPayment', 'Order\AOrderController@customerNoPayment');
 
                 Route::prefix('channelPayment')->group(function () { // api/admin/v1/...
                     Route::get('getUse', 'Order\ChannelPaymentController@getUse');
@@ -363,8 +364,9 @@ Route::prefix('callback')->group(function () { // api/callback/...
     Route::post('ksherPay', 'Order\KsherPayController@callBack');
 });
 
-Route::prefix('webhook')->group(function () { // api/callback/...
+Route::prefix('webhook')->group(function () { // api/webhook/...
     Route::post('facebook', 'Order\FacebookController@webhook');
+    Route::get('facebook', 'Order\FacebookController@webhook');
     Route::post('line', 'Order\LineController@webhook');
     // Route::get('facebook', 'Order\FacebookController@webhook');
 });

@@ -128,7 +128,7 @@ class KsherPayController extends Controller
             $amount = $KsherPay["ksher"]->amount;
             $result_order = AOrder::paymentByOrderID($orderID, $amount);
 
-            if ($result_order["status"]$challange = $request['hub_challenge'];
+            if ($result_order["status"] == "success") {
 
                 $result_aHistoryPayed = AHistoryPayed::paymentByOrderID($orderID, $amount, 3, $mch_order_no);
 
