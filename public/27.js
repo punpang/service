@@ -117,6 +117,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -381,16 +398,15 @@ var render = function () {
                 [
                   _c(
                     "v-col",
-                    { attrs: { md: "3", cols: "7" } },
+                    { attrs: { md: "5", cols: "7" } },
                     [
-                      _c("v-text-field", {
+                      _c("v-otp-input", {
                         attrs: {
+                          length: "4",
                           label: "OTP 4 หลัก",
-                          "prepend-icon": "vpn_key",
+                          type: "number",
                           outlined: "",
                           "hide-details": "",
-                          pattern: "\\d*",
-                          type: "number",
                           rules: _vm.rules.otp,
                         },
                         model: {
@@ -404,23 +420,32 @@ var render = function () {
                     ],
                     1
                   ),
-                  _vm._v(" "),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-row",
+                { staticClass: "mt-3", attrs: { justify: "center" } },
+                [
                   _c(
                     "v-col",
-                    { attrs: { md: "2", cols: "5" } },
+                    { attrs: { md: "5", cols: "5" } },
                     [
                       _c(
                         "v-btn",
                         {
                           staticClass: "success",
-                          attrs: { block: "", height: "100%", large: "" },
+                          attrs: { block: "", large: "" },
                           on: { click: _vm.get_otp },
                         },
                         [
                           _c("v-icon", { attrs: { left: "" } }, [
                             _vm._v("sms"),
                           ]),
-                          _vm._v("\n            รับรหัส\n          "),
+                          _vm._v(
+                            "\n                        รับรหัส\n                    "
+                          ),
                         ],
                         1
                       ),
@@ -494,7 +519,7 @@ var render = function () {
                                     },
                                     [
                                       _vm._v(
-                                        "\n                ลงทะเบียน\n              "
+                                        "\n                                ลงทะเบียน\n                            "
                                       ),
                                     ]
                                   ),
@@ -522,7 +547,7 @@ var render = function () {
                                     },
                                     [
                                       _vm._v(
-                                        "\n                ล้างข้อมูล\n              "
+                                        "\n                                ล้างข้อมูล\n                            "
                                       ),
                                     ]
                                   ),

@@ -138,6 +138,11 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
 
         Route::prefix("v1")->group(function () {
 
+            Route::prefix('setting')->group(function () { // api/v1/guest/ksher
+                Route::get('fetch', 'Order\SettingController@fetch');
+                Route::post('update', 'Order\SettingController@update');
+            });
+
             Route::prefix('facebook')->group(function () { // api/v1/facebook/
 
                 Route::get('search_profile', 'Order\FacebookController@search_profile');

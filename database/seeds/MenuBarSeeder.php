@@ -13,10 +13,22 @@ class MenuBarSeeder extends Seeder
      */
     public function run()
     {
+        $MenuMains = MenuMain::get();
+        foreach ($MenuMains as $MenuMain) {
+            $MenuMain->delete();
+        }
+
+        $MenuSubs = MenuSub::get();
+        foreach ($MenuSubs as $MenuSub) {
+            $MenuSub->delete();
+        }
+
+
+
         $datas = [
             [
                 // จัดการออร์เดอร์
-                "title" => "จัดการออร์เดอร์", "action" => "shop", "admin" => 1, "customer" => 0,
+                "title" => "ออร์เดอร์", "action" => "local_mall", "admin" => 1, "customer" => 0,
                 "subs" => [
                     ["title" => "รายการใหม่", "to" => "/manages/order/newOrder", "admin" => 1, "customer" => 0],
                     ["title" => "รายการสั่งซื้อ", "to" => "/manages/order", "admin" => 1, "customer" => 0],
@@ -25,7 +37,7 @@ class MenuBarSeeder extends Seeder
             ],
             [
                 // จัดการลุ้นโชค
-                "title" => "จัดการลุ้นโชค", "action" => "shop", "admin" => 1, "customer" => 0,
+                "title" => "ลุ้นโชค", "action" => "redeem", "admin" => 1, "customer" => 0,
                 "subs" => [
                     ["title" => "ลงทะเบียนลุ้นโชค", "to" => "/manages/lucky/register", "admin" => 1, "customer" => 0],
                     ["title" => "แลกของรางวัล", "to" => "/manages/lucky/redeem-code", "admin" => 1, "customer" => 0]
@@ -33,10 +45,19 @@ class MenuBarSeeder extends Seeder
             ],
             [
                 // จัดการ Ksher
-                "title" => "KSHER", "action" => "shop", "admin" => 1, "customer" => 0,
+                "title" => "KSHER", "action" => "attach_money", "admin" => 1, "customer" => 0,
                 "subs" => [
                     ["title" => "ช่องทางการชำระเงิน", "to" => "/manages/ksher/channel", "admin" => 1, "customer" => 0],
                     ["title" => "วันที่ปิดใช้งาน", "to" => "/manages/ksher/dayOff", "admin" => 1, "customer" => 0],
+                ]
+            ],
+
+            [
+                // จัดการ ตั้งค่า
+                "title" => "ตั้งค่า", "action" => "settings", "admin" => 1, "customer" => 0,
+                "subs" => [
+                    ["title" => "ทั่วไป", "to" => "/manages/setting", "admin" => 1, "customer" => 0],
+                    ["title" => "ข้อความตอบกลับ", "to" => "/manages/facebook/reply", "admin" => 1, "customer" => 0],
                 ]
             ],
             // [
