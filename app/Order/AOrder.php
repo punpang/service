@@ -4,6 +4,7 @@ namespace App\Order;
 
 use Bitly;
 use App\URL;
+use App\Linenotify;
 use App\Order\OrderDetail;
 use Illuminate\Support\Str;
 use App\Order\AHistoryPayed;
@@ -85,7 +86,9 @@ class AOrder extends Model
 
     public function getLinkForCustomerAttribute()
     {
-        return Bitly::getUrl(URL::base() . "/o/" . $this->auth_order);
+        // return Bitly::getUrl(URL::base() . "/o/" . $this->auth_order);
+        $shotlink = ShotlinkV2::store("/o/" . $this->auth_order);
+        return $shotlink;
     }
 
 

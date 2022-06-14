@@ -85,6 +85,8 @@ Route::prefix('v1')->group(function () { // api/v1/...
             Route::post('uploadImage', 'ShabuNooNee\GoogleImageController@storeNotAuth');
         });
 
+        Route::get('shotlink/{shotlink}', 'Order\ShotlinkV2Controller@redirect');
+
         Route::prefix('lucky')->group(function () { // api/gueœst/order/
             Route::post('reward/getByUUID', 'Order\RewardCustomerController@getByUUID');
             Route::post('reward/openReward', 'Order\RewardLabelController@openReward');
@@ -141,6 +143,12 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
             Route::prefix('setting')->group(function () { // api/v1/guest/ksher
                 Route::get('fetch', 'Order\SettingController@fetch');
                 Route::post('update', 'Order\SettingController@update');
+            });
+
+            Route::prefix('StoreDayOff')->group(function () { // api/v1/guest/ksher
+                Route::get('fetch', 'Order\StoreDayOffController@fetch');
+                Route::post('store', 'Order\StoreDayOffController@store');
+                Route::post('{id}/remove', 'Order\StoreDayOffController@remove');
             });
 
             Route::prefix('facebook')->group(function () { // api/v1/facebook/

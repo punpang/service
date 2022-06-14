@@ -2,11 +2,12 @@
 
 namespace App;
 
+use App\URL;
+use Request;
+use App\Order\Setting;
+use App\Notifications\LineNotification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use App\Notifications\LineNotification;
-use Request;
-use App\URL;
 
 class Linenotify extends Model
 {
@@ -18,6 +19,8 @@ class Linenotify extends Model
 
   protected function routeNotificationForLine()
   {
+    $setting = Setting::first();
+    return $setting->line_key_notify;
     return "aFrDdvbflGulc1vsErMtF6LyIGzjxk2zmnJ0xhfNrDn";
 
     if (

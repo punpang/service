@@ -479,7 +479,7 @@ class AOrderController extends Controller
         if ($order) {
             // $bitly = AOrder::genlinkUuid($order->id);
             AlertMessages::lineAlertPayment($order);
-            // AlertMessages::smsAlertPayment($order);
+            AlertMessages::smsAlertPayment($order);
 
             $message = "
 📌 หมายเลขคำสั่งซื้อ #" . $order->id . "

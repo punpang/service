@@ -54,6 +54,12 @@ const routes = [
         meta: { requiresAuth: true },
     },
     {
+        path: "/manages/ordersss",
+        name: "managesOrder",
+        component: () => import("@/js/pages/order/newOrder"),
+        meta: { requiresAuth: true },
+    },
+    {
         path: "/manages/order/:id/alertPayment",
         name: "managesOrderIDAlertPayment",
         component: () => import("@/js/pages/order/alertPaymentByOrderID"),
@@ -83,9 +89,23 @@ const routes = [
     },
 
     {
+        path: "/manages/ksher/channel",
+        name: "managesKsherDayOff",
+        component: () => import("@/js/pages/ksher/dayOff.vue"),
+        meta: { requiresAuth: true },
+    },
+
+    {
         path: "/manages/ksher/dayOff",
         name: "managesKsherDayOff",
         component: () => import("@/js/pages/ksher/dayOff.vue"),
+        meta: { requiresAuth: true },
+    },
+
+    {
+        path: "/manages/store/dayOff",
+        name: "managesStoreDayOff",
+        component: () => import("@/js/pages/store/dayOff.vue"),
         meta: { requiresAuth: true },
     },
 
@@ -96,14 +116,14 @@ const routes = [
         meta: { requiresAuth: true },
     },
     {
-        path: "/manages/facebook/reply",
+        path: "/manages/settings/facebook/reply",
         name: "managesOrderShowOrderByID",
-        component: () => import("@/js/pages/facebook/reply"),
+    component: () => import("@/js/pages/facebook/reply"),
         meta: { requiresAuth: true },
     },
 
     {
-        path: "/manages/setting",
+        path: "/manages/settings/general",
         name: "managesSetting",
         component: () => import("@/js/pages/setting"),
         meta: { requiresAuth: true },
@@ -159,8 +179,13 @@ const routes = [
     },
     {
         path: "/o/:uuid",
-        name: "guestOrderAuthUuid",
+        name: "guestOrderUUID",
         component: () => import("@/js/pages/guest/orders/uuid"),
+    },
+    {
+        path: "/r/:shotlink",
+        name: "guestShotlink",
+        component: () => import("@/js/pages/guest/orders/shotlink"),
     },
     {
         path: "/ksher/successfully",
