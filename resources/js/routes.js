@@ -103,7 +103,7 @@ const routes = [
     },
 
     {
-        path: "/manages/store/dayOff",
+        path: "/manages/settings/store/dayOff",
         name: "managesStoreDayOff",
         component: () => import("@/js/pages/store/dayOff.vue"),
         meta: { requiresAuth: true },

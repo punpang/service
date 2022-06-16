@@ -369,9 +369,10 @@ Route::get('/artisan/df4sd6f41wa6f1f6g8qw3f4as6df4196/db/seed/{seed}', function 
     return Artisan::call('db:seed --class=' . $seed);
 });
 
-Route::get('/artisan/df4sd6f41wa6f1f6g8qw3f4as6df4196/migrate/rollback', function () {
-    return Artisan::call('migrate:rollback');
+Route::get('/artisan/df4sd6f41wa6f1f6g8qw3f4as6df4196/{value}', function ($value) {
+    return Artisan::call($value);
 });
+
 
 Route::prefix('callback')->group(function () { // api/callback/...
     Route::post('ksherPay', 'Order\KsherPayController@callBack');

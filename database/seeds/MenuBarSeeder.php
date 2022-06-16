@@ -13,15 +13,15 @@ class MenuBarSeeder extends Seeder
      */
     public function run()
     {
-        $MenuMains = MenuMain::get();
-        foreach ($MenuMains as $MenuMain) {
-            $MenuMain->delete();
-        }
+        MenuMain::where("id", "!=", "null")->delete();
+        // foreach ($MenuMains as $MenuMain) {
+        //     $MenuMain->delete();
+        // }
 
-        $MenuSubs = MenuSub::get();
-        foreach ($MenuSubs as $MenuSub) {
-            $MenuSub->delete();
-        }
+        MenuSub::where("id", "!=", "null")->delete();
+        // foreach ($MenuSubs as $MenuSub) {
+        //     $MenuSub->delete();
+        // }
 
 
 
@@ -57,6 +57,7 @@ class MenuBarSeeder extends Seeder
                 "title" => "ตั้งค่า", "action" => "settings", "admin" => 1, "customer" => 0,
                 "subs" => [
                     ["title" => "ทั่วไป", "to" => "/manages/settings/general", "admin" => 1, "customer" => 0],
+                    ["title" => "วันหยุดร้าน", "to" => "/manages/settings/store/dayOff", "admin" => 1, "customer" => 0],
                     ["title" => "ข้อความตอบกลับ", "to" => "/manages/settings/facebook/reply", "admin" => 1, "customer" => 0],
                 ]
             ],
