@@ -1,0 +1,226 @@
+{
+    "type" : "bubble",
+    "body" : {
+        "type" : "box",
+        "layout" : "vertical",
+        "contents" : [
+            {
+                "type" : "text",
+                "text" : "แจ้งชำระเงิน",
+                "weight" : "bold",
+                "size" : "xl"
+            },
+            {
+                "type" : "box",
+                "layout" : "vertical",
+                "margin" : "lg",
+                "spacing" : "sm",
+                "contents" : [
+                    {
+                        "type" : "box",
+                        "layout" : "baseline",
+                        "spacing" : "sm",
+                        "contents" : [
+                            {
+                                "type" : "text",
+                                "color" : "#aaaaaa",
+                                "size" : "sm",
+                                "flex" : 4,
+                                "text" : "หมายเลขคำสั่งซื้อ"
+                            },
+                            {
+                                "type" : "text",
+                                "text" : "#$order->id",
+                                "wrap" : true,
+                                "color" : "#666666",
+                                "size" : "sm",
+                                "flex" : 5,
+                                "align" : "end"
+                            }
+                        ]
+                    },
+                    {
+                        "type" : "separator",
+                        "margin" : "md"
+                    },
+                    {
+                        "type" : "box",
+                        "layout" : "baseline",
+                        "spacing" : "sm",
+                        "contents" : [
+                            {
+                                "type" : "text",
+                                "text" : "ชื่อลูกค้า",
+                                "color" : "#aaaaaa",
+                                "size" : "sm",
+                                "flex" : 4
+                            },
+                            {
+                                "type" : "text",
+                                "text" : "$customer->name",
+                                "wrap" : true,
+                                "color" : "#666666",
+                                "size" : "sm",
+                                "flex" : 5,
+                                "align" : "end"
+                            }
+                        ],
+                        "margin" : "md"
+                    },
+                    {
+                        "type" : "box",
+                        "layout" : "baseline",
+                        "contents" : [
+                            {
+                                "type" : "text",
+                                "text" : "เบอร์โทรศัพท์",
+                                "flex" : 4,
+                                "color" : "#aaaaaa",
+                                "size" : "sm"
+                            },
+                            {
+                                "type" : "text",
+                                "text" : "$customer->tel",
+                                "color" : "#666666",
+                                "size" : "sm",
+                                "flex" : 5,
+                                "align" : "end"
+                            }
+                        ]
+                    },
+                    {
+                        "type" : "separator",
+                        "margin" : "md"
+                    },
+                    {
+                        "type" : "box",
+                        "layout" : "baseline",
+                        "spacing" : "sm",
+                        "contents" : [
+                            {
+                                "type" : "text",
+                                "color" : "#aaaaaa",
+                                "size" : "sm",
+                                "flex" : 4,
+                                "text" : "วันที่นัดรับ"
+                            },
+                            {
+                                "type" : "text",
+                                "text" : "$order->date_get_th",
+                                "wrap" : true,
+                                "color" : "#666666",
+                                "size" : "sm",
+                                "flex" : 5,
+                                "align" : "end"
+                            }
+                        ],
+                        "margin" : "md"
+                    },
+                    {
+                        "type" : "box",
+                        "layout" : "baseline",
+                        "spacing" : "sm",
+                        "contents" : [
+                            {
+                                "type" : "text",
+                                "text" : "เวลาที่นัดรับ",
+                                "color" : "#aaaaaa",
+                                "size" : "sm",
+                                "flex" : 4
+                            },
+                            {
+                                "type" : "text",
+                                "text" : "$order->time_get น.",
+                                "wrap" : true,
+                                "color" : "#666666",
+                                "size" : "sm",
+                                "flex" : 5,
+                                "align" : "end"
+                            }
+                        ]
+                    },
+                    {
+                        "type" : "separator",
+                        "margin" : "md"
+                    },
+                    {
+                        "type" : "box",
+                        "layout" : "baseline",
+                        "spacing" : "sm",
+                        "contents" : [
+                            {
+                                "type" : "text",
+                                "text" : "สรุปยอดทั้งหมด",
+                                "color" : "#aaaaaa",
+                                "size" : "sm",
+                                "flex" : 4
+                            },
+                            {
+                                "type" : "text",
+                                "text" : "$sumTASC บาท",
+                                "wrap" : true,
+                                "color" : "#666666",
+                                "size" : "sm",
+                                "flex" : 5,
+                                "align" : "end"
+                            }
+                        ],
+                        "margin" : "md"
+                    },
+                    {
+                        "type" : "separator",
+                        "margin" : "md"
+                    },
+                    {
+                        "type" : "box",
+                        "layout" : "baseline",
+                        "spacing" : "sm",
+                        "contents" : [
+                            {
+                                "type" : "text",
+                                "text" : "โปรดชำระก่อน",
+                                "color" : "#aaaaaa",
+                                "size" : "sm",
+                                "flex" : 4
+                            },
+                            {
+                                "type" : "text",
+                                "text" : "$order->payment_deadline_th น.",
+                                "wrap" : true,
+                                "color" : "#666666",
+                                "size" : "sm",
+                                "flex" : 6,
+                                "align" : "end"
+                            }
+                        ],
+                        "margin" : "md"
+                    }
+                ]
+            }
+        ]
+    },
+    "footer" : {
+        "type" : "box",
+        "layout" : "vertical",
+        "spacing" : "sm",
+        "contents" : [
+            {
+                "type" : "button",
+                "style" : "primary",
+                "height" : "sm",
+                "action" : {
+                    "type" : "uri",
+                    "label" : "รายละเอียดและชำระเงิน",
+                    "uri" : "$order->link_for_customer"
+                }
+            },
+            {
+                "type" : "box",
+                "layout" : "vertical",
+                "contents" : {},
+                "margin" : "sm"
+            }
+        ],
+        "flex" : 0
+    }
+}
