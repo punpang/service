@@ -3,6 +3,7 @@ export default {
     state: {
         useKsherChannelPayment: {},
         ksherPay: [],
+        fetch_day_offs: [],
     },
     mutations: {
         useKsherChannelPayment(state, data) {
@@ -11,11 +12,15 @@ export default {
         ksherPay(state, data) {
             state.ksherPay = data;
         },
+        fetch_day_offs(state, data) {
+            state.fetch_day_offs = data;
+        },
     },
     getters: {
         useKsherChannelPayment: (state) => state.useKsherChannelPayment,
         ksherPay: (state) => state.ksherPay,
         kshers: (state) => state.kshers,
+        fetch_day_offs: (state) => state.fetch_day_offs,
     },
     actions: {
         async getUseKsherChannelPayment({ commit }) {
@@ -67,6 +72,29 @@ export default {
         async setDayOff({}, payload) {
             return await axios
                 .post(`/api/admin/v1/ksher/setDayOff`, payload)
+                .then((response) => {
+                    return response;
+                })
+                .catch((err) => {
+                    log.error(err);
+                });
+        },
+
+        async fetch_ksher_day_off({ commit }, payload) {
+            return await axios
+                .get(`/api/admin/v1/ksher/dayOff/fetch?${payload}`)
+                .then((response) => {
+                    commit("fetch_day_offs", response.data);
+                    return response;
+                })
+                .catch((err) => {
+                    log.error(err);
+                });
+        },
+
+        async remove_ksher_day_off({}, payload) {
+            return await axios
+                .post(`/api/admin/v1/ksher/dayOff/${payload.id}/remove`)
                 .then((response) => {
                     return response;
                 })

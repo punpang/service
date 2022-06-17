@@ -187,6 +187,10 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
             Route::prefix('ksher')->group(function () { // api/v1/guest/ksher
                 Route::get('fetch', 'Order\KsherChannelPaymentController@fetch');
                 Route::post('setDayOff', 'Order\KsherChannelPaymentController@setDayOff');
+                Route::prefix('dayOff')->group(function () { // api/v1/guest/ksher
+                    Route::get('fetch', 'Order\KsherDayOffController@fetch');
+                    Route::post('{id}/remove', 'Order\KsherDayOffController@remove');
+                });
             });
 
             Route::prefix('QRCodeGenerator')->group(function () { // api/admin/v1/...

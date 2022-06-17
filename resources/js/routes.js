@@ -90,8 +90,8 @@ const routes = [
 
     {
         path: "/manages/ksher/channel",
-        name: "managesKsherDayOff",
-        component: () => import("@/js/pages/ksher/dayOff.vue"),
+        name: "managesKsherChannel",
+        component: () => import("@/js/pages/ksher/channel"),
         meta: { requiresAuth: true },
     },
 

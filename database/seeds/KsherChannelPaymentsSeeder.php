@@ -28,6 +28,7 @@ class KsherChannelPaymentsSeeder extends Seeder
                 "status_use" =>  1,
                 "channel" => "promptpay",
                 "minimum" => 1,
+                "maximum" => 500
             ],
             [
                 "id" =>  2,
@@ -44,6 +45,8 @@ class KsherChannelPaymentsSeeder extends Seeder
                 "status_use" =>  1,
                 "channel" => "wechat,alipay,truemoney,airpay,linepay",
                 "minimum" => 1,
+                "maximum" => 500
+
             ],
             [
                 "id" =>  3,
@@ -60,6 +63,8 @@ class KsherChannelPaymentsSeeder extends Seeder
                 "status_use" =>  1,
                 "channel" => "scb_easy,bbl_deeplink,baybank_deeplink",
                 "minimum" => 20,
+                "maximum" => 500
+
             ],
             [
                 "id" =>  4,
@@ -76,6 +81,8 @@ class KsherChannelPaymentsSeeder extends Seeder
                 "status_use" =>  1,
                 "channel" => "card",
                 "minimum" => 1,
+                "maximum" => 500
+
             ],
             [
                 "id" =>  5,
@@ -92,6 +99,8 @@ class KsherChannelPaymentsSeeder extends Seeder
                 "status_use" =>  1,
                 "channel" => "transferByCustomer",
                 "minimum" => 1,
+                "maximum" => 500
+
             ],
             [
                 "id" =>  6,
@@ -108,6 +117,8 @@ class KsherChannelPaymentsSeeder extends Seeder
                 "status_use" =>  1,
                 "channel" => "notPayment",
                 "minimum" => 1,
+                "maximum" => 500
+
             ],
         ];
 

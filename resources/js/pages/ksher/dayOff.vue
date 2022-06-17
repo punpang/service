@@ -1,111 +1,81 @@
 <template>
     <div>
-        <v-row class="mb-2">
-            <v-col cols="12" md="6">
-                <v-card class="mb-4" height="100%" elevation="1">
-                    <v-card-title class="text-h6 white--text warning">
-                        เลือกช่องทางชำระเงิน
-                    </v-card-title>
-                    <v-card-text>
-                        <v-checkbox
-                            v-for="ksher in ksherPay"
-                            :key="ksher.id"
-                            :label="ksher.text"
-                            v-model="checkbox"
-                            :value="ksher.id"
-                            hide-details
-                        ></v-checkbox>
-                    </v-card-text>
-                </v-card>
-            </v-col>
-            <v-col cols="12" md="6">
-                <v-date-picker
-                    v-model="dates"
-                    range
-                    :allowed-dates="allowedDates"
-                    color="warning"
-                    full-width
-                    locale="th-TH"
-                    elevation="1"
-                ></v-date-picker>
-            </v-col>
-        </v-row>
-
-        <v-btn x-large class="success" @click="clickSave()">
-            <v-icon left>save</v-icon>
-            บันทึกข้อมูล</v-btn
+        <!-- {{ fetchs }} -->
+        <v-data-table
+            :headers="headers"
+            :items="fetchs"
+            mobile-breakpoint="0"
+            :loading="loading_table"
+            hide-default-footer
         >
-        <v-btn x-large class="error" @click="clickReset()">
-            <v-icon left>refresh</v-icon>
-            ล้างข้อมูล</v-btn
-        >
+            <template v-slot:top>
+                <v-toolbar flat>
+                    <v-toolbar-title>วันที่ปิดใช้งาน KSHER</v-toolbar-title>
+                    <v-divider class="mx-4" inset vertical></v-divider>
+                    <v-spacer></v-spacer>
+                    <dayOffCreate> </dayOffCreate>
+                </v-toolbar>
+            </template>
+            <template v-slot:item.manages="{ item }">
+                <v-icon color="error" @click="clickRemove(item)">delete</v-icon>
+            </template>
+        </v-data-table>
     </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import dayOffCreate from "@/js/pages/ksher/dayOff/create";
 export default {
+    components: { dayOffCreate },
     data() {
         return {
-            checkbox: [],
-            dates: [],
+            loading_table: false,
+            headers: [
+                {
+                    text: "ช่องทางชำระเงิน",
+                    value: "ksher_channel_payment.text",
+                },
+                { text: "วันที่ปิดใช้งาน", value: "day_off_th" },
+                {
+                    text: "การจัดการ",
+                    value: "manages",
+                    align: "end",
+                },
+            ],
         };
     },
     methods: {
-        clickReset() {
-            this.checkbox = [];
-            this.dates = [];
-        },
-        async clickSave() {
-            if (this.checkbox.length == 0) {
-                this.$toast.error("โปรดเลือกช่องทางชำระเงิน");
-                return;
-            }
-            if (this.dates.length != 2) {
-                this.$toast.error("โปรดเลือกวันที่");
-                return;
-            }
+        async fetch() {
             let loader = this.$loading.show();
-            const payload = {
-                checkbox: this.checkbox,
-                dates: this.dates,
-            };
-            const response = await this.$store.dispatch(
-                "orderKsher/setDayOff",
+            this.loading_table = true;
+            const payload = "isStartNow=true&sort_asc=day_off";
+            const result = await this.$store.dispatch(
+                "orderKsher/fetch_ksher_day_off",
                 payload
             );
-
-            if (response.status == 200) {
-                this.$toast.success(response.data.message);
-                this.clickReset();
-            } else {
-                this.$toast.error("เกิดข้อผิดพลาดบางประการ");
-            }
-
+            this.loading_table = false;
             loader.hide();
         },
-        allowedDates(val) {
-            const subDate = new Date();
-            subDate.setDate(subDate.getDate() - 1);
-            const date = subDate.toISOString().substr(0, 10);
-            return val > date;
-        },
-        async getData() {
+        async clickRemove(v) {
             let loader = this.$loading.show();
-            const payload = {};
-            const response = await this.$store.dispatch(
-                "orderKsher/fetch",
+            const payload = {
+                id: v.id,
+            };
+            const result = await this.$store.dispatch(
+                "orderKsher/remove_ksher_day_off",
                 payload
             );
+            await this.fetch();
             loader.hide();
         },
     },
     mounted() {
-        this.getData();
+        this.fetch();
     },
     computed: {
         ...mapGetters({
-            ksherPay: "orderKsher/ksherPay",
+            fetchs: "orderKsher/fetch_day_offs",
         }),
     },
 };
