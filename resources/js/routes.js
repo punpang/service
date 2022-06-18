@@ -54,6 +54,12 @@ const routes = [
         meta: { requiresAuth: true },
     },
     {
+        path: "/manages/orders",
+        name: "managesOrders",
+        component: () => import("@/js/pages/order/index"),
+        meta: { requiresAuth: true },
+    },
+    {
         path: "/manages/ordersss",
         name: "managesOrder",
         component: () => import("@/js/pages/order/newOrder"),

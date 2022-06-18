@@ -10,7 +10,7 @@
                     <v-row justify="center">
                         <v-col cols="10" md="4">
                             <v-text-field
-                                label="ชื่อผู้ใช่"
+                                label="ชื่อผู้ใช้"
                                 v-model="email"
                                 required
                                 autofocus
@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
     data() {
         return {
@@ -114,6 +115,16 @@ export default {
                     });
             }
         },
+    },
+    async mounted() {
+        if (this.isLoggedIn) {
+            this.$router.replace("/admin");
+        }
+    },
+    computed: {
+        ...mapGetters({
+            isLoggedIn: "main/isLoggedIn",
+        }),
     },
 };
 </script>

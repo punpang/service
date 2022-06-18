@@ -218,6 +218,10 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                 Route::post('postAppealSlip', 'Order\NoticeOfPaymentFromCustomerController@postAppealSlip');
             });
 
+            Route::prefix('orders')->group(function () { // api/admin/v1/orders/...
+                Route::get('fetch', 'Order\AOrderController@fetch_orders');
+            });
+
             Route::prefix("order")->group(function () {
                 Route::post('newOrder', 'Order\AOrderController@newOrder');
                 Route::post('{order}/addGoodsCake', 'Order\AOrderController@addGoodsCake');

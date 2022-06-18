@@ -1,7 +1,7 @@
 export default {
     namespaced: true,
     state: {
-        User: "",
+        User: {},
         isLoggedIn: !!localStorage.getItem("token"),
         sizeOverlay: "64",
     },
@@ -14,15 +14,16 @@ export default {
         },
         logoutUser(state) {
             state.isLoggedIn = false;
+            state.User = {};
             state.profile = {
-                name: ""
+                name: "",
             };
         },
     },
     getters: {
-        User: state => state.User,
-        isLoggedIn: state => state.isLoggedIn,
-        sizeOverlay:state=>state.sizeOverlay,
+        User: (state) => state.User,
+        isLoggedIn: (state) => state.isLoggedIn,
+        sizeOverlay: (state) => state.sizeOverlay,
     },
-    actions: {}
+    actions: {},
 };

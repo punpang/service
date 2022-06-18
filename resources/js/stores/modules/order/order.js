@@ -1,6 +1,7 @@
 export default {
     namespaced: true,
     state: {
+        orders: [],
         setNameGoods: "",
         order: {
             sum_all: {
@@ -55,6 +56,9 @@ export default {
         setNameGoods(state, data) {
             state.setNameGoods = data;
         },
+        orders(state, data) {
+            state.orders = data;
+        },
     },
     getters: {
         order: (state) => state.order,
@@ -62,6 +66,7 @@ export default {
         sumAll: (state) => state.order.sumAll,
         useChannelPayments: (state) => state.useChannelPayments,
         setNameGoods: (state) => state.setNameGoods,
+        orders: (state) => state.orders,
     },
     actions: {
         async getOrderByUUID({ commit }, payload) {
@@ -351,6 +356,18 @@ export default {
                     payload
                 )
                 .then((response) => {
+                    return response;
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        },
+
+        async fetch_orders({ commit }, payload) {
+            return await axios
+                .get(`/api/admin/v1/orders/fetch?${payload}`)
+                .then((response) => {
+                    commit("orders", response.data);
                     return response;
                 })
                 .catch((err) => {

@@ -774,8 +774,8 @@ class AOrderController extends Controller
                 $request->option["status_id"]
             ]);
 
-            AlertMessages::smsCustomerNoPayment($order,$request->option["waiting_period"]);
-            AlertMessages::lineCustomerNoPayment($order);
+        AlertMessages::smsCustomerNoPayment($order, $request->option["waiting_period"]);
+        AlertMessages::lineCustomerNoPayment($order);
 
         return response()->json([
             "status" => "success",
@@ -783,5 +783,39 @@ class AOrderController extends Controller
             "icon" => "success",
             "text" => "ดำเนินการเรียบร้อย"
         ], 200);
+    }
+
+    public function fetch_orders(Request $request)
+    {
+        // dd($request->get("makeHidden"));
+        $query = AOrder::query();
+
+        if ($request->get("date_get") != null) {
+            $query->where("date_get", $request->get("date_get"));
+        }
+
+        if ($request->get("sort_date_get") != null) {
+            $query->orderBy("date_get", $request->get("sort_date_get"));
+        }
+
+        if ($request->get("sort_time_get") != null) {
+            $query->orderBy("time_get", $request->get("sort_time_get"));
+        }
+
+        if ($request->get("with") != null) {
+            $explodes = explode(",", $request->get("with"));
+            foreach ($explodes as $e) {
+                $query->with($e);
+            }
+        }
+
+        $result = $query->get();
+
+        if ($request->get("makeHidden") != null) {
+            $makeHidden = explode(",", $request->get("makeHidden"));
+            $result->makeHidden($makeHidden);
+        }
+
+        return $result;
     }
 }
