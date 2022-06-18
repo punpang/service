@@ -1,5 +1,5 @@
 <template>
-    <div>a
+    <div>
         <v-data-table
             :headers="headers"
             :items="replys"
