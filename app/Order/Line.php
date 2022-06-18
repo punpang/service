@@ -2,7 +2,7 @@
 
 namespace App\Order;
 
-use App\URL;
+// use App\URL;
 use App\MSms;
 use App\Linenotify;
 use App\Order\Setting;
@@ -165,8 +165,8 @@ class Line extends Model
 
     public static function reply_messages($replyToken, $text)
     {
-        Linenotify::send('fcghfcvh');
-        Linenotify::send(count($text));
+        // Linenotify::send('fcghfcvh');
+        // Linenotify::send(count($text));
         if (count($text) > 5) {
             $count = 5;
         } else {

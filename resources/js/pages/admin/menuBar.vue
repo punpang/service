@@ -20,9 +20,9 @@
               <tr>
                 <th class="text-left"></th>
                 <th class="text-left">admin</th>
-                <th class="text-left">cashier</th>
+                <!-- <th class="text-left">cashier</th>
                 <th class="text-left">waitress</th>
-                <th class="text-left">kitchen</th>
+                <th class="text-left">kitchen</th> -->
                 <th class="text-left">customer</th>
               </tr>
             </thead>
@@ -35,7 +35,7 @@
                     @change="changeMain(menuMain.id, menuMain.admin, 'admin')"
                   ></v-checkbox>
                 </td>
-                <td>
+                <!-- <td>
                   <v-checkbox
                     v-model="menuMain.cashier"
                     @change="
@@ -58,7 +58,7 @@
                       changeMain(menuMain.id, menuMain.kitchen, 'kitchen')
                     "
                   ></v-checkbox>
-                </td>
+                </td> -->
                 <td>
                   <v-checkbox
                     v-model="menuMain.customer"
@@ -77,7 +77,7 @@
                     :disabled="menuMain.admin == false"
                   ></v-checkbox>
                 </td>
-                <td>
+                <!-- <td>
                   <v-checkbox
                     v-model="menu_sub.cashier"
                     @change="
@@ -105,7 +105,7 @@
                     "
                     :disabled="menuMain.kitchen == false"
                   ></v-checkbox>
-                </td>
+                </td> -->
 
                 <td>
                   <v-checkbox

@@ -11,7 +11,7 @@
             ></v-checkbox>
           </td>
         </tr>
-        <tr>
+        <!-- <tr>
           <td>cashier</td>
           <td>
             <v-checkbox
@@ -37,7 +37,7 @@
               @change="changeCheckbox()"
             ></v-checkbox>
           </td>
-        </tr>
+        </tr> -->
         <tr>
           <td>customer</td>
           <td>

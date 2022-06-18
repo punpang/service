@@ -172,11 +172,11 @@ const routes = [
         name: "menuCake",
         component: () => import("@/js/pages/punpang/menu"),
     },
-    {
-        path: "/guest/order/auth/:uuid",
-        name: "guestOrderAuthUuid",
-        component: () => import("@/js/pages/guest/orders/uuid"),
-    },
+    // {
+    //     path: "/guest/order/auth/:uuid",
+    //     name: "guestOrderAuthUuid",
+    //     component: () => import("@/js/pages/guest/orders/uuid"),
+    // },
     {
         path: "/o/:uuid",
         name: "guestOrderUUID",

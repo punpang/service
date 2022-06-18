@@ -7,13 +7,14 @@
             mobile-breakpoint="0"
             :loading="loading_table"
             hide-default-footer
+            items-per-page="99"
         >
             <template v-slot:top>
                 <v-toolbar flat>
                     <v-toolbar-title>วันที่ปิดใช้งาน KSHER</v-toolbar-title>
                     <v-divider class="mx-4" inset vertical></v-divider>
                     <v-spacer></v-spacer>
-                    <dayOffCreate> </dayOffCreate>
+                    <dayOffCreate @emitSuccess="emitSuccess"> </dayOffCreate>
                 </v-toolbar>
             </template>
             <template v-slot:item.manages="{ item }">
@@ -46,6 +47,9 @@ export default {
         };
     },
     methods: {
+        async emitSuccess() {
+            await this.fetch();
+        },
         async fetch() {
             let loader = this.$loading.show();
             this.loading_table = true;

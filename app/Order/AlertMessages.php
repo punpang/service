@@ -2,8 +2,8 @@
 
 namespace App\Order;
 
-use Bitly;
-use App\URL;
+// use Bitly;
+// use App\URL;
 use App\MSms;
 use App\Linenotify;
 use App\Order\Line;
@@ -35,9 +35,9 @@ class AlertMessages extends Model
         $order = AOrder::findOrFail($order_id);
         // $link = URL::base() . "/o/" . $order->auth_order;
         // $bitly = Bitly::getUrl($link);
-        $bitly = AOrder::genlinkUuid($order->id);
+        // $bitly = AOrder::genlinkUuid($order->id);
         $nbfm_amount = number_format($amount, 2);
-        $msgSms = 'ขอบคุณที่ชำระเงิน จำนวน ' . $nbfm_amount  . ' บาท หมายเลขคำสั่งซื้อ #' . $order->id . ' รายละเอียดรายการสั่งซื้อคลิกลิงก์ [ ' . $bitly . ' ]\n\nวัน-เวลานัดรับสินค้า\n' . $order->dateGetTimeFormat();
+        $msgSms = 'ขอบคุณที่ชำระเงิน จำนวน ' . $nbfm_amount  . ' บาท หมายเลขคำสั่งซื้อ #' . $order->id . ' รายละเอียดรายการสั่งซื้อคลิกลิงก์ [ ' . $order->link_for_customer . ' ]\n\nวัน-เวลานัดรับสินค้า\n' . $order->dateGetTimeFormat();
 
         Line::flex_receipt($order);
         Facebook::send_postback(
@@ -76,9 +76,9 @@ class AlertMessages extends Model
         $order = AOrder::findOrFail($order_id);
         // $link = URL::base() . "/o/" . $order->auth_order;
         // $bitly = Bitly::getUrl($link);
-        $bitly = AOrder::genlinkUuid($order->id);
+        // $bitly = AOrder::genlinkUuid($order->id);
         $nbfm_amount = number_format($amount, 2);
-        $msgSms = 'รายการแจ้งชำระเงินของคุณ ไม่ผ่านการตรวจสอบ จำนวน ' . $nbfm_amount  . ' บาท หมายเลขคำสั่งซื้อ #' . $order->id . ' หากไม่ถูกต้อง "โปรดแนบสลิปใหม่" เพื่อตรวจสอบอีกครั้ง คลิกลิงก์ [ ' . $bitly . ' ]\n\nหรือติดต่อทางร้าน 091-885-3402 เพื่อขออุทธรณ์';
+        $msgSms = 'รายการแจ้งชำระเงินของคุณ ไม่ผ่านการตรวจสอบ จำนวน ' . $nbfm_amount  . ' บาท หมายเลขคำสั่งซื้อ #' . $order->id . ' หากไม่ถูกต้อง "โปรดแนบสลิปใหม่" เพื่อตรวจสอบอีกครั้ง คลิกลิงก์ [ ' . $order->link_for_customer . ' ]\n\nหรือติดต่อทางร้าน 091-885-3402 เพื่อขออุทธรณ์';
         return MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
 
         //NoticeOfPaymentFromCustomerController
@@ -95,10 +95,10 @@ class AlertMessages extends Model
     public static function smsPaymentOrderUpdate($order_id, $amountNew, $amountOld, $alertSMS = true)
     {
         $order = AOrder::findOrFail($order_id);
-        $bitly = AOrder::genlinkUuid($order->id);
+        // $bitly = AOrder::genlinkUuid($order->id);
         $nbfm_amountNew = number_format($amountNew, 2);
         $nbfm_amountOld = number_format($amountOld, 2);
-        $msgSms = 'ปรับยอดชำระเงินจาก ยอดเก่า ' . $nbfm_amountOld  . ' บาท เป็นยอดใหม่ ' . $nbfm_amountNew . ' บาท หมายเลขคำสั่งซื้อ #' . $order->id . ' รายละเอียดคลิกลิงก์ [ ' . $bitly . ' ]\n\nรายละเอียดเพิ่มเติม โปรดติดต่อทางร้าน 091-885-3402 ต้องขออภัยในความผิดพลาดค่ะ';
+        $msgSms = 'ปรับยอดชำระเงินจาก ยอดเก่า ' . $nbfm_amountOld  . ' บาท เป็นยอดใหม่ ' . $nbfm_amountNew . ' บาท หมายเลขคำสั่งซื้อ #' . $order->id . ' รายละเอียดคลิกลิงก์ [ ' . $order->link_for_customer . ' ]\n\nรายละเอียดเพิ่มเติม โปรดติดต่อทางร้าน 091-885-3402 ต้องขออภัยในความผิดพลาดค่ะ';
         return MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
     }
 
@@ -111,8 +111,8 @@ class AlertMessages extends Model
     public static function smsPaymentOrderAppeal($order_id, $alertSMS = true)
     {
         $order = AOrder::findOrFail($order_id);
-        $bitly = AOrder::genlinkUuid($order->id);
-        $msgSms = 'คุณขออุทธร์รายการชำระเงิน เราจะตรวจสอบรายการให้อีกครั้ง หมายเลขคำสั่งซื้อ #' . $order->id . ' รายละเอียดคลิกลิงก์ [ ' . $bitly . ' ]\n\nต้องขออภัยในความผิดพลาดค่ะ';
+        // $bitly = AOrder::genlinkUuid($order->id);
+        $msgSms = 'คุณขออุทธร์รายการชำระเงิน เราจะตรวจสอบรายการให้อีกครั้ง หมายเลขคำสั่งซื้อ #' . $order->id . ' รายละเอียดคลิกลิงก์ [ ' . $order->link_for_customer . ' ]\n\nต้องขออภัยในความผิดพลาดค่ะ';
         return MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
     }
 
@@ -182,17 +182,17 @@ class AlertMessages extends Model
         $nbfm_amount = number_format($amount, 2);
         $msgLine = 'แจ้งชำระเงินจากลูกค้า -> #' . $order->id . ' จำนวน ' . $nbfm_amount . ' บาท ';
 
-        $link = URL::base() . "/o/" . $order->auth_order;
-        $bitly = Bitly::getUrl($link);
-        $msgSms = 'เราได้รับการแจ้งชำระเงินของคุณ จำนวน ' . $nbfm_amount  . ' บาท หมายเลขคำสั่งซื้อ #' . $order->id . ' เราจะตรวจสอบและยืนยันการชำระเงิน ภายใน 15 นาที หลังจากชำระเงิน รายละเอียดรายการสั่งซื้อคลิกลิงก์ [ ' . $bitly . ' ]\n\nวัน-เวลานัดรับสินค้า\n' . $order->dateGetTimeFormat();
+        // $link = URL::base() . "/o/" . $order->auth_order;
+        // $bitly = Bitly::getUrl($link);
+        $msgSms = 'เราได้รับการแจ้งชำระเงินของคุณ จำนวน ' . $nbfm_amount  . ' บาท หมายเลขคำสั่งซื้อ #' . $order->id . ' เราจะตรวจสอบและยืนยันการชำระเงิน ภายใน 15 นาที หลังจากชำระเงิน รายละเอียดรายการสั่งซื้อคลิกลิงก์ [ ' . $order->link_for_customer . ' ]\n\nวัน-เวลานัดรับสินค้า\n' . $order->dateGetTimeFormat();
         Linenotify::send($msgLine);
         MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
     }
 
     public static function smsImageGoodsReviewToCustomer($order, $alertSMS = true)
     {
-        $bitly = AOrder::genlinkUuid($order->id);
-        $msgSms = "รูปภาพสินค้าของท่าน [ " . $bitly . " ]";
+        // $bitly = AOrder::genlinkUuid($order->id);
+        $msgSms = "รูปภาพสินค้าของท่าน [ " . $order->link_for_customer . " ]";
         return MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
     }
 
@@ -204,10 +204,10 @@ class AlertMessages extends Model
 
     public static function smsChangeDateTimeGet($order, $alertSMS = true)
     {
-        $link = URL::base() . "/o/" . $order->auth_order;
-        $bitly = Bitly::getUrl($link);
+        // $link = URL::base() . "/o/" . $order->auth_order;
+        // $bitly = Bitly::getUrl($link);
 
-        $msgSms = 'หมายเลขคำสั่งซื้อ #' . $order->id . " ของคุณ ได้เปลี่ยนแปลงวัน-เวลานัดรับเป็น " . $order->date_get_th . " " . $order->time_get . " น. รายละเอียดคำสั่งซื้อคลิกลิงก์ [ " . $bitly . " ]";
+        $msgSms = 'หมายเลขคำสั่งซื้อ #' . $order->id . " ของคุณ ได้เปลี่ยนแปลงวัน-เวลานัดรับเป็น " . $order->date_get_th . " " . $order->time_get . " น. รายละเอียดคำสั่งซื้อคลิกลิงก์ [ " . $order->link_for_customer . " ]";
         return MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
     }
 

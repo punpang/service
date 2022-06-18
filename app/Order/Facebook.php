@@ -2,7 +2,7 @@
 
 namespace App\Order;
 
-use App\URL;
+// use App\URL;
 use App\MSms;
 use App\Linenotify;
 use App\Order\Setting;

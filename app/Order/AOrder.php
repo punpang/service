@@ -2,9 +2,9 @@
 
 namespace App\Order;
 
-use Bitly;
-use App\URL;
-use App\Linenotify;
+// use Bitly;
+// use App\URL;
+// use App\Linenotify;
 use App\Order\OrderDetail;
 use Illuminate\Support\Str;
 use App\Order\AHistoryPayed;
@@ -395,13 +395,13 @@ class AOrder extends Model
         }
     }
 
-    public static function genlinkUuid($order_id)
-    {
-        $order = AOrder::findOrFail($order_id);
-        $link = URL::base() . "/o/" . $order->auth_order;
-        $bitly = Bitly::getUrl($link);
-        return $bitly;
-    }
+    // public static function genlinkUuid($order_id)
+    // {
+    //     $order = AOrder::findOrFail($order_id);
+    //     $link = URL::base() . "/o/" . $order->auth_order;
+    //     $bitly = Bitly::getUrl($link);
+    //     return $bitly;
+    // }
 
     public function orderDetails()
     {
