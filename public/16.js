@@ -1024,6 +1024,7 @@ var render = function () {
   return _c(
     "div",
     [
+      _vm._v("a\n    "),
       _c("v-data-table", {
         attrs: {
           headers: _vm.headers,
