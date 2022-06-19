@@ -9,5 +9,6 @@ class AStatus extends Model
     protected $table = "a_status";
     protected $connection = "order";
     protected $hidden = ['created_at', 'updated_at'];
+    public $timestamps = false;
 
 }

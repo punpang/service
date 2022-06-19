@@ -229,6 +229,7 @@ class AOrderController extends Controller
         )
             ->with("orderDetails.addOns.productAddOn.goodsAddOn")
             ->findOrFail($order_id);
+
         // ->with(
         //     "customer",
 
@@ -787,8 +788,11 @@ class AOrderController extends Controller
 
     public function fetch_orders(Request $request)
     {
-        // dd($request->get("makeHidden"));
         $query = AOrder::query();
+
+        if ($request->get("status") != null) {
+            $query->whereIn("status", explode(",", $request->get("status")));
+        }
 
         if ($request->get("date_get") != null) {
             $query->where("date_get", $request->get("date_get"));
@@ -811,10 +815,13 @@ class AOrderController extends Controller
 
         $result = $query->get();
 
+
         if ($request->get("makeHidden") != null) {
             $makeHidden = explode(",", $request->get("makeHidden"));
             $result->makeHidden($makeHidden);
         }
+
+        // $result->setAppends([]);
 
         return $result;
     }

@@ -15,6 +15,8 @@ class AddClassTableAStatus extends Migration
     {
         Schema::table('a_status', function (Blueprint $table) {
             $table->text("class")->default("");
+            $table->text("group")->default("");
+
         });
     }
 
@@ -27,6 +29,7 @@ class AddClassTableAStatus extends Migration
     {
         Schema::table('a_status', function (Blueprint $table) {
             $table->dropColumn("class");
+            $table->dropColumn("group");
         });
     }
 }
