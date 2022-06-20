@@ -21,10 +21,21 @@
                         hide-details
                         :value="status.id"
                     ></v-checkbox>
+                    <v-divider></v-divider>
+
+                    <v-text-field
+                        label="เวลาโหลดข้อมูลใหม่"
+                        outlined
+                        hide-details
+                        v-model="timer.default"
+                        suffix="วินาที"
+                    ></v-text-field>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn class="success" large @click="submit()">ค้นหา</v-btn>
+                    <v-btn class="success" large @click="submit(true)"
+                        >ค้นหา</v-btn
+                    >
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -39,6 +50,13 @@ export default {
             search: {
                 status: [1, 2, 4, 8],
             },
+            timer: {
+                default: 60,
+                run: 0,
+                status: true,
+                running: "",
+                set_down_timer: "",
+            },
             status_items: [
                 { id: 1, text: "รายการใหม่" },
                 { id: 2, text: "ยืนยันการสั่งซื้อ" },
@@ -50,8 +68,13 @@ export default {
         };
     },
     methods: {
-        submit() {
-            this.$emit("submitSearch", this.search);
+        submit(click) {
+            const payload = {
+                search: this.search,
+                timer: this.timer,
+                click: click,
+            };
+            this.$emit("submitSearch", payload);
             this.dialog = false;
         },
     },

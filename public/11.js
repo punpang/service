@@ -1032,6 +1032,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 
@@ -1272,7 +1274,7 @@ Vue.filter("formatNumber", function (value) {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var loader;
+        var loader, filter;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -1292,9 +1294,29 @@ Vue.filter("formatNumber", function (value) {
                 return _this.CaseOptionAmounts();
 
               case 7:
+                if (!(_this.sumAll.sumTASC > 500)) {
+                  _context.next = 15;
+                  break;
+                }
+
+                _context.next = 10;
+                return _this.useKsherChannelPayment.filter(function (e) {
+                  return e.maximum > _this.sumAll.sumTASC;
+                });
+
+              case 10:
+                filter = _context.sent;
+                _context.next = 13;
+                return _this.$store.commit("orderKsher/useKsherChannelPayment", filter);
+
+              case 13:
+                _context.next = 15;
+                return _this.clickChannel(filter[0]);
+
+              case 15:
                 loader.hide();
 
-              case 8:
+              case 16:
               case "end":
                 return _context.stop();
             }
@@ -3241,13 +3263,12 @@ var render = function () {
                     {
                       staticClass: "white",
                       attrs: { fab: "", small: "", icon: "" },
+                      on: { click: _vm.exit },
                     },
                     [
-                      _c(
-                        "v-icon",
-                        { attrs: { color: "error" }, on: { click: _vm.exit } },
-                        [_vm._v("close")]
-                      ),
+                      _c("v-icon", { attrs: { color: "error" } }, [
+                        _vm._v("close"),
+                      ]),
                     ],
                     1
                   ),
@@ -3423,6 +3444,9 @@ var render = function () {
                                                                 !paymentChannel.status_use ||
                                                                 _vm.deposit <
                                                                   paymentChannel.minimum ||
+                                                                _vm.sumAll
+                                                                  .sumTASC >
+                                                                  paymentChannel.maximum ||
                                                                 paymentChannel.ksher_day_off !=
                                                                   null,
                                                             },

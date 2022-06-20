@@ -12,6 +12,8 @@ class KsherChannelPaymentsSeeder extends Seeder
      */
     public function run()
     {
+        KsherChannelPayment::where("id", "!=", null)->delete();
+
         $datas = [
             [
                 "id" =>  1,
@@ -99,7 +101,7 @@ class KsherChannelPaymentsSeeder extends Seeder
                 "status_use" =>  1,
                 "channel" => "transferByCustomer",
                 "minimum" => 1,
-                "maximum" => 500
+                "maximum" => 999999
 
             ],
             [
@@ -117,7 +119,7 @@ class KsherChannelPaymentsSeeder extends Seeder
                 "status_use" =>  1,
                 "channel" => "notPayment",
                 "minimum" => 1,
-                "maximum" => 500
+                "maximum" => 999999
 
             ],
         ];
@@ -138,6 +140,7 @@ class KsherChannelPaymentsSeeder extends Seeder
             $new->status_use  = $data["status_use"];
             $new->channel = $data["channel"];
             $new->minimum  = $data["minimum"];
+            $new->maximum  = $data["maximum"];
             $new->save();
         }
     }

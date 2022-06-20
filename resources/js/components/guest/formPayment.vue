@@ -17,8 +17,8 @@
                 <v-card-title class="text-h5 white--text warning">
                     <v-icon left color="white">receipt</v-icon>ชำระเงิน
                     <v-spacer></v-spacer>
-                    <v-btn fab small icon class="white">
-                        <v-icon color="error" @click="exit">close</v-icon>
+                    <v-btn fab small icon class="white" @click="exit">
+                        <v-icon color="error">close</v-icon>
                     </v-btn>
                 </v-card-title>
                 <v-card-text>
@@ -95,6 +95,8 @@
                                                         !paymentChannel.status_use ||
                                                         deposit <
                                                             paymentChannel.minimum ||
+                                                        sumAll.sumTASC >
+                                                            paymentChannel.maximum ||
                                                         paymentChannel.ksher_day_off !=
                                                             null
                                                     "
@@ -439,9 +441,22 @@ export default {
             });
             await this.$store.dispatch("orderKsher/getUseKsherChannelPayment");
             await this.CaseOptionAmounts();
+
+            if (this.sumAll.sumTASC > 500) {
+                const filter = await this.useKsherChannelPayment.filter(
+                    (e) => e.maximum > this.sumAll.sumTASC
+                );
+                await this.$store.commit(
+                    "orderKsher/useKsherChannelPayment",
+                    filter
+                );
+                await this.clickChannel(filter[0]);
+            }
+
             loader.hide();
         },
     },
+
     computed: {
         ...mapGetters({
             order: "orderIndex/order",

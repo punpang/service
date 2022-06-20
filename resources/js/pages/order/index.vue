@@ -40,7 +40,7 @@
                     </v-date-picker>
                 </v-menu>
             </v-col>
-            <v-col cols="12" md="6">
+            <v-col cols="12" md="5">
                 <v-text-field
                     outlined
                     v-model="search"
@@ -48,8 +48,23 @@
                     hide-details
                 ></v-text-field>
             </v-col>
-            <v-col cols="12" md="3">
+
+            <v-col cols="9" md="3" class="pr-0">
                 <searchSettings @submitSearch="submitSearch"></searchSettings>
+            </v-col>
+            <v-col cols="3" md="1" class="text-center pt-4 pl-0">
+                <v-icon class="info--text" @click="refresh(true)"
+                    >refresh</v-icon
+                >
+
+                <v-icon
+                    @click="setTimerStatus()"
+                    :class="timer.status ? 'error--text' : 'success--text'"
+                    >{{ timer.status ? "stop" : "play_arrow" }}</v-icon
+                >
+
+                <br />
+                {{ timer.run }}s
             </v-col>
         </v-row>
         <v-divider></v-divider>
@@ -117,6 +132,7 @@ export default {
                 { text: "การจัดการ", value: "manages", align: "end" },
             ],
             search_settings: {},
+            timer: {},
         };
     },
     methods: {
@@ -125,7 +141,7 @@ export default {
         },
         async fetch() {
             let loader = this.$loading.show();
-            const payload = `date_get=${this.date}&sort_date_get=asc&makeHidden=sum_all&with=aStatus,customer&status=${this.search_settings.status}`;
+            const payload = `date_get=${this.date}&sort_date_get=asc&makeHidden=sum_all,payment_deadline_th,status_payment_deadline,date_get_default,created_at_th,payment_deadline,rating,status_full_payment,auth_order,date_order&with=aStatus,customer&status=${this.search_settings.status}`;
             const result = await this.$store.dispatch(
                 "orderIndex/fetch_orders",
                 payload
@@ -143,14 +159,54 @@ export default {
             return `${day}/${month}/${y}`;
         },
         async submitSearch(v) {
-            this.search_settings = v;
+            clearTimeout(this.timer.set_down_timer);
+            clearTimeout(this.timer.running);
+            this.search_settings = v.search;
+            this.timer = v.timer;
+            await this.refresh();
+            if (v.click) {
+                this.timer.run = 0;
+                this.down_timer();
+            }
+        },
+        count_time() {
+            this.timer.running = setTimeout(
+                this.refresh,
+                this.timer.default * 1000
+            );
+        },
+        setTimerStatus() {
+            this.timer.status = !this.timer.status;
+            clearTimeout(this.timer.set_down_timer);
+            clearTimeout(this.timer.running);
+            if (this.timer.status) {
+                this.refresh();
+                this.down_timer();
+                this.timer.run = this.timer.default;
+            }
+        },
+        down_timer() {
+            if (!this.timer.status) {
+                clearTimeout(this.timer.set_down_timer);
+                clearTimeout(this.timer.running);
+                return;
+            }
+            this.timer.run = this.timer.run - 1;
+            if (this.timer.run <= 0) {
+                this.timer.run = this.timer.default;
+            }
+            this.timer.set_down_timer = setTimeout(this.down_timer, 1000);
+        },
+        async refresh(click) {
             await this.fetch();
+            if (!click && this.timer.status) {
+                await this.count_time();
+            }
         },
     },
-    // async mounted() {
-    //     // await this.today();
-    //     // await this.fetch();
-    // },
+    async mounted() {
+        await this.down_timer();
+    },
     computed: {
         ...mapGetters({
             orders: "orderIndex/orders",
@@ -161,5 +217,3 @@ export default {
     },
 };
 </script>
-
-<style></style>

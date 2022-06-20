@@ -43,7 +43,7 @@ class AOrder extends Model
         "date_get_default",
         "created_at_th",
         "date_get_th",
-        "time_get_format"
+        "time_get_format",
         //"link_for_customer"
         // "sum_add_on"
     ];

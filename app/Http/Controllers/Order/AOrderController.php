@@ -815,13 +815,10 @@ class AOrderController extends Controller
 
         $result = $query->get();
 
-
         if ($request->get("makeHidden") != null) {
             $makeHidden = explode(",", $request->get("makeHidden"));
             $result->makeHidden($makeHidden);
         }
-
-        // $result->setAppends([]);
 
         return $result;
     }
