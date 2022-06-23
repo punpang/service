@@ -11,6 +11,42 @@ use App\Http\Controllers\Controller;
 
 class OrderDetailController extends Controller
 {
+    public function fetch(Request $request)
+    {
+        //$query = OrderDetail::query();
+
+        $query = OrderDetail::
+            // with([
+            //     "aOrder" => function ($q) {
+            //         $q->select("id", "date_get", "time_get");
+            //         // $q->orderBy("time_get", "asc");
+            //     }
+            // ])->        
+            with(
+                "aOrder:id,date_get,time_get",
+                "aOrder.orderDeliveryService",
+                "aPrice",
+                "addOns.productAddOn.goodsAddOn",
+                "imageFromCustomers.googleImage",
+                "productPrototypes.googleImage"
+            )
+            ->whereHas("aOrder", function ($q) use ($request) {
+                $q->where("date_get", $request->get("date_get"));
+                $q->where("status", "<", "8");
+            })
+            //->orderBy('a_order.time_get', 'ASC')
+
+            ->get();
+
+
+
+        foreach ($query as $q) {
+            $q->aOrder->setAppends(["time_get_format"]);
+        }
+
+        return $query->makeHidden(["sum_all"]);
+    }
+
     public function delete(OrderDetail $id)
     {
         $id->delete();
@@ -100,6 +136,4 @@ class OrderDetailController extends Controller
             "status" => "success",
         ], 200);
     }
-
-
 }

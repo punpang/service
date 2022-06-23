@@ -13,7 +13,7 @@ class AddMaximumTableKsherChannelPayments extends Migration
      */
     public function up()
     {
-        Schema::table('Ksher_channel_payments', function (Blueprint $table) {
+        Schema::table('ksher_channel_payments', function (Blueprint $table) {
             $table->integer("maximum")->default(500);
         });
     }
@@ -25,7 +25,7 @@ class AddMaximumTableKsherChannelPayments extends Migration
      */
     public function down()
     {
-        Schema::table('Ksher_channel_payments', function (Blueprint $table) {
+        Schema::table('ksher_channel_payments', function (Blueprint $table) {
             $table->dropColumn("maximum");
         });
     }

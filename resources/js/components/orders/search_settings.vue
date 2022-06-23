@@ -48,7 +48,7 @@ export default {
         return {
             dialog: false,
             search: {
-                status: [1, 2, 4, 8],
+                status: [1, 2, 3, 4, 8],
             },
             timer: {
                 default: 60,
@@ -58,12 +58,13 @@ export default {
                 set_down_timer: "",
             },
             status_items: [
-                { id: 1, text: "รายการใหม่" },
-                { id: 2, text: "ยืนยันการสั่งซื้อ" },
+                { id: 1, text: "คำสั่งซื้อใหม่" },
+                { id: 2, text: "รอยืนยันคำสั่งซื้อ" },
+                { id: 3, text: "ยืนยันคำสั่งซื้อ" },
                 { id: 4, text: "รอเตรียมสินค้า" },
-                { id: 8, text: "เตรียมสินค้า" },
-                { id: 9, text: "รับสินค้า" },
-                { id: 10, text: "ยกเลิก" },
+                { id: 8, text: "จัดเตรียมสินค้าแล้ว" },
+                { id: 9, text: "รับสินค้าเรียบร้อย" },
+                { id: 10, text: "ยกเลิกคำสั่งซื้อ" },
             ],
         };
     },

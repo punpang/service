@@ -382,7 +382,7 @@ class AOrder extends Model
         // $order->deposit = $order->sumDeposited() + $amount;
         // $order->balance = $order->sumBalance() - $amount;
 
-        if ($order->status <= 2) {
+        if ($order->status <= 4) {
             $order->status = 3;
         }
 

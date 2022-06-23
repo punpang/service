@@ -382,6 +382,8 @@ class AOrderController extends Controller
                 ], 200);
             }
         }
+
+        ///
         $order = AOrder::find(request("orderID"));
 
         if ($order->sumTASC() !== $order->sumDeposited() + $order->sumBalance()) {
@@ -397,7 +399,7 @@ class AOrderController extends Controller
         $order->deposit = $order->sumDeposited() + request("amount");
         $order->balance = $order->sumBalance() - request("amount");
 
-        if ($order->status <= 2) {
+        if ($order->status <= 4) {
             $order->status = 3;
         }
 
@@ -804,6 +806,10 @@ class AOrderController extends Controller
 
         if ($request->get("sort_time_get") != null) {
             $query->orderBy("time_get", $request->get("sort_time_get"));
+        }
+
+        if ($request->get("sort_id") != null) {
+            $query->orderBy("id", $request->get("sort_id"));
         }
 
         if ($request->get("with") != null) {

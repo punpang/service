@@ -141,16 +141,12 @@ export default {
         },
         async fetch() {
             let loader = this.$loading.show();
-            const payload = `date_get=${this.date}&sort_date_get=asc&makeHidden=sum_all,payment_deadline_th,status_payment_deadline,date_get_default,created_at_th,payment_deadline,rating,status_full_payment,auth_order,date_order&with=aStatus,customer&status=${this.search_settings.status}`;
+            const payload = `date_get=${this.date}&sort_id=asc&sort_time_get=asc&makeHidden=sum_all,payment_deadline_th,status_payment_deadline,date_get_default,created_at_th,payment_deadline,rating,status_full_payment,auth_order,date_order&with=aStatus,customer&status=${this.search_settings.status}`;
             const result = await this.$store.dispatch(
                 "orderIndex/fetch_orders",
                 payload
             );
             loader.hide();
-        },
-        today() {
-            const d = new Date();
-            this.date = d.getDate();
         },
         formatDate(date) {
             if (!date) return null;

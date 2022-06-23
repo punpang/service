@@ -220,6 +220,9 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
 
             Route::prefix('orders')->group(function () { // api/admin/v1/orders/...
                 Route::get('fetch', 'Order\AOrderController@fetch_orders');
+                Route::prefix('details')->group(function () { // api/admin/v1/orders/...
+                    Route::get('fetch', 'Order\OrderDetailController@fetch');
+                });
             });
 
             Route::prefix("order")->group(function () {
