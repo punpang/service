@@ -11,7 +11,9 @@
                         <v-icon>edit</v-icon>
                     </v-list-item-icon>
                     <v-list-item-content class="p-0">
-                        <v-list-item-title class="py-2">แก้ไขสินค้า</v-list-item-title>
+                        <v-list-item-title class="py-2"
+                            >แก้ไขสินค้า</v-list-item-title
+                        >
                     </v-list-item-content>
                 </v-list-item>
             </template>
@@ -50,7 +52,6 @@
                     <selectCake
                         :propCheckProduct="propOrderDetail.a_price"
                         @emitAPrice="emitAPrice"
-                        class="mb-3"
                     ></selectCake>
                     <v-spacer></v-spacer>
                     <v-btn class="error" @click="close()">

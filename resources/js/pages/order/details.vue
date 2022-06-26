@@ -57,6 +57,13 @@
             :search="search"
             :sort-by="['a_order.time_get']"
         >
+            <template v-slot:item.image_goods="{ item }">
+                <imageThumbnailPathSizeFree
+                    v-if="item.a_price.google_image"
+                    :path="item.a_price.google_image.src_name"
+                    :size="80"
+                ></imageThumbnailPathSizeFree>
+            </template>
             <template v-slot:item.a_price.name_goods="{ item }">
                 <div class="py-3">
                     <p class="mb-0 font-weight-black text-subtitle-2">
@@ -75,7 +82,7 @@
                         class="mb-1 text-caption info--text font-weight-black"
                         v-if="item.detail != '-'"
                     >
-                        {{ item.detail }}
+                        *{{ item.detail }}*
                     </p>
 
                     <v-btn
@@ -205,7 +212,9 @@
 
 <script>
 import { mapGetters } from "vuex";
+import imageThumbnailPathSizeFree from "@/js/components/google/drive/imageThumbnailPathSizeFree";
 export default {
+    components: { imageThumbnailPathSizeFree },
     data() {
         return {
             search: "",
@@ -220,6 +229,11 @@ export default {
                     value: "a_order.time_get_format",
                     align: "center",
                     width: "10%",
+                },
+                {
+                    text: "รูปภาพ",
+                    value: "image_goods",
+                    width: "5%",
                 },
                 {
                     text: "รายละเอียด",
@@ -238,6 +252,9 @@ export default {
         };
     },
     methods: {
+        src_name(v) {
+            console.log(v.src_name);
+        },
         clickToOrder(id) {
             window.location.href = `/manages/order/${id}/showOrderByID`;
         },

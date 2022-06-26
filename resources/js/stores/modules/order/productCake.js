@@ -1,6 +1,7 @@
 export default {
     namespaced: true,
     state: {
+        fetch_options: [],
         product: {
             a_product_id: "",
             price: 0,
@@ -62,6 +63,9 @@ export default {
         },
     },
     mutations: {
+        fetch_options(state, data) {
+            state.fetch_options = data;
+        },
         fetchProduct(state, data) {
             state.fetchProduct = data;
         },
@@ -166,6 +170,7 @@ export default {
         op4: (state) => state.op4,
         product: (state) => state.product,
         fetchAddOn: (state) => state.fetchAddOn,
+        fetch_options: (state) => state.fetch_options,
     },
     actions: {
         async fetchProduct({ commit }, payload) {
@@ -230,7 +235,7 @@ export default {
                 });
         },
 
-        async uploadImageProduct({commit}, payload) {
+        async uploadImageProduct({ commit }, payload) {
             return await axios
                 .post(
                     `/api/admin/v1/order/product/${payload.product_id}/uploadImageProduct`,
@@ -239,6 +244,42 @@ export default {
                 .then((response) => {
                     commit("fetchProduct", response.data.product);
                     return response.status;
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        },
+
+        async fetch_options({}, payload) {
+            return await axios
+                .get(
+                    `/api/admin/v1/order/product/${payload.option_id}/fetch_options`,
+                    payload
+                )
+                .then((response) => {
+                    // commit("fetch_options", response.data.options);
+                    return response.data;
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        },
+
+        async update_sort({}, payload) {
+            return await axios
+                .post(`/api/admin/v1/order/product/update_sort`, payload)
+                .then((response) => {
+                    return response;
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        },
+        async add_option({}, payload) {
+            return await axios
+                .post(`/api/admin/v1/order/product/add_option`, payload)
+                .then((response) => {
+                    return response.data;
                 })
                 .catch((err) => {
                     console.error(err);

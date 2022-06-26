@@ -21,21 +21,19 @@ class OrderDetailController extends Controller
             //         $q->select("id", "date_get", "time_get");
             //         // $q->orderBy("time_get", "asc");
             //     }
-            // ])->        
+            // ])->
             with(
                 "aOrder:id,date_get,time_get",
                 "aOrder.orderDeliveryService",
-                "aPrice",
+                "aPrice.googleImage",
                 "addOns.productAddOn.goodsAddOn",
                 "imageFromCustomers.googleImage",
                 "productPrototypes.googleImage"
             )
             ->whereHas("aOrder", function ($q) use ($request) {
                 $q->where("date_get", $request->get("date_get"));
-                $q->where("status", "<", "8");
+                //$q->where("status", "<", "8");
             })
-            //->orderBy('a_order.time_get', 'ASC')
-
             ->get();
 
 

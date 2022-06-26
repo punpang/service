@@ -20,7 +20,7 @@
                         <v-icon>close</v-icon>
                     </v-btn>
                 </v-card-title>
-                <v-card-text>
+                <v-card-text class="pb-0">
                     <v-form lazy-validation ref="form">
                         <v-select
                             outlined
@@ -31,7 +31,7 @@
                             v-model="op1"
                             :rules="rules.op"
                             hide-details
-                            class="mb-3"
+                            class="mb-3 py-1"
                             @change="fetchProduct()"
                         ></v-select>
                         <v-select
@@ -43,7 +43,7 @@
                             v-model="op2"
                             :rules="rules.op"
                             hide-details
-                            class="mb-3"
+                            class="mb-3 py-1"
                             @change="fetchProduct()"
                         ></v-select>
                         <v-select
@@ -55,7 +55,7 @@
                             v-model="op3"
                             :rules="rules.op"
                             hide-details
-                            class="mb-3"
+                            class="mb-3 py-1"
                             @change="fetchProduct()"
                         ></v-select>
                         <v-select
@@ -67,7 +67,7 @@
                             v-model="op4"
                             :rules="rules.op"
                             hide-details
-                            class="mb-3"
+                            class="mb-3 py-1"
                             @change="fetchProduct()"
                         ></v-select>
                     </v-form>
@@ -102,7 +102,13 @@
                     >
                 </v-card-text>
                 <v-card-actions>
+                    <options @emitLoadAgain="emitLoadAgain"></options>
                     <v-spacer></v-spacer>
+                    <editPrice
+                        v-if="dataSelectedSuccess && product"
+                        :propProduct="product"
+                    ></editPrice>
+                    
                     <addPrice
                         v-if="!product && dataSelectedSuccess"
                         :propOptions="dataMerge"
@@ -121,17 +127,14 @@
                         {{ msg.text.select }}
                     </v-btn>
                     <!-- // -->
-                    <editPrice
-                        v-if="dataSelectedSuccess && product"
-                        :propProduct="product"
-                    ></editPrice>
+
                     <!-- // -->
-                    <v-btn class="error mr-2" @click="reset()">
+                    <!-- <v-btn class="error mr-2" @click="reset()">
                         <v-icon left>
                             {{ msg.icon.clear }}
                         </v-icon>
                         {{ msg.text.clear }}
-                    </v-btn>
+                    </v-btn> -->
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -148,10 +151,11 @@ Vue.filter("formatNumber", function (value) {
 import { mapGetters } from "vuex";
 import editPrice from "@/js/components/order/product/select/editPrice";
 import addPrice from "@/js/components/order/product/select/addPrice";
+import options from "@/js/components/order/product/select/options";
 
 export default {
     props: ["propCheckProduct"],
-    components: { editPrice, addPrice },
+    components: { editPrice, addPrice, options },
     data() {
         return {
             dialog: false,
@@ -173,16 +177,25 @@ export default {
                 loader.hide();
             }
         },
-        start() {
+        async start() {
             // return;
             if (this.propCheckProduct.id) {
+                let loader = this.$loading.show();
                 this.op1 = this.propCheckProduct.m1;
                 this.op2 = this.propCheckProduct.m2;
                 this.op3 = this.propCheckProduct.m3;
                 this.op4 = this.propCheckProduct.m4;
+                await this.$store.dispatch(
+                    "orderProductCake/fetchProduct",
+                    this.dataMerge
+                );
+                loader.hide();
             } else {
                 this.reset();
             }
+        },
+        emitLoadAgain() {
+            this.fetchOption();
         },
         clickSelect() {
             // this.$store.commit("orderProductCake/product", this.product);
@@ -198,19 +211,22 @@ export default {
         close() {
             this.dialog = false;
         },
+        async fetchOption() {
+            let loader = this.$loading.show();
+
+            const resOption = await this.$store.dispatch(
+                "orderProductCake/fetchOption"
+            );
+
+            if (resOption != 200) {
+                this.$toast.error("โหลด OPTION ไม่สำเร็จ");
+            }
+
+            loader.hide();
+        },
     },
     async mounted() {
-        let loader = this.$loading.show();
-
-        const resOption = await this.$store.dispatch(
-            "orderProductCake/fetchOption"
-        );
-
-        if (resOption != 200) {
-            this.$toast.error("โหลด OPTION ไม่สำเร็จ");
-        }
-
-        loader.hide();
+        await this.fetchOption();
     },
     computed: {
         ...mapGetters({

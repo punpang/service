@@ -44,10 +44,14 @@ class APriceController extends Controller
 
     public function fetchOption()
     {
-        $am1 = AM1::get();
-        $am2 = AM2::get();
-        $am3 = AM3::get();
-        $am4 = AM4::get();
+        $am1 = AM1::orderBy("sort", "ASC")->get();
+        $am2 = AM2::orderBy("sort", "ASC")->get();
+        $am3 = AM3::orderBy("sort", "ASC")->get();
+        $am4 = AM4::orderBy("sort", "ASC")->get();
+
+        // foreach ($am4 as $a) {
+        //     $a->setAppends(["name"]);
+        // }
 
         return [
             "op1" => $am1,
@@ -120,7 +124,7 @@ class APriceController extends Controller
                 "image_id" => $request->images[0]["id"],
             ]);
         }
-        
+
         $product = APrice::with("googleImage")->find($product->id);
 
         return response()->json([
@@ -129,6 +133,56 @@ class APriceController extends Controller
             "title" => "สำเร็จ",
             "text" => "อัปโหลดสำเร็จ",
             "icon" => "success"
+        ], 200);
+    }
+
+    public function update_sort(Request $request)
+    {
+        foreach ($request->sort as $sort) {
+            DB::table($request->option)
+                ->where('id', $sort["id"])
+                ->update(["sort" => $sort["sort"]]);
+        }
+        return response()->json([], 200);
+    }
+
+    public function add_option(Request $request)
+    {
+        switch ($request->option_id) {
+            case '1':
+                $db = AM1::create(["m1" => $request->text]);
+                $db->update(["sort" => $db->id]);
+                break;
+
+            case '2':
+                $db = AM2::create(["m2" => $request->text]);
+                $db->update(["sort" => $db->id]);
+                break;
+
+            case '3':
+                $db = AM3::create(["m3" => $request->text]);
+                $db->update(["sort" => $db->id]);
+                break;
+
+            case '4':
+                $db = AM4::create(["m4" => $request->text]);
+                $db->update(["sort" => $db->id]);
+                break;
+
+            default:
+                # code...
+                break;
+        }
+
+        return response()->json([], 200);
+    }
+
+    public function fetch_options($option)
+    {
+        $db = DB::table("a_m" . $option)->orderBy("sort", "ASC")->get();
+
+        return response()->json([
+            "options" => $db
         ], 200);
     }
 }

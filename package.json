@@ -34,6 +34,7 @@
         "laravel-echo": "^1.11.1",
         "numeral": "^2.0.6",
         "pusher-js": "^7.0.3",
+        "sortablejs": "^1.15.0",
         "vue-axios": "^2.1.5",
         "vue-clipboard2": "^0.3.1",
         "vue-currency-input": "^1.22.6",

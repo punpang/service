@@ -302,9 +302,13 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                     Route::post('fetchPriceOfCake', 'Order\APriceController@fetchPriceOfCake');
                     Route::get('fetchOption', 'Order\APriceController@fetchOption');
                     Route::get('fetchAddOn', 'Order\ProductAddOnController@fetchAddOn');
+                    Route::get('{option}/fetch_options', 'Order\APriceController@fetch_options');
+                    Route::post('add_option', 'Order\APriceController@add_option');
                     Route::post('{product}/editPrice', 'Order\APriceController@editPrice');
                     Route::post('/addPrice', 'Order\APriceController@addPrice');
                     Route::post('{product}/uploadImageProduct', 'Order\APriceController@uploadImageProduct');
+
+                    Route::post('/update_sort', 'Order\APriceController@update_sort');
                 });
 
                 Route::post('checkDateTimeGet', 'Order\AOrderController@checkDateTimeGet');

@@ -70,6 +70,13 @@ const routes = [
         component: () => import("@/js/pages/order/newOrder"),
         meta: { requiresAuth: true },
     },
+
+    {
+        path: "/test/drag-sort",
+        name: "/test/drag-sort",
+        component: () => import("@/js/pages/test/drag-sort"),
+        meta: { requiresAuth: true },
+    },
     {
         path: "/manages/order/:id/alertPayment",
         name: "managesOrderIDAlertPayment",
