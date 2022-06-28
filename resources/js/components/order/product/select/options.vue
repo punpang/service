@@ -1,81 +1,70 @@
 <template>
     <div>
-        <v-dialog v-model="dialog" persistent scrollable width="500">
-            <template v-slot:activator="{ on }">
-                <v-btn v-on="on" class="info">
-                    <v-icon left> settings </v-icon>
-                    หมวด
-                </v-btn></template
-            >
-            <v-card>
-                <v-card-title class="text-h5 white">
-                    <v-icon left>settings</v-icon>
-                    หมวด
-                    <v-spacer></v-spacer>
-                    <v-btn icon fab x-small @click="exit()">
-                        <v-icon color="error">close</v-icon>
-                    </v-btn>
-                </v-card-title>
-                <v-card-text>
-                    <v-row>
-                        <v-col cols="7" md="9" class="pr-1">
-                            <v-select
-                                outlined
-                                hide-details
-                                label="หมวด"
-                                :items="options"
-                                item-key="id"
-                                item-value="id"
-                                @change="changeOption()"
-                                v-model="option"
-                                class="mb-2 pa-1"
-                            ></v-select>
-                        </v-col>
-                        <v-col cols="5" md="3" class="pl-1">
-                            <addOption
-                                @emitSuccess="emitSuccess"
-                                class="mt-1"
-                                :propOption="option"
-                                :propOptions="options"
-                            ></addOption>
-                        </v-col>
-                    </v-row>
+        <v-row>
+            <v-col cols="7" md="9" class="pr-1">
+                <v-select
+                    outlined
+                    hide-details
+                    label="หมวด"
+                    :items="options"
+                    item-key="id"
+                    item-value="id"
+                    @change="changeOption()"
+                    v-model="option"
+                    class="mb-2 pa-1"
+                ></v-select>
+            </v-col>
+            <v-col cols="5" md="3" class="pl-1">
+                <addOption
+                    @emitSuccess="emitSuccess"
+                    class="mt-1"
+                    :propOption="option"
+                    :propOptions="options"
+                    :propMethod="'create'"
+                ></addOption>
+            </v-col>
+        </v-row>
 
-                    <v-text-field
-                        outlined
-                        hide-details
-                        label="ค้นหา"
-                        v-model="search"
-                        class="mb-2 pa-1"
-                        :append-icon="search ? 'close' : ''"
-                        @click:append="() => (search = '')"
-                    ></v-text-field>
-                    <v-data-table
-                        :headers="headers()"
-                        :items="fetch_options"
-                        v-sortable-data-table
-                        @sorted="saveOrder"
-                        mobile-breakpoint="0"
-                        item-key="id"
-                        :items-per-page="999"
-                        hide-default-footer
-                        :search="search"
-                    >
-                        <template v-slot:item.manages="{ item }">
-                            <v-btn
-                                icon
-                                fab
-                                x-small
-                                class="warning"
-                                @click="clickEdit(item)"
-                            >
-                                <v-icon color="white">edit</v-icon>
-                            </v-btn>
-                        </template>
-                    </v-data-table>
-                </v-card-text>
-            </v-card>
-        </v-dialog>
+        <v-text-field
+            outlined
+            hide-details
+            label="ค้นหา"
+            v-model="search"
+            class="mb-2 pa-1"
+            :append-icon="search ? 'close' : ''"
+            @click:append="() => (search = '')"
+        ></v-text-field>
+        <v-data-table
+            :headers="headers()"
+            :items="fetch_options"
+            v-sortable-data-table
+            @sorted="saveOrder"
+            mobile-breakpoint="0"
+            item-key="id"
+            :items-per-page="999"
+            hide-default-footer
+            :search="search"
+        >
+            <template v-slot:item.manages="{ item }">
+                <addOption
+                    @emitSuccess="emitSuccess"
+                    class="mt-1"
+                    :propOption="option"
+                    :propOptions="options"
+                    :propMethod="'edit'"
+                    :propText="item"
+                ></addOption>
+                <!-- <v-btn
+                    icon
+                    fab
+                    x-small
+                    class="warning"
+                    @click="clickEdit(item)"
+                >
+                    <v-icon color="white">edit</v-icon>
+                </v-btn> -->
+            </template>
+        </v-data-table>
     </div>
 </template>
 

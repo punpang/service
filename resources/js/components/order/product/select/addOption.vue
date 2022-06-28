@@ -9,15 +9,32 @@
                     :disabled="propOption == ''"
                     x-large
                     block
+                    v-if="propMethod == 'create'"
                 >
                     <v-icon left> add </v-icon>
                     เพิ่ม
+                </v-btn>
+
+                <v-btn
+                    v-else
+                    v-on="on"
+                    @click="start()"
+                    icon
+                    fab
+                    x-small
+                    class="warning"
+                >
+                    <v-icon color="white">edit</v-icon>
                 </v-btn></template
             >
             <v-card>
                 <v-card-title class="text-h5 white">
-                    <v-icon left>add</v-icon>
-                    เพิ่มข้อความ
+                    <v-icon left>
+                        {{ propMethod == "create" ? "add" : "edit" }}
+                    </v-icon>
+                    {{
+                        propMethod == "create" ? "เพิ่มข้อความ" : "แก้ไขข้อความ"
+                    }}
                     <v-spacer></v-spacer>
                     <v-btn icon fab x-small @click="exit()">
                         <v-icon color="error">close</v-icon>
@@ -40,7 +57,11 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn class="success" @click="save()">
+                    <v-btn
+                        class="success"
+                        @click="save()"
+                        :disabled="text == ''"
+                    >
                         <v-icon left> save</v-icon>
                         บันทึก
                     </v-btn>
@@ -52,12 +73,39 @@
 
 <script>
 export default {
-    props: ["propOption", "propOptions"],
+    props: ["propOption", "propOptions", "propMethod", "propText"],
+    data() {
+        return {
+            dialog: false,
+            text: "",
+            option: {},
+        };
+    },
     methods: {
         start() {
             this.option = this.propOptions.find((e) => {
                 return e.id == this.propOption;
             });
+
+            if (this.propMethod == "edit") {
+                switch (this.propOption) {
+                    case 1:
+                        this.text = this.propText.m1;
+                        break;
+                    case 2:
+                        this.text = this.propText.m2;
+                        break;
+                    case 3:
+                        this.text = this.propText.m3;
+                        break;
+                    case 4:
+                        this.text = this.propText.m4;
+                        break;
+
+                    default:
+                        break;
+                }
+            }
         },
         async save() {
             if (this.option.id == "" || this.text == "") {
@@ -74,12 +122,32 @@ export default {
                 return;
             }
             let loader = this.$loading.show();
-            const payload = {
+            let payload = {
                 option_id: this.option.id,
                 text: this.text,
             };
 
-            await this.$store.dispatch("orderProductCake/add_option", payload);
+            switch (this.propMethod) {
+                case "create":
+                    await this.$store.dispatch(
+                        "orderProductCake/add_option",
+                        payload
+                    );
+                    break;
+
+                case "edit":
+                    payload.text_id = this.propText.id;
+                    await this.$store.dispatch(
+                        "orderProductCake/edit_option",
+                        payload
+                    );
+                    break;
+
+                default:
+                    return;
+                    break;
+            }
+
             this.$swal({
                 toast: true,
                 allowOutsideClick: false,
@@ -94,16 +162,10 @@ export default {
             this.exit();
             loader.hide();
         },
+
         exit() {
             this.dialog = false;
         },
-    },
-    data() {
-        return {
-            dialog: false,
-            text: "",
-            option: {},
-        };
     },
 };
 </script>

@@ -285,5 +285,15 @@ export default {
                     console.error(err);
                 });
         },
+        async edit_option({}, payload) {
+            return await axios
+                .post(`/api/admin/v1/order/product/edit_option`, payload)
+                .then((response) => {
+                    return response.data;
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        },
     },
 };

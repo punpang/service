@@ -177,6 +177,33 @@ class APriceController extends Controller
         return response()->json([], 200);
     }
 
+    public function edit_option(Request $request)
+    {
+        switch ($request->option_id) {
+            case '1':
+                AM1::where("id", $request->text_id)->update(["m1" => $request->text]);
+                break;
+
+            case '2':
+                AM2::where("id", $request->text_id)->update(["m2" => $request->text]);
+                break;
+
+            case '3':
+                AM3::where("id", $request->text_id)->update(["m3" => $request->text]);
+                break;
+
+            case '4':
+                AM4::where("id", $request->text_id)->update(["m4" => $request->text]);
+                break;
+
+            default:
+                # code...
+                break;
+        }
+
+        return response()->json([], 200);
+    }
+
     public function fetch_options($option)
     {
         $db = DB::table("a_m" . $option)->orderBy("sort", "ASC")->get();

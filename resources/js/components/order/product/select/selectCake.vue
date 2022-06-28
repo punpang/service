@@ -102,13 +102,13 @@
                     >
                 </v-card-text>
                 <v-card-actions>
-                    <options @emitLoadAgain="emitLoadAgain"></options>
+                    <btnOptions @emitLoadAgain="emitLoadAgain"></btnOptions>
                     <v-spacer></v-spacer>
                     <editPrice
                         v-if="dataSelectedSuccess && product"
                         :propProduct="product"
                     ></editPrice>
-                    
+
                     <addPrice
                         v-if="!product && dataSelectedSuccess"
                         :propOptions="dataMerge"
@@ -151,11 +151,11 @@ Vue.filter("formatNumber", function (value) {
 import { mapGetters } from "vuex";
 import editPrice from "@/js/components/order/product/select/editPrice";
 import addPrice from "@/js/components/order/product/select/addPrice";
-import options from "@/js/components/order/product/select/options";
+import btnOptions from "@/js/components/order/product/select/btnOptions";
 
 export default {
     props: ["propCheckProduct"],
-    components: { editPrice, addPrice, options },
+    components: { editPrice, addPrice, btnOptions },
     data() {
         return {
             dialog: false,

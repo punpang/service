@@ -304,6 +304,7 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                     Route::get('fetchAddOn', 'Order\ProductAddOnController@fetchAddOn');
                     Route::get('{option}/fetch_options', 'Order\APriceController@fetch_options');
                     Route::post('add_option', 'Order\APriceController@add_option');
+                    Route::post('edit_option', 'Order\APriceController@edit_option');
                     Route::post('{product}/editPrice', 'Order\APriceController@editPrice');
                     Route::post('/addPrice', 'Order\APriceController@addPrice');
                     Route::post('{product}/uploadImageProduct', 'Order\APriceController@uploadImageProduct');

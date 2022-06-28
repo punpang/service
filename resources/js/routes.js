@@ -58,7 +58,8 @@ const routes = [
         name: "managesOrders",
         component: () => import("@/js/pages/order/index"),
         meta: { requiresAuth: true },
-    },    {
+    },
+    {
         path: "/manages/order/details",
         name: "managesOrderDetails",
         component: () => import("@/js/pages/order/details"),
@@ -75,6 +76,15 @@ const routes = [
         path: "/test/drag-sort",
         name: "/test/drag-sort",
         component: () => import("@/js/pages/test/drag-sort"),
+        meta: { requiresAuth: true },
+    },
+    {
+        path: "/test/waitingForNameFile",
+        name: "/test/waitingForNameFile",
+        component: () =>
+            import(
+                "@/js/components/order/manages/goods/cake/productPrototype/waitingForNameFile"
+            ),
         meta: { requiresAuth: true },
     },
     {
@@ -136,7 +146,7 @@ const routes = [
     {
         path: "/manages/settings/facebook/reply",
         name: "managesOrderShowOrderByID",
-    component: () => import("@/js/pages/facebook/reply"),
+        component: () => import("@/js/pages/facebook/reply"),
         meta: { requiresAuth: true },
     },
 
@@ -144,6 +154,13 @@ const routes = [
         path: "/manages/settings/general",
         name: "managesSetting",
         component: () => import("@/js/pages/setting"),
+        meta: { requiresAuth: true },
+    },
+
+    {
+        path: "/manages/settings/products/options",
+        name: "/manages/settings/products/options",
+        component: () => import("@/js/pages/order/products/options"),
         meta: { requiresAuth: true },
     },
 

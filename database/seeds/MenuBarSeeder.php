@@ -58,9 +58,12 @@ class MenuBarSeeder extends Seeder
                 "subs" => [
                     ["title" => "ทั่วไป", "to" => "/manages/settings/general", "admin" => 1, "customer" => 0],
                     ["title" => "วันหยุดร้าน", "to" => "/manages/settings/store/dayOff", "admin" => 1, "customer" => 0],
+                    ["title" => "หมวด/สินค้า", "to" => "/manages/settings/products/options", "admin" => 1, "customer" => 0],
                     ["title" => "ข้อความตอบกลับ", "to" => "/manages/settings/facebook/reply", "admin" => 1, "customer" => 0],
                 ]
             ],
+
+
             // [
             //     // จัดการลุ้นโชค
             //     "title" => "จัดการเมนู", "action" => "shop", "admin" => 1, "customer" => 0,

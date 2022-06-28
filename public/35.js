@@ -1,9 +1,9 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[35],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/setting.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/setting.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/lucky/register.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/lucky/register.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -134,154 +134,101 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      setting: {},
-      open_store: false,
-      close_store: false,
-      hide_key: {
-        line_access_token: true,
-        line_client_id: true,
-        line_client_secret: true,
-        line_key_notify: true,
-        facebook_access_token: true
+      datas: {
+        number_of_right: "",
+        customers: {
+          name: "",
+          phone: ""
+        }
+      },
+      otp: "",
+      verify_otp: "xxxx",
+      nors: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      //number of rights
+      rules: {
+        name: [function (v) {
+          return !!v || "ห้ามเว้นว่าง";
+        }],
+        phone: [function (v) {
+          return !!v || "ห้ามเว้นว่าง";
+        }, function (v) {
+          return v.length == 10 || "กรอกเบอร์โทร 10 หลักเท่านั้น";
+        }, function (v) {
+          var pattern = /[0]{1}[0-9]{9}/;
+          return pattern.test(v) || "กรุณาขึ้นต้นด้วยเลข 0 และกรอกเบอร์โทร 10 หลักเท่านั้น";
+        }],
+        otp: [function (v) {
+          return !!v || "ห้ามเว้นว่าง";
+        }, function (v) {
+          return v.length == 4 || "กรอกรหัส OTP 4 หลัก";
+        }, function (v) {
+          var pattern = /[0-9]{4}/;
+          return pattern.test(v) || "กรุณกรอกรหัส OTP 4 หลัก";
+        }],
+        nors: [function (v) {
+          return !!v || "ห้ามเว้นว่าง";
+        }]
       }
     };
   },
   methods: {
-    fecth: function fecth() {
+    get_otp: function get_otp() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var loader, result;
+        var loader, random_otp, data, res;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                loader = _this.$loading.show();
-                _context.next = 3;
-                return axios.get("/api/admin/v1/setting/fetch");
+                if (!_this.$refs.formRegister.validate()) {
+                  _context.next = 10;
+                  break;
+                }
 
-              case 3:
-                result = _context.sent;
-                _this.setting = result.data;
+                loader = _this.$loading.show();
+                random_otp = Math.floor(1000 + Math.random() * 9000);
+                _this.verify_otp = random_otp;
+                data = {
+                  phone: _this.datas.customers.phone,
+                  random_otp: random_otp
+                };
+                _context.next = 7;
+                return _this.$store.dispatch("orderLuckyReward/getOTP", data);
+
+              case 7:
+                res = _context.sent;
+                /// TEST START ///
+                // const res = {
+                //   data: {
+                //     success: true,
+                //     message: "SMS SUCCESS !!",
+                //   },
+                // };
+                // this.otp = random_otp;
+                /// TEST END ///
                 loader.hide();
 
-              case 6:
+                if (res.data.success === true) {
+                  _this.$swal({
+                    title: res.data.message,
+                    icon: "success",
+                    allowOutsideClick: false,
+                    confirmButtonText: "\u0E40\u0E23\u0E35\u0E22\u0E1A\u0E23\u0E49\u0E2D\u0E22"
+                  });
+                } else {
+                  _this.$swal({
+                    title: "เกิดข้อผิดพลาด",
+                    icon: "error",
+                    allowOutsideClick: false,
+                    confirmButtonText: "\u0E23\u0E31\u0E1A\u0E17\u0E23\u0E32\u0E1A"
+                  });
+                }
+
+              case 10:
               case "end":
                 return _context.stop();
             }
@@ -289,72 +236,68 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    save: function save() {
+    register: function register() {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var loader, result;
+        var loader, data, res;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                if (!(_this2.$refs.formRegister.validate() && _this2.$refs.formNORS.validate() && _this2.verify_otp == _this2.otp)) {
+                  _context2.next = 9;
+                  break;
+                }
+
                 loader = _this2.$loading.show();
-                _context2.next = 3;
-                return axios.post("/api/admin/v1/setting/update", {
-                  setting: _this2.setting
-                });
+                data = _this2.datas;
+                _context2.next = 5;
+                return _this2.$store.dispatch("orderLuckyReward/register", data);
 
-              case 3:
-                result = _context2.sent;
-
-                _this2.$swal({
-                  toast: true,
-                  timer: 5000,
-                  timerProgressBar: true,
-                  showConfirmButton: false,
-                  icon: result.status == 200 ? "success" : "error",
-                  title: result.status == 200 ? "สำเร็จ" : "ล้มเหลว",
-                  position: "bottom"
-                });
-
+              case 5:
+                res = _context2.sent;
                 loader.hide();
 
-              case 6:
+                if (res.data.success === true) {
+                  _this2.$swal({
+                    title: res.data.message,
+                    icon: "success",
+                    allowOutsideClick: false,
+                    confirmButtonText: "\u0E40\u0E23\u0E35\u0E22\u0E1A\u0E23\u0E49\u0E2D\u0E22"
+                  });
+                }
+
+                _this2.reset();
+
+              case 9:
               case "end":
                 return _context2.stop();
             }
           }
         }, _callee2);
       }))();
-    }
-  },
-  mounted: function mounted() {
-    var _this3 = this;
-
-    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              _context3.next = 2;
-              return _this3.fecth();
-
-            case 2:
-            case "end":
-              return _context3.stop();
-          }
+    },
+    reset: function reset() {
+      this.datas = {
+        number_of_right: "",
+        customers: {
+          name: "",
+          phone: ""
         }
-      }, _callee3);
-    }))();
+      };
+      this.otp = "";
+      this.verify_otp = "xxxx";
+    }
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/setting.vue?vue&type=template&id=dbf85212&":
-/*!*****************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/setting.vue?vue&type=template&id=dbf85212& ***!
-  \*****************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/lucky/register.vue?vue&type=template&id=f654eada&":
+/*!************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/lucky/register.vue?vue&type=template&id=f654eada& ***!
+  \************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -372,126 +315,40 @@ var render = function () {
       _c(
         "v-card",
         [
-          _c(
-            "v-card-title",
-            { staticClass: "text-h6" },
-            [
-              _c("v-icon", { attrs: { left: "" } }, [_vm._v("settings")]),
-              _vm._v("\n            ตั้งค่า\n        "),
-            ],
-            1
-          ),
+          _c("v-card-title", [_c("h2", [_vm._v("ลงทะเบียนลุ้นโชค")])]),
           _vm._v(" "),
           _c(
             "v-card-text",
             [
-              _c("strong", { staticClass: "text-h6" }, [
-                _vm._v("เวลาเปิด-ปิด"),
-              ]),
-              _vm._v(" "),
               _c(
-                "v-row",
+                "v-form",
+                { ref: "formRegister", attrs: { "lazy-validation": "" } },
                 [
                   _c(
-                    "v-col",
-                    { attrs: { cols: "12", md: "6" } },
+                    "v-row",
+                    { attrs: { justify: "center" } },
                     [
                       _c(
-                        "v-menu",
-                        {
-                          ref: "menu",
-                          attrs: {
-                            "close-on-content-click": false,
-                            "nudge-right": 40,
-                            "return-value": _vm.open_store,
-                            transition: "scale-transition",
-                            "offset-y": "",
-                            "max-width": "290px",
-                            "min-width": "290px",
-                          },
-                          on: {
-                            "update:returnValue": function ($event) {
-                              _vm.open_store = $event
-                            },
-                            "update:return-value": function ($event) {
-                              _vm.open_store = $event
-                            },
-                          },
-                          scopedSlots: _vm._u([
-                            {
-                              key: "activator",
-                              fn: function (ref) {
-                                var on = ref.on
-                                var attrs = ref.attrs
-                                return [
-                                  _c(
-                                    "v-text-field",
-                                    _vm._g(
-                                      _vm._b(
-                                        {
-                                          staticClass: "mt-2",
-                                          attrs: {
-                                            label: "open_store",
-                                            readonly: "",
-                                            "hide-details": "",
-                                            outlined: "",
-                                          },
-                                          model: {
-                                            value: _vm.setting.open_store,
-                                            callback: function ($$v) {
-                                              _vm.$set(
-                                                _vm.setting,
-                                                "open_store",
-                                                $$v
-                                              )
-                                            },
-                                            expression: "setting.open_store",
-                                          },
-                                        },
-                                        "v-text-field",
-                                        attrs,
-                                        false
-                                      ),
-                                      on
-                                    )
-                                  ),
-                                ]
-                              },
-                            },
-                          ]),
-                          model: {
-                            value: _vm.open_store,
-                            callback: function ($$v) {
-                              _vm.open_store = $$v
-                            },
-                            expression: "open_store",
-                          },
-                        },
+                        "v-col",
+                        { attrs: { md: "5" } },
                         [
-                          _vm._v(" "),
-                          _vm.open_store
-                            ? _c("v-time-picker", {
-                                attrs: {
-                                  "full-width": "",
-                                  scrollable: "",
-                                  format: "24hr",
-                                },
-                                on: {
-                                  "click:minute": function ($event) {
-                                    return _vm.$refs.menu.save(
-                                      _vm.setting.open_store
-                                    )
-                                  },
-                                },
-                                model: {
-                                  value: _vm.setting.open_store,
-                                  callback: function ($$v) {
-                                    _vm.$set(_vm.setting, "open_store", $$v)
-                                  },
-                                  expression: "setting.open_store",
-                                },
-                              })
-                            : _vm._e(),
+                          _c("v-text-field", {
+                            attrs: {
+                              label: "ชื่อลูกค้า",
+                              "prepend-icon": "person",
+                              outlined: "",
+                              "hide-details": "",
+                              rules: _vm.rules.name,
+                              autofocus: "",
+                            },
+                            model: {
+                              value: _vm.datas.customers.name,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.datas.customers, "name", $$v)
+                              },
+                              expression: "datas.customers.name",
+                            },
+                          }),
                         ],
                         1
                       ),
@@ -500,105 +357,31 @@ var render = function () {
                   ),
                   _vm._v(" "),
                   _c(
-                    "v-col",
-                    { attrs: { cols: "12", md: "6" } },
+                    "v-row",
+                    { attrs: { justify: "center" } },
                     [
                       _c(
-                        "v-menu",
-                        {
-                          ref: "menu",
-                          attrs: {
-                            "close-on-content-click": false,
-                            "nudge-right": 40,
-                            "return-value": _vm.close_store,
-                            transition: "scale-transition",
-                            "offset-y": "",
-                            "max-width": "290px",
-                            "min-width": "290px",
-                          },
-                          on: {
-                            "update:returnValue": function ($event) {
-                              _vm.close_store = $event
-                            },
-                            "update:return-value": function ($event) {
-                              _vm.close_store = $event
-                            },
-                          },
-                          scopedSlots: _vm._u([
-                            {
-                              key: "activator",
-                              fn: function (ref) {
-                                var on = ref.on
-                                var attrs = ref.attrs
-                                return [
-                                  _c(
-                                    "v-text-field",
-                                    _vm._g(
-                                      _vm._b(
-                                        {
-                                          staticClass: "mt-2",
-                                          attrs: {
-                                            label: "close_store",
-                                            readonly: "",
-                                            "hide-details": "",
-                                            outlined: "",
-                                          },
-                                          model: {
-                                            value: _vm.setting.close_store,
-                                            callback: function ($$v) {
-                                              _vm.$set(
-                                                _vm.setting,
-                                                "close_store",
-                                                $$v
-                                              )
-                                            },
-                                            expression: "setting.close_store",
-                                          },
-                                        },
-                                        "v-text-field",
-                                        attrs,
-                                        false
-                                      ),
-                                      on
-                                    )
-                                  ),
-                                ]
-                              },
-                            },
-                          ]),
-                          model: {
-                            value: _vm.close_store,
-                            callback: function ($$v) {
-                              _vm.close_store = $$v
-                            },
-                            expression: "close_store",
-                          },
-                        },
+                        "v-col",
+                        { attrs: { md: "5" } },
                         [
-                          _vm._v(" "),
-                          _vm.close_store
-                            ? _c("v-time-picker", {
-                                attrs: {
-                                  "full-width": "",
-                                  scrollable: "",
-                                  format: "24hr",
-                                },
-                                on: {
-                                  "click:minute": function ($event) {
-                                    return _vm.$refs.menu.save(
-                                      _vm.setting.close_store
-                                    )
-                                  },
-                                },
-                                model: {
-                                  value: _vm.setting.close_store,
-                                  callback: function ($$v) {
-                                    _vm.$set(_vm.setting, "close_store", $$v)
-                                  },
-                                  expression: "setting.close_store",
-                                },
-                              })
-                            : _vm._e(),
+                          _c("v-text-field", {
+                            attrs: {
+                              label: "เบอร์โทรลูกค้า",
+                              "prepend-icon": "phone",
+                              outlined: "",
+                              "hide-details": "",
+                              pattern: "\\d*",
+                              type: "number",
+                              rules: _vm.rules.phone,
+                            },
+                            model: {
+                              value: _vm.datas.customers.phone,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.datas.customers, "phone", $$v)
+                              },
+                              expression: "datas.customers.phone",
+                            },
+                          }),
                         ],
                         1
                       ),
@@ -609,232 +392,176 @@ var render = function () {
                 1
               ),
               _vm._v(" "),
-              _c("v-divider"),
-              _vm._v(" "),
-              _c("strong", { staticClass: "text-h6" }, [_vm._v("LINE")]),
-              _vm._v(" "),
-              _c("v-switch", {
-                staticClass: "mb-4 mt-2",
-                attrs: {
-                  color: "success",
-                  inset: "",
-                  label: "line_status_bot",
-                  "hide-details": "",
-                },
-                model: {
-                  value: _vm.setting.line_status_bot,
-                  callback: function ($$v) {
-                    _vm.$set(_vm.setting, "line_status_bot", $$v)
-                  },
-                  expression: "setting.line_status_bot",
-                },
-              }),
-              _vm._v(" "),
-              _c("v-text-field", {
-                staticClass: "mb-4",
-                attrs: {
-                  "hide-details": "",
-                  outlined: "",
-                  "x-large": "",
-                  label: "line_client_id",
-                  "append-icon": _vm.hide_key.line_client_id
-                    ? "visibility"
-                    : "visibility_off",
-                  type: _vm.hide_key.line_client_id ? "password" : "text",
-                  readonly: _vm.hide_key.line_client_id ? true : false,
-                },
-                on: {
-                  "click:append": function () {
-                    return (_vm.hide_key.line_client_id =
-                      !_vm.hide_key.line_client_id)
-                  },
-                },
-                model: {
-                  value: _vm.setting.line_client_id,
-                  callback: function ($$v) {
-                    _vm.$set(_vm.setting, "line_client_id", $$v)
-                  },
-                  expression: "setting.line_client_id",
-                },
-              }),
-              _vm._v(" "),
-              _c("v-text-field", {
-                staticClass: "mb-4",
-                attrs: {
-                  "hide-details": "",
-                  outlined: "",
-                  "x-large": "",
-                  label: "line_client_secret",
-                  "append-icon": _vm.hide_key.line_client_secret
-                    ? "visibility"
-                    : "visibility_off",
-                  type: _vm.hide_key.line_client_secret ? "password" : "text",
-                  readonly: _vm.hide_key.line_client_secret ? true : false,
-                },
-                on: {
-                  "click:append": function () {
-                    return (_vm.hide_key.line_client_secret =
-                      !_vm.hide_key.line_client_secret)
-                  },
-                },
-                model: {
-                  value: _vm.setting.line_client_secret,
-                  callback: function ($$v) {
-                    _vm.$set(_vm.setting, "line_client_secret", $$v)
-                  },
-                  expression: "setting.line_client_secret",
-                },
-              }),
-              _vm._v(" "),
-              _c("v-text-field", {
-                staticClass: "mb-4",
-                attrs: {
-                  "hide-details": "",
-                  outlined: "",
-                  "x-large": "",
-                  label: "line_access_token",
-                  "append-icon": _vm.hide_key.line_access_token
-                    ? "visibility"
-                    : "visibility_off",
-                  type: _vm.hide_key.line_access_token ? "password" : "text",
-                  readonly: _vm.hide_key.line_access_token ? true : false,
-                },
-                on: {
-                  "click:append": function () {
-                    return (_vm.hide_key.line_access_token =
-                      !_vm.hide_key.line_access_token)
-                  },
-                },
-                model: {
-                  value: _vm.setting.line_access_token,
-                  callback: function ($$v) {
-                    _vm.$set(_vm.setting, "line_access_token", $$v)
-                  },
-                  expression: "setting.line_access_token",
-                },
-              }),
-              _vm._v(" "),
-              _c("v-text-field", {
-                staticClass: "mb-4",
-                attrs: {
-                  "hide-details": "",
-                  outlined: "",
-                  "x-large": "",
-                  label: "line_key_notify",
-                  "append-icon": _vm.hide_key.line_key_notify
-                    ? "visibility"
-                    : "visibility_off",
-                  type: _vm.hide_key.line_key_notify ? "password" : "text",
-                  readonly: _vm.hide_key.line_key_notify ? true : false,
-                },
-                on: {
-                  "click:append": function () {
-                    return (_vm.hide_key.line_key_notify =
-                      !_vm.hide_key.line_key_notify)
-                  },
-                },
-                model: {
-                  value: _vm.setting.line_key_notify,
-                  callback: function ($$v) {
-                    _vm.$set(_vm.setting, "line_key_notify", $$v)
-                  },
-                  expression: "setting.line_key_notify",
-                },
-              }),
-              _vm._v(" "),
-              _c("v-divider"),
-              _vm._v(" "),
-              _c("strong", { staticClass: "text-h6" }, [_vm._v("FACEBOOK")]),
-              _vm._v(" "),
-              _c("v-switch", {
-                staticClass: "mb-4 mt-2",
-                attrs: {
-                  color: "success",
-                  inset: "",
-                  label: "facebook_status_bot",
-                  "hide-details": "",
-                },
-                model: {
-                  value: _vm.setting.facebook_status_bot,
-                  callback: function ($$v) {
-                    _vm.$set(_vm.setting, "facebook_status_bot", $$v)
-                  },
-                  expression: "setting.facebook_status_bot",
-                },
-              }),
-              _vm._v(" "),
-              _c("v-text-field", {
-                staticClass: "mb-4",
-                attrs: {
-                  "hide-details": "",
-                  outlined: "",
-                  "x-large": "",
-                  label: "facebook_access_token",
-                  "append-icon": _vm.hide_key.facebook_access_token
-                    ? "visibility"
-                    : "visibility_off",
-                  type: _vm.hide_key.facebook_access_token
-                    ? "password"
-                    : "text",
-                  readonly: _vm.hide_key.facebook_access_token ? true : false,
-                },
-                on: {
-                  "click:append": function () {
-                    return (_vm.hide_key.facebook_access_token =
-                      !_vm.hide_key.facebook_access_token)
-                  },
-                },
-                model: {
-                  value: _vm.setting.facebook_access_token,
-                  callback: function ($$v) {
-                    _vm.$set(_vm.setting, "facebook_access_token", $$v)
-                  },
-                  expression: "setting.facebook_access_token",
-                },
-              }),
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-card-actions",
-            [
               _c(
-                "v-btn",
-                {
-                  staticClass: "warning",
-                  attrs: { "x-large": "" },
-                  on: {
-                    click: function ($event) {
-                      return _vm.fecth()
-                    },
-                  },
-                },
+                "v-row",
+                { staticClass: "mt-3", attrs: { justify: "center" } },
                 [
-                  _c("v-icon", { attrs: { left: "" } }, [_vm._v("refresh")]),
-                  _vm._v("\n                โหลดข้อมูลใหม่\n            "),
+                  _c(
+                    "v-col",
+                    { attrs: { md: "5", cols: "7" } },
+                    [
+                      _c("v-otp-input", {
+                        attrs: {
+                          length: "4",
+                          label: "OTP 4 หลัก",
+                          type: "number",
+                          outlined: "",
+                          "hide-details": "",
+                          rules: _vm.rules.otp,
+                        },
+                        model: {
+                          value: _vm.otp,
+                          callback: function ($$v) {
+                            _vm.otp = $$v
+                          },
+                          expression: "otp",
+                        },
+                      }),
+                    ],
+                    1
+                  ),
                 ],
                 1
               ),
               _vm._v(" "),
-              _c("v-spacer"),
-              _vm._v(" "),
               _c(
-                "v-btn",
-                {
-                  staticClass: "success",
-                  attrs: { "x-large": "" },
-                  on: {
-                    click: function ($event) {
-                      return _vm.save()
-                    },
-                  },
-                },
+                "v-row",
+                { staticClass: "mt-3", attrs: { justify: "center" } },
                 [
-                  _c("v-icon", { attrs: { left: "" } }, [_vm._v("save")]),
-                  _vm._v("\n                บันทึกข้อมูล\n            "),
+                  _c(
+                    "v-col",
+                    { attrs: { md: "5", cols: "5" } },
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          staticClass: "success",
+                          attrs: { block: "", large: "" },
+                          on: { click: _vm.get_otp },
+                        },
+                        [
+                          _c("v-icon", { attrs: { left: "" } }, [
+                            _vm._v("sms"),
+                          ]),
+                          _vm._v(
+                            "\n                        รับรหัส\n                    "
+                          ),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
                 ],
                 1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-form",
+                { ref: "formNORS", attrs: { "lazy-validation": "" } },
+                [
+                  _vm.verify_otp == _vm.otp
+                    ? _c(
+                        "div",
+                        { staticClass: "mt-3" },
+                        [
+                          _c(
+                            "v-row",
+                            { attrs: { justify: "center" } },
+                            [
+                              _c(
+                                "v-col",
+                                { attrs: { md: "5" } },
+                                [
+                                  _c("v-select", {
+                                    attrs: {
+                                      label: "จำนวนสิทธิ์",
+                                      "prepend-icon": "casino",
+                                      outlined: "",
+                                      "hide-details": "",
+                                      items: _vm.nors,
+                                      "item-value": "value",
+                                      rules: _vm.rules.nors,
+                                    },
+                                    model: {
+                                      value: _vm.datas.number_of_right,
+                                      callback: function ($$v) {
+                                        _vm.$set(
+                                          _vm.datas,
+                                          "number_of_right",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "datas.number_of_right",
+                                    },
+                                  }),
+                                ],
+                                1
+                              ),
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-row",
+                            { attrs: { justify: "center" } },
+                            [
+                              _c(
+                                "v-col",
+                                { staticClass: "pb-0", attrs: { md: "5" } },
+                                [
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      staticClass: "success",
+                                      attrs: { block: "", large: "" },
+                                      on: { click: _vm.register },
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                ลงทะเบียน\n                            "
+                                      ),
+                                    ]
+                                  ),
+                                ],
+                                1
+                              ),
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-row",
+                            { attrs: { justify: "center" } },
+                            [
+                              _c(
+                                "v-col",
+                                { attrs: { md: "5" } },
+                                [
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      staticClass: "error",
+                                      attrs: { block: "", large: "" },
+                                      on: { click: _vm.reset },
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                ล้างข้อมูล\n                            "
+                                      ),
+                                    ]
+                                  ),
+                                ],
+                                1
+                              ),
+                            ],
+                            1
+                          ),
+                        ],
+                        1
+                      )
+                    : _vm._e(),
+                ]
               ),
             ],
             1
@@ -853,18 +580,18 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./resources/js/pages/setting.vue":
-/*!****************************************!*\
-  !*** ./resources/js/pages/setting.vue ***!
-  \****************************************/
+/***/ "./resources/js/pages/lucky/register.vue":
+/*!***********************************************!*\
+  !*** ./resources/js/pages/lucky/register.vue ***!
+  \***********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _setting_vue_vue_type_template_id_dbf85212___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./setting.vue?vue&type=template&id=dbf85212& */ "./resources/js/pages/setting.vue?vue&type=template&id=dbf85212&");
-/* harmony import */ var _setting_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./setting.vue?vue&type=script&lang=js& */ "./resources/js/pages/setting.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _register_vue_vue_type_template_id_f654eada___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./register.vue?vue&type=template&id=f654eada& */ "./resources/js/pages/lucky/register.vue?vue&type=template&id=f654eada&");
+/* harmony import */ var _register_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./register.vue?vue&type=script&lang=js& */ "./resources/js/pages/lucky/register.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -873,9 +600,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _setting_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _setting_vue_vue_type_template_id_dbf85212___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _setting_vue_vue_type_template_id_dbf85212___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _register_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _register_vue_vue_type_template_id_f654eada___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _register_vue_vue_type_template_id_f654eada___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -885,38 +612,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/pages/setting.vue"
+component.options.__file = "resources/js/pages/lucky/register.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/pages/setting.vue?vue&type=script&lang=js&":
-/*!*****************************************************************!*\
-  !*** ./resources/js/pages/setting.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************/
+/***/ "./resources/js/pages/lucky/register.vue?vue&type=script&lang=js&":
+/*!************************************************************************!*\
+  !*** ./resources/js/pages/lucky/register.vue?vue&type=script&lang=js& ***!
+  \************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_setting_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./setting.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/setting.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_setting_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_register_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./register.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/lucky/register.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_register_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/pages/setting.vue?vue&type=template&id=dbf85212&":
-/*!***********************************************************************!*\
-  !*** ./resources/js/pages/setting.vue?vue&type=template&id=dbf85212& ***!
-  \***********************************************************************/
+/***/ "./resources/js/pages/lucky/register.vue?vue&type=template&id=f654eada&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/pages/lucky/register.vue?vue&type=template&id=f654eada& ***!
+  \******************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_setting_vue_vue_type_template_id_dbf85212___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./setting.vue?vue&type=template&id=dbf85212& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/setting.vue?vue&type=template&id=dbf85212&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_setting_vue_vue_type_template_id_dbf85212___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_register_vue_vue_type_template_id_f654eada___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./register.vue?vue&type=template&id=f654eada& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/lucky/register.vue?vue&type=template&id=f654eada&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_register_vue_vue_type_template_id_f654eada___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_setting_vue_vue_type_template_id_dbf85212___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_register_vue_vue_type_template_id_f654eada___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
