@@ -11,8 +11,7 @@ class KsherChannelPaymentController extends Controller
 {
     public function getUseKsherChannelPayment()
     {
-        $kshers = KsherChannelPayment::
-        WhereDoesntHave("ksherDayOff", function ($query) {
+        $kshers = KsherChannelPayment::WhereDoesntHave("ksherDayOff", function ($query) {
             return $query->where("day_off", \Carbon\Carbon::now()->format('Y-m-d'));
         })
             ->whereStatusUse(true)
@@ -85,5 +84,23 @@ class KsherChannelPaymentController extends Controller
             ],
             200
         );
+    }
+
+    public function update_status_use(KsherChannelPayment $ksher)
+    {
+        $ksher->status_use = !$ksher->status_use;
+        $ksher->update();
+
+        return response()->json([], 200);
+    }
+
+    public function update_sort(Request $request)
+    {
+        foreach ($request->sort as $ksher) {
+            KsherChannelPayment::where("id", $ksher["id"])
+                ->update(["sort" => $ksher["sort"]]);
+        }
+
+        return response()->json([], 200);
     }
 }

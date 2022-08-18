@@ -9,12 +9,20 @@
                 <v-row>
                     <v-col cols="12" md="12" class="px-2 pb-0 pt-1">
                         <v-row>
-                            <v-col cols="9" md="10">
+                            <v-col
+                                :cols="user.type != 1 ? 12 : 9"
+                                :md="user.type != 1 ? 12 : 10"
+                            >
                                 <strong>{{ detail.a_price.name_goods }}</strong>
                             </v-col>
-                            <v-col cols="3" md="2" class="text-right">
+                            <v-col
+                                cols="3"
+                                md="2"
+                                class="text-right"
+                                v-if="user.type == 1"
+                            >
                                 <btnCardManagesCake
-                                    v-if="user.type === 1 && order.status < 8"
+                                    v-if="order.status < 8"
                                     :propOrderDetail="detail"
                                 ></btnCardManagesCake>
                             </v-col>

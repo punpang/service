@@ -187,6 +187,8 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
             Route::prefix('ksher')->group(function () { // api/v1/guest/ksher
                 Route::get('fetch', 'Order\KsherChannelPaymentController@fetch');
                 Route::post('setDayOff', 'Order\KsherChannelPaymentController@setDayOff');
+                Route::post('{ksher}/update_status_use', 'Order\KsherChannelPaymentController@update_status_use');
+                Route::post('update_sort', 'Order\KsherChannelPaymentController@update_sort');
                 Route::prefix('dayOff')->group(function () { // api/v1/guest/ksher
                     Route::get('fetch', 'Order\KsherDayOffController@fetch');
                     Route::post('{id}/remove', 'Order\KsherDayOffController@remove');

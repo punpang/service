@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Order;
 use App\Linenotify;
 use App\Order\Setting;
 use App\Order\Facebook;
+use App\Order\FacebookMids;
 use Illuminate\Http\Request;
 use App\Order\FacebookWebhook;
 use App\Http\Controllers\Controller;
@@ -13,9 +14,13 @@ class FacebookController extends Controller
 {
     public function webhook(Request $request)
     {
+        Linenotify::send("Facebook Status Bot :: TEST");
+
         $setting = Setting::first();
         if (!$setting->facebook_status_bot || $request->method() == "GET") {
-            Linenotify::send("Facebook Status Bot :: Off");
+            Linenotify::send("Facebook Status Bot :: Start Off");
+            Linenotify::send($request->getContent());
+            Linenotify::send("Facebook Status Bot :: End Off");
             return $request["hub_challenge"];
         }
 
@@ -39,22 +44,25 @@ class FacebookController extends Controller
         ) {
             $message_out = "ขณะนี้ ! อยู่นอกเวลาทำการ โปรดติดต่ออีกครั้งในช่วงเวลาทำการ ($setting->open_store - $setting->close_store น.) ขออภัยในความไม่สะดวก
 
-**ทุกข้อความตอบกลับโดยระบบอัตโนมัติ";
+        **ทุกข้อความตอบกลับโดยระบบอัตโนมัติ";
             Facebook::reply_message_v2($sender, $message_out);
             return $request["hub_challenge"];
         }
 
         // มีข้อความไหม --เป็นตัวหนังสือ--
         if (!empty($input['entry'][0]['messaging'][0]['message']['text'])) {
+            if (FacebookMids::check($input['entry'][0]['messaging'][0]['message']['mid'])) {
+                return $request["hub_challenge"];
+            }
             $message = $input['entry'][0]['messaging'][0]['message']['text'];
 
             // สมัครสมาชิก
-            if (
-                str_starts_with($message, "สมัครสมาชิก") &&
-                Facebook::register_member($sender, $message)
-            ) {
-                return $request["hub_challenge"];
-            }
+            // if (
+            //     str_starts_with($message, "สมัครสมาชิก") &&
+            //     Facebook::register_member($sender, $message)
+            // ) {
+            //     return $request["hub_challenge"];
+            // }
 
             // สร้างคำที่ยังไม่มีในฐานข้อมูล พร้อมดึงข้อมูลออกมา
             $FacebookWebhook = FacebookWebhook::firstOrCreate([
@@ -67,17 +75,17 @@ class FacebookController extends Controller
             }
 
             // ตอบคะแนนของลูกค้า
-            if ($message == "คะแนนของฉัน") {
-                Facebook::sumCustomerScore($profile, $sender);
-                // return $request["hub_challenge"];
-            }
+            // if ($message == "คะแนนของฉัน") {
+            //     Facebook::sumCustomerScore($profile, $sender);
+            //     // return $request["hub_challenge"];
+            // }
         }
 
         // มี POSTBACK
-        if (!empty($input['entry'][0]['messaging'][0]['postback']['payload'])) {
-            $postback = json_decode($input['entry'][0]['messaging'][0]['postback']['payload'], true);
-            Facebook::key_word_postback($sender, $postback);
-        }
+        // if (!empty($input['entry'][0]['messaging'][0]['postback']['payload'])) {
+        //     $postback = json_decode($input['entry'][0]['messaging'][0]['postback']['payload'], true);
+        //     Facebook::key_word_postback($sender, $postback);
+        // }
 
         return $request["hub_challenge"];
     }

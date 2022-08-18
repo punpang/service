@@ -25,7 +25,7 @@ class Facebook extends Model
 
     public static function version()
     {
-        return 'v7.0/';
+        return 'v14.0/';
     }
 
     public static function pageToken()
@@ -57,11 +57,17 @@ class Facebook extends Model
     {
         $profile = Facebook::where("psid", $psid)->first();
         if (!$profile) {
-            $get_profile = Facebook::get_profile($psid);
+            // $get_profile = Facebook::get_profile($psid);
+            // $profile = Facebook::create([
+            //     "first_name" => $get_profile["first_name"],
+            //     "last_name" => $get_profile["last_name"],
+            //     "psid" => $get_profile["id"],
+
+            // ]);
             $profile = Facebook::create([
-                "first_name" => $get_profile["first_name"],
-                "last_name" => $get_profile["last_name"],
-                "psid" => $get_profile["id"],
+                "first_name" => $psid,
+                "last_name" => $psid,
+                "psid" => $psid,
 
             ]);
         } else {
@@ -254,6 +260,7 @@ $setting->open_store - $setting->close_store น. ชั่วคราว
     {
         if (
             $order->OrderChannel->keyword != "facebook" ||
+            empty($order->customer->facebook) ||
             $order->customer->facebook->updated_at->addHours("23") < now()
         ) {
             return;

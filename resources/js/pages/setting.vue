@@ -212,6 +212,38 @@
                     :type="hide_key.facebook_access_token ? 'password' : 'text'"
                     :readonly="hide_key.facebook_access_token ? true : false"
                 ></v-text-field>
+
+                <v-divider></v-divider>
+                <strong class="text-h6">KSHER PAYMENT GATEWAY</strong>
+                <!-- <v-switch
+                    color="success"
+                    class="mb-4 mt-2"
+                    inset
+                    label="ksher_is_use"
+                    v-model="setting.ksher_is_use"
+                    hide-details
+                >
+                </v-switch> -->
+                <v-text-field
+                    class="mb-4 mt-2"
+                    hide-details
+                    outlined
+                    x-large
+                    label="ksher_access_token"
+                    v-model="setting.ksher_access_token"
+                    :append-icon="
+                        hide_key.ksher_access_token
+                            ? 'visibility'
+                            : 'visibility_off'
+                    "
+                    @click:append="
+                        () =>
+                            (hide_key.ksher_access_token =
+                                !hide_key.ksher_access_token)
+                    "
+                    :type="hide_key.ksher_access_token ? 'password' : 'text'"
+                    :readonly="hide_key.ksher_access_token ? true : false"
+                ></v-text-field>
             </v-card-text>
             <v-card-actions>
                 <v-btn x-large class="warning" @click="fecth()">
@@ -241,6 +273,7 @@ export default {
                 line_client_secret: true,
                 line_key_notify: true,
                 facebook_access_token: true,
+                ksher_access_token: true,
             },
         };
     },

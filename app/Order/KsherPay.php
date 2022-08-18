@@ -2,9 +2,10 @@
 
 namespace App\Order;
 
-use Illuminate\Database\Eloquent\Model;
 use Exception;
 use App\Order\AOrder;
+use App\Order\Setting;
+use Illuminate\Database\Eloquent\Model;
 
 class KsherPay extends Model
 {
@@ -91,22 +92,9 @@ EOD;
 
     public static function privatekey()
     {
+        $setting = Setting::attribute_name("ksher_access_token");
         return <<<EOD
------BEGIN RSA PRIVATE KEY-----
-MIICYAIBAAKBgQCGgHmSR7CCC3i1oMYSHfmOGQELDbUUSdzkOK8/1sHRQYpPy5L1
-dvkl+sXcSRV0BtFjnW180dc1yBRam6X0db3rlRyyolEXWZTcTA1ujqIA3948TAuH
-c2Mg7IgEpGt2yohhcrmdXYbFrHQx/m2GM6RFBrmS0c12zfRaN3hue8iq/wIDAQAB
-AoGAQcMRLcdlcr//HfbkwTjsqmBpVSk3jxrqKJ/ad8Ed9J0x7f/f86pe+QXatfD5
-z0gCGs1/GddTfRU9dmvBX832lI1tNsy01sCW0jVxwvK7NOl68Z64A1JK/y2Eo2y5
-h+KsJb5oke0iyCtiYdUxm29pYaJELy8S5Glltt3IAEDjhFkCRQDHyAEXAQp6/qxj
-8MGgQcabUjI6NE5ytG6+q+KiMItS3TfZ07kQhrKR9UGjBmdMDGFhwaKcJQDGkprZ
-dngzyREYS67mZQI9AKxZ0orgm9+NgoRoPVOzDJonzyUmaK0vjNs7JFUXz25yak05
-3TY7oj05L3D/apA9oOHAWzsdixH4mj9zkwJEV56RU8yCEzV02BQ0Z5vRhjeDjeF4
-8nfOBlQOfsG5qSsanq9sACKDWN5u3hgl38WiRCSPs9nKwEx2G6AI0fWCSNyQpb0C
-PQCSbRGaGa90I2aylVkdBi57vbyYhGREVvSlwT5h6QO7gwtbJwEQtWNl/nKW3vkr
-KKDJi0I3HCduEjcCF28CRGCz9H2TME4xZIszWhw7dr3uXx/9TJjoS5Xw3KBre6F5
-S7SFjO/PeBwNryxbs0Bp/bq7sgfe/CFHuW8kxDPUhUhoMK7i
------END RSA PRIVATE KEY-----
+$setting
 EOD;
     }
 

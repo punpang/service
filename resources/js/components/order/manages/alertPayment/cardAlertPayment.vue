@@ -238,7 +238,6 @@ export default {
         clickTimeOption(v) {
             const datetime = new Date();
             const oDateTime = new Date(this.formatDateTimeGet());
-            // console.log(oDateTime);
 
             switch (v.id) {
                 case 1:
@@ -263,7 +262,7 @@ export default {
                     break;
             }
 
-            if (v.id === 6) {
+            if (v.id == 6) {
                 this.dateTimeForPay = oDateTime.toLocaleString();
             } else {
                 this.dateTimeForPay = datetime.toLocaleString();
@@ -274,10 +273,10 @@ export default {
         },
         formatDateTimeGet() {
             const d = this.order.date_get;
-            const arr = d.split("-");
-            const dd = arr[0];
-            const mm = arr[1];
-            const yyyy = parseInt(arr[2]) - 543;
+            const [yyyy, mm, dd] = d.split("-");
+            // const dd = arr[0];
+            // const mm = arr[1];
+            // const yyyy = parseInt(arr[2]) - 543;
 
             return `${yyyy}/${mm}/${dd} ${this.order.time_get}:00`;
         },

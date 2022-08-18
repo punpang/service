@@ -6,7 +6,11 @@
                     v-on="on"
                     large
                     class="success"
-                    :disabled="propChannelID === 6 || propDeposit <= 0"
+                    :disabled="
+                        propChannelID === 6 ||
+                        propDeposit <= 0 ||
+                        sumAll.sumTASC / 2 > propDeposit
+                    "
                     @click="clickSubmitPayment"
                 >
                     <v-icon left>payments</v-icon>
@@ -15,7 +19,7 @@
             </template>
             <v-card>
                 <v-card-title class="text-h5 grey lighten-2">
-                    กำลังชำระเงิน
+                    กำลังชำระเงิน {{ propChannelID }}
                     <v-spacer></v-spacer>
                     <v-btn icon fab small @click="exit">
                         <v-icon color="error" @click="exit">close</v-icon>
@@ -75,7 +79,7 @@
                     </v-card>
                     <v-card outlined>
                         <v-card-text
-                            v-if="propChannelID === 1"
+                            v-if="propChannelID == 1 || propChannelID == 7"
                             class="align-center"
                         >
                             <v-alert type="info">ไม่ต้องแจ้งชำระเงิน</v-alert>
@@ -107,7 +111,8 @@
                                 <!-- :src="qrcodeTest" -->
                             </v-flex>
                             <v-alert type="error" dense v-if="timeUp != 0"
-                                >QR CODE มีอายุ 10 นาที จะหมดอายุ {{ timeUp }} น.</v-alert
+                                >QR CODE มีอายุ 10 นาที จะหมดอายุ
+                                {{ timeUp }} น.</v-alert
                             >
                             <v-divider></v-divider>
                             <p class="mb-1">
@@ -154,7 +159,7 @@
                                 ชำระเงิน
                             </v-btn>
                         </v-card-text>
-                        <v-card-text v-else-if="propChannelID === 5">
+                        <v-card-text v-else-if="propChannelID == 5">
                             <uploadImage
                                 :propUploadImange="uploadImange"
                                 @emitImageId="emitImageId"
@@ -400,6 +405,8 @@ export default {
         ...mapGetters({
             useKsherChannelPayment: "orderKsher/useKsherChannelPayment",
             order: "orderIndex/order",
+            sumAll: "orderIndex/sumAll",
+
             ksherPay: "orderKsher/ksherPay",
         }),
     },

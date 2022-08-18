@@ -641,71 +641,66 @@ if (module && module.exports) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var qrcode_js_package_qrcode_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! qrcode-js-package/qrcode.js */ "./node_modules/qrcode-js-package/qrcode.js");
 /* harmony import */ var qrcode_js_package_qrcode_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(qrcode_js_package_qrcode_js__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
-//
-//
-//
 
+    
+    /* harmony default export */ __webpack_exports__["default"] = ({
 
-/* harmony default export */ __webpack_exports__["default"] = ({
-
-    props: {
-        text: {type: String, required: true},
-        size: {type: Number, required: false, default: 256},
-        color: {type: String, required: false, default: '#000'},
-        bgColor: {type: String, required: false, default: '#FFF'},
-        errorLevel: {
-            type: String, 
-            validator: function (value) {
-                return value === 'L' || value === 'M' || value === 'Q' || value === 'H'
-            }, 
-            required: false, 
-            default: 'H'
-        }
-    },
-
-    watch: {
-        text: function () {
-            this.clear();
-            this.makeCode(this.text);
-        }
-    },
-
-    data() {
-        return{
-            qrCode: {}
-        }
-    },
-
-    mounted() {
-        this.qrCode = new qrcode_js_package_qrcode_js__WEBPACK_IMPORTED_MODULE_0___default.a(this.$el, {
-            text: this.text,
-            width: this.size,
-            height: this.size,
-            colorDark : this.color,
-            colorLight : this.bgColor,
-            correctLevel : qrcode_js_package_qrcode_js__WEBPACK_IMPORTED_MODULE_0___default.a.CorrectLevel[this.errorLevel]
-        });
-    },
-
-    methods: {
-        clear: function () {
-            this.qrCode.clear();
+        props: {
+            text: {type: String, required: true},
+            size: {type: Number, required: false, default: 256},
+            color: {type: String, required: false, default: '#000'},
+            bgColor: {type: String, required: false, default: '#FFF'},
+            errorLevel: {
+                type: String, 
+                validator: function (value) {
+                    return value === 'L' || value === 'M' || value === 'Q' || value === 'H'
+                }, 
+                required: false, 
+                default: 'H'
+            }
         },
-        makeCode: function (text) {
-            this.qrCode.makeCode(text);
+
+        watch: {
+            text: function () {
+                this.clear();
+                this.makeCode(this.text);
+            }
+        },
+
+        data() {
+            return{
+                qrCode: {}
+            }
+        },
+
+        mounted() {
+            this.qrCode = new qrcode_js_package_qrcode_js__WEBPACK_IMPORTED_MODULE_0___default.a(this.$el, {
+                text: this.text,
+                width: this.size,
+                height: this.size,
+                colorDark : this.color,
+                colorLight : this.bgColor,
+                correctLevel : qrcode_js_package_qrcode_js__WEBPACK_IMPORTED_MODULE_0___default.a.CorrectLevel[this.errorLevel]
+            });
+        },
+
+        methods: {
+            clear: function () {
+                this.qrCode.clear();
+            },
+            makeCode: function (text) {
+                this.qrCode.makeCode(text);
+            }
         }
-    }
-});
+    });
 
 
 /***/ }),
 
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./node_modules/vue-qrcode-component/src/QRCode.vue?vue&type=template&id=499cd36c&":
-/*!***********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/vue-qrcode-component/src/QRCode.vue?vue&type=template&id=499cd36c& ***!
-  \***********************************************************************************************************************************************************************************************************************/
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/vue-qrcode-component/src/QRCode.vue?vue&type=template&id=499cd36c& ***!
+  \***********************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -713,10 +708,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function () {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c
   return _c("div")
 }
 var staticRenderFns = []
@@ -786,10 +780,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _vue_loader_lib_loaders_templateLoader_js_vue_loader_options_vue_loader_lib_index_js_vue_loader_options_QRCode_vue_vue_type_template_id_499cd36c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../vue-loader/lib??vue-loader-options!./QRCode.vue?vue&type=template&id=499cd36c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./node_modules/vue-qrcode-component/src/QRCode.vue?vue&type=template&id=499cd36c&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _vue_loader_lib_loaders_templateLoader_js_vue_loader_options_vue_loader_lib_index_js_vue_loader_options_QRCode_vue_vue_type_template_id_499cd36c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _vue_loader_lib_loaders_templateLoader_js_ref_6_vue_loader_lib_index_js_vue_loader_options_QRCode_vue_vue_type_template_id_499cd36c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../vue-loader/lib/loaders/templateLoader.js??ref--6!../../vue-loader/lib??vue-loader-options!./QRCode.vue?vue&type=template&id=499cd36c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./node_modules/vue-qrcode-component/src/QRCode.vue?vue&type=template&id=499cd36c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _vue_loader_lib_loaders_templateLoader_js_ref_6_vue_loader_lib_index_js_vue_loader_options_QRCode_vue_vue_type_template_id_499cd36c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _vue_loader_lib_loaders_templateLoader_js_vue_loader_options_vue_loader_lib_index_js_vue_loader_options_QRCode_vue_vue_type_template_id_499cd36c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _vue_loader_lib_loaders_templateLoader_js_ref_6_vue_loader_lib_index_js_vue_loader_options_QRCode_vue_vue_type_template_id_499cd36c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

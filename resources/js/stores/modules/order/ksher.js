@@ -30,6 +30,7 @@ export default {
             commit("useKsherChannelPayment", res.data);
         },
         async createKsherPay({ commit }, payload) {
+            commit("ksherPay", []);
             const res = await axios.post(
                 `/api/v1/guest/ksher/orderCreate`,
                 payload
@@ -95,6 +96,30 @@ export default {
         async remove_ksher_day_off({}, payload) {
             return await axios
                 .post(`/api/admin/v1/ksher/dayOff/${payload.id}/remove`)
+                .then((response) => {
+                    return response;
+                })
+                .catch((err) => {
+                    log.error(err);
+                });
+        },
+
+        async update_status_use({}, payload) {
+            return await axios
+                .post(
+                    `/api/admin/v1/ksher/${payload.ksher.id}/update_status_use`
+                )
+                .then((response) => {
+                    return response;
+                })
+                .catch((err) => {
+                    log.error(err);
+                });
+        },
+
+        async update_sort({}, payload) {
+            return await axios
+                .post(`/api/admin/v1/ksher/update_sort`, payload)
                 .then((response) => {
                     return response;
                 })

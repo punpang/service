@@ -51,14 +51,14 @@
                                     "
                                     v-for="optionAmount in optionAmounts"
                                     :key="optionAmount.id"
-                                    :disabled="order.status_full_payment"
+                                    :disabled="order.status_full_payment == 1"
                                 >
                                     {{ optionAmount.text }}
                                 </v-chip>
                             </v-chip-group>
                             <strong
                                 class="error--text"
-                                v-if="order.status_full_payment"
+                                v-if="order.status_full_payment == 1"
                                 >ไม่สามารถเปลี่ยนแปลงยอดที่ต้องการชำระเงินได้
                                 เนื่องจากท่านต้องชำระเงินเต็มจำนวน</strong
                             >
@@ -421,12 +421,14 @@ export default {
         },
         CaseOptionAmounts() {
             const options = this.amountOptions;
-            let group = 0;
-            if (this.sumAll.sumDeposited == 0) {
-                group = 1;
-            } else {
-                group = 2;
-            }
+            // let group = 0;
+            // if (this.sumAll.sumDeposited == 0) {
+            //     group = 1;
+            // } else {
+            //     group = 2;
+            // }
+
+            let group = this.sumAll.sumDeposited == 0 ? 1 : 2;
 
             let option = options.filter((options) => options.group == group);
 
@@ -451,6 +453,8 @@ export default {
                     filter
                 );
                 await this.clickChannel(filter[0]);
+            } else {
+                this.clickChannel(this.useKsherChannelPayment[0]);
             }
 
             loader.hide();

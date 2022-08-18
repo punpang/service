@@ -46,7 +46,20 @@ class APrice extends Model
 
     public function getNameGoodsAttribute()
     {
-        return $this->am1->m1 . ":" . $this->am2->m2 . ":" . $this->am3->m3 . ":" . $this->am4->m4;
+        $m = [];
+        for ($i = 1; $i <= 4; $i++) {
+            $a = "am$i";
+            $b = "m$i";
+            $m[$i] = $this->$a->$b;
+        }
+
+        $q = "";
+        foreach ($m as $k => $v) {
+            $q = $k == 1 ? $v : "$q | $v";
+        }
+
+        return $q;
+        // return $this->am1->m1 . ":" . $this->am2->m2 . ":" . $this->am3->m3 . ":" . $this->am4->m4;
     }
 
     public function googleImage()

@@ -85,14 +85,13 @@
                         *{{ item.detail }}*
                     </p>
 
-                    <v-btn
-                        class="info"
-                        x-small
-                        rounded
+                    <!-- <v-btn class="info" x-small rounded> ต้นแบบสินค้า </v-btn> -->
+                    <btnPrototypeImage
+                        :propPath="
+                            item.product_prototypes[0].google_image.src_name
+                        "
                         v-if="item.product_prototypes.length > 0"
-                    >
-                        ต้นแบบสินค้า
-                    </v-btn>
+                    ></btnPrototypeImage>
 
                     <v-btn
                         class="pink accent-2"
@@ -213,8 +212,9 @@
 <script>
 import { mapGetters } from "vuex";
 import imageThumbnailPathSizeFree from "@/js/components/google/drive/imageThumbnailPathSizeFree";
+import btnPrototypeImage from "@/js/components/order/details/btnPrototypeImage.vue";
 export default {
-    components: { imageThumbnailPathSizeFree },
+    components: { imageThumbnailPathSizeFree, btnPrototypeImage },
     data() {
         return {
             search: "",

@@ -87,12 +87,8 @@
             </template>
 
             <template v-slot:item.tags="{ item }">
-                <v-btn rounded color="primary" dark x-small>
+                <v-btn rounded color="primary" dark x-small v-if="item.order_delivery_service">
                     บริการจัดส่ง
-                </v-btn>
-                <br />
-                <v-btn rounded color="warning" dark x-small>
-                    ถ่ายรูปสินค้า
                 </v-btn>
             </template>
 
@@ -141,7 +137,7 @@ export default {
         },
         async fetch() {
             let loader = this.$loading.show();
-            const payload = `date_get=${this.date}&sort_id=asc&sort_time_get=asc&makeHidden=sum_all,payment_deadline_th,status_payment_deadline,date_get_default,created_at_th,payment_deadline,rating,status_full_payment,auth_order,date_order&with=aStatus,customer&status=${this.search_settings.status}`;
+            const payload = `date_get=${this.date}&sort_id=asc&sort_time_get=asc&makeHidden=sum_all,payment_deadline_th,status_payment_deadline,date_get_default,created_at_th,payment_deadline,rating,status_full_payment,auth_order,date_order&with=aStatus,customer,orderDeliveryService&status=${this.search_settings.status}`;
             const result = await this.$store.dispatch(
                 "orderIndex/fetch_orders",
                 payload

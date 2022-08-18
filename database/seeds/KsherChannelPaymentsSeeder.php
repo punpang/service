@@ -38,14 +38,17 @@ class KsherChannelPaymentsSeeder extends Seeder
                 "text" =>  "E-WALLET",
                 "remark" =>  "ค่าธรรมเนียม 3%",
                 "color" =>  "info",
+                // "image" =>  "18azZhssTmSzxpVH-9yRoeXQTlZqQL12w",
+                // "image2" =>  "1dkP7rTQkUiowO_2mhCKM_70_Qf_B7ElN",
                 "image" =>  "18azZhssTmSzxpVH-9yRoeXQTlZqQL12w",
-                "image2" =>  "1dkP7rTQkUiowO_2mhCKM_70_Qf_B7ElN",
+                "image2" =>  "1AA3K8Wf1aXyc_DDundBR2s6F_Qt8JaAd",
                 "fee_value" =>  3,
                 "fee_type" =>  "percent",
                 "fee_type_th" =>  "เปอร์เซ็นต์",
                 "sort" => "6",
                 "status_use" =>  1,
-                "channel" => "wechat,alipay,truemoney,airpay,linepay",
+                "channel" => "wechat,alipay,linepay",
+                // ,truemoney,airpay
                 "minimum" => 1,
                 "maximum" => 500
 
@@ -122,6 +125,25 @@ class KsherChannelPaymentsSeeder extends Seeder
                 "maximum" => 999999
 
             ],
+
+            [
+                "id" => 7,
+                "payment_code" => "promptpayQR",
+                "text" => "E-Wallet-PromptpayQR",
+                "remark" => "ไม่มีค่าธรรมเนียม",
+                "color" => "info",
+                "image" => "1MrjocLHZf4JA1T29kOOC990byzmjpwF7",
+                "image2" => "1MrjocLHZf4JA1T29kOOC990byzmjpwF7",
+                "fee_value" => 0,
+                "fee_type" => "bath",
+                "fee_type_th" => "บาท",
+                "sort" => 7,
+                "status_use" => 1,
+                "channel" => "promptpay",
+                "minimum" => 1,
+                "maximum" => 500,
+                "group" => "KSHER"
+            ]
         ];
 
         foreach ($datas as $data) {
