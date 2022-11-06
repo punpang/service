@@ -21,7 +21,6 @@ class OrderDetail extends Model implements Auditable
     protected $primaryKey = "id";
     protected $hidden = ['created_at', 'updated_at'];
 
-
     protected $fillable = [
         "order_id",
         "a_price_id",
@@ -32,9 +31,7 @@ class OrderDetail extends Model implements Auditable
         "is_show_public"
     ];
 
-    protected $appends = ["sum_all"];
-
-
+    protected $appends = ["sum_all", "sum_money_customer", "sum_money_service"];
 
     public function aPrice()
     {
@@ -64,6 +61,26 @@ class OrderDetail extends Model implements Auditable
     public function productPrototypes()
     {
         return $this->hasMany(OrderProductPrototype::class);
+    }
+
+    public function MoneyServices()
+    {
+        return $this->hasMany(MoneyServices::class);
+    }
+
+    public function getSumMoneyCustomerAttribute()
+    {
+        return $this->MoneyServices->sum("sumMoney");
+    }
+
+    public function getSumMoneyServiceAttribute()
+    {
+        return $this->MoneyServices()->sum("fee");
+    }
+
+    public function getSumAllMoneyServiceAttribute()
+    {
+        return $this->sum("SumMoneyService");
     }
 
     public function imageGoodsReviewToCustomers()

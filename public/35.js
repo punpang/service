@@ -20,7 +20,6 @@ __webpack_require__.r(__webpack_exports__);
         }
       },
       nors: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] //number of rights
-
     };
   }
 });
@@ -40,9 +39,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 var render = function render() {
   var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("div", [_c("v-card", [_c("v-card-title", [_c("h3", [_vm._v("\n        แลกรางวัล (REDEEM CODE)")])]), _vm._v(" "), _c("v-card-text", [_c("v-row", {
+    _c = _vm._self._c;
+  return _c("div", [_c("v-card", [_c("v-card-title", [_c("h3", [_vm._v("\n      แลกรางวัล (REDEEM CODE)")])]), _vm._v(" "), _c("v-card-text", [_c("v-row", {
     attrs: {
       justify: "center"
     }
@@ -101,7 +99,7 @@ var render = function render() {
       block: "",
       large: ""
     }
-  }, [_vm._v("\n                ตรวจสอบข้อมูล\n            ")])], 1)], 1), _vm._v(" "), _c("v-row", {
+  }, [_vm._v("\n              ตรวจสอบข้อมูล\n          ")])], 1)], 1), _vm._v(" "), _c("v-row", {
     attrs: {
       justify: "center"
     }
@@ -115,9 +113,8 @@ var render = function render() {
       block: "",
       large: ""
     }
-  }, [_vm._v("\n                ล้างข้อมูล\n            ")])], 1)], 1)], 1)], 1)], 1);
+  }, [_vm._v("\n              ล้างข้อมูล\n          ")])], 1)], 1)], 1)], 1)], 1);
 };
-
 var staticRenderFns = [];
 render._withStripped = true;
 

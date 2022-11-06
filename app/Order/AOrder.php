@@ -226,7 +226,9 @@ class AOrder extends Model
             "sumDiscount" => number_format($this->sumDiscount(), 2),
             "sumAddOn" => number_format($this->sumAddOn(), 2),
             "sumDeliverService" => number_format($this->sumDeliverService(), 2),
-            "sumAdjustExcessPayment" => number_format($this->sumAdjustExcessPayment(), 2)
+            "sumAdjustExcessPayment" => number_format($this->sumAdjustExcessPayment(), 2),
+            "sumMoneyService" => number_format($this->sumMoneyService(), 2),
+            "sumMoneyCustomer" => number_format($this->sumMoneyCustomer(), 2)
             // "sumHistoryPayed" => $this->sumHistoryPayed()
         ];
     }
@@ -241,6 +243,16 @@ class AOrder extends Model
         return $this->adjustExcessPayments()->sum("amount");
     }
 
+    public function sumMoneyCustomer()
+    {
+        return $this->orderDetails->sum("sumMoneyCustomer");
+    }
+
+    public function sumMoneyService()
+    {
+        return $this->orderDetails->sum("sum_money_service");
+    }
+
     public function sumBalance()
     {
         return $this->sumTASC()
@@ -250,7 +262,11 @@ class AOrder extends Model
 
     public function sumTASC()
     {
-        return  $this->sumGoods() + $this->sumAccessoryServiceDiscount() + $this->sumDeliverService();
+        return  $this->sumGoods() +
+            $this->sumAccessoryServiceDiscount() +
+            $this->sumDeliverService() +
+            $this->sumMoneyCustomer() +
+            $this->sumMoneyService();
     }
 
     public function getSumTascAttribute()

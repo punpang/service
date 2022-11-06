@@ -60,10 +60,10 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var numeral = __webpack_require__(/*! numeral */ "./node_modules/numeral/numeral.js");
-
 Vue.filter("formatNumber", function (value) {
   return numeral(value).format("0,0.00"); // displaying other groupings/separators is possible, look at the docs
 });
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["propSum", "propProducts"]
 });
@@ -83,8 +83,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 var render = function render() {
   var _vm = this,
-      _c = _vm._self._c;
-
+    _c = _vm._self._c;
   return _c("v-img", {
     attrs: {
       src: "https://drive.google.com/thumbnail?id=" + _vm.path + "&sz=w1000-h1000",
@@ -110,7 +109,6 @@ var render = function render() {
     }])
   });
 };
-
 var staticRenderFns = [];
 render._withStripped = true;
 
@@ -130,8 +128,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 var render = function render() {
   var _vm = this,
-      _c = _vm._self._c;
-
+    _c = _vm._self._c;
   return _vm.propCustomer ? _c("div", [_c("v-card", {
     staticClass: "mb-4"
   }, [_c("v-card-title", [_c("h4", {}, [_vm._v("ข้อมูลลูกค้า")])]), _vm._v(" "), _c("v-card-text", [_c("v-row", [_c("v-col", {
@@ -152,9 +149,8 @@ var render = function render() {
     attrs: {
       cols: "6"
     }
-  }, [_vm._v("\n            " + _vm._s(_vm.propCustomer.phone_number) + "\n          ")])], 1)], 1)], 1)], 1) : _vm._e();
+  }, [_vm._v("\n          " + _vm._s(_vm.propCustomer.phone_number) + "\n        ")])], 1)], 1)], 1)], 1) : _vm._e();
 };
-
 var staticRenderFns = [];
 render._withStripped = true;
 
@@ -174,8 +170,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 var render = function render() {
   var _vm = this,
-      _c = _vm._self._c;
-
+    _c = _vm._self._c;
   return _c("div", [_c("v-card", {
     staticClass: "mb-4"
   }, [_c("v-card-title", [_c("h3", [_vm._v("รายการสินค้า")])]), _vm._v(" "), _c("v-card-text", _vm._l(_vm.propOrderDetails, function (orderDetail) {
@@ -199,12 +194,11 @@ var render = function render() {
       staticClass: "black--text mb-1"
     }, [_vm._v(_vm._s(orderDetail.product.title))]), _vm._v(" "), _c("p", {
       staticClass: "text-body-1 mb-0 font-weight-black deep-orange--text"
-    }, [_vm._v("\n              ฿" + _vm._s(orderDetail.product.price_special) + "\n            ")]), _vm._v(" "), _c("p", {
+    }, [_vm._v("\n            ฿" + _vm._s(orderDetail.product.price_special) + "\n          ")]), _vm._v(" "), _c("p", {
       staticClass: "text-caption mb-1 text-decoration-line-through"
-    }, [_vm._v("\n              ฿" + _vm._s(orderDetail.product.price_normal) + "\n            ")])])], 1);
+    }, [_vm._v("\n            ฿" + _vm._s(orderDetail.product.price_normal) + "\n          ")])])], 1);
   }), 1)], 1)], 1);
 };
-
 var staticRenderFns = [];
 render._withStripped = true;
 
@@ -224,8 +218,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 var render = function render() {
   var _vm = this,
-      _c = _vm._self._c;
-
+    _c = _vm._self._c;
   return _vm.propSum ? _c("div", [_c("v-card", {
     staticClass: "mb-4"
   }, [_c("v-card-title", [_c("h4", {
@@ -264,7 +257,6 @@ var render = function render() {
     }
   }, [_c("strong", [_vm._v("฿" + _vm._s(_vm._f("formatNumber")(parseFloat(_vm.propSum.sum_price_special))))])])], 1)], 1)], 1)], 1) : _vm._e();
 };
-
 var staticRenderFns = [];
 render._withStripped = true;
 

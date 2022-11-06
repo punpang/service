@@ -41,10 +41,10 @@
                     ></btnChangeDateTimeGet>
                     <!-- <v-subheader>การชำระเงิน</v-subheader> -->
                     <btnAlertPayment
-                        v-if="order.sum_all.sumBalance > 0"
+                        v-if="order.sum_all.sumBalance != 0"
                     ></btnAlertPayment>
                     <btnPayment
-                        v-if="order.sum_all.sumBalance > 0"
+                        v-if="order.sum_all.sumBalance != 0"
                     ></btnPayment>
                     <btnNoPayment
                         v-if="order.status == 1"

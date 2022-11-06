@@ -112,6 +112,10 @@
 
                         <v-divider class="my-1"></v-divider>
                         <p>รวมทั้งหมด {{ detail.sum_all.total }} บาท</p>
+                        <div>
+                            <v-divider class="my-1"></v-divider>
+                            <showMoneyService :propMoneyService="detail.money_services"></showMoneyService>
+                        </div>
                     </v-col>
                 </v-row>
             </v-card-text>
@@ -146,6 +150,7 @@ import btnShowProductPrototype from "@/js/components/order/manages/goods/cake/pr
 import btnShowIsTakeAPhoto from "@/js/components/order/manages/goods/cake/btnShowIsTakeAPhoto";
 import btnUploadImagesForOrderDetail from "@/js/components/guest/btnUploadImagesForOrderDetail";
 import imageThumbnailPathSizeW200H200 from "@/js/components/google/drive/imageThumbnailPathSizeW200H200";
+import showMoneyService from "@/js/components/order/manages/goods/cake/moneyService/show";
 
 export default {
     components: {
@@ -157,6 +162,7 @@ export default {
         btnUploadImagesForOrderDetail,
         btnShowIsTakeAPhoto,
         imageThumbnailPathSizeW200H200,
+        showMoneyService,
     },
     computed: {
         ...mapGetters({

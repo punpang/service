@@ -14,7 +14,7 @@
                 </tr>
                 <!-- / -->
 
-                <tr v-if="order.sum_all.sumAccessory > 0">
+                <tr v-if="order.sum_all.sumAccessory != 0">
                     <td>
                         <strong>{{ paymentSummary.text.accessory }}</strong>
                         <p class="text-caption pl-4 mt-1 mb-2">
@@ -29,7 +29,7 @@
                 </tr>
                 <!-- / -->
 
-                <tr v-if="order.sum_all.sumService > 0">
+                <tr v-if="order.sum_all.sumService != 0">
                     <td>
                         <strong>{{ paymentSummary.text.service }}</strong>
                         <p class="text-caption pl-4 mt-1 mb-2">
@@ -44,7 +44,7 @@
                 </tr>
                 <!-- / -->
 
-                <tr v-if="order.sum_all.sumDiscount > 0">
+                <tr v-if="order.sum_all.sumDiscount != 0">
                     <td>
                         <strong>{{ paymentSummary.text.discount }}</strong>
                     </td>
@@ -58,8 +58,34 @@
                     </td>
                 </tr>
                 <!-- / -->
+                <tr v-if="order.sum_all.sumMoneyCustomer != 0">
+                    <td>
+                        <strong>จำนวนเงินลูกค้า</strong>
+                    </td>
+                    <td class="text-right">
+                        <strong>
+                            {{
+                                order.sum_all.sumMoneyCustomer
+                            }}</strong
+                        >
+                    </td>
+                </tr>
+                <!-- / -->
+                <tr v-if="order.sum_all.sumMoneyService != 0">
+                    <td>
+                        <strong>ค่าบริการเสริม</strong>
+                    </td>
+                    <td class="text-right">
+                        <strong>
+                            {{
+                                order.sum_all.sumMoneyService
+                            }}</strong
+                        >
+                    </td>
+                </tr>
+                <!-- / -->
 
-                <tr v-if="order.sum_all.sumDeliverService > 0">
+                <tr v-if="order.sum_all.sumDeliverService != 0">
                     <td>
                         <strong>ค่าบริการจัดส่ง</strong>
                     </td>
@@ -95,7 +121,7 @@
                     </td>
                 </tr>
                 <!-- / -->
-                <tr v-if="order.sum_all.sumAdjustExcessPayment > 0">
+                <tr v-if="order.sum_all.sumAdjustExcessPayment != 0">
                     <td>
                         <strong>ปรับยอดส่วนเกิน</strong>
                     </td>
@@ -107,7 +133,7 @@
                     </td>
                 </tr>
                 <!-- / -->
-                <tr >
+                <tr>
                     <td>
                         <strong>{{ paymentSummary.text.balance }}</strong>
                     </td>

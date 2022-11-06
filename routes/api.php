@@ -140,6 +140,16 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
 
         Route::prefix("v1")->group(function () {
 
+            Route::prefix('categoryMoneyService')->group(function () { // api/v1/guest/ksher
+                Route::get('fetch', 'Order\CategoryMoneyServiceController@fetch');
+            });
+
+            Route::prefix('moneyServices')->group(function () { // api/v1/guest/ksher
+                Route::post('store', 'Order\MoneyServicesController@store');
+                Route::post('{id}/update', 'Order\MoneyServicesController@update');
+                Route::post('{id}/delete', 'Order\MoneyServicesController@delete');
+            });
+
             Route::prefix('setting')->group(function () { // api/v1/guest/ksher
                 Route::get('fetch', 'Order\SettingController@fetch');
                 Route::post('update', 'Order\SettingController@update');

@@ -225,6 +225,7 @@ class AOrderController extends Controller
             "orderDetails.imageFromCustomers.googleImage",
             "orderDetails.imageGoodsReviewToCustomers.googleImage",
             "orderDeliveryService",
+            "orderDetails.MoneyServices.category_money_service",
             "adjustExcessPayments"
         )
             ->with("orderDetails.addOns.productAddOn.goodsAddOn")

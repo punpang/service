@@ -14,17 +14,18 @@ class FacebookController extends Controller
 {
     public function webhook(Request $request)
     {
-        Linenotify::send("Facebook Status Bot :: TEST");
-
         $setting = Setting::first();
         if (!$setting->facebook_status_bot || $request->method() == "GET") {
-            Linenotify::send("Facebook Status Bot :: Start Off");
-            Linenotify::send($request->getContent());
-            Linenotify::send("Facebook Status Bot :: End Off");
+            Linenotify::send("Facebook Status Bot :: Off");
             return $request["hub_challenge"];
         }
 
         $input = json_decode($request->getContent(), true);
+
+        if (FacebookMids::check($input['entry'][0]['messaging'][0]['message']['mid'])) {
+            Linenotify::send($request->getContent());
+            return $request["hub_challenge"];
+        }
 
         // PSID ของลูกค้า
         $sender = $input['entry'][0]['messaging'][0]['sender']['id'];
@@ -51,9 +52,6 @@ class FacebookController extends Controller
 
         // มีข้อความไหม --เป็นตัวหนังสือ--
         if (!empty($input['entry'][0]['messaging'][0]['message']['text'])) {
-            if (FacebookMids::check($input['entry'][0]['messaging'][0]['message']['mid'])) {
-                return $request["hub_challenge"];
-            }
             $message = $input['entry'][0]['messaging'][0]['message']['text'];
 
             // สมัครสมาชิก
