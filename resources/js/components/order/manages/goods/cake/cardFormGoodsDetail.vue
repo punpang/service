@@ -112,10 +112,11 @@
 
                         <v-divider class="my-1"></v-divider>
                         <p>รวมทั้งหมด {{ detail.sum_all.total }} บาท</p>
-                        <div>
-                            <v-divider class="my-1"></v-divider>
-                            <showMoneyService :propMoneyService="detail.money_services"></showMoneyService>
-                        </div>
+                    </v-col>
+                    <v-col cols="12" md="12">
+                        <showMoneyService
+                            :propMoneyService="detail.money_services"
+                        ></showMoneyService>
                     </v-col>
                 </v-row>
             </v-card-text>

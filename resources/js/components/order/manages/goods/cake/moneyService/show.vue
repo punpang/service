@@ -9,19 +9,32 @@
             <v-card-title class="body-1 font-weight-bold"
                 >บริการเสริม : {{ moneyService.category_money_service.text }}
                 <v-spacer></v-spacer>
-                <btnEditMoneyService :propMoneyService="moneyService"></btnEditMoneyService>
+                <btnEditMoneyService
+                    v-if="user.type == 1"
+                    :propMoneyService="moneyService"
+                ></btnEditMoneyService>
             </v-card-title>
-            <v-card-text class="subtitle-1">
+            <v-card-text class="subtitle-1 pb-6">
+                <!-- <p class="mb-0 font-weight-black">
+                    {{ moneyService.sum_money_format }} บาท ({{
+                        moneyService.sum_bank_notes
+                    }}/{{ moneyService.category_money_service.max }})
+                </p>
+                <p class="caption font-weight-black red--text mb-0">
+                    ค่าบริการ {{ moneyService.fee }} บาท
+                </p>
+
+                <ul class="mb-0">
+                    <li>20 x {{ moneyService.thb20 }}</li>
+                    <li>50 x {{ moneyService.thb50 }}</li>
+                    <li>100 x {{ moneyService.thb100 }}</li>
+                    <li>500 x {{ moneyService.thb500 }}</li>
+                    <li>1,000 x {{ moneyService.thb1000 }}</li>
+                </ul> -->
+
                 <v-row>
-                    <v-col cols="12" md="6">
-                        <!-- <ul>
-                                        <li>20 บาท x 2 แบงค์</li>
-                                        <li>50 บาท x 5 แบงค์</li>
-                                        <li>100 บาท x 8 แบงค์</li>
-                                        <li>500 บาท x 7 แบงค์</li>
-                                        <li>1,000 บาท x 2 แบงค์</li>
-                                    </ul> -->
-                        <v-simple-table>
+                    <v-col cols="12" md="6" class="py-0">
+                        <v-simple-table dense>
                             <tbody>
                                 <tr>
                                     <td>20 บาท</td>
@@ -56,8 +69,8 @@
                             </tbody>
                         </v-simple-table>
                     </v-col>
-                    <v-col cols="12" md="6">
-                        <v-simple-table>
+                    <v-col cols="12" md="6" class="py-0">
+                        <v-simple-table dense>
                             <tbody>
                                 <tr>
                                     <td>จำนวนแบงค์</td>
@@ -91,15 +104,6 @@
                                 </tr>
                             </tbody>
                         </v-simple-table>
-                        <!-- <v-btn
-                                        text
-                                        color="warning"
-                                        large
-                                        block
-                                    >
-                                        <v-icon left>edit</v-icon>
-                                        แก้ไขรายการ
-                                    </v-btn> -->
                     </v-col>
                 </v-row>
             </v-card-text>
@@ -109,9 +113,15 @@
 
 <script>
 import btnEditMoneyService from "@/js/components/order/manages/goods/cake/moneyService/btnEdit";
+import { mapGetters } from "vuex";
 export default {
     props: ["propMoneyService"],
     components: { btnEditMoneyService },
+    computed: {
+        ...mapGetters({
+            user: "main/User",
+        }),
+    },
 };
 </script>
 

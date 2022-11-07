@@ -8,7 +8,7 @@
             transition="dialog-top-transition"
         >
             <template v-slot:activator="{ on }">
-                <v-list-item v-on="on">
+                <v-list-item v-on="on" @click="clickStart()">
                     <v-list-item-title> รับชำระเงิน </v-list-item-title>
                 </v-list-item>
             </template>
@@ -26,6 +26,7 @@
 
 <script>
 import cardPayment from "@/js/components/order/manages/payment/cardPayment";
+import { mapGetters } from "vuex";
 export default {
     components: { cardPayment },
     data() {
@@ -37,6 +38,24 @@ export default {
         emitExitCardPayment() {
             this.dialog = false;
         },
+        clickStart() {
+            if (
+                this.order.sum_all.sumMoneyCustomer > 0 ||
+                this.order.order_delivery_service
+            ) {
+                this.$swal({
+                    title: "ต้องชำระทั้งหมด",
+                    icon: "info",
+                    allowOutsideClick: false,
+                    confirmButtonText: "รับทราบ",
+                });
+            }
+        },
+    },
+    computed: {
+        ...mapGetters({
+            order: "orderIndex/order",
+        }),
     },
 };
 </script>

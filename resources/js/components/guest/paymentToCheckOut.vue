@@ -8,18 +8,18 @@
                     class="success"
                     :disabled="
                         propChannelID === 6 ||
-                        propDeposit <= 0 ||
-                        sumAll.sumTASC / 2 > propDeposit
+                        propDeposit <= 0 
                     "
                     @click="clickSubmitPayment"
                 >
                     <v-icon left>payments</v-icon>
                     ทำรายการต่อไป</v-btn
                 >
+                <!-- || sumAll.sumTASC / 2 > propDeposit -->
             </template>
             <v-card>
                 <v-card-title class="text-h5 grey lighten-2">
-                    กำลังชำระเงิน {{ propChannelID }}
+                    กำลังชำระเงิน 
                     <v-spacer></v-spacer>
                     <v-btn icon fab small @click="exit">
                         <v-icon color="error" @click="exit">close</v-icon>

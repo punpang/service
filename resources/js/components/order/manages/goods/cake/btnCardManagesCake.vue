@@ -32,9 +32,9 @@
                             <btnUploadProductPrototype
                                 :propOrderDetail="propOrderDetail"
                             ></btnUploadProductPrototype>
-                            <btnUploadProductPrototype
+                            <!-- <btnUploadProductPrototype
                                 :propOrderDetail="propOrderDetail"
-                            ></btnUploadProductPrototype>
+                            ></btnUploadProductPrototype> -->
                             <btnMoneyService
                                 :propOrderDetail="propOrderDetail"
                             ></btnMoneyService>

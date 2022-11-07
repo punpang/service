@@ -166,8 +166,8 @@ class NoticeOfPaymentFromCustomerController extends Controller
         $notice->aHistoryPayedFindSelfID->value = request("amount");
         $notice->aHistoryPayedFindSelfID->save();
 
-        $notice->aHistoryPayedFindSelfID->customerScore->point = request("amount") / 50;
-        $notice->aHistoryPayedFindSelfID->customerScore->save();
+        // $notice->aHistoryPayedFindSelfID->customerScore->point = request("amount") / 50;
+        // $notice->aHistoryPayedFindSelfID->customerScore->save();
 
         // $historyOverPaid = $notice->aHistoryPayedFindSelfID->id . "-overPaid";
         // $pointOver = CustomerScore::where("history_payed_id", $historyOverPaid)->first();

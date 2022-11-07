@@ -29,6 +29,17 @@
                             </td>
                         </tr>
                         <!-- / -->
+                        <tr v-if="user.type == 1">
+                            <td>
+                                <strong>คะแนนสะสม</strong>
+                            </td>
+                            <td class="text-right">
+                                <strong>{{
+                                    order.customer.sum_diff_score | formatNumber
+                                }}</strong>
+                            </td>
+                        </tr>
+                        <!-- / -->
                     </tbody>
                 </v-simple-table>
             </v-card-text>
@@ -37,6 +48,10 @@
 </template>
 
 <script>
+var numeral = require("numeral");
+Vue.filter("formatNumber", function (value) {
+    return numeral(value).format("0,0.00");
+});
 import { mapGetters } from "vuex";
 export default {
     computed: {

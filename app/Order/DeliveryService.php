@@ -19,8 +19,8 @@ class DeliveryService extends Model
         return $this->belongsTo(AOrder::class, "order_id", "id");
     }
 
-    public function getDeliveryFeeAttribute($data)
-    {
-        return number_format($data, 2);
-    }
+    // public function getDeliveryFeeAttribute($data)
+    // {
+    //     return number_format($data, 2);
+    // }
 }

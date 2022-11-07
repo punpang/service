@@ -25,7 +25,7 @@ class ACustomer extends Model implements Auditable
     protected $hidden = ["created_at", "updated_at"];
 
     protected $appends = [
-        "phone_format"
+        "phone_format", "sum_diff_score"
     ];
 
     public function getDateGetAtAttribute($date)
@@ -69,6 +69,11 @@ class ACustomer extends Model implements Auditable
         return $this->customerScores()
             ->where("point", "<", 0)
             ->sum("point");
+    }
+
+    public function getsumDiffScoreAttribute()
+    {
+        return $this->sumDiffScore();
     }
 
     public function sumDiffScore()

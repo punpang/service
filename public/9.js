@@ -1255,6 +1255,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 } else {
                   _this.$toast.error("แจ้งเตือนชำระเงินไม่สำเร็จ");
                 }
+
+                // this.dateTimeForPay = "";
+                // this.status_full_payment = 0;
+                // this.alertSMSToCustomer = 1;
+
                 loader.hide();
               case 7:
               case "end":
@@ -1360,7 +1365,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
               case 2:
                 res = _context2.sent;
-              case 3:
+                if (_this2.order.sum_all.sumMoneyCustomer > 0) {
+                  _this2.status_full_payment = true;
+                }
+                // console.log(res);
+              case 4:
               case "end":
                 return _context2.stop();
             }
@@ -1564,6 +1573,11 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_components_order_manages_payment_cardPayment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/js/components/order/manages/payment/cardPayment */ "./resources/js/components/order/manages/payment/cardPayment.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -1577,8 +1591,21 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     emitExitCardPayment: function emitExitCardPayment() {
       this.dialog = false;
+    },
+    clickStart: function clickStart() {
+      if (this.order.sum_all.sumMoneyCustomer > 0 || this.order.order_delivery_service) {
+        this.$swal({
+          title: "ต้องชำระทั้งหมด",
+          icon: "info",
+          allowOutsideClick: false,
+          confirmButtonText: "รับทราบ"
+        });
+      }
     }
-  }
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
+    order: "orderIndex/order"
+  }))
 });
 
 /***/ }),
@@ -1643,12 +1670,33 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                loader = _this.$loading.show();
-                _context.next = 3;
-                return _this.$store.dispatch("orderIndex/getUseChannelPayments");
-              case 3:
-                loader.hide();
+                if (!(_this.order.sum_all.sumMoneyCustomer > 0 || _this.order.order_delivery_service)) {
+                  _context.next = 4;
+                  break;
+                }
+                if (!(_this.propAmount != _this.order.sum_all.sumTASC - _this.order.sum_all.sumDeposited)) {
+                  _context.next = 4;
+                  break;
+                }
+                _this.$swal({
+                  title: "ยอดชำระไม่ถูกต้อง",
+                  text: "มีบริการบางอย่างที่ต้องชำระทั้งหมด",
+                  icon: "error",
+                  allowOutsideClick: false,
+                  confirmButtonText: "รับทราบ"
+                }).then(function (result) {
+                  if (result.isConfirmed) {
+                    _this.dialog = false;
+                  }
+                });
+                return _context.abrupt("return");
               case 4:
+                loader = _this.$loading.show();
+                _context.next = 7;
+                return _this.$store.dispatch("orderIndex/getUseChannelPayments");
+              case 7:
+                loader.hide();
+              case 8:
               case "end":
                 return _context.stop();
             }
@@ -1748,7 +1796,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   orderID: _this.$route.params.id
                 });
               case 3:
-                // if (this.order.sum_all.sumBalance === 0 ) {
+                // if (this.order.sum_all.sumBalance == 0 ) {
                 //   this.$swal({
                 //     title: "ชำระเงินครบจำนวนแล้ว",a
                 //     icon: "info",
@@ -1809,7 +1857,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 5:
                 res = _context2.sent;
                 loader.hide();
-                if (res.status === 200) {
+                if (res.status == 200) {
                   _this3.$swal({
                     icon: "success",
                     title: res.data.message,
@@ -1821,7 +1869,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                       _this3.start();
                     }
                   });
-                } else if (res.status === 201) {
+                } else if (res.status == 201) {
                   _this3.$swal({
                     icon: "error",
                     title: "ดำเนินการสำเร็จ",
@@ -1893,11 +1941,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     setAmount: function setAmount() {
       var deposited = this.order.sum_all.sumDeposited;
       var total = this.order.sum_all.sumTASC;
-      if (this.order.status === 8) {
+      if (this.order.status == 8) {
         this.amount = parseInt(this.order.sum_all.sumBalance);
         return;
       }
-      if (deposited === 0) {
+      if (deposited == 0) {
         this.amount = parseInt(total / 2);
         return;
       } else {
@@ -3672,6 +3720,7 @@ var render = function render() {
     staticClass: "text-h6 white--text warning"
   }, [_vm._v("\n            ข้อบังคับ\n        ")]), _vm._v(" "), _c("v-card-text", [_c("v-checkbox", {
     attrs: {
+      disabled: _vm.order.sum_all.sumMoneyCustomer > 0,
       label: "แจ้งชำระเงินเต็มจำนวน",
       "hide-details": ""
     },
@@ -3910,7 +3959,13 @@ var render = function render() {
       key: "activator",
       fn: function fn(_ref) {
         var on = _ref.on;
-        return [_c("v-list-item", _vm._g({}, on), [_c("v-list-item-title", [_vm._v(" รับชำระเงิน ")])], 1)];
+        return [_c("v-list-item", _vm._g({
+          on: {
+            click: function click($event) {
+              return _vm.clickStart();
+            }
+          }
+        }, on), [_c("v-list-item-title", [_vm._v(" รับชำระเงิน ")])], 1)];
       }
     }]),
     model: {
@@ -4082,7 +4137,7 @@ var render = function render() {
       large: "",
       suffix: _vm.paymentSummary.text.thb,
       rules: _vm.paymentSummary.rules.amount,
-      readonly: _vm.order.status === 8,
+      readonly: _vm.order.status == 8,
       type: "number",
       pattern: "\\d*",
       "hide-details": ""
@@ -4128,7 +4183,7 @@ var render = function render() {
     on: {
       emitClickSubmitPayment: _vm.emitClickSubmitPayment
     }
-  }) : _vm._e(), _vm._v(" "), _vm.order.status === 8 && _vm.order.sum_all.sumBalance === 0 ? _c("cardPickupOrder", {
+  }) : _vm._e(), _vm._v(" "), _vm.order.status == 8 && _vm.order.sum_all.sumBalance == 0 ? _c("cardPickupOrder", {
     attrs: {
       propLarge: true
     },
@@ -4180,7 +4235,7 @@ var render = function render() {
     on: {
       emitClickSubmitPayment: _vm.emitClickSubmitPayment
     }
-  })], 1) : _vm._e(), _vm._v(" "), _vm.order.status === 8 && _vm.order.sum_all.sumBalance === 0 ? _c("v-col", {
+  })], 1) : _vm._e(), _vm._v(" "), _vm.order.status == 8 && _vm.order.sum_all.sumBalance == 0 ? _c("v-col", {
     attrs: {
       cols: "6"
     }
@@ -4275,7 +4330,7 @@ var render = function render() {
         var on = _ref.on;
         return [_vm.order.status >= 3 && _vm.order.status <= 7 ? _c("v-list-item", _vm._g({
           attrs: {
-            disabled: _vm.order.sum_all.sumBalance != 0 && _vm.order.order_delivery_service
+            disabled: _vm.order.sum_all.sumBalance != 0 && _vm.order.order_delivery_service || _vm.order.sum_all.sumBalance != 0 && _vm.order.sum_all.sumMoneyCustomer > 0
           },
           on: {
             click: function click($event) {
@@ -4360,7 +4415,7 @@ var render = function render() {
       },
       expression: "sheet"
     }
-  }, [_vm._v(" "), _c("v-list", [_vm.order.status < 8 ? _c("btnAddGoods") : _vm._e(), _vm._v(" "), _vm.order.status < 8 ? _c("btnChangeCustomer") : _vm._e(), _vm._v(" "), _vm.order.status < 8 ? _c("btnConnectSocialProfile") : _vm._e(), _vm._v(" "), _vm.order.status < 8 ? _c("btnChangeDateTimeGet") : _vm._e(), _vm._v(" "), _vm.order.sum_all.sumBalance != 0 ? _c("btnAlertPayment") : _vm._e(), _vm._v(" "), _vm.order.sum_all.sumBalance != 0 ? _c("btnPayment") : _vm._e(), _vm._v(" "), _vm.order.status == 1 ? _c("btnNoPayment") : _vm._e(), _vm._v(" "), !_vm.order.order_delivery_service && _vm.order.status < 8 ? _c("btnDelivery", {
+  }, [_vm._v(" "), _c("v-list", [_vm.order.status < 8 ? _c("btnAddGoods") : _vm._e(), _vm._v(" "), _vm.order.status < 8 ? _c("btnChangeCustomer") : _vm._e(), _vm._v(" "), _vm.order.status < 8 ? _c("btnConnectSocialProfile") : _vm._e(), _vm._v(" "), _vm.order.status < 8 ? _c("btnChangeDateTimeGet") : _vm._e(), _vm._v(" "), _vm.order.sum_all.sumBalance > 0 ? _c("btnAlertPayment") : _vm._e(), _vm._v(" "), _vm.order.sum_all.sumBalance > 0 ? _c("btnPayment") : _vm._e(), _vm._v(" "), _vm.order.status == 1 && _vm.order.sum_all.sumMoneyCustomer < 0 ? _c("btnNoPayment") : _vm._e(), _vm._v(" "), !_vm.order.order_delivery_service && _vm.order.status < 8 ? _c("btnDelivery", {
     attrs: {
       propButton: "list"
     }

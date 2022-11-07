@@ -156,6 +156,7 @@ class AOrderController extends Controller
                 "orderDetails.productPrototypes.googleImage",
                 "orderDetails.imageFromCustomers.googleImage",
                 "orderDetails.imageGoodsReviewToCustomers.googleImage",
+                "orderDetails.MoneyServices.category_money_service",
                 "orderDeliveryService"
             )
             ->with("orderDetails.addOns.productAddOn.goodsAddOn")
@@ -477,8 +478,11 @@ class AOrderController extends Controller
         $order->payment_deadline = $payment_deadline;
         $order->status_full_payment = request("status_full_payment");
 
-        $order->save();
+        if ($order->sumMoneyCustomer() > 0) {
+            $order->status_full_payment = 1;
+        }
 
+        $order->save();
 
         if ($order) {
             // $bitly = AOrder::genlinkUuid($order->id);
@@ -748,10 +752,13 @@ class AOrderController extends Controller
             ], 201);
         }
 
+      
         $order->update(["status" => 9]);
 
         AlertMessages::linePickUpGoods($order);
         AlertMessages::smsPickUpGoods($order);
+
+        CustomerScore::addScore($order->customer, $order->sumForScore());
 
         return response()->json([
             "status" => "success",

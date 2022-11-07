@@ -194,7 +194,7 @@ class AOrder extends Model
 
     public function sumGoods()
     {
-        return $this->orderDetails()->sum("price");
+        return $this->orderDetails()->sum("price") + $this->sumAddOn();
     }
 
     // public function getSumAddOnAttribute()
@@ -216,22 +216,42 @@ class AOrder extends Model
     public function sumAll()
     {
         return [
-            "sumGoods" => number_format($this->sumGoods(), 2),
-            "sumASC" => number_format($this->sumAccessoryServiceDiscount(), 2),
-            "sumTASC" => number_format($this->sumTASC(), 2),
-            "sumBalance" => number_format($this->sumBalance(), 2),
-            "sumDeposited" => number_format($this->sumDeposited(), 2),
-            "sumAccessory" => number_format($this->sumAccessory(), 2),
-            "sumService" => number_format($this->sumService(), 2),
-            "sumDiscount" => number_format($this->sumDiscount(), 2),
-            "sumAddOn" => number_format($this->sumAddOn(), 2),
-            "sumDeliverService" => number_format($this->sumDeliverService(), 2),
-            "sumAdjustExcessPayment" => number_format($this->sumAdjustExcessPayment(), 2),
-            "sumMoneyService" => number_format($this->sumMoneyService(), 2),
-            "sumMoneyCustomer" => number_format($this->sumMoneyCustomer(), 2)
+            "sumGoods" => $this->sumGoods(),
+            "sumASC" => $this->sumAccessoryServiceDiscount(),
+            "sumTASC" => $this->sumTASC(),
+            "sumBalance" => $this->sumBalance(),
+            "sumDeposited" => $this->sumDeposited(),
+            "sumAccessory" => $this->sumAccessory(),
+            "sumService" => $this->sumService(),
+            "sumDiscount" => $this->sumDiscount(),
+            "sumAddOn" => $this->sumAddOn(),
+            "sumDeliverService" => $this->sumDeliverService(),
+            "sumAdjustExcessPayment" => $this->sumAdjustExcessPayment(),
+            "sumMoneyService" => $this->sumMoneyService(),
+            "sumMoneyCustomer" => $this->sumMoneyCustomer(),
             // "sumHistoryPayed" => $this->sumHistoryPayed()
         ];
     }
+
+    // public function sumAll()
+    // {
+    //     return [
+    //         "sumGoods" => number_format($this->sumGoods(), 2),
+    //         "sumASC" => number_format($this->sumAccessoryServiceDiscount(), 2),
+    //         "sumTASC" => number_format($this->sumTASC(), 2),
+    //         "sumBalance" => number_format($this->sumBalance(), 2),
+    //         "sumDeposited" => number_format($this->sumDeposited(), 2),
+    //         "sumAccessory" => number_format($this->sumAccessory(), 2),
+    //         "sumService" => number_format($this->sumService(), 2),
+    //         "sumDiscount" => number_format($this->sumDiscount(), 2),
+    //         "sumAddOn" => number_format($this->sumAddOn(), 2),
+    //         "sumDeliverService" => number_format($this->sumDeliverService(), 2),
+    //         "sumAdjustExcessPayment" => number_format($this->sumAdjustExcessPayment(), 2),
+    //         "sumMoneyService" => number_format($this->sumMoneyService(), 2),
+    //         "sumMoneyCustomer" => number_format($this->sumMoneyCustomer(), 2)
+    //         // "sumHistoryPayed" => $this->sumHistoryPayed()
+    //     ];
+    // }
 
     public function getSumAllAttribute()
     {
@@ -258,6 +278,13 @@ class AOrder extends Model
         return $this->sumTASC()
             - $this->sumDeposited()
             + $this->sumAdjustExcessPayment();
+    }
+
+    public function sumForScore()
+    {
+        return  $this->sumGoods() +
+            $this->sumAccessoryServiceDiscount() +
+            $this->sumDeliverService();
     }
 
     public function sumTASC()
@@ -321,7 +348,7 @@ class AOrder extends Model
 
     public function sumAccessoryServiceDiscount()
     {
-        return ($this->sumAddOn() + $this->sumAccessory() + $this->sumService()) -
+        return ($this->sumAccessory() + $this->sumService()) -
             $this->sumDiscount();
     }
 

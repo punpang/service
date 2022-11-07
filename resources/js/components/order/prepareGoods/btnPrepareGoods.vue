@@ -14,8 +14,10 @@
                     @click="clickStart()"
                     v-if="order.status >= 3 && order.status <= 7"
                     :disabled="
-                        order.sum_all.sumBalance != 0 &&
-                        order.order_delivery_service
+                        (order.sum_all.sumBalance != 0 &&
+                            order.order_delivery_service) ||
+                        (order.sum_all.sumBalance != 0 &&
+                            order.sum_all.sumMoneyCustomer > 0)
                     "
                 >
                     <!-- ||

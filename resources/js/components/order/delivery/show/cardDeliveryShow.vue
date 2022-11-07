@@ -12,10 +12,27 @@
                 <v-row>
                     <v-col cols="12" md="6">
                         <v-card outlined height="100%">
-                            <v-card-text class="pa-4"
-                                ><strong class="text-h6 black--text"
-                                    >ข้อมูลผู้รับ</strong
+                            <v-card-title class="text-h6 black-text pb-0">
+                                ข้อมูลผู้รับ
+                                <v-spacer></v-spacer>
+                                <v-btn
+                                    dark
+                                    icon
+                                    fab
+                                    x-small
+                                    class="info"
+                                    :href="
+                                        order.order_delivery_service
+                                            .link_google_maps
+                                    "
                                 >
+                                    <v-icon>location_on</v-icon>
+                                </v-btn>
+                            </v-card-title>
+                            <v-card-text class="px-4 pb-4">
+                                <!-- <strong class="text-h6 black--text"
+                                    >ข้อมูลผู้รับ</strong
+                                > -->
                                 <div class="mt-2">
                                     <strong>ชื่อผู้รับ ::</strong>
                                     <strong class="text-subtitle-1">{{
@@ -37,7 +54,7 @@
                                     <strong class="text-subtitle-1"
                                         >{{
                                             order.order_delivery_service
-                                                .delivery_fee
+                                                .delivery_fee | formatNumber
                                         }}
                                         บาท</strong
                                     >
@@ -48,7 +65,7 @@
                                         order.order_delivery_service.detail
                                     }}</strong>
                                 </div>
-                                <v-btn
+                                <!-- <v-btn
                                     small
                                     class="info mt-2"
                                     :href="
@@ -58,16 +75,32 @@
                                 >
                                     <v-icon left>location_on</v-icon>
                                     Link Google Map</v-btn
-                                ></v-card-text
-                            >
+                                > -->
+                            </v-card-text>
                         </v-card>
                     </v-col>
                     <v-col cols="12" md="6">
                         <v-card outlined height="100%">
-                            <v-card-text class="pa-4">
-                                <strong class="text-h6 black--text"
-                                    >ข้อมูลไรเดอร์</strong
+                            <v-card-title class="text-h6 black-text pb-0">
+                                ข้อมูลไรเดอร์
+                                <v-spacer></v-spacer>
+                                <v-btn
+                                    dark
+                                    icon
+                                    fab
+                                    x-small
+                                    class="info"
+                                    :href="
+                                        order.order_delivery_service.rider_link
+                                    "
                                 >
+                                    <v-icon>location_on</v-icon>
+                                </v-btn>
+                            </v-card-title>
+                            <v-card-text class="px-4 pb-4">
+                                <!-- <strong class="text-h6 black--text"
+                                    >ข้อมูลไรเดอร์</strong
+                                > -->
                                 <div class="mt-2">
                                     <strong>ชื่อไรเดอร์ ::</strong>
                                     <strong class="text-subtitle-1">{{
@@ -94,7 +127,7 @@
                                             .rider_remark
                                     }}</strong>
                                 </div>
-                                <v-btn
+                                <!-- <v-btn
                                     small
                                     class="info mt-2"
                                     :href="
@@ -104,8 +137,8 @@
                                 >
                                     <v-icon left>link</v-icon>
                                     Link Rider</v-btn
-                                ></v-card-text
-                            >
+                                > -->
+                            </v-card-text>
                         </v-card>
                     </v-col>
                 </v-row>
@@ -120,7 +153,10 @@
                     class="mr-2"
                 ></btnDelivery>
                 <btnRider
-                    v-if="order.status == 8"
+                    v-if="
+                        order.status == 8 &&
+                        order.order_delivery_service.status != 'success'
+                    "
                     :disabled="order.sum_all.sumBalance != 0"
                     class="mr-2"
                 ></btnRider>
@@ -150,6 +186,10 @@ import { mapGetters } from "vuex";
 import btnDelivery from "@/js/components/order/delivery/btnDelivery";
 import btnRider from "@/js/components/order/delivery/rider/btnRider";
 
+var numeral = require("numeral");
+Vue.filter("formatNumber", function (value) {
+    return numeral(value).format("0,0.00");
+});
 export default {
     components: { btnDelivery, btnRider },
     methods: {
@@ -187,7 +227,6 @@ export default {
                 await this.$store.dispatch("orderIndex/getOrderByID", {
                     orderID: this.order.id,
                 });
-                this.exit();
                 loader.hide();
             } else {
                 this.$toast.error(result.data.message);

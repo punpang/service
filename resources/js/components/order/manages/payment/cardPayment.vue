@@ -9,7 +9,7 @@
             large
             :suffix="paymentSummary.text.thb"
             :rules="paymentSummary.rules.amount"
-            :readonly="order.status === 8"
+            :readonly="order.status == 8"
             type="number"
             pattern="\d*"
             hide-details
@@ -40,7 +40,7 @@
             <cardPickupOrder
                 @emitPickUpSuccess="emitPickUpSuccess"
                 :propLarge="true"
-                v-if="order.status === 8 && order.sum_all.sumBalance === 0"
+                v-if="order.status == 8 && order.sum_all.sumBalance == 0"
             ></cardPickupOrder
         ></v-row>
         <!-- ///// -->
@@ -72,7 +72,7 @@
                 ></v-col>
                 <v-col
                     cols="6"
-                    v-if="order.status === 8 && order.sum_all.sumBalance === 0"
+                    v-if="order.status == 8 && order.sum_all.sumBalance == 0"
                 >
                     <cardPickupOrder></cardPickupOrder>
                 </v-col>
@@ -116,7 +116,7 @@ export default {
             await this.$store.dispatch("orderIndex/getOrderByID", {
                 orderID: this.$route.params.id,
             });
-            // if (this.order.sum_all.sumBalance === 0 ) {
+            // if (this.order.sum_all.sumBalance == 0 ) {
             //   this.$swal({
             //     title: "ชำระเงินครบจำนวนแล้ว",a
             //     icon: "info",
@@ -171,7 +171,7 @@ export default {
 
             loader.hide();
 
-            if (res.status === 200) {
+            if (res.status == 200) {
                 this.$swal({
                     icon: "success",
                     title: res.data.message,
@@ -183,7 +183,7 @@ export default {
                         this.start();
                     }
                 });
-            } else if (res.status === 201) {
+            } else if (res.status == 201) {
                 this.$swal({
                     icon: "error",
                     title: "ดำเนินการสำเร็จ",
@@ -217,11 +217,11 @@ export default {
         setAmount() {
             const deposited = this.order.sum_all.sumDeposited;
             const total = this.order.sum_all.sumTASC;
-            if (this.order.status === 8) {
+            if (this.order.status == 8) {
                 this.amount = parseInt(this.order.sum_all.sumBalance);
                 return;
             }
-            if (deposited === 0) {
+            if (deposited == 0) {
                 this.amount = parseInt(total / 2);
                 return;
             } else {

@@ -61,8 +61,10 @@
                         block
                         x-large
                         :color="useChannelPayment.color"
-                        v-if="useChannelPayment.status_use && useChannelPayment.id != 3"
-
+                        v-if="
+                            useChannelPayment.status_use &&
+                            useChannelPayment.id != 3
+                        "
                         @click="clickSubmitPayment(useChannelPayment)"
                     >
                         <v-icon left>{{ useChannelPayment.icon }}</v-icon>
@@ -124,6 +126,28 @@ export default {
     },
     methods: {
         async start() {
+            if (
+                this.order.sum_all.sumMoneyCustomer > 0 ||
+                this.order.order_delivery_service
+            ) {
+                if (
+                    this.propAmount !=
+                    this.order.sum_all.sumTASC - this.order.sum_all.sumDeposited
+                ) {
+                    this.$swal({
+                        title: "ยอดชำระไม่ถูกต้อง",
+                        text: "มีบริการบางอย่างที่ต้องชำระทั้งหมด",
+                        icon: "error",
+                        allowOutsideClick: false,
+                        confirmButtonText: "รับทราบ",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.dialog = false;
+                        }
+                    });
+                    return;
+                }
+            }
             let loader = this.$loading.show();
             await this.$store.dispatch("orderIndex/getUseChannelPayments");
             loader.hide();

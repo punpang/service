@@ -120,6 +120,7 @@
             </v-card-title>
             <v-card-text>
                 <v-checkbox
+                    :disabled="order.sum_all.sumMoneyCustomer > 0"
                     v-model="status_full_payment"
                     label="แจ้งชำระเงินเต็มจำนวน"
                     hide-details
@@ -196,6 +197,11 @@ export default {
             } else {
                 this.$toast.error("แจ้งเตือนชำระเงินไม่สำเร็จ");
             }
+
+            // this.dateTimeForPay = "";
+            // this.status_full_payment = 0;
+            // this.alertSMSToCustomer = 1;
+
             loader.hide();
         },
         exit() {
@@ -285,6 +291,9 @@ export default {
                 orderID: this.$route.params.id,
             });
 
+            if (this.order.sum_all.sumMoneyCustomer > 0) {
+                this.status_full_payment = true;
+            }
             // console.log(res);
         },
         onCopy() {

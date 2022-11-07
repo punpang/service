@@ -19,7 +19,7 @@ class CustomerScore extends Model
     protected $hidden = ['created_at', 'updated_at'];
 
 
-    public $divisor = 50;
+    // public $divisor = 50;
 
     // public function setPointAttribute($point)
     // {
@@ -34,6 +34,11 @@ class CustomerScore extends Model
     // {
     //     return $this->attributes['expiration_date'] = \Carbon\Carbon::parse($expiration_date)->addDays(365)->format("Y-m-d H:i:s");
     // }
+
+    public static function divisor()
+    {
+        return 50;
+    }
 
     public function setExpirationDateAttribute($value)
     {

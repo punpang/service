@@ -48,7 +48,12 @@ export default {
     props: ["propRider"],
     data() {
         return {
-            delivery_platform: ["Grab Express", "FoodPanda", "ร้าน"],
+            delivery_platform: [
+                "Line Man",
+                "Grab Express",
+                "FoodPanda",
+                "ร้าน",
+            ],
         };
     },
 };

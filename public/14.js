@@ -2005,7 +2005,7 @@ var render = function render() {
           staticClass: "success",
           attrs: {
             large: "",
-            disabled: _vm.propChannelID === 6 || _vm.propDeposit <= 0 || _vm.sumAll.sumTASC / 2 > _vm.propDeposit
+            disabled: _vm.propChannelID === 6 || _vm.propDeposit <= 0
           },
           on: {
             click: _vm.clickSubmitPayment
@@ -2026,7 +2026,7 @@ var render = function render() {
     }
   }, [_vm._v(" "), _c("v-card", [_c("v-card-title", {
     staticClass: "text-h5 grey lighten-2"
-  }, [_vm._v("\n                กำลังชำระเงิน " + _vm._s(_vm.propChannelID) + "\n                "), _c("v-spacer"), _vm._v(" "), _c("v-btn", {
+  }, [_vm._v("\n                กำลังชำระเงิน \n                "), _c("v-spacer"), _vm._v(" "), _c("v-btn", {
     attrs: {
       icon: "",
       fab: "",

@@ -15,6 +15,7 @@
                             ? 'success'
                             : 'warning'
                     "
+                    @click="clickStart()"
                 >
                     <v-icon left>local_shipping</v-icon>
 
@@ -70,6 +71,19 @@ export default {
     },
     components: { cardRider },
     methods: {
+        clickStart() {
+            if (this.order.order_delivery_service.status == "shipping") {
+                this.rider = {
+                    rider_name: this.order.order_delivery_service.rider_name,
+                    rider_phone: this.order.order_delivery_service.rider_phone,
+                    rider_remark:
+                        this.order.order_delivery_service.rider_remark,
+                    rider_link: this.order.order_delivery_service.rider_link,
+                    delivery_platform:
+                        this.order.order_delivery_service.delivery_platform,
+                };
+            }
+        },
         close() {
             this.dialog = false;
         },

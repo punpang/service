@@ -78,25 +78,25 @@ var render = function render() {
     staticClass: "text-caption pl-4 mt-1 mb-2"
   }, [_vm._v("\n                        " + _vm._s(_vm.order.a_accessory.detail) + "\n                    ")])]), _vm._v(" "), _c("td", {
     staticClass: "text-right"
-  }, [_c("strong", [_vm._v(_vm._s(_vm._f("formatNumber")(_vm.order.sum_all.sumAccessory)))])])]) : _vm._e(), _vm._v(" "), _vm.order.sum_all.sumService != 0 ? _c("tr", [_c("td", [_c("strong", [_vm._v(_vm._s(_vm.paymentSummary.text.service))]), _vm._v(" "), _c("p", {
+  }, [_c("strong", [_vm._v(_vm._s(_vm._f("formatNumber")(_vm.order.sum_all.sumAccessory)))])])]) : _vm._e(), _vm._v(" "), _vm.order.sum_all.sumService > 0 ? _c("tr", [_c("td", [_c("strong", [_vm._v(_vm._s(_vm.paymentSummary.text.service))]), _vm._v(" "), _c("p", {
     staticClass: "text-caption pl-4 mt-1 mb-2"
   }, [_vm._v("\n                        " + _vm._s(_vm.order.a_service.detail) + "\n                    ")])]), _vm._v(" "), _c("td", {
     staticClass: "text-right"
-  }, [_c("strong", [_vm._v(_vm._s(_vm._f("formatNumber")(_vm.order.sum_all.sumService)))])])]) : _vm._e(), _vm._v(" "), _vm.order.sum_all.sumDiscount != 0 ? _c("tr", [_c("td", [_c("strong", [_vm._v(_vm._s(_vm.paymentSummary.text.discount))])]), _vm._v(" "), _c("td", {
+  }, [_c("strong", [_vm._v(_vm._s(_vm._f("formatNumber")(_vm.order.sum_all.sumService)))])])]) : _vm._e(), _vm._v(" "), _vm.order.sum_all.sumDiscount > 0 ? _c("tr", [_c("td", [_c("strong", [_vm._v(_vm._s(_vm.paymentSummary.text.discount))])]), _vm._v(" "), _c("td", {
     staticClass: "text-right error--text"
-  }, [_c("strong", [_vm._v("-\n                        " + _vm._s(_vm._f("formatNumber")(_vm.order.sum_all.sumDiscount)))])])]) : _vm._e(), _vm._v(" "), _vm.order.sum_all.sumMoneyCustomer != 0 ? _c("tr", [_c("td", [_c("strong", [_vm._v("จำนวนเงินลูกค้า")])]), _vm._v(" "), _c("td", {
+  }, [_c("strong", [_vm._v("-\n                        " + _vm._s(_vm._f("formatNumber")(_vm.order.sum_all.sumDiscount)))])])]) : _vm._e(), _vm._v(" "), _vm.order.sum_all.sumMoneyCustomer > 0 ? _c("tr", [_c("td", [_c("strong", [_vm._v("จำนวนเงินลูกค้า")])]), _vm._v(" "), _c("td", {
     staticClass: "text-right"
-  }, [_c("strong", [_vm._v("\n                        " + _vm._s(_vm.order.sum_all.sumMoneyCustomer))])])]) : _vm._e(), _vm._v(" "), _vm.order.sum_all.sumMoneyService != 0 ? _c("tr", [_c("td", [_c("strong", [_vm._v("ค่าบริการเสริม")])]), _vm._v(" "), _c("td", {
+  }, [_c("strong", [_vm._v("\n                        " + _vm._s(_vm._f("formatNumber")(_vm.order.sum_all.sumMoneyCustomer)))])])]) : _vm._e(), _vm._v(" "), _vm.order.sum_all.sumMoneyService > 0 ? _c("tr", [_c("td", [_c("strong", [_vm._v("ค่าบริการเสริม")])]), _vm._v(" "), _c("td", {
     staticClass: "text-right"
-  }, [_c("strong", [_vm._v("\n                        " + _vm._s(_vm.order.sum_all.sumMoneyService))])])]) : _vm._e(), _vm._v(" "), _vm.order.sum_all.sumDeliverService != 0 ? _c("tr", [_c("td", [_c("strong", [_vm._v("ค่าบริการจัดส่ง")])]), _vm._v(" "), _c("td", {
+  }, [_c("strong", [_vm._v("\n                        " + _vm._s(_vm._f("formatNumber")(_vm.order.sum_all.sumMoneyService)))])])]) : _vm._e(), _vm._v(" "), _vm.order.sum_all.sumDeliverService > 0 ? _c("tr", [_c("td", [_c("strong", [_vm._v("ค่าบริการจัดส่ง")])]), _vm._v(" "), _c("td", {
     staticClass: "text-right"
   }, [_c("strong", [_vm._v("\n                        " + _vm._s(_vm._f("formatNumber")(_vm.order.sum_all.sumDeliverService)))])])]) : _vm._e(), _vm._v(" "), _c("tr", [_c("td", [_c("strong", [_vm._v(_vm._s(_vm.paymentSummary.text.sumTASC))])]), _vm._v(" "), _c("td", {
     staticClass: "text-right"
   }, [_c("strong", [_vm._v(_vm._s(_vm._f("formatNumber")(_vm.order.sum_all.sumTASC)))])])]), _vm._v(" "), _c("tr", [_c("td", [_c("strong", [_vm._v(_vm._s(_vm.paymentSummary.text.deposited))])]), _vm._v(" "), _c("td", {
     staticClass: "text-right"
-  }, [_c("strong", [_vm._v(_vm._s(_vm._f("formatNumber")(_vm.order.sum_all.sumDeposited)))])])]), _vm._v(" "), _vm.order.sum_all.sumAdjustExcessPayment != 0 ? _c("tr", [_c("td", [_c("strong", [_vm._v("ปรับยอดส่วนเกิน")])]), _vm._v(" "), _c("td", {
+  }, [_c("strong", [_vm._v(_vm._s(_vm._f("formatNumber")(_vm.order.sum_all.sumDeposited)))])])]), _vm._v(" "), _vm.order.sum_all.sumAdjustExcessPayment > 0 ? _c("tr", [_c("td", [_c("strong", [_vm._v("ปรับยอดส่วนเกิน")])]), _vm._v(" "), _c("td", {
     staticClass: "text-right"
-  }, [_c("strong", [_vm._v("-\n                        " + _vm._s(_vm.order.sum_all.sumAdjustExcessPayment))])])]) : _vm._e(), _vm._v(" "), _c("tr", [_c("td", [_c("strong", [_vm._v(_vm._s(_vm.paymentSummary.text.balance))])]), _vm._v(" "), _c("td", {
+  }, [_c("strong", [_vm._v("-\n                        " + _vm._s(_vm._f("formatNumber")(_vm.order.sum_all.sumAdjustExcessPayment)))])])]) : _vm._e(), _vm._v(" "), _c("tr", [_c("td", [_c("strong", [_vm._v(_vm._s(_vm.paymentSummary.text.balance))])]), _vm._v(" "), _c("td", {
     staticClass: "text-right"
   }, [_c("strong", [_vm._v(_vm._s(_vm._f("formatNumber")(_vm.order.sum_all.sumBalance)))])])]), _vm._v(" "), _c("tr", [_c("td", {
     attrs: {

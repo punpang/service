@@ -142,7 +142,7 @@ class AlertMessages extends Model
 
     public static function smsAdjustExcessPayment($customer, $amount, $option, $alertSMS = true)
     {
-        $msgSms = "คืนยอดเงินส่วนเกิด " . number_format($amount, 2) . " บาท เป็น" . $option["text"] . " ให้ท่านแล้ว";
+        $msgSms = "คืนยอดเงินส่วนเกิน " . number_format($amount, 2) . " บาท เป็น" . $option["text"] . " ให้ท่านแล้ว";
         return MSms::Sms($customer->tel, $msgSms, $alertSMS);
     }
 
