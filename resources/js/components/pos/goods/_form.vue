@@ -43,6 +43,9 @@
                     class="mb-3"
                     v-model="goods.status_use"
                 ></v-switch>
+                <!-- <v-btn text block large class="error--text" v-if="propGoods">
+                    <v-icon left>delete</v-icon> ลบรายการนี้
+                </v-btn> -->
             </v-card-text>
             <v-card-actions>
                 <v-btn class="error">

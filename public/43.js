@@ -1348,7 +1348,7 @@ var render = function render() {
   return _c("div", [_c("v-dialog", {
     attrs: {
       persistent: "",
-      width: "500",
+      width: "400",
       scrollable: ""
     },
     scopedSlots: _vm._u([{

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-dialog persistent width="500" v-model="dialog" scrollable>
+        <v-dialog persistent width="400" v-model="dialog" scrollable>
             <template v-slot:activator="{ on }">
                 <v-btn icon fab x-small v-on="on">
                     <v-icon>more_vert</v-icon>
