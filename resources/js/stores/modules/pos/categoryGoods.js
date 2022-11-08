@@ -22,8 +22,9 @@ export default {
                     return error;
                 });
         },
-        async fetch({ commit }) {
-            return await axios.get(`/api/admin/v1/pos/category_goods/fetch`)
+        async fetch({ commit }, payload) {
+            return await axios
+                .get(`/api/admin/v1/pos/category_goods/fetch?${payload}`)
                 .then((response) => {
                     commit("fetch", response.data.category_goods);
                     return response;

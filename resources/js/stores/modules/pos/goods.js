@@ -22,6 +22,16 @@ export default {
                     return error;
                 });
         },
+        async update({}, payload) {
+            return await axios
+                .post(`/api/admin/v1/pos/goods/${payload.id}/update`, payload)
+                .then((response) => {
+                    return response;
+                })
+                .catch((error) => {
+                    return error;
+                });
+        },
 
         async fetch({ commit }, payload) {
             console.log("fhdsauio");

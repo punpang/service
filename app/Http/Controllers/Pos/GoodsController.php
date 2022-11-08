@@ -32,4 +32,19 @@ class GoodsController extends Controller
 
         return $query->get();
     }
+
+    public function update(Goods $id, Request $request)
+    {
+        $id->update([
+            "text" => $request->text,
+            "pos_category_goods_id" => $request->pos_category_goods_id,
+            "status_use" => $request->status_use,
+            "price" => $request->price,
+        ]);
+
+        return response()->json([
+            "title" => "สร้างสินค้าสำเร็จ",
+            "icon" => "success"
+        ], 200);
+    }
 }

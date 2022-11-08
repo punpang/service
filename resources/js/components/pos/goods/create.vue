@@ -2,7 +2,7 @@
     <div>
         <v-dialog persistent width="500" v-model="dialog" scrollable>
             <template v-slot:activator="{ on }">
-                <v-btn v-on="on" class="orange" dark @click="clickStart()">
+                <v-btn v-on="on" class="deep-orange" dark @click="clickStart()">
                     <v-icon left> add</v-icon>
                     สร้างสินค้า
                 </v-btn>
@@ -81,12 +81,22 @@ export default {
         };
     },
     methods: {
+        reset() {
+            this.goods = {
+                text: "",
+                price: "",
+                status_use: 1,
+                pos_category_goods_id: "",
+            };
+        },
         async clickSave() {
-            // let loader = this.$loading.show();
+            let loader = this.$loading.show();
             const payload = this.goods;
             await this.$store
                 .dispatch("posGoods/store", payload)
                 .then((result) => {
+                    this.$emit("emitExit");
+                    this.exit();
                     this.$swal({
                         toast: true,
                         title: result.data.title,
@@ -110,14 +120,17 @@ export default {
                         timerProgressBar: true,
                     });
                 });
+            loader.hide();
         },
         exit() {
+            this.reset();
             this.dialog = false;
         },
         clickStart() {
             this.fetch_category_goods();
         },
         async fetch_category_goods() {
+            let loader = this.$loading.show();
             await this.$store
                 .dispatch("posCategoryGoods/fetch")
                 .then((result) => {
@@ -144,6 +157,7 @@ export default {
                         timerProgressBar: true,
                     });
                 });
+            loader.hide();
         },
     },
     computed: {

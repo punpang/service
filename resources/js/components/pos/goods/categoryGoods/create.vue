@@ -2,7 +2,7 @@
     <div>
         <v-dialog persistent width="500" v-model="dialog" scrollable>
             <template v-slot:activator="{ on }">
-                <v-btn v-on="on" class="orange" dark>
+                <v-btn v-on="on" class="deep-orange" dark>
                     <v-icon left> add</v-icon>
                     สร้างประเภท
                 </v-btn>
@@ -58,12 +58,20 @@ export default {
         };
     },
     methods: {
+        reset() {
+            this.category_goods = {
+                text: "",
+                status_use: 1,
+            };
+        },
         async clickSave() {
-            // let loader = this.$loading.show();
+            let loader = this.$loading.show();
             const payload = this.category_goods;
             await this.$store
                 .dispatch("posCategoryGoods/store", payload)
                 .then((result) => {
+                    this.$emit("emitExit");
+                    this.exit();
                     this.$swal({
                         toast: true,
                         title: result.data.title,
@@ -87,8 +95,10 @@ export default {
                         timerProgressBar: true,
                     });
                 });
+            loader.hide();
         },
         exit() {
+            this.reset();
             this.dialog = false;
         },
     },
