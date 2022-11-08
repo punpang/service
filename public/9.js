@@ -1365,7 +1365,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
               case 2:
                 res = _context2.sent;
-                if (_this2.order.sum_all.sumMoneyCustomer > 0) {
+                if (_this2.order.sum_all.sumMoneyCustomer > 0 || _this2.order.order_delivery_service) {
                   _this2.status_full_payment = true;
                 }
                 // console.log(res);
@@ -3720,7 +3720,7 @@ var render = function render() {
     staticClass: "text-h6 white--text warning"
   }, [_vm._v("\n            ข้อบังคับ\n        ")]), _vm._v(" "), _c("v-card-text", [_c("v-checkbox", {
     attrs: {
-      disabled: _vm.order.sum_all.sumMoneyCustomer > 0,
+      disabled: _vm.order.sum_all.sumMoneyCustomer > 0 || this.order.order_delivery_service != undefined,
       label: "แจ้งชำระเงินเต็มจำนวน",
       "hide-details": ""
     },
@@ -4415,7 +4415,7 @@ var render = function render() {
       },
       expression: "sheet"
     }
-  }, [_vm._v(" "), _c("v-list", [_vm.order.status < 8 ? _c("btnAddGoods") : _vm._e(), _vm._v(" "), _vm.order.status < 8 ? _c("btnChangeCustomer") : _vm._e(), _vm._v(" "), _vm.order.status < 8 ? _c("btnConnectSocialProfile") : _vm._e(), _vm._v(" "), _vm.order.status < 8 ? _c("btnChangeDateTimeGet") : _vm._e(), _vm._v(" "), _vm.order.sum_all.sumBalance > 0 ? _c("btnAlertPayment") : _vm._e(), _vm._v(" "), _vm.order.sum_all.sumBalance > 0 ? _c("btnPayment") : _vm._e(), _vm._v(" "), _vm.order.status == 1 && _vm.order.sum_all.sumMoneyCustomer < 0 ? _c("btnNoPayment") : _vm._e(), _vm._v(" "), !_vm.order.order_delivery_service && _vm.order.status < 8 ? _c("btnDelivery", {
+  }, [_vm._v(" "), _c("v-list", [_vm.order.status < 8 ? _c("btnAddGoods") : _vm._e(), _vm._v(" "), _vm.order.status < 8 ? _c("btnChangeCustomer") : _vm._e(), _vm._v(" "), _vm.order.status < 8 ? _c("btnConnectSocialProfile") : _vm._e(), _vm._v(" "), _vm.order.status < 8 ? _c("btnChangeDateTimeGet") : _vm._e(), _vm._v(" "), _vm.order.sum_all.sumBalance > 0 ? _c("btnAlertPayment") : _vm._e(), _vm._v(" "), _vm.order.sum_all.sumBalance > 0 ? _c("btnPayment") : _vm._e(), _vm._v(" "), _vm.order.status == 1 && _vm.order.sum_all.sumMoneyCustomer == 0 && _vm.order.order_delivery_service == undefined ? _c("btnNoPayment") : _vm._e(), _vm._v(" "), !_vm.order.order_delivery_service && _vm.order.status < 8 ? _c("btnDelivery", {
     attrs: {
       propButton: "list"
     }

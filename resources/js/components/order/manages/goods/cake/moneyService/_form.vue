@@ -1,177 +1,183 @@
 <template>
     <div>
-        <v-card-title class="text-h6">
-            บริการล้อม/ลูกบอล/ซ่อนเงิน
-            <v-spacer></v-spacer>
-            <v-btn icon fab x-small @click="exit()">
-                <v-icon color="error">close</v-icon>
-            </v-btn>
-        </v-card-title>
-        <v-card-text>
-            <v-select
-                class="py-1"
-                :items="options"
-                outlined
-                hide-details
-                label="บริการ"
-                v-model="option"
-                item-value="id"
-                @change="changeOption()"
-            ></v-select>
-            <p
-                class="my-1 red--text text-caption font-weight-black"
-                v-if="option"
-            >
-                หมายเหตุ : {{ cash.remark }}
-            </p>
-            <v-divider v-if="option"></v-divider>
-            <v-row v-if="option">
-                <v-col cols="12" md="6">
-                    <v-text-field
-                        label="แบงค์ 20 บาท"
-                        outlined
-                        hide-details
-                        suffix="แบงค์"
-                        class="mb-3"
-                        v-model="cash.thb20"
-                        @click="cash.thb20 = ''"
-                        type="number"
-                        pattern="\d*"
-                        @change="changeCash(20)"
-                        dense
-                    ></v-text-field>
+        <v-card>
+            <v-card-title class="text-h6">
+                บริการล้อม/ลูกบอล/ซ่อนเงิน
+                <v-spacer></v-spacer>
+                <v-btn icon fab x-small @click="exit()">
+                    <v-icon color="error">close</v-icon>
+                </v-btn>
+            </v-card-title>
+            <v-card-text>
+                <v-select
+                    class="py-1"
+                    :items="options"
+                    outlined
+                    hide-details
+                    label="บริการ"
+                    v-model="option"
+                    item-value="id"
+                    @change="changeOption()"
+                ></v-select>
+                <p
+                    class="my-1 red--text text-caption font-weight-black"
+                    v-if="option"
+                >
+                    หมายเหตุ : {{ cash.remark }}
+                </p>
+                <v-divider v-if="option"></v-divider>
+                <v-row v-if="option">
+                    <v-col cols="12" md="6">
+                        <v-text-field
+                            label="แบงค์ 20 บาท"
+                            outlined
+                            hide-details
+                            suffix="แบงค์"
+                            class="mb-3"
+                            v-model="cash.thb20"
+                            @click="cash.thb20 = ''"
+                            type="number"
+                            pattern="\d*"
+                            @change="changeCash(20)"
+                            dense
+                        ></v-text-field>
 
-                    <v-text-field
-                        dense
-                        label="แบงค์ 50 บาท"
-                        outlined
-                        hide-details
-                        suffix="แบงค์"
-                        class="mb-3"
-                        v-model="cash.thb50"
-                        @click="cash.thb50 = ''"
-                        type="number"
-                        pattern="\d*"
-                        @change="changeCash(50)"
-                    ></v-text-field>
+                        <v-text-field
+                            dense
+                            label="แบงค์ 50 บาท"
+                            outlined
+                            hide-details
+                            suffix="แบงค์"
+                            class="mb-3"
+                            v-model="cash.thb50"
+                            @click="cash.thb50 = ''"
+                            type="number"
+                            pattern="\d*"
+                            @change="changeCash(50)"
+                        ></v-text-field>
 
-                    <v-text-field
-                        dense
-                        label="แบงค์ 100 บาท"
-                        outlined
-                        hide-details
-                        suffix="แบงค์"
-                        class="mb-3"
-                        v-model="cash.thb100"
-                        @click="cash.thb100 = ''"
-                        type="number"
-                        pattern="\d*"
-                        @change="changeCash(100)"
-                    ></v-text-field>
+                        <v-text-field
+                            dense
+                            label="แบงค์ 100 บาท"
+                            outlined
+                            hide-details
+                            suffix="แบงค์"
+                            class="mb-3"
+                            v-model="cash.thb100"
+                            @click="cash.thb100 = ''"
+                            type="number"
+                            pattern="\d*"
+                            @change="changeCash(100)"
+                        ></v-text-field>
 
-                    <v-text-field
-                        dense
-                        label="แบงค์ 500 บาท"
-                        outlined
-                        hide-details
-                        suffix="แบงค์"
-                        class="mb-3"
-                        v-model="cash.thb500"
-                        @click="cash.thb500 = ''"
-                        type="number"
-                        pattern="\d*"
-                        @change="changeCash(500)"
-                    ></v-text-field>
+                        <v-text-field
+                            dense
+                            label="แบงค์ 500 บาท"
+                            outlined
+                            hide-details
+                            suffix="แบงค์"
+                            class="mb-3"
+                            v-model="cash.thb500"
+                            @click="cash.thb500 = ''"
+                            type="number"
+                            pattern="\d*"
+                            @change="changeCash(500)"
+                        ></v-text-field>
 
-                    <v-text-field
-                        dense
-                        label="แบงค์ 1,000 บาท"
-                        outlined
-                        hide-details
-                        suffix="แบงค์"
-                        class="mb-3"
-                        v-model="cash.thb1000"
-                        @click="cash.thb1000 = ''"
-                        type="number"
-                        pattern="\d*"
-                        @change="changeCash(1000)"
-                    ></v-text-field>
-                    <v-textarea
-                        dense
-                        label="หมายเหตุ"
-                        outlined
-                        hide-details
-                        v-model="cash.note"
-                    ></v-textarea>
-                </v-col>
-                <v-col cols="12" md="6">
-                    <v-simple-table>
-                        <tbody>
-                            <tr
-                                :class="
-                                    cash.max < cashSum ? 'red white--text' : ''
-                                "
-                            >
-                                <td>จำนวนแบงค์</td>
-                                <td class="text-right">
-                                    {{ cashSum > 0 ? cashSum : 0 }} /
-                                    {{ cash.max }}
-                                    แบงค์
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>จำนวนเงิน</td>
-                                <td class="text-right">
-                                    {{ thbSum | formatNumber }} บาท
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>ค่าบริการ</td>
-                                <td class="text-right">
-                                    {{ cash.fee | formatNumber }}
-                                    บาท
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>รวม</td>
-                                <td class="text-right">
-                                    {{ cashTotal | formatNumber }}
-                                    บาท
-                                </td>
-                            </tr>
-                        </tbody>
-                    </v-simple-table>
+                        <v-text-field
+                            dense
+                            label="แบงค์ 1,000 บาท"
+                            outlined
+                            hide-details
+                            suffix="แบงค์"
+                            class="mb-3"
+                            v-model="cash.thb1000"
+                            @click="cash.thb1000 = ''"
+                            type="number"
+                            pattern="\d*"
+                            @change="changeCash(1000)"
+                        ></v-text-field>
+                        <v-textarea
+                            dense
+                            label="หมายเหตุ"
+                            outlined
+                            hide-details
+                            v-model="cash.note"
+                        ></v-textarea>
+                    </v-col>
+                    <v-col cols="12" md="6">
+                        <v-simple-table>
+                            <tbody>
+                                <tr
+                                    :class="
+                                        cash.max < cashSum
+                                            ? 'red white--text'
+                                            : ''
+                                    "
+                                >
+                                    <td>จำนวนแบงค์</td>
+                                    <td class="text-right">
+                                        {{ cashSum > 0 ? cashSum : 0 }} /
+                                        {{ cash.max }}
+                                        แบงค์
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>จำนวนเงิน</td>
+                                    <td class="text-right">
+                                        {{ thbSum | formatNumber }} บาท
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ค่าบริการ</td>
+                                    <td class="text-right">
+                                        {{ cash.fee | formatNumber }}
+                                        บาท
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>รวม</td>
+                                    <td class="text-right">
+                                        {{ cashTotal | formatNumber }}
+                                        บาท
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </v-simple-table>
 
-                    <v-btn
-                        text
-                        color="error"
-                        class="my-3"
-                        large
-                        block
-                        v-if="this.propMoneyService"
-                        @click="clickDelete()"
-                    >
-                        <v-icon left>delete</v-icon>
-                        ลบรายการนี้
-                    </v-btn>
-                </v-col>
-            </v-row>
-        </v-card-text>
-        <v-card-actions>
-            <v-btn class="error" @click="exit()">
-                <v-icon left>exit_to_app</v-icon>
-                ออก
-            </v-btn>
-            <v-spacer></v-spacer>
-            <v-btn
-                class="success"
-                @click="clickSave()"
-                :disabled="cashSum <= 0 || thbSum <= 0 || cash.max < cashSum"
-            >
-                <v-icon left>save</v-icon>
-                บันทึก
-            </v-btn>
-        </v-card-actions>
+                        <v-btn
+                            text
+                            color="error"
+                            class="my-3"
+                            large
+                            block
+                            v-if="this.propMoneyService"
+                            @click="clickDelete()"
+                        >
+                            <v-icon left>delete</v-icon>
+                            ลบรายการนี้
+                        </v-btn>
+                    </v-col>
+                </v-row>
+            </v-card-text>
+            <v-card-actions>
+                <v-btn class="error" @click="exit()">
+                    <v-icon left>exit_to_app</v-icon>
+                    ออก
+                </v-btn>
+                <v-spacer></v-spacer>
+                <v-btn
+                    class="success"
+                    @click="clickSave()"
+                    :disabled="
+                        cashSum <= 0 || thbSum <= 0 || cash.max < cashSum
+                    "
+                >
+                    <v-icon left>save</v-icon>
+                    บันทึก
+                </v-btn>
+            </v-card-actions>
+        </v-card>
     </div>
 </template>
 
@@ -246,6 +252,9 @@ export default {
     },
     methods: {
         async clickSave() {
+            // console.log(this.propMoneyService);
+
+            // return;
             if (this.cashSum <= 0 || this.thbSum <= 0) {
                 this.$swal({
                     toast: true,
@@ -260,6 +269,7 @@ export default {
                 return;
             }
             let loader = this.$loading.show();
+            const payload = this.cash;
             let result;
             if (!this.propMoneyService) {
                 this.cash.order_detail_id = this.propOrderDetail.id;
@@ -279,10 +289,10 @@ export default {
             }
 
             let swal = {};
-            if (result.status == 201) {
+            if (result.status == 200) {
                 swal = {
-                    icon: "success",
-                    title: "สร้างรายการสำเร็จ",
+                    icon: result.data.icon,
+                    title: result.data.title,
                 };
             } else {
                 swal = {
@@ -327,6 +337,7 @@ export default {
             const e = this.options.find((e) => {
                 return e.id == this.option;
             });
+
             this.cash.category_money_service_id = e.id;
             this.cash.text = e.text;
             this.cash.remark = e.remark;

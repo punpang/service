@@ -19,12 +19,10 @@
                     </v-list-item-content>
                 </v-list-item>
             </template>
-            <v-card>
-                <moneyService
-                    @emitExit="emitExit"
-                    :propOrderDetail="propOrderDetail"
-                ></moneyService>
-            </v-card>
+            <moneyService
+                @emitExit="emitExit"
+                :propOrderDetail="propOrderDetail"
+            ></moneyService>
         </v-dialog>
     </div>
 </template>

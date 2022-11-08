@@ -5,6 +5,7 @@ export default {
     getters: {},
     actions: {
         async store({}, payload) {
+            console.log("store", payload);
             return await axios
                 .post("/api/admin/v1/moneyServices/store", payload)
                 .then((response) => {

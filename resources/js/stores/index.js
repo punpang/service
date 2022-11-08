@@ -48,13 +48,16 @@ import orderProductPrototype from "@/js/stores/modules/order/orderProductPrototy
 import orderImageGoodsReviewToCustomer from "@/js/stores/modules/order/imageGoodsReviewToCustomer";
 import orderDeliveryService from "@/js/stores/modules/order/deliveryService";
 import orderAdjustExcessPayment from "@/js/stores/modules/order/adjustExcessPayment";
-import facebook from "@/js/stores/modules/order/facebook.js";
-import line from "@/js/stores/modules/order/line.js";
-import moneyServices from "@/js/stores/modules/order/moneyServices.js";
+import facebook from "@/js/stores/modules/order/facebook";
+import line from "@/js/stores/modules/order/line";
+import moneyServices from "@/js/stores/modules/order/moneyServices";
 /////////////////////////
 /// LUCKY REWAYD START ///
 import orderLuckyReward from "@/js/stores/modules/order/luckyReward";
 /// LUCKY REWAYD END ///
+
+import posGoods from '@/js/stores/modules/pos/goods';
+import posCategoryGoods from '@/js/stores/modules/pos/categoryGoods';
 
 Vue.use(Vuex);
 
@@ -109,5 +112,8 @@ export default new Vuex.Store({
         facebook,
         line,
         moneyServices,
+        //
+        posGoods,
+        posCategoryGoods
     },
 });

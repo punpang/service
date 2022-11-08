@@ -6,12 +6,11 @@
                     <v-icon color="warning">edit</v-icon>
                 </v-btn></template
             >
-            <v-card>
-                <moneyService
-                    :propMoneyService="propMoneyService"
-                    @emitExit="emitExit"
-                ></moneyService>
-            </v-card>
+
+            <moneyService
+                :propMoneyService="propMoneyService"
+                @emitExit="emitExit"
+            ></moneyService>
         </v-dialog>
     </div>
 </template>

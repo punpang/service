@@ -22,7 +22,10 @@ class MoneyServicesController extends Controller
         $data->note = $request->note;
         $data->save();
 
-        return $data;
+        return response()->json([
+            "title" => "สร้างรายการสำเร็จ",
+            "icon" => "success"
+        ], 200);
     }
 
     public function update(MoneyServices $id, Request $request)
@@ -36,7 +39,10 @@ class MoneyServicesController extends Controller
         $id->thb1000 = $request->thb1000;
         $id->note = $request->note;
         $id->save();
-        return response()->json($id, 201);
+        return response()->json([
+            "title" => "เปลี่ยนแปลงสำเร็จ",
+            "icon" => "success"
+        ], 200);
     }
 
     public function delete(MoneyServices $id)

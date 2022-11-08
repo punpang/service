@@ -467,9 +467,9 @@ class AOrderController extends Controller
 
     public function alertPaymentByOrderID()
     {
+
         $order = AOrder::findOrFail(request("orderID"));
         $payment_deadline = \Carbon\Carbon::createFromFormat('d/m/Y H:i:s', request("payment_deadline"))->subYears(543)->format('Y-m-d H:i:s');
-
 
         if ($order->auth_order == null) {
             $order->auth_order = Str::uuid();
@@ -478,7 +478,10 @@ class AOrderController extends Controller
         $order->payment_deadline = $payment_deadline;
         $order->status_full_payment = request("status_full_payment");
 
-        if ($order->sumMoneyCustomer() > 0) {
+        if (
+            $order->sumMoneyCustomer() > 0
+            || $order->orderDeliveryService
+        ) {
             $order->status_full_payment = 1;
         }
 
@@ -563,7 +566,7 @@ class AOrderController extends Controller
         $order = AOrder::whereAuthOrder(request("uuid"))->first();
 
         if ($order->rating == 0) {
-            CustomerScore::addScore($order->customer, 150);
+            CustomerScore::addScore($order->customer, 100);
         }
 
         $order->rating = request("rating");
@@ -752,7 +755,7 @@ class AOrderController extends Controller
             ], 201);
         }
 
-      
+
         $order->update(["status" => 9]);
 
         AlertMessages::linePickUpGoods($order);

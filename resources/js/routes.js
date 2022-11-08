@@ -164,6 +164,13 @@ const routes = [
         meta: { requiresAuth: true },
     },
 
+    {
+        path: "/manages/settings/products/pos",
+        name: "/manages/settings/products/pos",
+        component: () => import("@/js/pages/order/pos/goods"),
+        meta: { requiresAuth: true },
+    },
+
     // {
     //     path: "/manages/order/run",
     //     name: "managesOrderID",

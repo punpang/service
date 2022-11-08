@@ -120,7 +120,7 @@
             </v-card-title>
             <v-card-text>
                 <v-checkbox
-                    :disabled="order.sum_all.sumMoneyCustomer > 0"
+                    :disabled="order.sum_all.sumMoneyCustomer > 0 || this.order.order_delivery_service != undefined"
                     v-model="status_full_payment"
                     label="แจ้งชำระเงินเต็มจำนวน"
                     hide-details
@@ -291,7 +291,7 @@ export default {
                 orderID: this.$route.params.id,
             });
 
-            if (this.order.sum_all.sumMoneyCustomer > 0) {
+            if (this.order.sum_all.sumMoneyCustomer > 0 || this.order.order_delivery_service) {
                 this.status_full_payment = true;
             }
             // console.log(res);

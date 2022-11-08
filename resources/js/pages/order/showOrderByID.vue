@@ -47,7 +47,11 @@
                         v-if="order.sum_all.sumBalance > 0"
                     ></btnPayment>
                     <btnNoPayment
-                        v-if="order.status == 1 && order.sum_all.sumMoneyCustomer < 0"
+                        v-if="
+                            order.status == 1 &&
+                            order.sum_all.sumMoneyCustomer == 0 &&
+                            order.order_delivery_service == undefined
+                        "
                     ></btnNoPayment>
                     <!-- <v-subheader></v-subheader> -->
                     <btnDelivery
@@ -77,7 +81,7 @@ import btnAddGoods from "@/js/components/order/addGoods/btnAddGoods";
 
 import btnAlertPayment from "@/js/components/order/manages/alertPayment/btnAlertPayment";
 import btnPayment from "@/js/components/order/manages/payment/btnPayment";
-import btnNoPayment from "@/js/components/order/manages/noPayment/btn"
+import btnNoPayment from "@/js/components/order/manages/noPayment/btn";
 import btnChangeCustomer from "@/js/components/order/changeCustomer/btnChangeCustomer";
 import btnConnectSocialProfile from "@/js/components/order/connectSocialProfile/button";
 import btnChangeDateTimeGet from "@/js/components/order/changeDateTimeGet/btnChangeDateTimeGet";

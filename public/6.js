@@ -2505,7 +2505,7 @@ Vue.filter("formatNumber", function (value) {
     clickSave: function clickSave() {
       var _this = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var loader, result, payload, _payload, swal;
+        var loader, payload, result, _payload, _payload2, swal;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -2527,32 +2527,33 @@ Vue.filter("formatNumber", function (value) {
                 return _context.abrupt("return");
               case 3:
                 loader = _this.$loading.show();
+                payload = _this.cash;
                 if (_this.propMoneyService) {
-                  _context.next = 13;
+                  _context.next = 14;
                   break;
                 }
                 _this.cash.order_detail_id = _this.propOrderDetail.id;
-                payload = _this.cash;
-                _context.next = 9;
-                return _this.$store.dispatch("moneyServices/store", payload);
-              case 9:
+                _payload = _this.cash;
+                _context.next = 10;
+                return _this.$store.dispatch("moneyServices/store", _payload);
+              case 10:
                 result = _context.sent;
                 _this.exit();
-                _context.next = 18;
+                _context.next = 19;
                 break;
-              case 13:
-                _payload = _this.cash;
-                _context.next = 16;
-                return _this.$store.dispatch("moneyServices/update", _payload);
-              case 16:
+              case 14:
+                _payload2 = _this.cash;
+                _context.next = 17;
+                return _this.$store.dispatch("moneyServices/update", _payload2);
+              case 17:
                 result = _context.sent;
                 _this.exitEdit();
-              case 18:
+              case 19:
                 swal = {};
-                if (result.status == 201) {
+                if (result.status == 200) {
                   swal = {
-                    icon: "success",
-                    title: "สร้างรายการสำเร็จ"
+                    icon: result.data.icon,
+                    title: result.data.title
                   };
                 } else {
                   swal = {
@@ -2571,7 +2572,7 @@ Vue.filter("formatNumber", function (value) {
                   position: "bottom"
                 });
                 loader.hide();
-              case 22:
+              case 23:
               case "end":
                 return _context.stop();
             }
@@ -5572,9 +5573,9 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_c("v-card-title", {
+  return _c("div", [_c("v-card", [_c("v-card-title", {
     staticClass: "text-h6"
-  }, [_vm._v("\n        บริการล้อม/ลูกบอล/ซ่อนเงิน\n        "), _c("v-spacer"), _vm._v(" "), _c("v-btn", {
+  }, [_vm._v("\n            บริการล้อม/ลูกบอล/ซ่อนเงิน\n            "), _c("v-spacer"), _vm._v(" "), _c("v-btn", {
     attrs: {
       icon: "",
       fab: "",
@@ -5612,7 +5613,7 @@ var render = function render() {
     }
   }), _vm._v(" "), _vm.option ? _c("p", {
     staticClass: "my-1 red--text text-caption font-weight-black"
-  }, [_vm._v("\n            หมายเหตุ : " + _vm._s(_vm.cash.remark) + "\n        ")]) : _vm._e(), _vm._v(" "), _vm.option ? _c("v-divider") : _vm._e(), _vm._v(" "), _vm.option ? _c("v-row", [_c("v-col", {
+  }, [_vm._v("\n                หมายเหตุ : " + _vm._s(_vm.cash.remark) + "\n            ")]) : _vm._e(), _vm._v(" "), _vm.option ? _c("v-divider") : _vm._e(), _vm._v(" "), _vm.option ? _c("v-row", [_c("v-col", {
     attrs: {
       cols: "12",
       md: "6"
@@ -5770,13 +5771,13 @@ var render = function render() {
     "class": _vm.cash.max < _vm.cashSum ? "red white--text" : ""
   }, [_c("td", [_vm._v("จำนวนแบงค์")]), _vm._v(" "), _c("td", {
     staticClass: "text-right"
-  }, [_vm._v("\n                                " + _vm._s(_vm.cashSum > 0 ? _vm.cashSum : 0) + " /\n                                " + _vm._s(_vm.cash.max) + "\n                                แบงค์\n                            ")])]), _vm._v(" "), _c("tr", [_c("td", [_vm._v("จำนวนเงิน")]), _vm._v(" "), _c("td", {
+  }, [_vm._v("\n                                    " + _vm._s(_vm.cashSum > 0 ? _vm.cashSum : 0) + " /\n                                    " + _vm._s(_vm.cash.max) + "\n                                    แบงค์\n                                ")])]), _vm._v(" "), _c("tr", [_c("td", [_vm._v("จำนวนเงิน")]), _vm._v(" "), _c("td", {
     staticClass: "text-right"
-  }, [_vm._v("\n                                " + _vm._s(_vm._f("formatNumber")(_vm.thbSum)) + " บาท\n                            ")])]), _vm._v(" "), _c("tr", [_c("td", [_vm._v("ค่าบริการ")]), _vm._v(" "), _c("td", {
+  }, [_vm._v("\n                                    " + _vm._s(_vm._f("formatNumber")(_vm.thbSum)) + " บาท\n                                ")])]), _vm._v(" "), _c("tr", [_c("td", [_vm._v("ค่าบริการ")]), _vm._v(" "), _c("td", {
     staticClass: "text-right"
-  }, [_vm._v("\n                                " + _vm._s(_vm._f("formatNumber")(_vm.cash.fee)) + "\n                                บาท\n                            ")])]), _vm._v(" "), _c("tr", [_c("td", [_vm._v("รวม")]), _vm._v(" "), _c("td", {
+  }, [_vm._v("\n                                    " + _vm._s(_vm._f("formatNumber")(_vm.cash.fee)) + "\n                                    บาท\n                                ")])]), _vm._v(" "), _c("tr", [_c("td", [_vm._v("รวม")]), _vm._v(" "), _c("td", {
     staticClass: "text-right"
-  }, [_vm._v("\n                                " + _vm._s(_vm._f("formatNumber")(_vm.cashTotal)) + "\n                                บาท\n                            ")])])])]), _vm._v(" "), this.propMoneyService ? _c("v-btn", {
+  }, [_vm._v("\n                                    " + _vm._s(_vm._f("formatNumber")(_vm.cashTotal)) + "\n                                    บาท\n                                ")])])])]), _vm._v(" "), this.propMoneyService ? _c("v-btn", {
     staticClass: "my-3",
     attrs: {
       text: "",
@@ -5793,7 +5794,7 @@ var render = function render() {
     attrs: {
       left: ""
     }
-  }, [_vm._v("delete")]), _vm._v("\n                    ลบรายการนี้\n                ")], 1) : _vm._e()], 1)], 1) : _vm._e()], 1), _vm._v(" "), _c("v-card-actions", [_c("v-btn", {
+  }, [_vm._v("delete")]), _vm._v("\n                        ลบรายการนี้\n                    ")], 1) : _vm._e()], 1)], 1) : _vm._e()], 1), _vm._v(" "), _c("v-card-actions", [_c("v-btn", {
     staticClass: "error",
     on: {
       click: function click($event) {
@@ -5804,7 +5805,7 @@ var render = function render() {
     attrs: {
       left: ""
     }
-  }, [_vm._v("exit_to_app")]), _vm._v("\n            ออก\n        ")], 1), _vm._v(" "), _c("v-spacer"), _vm._v(" "), _c("v-btn", {
+  }, [_vm._v("exit_to_app")]), _vm._v("\n                ออก\n            ")], 1), _vm._v(" "), _c("v-spacer"), _vm._v(" "), _c("v-btn", {
     staticClass: "success",
     attrs: {
       disabled: _vm.cashSum <= 0 || _vm.thbSum <= 0 || _vm.cash.max < _vm.cashSum
@@ -5818,7 +5819,7 @@ var render = function render() {
     attrs: {
       left: ""
     }
-  }, [_vm._v("save")]), _vm._v("\n            บันทึก\n        ")], 1)], 1)], 1);
+  }, [_vm._v("save")]), _vm._v("\n                บันทึก\n            ")], 1)], 1)], 1)], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -5865,14 +5866,14 @@ var render = function render() {
       },
       expression: "dialog"
     }
-  }, [_vm._v(" "), _c("v-card", [_c("moneyService", {
+  }, [_vm._v(" "), _c("moneyService", {
     attrs: {
       propOrderDetail: _vm.propOrderDetail
     },
     on: {
       emitExit: _vm.emitExit
     }
-  })], 1)], 1)], 1);
+  })], 1)], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -5924,14 +5925,14 @@ var render = function render() {
       },
       expression: "dialog"
     }
-  }, [_vm._v(" "), _c("v-card", [_c("moneyService", {
+  }, [_vm._v(" "), _c("moneyService", {
     attrs: {
       propMoneyService: _vm.propMoneyService
     },
     on: {
       emitExit: _vm.emitExit
     }
-  })], 1)], 1)], 1);
+  })], 1)], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;

@@ -283,8 +283,7 @@ class AOrder extends Model
     public function sumForScore()
     {
         return  $this->sumGoods() +
-            $this->sumAccessoryServiceDiscount() +
-            $this->sumDeliverService();
+            $this->sumAccessoryServiceDiscount();
     }
 
     public function sumTASC()
