@@ -45,7 +45,6 @@
                         dense
                         inset
                         outlined
-
                         v-model="item.status_use"
                         @click="clickSwitchStatusUse(item.id)"
                     ></v-switch>
@@ -53,10 +52,17 @@
             </template>
 
             <template v-slot:item.manages="{ item }">
-                <updateGoods
-                    :propGoods="item"
-                    @emitExit="emitExit"
-                ></updateGoods>
+                <div class="flex-row d-flex justify-end">
+                    <selectForOrder
+                        :propGoods="item"
+                        :propOrder="propOrder"
+                        v-if="propOrder"
+                    ></selectForOrder>
+                    <updateGoods
+                        :propGoods="item"
+                        @emitExit="emitExit"
+                    ></updateGoods>
+                </div>
             </template>
         </v-data-table>
     </div>
@@ -70,11 +76,14 @@ Vue.filter("formatNumber", function (value) {
 import { mapGetters } from "vuex";
 import createGoods from "@/js/components/pos/goods/create";
 import updateGoods from "@/js/components/pos/goods/update";
+import selectForOrder from "@/js/components/pos/goods/selectForOrder/create";
 
 export default {
+    props: ["propOrder"],
     components: {
         createGoods,
         updateGoods,
+        selectForOrder,
     },
     data() {
         return {

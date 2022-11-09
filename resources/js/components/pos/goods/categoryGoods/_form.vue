@@ -63,7 +63,7 @@ export default {
         async clickSave() {
             if (
                 this.category_goods.text == "" ||
-                this.category_goods.status_use == "" ||
+                this.category_goods.status_use == null ||
                 (this.category_goods.id == "" && this.propCategoryGoods)
             ) {
                 this.$swal({

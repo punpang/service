@@ -90,7 +90,7 @@ export default {
                 this.goods.text == "" ||
                 this.goods.price == "" ||
                 this.goods.pos_category_goods_id == "" ||
-                this.goods.status_use == "" ||
+                this.goods.status_use == null ||
                 (this.goods.id == "" && this.propGoods)
             ) {
                 this.$swal({

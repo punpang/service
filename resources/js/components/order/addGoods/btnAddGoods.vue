@@ -8,7 +8,9 @@
         >
             <template v-slot:activator="{ on }">
                 <v-list-item v-on="on">
-                    <v-list-item-title class="py-1">{{ text.header }} </v-list-item-title>
+                    <v-list-item-title class="py-1"
+                        >{{ text.header }}
+                    </v-list-item-title>
                 </v-list-item>
             </template>
 
@@ -23,22 +25,7 @@
                                 <btnAddCake></btnAddCake>
                             </v-col>
                             <v-col cols="12" md="6">
-                                <v-item>
-                                    <v-card
-                                        color="white"
-                                        class="d-flex align-center grey warning"
-                                        dark
-                                        height="150"
-                                    >
-                                        <v-scroll-y-transition>
-                                            <div
-                                                class="text-h4 flex-grow-1 text-center"
-                                            >
-                                                POS
-                                            </div>
-                                        </v-scroll-y-transition>
-                                    </v-card>
-                                </v-item>
+                                <btnAddGoodsPos></btnAddGoodsPos>
                             </v-col>
                         </v-row>
                     </v-container>
@@ -50,8 +37,9 @@
 
 <script>
 import btnAddCake from "@/js/components/order/addGoods/btnAddCake";
+import btnAddGoodsPos from "@/js/components/order/addGoodsPos/create";
 export default {
-    components: { btnAddCake },
+    components: { btnAddCake, btnAddGoodsPos },
     data() {
         return {
             dialog: false,
