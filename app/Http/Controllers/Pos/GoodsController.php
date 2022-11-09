@@ -26,11 +26,22 @@ class GoodsController extends Controller
     {
         $query = Goods::query();
 
-        if ($request->get("raw") == true) {
-            return $query->with("categoryGoodses")->get();
+        if ($request->get("sortUpdatedAt") != "undefined") {
+            $query->orderBy("updated_at", $request->get("sortUpdatedAt"));
         }
 
-        return $query->get();
+        if ($request->get("with") != null) {
+            $explodes = explode(",", $request->get("with"));
+            foreach ($explodes as $e) {
+                $query->with($e);
+            }
+        }
+
+        return response()->json([
+            "goods" => $query->get(),
+            "title" => "โหลดข้อมูลสำเร็จ",
+            "icon" => "success"
+        ], 200);
     }
 
     public function update(Goods $id, Request $request)
@@ -43,7 +54,18 @@ class GoodsController extends Controller
         ]);
 
         return response()->json([
-            "title" => "สร้างสินค้าสำเร็จ",
+            "title" => "เปลี่ยนแปลงสินค้าสำเร็จ",
+            "icon" => "success"
+        ], 200);
+    }
+
+    public function updateStatusUse(Goods $id)
+    {
+        $id->status_use = $id->status_use = !$id->status_use;
+        $id->save();
+
+        return response()->json([
+            "title" => "เปลี่ยนแปลงสำเร็จ",
             "icon" => "success"
         ], 200);
     }

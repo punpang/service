@@ -32,6 +32,7 @@ class MenuBarSeeder extends Seeder
                 "subs" => [
                     ["title" => "รายการใหม่", "to" => "/manages/order/newOrder", "admin" => 1, "customer" => 0],
                     ["title" => "รายการสั่งซื้อ", "to" => "/manages/orders", "admin" => 1, "customer" => 0],
+                    ["title" => "รายละเอียดรายการสั่งซื้อ", "to" => "/manages/order/details", "admin" => 1, "customer" => 0],
                     ["title" => "ตรวจสอบสลิป", "to" => "/manages/order/checkNoticeOfPaymentFromCustomer", "admin" => 1, "customer" => 0],
                 ]
             ],
@@ -59,6 +60,7 @@ class MenuBarSeeder extends Seeder
                     ["title" => "ทั่วไป", "to" => "/manages/settings/general", "admin" => 1, "customer" => 0],
                     ["title" => "วันหยุดร้าน", "to" => "/manages/settings/store/dayOff", "admin" => 1, "customer" => 0],
                     ["title" => "หมวด/สินค้า", "to" => "/manages/settings/products/options", "admin" => 1, "customer" => 0],
+                    ["title" => "POS/สินค้า", "to" => "/manages/settings/products/pos", "admin" => 1, "customer" => 0],
                     ["title" => "ข้อความตอบกลับ", "to" => "/manages/settings/facebook/reply", "admin" => 1, "customer" => 0],
                 ]
             ],

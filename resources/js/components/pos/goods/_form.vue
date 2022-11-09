@@ -48,7 +48,7 @@
                 </v-btn> -->
             </v-card-text>
             <v-card-actions>
-                <v-btn class="error">
+                <v-btn class="error" @click="exit()">
                     <v-icon left>exit_to_app</v-icon> ออก
                 </v-btn>
                 <v-spacer></v-spacer>
@@ -86,6 +86,25 @@ export default {
             };
         },
         async clickSave() {
+            if (
+                this.goods.text == "" ||
+                this.goods.price == "" ||
+                this.goods.pos_category_goods_id == "" ||
+                this.goods.status_use == "" ||
+                (this.goods.id == "" && this.propGoods)
+            ) {
+                this.$swal({
+                    toast: true,
+                    title: "โปรดกรอกข้อมูลให้ครบถ้วน",
+                    icon: "warning",
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    position: "bottom",
+                });
+                return;
+            }
             let loader = this.$loading.show();
             const payload = this.goods;
             await this.$store
@@ -96,7 +115,7 @@ export default {
                     payload
                 )
                 .then((result) => {
-                    this.$emit("emitExit");
+                    // this.$emit("emitExit");
                     this.exit();
                     this.$swal({
                         toast: true,
@@ -141,6 +160,7 @@ export default {
                 pos_category_goods_id: this.propGoods.pos_category_goods_id,
             };
         },
+
         async fetch_category_goods() {
             let loader = this.$loading.show();
             await this.$store
@@ -172,11 +192,11 @@ export default {
             loader.hide();
         },
     },
-    mounted() {
+    async mounted() {
         if (this.propGoods) {
-            this.setGoods();
-            this.fetch_category_goods();
+            await this.setGoods();
         }
+        await this.fetch_category_goods();
     },
 
     computed: {

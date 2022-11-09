@@ -104,6 +104,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         pos_category_goods_id: this.propGoods.pos_category_goods_id
       };
     },
+    clickSwitchStatusUse: function clickSwitchStatusUse(e) {
+      console.log("fdsjko");
+      console.log("🚀 ~ file: _form.vue ~ line 146 ~ clickSwitchStatusUse ~ e", e);
+    },
     fetch_category_goods: function fetch_category_goods() {
       var _this2 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
@@ -811,6 +815,11 @@ var render = function render() {
       outlined: "",
       label: "สถานะใช้งาน",
       "hide-details": ""
+    },
+    on: {
+      click: function click($event) {
+        return _vm.clickSwitchStatusUse(_vm.goods.id);
+      }
     },
     model: {
       value: _vm.goods.status_use,

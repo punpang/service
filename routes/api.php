@@ -144,11 +144,14 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                 Route::prefix('goods')->group(function () { // api/v1/pos/goods/...
                     Route::post('store', 'Pos\GoodsController@store');
                     Route::post('{id}/update', 'Pos\GoodsController@update');
+                    Route::post('{id}/updateStatusUse', 'Pos\GoodsController@updateStatusUse');
                     Route::get('fetch', 'Pos\GoodsController@fetch');
                 });
                 Route::prefix('category_goods')->group(function () { // api/v1/pos/goods/...
                     Route::post('store', 'Pos\CategoryGoodsController@store');
                     Route::get('fetch', 'Pos\CategoryGoodsController@fetch');
+                    Route::post('{id}/update', 'Pos\CategoryGoodsController@update');
+                    Route::post('{id}/updateStatusUse', 'Pos\CategoryGoodsController@updateStatusUse');
                 });
 
             });

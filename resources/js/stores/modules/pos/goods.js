@@ -34,11 +34,20 @@ export default {
         },
 
         async fetch({ commit }, payload) {
-            console.log("fhdsauio");
             return await axios
                 .get(`/api/admin/v1/pos/goods/fetch?${payload}`)
                 .then((response) => {
-                    commit("fetch", response.data);
+                    commit("fetch", response.data.goods);
+                    return response.data;
+                })
+                .catch((error) => {
+                    return error;
+                });
+        },
+        async updateStatusUse({}, payload) {
+            return await axios
+                .post(`/api/admin/v1/pos/goods/${payload.id}/updateStatusUse`)
+                .then((response) => {
                     return response.data;
                 })
                 .catch((error) => {

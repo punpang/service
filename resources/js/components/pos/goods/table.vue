@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-row class="mt-1">
-            <v-col md="4" cols="12">
+            <v-col md="4" cols="9">
                 <v-text-field
                     dense
                     label="ค้นหาชื่อสินค้า"
@@ -11,8 +11,8 @@
                     v-model="search"
                 ></v-text-field>
             </v-col>
-            <v-col md="8" cols="12">
-                <div class="flex-row d-flex align-center justify-end">
+            <v-col md="8" cols="3">
+                <div class="d-flex justify-end">
                     <createGoods @emitExit="emitExit"></createGoods>
                 </div>
             </v-col>
@@ -24,7 +24,13 @@
             mobile-breakpoint="0"
             hide-default-footer
             :search="search"
+            :items-per-page="99"
         >
+            <template v-slot:item.text="{ item }" class="mb-0 flex-row d-flex">
+                <p class="mb-0 flex-row d-flex">
+                    {{ item.text }}
+                </p>
+            </template>
             <template v-slot:item.price="{ item }">
                 {{ item.price | formatNumber }}
             </template>
@@ -39,14 +45,18 @@
                         dense
                         inset
                         outlined
-                        :label="item.status_use ? 'ใช้งานอยู่' : 'ไม่ได้ใช้งาน'"
+
                         v-model="item.status_use"
+                        @click="clickSwitchStatusUse(item.id)"
                     ></v-switch>
                 </div>
             </template>
 
             <template v-slot:item.manages="{ item }">
-                <updateGoods :propGoods="item" @emitExit="emitExit"></updateGoods>
+                <updateGoods
+                    :propGoods="item"
+                    @emitExit="emitExit"
+                ></updateGoods>
             </template>
         </v-data-table>
     </div>
@@ -80,11 +90,45 @@ export default {
     },
     methods: {
         async emitExit() {
+            console.log("fdsjklo");
             await this.fetch_goods();
+        },
+        async clickSwitchStatusUse(e) {
+            let loader = this.$loading.show();
+            const payload = {
+                id: e,
+            };
+            await this.$store
+                .dispatch("posGoods/updateStatusUse", payload)
+                .then((response) => {
+                    this.$swal({
+                        toast: true,
+                        icon: response.icon,
+                        title: response.title,
+                        allowOutsideClick: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                        position: "bottom",
+                    });
+                })
+                .catch((error) => {
+                    this.$swal({
+                        toast: true,
+                        icon: "error",
+                        title: "เกิดข้อผิดพลาดบางประการ",
+                        allowOutsideClick: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                        position: "bottom",
+                    });
+                });
+            loader.hide();
         },
         async fetch_goods() {
             let loader = this.$loading.show();
-            const payload = "raw=true";
+            const payload = "with=categoryGoodses&sortUpdatedAt=DESC";
             await this.$store
                 .dispatch("posGoods/fetch", payload)
                 .then((response) => {
