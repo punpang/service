@@ -195,7 +195,7 @@ class AOrder extends Model
 
     public function sumGoods()
     {
-        return $this->orderDetails()->sum("price") + $this->sumAddOn();
+        return $this->orderDetails()->sum("price") + $this->sumAddOn() + $this->sumPosOrder();
     }
 
     // public function getSumAddOnAttribute()
@@ -294,8 +294,7 @@ class AOrder extends Model
             $this->sumAccessoryServiceDiscount() +
             $this->sumDeliverService() +
             $this->sumMoneyCustomer() +
-            $this->sumMoneyService() +
-            $this->sumPosOrder();
+            $this->sumMoneyService();
     }
 
     public function getSumTascAttribute()

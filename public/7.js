@@ -6437,9 +6437,7 @@ var render = function render() {
     }
   }, [_c("v-card-title", {
     staticClass: "text-h6 white--text warning"
-  }, [_vm._v("\n            สินค้าทั่วไป "), _c("v-spacer"), _vm._v(" "), _c("div", {
-    staticClass: "font-weight-bold"
-  }, [_vm._v("\n                ฿ " + _vm._s(_vm._f("formatNumber")(_vm.propSumPos)) + "\n            ")])], 1), _vm._v(" "), _c("v-card-text", {
+  }, [_vm._v("\n            สินค้าทั่วไป\n        ")]), _vm._v(" "), _c("v-card-text", {
     staticClass: "py-2"
   }, [_c("v-data-table", {
     attrs: {
@@ -6479,7 +6477,11 @@ var render = function render() {
         })];
       }
     }])
-  })], 1)], 1)], 1);
+  })], 1), _vm._v(" "), _c("v-divider", {
+    staticClass: "ma-0"
+  }), _vm._v(" "), _c("v-card-actions", {
+    staticClass: "px-8 font-weight-bold text-h6"
+  }, [_vm._v("\n            รวม\n            "), _c("v-spacer"), _vm._v("\n            ฿ " + _vm._s(_vm._f("formatNumber")(_vm.propSumPos)) + "\n        ")], 1)], 1)], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;

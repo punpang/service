@@ -2,10 +2,7 @@
     <div>
         <v-card outlined>
             <v-card-title class="text-h6 white--text warning">
-                สินค้าทั่วไป <v-spacer></v-spacer>
-                <div class="font-weight-bold">
-                    ฿ {{ propSumPos | formatNumber }}
-                </div>
+                สินค้าทั่วไป
             </v-card-title>
             <v-card-text class="py-2">
                 <v-data-table
@@ -44,6 +41,12 @@
                     </template>
                 </v-data-table>
             </v-card-text>
+            <v-divider class="ma-0"></v-divider>
+            <v-card-actions class="px-8 font-weight-bold text-h6">
+                รวม
+                <v-spacer></v-spacer>
+                ฿ {{ propSumPos | formatNumber }}
+            </v-card-actions>
         </v-card>
     </div>
 </template>
@@ -69,7 +72,7 @@ export default {
     },
     mounted() {
         if (this.user.type == "1") {
-            this.headers.push({ text: "", value: "manages" , align: "end"});
+            this.headers.push({ text: "", value: "manages", align: "end" });
         }
     },
     computed: {
