@@ -157,6 +157,7 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                 Route::prefix('order')->group(function () { // api/v1/pos/goods/...
                     Route::post('store', 'Pos\OrderController@store');
                     Route::post('{id}/update', 'Pos\OrderController@update');
+                    Route::post('{id}/delete', 'Pos\OrderController@delete');
                 });
 
             });

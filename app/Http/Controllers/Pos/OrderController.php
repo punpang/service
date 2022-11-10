@@ -38,4 +38,14 @@ class OrderController extends Controller
             "icon" => "success"
         ], 200);
     }
+
+    public function delete(Order $id)
+    {
+        $id->delete();
+
+        return response()->json([
+            "title" => "ทำรายการสำเร็จ",
+            "icon" => "success"
+        ], 200);
+    }
 }

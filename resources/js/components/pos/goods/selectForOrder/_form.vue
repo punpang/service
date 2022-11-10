@@ -63,7 +63,7 @@
                     class="deep-orange--text"
                     block
                     large
-                    @click="selectOption()"
+                    @click="clickDelete()"
                 >
                     ลบรายการนี้
                 </v-btn>
@@ -227,6 +227,45 @@ export default {
                 });
 
             loader.hide();
+        },
+        async clickDelete() {
+            const payload = {
+                id: this.propPosGoods.propOrderGoods.id,
+            };
+            let dispatch = ""
+
+            if(this.option.text == "pos_update_goods_order"){
+                dispatch = "posOrder/delete"
+            }
+
+            await this.$store
+                .dispatch(dispatch, payload)
+                .then((response) => {
+                    this.$swal({
+                        toast: true,
+                        title: response.title,
+                        icon: response.icon,
+                        allowOutsideClick: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        position: "bottom",
+                        showConfirmButton: false,
+                    });
+
+                    this.$emit("emitExit");
+                })
+                .catch((error) => {
+                    this.$swal({
+                        toast: true,
+                        title: "มีบางอย่างผิดพลาด",
+                        icon: "error",
+                        allowOutsideClick: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        position: "bottom",
+                        showConfirmButton: false,
+                    });
+                });
         },
         clickDown() {
             if (this.quantity <= 1) {

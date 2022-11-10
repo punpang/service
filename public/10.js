@@ -4660,10 +4660,12 @@ var render = function render() {
       fn: function fn(_ref) {
         var item = _ref.item;
         return [_c("p", {
-          staticClass: "font-weight-black mb-0 d-inline-block text-truncate"
+          staticClass: "font-weight-black mb-0"
         }, [_vm._v("\n                " + _vm._s(item.pos_goods.text) + "\n            ")]), _vm._v(" "), _c("p", {
           staticClass: "mb-0 caption deep-orange--text font-weight-bold"
-        }, [_vm._v("\n                " + _vm._s(item.quantity) + " x " + _vm._s(_vm._f("formatNumber")(item.price)) + "\n            ")])];
+        }, [_vm._v("\n                " + _vm._s(item.quantity) + " x " + _vm._s(_vm._f("formatNumber")(item.price)) + "\n            ")]), _vm._v(" "), item.note ? _c("p", {
+          staticClass: "mb-0 caption"
+        }, [_vm._v("\n                ** " + _vm._s(item.note) + " **\n            ")]) : _vm._e()];
       }
     }, {
       key: "item.total",

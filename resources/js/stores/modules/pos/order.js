@@ -25,5 +25,16 @@ export default {
                     return err;
                 });
         },
+
+        async delete({}, payload) {
+            return await axios
+                .post(`/api/admin/v1/pos/order/${payload.id}/delete`, payload)
+                .then((response) => {
+                    return response.data;
+                })
+                .catch((err) => {
+                    return err;
+                });
+        },
     },
 };

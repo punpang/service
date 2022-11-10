@@ -8,11 +8,15 @@
             mobile-breakpoint="0"
         >
             <template v-slot:item.pos_goods.text="{ item }">
-                <p class="font-weight-black mb-0 d-inline-block text-truncate">
+                <p class="font-weight-black mb-0">
                     {{ item.pos_goods.text }}
                 </p>
+
                 <p class="mb-0 caption deep-orange--text font-weight-bold">
                     {{ item.quantity }} x {{ item.price | formatNumber }}
+                </p>
+                <p class="mb-0 caption" v-if="item.note">
+                    ** {{ item.note }} **
                 </p>
                 <!-- {{ item.quantity }} x {{ item.pos_goods.text }} @ -->
             </template>
@@ -22,8 +26,9 @@
             </template>
 
             <template v-slot:item.manages="{ item }">
-
-                <updateSelectForOrder :propOrderGoods="item"></updateSelectForOrder>
+                <updateSelectForOrder
+                    :propOrderGoods="item"
+                ></updateSelectForOrder>
             </template>
         </v-data-table>
     </div>
