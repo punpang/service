@@ -10,14 +10,31 @@ class OrderController extends Controller
 {
     public function store(Request $request)
     {
-        Order::create([
+
+        $order = Order::where([
             "order_id" => $request->order_id,
             "pos_goods_id" => $request->pos_goods_id,
-            "price" => $request->price,
-            "quantity" => $request->quantity,
-            "total" => $request->total,
-            "note" => $request->note
-        ]);
+            "note" => $request->note,
+            "price" => $request->price
+        ])->first();
+
+        if ($order) {
+            $order->update([
+                "price" => $request->price,
+                "quantity" => $order->quantity + $request->quantity,
+                "total" => $request->total,
+                "note" => $request->note
+            ]);
+        } else {
+            Order::create([
+                "order_id" => $request->order_id,
+                "pos_goods_id" => $request->pos_goods_id,
+                "price" => $request->price,
+                "quantity" => $request->quantity,
+                "total" => $request->total,
+                "note" => $request->note
+            ]);
+        }
 
         return response()->json([
             "title" => "ทำรายการสำเร็จ",
@@ -33,6 +50,25 @@ class OrderController extends Controller
             "total" => $request->total,
             "note" => $request->note
         ]);
+
+        $orders = Order::where([
+            "order_id" => $id->order_id,
+            "pos_goods_id" => $id->pos_goods_id,
+            "note" => $id->note,
+            "price" => $id->price
+        ])->get();
+
+        if ($orders->count() > 1) {
+            foreach ($orders as $key => $order) {
+                if ($key > 0) {
+                    $orders[0]->update([
+                        "quantity" => $orders[0]->quantity + $order->quantity,
+                    ]);
+                    $order->delete();
+                }
+            }
+        }
+
         return response()->json([
             "title" => "ทำรายการสำเร็จ",
             "icon" => "success"

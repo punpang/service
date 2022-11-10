@@ -23,7 +23,7 @@
                     สินค้า POS
 
                     <v-spacer></v-spacer>
-                    <v-btn icon fab x-small>
+                    <v-btn icon fab x-small @click="clickExit()">
                         <v-icon color="white">close</v-icon>
                     </v-btn>
                 </v-card-title>
@@ -47,6 +47,12 @@ export default {
         return {
             dialog: false,
         };
+    },
+    methods: {
+        clickExit() {
+            this.$emit("emitExit");
+            this.dialog = false;
+        },
     },
     computed: {
         ...mapGetters({

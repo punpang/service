@@ -1,8 +1,8 @@
 <template>
     <div>
-        <v-dialog persistent width="350" v-model="dialog" scrollable>
+        <v-dialog width="350" v-model="dialog" scrollable>
             <template v-slot:activator="{ on }">
-                <v-btn icon fab small v-on="on">
+                <v-btn icon fab small v-on="on" @click="clickSet()">
                     <v-icon>more_horiz</v-icon>
                 </v-btn>
             </template>
@@ -36,12 +36,12 @@ export default {
             this.dialog = false;
             loader.hide();
         },
-    },
-    mounted() {
-        this.pos = {
-            text: "pos_update_goods_order",
-            propOrderGoods: this.propOrderGoods,
-        };
+        clickSet() {
+            this.pos = {
+                text: "pos_update_goods_order",
+                propOrderGoods: this.propOrderGoods,
+            };
+        },
     },
 };
 </script>

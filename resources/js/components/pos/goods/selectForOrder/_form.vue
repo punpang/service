@@ -232,12 +232,30 @@ export default {
             const payload = {
                 id: this.propPosGoods.propOrderGoods.id,
             };
-            let dispatch = ""
+            let dispatch = "";
 
-            if(this.option.text == "pos_update_goods_order"){
-                dispatch = "posOrder/delete"
+            if (this.option.text == "pos_update_goods_order") {
+                dispatch = "posOrder/delete";
             }
 
+            this.$swal({
+                title: "ต้องการลบรายการนี้ใช่ไหม ?",
+                icon: "warning",
+                allowOutsideClick: false,
+                confirmButtonColor: "#38c172",
+                confirmButtonText: "ใช่, ลบเลย",
+                denyButtonText: "ไม่ใช่, ออก",
+                showDenyButton: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let loader = this.$loading.show();
+                    this.processingDelete(dispatch, payload);
+                    loader.hide();
+                }
+            });
+            return;
+        },
+        async processingDelete(dispatch, payload) {
             await this.$store
                 .dispatch(dispatch, payload)
                 .then((response) => {

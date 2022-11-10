@@ -91,8 +91,15 @@
         ></formConditionPayment>
         <cardDataOrderDetail></cardDataOrderDetail>
         <cardDataCustomer></cardDataCustomer>
-        <cardDataGoodsDetail></cardDataGoodsDetail>
-
+        <cardDataGoodsDetail
+            v-if="order.order_details.length > 0"
+        ></cardDataGoodsDetail>
+        <tablePosOrder
+            class="mb-2"
+            v-if="order.pos_orders.length > 0"
+            :propGoods="order.pos_orders"
+            :propSumPos="order.sum_all.sumPosOrder"
+        ></tablePosOrder>
         <cardDeliveryShow v-if="order.status < 8"></cardDeliveryShow>
 
         <cardPaymentSummary></cardPaymentSummary>
@@ -123,6 +130,7 @@ import formConditionPayment from "@/js/components/guest/formConditionPayment";
 import cardDeliveryShow from "@/js/components/order/delivery/show/cardDeliveryShow";
 import alertRatingUUID from "@/js/components/guest/alertRatingUUID";
 import alertPaymentUUID from "@/js/components/guest/alertPaymentUUID";
+import tablePosOrder from "@/js/components/pos/order/table";
 
 import { mapGetters } from "vuex";
 export default {
@@ -136,6 +144,7 @@ export default {
         cardDeliveryShow,
         alertRatingUUID,
         alertPaymentUUID,
+        tablePosOrder,
     },
     data() {
         return {};

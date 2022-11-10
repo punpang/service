@@ -157,7 +157,8 @@ class AOrderController extends Controller
                 "orderDetails.imageFromCustomers.googleImage",
                 "orderDetails.imageGoodsReviewToCustomers.googleImage",
                 "orderDetails.MoneyServices.category_money_service",
-                "orderDeliveryService"
+                "orderDeliveryService",
+                "posOrders.posGoods"
             )
             ->with("orderDetails.addOns.productAddOn.goodsAddOn")
             ->first();

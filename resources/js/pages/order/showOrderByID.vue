@@ -5,8 +5,8 @@
         ></alertAdjustExcessPayment>
         <v-row>
             <v-col cols="12" md="8">
-                <cardManagesGoodsDetail></cardManagesGoodsDetail>
-                <cardPosGoods :propGoods="order.pos_orders"></cardPosGoods>
+                <cardManagesGoodsDetail v-if="order.order_details.length > 0"></cardManagesGoodsDetail>
+                <cardPosGoods v-if="order.pos_orders.length > 0" :propGoods="order.pos_orders" :propSumPos="order.sum_all.sumPosOrder"></cardPosGoods>
                 <cardDeliveryShow></cardDeliveryShow>
             </v-col>
             <v-col cols="12" md="4">

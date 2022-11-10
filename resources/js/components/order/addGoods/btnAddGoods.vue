@@ -26,6 +26,7 @@
                             </v-col>
                             <v-col cols="12" md="6">
                                 <btnAddGoodsPos
+                                    @emitExit="emitExit"
                                     :propPosGoods="pos"
                                 ></btnAddGoodsPos>
                             </v-col>
@@ -52,7 +53,15 @@ export default {
             pos: {},
         };
     },
-    methods: {},
+    methods: {
+        async emitExit() {
+            let loader = this.$loading.show();
+            await this.$store.dispatch("orderIndex/getOrderByID", {
+                orderID: this.order.id,
+            });
+            loader.hide();
+        },
+    },
     mounted() {
         this.pos.order_id = this.order.id;
         this.pos.text = "pos_add_goods_order";

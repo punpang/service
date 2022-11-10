@@ -230,6 +230,7 @@ class AOrder extends Model
             "sumAdjustExcessPayment" => $this->sumAdjustExcessPayment(),
             "sumMoneyService" => $this->sumMoneyService(),
             "sumMoneyCustomer" => $this->sumMoneyCustomer(),
+            "sumPosOrder" => $this->sumPosOrder(),
             // "sumHistoryPayed" => $this->sumHistoryPayed()
         ];
     }
@@ -293,7 +294,8 @@ class AOrder extends Model
             $this->sumAccessoryServiceDiscount() +
             $this->sumDeliverService() +
             $this->sumMoneyCustomer() +
-            $this->sumMoneyService();
+            $this->sumMoneyService() +
+            $this->sumPosOrder();
     }
 
     public function getSumTascAttribute()
@@ -488,6 +490,11 @@ class AOrder extends Model
 
     public function posOrders()
     {
-        return $this->hasMany(Order::class,"order_id", "id");
+        return $this->hasMany(Order::class, "order_id", "id");
+    }
+
+    public function sumPosOrder()
+    {
+        return $this->posOrders()->sum("total");
     }
 }
