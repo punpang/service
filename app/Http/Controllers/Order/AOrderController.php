@@ -227,7 +227,8 @@ class AOrderController extends Controller
             "orderDetails.imageGoodsReviewToCustomers.googleImage",
             "orderDeliveryService",
             "orderDetails.MoneyServices.category_money_service",
-            "adjustExcessPayments"
+            "adjustExcessPayments",
+            "posOrders.posGoods"
         )
             ->with("orderDetails.addOns.productAddOn.goodsAddOn")
             ->findOrFail($order_id);

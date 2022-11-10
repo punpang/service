@@ -56,8 +56,10 @@ import moneyServices from "@/js/stores/modules/order/moneyServices";
 import orderLuckyReward from "@/js/stores/modules/order/luckyReward";
 /// LUCKY REWAYD END ///
 
-import posGoods from '@/js/stores/modules/pos/goods';
-import posCategoryGoods from '@/js/stores/modules/pos/categoryGoods';
+import posGoods from "@/js/stores/modules/pos/goods";
+import posCategoryGoods from "@/js/stores/modules/pos/categoryGoods";
+import posOrder from "@/js/stores/modules/pos/order";
+import posOrderDetail from "@/js/stores/modules/pos/orderDetail";
 
 Vue.use(Vuex);
 
@@ -114,6 +116,8 @@ export default new Vuex.Store({
         moneyServices,
         //
         posGoods,
-        posCategoryGoods
+        posCategoryGoods,
+        posOrder,
+        posOrderDetail,
     },
 });

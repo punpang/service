@@ -6,6 +6,7 @@
         <v-row>
             <v-col cols="12" md="8">
                 <cardManagesGoodsDetail></cardManagesGoodsDetail>
+                <cardPosGoods :propGoods="order.pos_orders"></cardPosGoods>
                 <cardDeliveryShow></cardDeliveryShow>
             </v-col>
             <v-col cols="12" md="4">
@@ -76,6 +77,7 @@ import cardDataOrderDetail from "@/js/components/order/cardDataOrderDetail";
 import cardManagesGoodsDetail from "@/js/components/order/cardManagesGoodsDetail";
 import cardPaymentSummary from "@/js/components/order/cardPaymentSummary";
 import cardDeliveryShow from "@/js/components/order/delivery/show/cardDeliveryShow";
+import cardPosGoods from "@/js/components/pos/order/table";
 
 import btnAddGoods from "@/js/components/order/addGoods/btnAddGoods";
 
@@ -94,6 +96,7 @@ export default {
     components: {
         cardDataCustomer,
         cardDataOrderDetail,
+        cardPosGoods,
 
         cardManagesGoodsDetail,
         cardPaymentSummary,

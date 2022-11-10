@@ -28,7 +28,7 @@
                     </v-btn>
                 </v-card-title>
                 <v-card-text>
-                    <tablePosGoods :propOrder="order"></tablePosGoods>
+                    <tablePosGoods :propPosGoods="propPosGoods"></tablePosGoods>
                 </v-card-text>
             </v-card>
         </v-dialog>
@@ -39,6 +39,7 @@
 import tablePosGoods from "@/js/components/pos/goods/table";
 import { mapGetters } from "vuex";
 export default {
+    props: ["propPosGoods"],
     components: {
         tablePosGoods,
     },

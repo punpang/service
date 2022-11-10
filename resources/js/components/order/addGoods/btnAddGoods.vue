@@ -25,7 +25,9 @@
                                 <btnAddCake></btnAddCake>
                             </v-col>
                             <v-col cols="12" md="6">
-                                <btnAddGoodsPos></btnAddGoodsPos>
+                                <btnAddGoodsPos
+                                    :propPosGoods="pos"
+                                ></btnAddGoodsPos>
                             </v-col>
                         </v-row>
                     </v-container>
@@ -38,6 +40,7 @@
 <script>
 import btnAddCake from "@/js/components/order/addGoods/btnAddCake";
 import btnAddGoodsPos from "@/js/components/order/addGoodsPos/create";
+import { mapGetters } from "vuex";
 export default {
     components: { btnAddCake, btnAddGoodsPos },
     data() {
@@ -46,8 +49,18 @@ export default {
             text: {
                 header: "เพิ่มสินค้า",
             },
+            pos: {},
         };
     },
     methods: {},
+    mounted() {
+        this.pos.order_id = this.order.id;
+        this.pos.text = "pos_add_goods_order";
+    },
+    computed: {
+        ...mapGetters({
+            order: "orderIndex/order",
+        }),
+    },
 };
 </script>

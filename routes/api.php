@@ -154,6 +154,11 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                     Route::post('{id}/updateStatusUse', 'Pos\CategoryGoodsController@updateStatusUse');
                 });
 
+                Route::prefix('order')->group(function () { // api/v1/pos/goods/...
+                    Route::post('store', 'Pos\OrderController@store');
+                    Route::post('{id}/update', 'Pos\OrderController@update');
+                });
+
             });
 
             Route::prefix('categoryMoneyService')->group(function () { // api/v1/guest/ksher

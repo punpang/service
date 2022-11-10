@@ -11,7 +11,7 @@ class Goods extends Model
 
     protected $table = "pos_goods";
     protected $connection = "order";
-    // protected $hidden = ['created_at', 'updated_at'];
+    protected $hidden = ['created_at', 'updated_at'];
     // public $timestamps = false;
     protected $appends = [];
     protected $guarded = [];
@@ -19,5 +19,10 @@ class Goods extends Model
     public function categoryGoodses()
     {
         return $this->belongsTo(CategoryGoods::class, "pos_category_goods_id", "id");
+    }
+
+    public function posOrders()
+    {
+        return $this->hasMany(Order::class);
     }
 }

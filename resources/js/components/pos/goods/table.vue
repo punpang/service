@@ -55,8 +55,8 @@
                 <div class="flex-row d-flex justify-end">
                     <selectForOrder
                         :propGoods="item"
-                        :propOrder="propOrder"
-                        v-if="propOrder"
+                        :propPosGoods="propPosGoods"
+                        v-if="propPosGoods"
                     ></selectForOrder>
                     <updateGoods
                         :propGoods="item"
@@ -79,7 +79,7 @@ import updateGoods from "@/js/components/pos/goods/update";
 import selectForOrder from "@/js/components/pos/goods/selectForOrder/create";
 
 export default {
-    props: ["propOrder"],
+    props: ["propPosGoods"],
     components: {
         createGoods,
         updateGoods,

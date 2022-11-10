@@ -5,6 +5,7 @@ namespace App\Order;
 // use Bitly;
 // use App\URL;
 // use App\Linenotify;
+use App\Pos\Order;
 use App\Order\OrderDetail;
 use Illuminate\Support\Str;
 use App\Order\AHistoryPayed;
@@ -483,5 +484,10 @@ class AOrder extends Model
     public function OrderChannel()
     {
         return $this->belongsTo(OrderChannel::class, "channel", "id");
+    }
+
+    public function posOrders()
+    {
+        return $this->hasMany(Order::class,"order_id", "id");
     }
 }
