@@ -45,6 +45,8 @@ class OrderDetailController extends Controller
         return $query->makeHidden(["sum_all"]);
     }
 
+
+
     public function delete(OrderDetail $id)
     {
         $id->delete();

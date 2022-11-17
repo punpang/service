@@ -318,4 +318,10 @@ class AlertMessages extends Model
 
         return MSms::Sms($order->customer->tel, $msgSms . " รายละเอียดคำสั่งซื้อ คลิกลิงก์ [ " . $order->link_for_customer . " ]", $alertSMS);
     }
+
+    public static function smsConfirmConsentConditions($customer, $alertSMS = true)
+    {
+        $msgSms = "คุณได้ยอมรับเงื่อนไขการสั่งซื้อแล้ว คุณสามารถศึกษาเงื่อนไขได้ที่ [ https://punpang.net/learning/conditions/order ]";
+        return MSms::Sms($customer->tel, $msgSms, $alertSMS);
+    }
 }

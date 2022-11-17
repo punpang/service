@@ -55,6 +55,7 @@ class Facebook extends Model
 
     public static function create_profile($psid)
     {
+
         $profile = Facebook::where("psid", $psid)->first();
         if (!$profile) {
             // $get_profile = Facebook::get_profile($psid);
@@ -64,16 +65,28 @@ class Facebook extends Model
             //     "psid" => $get_profile["id"],
 
             // ]);
-            $profile = Facebook::create([
-                "first_name" => $psid,
-                "last_name" => $psid,
-                "psid" => $psid,
+            // $profile = Facebook::create([
+            //     "first_name" => $psid,
+            //     "last_name" => $psid,
+            //     "psid" => $psid,
 
-            ]);
+            // ]);
         } else {
+            // Facebook::update_profile($profile);
             $profile->update(["updated_at" => now()]);
         }
         return $profile;
+    }
+
+    public static function update_profile($profile)
+    {
+        if ($profile->updated_at > now()->subDays(30)->format("Y-m-d")) {
+            $get_profile = Facebook::get_profile($profile->psid);
+            $profile->update([
+                "first_name" => $get_profile["first_name"],
+                "last_name" => $get_profile["last_name"],
+            ]);
+        }
     }
 
     public static function welcome_date($profile)
@@ -249,6 +262,7 @@ $setting->open_store - $setting->close_store น. ชั่วคราว
     {
         if (
             $order->OrderChannel->keyword != "facebook" ||
+            empty($order->customer->facebook) ||
             $order->customer->facebook->updated_at->addHours("23") < now()
         ) {
             return;

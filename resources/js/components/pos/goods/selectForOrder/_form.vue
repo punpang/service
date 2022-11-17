@@ -125,12 +125,6 @@ export default {
         };
     },
     methods: {
-        selectOption() {
-            const e = this.options.filter((e) => {
-                return e.text == this.propPosGoods.text;
-            });
-            [this.option] = e;
-        },
         async clickSave() {
             if (
                 this.quantity <= 0 ||
@@ -294,18 +288,54 @@ export default {
         clickUp() {
             this.quantity++;
         },
+        start() {
+            if (this.propPosGoods) {
+                this.selectOption();
+            }
+            if (this.option.status == "update") {
+                this.price = this.propPosGoods.propOrderGoods.price;
+                this.note = this.propPosGoods.propOrderGoods.note;
+                this.quantity = this.propPosGoods.propOrderGoods.quantity;
+            } else {
+                this.price = this.propGoods.price;
+            }
+        },
+        selectOption() {
+            const e = this.options.filter((e) => {
+                return e.text == this.propPosGoods.text;
+            });
+            [this.option] = e;
+        },
     },
     mounted() {
-        if (this.propPosGoods) {
-            this.selectOption();
-        }
-        if (this.option.status == "update") {
+        this.start();
+    },
+    watch: {
+        propPosGoods() {
+
             this.price = this.propPosGoods.propOrderGoods.price;
             this.note = this.propPosGoods.propOrderGoods.note;
             this.quantity = this.propPosGoods.propOrderGoods.quantity;
-        } else {
-            this.price = this.propGoods.price;
-        }
+        },
+
+        // price() {
+        //     if (this.option.status == "update") {
+        //         return this.propPosGoods.propOrderGoods.price;
+        //     }
+        //     return this.propGoods.price;
+        // },
+        // quantity() {
+        //     if (this.option.status == "update") {
+        //         return this.propPosGoods.propOrderGoods.quantity;
+        //     }
+        //     return 1;
+        // },
+        // note() {
+        //     if (this.option.status == "update") {
+        //         return this.propPosGoods.propOrderGoods.note;
+        //     }
+        //     return "";
+        // },
     },
     computed: {
         total() {

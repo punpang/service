@@ -841,4 +841,42 @@ class AOrderController extends Controller
 
         return $result;
     }
+
+    public function pos_fetch(Request $request)
+    {
+        //$query = OrderDetail::query();
+
+        $query = AOrder::
+            // with([
+            //     "aOrder" => function ($q) {
+            //         $q->select("id", "date_get", "time_get");
+            //         // $q->orderBy("time_get", "asc");
+            //     }
+            // ])->
+            // with(
+            //     "aOrder:id,date_get,time_get",
+            //     "aOrder.orderDeliveryService",
+            //     "aPrice.googleImage",
+            //     "addOns.productAddOn.goodsAddOn",
+            //     "imageFromCustomers.googleImage",
+            //     "productPrototypes.googleImage"
+            // )
+            with("posOrders.posGoods")
+            // ->whereHas("aOrder", function ($q) use ($request) {
+            //     $q->where("date_get", $request->get("date_get"));
+            //     //$q->where("status", "<", "8");
+            // })
+            ->where("date_get", $request->get("date_get"))
+            ->get();
+
+
+
+        // foreach ($query as $q) {
+        //     $q->setAppends(["time_get_format"]);
+        // }
+
+        return $query->makeHidden(["sum_all"]);
+
+        return $query;
+    }
 }

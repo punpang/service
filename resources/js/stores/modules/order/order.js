@@ -3,6 +3,7 @@ export default {
     state: {
         orders: [],
         orders_details: [],
+        orders_details_pos:[],
         setNameGoods: "",
         order: {
             sum_all: {
@@ -63,6 +64,9 @@ export default {
         orders_details(state, data) {
             state.orders_details = data;
         },
+        orders_details_pos(state, data){
+            state.orders_details_pos = data;
+        }
     },
     getters: {
         order: (state) => state.order,
@@ -72,6 +76,7 @@ export default {
         setNameGoods: (state) => state.setNameGoods,
         orders: (state) => state.orders,
         orders_details: (state) => state.orders_details,
+        orders_details_pos: (state) => state.orders_details_pos,
     },
     actions: {
         async getOrderByUUID({ commit }, payload) {
@@ -385,6 +390,17 @@ export default {
                 .get(`/api/admin/v1/orders/details/fetch?${payload}`)
                 .then((response) => {
                     commit("orders_details", response.data);
+                    return response;
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        },
+        async fetch_orders_details_pos({ commit }, payload) {
+            return await axios
+                .get(`/api/admin/v1/orders/details/pos/fetch?${payload}`)
+                .then((response) => {
+                    commit("orders_details_pos", response.data);
                     return response;
                 })
                 .catch((err) => {

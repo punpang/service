@@ -50,95 +50,118 @@
             </v-col>
         </v-row>
         <v-divider></v-divider>
-        <v-data-table
-            :headers="headers"
-            :items="details"
-            hide-default-footer
-            :search="search"
-            :sort-by="['a_order.time_get']"
-        >
-            <template v-slot:item.image_goods="{ item }">
-                <imageThumbnailPathSizeFree
-                    v-if="item.a_price.google_image"
-                    :path="item.a_price.google_image.src_name"
-                    :size="80"
-                ></imageThumbnailPathSizeFree>
-            </template>
-            <template v-slot:item.a_price.name_goods="{ item }">
-                <div class="py-3">
-                    <p class="mb-0 font-weight-black text-subtitle-2">
-                        {{ item.a_price.name_goods }}
-                    </p>
+        <v-tabs v-model="tab">
+            <v-tab>
+                <v-badge
+                    color="deep-orange"
+                    :content="details.length > 0 ? details.length : '0'"
+                >
+                    Order
+                </v-badge>
+            </v-tab>
 
-                    <p
-                        v-for="a in item.add_ons"
-                        :key="a"
-                        class="mb-1 text-body-2"
-                    >
-                        + {{ a.product_add_on.goods_add_on.name }}
-                    </p>
+            <v-tab
+                ><v-badge
+                    color="deep-orange"
+                    :content="pos.length > 0 ? pos.length : '0'"
+                >
+                    pos
+                </v-badge></v-tab
+            >
+        </v-tabs>
 
-                    <p
-                        class="mb-1 text-caption info--text font-weight-black"
-                        v-if="item.detail != '-'"
-                    >
-                        *{{ item.detail }}*
-                    </p>
+        <v-tabs-items v-model="tab">
+            <v-tab-item>
+                <v-data-table
+                    :headers="headers"
+                    :items="details"
+                    hide-default-footer
+                    :search="search"
+                    :sort-by="['a_order.time_get']"
+                >
+                    <template v-slot:item.image_goods="{ item }">
+                        <imageThumbnailPathSizeFree
+                            v-if="item.a_price.google_image"
+                            :path="item.a_price.google_image.src_name"
+                            :size="80"
+                        ></imageThumbnailPathSizeFree>
+                    </template>
+                    <template v-slot:item.a_price.name_goods="{ item }">
+                        <div class="py-3">
+                            <p class="mb-0 font-weight-black text-subtitle-2">
+                                {{ item.a_price.name_goods }}
+                            </p>
 
-                    <!-- <v-btn class="info" x-small rounded> ต้นแบบสินค้า </v-btn> -->
-                    <btnPrototypeImage
-                        :propPath="
-                            item.product_prototypes[0].google_image.src_name
-                        "
-                        v-if="item.product_prototypes.length > 0"
-                    ></btnPrototypeImage>
+                            <p
+                                v-for="a in item.add_ons"
+                                :key="a"
+                                class="mb-1 text-body-2"
+                            >
+                                + {{ a.product_add_on.goods_add_on.name }}
+                            </p>
 
-                    <v-btn
-                        class="pink accent-2"
-                        x-small
-                        rounded
-                        dark
-                        v-if="item.add_ons.length > 0"
-                    >
-                        ตกแต่งเพิ่มเติม
-                    </v-btn>
+                            <p
+                                class="mb-1 text-caption info--text font-weight-black"
+                                v-if="item.detail != '-'"
+                            >
+                                *{{ item.detail }}*
+                            </p>
 
-                    <!-- <v-btn class="indigo accent-3" x-small rounded dark>
+                            <!-- <v-btn class="info" x-small rounded> ต้นแบบสินค้า </v-btn> -->
+                            <btnPrototypeImage
+                                :propPath="
+                                    item.product_prototypes[0].google_image
+                                        .src_name
+                                "
+                                v-if="item.product_prototypes.length > 0"
+                            ></btnPrototypeImage>
+
+                            <v-btn
+                                class="pink accent-2"
+                                x-small
+                                rounded
+                                dark
+                                v-if="item.add_ons.length > 0"
+                            >
+                                ตกแต่งเพิ่มเติม
+                            </v-btn>
+
+                            <!-- <v-btn class="indigo accent-3" x-small rounded dark>
                         ลูกบอล/ล้อม/ซ่อนเงิน
                     </v-btn> -->
 
-                    <v-btn
-                        class="cyan darken-2"
-                        x-small
-                        rounded
-                        dark
-                        v-if="item.a_order.order_delivery_service"
-                    >
-                        บริการจัดส่ง
-                    </v-btn>
+                            <v-btn
+                                class="cyan darken-2"
+                                x-small
+                                rounded
+                                dark
+                                v-if="item.a_order.order_delivery_service"
+                            >
+                                บริการจัดส่ง
+                            </v-btn>
 
-                    <v-btn
-                        class="purple darken-3"
-                        x-small
-                        rounded
-                        dark
-                        v-if="item.is_take_a_photo"
-                    >
-                        ถ่ายรูปสินค้า
-                    </v-btn>
+                            <v-btn
+                                class="purple darken-3"
+                                x-small
+                                rounded
+                                dark
+                                v-if="item.is_take_a_photo"
+                            >
+                                ถ่ายรูปสินค้า
+                            </v-btn>
 
-                    <v-btn
-                        class="lime darken-2"
-                        x-small
-                        rounded
-                        dark
-                        v-if="item.status_upload_images_from_customer"
-                    >
-                        รูปภาพลูกค้า
-                    </v-btn>
-                </div>
-            </template>
-            <!-- <template v-slot:item.tags="{ item }">
+                            <v-btn
+                                class="lime darken-2"
+                                x-small
+                                rounded
+                                dark
+                                v-if="item.status_upload_images_from_customer"
+                            >
+                                รูปภาพลูกค้า
+                            </v-btn>
+                        </div>
+                    </template>
+                    <!-- <template v-slot:item.tags="{ item }">
                 <div class="py-3">
                     <v-btn
                         class="info"
@@ -195,17 +218,61 @@
                 </div>
             </template> -->
 
-            <template v-slot:item.manages="{ item }">
-                <v-btn
-                    class="info"
-                    small
-                    @click="clickToOrder(item.a_order.id)"
-                >
-                    <v-icon left>search</v-icon>
-                    ดูข้อมูล
-                </v-btn>
-            </template>
-        </v-data-table>
+                    <template v-slot:item.manages="{ item }">
+                        <v-btn
+                            class="info"
+                            small
+                            @click="clickToOrder(item.a_order.id)"
+                        >
+                            <v-icon left>search</v-icon>
+                            ดูข้อมูล
+                        </v-btn>
+                    </template>
+                </v-data-table>
+            </v-tab-item>
+            <v-tab-item class="py-2">
+                <v-card outlined v-for="order in pos" :key="order.id">
+                    <v-card-title class="text-h6">
+                        Order :: {{ order.id }}
+                        <v-spacer></v-spacer>
+                        <v-btn
+                            icon
+                            fab
+                            x-small
+                            class="deep-orange"
+                            dark
+                            @click="clickToOrder(order.id)"
+                        >
+                            <v-icon>search</v-icon>
+                        </v-btn>
+                    </v-card-title>
+                    <v-card-text>
+                        <p class="font-weight-bold mb-0">
+                            วัน-เวลานัดรับสินค้า
+                        </p>
+                        <p class="mb-4 caption">
+                            {{ order.date_get_th }}
+                            {{ order.time_get_format }} น.
+                        </p>
+                        <div
+                            v-for="pos_order in order.pos_orders"
+                            :key="pos_order.id"
+                        >
+                            <v-divider class="my-2"></v-divider>
+                            <p class="mb-1">
+                                <strong>{{ pos_order.pos_goods.text }}</strong>
+                            </p>
+                            <p
+                                class="mb-0 caption deep-orange--text font-weight-bold"
+                            >
+                                {{ pos_order.quantity }} x
+                                {{ pos_order.price | formatNumber }}
+                            </p>
+                        </div>
+                    </v-card-text>
+                </v-card>
+            </v-tab-item>
+        </v-tabs-items>
     </div>
 </template>
 
@@ -213,10 +280,16 @@
 import { mapGetters } from "vuex";
 import imageThumbnailPathSizeFree from "@/js/components/google/drive/imageThumbnailPathSizeFree";
 import btnPrototypeImage from "@/js/components/order/details/btnPrototypeImage.vue";
+
+var numeral = require("numeral");
+Vue.filter("formatNumber", function (value) {
+    return numeral(value).format("0,0.00");
+});
 export default {
     components: { imageThumbnailPathSizeFree, btnPrototypeImage },
     data() {
         return {
+            tab: null,
             search: "",
             menu: false,
             date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
@@ -265,6 +338,11 @@ export default {
                 "orderIndex/fetch_orders_details",
                 payload
             );
+
+            const result_pos = await this.$store.dispatch(
+                "orderIndex/fetch_orders_details_pos",
+                payload
+            );
             loader.hide();
         },
         formatDate(date) {
@@ -280,6 +358,7 @@ export default {
     computed: {
         ...mapGetters({
             details: "orderIndex/orders_details",
+            pos: "orderIndex/orders_details_pos",
         }),
         computedDateFormatted() {
             return this.formatDate(this.date);

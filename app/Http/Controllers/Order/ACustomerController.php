@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Order;
 
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Order\ACustomer;
+// use App\Order\ACustomer;
 use App\Order\AOrder;
+use App\Order\AlertMessages;
 
 class ACustomerController extends Controller
 {
@@ -15,6 +16,8 @@ class ACustomerController extends Controller
         $order->customer->status_consent_condition = request("status_consent_condition");
         $order->customer->status_consent_condition_updated_at = \Carbon\Carbon::now();
         $order->customer->save();
+
+        AlertMessages::smsConfirmConsentConditions($order->customer);
 
         return $order->customer;
     }

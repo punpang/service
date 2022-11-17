@@ -230,6 +230,11 @@ const routes = [
         component: () => import("@/js/pages/guest/orders/shotlink"),
     },
     {
+        path: "/learning/conditions/order",
+        name: "learningConditionsOrder",
+        component: () => import("@/js/pages/learning/conditions/order"),
+    },
+    {
         path: "/ksher/successfully",
         name: "guestOrderKsherSuccessfully",
         component: () => import("@/js/pages/guest/orders/ksher/successfully"),

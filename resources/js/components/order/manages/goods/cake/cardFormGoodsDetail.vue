@@ -33,8 +33,16 @@
                             src="https://www.punpangsv.com/admin_system/home/product/img-products/3FE0FF85-F7DE-4ED2-A5EF-77C4955186C1_1_201_a.png"
                         ></v-img> -->
                         <imageThumbnailPathSizeW200H200
-                            v-if="detail.a_price.google_image"
-                            :path="detail.a_price.google_image.src_name"
+                            v-if="
+                                detail.a_price.google_image ||
+                                detail.product_prototypes.google_image
+                            "
+                            :path="
+                                detail.product_prototypes.length > 0
+                                    ? detail.product_prototypes.google_image
+                                          .src_name
+                                    : detail.a_price.google_image.src_name
+                            "
                         ></imageThumbnailPathSizeW200H200>
                     </v-col>
                     <v-col cols="9" md="9" class="pa-2">
