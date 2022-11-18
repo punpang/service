@@ -65,12 +65,12 @@ class Facebook extends Model
             //     "psid" => $get_profile["id"],
 
             // ]);
-            // $profile = Facebook::create([
-            //     "first_name" => $psid,
-            //     "last_name" => $psid,
-            //     "psid" => $psid,
+            $profile = Facebook::create([
+                "first_name" => $psid,
+                "last_name" => $psid,
+                "psid" => $psid,
 
-            // ]);
+            ]);
         } else {
             // Facebook::update_profile($profile);
             $profile->update(["updated_at" => now()]);
@@ -80,7 +80,7 @@ class Facebook extends Model
 
     public static function update_profile($profile)
     {
-        if ($profile->updated_at > now()->subDays(30)->format("Y-m-d")) {
+        if ($profile->updated_at < now()->subDays(7)) {
             $get_profile = Facebook::get_profile($profile->psid);
             $profile->update([
                 "first_name" => $get_profile["first_name"],

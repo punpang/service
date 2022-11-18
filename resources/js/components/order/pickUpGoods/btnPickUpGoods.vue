@@ -12,9 +12,7 @@
                     v-on="on"
                     @click="clickStart()"
                     v-if="order.status == 8"
-                    :disabled="
-                        order.sum_all.sumBalance != 0
-                    "
+                    :disabled="order.sum_all.sumBalance != 0"
                 >
                     <!-- ||
                         (order.sum_all.sumBalance != 0 &&
@@ -80,19 +78,24 @@ export default {
                 cancelButtonColor: "#d33",
                 confirmButtonText: "ใช่ , ได้รับแล้ว",
                 cancelButtonText: "ไมใช่ , ยังไม่ได้รับ",
+
+                input: "checkbox",
+                inputValue: 1,
+                inputPlaceholder: "สะสมคะแนนได้",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    this.save();
+                    this.save(result.value);
                 }
 
                 this.dialog = false;
             });
         },
-        async save() {
+        async save(is_AddScore) {
             let loader = this.$loading.show();
             const result = await this.$store.dispatch(
                 "orderIndex/pickUpGoods",
                 {
+                    is_AddScore: is_AddScore,
                     order_id: this.$route.params.id,
                 }
             );

@@ -80,11 +80,18 @@
                     :sort-by="['a_order.time_get']"
                 >
                     <template v-slot:item.image_goods="{ item }">
-                        <imageThumbnailPathSizeFree
-                            v-if="item.a_price.google_image"
-                            :path="item.a_price.google_image.src_name"
+                        <imageThumbnailFullPathSizeFree
+                            v-if="
+                                item.a_price.google_image ||
+                                item.product_prototypes.length > 0
+                            "
+                            :path="
+                                item.product_prototypes.length > 0
+                                    ? item.product_prototypes[0]
+                                    : item.a_price
+                            "
                             :size="80"
-                        ></imageThumbnailPathSizeFree>
+                        ></imageThumbnailFullPathSizeFree>
                     </template>
                     <template v-slot:item.a_price.name_goods="{ item }">
                         <div class="py-3">
@@ -231,7 +238,12 @@
                 </v-data-table>
             </v-tab-item>
             <v-tab-item class="py-2">
-                <v-card outlined v-for="order in pos" :key="order.id">
+                <v-card
+                    class="mb-4"
+                    outlined
+                    v-for="order in pos"
+                    :key="order.id"
+                >
                     <v-card-title class="text-h6">
                         Order :: {{ order.id }}
                         <v-spacer></v-spacer>
@@ -278,15 +290,20 @@
 
 <script>
 import { mapGetters } from "vuex";
-import imageThumbnailPathSizeFree from "@/js/components/google/drive/imageThumbnailPathSizeFree";
+// import imageThumbnailPathSizeFree from "@/js/components/google/drive/imageThumbnailPathSizeFree";
 import btnPrototypeImage from "@/js/components/order/details/btnPrototypeImage.vue";
 
+import imageThumbnailFullPathSizeFree from "@/js/components/google/drive/imageThumbnailFullPathSizeFree";
 var numeral = require("numeral");
 Vue.filter("formatNumber", function (value) {
     return numeral(value).format("0,0.00");
 });
 export default {
-    components: { imageThumbnailPathSizeFree, btnPrototypeImage },
+    components: {
+        // imageThumbnailPathSizeFree,
+        btnPrototypeImage,
+        imageThumbnailFullPathSizeFree,
+    },
     data() {
         return {
             tab: null,

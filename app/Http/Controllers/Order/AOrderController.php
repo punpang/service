@@ -724,7 +724,7 @@ class AOrderController extends Controller
         ], 200);
     }
 
-    public function pickUpGoods(AOrder $order)
+    public function pickUpGoods(AOrder $order, Request $request)
     {
         // dd($order->sum_all["sumBalance"]);
         if ($order->status != 8) {
@@ -758,12 +758,15 @@ class AOrderController extends Controller
         }
 
 
-        $order->update(["status" => 9]);
+        // $order->update(["status" => 9]);
 
         AlertMessages::linePickUpGoods($order);
         AlertMessages::smsPickUpGoods($order);
 
-        CustomerScore::addScore($order->customer, $order->sumForScore());
+        if ($request->is_AddScore) {
+            CustomerScore::addScore($order->customer, $order->sumForScore());
+        }
+
 
         return response()->json([
             "status" => "success",
@@ -861,7 +864,10 @@ class AOrderController extends Controller
             //     "imageFromCustomers.googleImage",
             //     "productPrototypes.googleImage"
             // )
-            with("posOrders.posGoods")
+            // $detail = OrderDetail::whereHas("aOrder", function ($query) use ($request) {
+            //     return $query->where("auth_order", $request->uuid);
+            // })->findOrFail($request->order_detail_id);
+            whereHas("posOrders")->with("posOrders.posGoods")
             // ->whereHas("aOrder", function ($q) use ($request) {
             //     $q->where("date_get", $request->get("date_get"));
             //     //$q->where("status", "<", "8");

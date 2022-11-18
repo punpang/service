@@ -35,11 +35,11 @@
                         <imageThumbnailPathSizeW200H200
                             v-if="
                                 detail.a_price.google_image ||
-                                detail.product_prototypes.google_image
+                                detail.product_prototypes.length > 0
                             "
                             :path="
                                 detail.product_prototypes.length > 0
-                                    ? detail.product_prototypes.google_image
+                                    ? detail.product_prototypes[0].google_image
                                           .src_name
                                     : detail.a_price.google_image.src_name
                             "
@@ -160,7 +160,7 @@ import btnShowIsTakeAPhoto from "@/js/components/order/manages/goods/cake/btnSho
 import btnUploadImagesForOrderDetail from "@/js/components/guest/btnUploadImagesForOrderDetail";
 import imageThumbnailPathSizeW200H200 from "@/js/components/google/drive/imageThumbnailPathSizeW200H200";
 import showMoneyService from "@/js/components/order/manages/goods/cake/moneyService/show";
-
+// import imageThumbnailFullPathSizeW200H200 from "@/js/components/google/drive/imageThumbnailFullPathSizeW200H200"
 export default {
     components: {
         // editCake,
@@ -172,6 +172,7 @@ export default {
         btnShowIsTakeAPhoto,
         imageThumbnailPathSizeW200H200,
         showMoneyService,
+        // imageThumbnailFullPathSizeW200H200
     },
     computed: {
         ...mapGetters({

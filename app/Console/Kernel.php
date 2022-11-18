@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Order\AlertMessages;
 
 class Kernel extends ConsoleKernel
 {
@@ -24,6 +25,20 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        // AlertMessages::LineAlertGeneral("TEST Command");
+
+        // แจ้งเตือนชำระเงินจากลูกค้า
+        $schedule->command("Alert:NoticePaymentByCustomer")->everyMinute()->between('8:30', '19:00');
+
+        // แจ้งเตือนรายการสั่งซื้อวันนี้
+        $schedule->command("Alert:OrderToday")->dailyAt('08:30');
+
+        // แจ้งเตือนรายการสั่งซื้อที่รอชำระสำหรับวันนี้
+
+
+        // แจ้งยอดขายวันนี้
+        $schedule->command("Alert:SumOrderToday")->dailyAt('19:00');
+
         // $schedule->command('inspire')
         //          ->hourly();
     }
@@ -35,7 +50,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

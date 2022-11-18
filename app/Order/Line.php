@@ -65,10 +65,21 @@ class Line extends Model
                 "userId" => $get_profile["userId"],
             ]);
         } else {
+            Line::update_profile($profile);
             $profile->update(["updated_at" => now()]);
         }
 
         return $profile;
+    }
+
+    public static function update_profile($profile)
+    {
+        if ($profile->updated_at < now()->subDays(7)) {
+            $get_profile = Line::get_profile($profile->userId);
+            $profile->update([
+                "displayName" => $get_profile["displayName"],
+            ]);
+        }
     }
 
     public static function get_profile($userId)
@@ -434,6 +445,7 @@ class Line extends Model
     {
         if (
             $order->OrderChannel->keyword != "line" ||
+            empty($order->customer->line) ||
             $order->customer->line->updated_at->addHours("23") < now()
         ) {
             return;
@@ -446,6 +458,7 @@ class Line extends Model
     {
         if (
             $order->OrderChannel->keyword != "line" ||
+            empty($order->customer->line) ||
             $order->customer->line->updated_at->addHours("23") < now()
         ) {
             return;
@@ -458,6 +471,7 @@ class Line extends Model
     {
         if (
             $order->OrderChannel->keyword != "line" ||
+            empty($order->customer->line) ||
             $order->customer->line->updated_at->addHours("23") < now()
         ) {
             return;
@@ -718,6 +732,7 @@ class Line extends Model
     {
         if (
             $order->OrderChannel->keyword != "line" ||
+            empty($order->customer->line) ||
             $order->customer->line->updated_at->addHours("23") < now()
         ) {
             return;
@@ -786,6 +801,7 @@ class Line extends Model
     {
         if (
             $order->OrderChannel->keyword != "line" ||
+            empty($order->customer->line) ||
             $order->customer->line->updated_at->addHours("23") < now()
         ) {
             return;
