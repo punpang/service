@@ -159,6 +159,7 @@
                     "
                     :disabled="order.sum_all.sumBalance != 0"
                     class="mr-2"
+                    @emitExit="emitExit"
                 ></btnRider>
                 <v-btn
                     class="success mr-2"
@@ -224,9 +225,7 @@ export default {
             if (result.status == 200) {
                 this.$toast.success(result.data.message);
                 // let loader = this.$loading.show();
-                await this.$store.dispatch("orderIndex/getOrderByID", {
-                    orderID: this.order.id,
-                });
+                this.getDataOrderIndex();
                 loader.hide();
             } else {
                 this.$toast.error(result.data.message);
@@ -250,6 +249,16 @@ export default {
                     this.processinSuccess();
                 }
             });
+        },
+        emitExit() {
+            this.getDataOrderIndex();
+        },
+        async getDataOrderIndex() {
+            let loader = this.$loading.show();
+            await this.$store.dispatch("orderIndex/getOrderByID", {
+                orderID: this.order.id,
+            });
+            loader.hide();
         },
 
         async processinSuccess() {

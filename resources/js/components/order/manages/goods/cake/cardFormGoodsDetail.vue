@@ -122,6 +122,11 @@
                         <p>รวมทั้งหมด {{ detail.sum_all.total }} บาท</p>
                     </v-col>
                     <v-col cols="12" md="12">
+                        <comboboxTags
+                            v-if="user.type == 1"
+                            :propOrderDetail="detail"
+                            :propOrderTags="detail.order_tags"
+                        ></comboboxTags>
                         <showMoneyService
                             :propMoneyService="detail.money_services"
                         ></showMoneyService>
@@ -161,6 +166,9 @@ import btnUploadImagesForOrderDetail from "@/js/components/guest/btnUploadImages
 import imageThumbnailPathSizeW200H200 from "@/js/components/google/drive/imageThumbnailPathSizeW200H200";
 import showMoneyService from "@/js/components/order/manages/goods/cake/moneyService/show";
 // import imageThumbnailFullPathSizeW200H200 from "@/js/components/google/drive/imageThumbnailFullPathSizeW200H200"
+
+import comboboxTags from "@/js/components/order/tags/combobox";
+
 export default {
     components: {
         // editCake,
@@ -173,6 +181,7 @@ export default {
         imageThumbnailPathSizeW200H200,
         showMoneyService,
         // imageThumbnailFullPathSizeW200H200
+        comboboxTags,
     },
     computed: {
         ...mapGetters({

@@ -159,7 +159,13 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                     Route::post('{id}/update', 'Pos\OrderController@update');
                     Route::post('{id}/delete', 'Pos\OrderController@delete');
                 });
+            });
 
+            Route::prefix('tags')->group(function () { // api/v1/pos/goods/...
+                Route::get('fetch', 'Order\TagsController@fetch');
+                Route::post('store', 'Order\TagsController@store');
+                Route::post('{id}/edit_tag', 'Order\TagsController@edit_tag');
+                Route::post('tags_store', 'Order\TagsController@tags_store');
             });
 
             Route::prefix('categoryMoneyService')->group(function () { // api/v1/guest/ksher

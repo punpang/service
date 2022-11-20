@@ -163,6 +163,7 @@ export default {
                 channel: data.channel,
                 alertSMS: data.alertSMS,
                 getGoods: data.getGoods,
+                is_add_score : data.is_add_score,
             };
             const res = await this.$store.dispatch(
                 "orderIndex/paymentByOrderID",

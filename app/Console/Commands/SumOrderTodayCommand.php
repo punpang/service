@@ -54,7 +54,7 @@ class SumOrderTodayCommand extends Command
 
         $count_pos = 0;
         foreach ($orders as $order) {
-            if ($order->posOrders->count() > 0) {
+            if ($order->sumPosOrder() >= 200) {
                 $count_pos += 1;
             }
         }

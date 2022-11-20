@@ -226,6 +226,7 @@ class AOrderController extends Controller
             "orderDetails.productPrototypes.googleImage",
             "orderDetails.imageFromCustomers.googleImage",
             "orderDetails.imageGoodsReviewToCustomers.googleImage",
+            "orderDetails.orderTags.tag",
             "orderDeliveryService",
             "orderDetails.MoneyServices.category_money_service",
             "adjustExcessPayments",
@@ -314,7 +315,7 @@ class AOrderController extends Controller
         // 00020101021230770016A000000677010112011501075360001028602150140000048953630315PUNPANGPRANBURI5802TH540 6200.00 53037646220071600000000007066306304 57F5
     }
 
-    public function paymentByOrderID(Request $request)
+    public function paymentByOrderID()
     {
         // ----$order = AOrder::find($request->orderID);
         // $order->testPaymentByOrderID();
@@ -372,7 +373,7 @@ class AOrderController extends Controller
             );
             if ($history["status"] == "success") {
                 if (request("getGoods")) {
-                    $this->pickUpOrderByID(request("orderID"));
+                    $this->pickUpOrderByID(request("orderID"), request("is_add_score"));
                     return response()->json([
                         "message" => "ชำระเงินสำเร็จและรับสินค้าเรียบร้อย",
                         "result" => "success",
@@ -432,7 +433,7 @@ class AOrderController extends Controller
         MSms::Sms($order->customer->tel, $msgSms, request("alertSMS"));
     }
 
-    public function pickUpOrderByID($order_id)
+    public function pickUpOrderByID($order_id, $is_add_score = true)
     {
         $order = AOrder::findOrFail($order_id);
 
@@ -459,6 +460,9 @@ class AOrderController extends Controller
         AlertMessages::linePickUpGoods($order);
         AlertMessages::smsPickUpGoods($order);
 
+        if ($is_add_score) {
+            CustomerScore::addScore($order->customer, $order->sumForScore());
+        }
 
         return response()->json([
             "message" => "รับสินค้าเรียบร้อย",
@@ -758,7 +762,7 @@ class AOrderController extends Controller
         }
 
 
-        // $order->update(["status" => 9]);
+        $order->update(["status" => 9]);
 
         AlertMessages::linePickUpGoods($order);
         AlertMessages::smsPickUpGoods($order);
@@ -766,7 +770,6 @@ class AOrderController extends Controller
         if ($request->is_AddScore) {
             CustomerScore::addScore($order->customer, $order->sumForScore());
         }
-
 
         return response()->json([
             "status" => "success",
@@ -847,6 +850,7 @@ class AOrderController extends Controller
 
     public function pos_fetch(Request $request)
     {
+        // dd($request);
         //$query = OrderDetail::query();
 
         $query = AOrder::
@@ -868,11 +872,14 @@ class AOrderController extends Controller
             //     return $query->where("auth_order", $request->uuid);
             // })->findOrFail($request->order_detail_id);
             whereHas("posOrders")->with("posOrders.posGoods")
+
             // ->whereHas("aOrder", function ($q) use ($request) {
             //     $q->where("date_get", $request->get("date_get"));
             //     //$q->where("status", "<", "8");
             // })
             ->where("date_get", $request->get("date_get"))
+            ->where("status", "<", "8")
+            ->orderBy("time_get", "ASC")
             ->get();
 
 

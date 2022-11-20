@@ -15,15 +15,15 @@ class updateOrderOldSeeder extends Seeder
      */
     public function run()
     {
-        $datas = AOrder::get();
-        foreach ($datas as $data) {
-            $data->delete();
-        }
+        // $datas = AOrder::get();
+        // foreach ($datas as $data) {
+        //     $data->delete();
+        // }
 
-        $datas = OrderDetail::get();
-        foreach ($datas as $data) {
-            $data->delete();
-        }
+        // $datas = OrderDetail::get();
+        // foreach ($datas as $data) {
+        //     $data->delete();
+        // }
 
         $datas = UpdateOrderOld::get();
         foreach ($datas as $data) {
@@ -39,24 +39,24 @@ class updateOrderOldSeeder extends Seeder
             ]);
 
 
-            $price = APrice::where("code", $data->m1 . $data->m2 . $data->m3 . $data->m4)->first();
-            if ($price == null) {
-                $price = APrice::create([
-                    "code" => $data->m1 . $data->m2 . $data->m3 . $data->m4,
-                    "price" => $data->total,
-                    "m1" => $data->m1,
-                    "m2" => $data->m2,
-                    "m3" => $data->m3,
-                    "m4" => $data->m4
-                ]);
-            }
-            OrderDetail::create([
-                "order_id" => $data->id,
-                "a_price_id" => $price->id,
-                "price" => $data->total,
-                "message" => $data->msg,
-                "detail" => $data->other
-            ]);
+            // $price = APrice::where("code", $data->m1 . $data->m2 . $data->m3 . $data->m4)->first();
+            // if ($price == null) {
+            //     $price = APrice::create([
+            //         "code" => $data->m1 . $data->m2 . $data->m3 . $data->m4,
+            //         "price" => $data->total,
+            //         "m1" => $data->m1,
+            //         "m2" => $data->m2,
+            //         "m3" => $data->m3,
+            //         "m4" => $data->m4
+            //     ]);
+            // }
+            // OrderDetail::create([
+            //     "order_id" => $data->id,
+            //     "a_price_id" => $price->id,
+            //     "price" => $data->total,
+            //     "message" => $data->msg,
+            //     "detail" => $data->other
+            // ]);
         }
     }
 }

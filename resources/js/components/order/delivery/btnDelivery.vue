@@ -64,6 +64,7 @@ export default {
     },
     methods: {
         emitExit() {
+            this.getData();
             this.dialog = false;
         },
         async getData() {

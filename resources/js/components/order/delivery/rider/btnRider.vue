@@ -109,6 +109,7 @@ export default {
                 allowOutsideClick: false,
             }).then((result) => {
                 if (result.isConfirmed) {
+                    this.$emit("emitExit")
                     this.dialog = false;
                 }
             });

@@ -71,13 +71,14 @@ export default {
         };
     },
     mounted() {
-        if (this.user.type == "1") {
+        if (this.user.type == "1" && this.order.status < 8) {
             this.headers.push({ text: "", value: "manages", align: "end" });
         }
     },
     computed: {
         ...mapGetters({
             user: "main/User",
+            order: "orderIndex/order",
         }),
     },
 };

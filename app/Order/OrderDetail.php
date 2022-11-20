@@ -4,6 +4,7 @@ namespace App\Order;
 
 use App\Order\AOrder;
 use App\Order\APrice;
+use App\Order\OrderTags;
 use App\Order\OrderDetailAddOn;
 use App\Order\ImageFromCustomer;
 use App\Order\OrderProductPrototype;
@@ -109,5 +110,9 @@ class OrderDetail extends Model implements Auditable
     public function onlyTrashed()
     {
         return $this->withTrashed();
+    }
+
+    public function orderTags(){
+        return $this->hasMany(OrderTags::class);
     }
 }

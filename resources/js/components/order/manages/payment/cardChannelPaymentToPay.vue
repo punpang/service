@@ -49,7 +49,13 @@
                                 v-model="getGoods"
                                 label="รับสินค้า"
                                 hide-details
-                                v-if="order.status === 8"
+                                v-if="order.status == 8"
+                            ></v-checkbox>
+                            <v-checkbox
+                                v-model="is_add_score"
+                                label="สะสมคะแนนได้"
+                                hide-details
+                                v-if="order.status == 8"
                             ></v-checkbox>
                         </v-card-text>
                     </v-card>
@@ -99,6 +105,7 @@ export default {
             dialog: false,
             alertSMS: true,
             getGoods: true,
+            is_add_score: true,
             // btnPayments: [
             //   {
             //     id: 1,
@@ -157,6 +164,7 @@ export default {
                 alertSMS: this.alertSMS,
                 getGoods: this.getGoods,
                 channel: channel,
+                is_add_score: this.is_add_score,
             };
             this.$emit("emitClickSubmitPayment", data);
 

@@ -5,8 +5,14 @@
         ></alertAdjustExcessPayment>
         <v-row>
             <v-col cols="12" md="8">
-                <cardManagesGoodsDetail v-if="order.order_details.length > 0"></cardManagesGoodsDetail>
-                <cardPosGoods v-if="order.pos_orders.length > 0" :propGoods="order.pos_orders" :propSumPos="order.sum_all.sumPosOrder"></cardPosGoods>
+                <cardManagesGoodsDetail
+                    v-if="order.order_details.length > 0"
+                ></cardManagesGoodsDetail>
+                <cardPosGoods
+                    v-if="order.pos_orders.length > 0"
+                    :propGoods="order.pos_orders"
+                    :propSumPos="order.sum_all.sumPosOrder"
+                ></cardPosGoods>
                 <cardDeliveryShow></cardDeliveryShow>
             </v-col>
             <v-col cols="12" md="4">
@@ -38,7 +44,7 @@
                         v-if="order.status < 8"
                     ></btnConnectSocialProfile>
                     <btnChangeDateTimeGet
-                        v-if="order.status < 8"
+                        v-if="order.status < 9"
                     ></btnChangeDateTimeGet>
                     <!-- <v-subheader>การชำระเงิน</v-subheader> -->
                     <btnAlertPayment
@@ -146,6 +152,10 @@ export default {
                     allowOutsideClick: false,
                     showConfirmButton: false,
                 });
+            }
+
+            if (this.order.order_details.length > 0) {
+                await this.$store.dispatch("orderTags/fetch", "status=true");
             }
 
             loader.hide();

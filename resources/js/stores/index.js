@@ -56,6 +56,8 @@ import moneyServices from "@/js/stores/modules/order/moneyServices";
 import orderLuckyReward from "@/js/stores/modules/order/luckyReward";
 /// LUCKY REWAYD END ///
 
+import orderTags from '@/js/stores/modules/order/tags'
+
 import posGoods from "@/js/stores/modules/pos/goods";
 import posCategoryGoods from "@/js/stores/modules/pos/categoryGoods";
 import posOrder from "@/js/stores/modules/pos/order";
@@ -119,5 +121,6 @@ export default new Vuex.Store({
         posCategoryGoods,
         posOrder,
         posOrderDetail,
+        orderTags
     },
 });

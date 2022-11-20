@@ -78,6 +78,7 @@
                     hide-default-footer
                     :search="search"
                     :sort-by="['a_order.time_get']"
+                    :items-per-page="-1"
                 >
                     <template v-slot:item.image_goods="{ item }">
                         <imageThumbnailFullPathSizeFree
@@ -106,6 +107,18 @@
                             >
                                 + {{ a.product_add_on.goods_add_on.name }}
                             </p>
+
+                            <div
+                                v-if="item.message != '-'"
+                                class="d-flex justify-lg-start justify-md-start justify-sm-start justify-xl-start justify-end"
+                            >
+                                <p class="mb-1 text-caption font-weight-black">
+                                    ข้อความ
+                                </p>
+                                <p class="mb-1 text-caption">
+                                    : {{ item.message }}
+                                </p>
+                            </div>
 
                             <p
                                 class="mb-1 text-caption info--text font-weight-black"
@@ -165,6 +178,14 @@
                                 v-if="item.status_upload_images_from_customer"
                             >
                                 รูปภาพลูกค้า
+                            </v-btn>
+
+                            <v-btn
+                                :class="item.a_order.a_status.class"
+                                x-small
+                                rounded
+                            >
+                                {{ item.a_order.a_status.status }}
                             </v-btn>
                         </div>
                     </template>

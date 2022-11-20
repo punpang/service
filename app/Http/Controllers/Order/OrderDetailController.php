@@ -23,8 +23,9 @@ class OrderDetailController extends Controller
             //     }
             // ])->
             with(
-                "aOrder:id,date_get,time_get",
+                "aOrder:id,date_get,time_get,status",
                 "aOrder.orderDeliveryService",
+                "aOrder.aStatus",
                 "aPrice.googleImage",
                 "addOns.productAddOn.goodsAddOn",
                 "imageFromCustomers.googleImage",
@@ -32,7 +33,7 @@ class OrderDetailController extends Controller
             )
             ->whereHas("aOrder", function ($q) use ($request) {
                 $q->where("date_get", $request->get("date_get"));
-                //$q->where("status", "<", "8");
+                $q->where("status", "<", "8");
             })
             ->get();
 

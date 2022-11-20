@@ -94,6 +94,8 @@ export default {
                     order_id: this.$route.params.id,
                 }
             );
+            await this.getData();
+            loader.hide();
             this.$swal({
                 title: result.data.title,
                 text: result.data.message,
@@ -104,8 +106,7 @@ export default {
                 confirmButtonText: "รับทราบ",
                 confirmButtonColor: "#3085d6",
             });
-            await this.getData();
-            loader.hide();
+
             // return result;
         },
     },
