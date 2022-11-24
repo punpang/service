@@ -12,6 +12,7 @@
                     v-if="order.pos_orders.length > 0"
                     :propGoods="order.pos_orders"
                     :propSumPos="order.sum_all.sumPosOrder"
+                    class="mb-2"
                 ></cardPosGoods>
                 <cardDeliveryShow></cardDeliveryShow>
             </v-col>

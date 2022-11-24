@@ -12,6 +12,8 @@ class KsherPay extends Model
     protected $primaryKey = 'mch_order_no';
     protected $table = "ksher_pays";
     protected $guarded = [];
+    protected $appends = [];
+    protected $hidden = ['created_at', 'updated_at'];
 
     public $time;
     public $appid; //ksher appid
@@ -36,6 +38,16 @@ MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAL7955OCuN4I8eYNL/mixZWIXIgCvIVE
 ivlxqdpiHPcOLdQ2RPSx/pORpsUu/E9wz0mYS2PY7hNc2mBgBOQT+wUCAwEAAQ==
 -----END PUBLIC KEY-----
 EOD;
+    }
+
+    public function getSumTotalFeeAttribute()
+    {
+        return $this->sum("total_fee");
+    }
+
+    public function getUpdatedAtThAttribute()
+    {
+        return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $this->updated_at)->addYears(543)->format('d-m-Y H:i');
     }
 
     public function aOrder()

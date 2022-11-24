@@ -21,7 +21,8 @@ class APrice extends Model
 
     public function getPriceAttribute($price)
     {
-        return number_format($price, 2);
+        return $price;
+        // return number_format($price, 2);
     }
 
     public function am1()

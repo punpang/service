@@ -188,4 +188,60 @@ class KsherPayController extends Controller
             200
         );
     }
+
+    public function fetch_custom(Request $request)
+    {
+        $query = KsherPay::query();
+
+        if ($request->date_start != null && $request->date_end != null) {
+            // $query->whereBetween('created_at', [$request->date_start, $request->date_end]);
+            $query->whereDate("created_at", ">=", $request->date_start);
+            $query->whereDate("created_at", "<=", $request->date_end);
+        }
+
+        if ($request->result != null) {
+            $explodes = explode(",", $request->result);
+            $result = [];
+
+            foreach ($explodes as $explode) {
+                $result[] = $explode;
+            }
+
+            // dd($result);
+            // $implode = implode(",",$result);
+
+            $query->whereIn("result", $result);
+            // dd($result);
+            // $query->whereIn("result", ["success"]);
+
+
+
+            // foreach ($explodes as $explode){
+            //     dd($explode);
+            //     $query->where("result", $explode);
+            // }
+        }
+
+        // $query->where("result","success");
+
+        if ($request->sum_total_fee != null && $request->sum_total_fee == true) {
+            $sum_total_fee = $query->sum("total_fee");
+        } else {
+            $sum_total_fee = null;
+        }
+
+        $kshers = $query->get();
+
+        foreach ($kshers as $q) {
+            $q->setAppends(["updated_at_th"]);
+        }
+
+        return response()->json(
+            [
+                "sum_total_fee" => $sum_total_fee,
+                "kshers" => $kshers
+            ],
+            200
+        );
+    }
 }

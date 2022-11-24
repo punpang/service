@@ -4,6 +4,7 @@ export default {
         useKsherChannelPayment: {},
         ksherPay: [],
         fetch_day_offs: [],
+        fetch_custom: [],
     },
     mutations: {
         useKsherChannelPayment(state, data) {
@@ -15,12 +16,16 @@ export default {
         fetch_day_offs(state, data) {
             state.fetch_day_offs = data;
         },
+        fetch_custom(state, data) {
+            state.fetch_custom = data;
+        },
     },
     getters: {
         useKsherChannelPayment: (state) => state.useKsherChannelPayment,
         ksherPay: (state) => state.ksherPay,
         kshers: (state) => state.kshers,
         fetch_day_offs: (state) => state.fetch_day_offs,
+        fetch_custom: (state) => state.fetch_custom,
     },
     actions: {
         async getUseKsherChannelPayment({ commit }) {
@@ -63,6 +68,18 @@ export default {
                 .get(`/api/admin/v1/ksher/fetch?${params}`)
                 .then((response) => {
                     commit("ksherPay", response.data);
+                    return response;
+                })
+                .catch((err) => {
+                    log.error(err);
+                });
+        },
+
+        async fetch_custom({ commit }, payload) {
+            return await axios
+                .get(`/api/admin/v1/ksher/pay/fetch?${payload}`)
+                .then((response) => {
+                    commit("fetch_custom", response.data);
                     return response;
                 })
                 .catch((err) => {

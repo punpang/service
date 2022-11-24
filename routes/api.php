@@ -140,6 +140,15 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
 
         Route::prefix("v1")->group(function () {
 
+            Route::prefix('sms')->group(function () { // api/v1/pos/goods/...
+                Route::prefix('messages')->group(function () { // api/v1/pos/goods/...
+                    Route::post('store', 'Order\SmsMessagesController@store');
+                    Route::post('{smsID}/update', 'Order\SmsMessagesController@update');
+                    Route::post('send', 'Order\SmsMessagesController@send');
+                    Route::get('fetch', 'Order\SmsMessagesController@fetch');
+                });
+            });
+
             Route::prefix('pos')->group(function () { // api/v1/pos/...
                 Route::prefix('goods')->group(function () { // api/v1/pos/goods/...
                     Route::post('store', 'Pos\GoodsController@store');
@@ -231,6 +240,10 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                     Route::get('fetch', 'Order\KsherDayOffController@fetch');
                     Route::post('{id}/remove', 'Order\KsherDayOffController@remove');
                 });
+
+                Route::prefix('pay')->group(function () { // api/v1/guest/ksher
+                    Route::get('fetch', 'Order\KsherPayController@fetch_custom');
+                });
             });
 
             Route::prefix('QRCodeGenerator')->group(function () { // api/admin/v1/...
@@ -316,6 +329,11 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                     Route::prefix('productPrototype')->group(function () { // api/admin/v1/order/detail/addOn
                         Route::post('{detail_id}/store', 'Order\OrderProductPrototypeController@store');
                         Route::post('{detail_id}/delete', 'Order\OrderProductPrototypeController@delete');
+                    });
+
+                    Route::prefix('imageForMenu')->group(function () { // api/admin/v1/order/detail/addOn
+                        Route::post('{detail_id}/store', 'Order\OrderImageForMenuController@store');
+                        Route::post('{detail_id}/delete', 'Order\OrderImageForMenuController@delete');
                     });
 
                     Route::post('{detail}/switchStatusUploadImagesFromCustomer', 'Order\OrderDetailController@switchStatusUploadImagesFromCustomer');

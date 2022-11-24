@@ -224,6 +224,7 @@ class AOrderController extends Controller
             "orderDetails.aPrice.googleImage",
             "orderDetailsOnlyTrashed",
             "orderDetails.productPrototypes.googleImage",
+            "orderDetails.imageForMenus.googleImage",
             "orderDetails.imageFromCustomers.googleImage",
             "orderDetails.imageGoodsReviewToCustomers.googleImage",
             "orderDetails.orderTags.tag",
@@ -809,7 +810,31 @@ class AOrderController extends Controller
 
     public function fetch_orders(Request $request)
     {
+
         $query = AOrder::query();
+
+        if ($request->get("search") != null) {
+            // dd("dsad");
+            $query->where("id", $request->get("search"));
+            $query->orWhereHas("customer", function ($q) use ($request) {
+                $q->where("tel", $request->get("search"));
+                $q->orWhere("name", $request->get("search"));
+            });
+            $query->orWhereHas("orderDetails", function ($q) use ($request) {
+                $q->Where("message", "like", "%" . $request->get("search") . "%");
+                $q->orWhere("detail", "%" . $request->get("search") . "%");
+            });
+        }
+
+        // if ($request->get("order_id") != null) {
+        //     $query->where("id", $request->get("order_id"));
+        // }
+
+        // if ($request->get("customer_phone") != null) {
+        //     $query->whereHas("customer", function ($q) use ($request) {
+        //         return $q->where("tel", $request->get("customer_phone"));
+        //     });
+        // }
 
         if ($request->get("status") != null) {
             $query->whereIn("status", explode(",", $request->get("status")));

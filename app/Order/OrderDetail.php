@@ -7,6 +7,7 @@ use App\Order\APrice;
 use App\Order\OrderTags;
 use App\Order\OrderDetailAddOn;
 use App\Order\ImageFromCustomer;
+use App\Order\OrderImageForMenu;
 use App\Order\OrderProductPrototype;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -62,6 +63,11 @@ class OrderDetail extends Model implements Auditable
     public function productPrototypes()
     {
         return $this->hasMany(OrderProductPrototype::class);
+    }
+
+    public function imageForMenus()
+    {
+        return $this->hasMany(OrderImageForMenu::class);
     }
 
     public function MoneyServices()

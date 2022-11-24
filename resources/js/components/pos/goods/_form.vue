@@ -2,7 +2,7 @@
     <div>
         <v-card>
             <v-card-title class="text-h6 white--text warning">
-                สร้างสินค้า
+                {{ propGoods ? "แก้ไขสินค้า" : "สร้างสินค้า" }}
                 <v-spacer></v-spacer>
                 <v-btn icon fab x-small @click="exit()">
                     <v-icon color="white">close</v-icon>

@@ -243,7 +243,8 @@ export default {
         },
         clickTimeOption(v) {
             const datetime = new Date();
-            const oDateTime = new Date(this.formatDateTimeGet());
+            let oDateTime = new Date(this.formatDateTimeGetForAlert());
+            console.log("🚀 ~ file: cardAlertPayment.vue ~ line 248 ~ clickTimeOption ~ oDateTime", oDateTime)
 
             switch (v.id) {
                 case 1:
@@ -276,6 +277,15 @@ export default {
         },
         changeTimeOption(v) {
             this.clickTimeOption(v);
+        },
+        formatDateTimeGetForAlert() {
+            const d = this.order.date_get;
+            const [yyyy, mm, dd] = d.split("-");
+            // const dd = arr[0];
+            // const mm = arr[1];
+            // const yyyy = parseInt(arr[2]) - 543;
+
+            return `${yyyy}/${mm}/${dd}`;
         },
         formatDateTimeGet() {
             const d = this.order.date_get;

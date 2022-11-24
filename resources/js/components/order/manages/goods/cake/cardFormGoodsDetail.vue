@@ -67,7 +67,9 @@
                             v-if="
                                 detail.status_upload_images_from_customer ||
                                 detail.product_prototypes.length > 0 ||
-                                detail.is_take_a_photo
+                                detail.is_take_a_photo ||
+                                order.status == 8 ||
+                                order.status == 9
                             "
                         >
                             <btnUploadImagesForOrderDetail
@@ -92,6 +94,12 @@
                                 v-if="detail.is_take_a_photo"
                                 :propOrderDetail="detail"
                             ></btnShowIsTakeAPhoto>
+
+                            <btnShowImageForMenu
+                                v-if="user.type == 1"
+                                class="mx-1"
+                                :propOrderDetail="detail"
+                            ></btnShowImageForMenu>
                         </div>
                         <p class="my-2"></p>
                         <div v-if="detail.add_ons.length > 0">
@@ -161,6 +169,7 @@ import { mapGetters } from "vuex";
 // import cardManageAddOn from "@/js/components/order/manages/goods/cake/addOn/cardManageAddOn";
 import btnCardManagesCake from "@/js/components/order/manages/goods/cake/btnCardManagesCake";
 import btnShowProductPrototype from "@/js/components/order/manages/goods/cake/productPrototype/btnShowProductPrototype";
+import btnShowImageForMenu from "@/js/components/order/manages/goods/cake/imageForMenu/btn";
 import btnShowIsTakeAPhoto from "@/js/components/order/manages/goods/cake/btnShowIsTakeAPhoto";
 import btnUploadImagesForOrderDetail from "@/js/components/guest/btnUploadImagesForOrderDetail";
 import imageThumbnailPathSizeW200H200 from "@/js/components/google/drive/imageThumbnailPathSizeW200H200";
@@ -182,6 +191,7 @@ export default {
         showMoneyService,
         // imageThumbnailFullPathSizeW200H200
         comboboxTags,
+        btnShowImageForMenu,
     },
     computed: {
         ...mapGetters({

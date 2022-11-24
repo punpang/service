@@ -105,7 +105,7 @@ class Facebook extends Model
             // );
             Facebook::reply_message_v2($profile->psid, "สวัสดีค่ะ รบกวนรอสักครู่ค่ะ
 *ลูกค้าจำเป็นต้องชำระมัดจำทุกกรณีค่ะ
-เมนู https://bit.ly/3r5v2ZM หรือ https://bit.ly/3GdYyTt
+เมนู https://punpang.net/menu หรือ https://bit.ly/3GdYyTt
 
 ร้านเปิดให้บริการทุกวัน
 $setting->open_store - $setting->close_store น. ชั่วคราว

@@ -45,18 +45,20 @@ import orderProductAddOn from "@/js/stores/modules/order/productAddOn";
 import orderGoodsAddOn from "@/js/stores/modules/order/goodsAddOn";
 import orderM4 from "@/js/stores/modules/order/m4";
 import orderProductPrototype from "@/js/stores/modules/order/orderProductPrototype";
+import orderImageForMenu from "@/js/stores/modules/order/orderImageForMenu";
 import orderImageGoodsReviewToCustomer from "@/js/stores/modules/order/imageGoodsReviewToCustomer";
 import orderDeliveryService from "@/js/stores/modules/order/deliveryService";
 import orderAdjustExcessPayment from "@/js/stores/modules/order/adjustExcessPayment";
 import facebook from "@/js/stores/modules/order/facebook";
 import line from "@/js/stores/modules/order/line";
 import moneyServices from "@/js/stores/modules/order/moneyServices";
+import smsMessages from "@/js/stores/modules/order/smsMessages";
 /////////////////////////
 /// LUCKY REWAYD START ///
 import orderLuckyReward from "@/js/stores/modules/order/luckyReward";
 /// LUCKY REWAYD END ///
 
-import orderTags from '@/js/stores/modules/order/tags'
+import orderTags from "@/js/stores/modules/order/tags";
 
 import posGoods from "@/js/stores/modules/pos/goods";
 import posCategoryGoods from "@/js/stores/modules/pos/categoryGoods";
@@ -110,6 +112,7 @@ export default new Vuex.Store({
         orderGoodsAddOn,
         orderM4,
         orderProductPrototype,
+        orderImageForMenu,
         orderImageGoodsReviewToCustomer,
         orderDeliveryService,
         orderAdjustExcessPayment,
@@ -121,6 +124,7 @@ export default new Vuex.Store({
         posCategoryGoods,
         posOrder,
         posOrderDetail,
-        orderTags
+        orderTags,
+        smsMessages,
     },
 });

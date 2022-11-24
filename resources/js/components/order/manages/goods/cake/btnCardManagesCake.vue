@@ -32,9 +32,9 @@
                             <btnUploadProductPrototype
                                 :propOrderDetail="propOrderDetail"
                             ></btnUploadProductPrototype>
-                            <!-- <btnUploadProductPrototype
+                            <!-- <btnUploadImageForMenu
                                 :propOrderDetail="propOrderDetail"
-                            ></btnUploadProductPrototype> -->
+                            ></btnUploadImageForMenu> -->
                             <btnMoneyService
                                 :propOrderDetail="propOrderDetail"
                             ></btnMoneyService>
@@ -75,6 +75,7 @@ import editCake from "@/js/components/order/manages/goods/cake/editCake";
 import removeCake from "@/js/components/order/manages/goods/cake/removeCake";
 import cardManageAddOn from "@/js/components/order/manages/goods/cake/addOn/cardManageAddOn";
 import btnUploadProductPrototype from "@/js/components/order/manages/goods/cake/productPrototype/btnUploadProductPrototype";
+// import btnUploadImageForMenu from "@/js/components/order/manages/goods/cake/imageForMenu/btn.vue";
 import btnSwitchUploadImageFromCustomer from "@/js/components/order/manages/goods/cake/btnSwitchUploadImageFromCustomer";
 import btnSwitchTakeAPhoto from "@/js/components/order/manages/goods/cake/btnSwitchTakeAPhoto";
 import btnMoneyService from "@/js/components/order/manages/goods/cake/moneyService/btn";
@@ -88,6 +89,7 @@ export default {
         btnSwitchUploadImageFromCustomer,
         btnSwitchTakeAPhoto,
         btnMoneyService,
+        // btnUploadImageForMenu
     },
     data() {
         return {

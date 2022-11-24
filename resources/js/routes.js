@@ -48,6 +48,13 @@ const routes = [
     },
 
     {
+        path: "/manages/sms/",
+        name: "managesOrderNew",
+        component: () => import("@/js/pages/sms/index"),
+        meta: { requiresAuth: true },
+    },
+
+    {
         path: "/manages/order/newOrder",
         name: "managesOrderNew",
         component: () => import("@/js/pages/order/newOrder"),
@@ -57,6 +64,12 @@ const routes = [
         path: "/manages/orders",
         name: "managesOrders",
         component: () => import("@/js/pages/order/index"),
+        meta: { requiresAuth: true },
+    },
+    {
+        path: "/manages/orders/search",
+        name: "managesOrders",
+        component: () => import("@/js/pages/order/search"),
         meta: { requiresAuth: true },
     },
     {
@@ -120,6 +133,13 @@ const routes = [
         path: "/manages/ksher/channel",
         name: "managesKsherChannel",
         component: () => import("@/js/pages/ksher/channel"),
+        meta: { requiresAuth: true },
+    },
+
+    {
+        path: "/manages/ksher/settlement",
+        name: "managesKsherSettlement",
+        component: () => import("@/js/pages/ksher/settlement"),
         meta: { requiresAuth: true },
     },
 
