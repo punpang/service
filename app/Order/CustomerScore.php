@@ -58,12 +58,17 @@ class CustomerScore extends Model
         //AHistoryPayed
     }
 
+    public static function processing_point($amount = 0)
+    {
+        return floor($amount / self::divisor());
+    }
+
     public static function addScore($customer, $amount, $can_refund = 0, $history_payed_id = null, $expiration_date = 365)
     {
         $score = new CustomerScore;
         $score->customer_id = $customer->id;
         $score->history_payed_id = $history_payed_id;
-        $score->point = $amount / self::divisor();
+        $score->point = self::processing_point($amount); //$amount / self::divisor();
         $score->can_refund = $can_refund;
         $score->expiration_date = \Carbon\Carbon::now()->addDays($expiration_date);
         $score->save();

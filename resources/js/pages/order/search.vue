@@ -9,6 +9,7 @@
                     prepend-inner-icon="search"
                     hide-details
                     dense
+                    required
                 ></v-text-field>
             </v-col>
             <v-col cols="12" md="4">
@@ -77,7 +78,7 @@ export default {
             let loader = this.$loading.show();
             this.search = await this.$route.query.search;
             const result = await axios.get(
-                `/api/admin/v1/orders/fetch?search=${this.search}&with=orderDetails,customer&makeHidden=sum_all`
+                `/api/admin/v1/orders/fetch?search=${this.search}&with=orderDetails,customer&makeHidden=sum_all&sort_id=DESC`
             );
             this.orders = await result.data;
             loader.hide();

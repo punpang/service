@@ -62,6 +62,7 @@ Route::prefix('v1')->group(function () { // api/v1/...
         Route::prefix('product')->group(function () { // api/v1/guest/
             Route::prefix('punpang')->group(function () { // api/v1/guest/
                 Route::get('fetchAllUse', 'Punpang\ProductController@fetchAllUse');
+                Route::get('order_details/fetch_for_menu', 'Order\OrderDetailController@fetch_for_menu');
             });
             Route::get('{promotion_id}/fetchByPromotionID', 'Momday\PromotionProductController@fetchByPromotionID');
         });
@@ -461,6 +462,8 @@ Route::prefix('webhook')->group(function () { // api/webhook/...
     Route::get('facebook', 'Order\FacebookController@webhook');
     Route::post('line', 'Order\LineController@webhook');
     // Route::get('facebook', 'Order\FacebookController@webhook');
+    // Route::get('hash_hmac', 'Order\FacebookController@hash_hmac');
+    Route::get('save_image_base64', 'Order\FacebookController@save_image_base64');
 });
 
 

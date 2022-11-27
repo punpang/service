@@ -137,4 +137,40 @@ class OrderDetailController extends Controller
             "status" => "success",
         ], 200);
     }
+
+    public function fetch_for_menu(Request $request)
+    {
+        $query = OrderDetail::query();
+
+        $query->select("id", "a_price_id");
+        // $query->whereHas("aOrder", function ($query) {
+        //     $query->whereDate("date_get", "<=", now()->subDays(1)->format("Y-m-d"))
+        //         ->where("status", 9);
+        // });
+        $query->orderBy("id", "DESC");
+        $query->whereHas("imageForMenus");
+
+        $query->with(
+            //"imageForMenus:id,google_image_id,order_detail_id",
+            "imageForMenus.googleImage:id,src_name",
+            "aPrice",
+            "addOns:id,order_detail_id,product_add_on_id",
+            "addOns.productAddOn.goodsAddOn",
+            "orderTags.tag:id,text"
+        );
+        $query = $query->get();
+
+        foreach ($query as $q) {
+            $q->setAppends(["sum_price_for_menu"]);
+        }
+
+        if ($request->price_rank != null) {
+            $query = $query->where("sum_price_for_menu", "<=", $request->price_rank)
+                ->sortBy("sum_price_for_menu");
+        }
+
+        $query = $query->makeHidden(["sum_all", "sum_money_customer", "sum_money_service"]);
+
+        return  $query;
+    }
 }

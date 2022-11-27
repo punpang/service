@@ -80,6 +80,11 @@ class AOrder extends Model
         return \Carbon\Carbon::createFromFormat('H:i:s', $this->time_get)->format('H:i');
     }
 
+    public function getDateTimeGetThAttribute()
+    {
+        return $this->date_get_th . " " . $this->time_get_format;
+    }
+
     public function getCreatedAtThAttribute()
     {
         return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->addYears(543)->format('d-m-Y H:i');

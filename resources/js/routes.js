@@ -234,6 +234,11 @@ const routes = [
         name: "menuCake",
         component: () => import("@/js/pages/punpang/menu"),
     },
+    {
+        path: "/menu/orders",
+        name: "menuCakeOrder",
+        component: () => import("@/js/pages/punpang/menuOrder"),
+    },
     // {
     //     path: "/guest/order/auth/:uuid",
     //     name: "guestOrderAuthUuid",

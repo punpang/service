@@ -40,6 +40,15 @@
                             </td>
                         </tr>
                         <!-- / -->
+                        <tr v-if="user.type == 1 && social_startWith()">
+                            <td colspan="2">
+                                <a
+                                    target="_blank"
+                                    :href="order.customer.social_is"
+                                    >Facebook</a
+                                >
+                            </td>
+                        </tr>
                     </tbody>
                 </v-simple-table>
             </v-card-text>
@@ -54,6 +63,18 @@ Vue.filter("formatNumber", function (value) {
 });
 import { mapGetters } from "vuex";
 export default {
+    methods: {
+        social_startWith() {
+            if (
+                this.order.customer.social_is.startsWith(
+                    "https://www.facebook.com"
+                )
+            ) {
+                return true;
+            }
+            return false;
+        },
+    },
     computed: {
         ...mapGetters({
             order: "orderIndex/order",

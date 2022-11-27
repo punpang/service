@@ -55,6 +55,11 @@ class OrderDetail extends Model implements Auditable
         return $this->hasOne(OrderDetailAddOn::class)->orderBy("created_at", "desc");
     }
 
+    public function getSumPriceForMenuAttribute()
+    {
+        return $this->addOns->sum("price_addon") + $this->aPrice->price;
+    }
+
     public function imageFromCustomers()
     {
         return $this->hasMany(ImageFromCustomer::class);
@@ -118,7 +123,8 @@ class OrderDetail extends Model implements Auditable
         return $this->withTrashed();
     }
 
-    public function orderTags(){
+    public function orderTags()
+    {
         return $this->hasMany(OrderTags::class);
     }
 }

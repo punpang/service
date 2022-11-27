@@ -32,11 +32,15 @@ class Kernel extends ConsoleKernel
 
         // แจ้งเตือนรายการสั่งซื้อวันนี้
         $schedule->command("Alert:OrderToday")->dailyAt('08:30');
+        $schedule->command("Notify:PaymentOfTomorrowOrder")->dailyAt('09:00');
 
         // แจ้งเตือนรายการสั่งซื้อที่รอชำระสำหรับวันนี้
 
         // แจ้งยอดขายวันนี้
         $schedule->command("Alert:SumOrderToday")->dailyAt('19:00');
+
+        // แจ้งลูกค้าที่ยังไม่ได้รับสินค้า ให้รับก่อนร้านปิด
+        $schedule->command("AlertCustomer:GetBeforeClose")->dailyAt('18:00');
 
         // $schedule->command('inspire')
         //          ->hourly();

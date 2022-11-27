@@ -72,19 +72,28 @@ class Facebook extends Model
 
             ]);
         } else {
-            // Facebook::update_profile($profile);
+            // Facebook::update_profile($profile, $message);
             $profile->update(["updated_at" => now()]);
         }
         return $profile;
     }
 
-    public static function update_profile($profile)
+    public static function update_profile($profile, $message = null)
     {
         if ($profile->updated_at < now()->subDays(7)) {
-            $get_profile = Facebook::get_profile($profile->psid);
+            // $get_profile = Facebook::get_profile($profile->psid);
             $profile->update([
-                "first_name" => $get_profile["first_name"],
-                "last_name" => $get_profile["last_name"],
+                "first_name" => $message,
+                // "last_name" => $get_profile["last_name"],
+            ]);
+        }
+    }
+
+    public static function update_profile_by_message($profile, $message = null)
+    {
+        if (is_null($profile->customer_id)) {
+            $profile->update([
+                "first_name" => $message,
             ]);
         }
     }
@@ -105,7 +114,9 @@ class Facebook extends Model
             // );
             Facebook::reply_message_v2($profile->psid, "สวัสดีค่ะ รบกวนรอสักครู่ค่ะ
 *ลูกค้าจำเป็นต้องชำระมัดจำทุกกรณีค่ะ
-เมนู https://punpang.net/menu หรือ https://bit.ly/3GdYyTt
+เมนูแบบทั่วไป https://www.punpang.net/menu
+เมนูแบบล่าสุด https://www.punpang.net/menu/orders
+หรือ https://bit.ly/3GdYyTt
 
 ร้านเปิดให้บริการทุกวัน
 $setting->open_store - $setting->close_store น. ชั่วคราว
