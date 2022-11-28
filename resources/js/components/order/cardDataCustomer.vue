@@ -3,6 +3,11 @@
         <v-card class="mb-2" outlined>
             <v-card-title class="text-h6 white--text warning">
                 ข้อมูลลูกค้า
+                <v-spacer></v-spacer>
+                <btnUpdateCustomer
+                    v-if="user.type == 1"
+                    :propCustomer="order.customer"
+                ></btnUpdateCustomer>
             </v-card-title>
             <v-card-text>
                 <v-simple-table>
@@ -62,7 +67,9 @@ Vue.filter("formatNumber", function (value) {
     return numeral(value).format("0,0.00");
 });
 import { mapGetters } from "vuex";
+import btnUpdateCustomer from "@/js/components/order/customer/update/btn";
 export default {
+    components: { btnUpdateCustomer },
     methods: {
         social_startWith() {
             if (

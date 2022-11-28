@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\URL;
+use App\Order\Facebook;
 use App\Order\AlertMessages;
 use Illuminate\Console\Command;
 use App\Order\NoticeOfPaymentFromCustomer;

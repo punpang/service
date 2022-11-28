@@ -20,7 +20,7 @@ class CustomerController extends Controller
     {
         request()->validate([
             "name" => "required",
-            "tel" => "required|unique:order.a_customer|numeric",
+            "tel" => "required|unique:order.a_customer|numeric|starts_with:0|digits:10",
             "social_is" => "required"
         ], [
             "name.required" => "ห้ามเว้นว่าง",
@@ -47,5 +47,33 @@ class CustomerController extends Controller
             DB::rollback();
             return $e;
         }
+    }
+
+    public function update(ACustomer $customer, Request $request)
+    {
+        // dd($request->name);
+
+        $request->validate([
+            "name" => "required",
+            "tel" => "required|numeric|starts_with:0|digits:10|unique:order.a_customer,tel," . $request->id,
+            "social_is" => "required"
+        ], [
+            "name.required" => "ห้ามเว้นว่าง",
+            "tel.required" => "ห้ามเว้นว่าง",
+            "tel.unique" => "เบอร์นี้ มีในระบบแล้ว",
+            "tel.numeric" => "ตัวเลขเท่านั้น",
+            "social_is.required" => "ห้ามเว้นว่าง",
+        ]);
+
+        $customer->update([
+            "name" => $request->name,
+            "tel" => $request->tel,
+            "social_is" => $request->social_is
+        ]);
+
+        return response()->json([
+            "title" => "แก้ไขเรียบร้อย",
+            "icon" => "success"
+        ], 200);
     }
 }

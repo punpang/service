@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Order\MoneyServices;
 
+
 class MoneyServicesController extends Controller
 {
     public function store(Request $request)
@@ -21,6 +22,8 @@ class MoneyServicesController extends Controller
         $data->thb1000 = $request->thb1000;
         $data->note = $request->note;
         $data->save();
+
+        $data->orderDetail->aOrder->update(["status_full_payment", 1]);
 
         return response()->json([
             "title" => "สร้างรายการสำเร็จ",
@@ -48,6 +51,11 @@ class MoneyServicesController extends Controller
     public function delete(MoneyServices $id)
     {
         $id->delete();
+
+        // if ($id->orderDetail->MoneyServices->count() == 0) {
+        //     $id->orderDetail->aOrder->update(["status_full_payment" => 0]);
+        // }
+
         return response()->json([
             "title" => "ลบข้อมูลสำเร็จ",
             "icon" => 'success'

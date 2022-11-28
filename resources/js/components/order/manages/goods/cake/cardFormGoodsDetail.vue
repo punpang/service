@@ -58,9 +58,9 @@
                                 detail.detail
                             }}</strong>
                         </p>
-                        <p class="mb-0">
+                        <p class="mb-0" v-if="user.type == 1">
                             <strong>ราคา </strong>
-                            {{ detail.price }} บาท
+                            {{ detail.price | formatNumber }} บาท
                         </p>
                         <div
                             class="my-2 d-flex"
@@ -101,11 +101,11 @@
                                 :propOrderDetail="detail"
                             ></btnShowImageForMenu>
                         </div>
-                        <p class="my-2"></p>
+                      
                         <div v-if="detail.add_ons.length > 0">
                             <v-divider class="my-1"></v-divider>
-                            <p
-                                class="mb-0"
+                            <div 
+                                class="mb-0 flex-row d-flex"
                                 v-for="(addOn, index) in detail.add_ons"
                                 :key="index"
                             >
@@ -117,17 +117,27 @@
                                     "
                                     >priority_high</v-icon
                                 >
-                                + {{ addOn.price | formatNumber }}
-                                {{ addOn.product_add_on.goods_add_on.name }}
-                            </p>
-                            <p class="mb-0">
+                                <div v-if="user.type == 1" class="font-weight-bold">
+                                    {{ addOn.price | formatNumber }} 
+                                </div>
+
+                                <div class="ml-1 text--secondary">
+                                    {{ addOn.product_add_on.goods_add_on.name }}
+                                </div>
+                                
+                                
+                            </div>
+                            <p class="mb-0" v-if="user.type == 1">
                                 รวมตัวเลือกเพิ่มเติม
                                 {{ detail.sum_all.add_on }} บาท
                             </p>
                         </div>
 
                         <v-divider class="my-1"></v-divider>
-                        <p>รวมทั้งหมด {{ detail.sum_all.total }} บาท</p>
+                        <p>
+                            <strong>รวม</strong>
+                            {{ detail.sum_all.total }} บาท
+                        </p>
                     </v-col>
                     <v-col cols="12" md="12">
                         <comboboxTags
@@ -178,6 +188,10 @@ import showMoneyService from "@/js/components/order/manages/goods/cake/moneyServ
 
 import comboboxTags from "@/js/components/order/tags/combobox";
 
+var numeral = require("numeral");
+Vue.filter("formatNumber", function (value) {
+    return numeral(value).format("0,0.00");
+});
 export default {
     components: {
         // editCake,
@@ -193,6 +207,7 @@ export default {
         comboboxTags,
         btnShowImageForMenu,
     },
+    methods: {},
     computed: {
         ...mapGetters({
             order: "orderIndex/order",

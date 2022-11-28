@@ -109,6 +109,14 @@ Route::prefix('v1')->group(function () { // api/v1/...
     });
 });
 
+Route::prefix('v2')->group(function () { // api/gueœst/order/
+    Route::prefix('guest')->group(function () { // api/gueœst/order/
+        Route::prefix('ksher')->group(function () { // api/v1/guest/ksher
+            Route::get('{order}/getUseKsherChannelPayment', 'Order\KsherChannelPaymentController@getUseKsherChannelPayment_v2');
+        });
+    });
+});
+
 Route::middleware("admin:api")->group(function () { //สำหรับ waitress
 
     Route::prefix('menuBar')->group(function () { // api/menuBar/...
@@ -401,6 +409,7 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
             Route::prefix("customer")->group(function () {
                 Route::post('getSearchByPhoneNumber', 'Order\CustomerController@getSearchByPhoneNumber');
                 Route::post('/', 'Order\CustomerController@store');
+                Route::post('{customer}/update', 'Order\CustomerController@update');
             });
         });
 

@@ -15,8 +15,9 @@
           class="white--text"
           :class="classNtpfc(ntpfc.status)"
         >
-          <td>
-            <strong>#{{ ntpfc.order_id }}</strong>
+          <td >
+            <strong class="d-flex flex-row">#{{ ntpfc.order_id }}</strong>
+            {{ ntpfc.created_at_th}}
           </td>
           <td class="text-center">
             <strong>{{ ntpfc.amount | formatNumber }} บาท</strong>

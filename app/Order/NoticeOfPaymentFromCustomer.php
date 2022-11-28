@@ -19,11 +19,21 @@ class NoticeOfPaymentFromCustomer extends Model
     ];
     protected $hidden = ['created_at', 'updated_at'];
 
+    protected $appends = ["created_at_th"];
 
-    public function getCreatedAtAttribute($date)
+
+    // public function getCreatedAtAttribute($date)
+    // {
+    //     // return \Carbon\Carbon::createFromFormat('Y-m-d', $date)->diffForHumans();
+    //     return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $date)->addYears(543)->format('d-m-Y H:i:s');
+    // }
+
+    public function getCreatedAtThAttribute()
     {
         // return \Carbon\Carbon::createFromFormat('Y-m-d', $date)->diffForHumans();
-        return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $date)->addYears(543)->format('d-m-Y H:i:s');
+        // return $this->created_at;
+        return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)
+            ->addYears(543)->format('d/m/y H:i:s');
     }
 
     public function aOrder()

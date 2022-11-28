@@ -15,7 +15,7 @@ export default {
                 edit: "edit",
                 add: "add_circle_outline",
                 dataCustomer: "person",
-                phone:"phone"
+                phone: "phone",
             },
             text: {
                 refresh: "ล้างข้อมูล",
@@ -24,24 +24,24 @@ export default {
                 phoneNumberCustomer: "เบอร์โทรลูกค้า",
                 dataCustomer: "ข้อมูลลูกค้า",
                 social: "ช่องทางอื่น",
-                successAddNewCustomer:"เพิ่มลูกค้าใหม่สำเร็จ"
-            }
+                successAddNewCustomer: "เพิ่มลูกค้าใหม่สำเร็จ",
+            },
         },
         rules: {
-            name: [v => !!v || "ห้ามเว้นว่าง"],
-            social: [v => !!v || "ห้ามเว้นว่าง"],
+            name: [(v) => !!v || "ห้ามเว้นว่าง"],
+            social: [(v) => !!v || "ห้ามเว้นว่าง"],
             phone_number: [
-                v => !!v || "ห้ามเว้นว่าง",
-                v => v.length == 10 || "กรอกเบอร์โทร 10 หลักเท่านั้น",
-                v => {
+                (v) => !!v || "ห้ามเว้นว่าง",
+                (v) => v.length == 10 || "กรอกเบอร์โทร 10 หลักเท่านั้น",
+                (v) => {
                     const pattern = /[0]{1}[0-9]{9}/;
                     return (
                         pattern.test(v) ||
                         "กรุณาขึ้นต้นด้วยเลข 0 และกรอกเบอร์โทร 10 หลักเท่านั้น"
                     );
-                }
-            ]
-        }
+                },
+            ],
+        },
     },
     mutations: {
         getSearch(state, data) {
@@ -55,34 +55,44 @@ export default {
         },
         resetCustomer(state) {
             state.getSearch = "";
-        }
+        },
     },
     getters: {
-        getSearch: state => state.getSearch,
-        messages: state => state.messages,
-        customer: state => state.customer,
-        rules: state => state.rules
+        getSearch: (state) => state.getSearch,
+        messages: (state) => state.messages,
+        customer: (state) => state.customer,
+        rules: (state) => state.rules,
     },
     actions: {
         async getSearch({ commit }, payload) {
             await axios
                 .post(`/api/admin/v1/customer/getSearchByPhoneNumber`, {
-                    phone_number: payload
+                    phone_number: payload,
                 })
-                .then(response => {
+                .then((response) => {
                     // console.log(response.data);
                     commit("getSearch", response.data);
                 })
-                .catch(err => console.error(err));
+                .catch((err) => console.error(err));
         },
         async store({ commit }, payload) {
             return await axios
                 .post(`/api/admin/v1/customer`, payload)
-                .then(response => {
+                .then((response) => {
                     commit("getSearch", response.data);
                     return response;
                 })
-                .catch(err => console.error(err));
-        }
-    }
+                .catch((err) => console.error(err));
+        },
+        async update({}, payload) {
+            return await axios
+                .post(`/api/admin/v1/customer/${payload.id}/update`, payload)
+                .then((response) => {
+                    return response.data;
+                })
+                .catch((err) => {
+                    // return err;
+                });
+        },
+    },
 };

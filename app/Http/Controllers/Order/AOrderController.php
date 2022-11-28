@@ -255,6 +255,10 @@ class AOrderController extends Controller
         //     $order->save();
         // }
 
+        if ($order->sumMoneyCustomer() > 0 || $order->orderDeliveryService) {
+            $order->update(["status_full_payment" => 1]);
+        }
+
         return response()->json([
             "order" => $order,
 
@@ -501,20 +505,24 @@ class AOrderController extends Controller
 
             $message = "
 📌 หมายเลขคำสั่งซื้อ #" . $order->id . "
-
-📌ข้อมูลลูกค้า
+---------------------------
+📌 ข้อมูลลูกค้า
 คุณ " . $order->customer->name . "
-หมายเลขโทรศัพท์
-" . $order->customer->tel . "
-
+เบอร์โทรศัพท์ " . $order->customer->tel . "
+---------------------------
 📌 วัน-เวลานัดรับสินค้า
-" . $order->date_get_th . " " . $order->time_get . " น.
-
-📌 ยอดรวมทั้งหมด
-" . number_format($order->sumTASC(), 2) . " บาท
-
+" . $order->date_time_get_th . " น.
+---------------------------
+📌 ยอดรวมทั้งหมด " . number_format($order->sumTASC(), 2) . " บาท
+📌 ยอดชำระแล้ว " . number_format($order->sumDeposited(), 2) . " บาท
+---------------------------
+📌 ยอดคงเหลือ " . number_format($order->sumBalance(), 2) . " บาท
+---------------------------
 📌 โปรดชำระเงินภายใน
-" . $order->payment_deadline_th . " น.";
+" . $order->payment_deadline_th . " น.
+---------------------------
+หลังจากลูกค้าชำระเงินแล้ว
+ทางร้านสงวนสิทธิ์ลูกค้าตรวจสอบรายการสั่งซื้อแล้ว";
             Facebook::send_reply_message(
                 $order,
                 $message
@@ -524,6 +532,8 @@ class AOrderController extends Controller
                 "order_id" => $order->id,
                 "link_for_customer" => $order->link_for_customer
             ];
+
+
             Facebook::send_postback(
                 $order,
                 [
@@ -545,6 +555,13 @@ class AOrderController extends Controller
                     ]
                 ]
             );
+
+            // Facebook::reply_image($order->customer->facebook->psid, "https://punpang.net/images/payments/payment-process-qr-code-promptpay.jpg");
+            //   Facebook::reply_image($order->customer->facebook->psid, "https://punpang.net/images/payments/payment-process-Transfer-payment-by-yourself.jpg");
+            Facebook::send_reply_image($order, "https://punpang.net/images/payments/payment-process-Transfer-payment-by-yourself.jpg");
+            Facebook::send_reply_image($order, "https://punpang.net/images/payments/payment-process-qr-code-promptpay.jpg");
+            //Facebook::send_reply_image($order, "https://punpang.net/images/payments/payment-process-qr-code-promptpay.jpg");
+
             Line::flex_alert_payment($order);
 
             return response()->json([

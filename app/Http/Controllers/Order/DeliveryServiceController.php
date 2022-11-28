@@ -30,6 +30,8 @@ class DeliveryServiceController extends Controller
             "detail" => $request->form["detail"]
         ]);
 
+        $order->update(["status_full_payment", 1]);
+
         return response()->json([
             'status' => "success",
             "message" => "สร้างรายการสำหรับบริการจัดส่งสำเร็จ",
@@ -47,6 +49,8 @@ class DeliveryServiceController extends Controller
             "link_google_maps" => $request->form["link_google_maps"],
             "detail" => $request->form["detail"]
         ]);
+
+        $delivery_service->aOrder->update(["status_full_payment", 0]);
 
         return response()->json([
             'status' => "success",

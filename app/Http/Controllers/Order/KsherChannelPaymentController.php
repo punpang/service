@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Order;
 
-use App\Http\Controllers\Controller;
-use App\Order\KsherChannelPayment;
+use App\Order\AOrder;
 use App\Order\KsherDayOff;
 use Illuminate\Http\Request;
+use App\Order\KsherChannelPayment;
+use App\Http\Controllers\Controller;
 
 class KsherChannelPaymentController extends Controller
 {
@@ -17,6 +18,41 @@ class KsherChannelPaymentController extends Controller
             ->whereStatusUse(true)
             ->orderBy("sort", "ASC")
             ->get();
+
+        return $kshers;
+    }
+
+    public function getUseKsherChannelPayment_v2(AOrder $order)
+    {
+        if ($order->sumMoneyCustomer() > 0) {
+            $kshers = KsherChannelPayment::where("payment_code", "transferByCustomer")
+                ->whereStatusUse(true)
+                ->orderBy("sort", "ASC")
+                ->get();
+        }
+        // else if ($order->date_get == now()->format('Y-m-d')) {
+        //     $kshers = KsherChannelPayment::whereIn("payment_code", ["transferByCustomer", "notPayment"])
+        //         ->whereStatusUse(true)
+        //         ->orderBy("sort", "ASC")
+        //         ->get();
+        // } 
+        else if ($order->orderDeliveryService) {
+            $kshers = KsherChannelPayment::WhereDoesntHave("ksherDayOff", function ($query) {
+                return $query->where("day_off", \Carbon\Carbon::now()->format('Y-m-d'));
+            })
+                ->where("payment_code", "!=", "notPayment")
+                ->whereStatusUse(true)
+                ->orderBy("sort", "ASC")
+                ->get();
+        } else {
+            $kshers = KsherChannelPayment::WhereDoesntHave("ksherDayOff", function ($query) {
+                return $query->where("day_off", \Carbon\Carbon::now()->format('Y-m-d'));
+            })
+                ->whereStatusUse(true)
+                ->orderBy("sort", "ASC")
+                ->get();
+        }
+
 
         return $kshers;
     }

@@ -441,7 +441,10 @@ export default {
             await this.$store.dispatch("orderIndex/getOrderByUUID", {
                 uuid: this.$route.params.uuid,
             });
-            await this.$store.dispatch("orderKsher/getUseKsherChannelPayment");
+            const payload = {
+                order : this.order
+            }
+            await this.$store.dispatch("orderKsher/getUseKsherChannelPayment_v2", payload);
             await this.CaseOptionAmounts();
 
             if (this.sumAll.sumTASC > 500) {

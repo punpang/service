@@ -50,6 +50,11 @@ EOD;
         return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $this->updated_at)->addYears(543)->format('d-m-Y H:i');
     }
 
+    public function getCodeAttribute()
+    {
+        return $this->mch_order_no;
+    }
+
     public function aOrder()
     {
         return $this->belongsTo(AOrder::class, "order_id", "id");

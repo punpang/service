@@ -42,9 +42,12 @@ class NoticeOfPaymentFromCustomerController extends Controller
 
     public function getAllByAdmin()
     {
-        $notices = NoticeOfPaymentFromCustomer::orderBy("status", "ASC")
+        $notices = NoticeOfPaymentFromCustomer::where("created_at", ">=", now()->subDays(7))
+            ->orderBy("status", "ASC")
             ->orderBy("created_at", "DESC")
+            ->take(100)
             ->get();
+
         return $notices;
     }
 

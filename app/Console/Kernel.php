@@ -34,6 +34,10 @@ class Kernel extends ConsoleKernel
         $schedule->command("Alert:OrderToday")->dailyAt('08:30');
         $schedule->command("Notify:PaymentOfTomorrowOrder")->dailyAt('09:00');
 
+
+        // สร้างวันที่งดรับชำระผ่าน ksher พฤ-ส
+        $schedule->command("create:dayOffsKsher")->dailyAt("22:45");
+
         // แจ้งเตือนรายการสั่งซื้อที่รอชำระสำหรับวันนี้
 
         // แจ้งยอดขายวันนี้

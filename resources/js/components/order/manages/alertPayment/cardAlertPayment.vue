@@ -120,7 +120,10 @@
             </v-card-title>
             <v-card-text>
                 <v-checkbox
-                    :disabled="order.sum_all.sumMoneyCustomer > 0 || this.order.order_delivery_service != undefined"
+                    :disabled="
+                        order.sum_all.sumMoneyCustomer > 0 ||
+                        this.order.order_delivery_service != undefined
+                    "
                     v-model="status_full_payment"
                     label="แจ้งชำระเงินเต็มจำนวน"
                     hide-details
@@ -171,6 +174,8 @@ export default {
                 { id: 3, text: "1 ชั่วโมง", status_use: 1 },
                 { id: 4, text: "3 ชั่วโมง", status_use: 1 },
                 { id: 5, text: "6 ชั่วโมง", status_use: 1 },
+                { id: 7, text: "12 ชั่วโมง", status_use: 1 },
+                { id: 8, text: "24 ชั่วโมง", status_use: 1 },
                 { id: 6, text: "ก่อนวันรับสินค้า", status_use: 1 },
             ],
             dateTimeForPay: "",
@@ -244,7 +249,7 @@ export default {
         clickTimeOption(v) {
             const datetime = new Date();
             let oDateTime = new Date(this.formatDateTimeGetForAlert());
-            console.log("🚀 ~ file: cardAlertPayment.vue ~ line 248 ~ clickTimeOption ~ oDateTime", oDateTime)
+
 
             switch (v.id) {
                 case 1:
@@ -262,8 +267,14 @@ export default {
                 case 5:
                     datetime.setMinutes(datetime.getMinutes() + 360);
                     break;
+                case 7:
+                    datetime.setMinutes(datetime.getMinutes() + 720);
+                    break;
+                case 8:
+                    datetime.setMinutes(datetime.getMinutes() + 1440);
+                    break;
                 case 6:
-                    oDateTime.setDate(oDateTime.getDate() - 1);
+                    oDateTime.setDate(oDateTime.getDate() - 2);
                     oDateTime.setHours(12);
                     oDateTime.setMinutes(0);
                     break;
@@ -301,7 +312,10 @@ export default {
                 orderID: this.$route.params.id,
             });
 
-            if (this.order.sum_all.sumMoneyCustomer > 0 || this.order.order_delivery_service) {
+            if (
+                this.order.sum_all.sumMoneyCustomer > 0 ||
+                this.order.order_delivery_service
+            ) {
                 this.status_full_payment = true;
             }
             // console.log(res);

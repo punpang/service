@@ -114,8 +114,8 @@ class Facebook extends Model
             // );
             Facebook::reply_message_v2($profile->psid, "สวัสดีค่ะ รบกวนรอสักครู่ค่ะ
 *ลูกค้าจำเป็นต้องชำระมัดจำทุกกรณีค่ะ
-เมนูแบบทั่วไป https://www.punpang.net/menu
-เมนูแบบล่าสุด https://www.punpang.net/menu/orders
+เมนูแบบทั่วไป https://punpang.net/menu
+เมนูแบบล่าสุด https://punpang.net/menu/orders
 หรือ https://bit.ly/3GdYyTt
 
 ร้านเปิดให้บริการทุกวัน
@@ -175,7 +175,7 @@ $setting->open_store - $setting->close_store น. ชั่วคราว
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://graph.facebook.com/v7.0/me/messages?access_token=' . self::access_token(),
+            CURLOPT_URL => 'https://graph.facebook.com/v14.0/me/messages?access_token=' . self::access_token(),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -246,11 +246,57 @@ $setting->open_store - $setting->close_store น. ชั่วคราว
         echo $response;
     }
 
+    public static function reply_image_v2($sender, $url)
+    {
+        $url = self::url() . self::version() . 'me/messages?access_token=' . self::access_token();
+
+        $data = [
+            "messaging_type" => "RESPONSE",
+            "recipient" => [
+                "id" => $sender
+            ],
+            "message" => [
+                "attachment" => [
+                    "type" => "image",
+                    "payload" => [
+                        "url" => $url,
+                        "is_reusable" => true
+                    ]
+                ]
+            ]
+        ];
+
+        // {
+        //     "recipient": {
+        //         "id": "' . $sender . '"
+        //     },
+        //     "message": {
+        //     "attachment": {
+        //         "type" : "image",
+        //         "payload" : {
+        //             "url" : "' . $url . '",
+        //             "is_reusable" : true
+        //         }
+        //     }
+        // }
+        // }
+
+        $client = new \GuzzleHttp\Client();
+        $response = $client->post($url, ['form_params' => $data]);
+        
+        if ($response->getStatusCode() != 200) {
+            Linenotify::send("Facebook::reply_message_v2 || ERROR::" . $response->getBody());
+        }
+
+        return $response->getBody();
+    }
+
     public static function reply_message_v2($sender, $message)
     {
         $url = self::url() . self::version() . 'me/messages?access_token=' . self::access_token();
 
         $data = [
+            "messaging_type" => "RESPONSE",
             "recipient" => [
                 "id" => $sender
             ],
@@ -279,6 +325,18 @@ $setting->open_store - $setting->close_store น. ชั่วคราว
             return;
         }
         Facebook::reply_message_v2($order->customer->facebook->psid, $message);
+    }
+
+    public static function send_reply_image($order, $url)
+    {
+        if (
+            $order->OrderChannel->keyword != "facebook" ||
+            empty($order->customer->facebook) ||
+            $order->customer->facebook->updated_at->addHours("23") < now()
+        ) {
+            return;
+        }
+        Facebook::reply_image($order->customer->facebook->psid, $url);
     }
 
     public static function send_postback($order, $elements)

@@ -25,6 +25,11 @@ class MoneyServices extends Model
         return $this->belongsTo(OrderDetail::class);
     }
 
+    public function orderDetail()
+    {
+        return $this->belongsTo(OrderDetail::class);
+    }
+
     public function getSumBankNotesAttribute()
     {
         return $this->thb20 +

@@ -34,6 +34,12 @@ export default {
             );
             commit("useKsherChannelPayment", res.data);
         },
+        async getUseKsherChannelPayment_v2({ commit },payload) {
+            const res = await axios.get(
+                `/api/v2/guest/ksher/${payload.order.id}/getUseKsherChannelPayment`
+            );
+            commit("useKsherChannelPayment", res.data);
+        },
         async createKsherPay({ commit }, payload) {
             commit("ksherPay", []);
             const res = await axios.post(
