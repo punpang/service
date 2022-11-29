@@ -284,9 +284,11 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                 Route::get('fetch', 'Order\AOrderController@fetch_orders');
                 Route::prefix('details')->group(function () { // api/admin/v1/orders/...
                     Route::get('fetch', 'Order\OrderDetailController@fetch');
+                    Route::get('fetch_pre_order_lists', 'Order\OrderDetailController@fetch_pre_order_lists');
 
                     Route::prefix('pos')->group(function () { // api/admin/v1/orders/...
                         Route::get('fetch', 'Order\AOrderController@pos_fetch');
+                        Route::get('fetch_pre_pos_lists', 'Order\AOrderController@fetch_pre_pos_lists');
                     });
                 });
             });

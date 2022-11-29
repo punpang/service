@@ -46,6 +46,58 @@ class OrderDetailController extends Controller
         return $query->makeHidden(["sum_all"]);
     }
 
+    public function fetch_pre_order_lists()
+    {
+        //$query = OrderDetail::query();
+
+        $query = OrderDetail::
+            // with([
+            //     "aOrder" => function ($q) {
+            //         $q->select("id", "date_get", "time_get");
+            //         // $q->orderBy("time_get", "asc");
+            //     }
+            // ])->
+            with(
+                "aOrder:id,date_get,time_get,status",
+                "aOrder.orderDeliveryService",
+                "aOrder.aStatus",
+                "aPrice.googleImage",
+                "addOns.productAddOn.goodsAddOn",
+                "imageFromCustomers.googleImage",
+                "productPrototypes.googleImage"
+            )
+            ->whereHas("aOrder", function ($q) {
+                return $q->where("date_get", ">=", now()->addDays(1)->format("Y-m-d"))
+                    ->where("status", "<", "8");
+
+                // $q->where("status", "<", "8");
+                // $q->orderBy("date_get","ASC");
+            })
+            // ->sortBy("a_order.date_get")
+            ->get();
+
+        // foreach ($query as $q) {
+        //     $q->aOrder->orderBy("date_get", "DESC");
+        // // }
+
+        // return $query;
+
+        // dd($query->sortBy("aOrder.date_get"));
+
+        // foreach ($query as $q) {
+        //     $q->aOrder->orderBy(["date_get", "ASC"]);
+        // }
+
+
+        foreach ($query as $q) {
+            $q->aOrder->setAppends(["time_get_format", "date_get_th"]);
+        }
+
+
+
+        return $query->makeHidden(["sum_all"]);
+    }
+
 
 
     public function delete(OrderDetail $id)

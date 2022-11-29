@@ -3,7 +3,7 @@
         <v-dialog
             v-model="dialog"
             persistent
-            width="100%"
+            width="500"
             scrollable
             transition="dialog-top-transition"
         >

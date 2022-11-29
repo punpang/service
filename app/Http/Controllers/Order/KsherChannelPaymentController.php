@@ -41,6 +41,7 @@ class KsherChannelPaymentController extends Controller
                 return $query->where("day_off", \Carbon\Carbon::now()->format('Y-m-d'));
             })
                 ->where("payment_code", "!=", "notPayment")
+                ->where("maximum", ">=", $order->sumTASC())
                 ->whereStatusUse(true)
                 ->orderBy("sort", "ASC")
                 ->get();
@@ -48,6 +49,7 @@ class KsherChannelPaymentController extends Controller
             $kshers = KsherChannelPayment::WhereDoesntHave("ksherDayOff", function ($query) {
                 return $query->where("day_off", \Carbon\Carbon::now()->format('Y-m-d'));
             })
+                ->where("maximum", ">=", $order->sumTASC())
                 ->whereStatusUse(true)
                 ->orderBy("sort", "ASC")
                 ->get();

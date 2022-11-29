@@ -417,7 +417,7 @@ class AOrder extends Model
         // dd(request()->all());
         $order = self::findOrFail($order_id);
 
-        if ($order->sumTASC() !== $order->sumDeposited() + $order->sumBalance() - $order->sumAdjustExcessPayment()) {
+        if ($order->sumTASC() != $order->sumDeposited() + $order->sumBalance() - $order->sumAdjustExcessPayment()) {
             return response()->json([
                 "message" => "จำนวนเงินไม่ถูกต้อง",
                 "status" => "error"

@@ -396,9 +396,35 @@ export default {
                     console.error(err);
                 });
         },
+
+        async fetch_pre_order_lists({ commit }, payload) {
+            return await axios
+                .get(`/api/admin/v1/orders/details/fetch_pre_order_lists`)
+                .then((response) => {
+                    commit("orders_details", response.data);
+                    return response;
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        },
+
+        async fetch_pre_pos_lists({ commit }, payload) {
+            return await axios
+                .get(`/api/admin/v1/orders/details/pos/fetch_pre_pos_lists`)
+                .then((response) => {
+                    commit("orders_details_pos", response.data);
+                    return response;
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        },
+
+        
         async fetch_orders_details_pos({ commit }, payload) {
             return await axios
-                .get(`/api/admin/v1/orders/details/pos/fetch?${payload}`)
+                .get(`/api/admin/v1/orders/details/pos/fetch_orders_details_pos`)
                 .then((response) => {
                     commit("orders_details_pos", response.data);
                     return response;
