@@ -195,11 +195,13 @@ class OrderDetailController extends Controller
         $query = OrderDetail::query();
 
         $query->select("id", "a_price_id");
-        // $query->whereHas("aOrder", function ($query) {
-        //     $query->whereDate("date_get", "<=", now()->subDays(1)->format("Y-m-d"))
-        //         ->where("status", 9);
-        // });
+        $query->whereHas("aOrder", function ($query) {
+            $query->whereDate("date_get", "<=", now()->subDays(1)->format("Y-m-d"))
+                ->where("status", 9);
+        });
+        // $query->orderBy("a_order.time_get", "DESC");
         $query->orderBy("id", "DESC");
+
         $query->whereHas("imageForMenus");
 
         $query->with(

@@ -39,8 +39,22 @@ class AlertMessages extends Model
         $nbfm_amount = number_format($amount, 2);
         $msgSms = 'ขอบคุณที่ชำระเงิน จำนวน ' . $nbfm_amount  . ' บาท หมายเลขคำสั่งซื้อ #' . $order->id . ' รายละเอียดรายการสั่งซื้อคลิกลิงก์ [ ' . $order->link_for_customer . ' ]\n\nวัน-เวลานัดรับสินค้า\n' . $order->dateGetTimeFormat();
 
-        Line::flex_receipt($order);
-        $msgFacebook = "- เวลานัดรับข้างต้น เป็นเพียงเวลาที่สินค้าจะจัดเตรียมเสร็จ
+        return MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
+
+        //AHistoryPayed
+        //
+    }
+
+    public static function socialPaymentOrder($order, $amount, $is_pickup = false)
+    {
+        
+
+
+        if (!$is_pickup) {
+            $nbfm_amount = number_format($amount, 2);
+
+            Line::flex_receipt($order);
+            $msgFacebook = "- เวลานัดรับข้างต้น เป็นเพียงเวลาที่สินค้าจะจัดเตรียมเสร็จ
 - ลูกค้าสามารถรับสินค้าได้ตั้งแต่เวลานัดรับ หรือหลังจากได้รับ SMS แจ้งเตือนให้สามารถเข้ารับสินค้าได้แล้ว
 - ไม่สามารถรับสินค้าก่อนเวลานัดรับได้
 - หากต้องการเปลี่ยนแปลงเวลานัดรับ โปรดแจ้งล่วงหน้าอย่างน้อย 3 ชั่วโมง ของเวลานัดรับใหม่
@@ -48,29 +62,28 @@ class AlertMessages extends Model
 ********
 *สินค้าทุกรายการจำเป็นต้องแช่เย็น เพื่อรักษาคุณภาพสูงสุด*";
 
-        Facebook::send_reply_message(
-            $order,
-            $msgFacebook
-        );
+            Facebook::send_reply_message(
+                $order,
+                $msgFacebook
+            );
 
-        Facebook::send_postback(
-            $order,
-            [
+            Facebook::send_postback(
+                $order,
                 [
-                    "title" => "ขอบคุณที่ชำระเงิน #$order->id",
-                    "subtitle" => "จำนวน $nbfm_amount บาท",
-                    "buttons" => [
-                        [
-                            "title" => "รายละเอียดเพิ่มเติม",
-                            "url" => $order->link_for_customer,
-                            "type" => "web_url"
+                    [
+                        "title" => "ขอบคุณที่ชำระเงิน #$order->id",
+                        "subtitle" => "จำนวน $nbfm_amount บาท",
+                        "buttons" => [
+                            [
+                                "title" => "รายละเอียดเพิ่มเติม",
+                                "url" => $order->link_for_customer,
+                                "type" => "web_url"
+                            ]
                         ]
                     ]
                 ]
-            ]
-        );
-        return MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
-
+            );
+        }
         //AHistoryPayed
         //
     }
@@ -193,13 +206,35 @@ class AlertMessages extends Model
     {
         $order = AOrder::findOrFail($orderID);
         $nbfm_amount = number_format($amount, 2);
-        $msgLine = 'แจ้งชำระเงินจากลูกค้า -> #' . $order->id . ' จำนวน ' . $nbfm_amount . ' บาท ';
-
-        // $link = URL::base() . "/o/" . $order->auth_order;
-        // $bitly = Bitly::getUrl($link);
         $msgSms = 'เราได้รับการแจ้งชำระเงินของคุณ จำนวน ' . $nbfm_amount  . ' บาท หมายเลขคำสั่งซื้อ #' . $order->id . ' เราจะตรวจสอบและยืนยันการชำระเงิน ภายใน 15 นาที หลังจากชำระเงิน รายละเอียดรายการสั่งซื้อคลิกลิงก์ [ ' . $order->link_for_customer . ' ]\n\nวัน-เวลานัดรับสินค้า\n' . $order->dateGetTimeFormat();
-        Linenotify::send($msgLine);
         MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
+
+        $msgLine = 'แจ้งชำระเงินจากลูกค้า -> #' . $order->id . ' จำนวน ' . $nbfm_amount . ' บาท ';
+        Linenotify::send($msgLine);
+    }
+
+    public static function socialNoticeOfPaymentByCustomer($order, $amount)
+    {
+        $nbfm_amount = number_format($amount, 2);
+        $msg = 'เราได้รับการแจ้งชำระเงินของคุณ จำนวน ' . $nbfm_amount  . ' บาท หมายเลขคำสั่งซื้อ #' . $order->id . ' เราจะตรวจสอบและยืนยันการชำระเงิน ภายใน 15 นาที หลังจากชำระเงิน';
+        Facebook::send_reply_message($order, $msg);
+        Facebook::send_postback(
+            $order,
+            [
+                [
+                    "title" => "ตรวจสอบรายการสั่งซื้อ",
+                    "buttons" => [
+                        [
+                            "title" => "รายละเอียดเพิ่มเติม",
+                            "url" => $order->link_for_customer,
+                            "type" => "web_url"
+                        ]
+                    ]
+                ]
+            ]
+        );
+        Line::send($order, $msg);
+
     }
 
     public static function smsImageGoodsReviewToCustomer($order, $alertSMS = true)
@@ -221,7 +256,33 @@ class AlertMessages extends Model
         // $bitly = Bitly::getUrl($link);
 
         $msgSms = 'หมายเลขคำสั่งซื้อ #' . $order->id . " ของคุณ ได้เปลี่ยนแปลงวัน-เวลานัดรับเป็น " . $order->date_get_th . " " . $order->time_get . " น. รายละเอียดคำสั่งซื้อคลิกลิงก์ [ " . $order->link_for_customer . " ]";
+
         return MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
+    }
+
+    public static function socialChangeDateTimeGet($order)
+    {
+        // $link = URL::base() . "/o/" . $order->auth_order;
+        // $bitly = Bitly::getUrl($link);
+
+        $msg = 'หมายเลขคำสั่งซื้อ #' . $order->id . " ของคุณ ได้เปลี่ยนแปลงวัน-เวลานัดรับเป็น " . $order->date_get_th . " " . $order->time_get . " น. ";
+        Facebook::send_reply_message($order, $msg);
+        Facebook::send_postback(
+            $order,
+            [
+                [
+                    "title" => "ตรวจสอบรายละเอียด",
+                    "buttons" => [
+                        [
+                            "title" => "รายการสั่งซื้อ",
+                            "url" => $order->link_for_customer,
+                            "type" => "web_url"
+                        ]
+                    ]
+                ]
+            ]
+        );
+        Line::send($order, $msg);
     }
 
     public static function linePrepareGoods($order)

@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Order;
 
-use App\Http\Controllers\Controller;
-use App\Order\KsherPay;
-use App\Order\AOrder;
-use App\Order\AHistoryPayed;
-use App\Order\AlertMessages;
-use App\Linenotify;
-use Illuminate\Http\Request;
 use App\URL;
+use App\Order\AOrder;
+use App\Order\Facebook;
+use App\Order\KsherPay;
+use App\Order\AHistoryPayed;
+// use App\Linenotify;
+use App\Order\AlertMessages;
+use Illuminate\Http\Request;
 use App\Events\KsherPayEvent;
+use App\Http\Controllers\Controller;
 
 class KsherPayController extends Controller
 {
@@ -243,5 +244,32 @@ class KsherPayController extends Controller
             ],
             200
         );
+    }
+
+    public function create_qrcode_promptpay_by_facebook($order)
+    {
+        $datas = [
+            "mch_order_no" => $order->id . "-" . KsherPay::generate_nonce_str(10),
+            "total_fee" => round($order->sumBalance(), 2) * 100,
+            "fee_type" => "THB",
+            "expire_time" => 600
+        ];
+
+        $url_notify = URL::base() . '/api/callback/ksherPay';
+
+        $datas["channel"] = "promptpay";
+        $datas["notify_url"] = $url_notify;
+        $ksher = KsherPay::native_pay($datas);
+
+        $ksherDecode = json_decode($ksher, true);
+
+        $new_KsherPay = new KsherPay;
+        $new_KsherPay->mch_order_no = $datas["mch_order_no"];
+        $new_KsherPay->result;
+        $new_KsherPay->amount = request("amount");
+        $new_KsherPay->total_fee = request("total_fee");
+        $new_KsherPay->save();
+
+        return $ksherDecode["data"];
     }
 }

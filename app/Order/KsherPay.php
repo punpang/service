@@ -2,6 +2,7 @@
 
 namespace App\Order;
 
+use App\URL;
 use Exception;
 use App\Order\AOrder;
 use App\Order\Setting;
@@ -38,6 +39,33 @@ MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAL7955OCuN4I8eYNL/mixZWIXIgCvIVE
 ivlxqdpiHPcOLdQ2RPSx/pORpsUu/E9wz0mYS2PY7hNc2mBgBOQT+wUCAwEAAQ==
 -----END PUBLIC KEY-----
 EOD;
+    }
+
+    public static function create_qrcode_promptpay_by_facebook($order)
+    {
+        $datas = [
+            "mch_order_no" => $order->id . "-" . KsherPay::generate_nonce_str(10),
+            "total_fee" => round($order->sumBalance(), 2) * 100,
+            "fee_type" => "THB",
+            "expire_time" => 600
+        ];
+
+        $url_notify = URL::base() . '/api/callback/ksherPay';
+
+        $datas["channel"] = "promptpay";
+        $datas["notify_url"] = $url_notify;
+        $ksher = self::native_pay($datas);
+
+        $ksherDecode = json_decode($ksher, true);
+
+        $new_KsherPay = new KsherPay;
+        $new_KsherPay->mch_order_no = $datas["mch_order_no"];
+        $new_KsherPay->result;
+        $new_KsherPay->amount = $order->sumBalance();
+        $new_KsherPay->total_fee = 0;
+        $new_KsherPay->save();
+
+        return $ksherDecode["data"]["imgdat"];
     }
 
     public function getSumTotalFeeAttribute()

@@ -424,7 +424,7 @@ export default {
         
         async fetch_orders_details_pos({ commit }, payload) {
             return await axios
-                .get(`/api/admin/v1/orders/details/pos/fetch_orders_details_pos`)
+                .get(`/api/admin/v1/orders/details/pos/fetch?${payload}`)
                 .then((response) => {
                     commit("orders_details_pos", response.data);
                     return response;

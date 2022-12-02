@@ -377,6 +377,7 @@ class AOrderController extends Controller
                 request("channel.id")
             );
             if ($history["status"] == "success") {
+                AlertMessages::socialPaymentOrder($order["order"], request("amount"), request("getGoods"));
                 if (request("getGoods")) {
                     $this->pickUpOrderByID(request("orderID"), request("is_add_score"));
                     return response()->json([
@@ -503,6 +504,9 @@ class AOrderController extends Controller
             AlertMessages::lineAlertPayment($order);
             AlertMessages::smsAlertPayment($order);
 
+            Facebook::send_reply_image($order, "https://punpang.net/images/payments/payment-process-Transfer-payment-by-yourself.jpg");
+            Facebook::send_reply_image($order, "https://punpang.net/images/payments/payment-process-qr-code-promptpay.jpg");
+
             $message = "
 📌 หมายเลขคำสั่งซื้อ #" . $order->id . "
 ---------------------------
@@ -555,12 +559,6 @@ class AOrderController extends Controller
                     ]
                 ]
             );
-
-            // Facebook::reply_image($order->customer->facebook->psid, "https://punpang.net/images/payments/payment-process-qr-code-promptpay.jpg");
-            //   Facebook::reply_image($order->customer->facebook->psid, "https://punpang.net/images/payments/payment-process-Transfer-payment-by-yourself.jpg");
-            Facebook::send_reply_image($order, "https://punpang.net/images/payments/payment-process-Transfer-payment-by-yourself.jpg");
-            Facebook::send_reply_image($order, "https://punpang.net/images/payments/payment-process-qr-code-promptpay.jpg");
-            //Facebook::send_reply_image($order, "https://punpang.net/images/payments/payment-process-qr-code-promptpay.jpg");
 
             Line::flex_alert_payment($order);
 
@@ -704,6 +702,7 @@ class AOrderController extends Controller
 
         AlertMessages::lineChangeDateTimeGet($order);
         AlertMessages::smsChangeDateTimeGet($order, $request->alert_sms);
+        AlertMessages::socialChangeDateTimeGet($order);
 
         return response()->json([
             "status" => "success",
@@ -892,6 +891,7 @@ class AOrderController extends Controller
 
     public function pos_fetch(Request $request)
     {
+        // dd($request->get("date_get"));
         // dd($request);
         //$query = OrderDetail::query();
 
@@ -964,7 +964,7 @@ class AOrderController extends Controller
             //     $q->where("date_get", $request->get("date_get"));
             //     //$q->where("status", "<", "8");
             // })
-            ->where("date_get",">=", now()->addDays(1)->format("Y-m-d"))
+            ->where("date_get", ">=", now()->addDays(1)->format("Y-m-d"))
             ->where("status", "<", "8")
             ->orderBy("date_get", "ASC")
             ->orderBy("time_get", "ASC")
@@ -973,7 +973,7 @@ class AOrderController extends Controller
 
 
         foreach ($query as $q) {
-            $q->setAppends(["date_get_th"]);
+            $q->setAppends(["date_get_th", "time_get_format"]);
         }
 
         return $query->makeHidden(["sum_all"]);

@@ -66,8 +66,13 @@ class AHistoryPayed extends Model
         return $this->belongsTo(KsherPay::class, "mch_order_no_of_ksher_pay", "mch_order_no");
     }
 
-    public static  function paymentByOrderID($order_id, $amount, $channel_payment_id, $mch_order_no_of_ksher_pay = null, $notice_of_payment_from_customer_id = null)
-    {
+    public static  function paymentByOrderID(
+        $order_id,
+        $amount,
+        $channel_payment_id,
+        $mch_order_no_of_ksher_pay = null,
+        $notice_of_payment_from_customer_id = null
+    ) {
         // return "success";
         if ($mch_order_no_of_ksher_pay != null) {
             $check = AHistoryPayed::where("mch_order_no_of_ksher_pay", $mch_order_no_of_ksher_pay)->first();
@@ -95,8 +100,8 @@ class AHistoryPayed extends Model
         $aHistoryPayed->notice_of_payment_from_customer_id = $notice_of_payment_from_customer_id;
         $aHistoryPayed->save();
 
-
         AlertMessages::smsPaymentOrder($aHistoryPayed->order->id, $amount);
+        AlertMessages::socialPaymentOrder($aHistoryPayed->order,$amount);
         AlertMessages::linePaymentOrder($aHistoryPayed->order, $amount);
 
         // $point = CustomerScore::calculateScore($amount);

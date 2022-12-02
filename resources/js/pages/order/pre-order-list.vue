@@ -181,6 +181,15 @@
                             </v-btn>
 
                             <v-btn
+                                class="yellow accent-4"
+                                x-small
+                                rounded
+                                v-if="item.money_services.length > 0"
+                            >
+                                บริการเกี่ยวกับเงิน
+                            </v-btn>
+
+                            <v-btn
                                 :class="item.a_order.a_status.class"
                                 x-small
                                 rounded
@@ -246,7 +255,6 @@
                 </div>
             </template> -->
                     <template v-slot:item.a_order.date_get="{ item }">
-                        
                         {{ item.a_order.date_get_th }}
                     </template>
 
@@ -315,9 +323,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-// import imageThumbnailPathSizeFree from "@/js/components/google/drive/imageThumbnailPathSizeFree";
 import btnPrototypeImage from "@/js/components/order/details/btnPrototypeImage.vue";
-
 import imageThumbnailFullPathSizeFree from "@/js/components/google/drive/imageThumbnailFullPathSizeFree";
 var numeral = require("numeral");
 Vue.filter("formatNumber", function (value) {
@@ -325,7 +331,6 @@ Vue.filter("formatNumber", function (value) {
 });
 export default {
     components: {
-        // imageThumbnailPathSizeFree,
         btnPrototypeImage,
         imageThumbnailFullPathSizeFree,
     },
@@ -368,14 +373,14 @@ export default {
                     width: "10%",
                 },
             ],
-            search_settings: {},
-            timer: {},
+            // search_settings: {},
+            // timer: {},
         };
     },
     methods: {
-        src_name(v) {
-            console.log(v.src_name);
-        },
+        // src_name(v) {
+        //     console.log(v.src_name);
+        // },
         clickToOrder(id) {
             window.location.href = `/manages/order/${id}/showOrderByID`;
         },

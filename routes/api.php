@@ -278,6 +278,7 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                 Route::post('postCheckSlip', 'Order\NoticeOfPaymentFromCustomerController@postCheckSlip');
                 Route::post('postUpdateSlip', 'Order\NoticeOfPaymentFromCustomerController@postUpdateSlip');
                 Route::post('postAppealSlip', 'Order\NoticeOfPaymentFromCustomerController@postAppealSlip');
+                Route::post('{id}/setCancel', 'Order\NoticeOfPaymentFromCustomerController@setCancel');
             });
 
             Route::prefix('orders')->group(function () { // api/admin/v1/orders/...
@@ -441,6 +442,7 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
 });
 
 Route::get('{promotion_id}/test', 'Momday\PromotionController@test');
+// Route::get('facebook/{order}', 'Order\FacebookController@set_qrcode_payment');
 
 
 Route::get('/clear-cache/fghrfywertgsdfdrwet', function () {

@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Order;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Order\NoticeOfPaymentFromCustomer;
+use App\URL;
+use App\Linenotify;
 use App\Order\AOrder;
 use App\Order\AHistoryPayed;
 use App\Order\AlertMessages;
-use App\URL;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Order\NoticeOfPaymentFromCustomer;
 // use App\Order\CustomerScore;
 
 class NoticeOfPaymentFromCustomerController extends Controller
@@ -27,6 +28,7 @@ class NoticeOfPaymentFromCustomerController extends Controller
             );
             if ($noticed) {
                 AlertMessages::bothNoticeOfPaymentByCustomer($order->id, $noticed->amount);
+                AlertMessages::socialNoticeOfPaymentByCustomer($order, $noticed->amount);
                 return [
                     "status" => "success",
                     "message" => "แจ้งชำระเงินสำเร็จ",
@@ -219,5 +221,18 @@ class NoticeOfPaymentFromCustomerController extends Controller
             return $msgLine;
         }
         return;
+    }
+
+    public function setCancel(NoticeOfPaymentFromCustomer $id)
+    {
+        NoticeOfPaymentFromCustomer::setCancel($id);
+        Linenotify::send("ยกเลิกรายการแจ้งชำระจากลูกค้า -> #$id->order_id");
+        return response()->json(
+            [
+                "title" => "ยกเลิกรายการแจ้งชำระจากลูกค้า #$id->order_id เรียบร้อย",
+                "icon" => "success"
+            ],
+            200
+        );
     }
 }

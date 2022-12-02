@@ -3,10 +3,12 @@
 namespace App\Order;
 
 // use App\URL;
+use App\URL;
 use App\MSms;
 use App\Linenotify;
 use App\Order\Setting;
 use App\Order\ShotlinkV2;
+use Illuminate\Support\Str;
 use App\Order\RegisterMemberTemp;
 use Illuminate\Database\Eloquent\Model;
 
@@ -283,7 +285,7 @@ $setting->open_store - $setting->close_store น. ชั่วคราว
 
         $client = new \GuzzleHttp\Client();
         $response = $client->post($url, ['form_params' => $data]);
-        
+
         if ($response->getStatusCode() != 200) {
             Linenotify::send("Facebook::reply_message_v2 || ERROR::" . $response->getBody());
         }
@@ -513,5 +515,58 @@ $setting->open_store - $setting->close_store น. ชั่วคราว
                 ]
             );
         }
+
+        if ($keyword == "genarate_qrcode_promtpay_to_facebook") {
+            self::set_qrcode_payment($postback["order_id"]);
+        }
+    }
+
+    public static function set_qrcode_payment($order_id)
+    {
+        $order = AOrder::find($order_id);
+        // $payload = [
+        //     "keyword" => "genarate_qrcode_promtpay_to_facebook",
+        //     "order_id" => $order->id,
+        // ];
+
+
+        // Facebook::send_postback(
+        //     $order,
+        //     [
+        //         [
+        //             "title" => "ทดสอบ QRCODE",
+        //             "buttons" => [
+        //                 [
+        //                     "title" => "สร้าง QR CODE ชำระเงิน",
+        //                     "payload" => json_encode($payload),
+        //                     "type" => "postback"
+        //                 ]
+        //             ]
+        //         ]
+        //     ]
+        // );
+        // return;
+        $msg = "โปรดรอสักครู่ ระบบกำลังสร้าง QR CODE";
+        Facebook::send_reply_message($order, $msg);
+
+        $base64 = KsherPay::create_qrcode_promptpay_by_facebook($order);
+
+        $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64));
+        $unique = Str::uuid();
+        file_put_contents("images/qr-code/$unique.png", $data);
+        $url = URL::base() . "/images/qr-code/$unique.png";
+
+        Facebook::send_reply_image($order, $url);
+        $msg = "ชำระด้วยยอด " . number_format($order->sumBalance(), 2) . " บาท
+------------------------------
+QR CODE นี้ จะหมดอายุ
+" . now()->addMinutes(10)->format("d/m/y H:i:s") . " น.
+------------------------------
+*ใช้ QR CODE พร้อมเพย์นี้ เพื่อชำระเงินได้เลยค่ะ*
+**หลังจากลูกค้าชำระเงินแล้ว ทางร้านสงวนสิทธิ์ว่าลูกค้าได้ทำการตรวจสอบรายการสั่งซื้อแล้ว และรายการสั่งซื้อนั้นถูกต้อง**";
+        Facebook::send_reply_message($order, $msg);
+
+        unlink("images/qr-code/$unique.png");
+        return response()->json([], 200);
     }
 }

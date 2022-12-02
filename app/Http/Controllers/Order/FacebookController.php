@@ -2,19 +2,24 @@
 
 namespace App\Http\Controllers\Order;
 
+use App\URL;
 use App\Linenotify;
+use App\Order\AOrder;
 use App\Order\Setting;
 use App\Order\Facebook;
 use App\Order\FacebookMids;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Order\FacebookWebhook;
 use App\Http\Controllers\Controller;
+use App\Order\KsherPay;
 use Illuminate\Support\Facades\Storage;
 
 class FacebookController extends Controller
 {
     public function webhook(Request $request)
     {
+
         $setting = Setting::first();
         if (!$setting->facebook_status_bot || $request->method() == "GET") {
             Linenotify::send("Facebook Status Bot :: Off");
@@ -23,10 +28,13 @@ class FacebookController extends Controller
 
         $input = json_decode($request->getContent(), true);
 
-        if (FacebookMids::check($input['entry'][0]['messaging'][0]['message']['mid'])) {
-            Linenotify::send($request->getContent());
-            return $request["hub_challenge"];
+        if (isset($input['entry'][0]['messaging'][0]['message']['mid'])) {
+            if (FacebookMids::check($input['entry'][0]['messaging'][0]['message']['mid'])) {
+                Linenotify::send($request->getContent());
+                return $request["hub_challenge"];
+            }
         }
+
 
         // PSID ของลูกค้า
         $sender = $input['entry'][0]['messaging'][0]['sender']['id'];
@@ -83,10 +91,10 @@ class FacebookController extends Controller
         }
 
         // มี POSTBACK
-        // if (!empty($input['entry'][0]['messaging'][0]['postback']['payload'])) {
-        //     $postback = json_decode($input['entry'][0]['messaging'][0]['postback']['payload'], true);
-        //     Facebook::key_word_postback($sender, $postback);
-        // }
+        if (!empty($input['entry'][0]['messaging'][0]['postback']['payload'])) {
+            $postback = json_decode($input['entry'][0]['messaging'][0]['postback']['payload'], true);
+            Facebook::key_word_postback($sender, $postback);
+        }
 
         return $request["hub_challenge"];
     }
@@ -112,6 +120,8 @@ class FacebookController extends Controller
                 $datas->whereNull("customer_id");
             }
         }
+
+        $datas->orderBy("updated_at", "DESC");
 
         return $datas->get();
     }
@@ -179,18 +189,50 @@ class FacebookController extends Controller
         return $response;
     }
 
-    public function save_image_base64()
+    public function set_qrcode_payment(AOrder $order)
     {
-        $base64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQAAAADAX2ykAAACoElEQVR4nO2aTWrkMBBGX40FWaohB+ijqG82zJFyA/soOcCAtWyQ+WYhqdOdMJMOOKY9VC0MRm/xQVE/KpWJr9j040s4OO+8884777zzf+OtWaB/zJgOALmfnTbU4/zKfJIkzbdn2QwYJEm65b9bj/Mr87lHaJqX6lXSDHaCGtMb63F+HT68+9d0LIH0cjCIAvK2epxfl3/vX0szYjqWILLx4Xb8aPqd/7d1//ZYbQ7NTzKisPTCjZMfTb/zd/GTmZkdwE45YD9nIL0GgKW2z9vqcX4lvsbvW4RqOhZEXkzkpRfh7fQ4vy5Pvfwklfaf+l1II4MgqnbS9Qo1Ppp+5+/hNeYnaYwS5ABpHgTxbNK8GMSCxg31OL8ub3Y8Wx1oTMcCsFh1chtiPfl8Y8+8RsBOsSC9tl7K7AA1nKfj2eeT++Rr/dUYr+eTNRcnlZqpNcbSuUfT7/wn1vwGtDIbJUmlN1T1QPL+apf8pX+WaqxqBtIM0kx1dzt1/+6Qb/ffyUBwNhFL0HQASy9DMQhFk134R9Pv/CfW629BmodLai43hfliHr8746/yc7dy5fM+7hjcv/vkm3/fxlTE3lVdTa28v9or39+PcihMRwEsQcTfQeShWCu9lwL8aPqdv4+PZ4McMDsMshOX+Qb0ceWmepxfk79qrcgBYJDGeLZWf+PZfP68Y/5tf7K2ziNLz8jd3ZvqcX4tvtXfNALkZ4AlQBxkRIBYnxuCttHj/Pfwl/3J9la0tIQ89U3odvqo+p2/l4/lspozqM6k5f3V/8Lr1wHaI3DuL4Wn7PtXO+Xf709WS+OCpfm5QA7Um/A2epxfl2/+bWOMAUuvobRkHM8GDKUm6W30OL8u/2F/Egq0C9HwYb394fQ777zzzjvv/B75P230m3hnLMGVAAAAAElFTkSuQmCC";
-        $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64));
-        // file_put_contents('/storage/images/text.png', $data);
+        Linenotify::send("set_qrcode_payment");
+        // $payload = [
+        //     "keyword" => "genarate_qrcode_promtpay_to_facebook",
+        //     "order_id" => $order->id,
+        // ];
 
-        // $image = str_replace('data:image/png;base64,', '', $image);
-        // $image = str_replace(' ', '+', $image);
-        // $imageName = "textTest" . '.' . 'png';
-        // Storage::put('/app/public/images/qrcode/1.png', $data);
-        Storage::put('file.png', $data, 'public');
-        // Storage::disk('public')->put($imageName, $data);
-        return $data;
+
+        // Facebook::send_postback(
+        //     $order,
+        //     [
+        //         [
+        //             "title" => "ทดสอบ QRCODE",
+        //             "buttons" => [
+        //                 [
+        //                     "title" => "สร้าง QR CODE ชำระเงิน",
+        //                     "payload" => json_encode($payload),
+        //                     "type" => "postback"
+        //                 ]
+        //             ]
+        //         ]
+        //     ]
+        // );
+        // return;
+
+        $base64 = KsherPay::create_qrcode_promptpay_by_facebook($order);
+
+        $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64));
+        $unique = Str::uuid();
+        file_put_contents("images/qr-code/$unique.png", $data);
+        $url = URL::base() . "/images/qr-code/$unique.png";
+
+        Facebook::send_reply_image($order, $url);
+        $msg = "ชำระด้วยยอด " . number_format($order->sumBalance(), 2) . " บาท
+------------------------------
+QR CODE นี้ จะหมดอายุ
+" . now()->addMinutes(10)->format("d/m/y H:i:s") . " น.
+------------------------------
+*ใช้ QR CODE พร้อมเพย์นี้ เพื่อชำระเงินได้เลยค่ะ*
+**หลังจากลูกค้าชำระเงินแล้ว ทางร้านสงวนสิทธิ์ว่าลูกค้าได้ทำการตรวจสอบรายการสั่งซื้อแล้ว และรายการสั่งซื้อนั้นถูกต้อง**";
+        Facebook::send_reply_message($order, $msg);
+
+        unlink("images/qr-code/$unique.png");
+        return response()->json([], 200);
     }
 }
