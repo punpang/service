@@ -30,7 +30,7 @@ class DeliveryServiceController extends Controller
             "detail" => $request->form["detail"]
         ]);
 
-        $order->update(["status_full_payment", 1]);
+        // $order->update(["status_full_payment", 1]);
 
         return response()->json([
             'status' => "success",

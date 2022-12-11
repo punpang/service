@@ -102,4 +102,31 @@ class Helper extends Model
         }
         return $result;
     }
+
+    public function promptPayQrCode($order)
+    {
+
+        // 00020101021153037645802TH29370016A0000006770101110 21318 09900565216 6304E49E
+        // 00020101021153037645802TH29370016A0000006770101110 21318 09900565216 540810000.006304 2409
+
+        // 00020101021153037645802TH29370016A0000006770101110 11300 66918853402 63041FE6
+        // 00020101021153037645802TH29370016A00000067701011101130066918853402 5406321.006304 8CC5
+        $first = "00020101021153037645802TH29370016A00000067701011101130066918853402";
+        $amount = number_format($order->sumBalance(), 2, '.', '');
+        $countAmount = strlen($amount); //3
+        $last = "6304";
+
+        $code = $first . $countAmount . $amount . $last;
+
+        $xFFFF = dechex(Helper::CRC16Normal($code));
+
+        $full = Str::upper($code . $xFFFF);
+
+        return response()->json(
+            [
+                "full" => $full,
+                "xFFFF" => $xFFFF,
+            ]
+        );
+    }
 }

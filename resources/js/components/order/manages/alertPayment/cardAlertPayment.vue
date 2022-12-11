@@ -274,7 +274,7 @@ export default {
                     datetime.setMinutes(datetime.getMinutes() + 1440);
                     break;
                 case 6:
-                    oDateTime.setDate(oDateTime.getDate() - 2);
+                    oDateTime.setDate(oDateTime.getDate() - 1);
                     oDateTime.setHours(12);
                     oDateTime.setMinutes(0);
                     break;

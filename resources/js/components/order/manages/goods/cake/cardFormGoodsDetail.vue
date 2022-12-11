@@ -21,13 +21,14 @@
                                 class="text-right"
                                 v-if="user.type == 1"
                             >
+                                <!-- v-if="order.status < 8" -->
                                 <btnCardManagesCake
-                                    v-if="order.status < 8"
                                     :propOrderDetail="detail"
                                 ></btnCardManagesCake>
                             </v-col>
                         </v-row>
                     </v-col>
+
                     <v-col cols="3" md="3" class="pa-2">
                         <!-- <v-img
                             src="https://www.punpangsv.com/admin_system/home/product/img-products/3FE0FF85-F7DE-4ED2-A5EF-77C4955186C1_1_201_a.png"
@@ -101,10 +102,10 @@
                                 :propOrderDetail="detail"
                             ></btnShowImageForMenu>
                         </div>
-                      
+
                         <div v-if="detail.add_ons.length > 0">
                             <v-divider class="my-1"></v-divider>
-                            <div 
+                            <div
                                 class="mb-0 flex-row d-flex"
                                 v-for="(addOn, index) in detail.add_ons"
                                 :key="index"
@@ -117,15 +118,16 @@
                                     "
                                     >priority_high</v-icon
                                 >
-                                <div v-if="user.type == 1" class="font-weight-bold">
-                                    {{ addOn.price | formatNumber }} 
+                                <div
+                                    v-if="user.type == 1"
+                                    class="font-weight-bold"
+                                >
+                                    {{ addOn.price | formatNumber }}
                                 </div>
 
                                 <div class="ml-1 text--secondary">
                                     {{ addOn.product_add_on.goods_add_on.name }}
                                 </div>
-                                
-                                
                             </div>
                             <p class="mb-0" v-if="user.type == 1">
                                 รวมตัวเลือกเพิ่มเติม

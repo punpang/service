@@ -48,6 +48,11 @@
                         v-if="order.status < 9"
                     ></btnChangeDateTimeGet>
                     <!-- <v-subheader>การชำระเงิน</v-subheader> -->
+                    <btnSummaryOfOrderDetails
+                        v-if="order.status < 9"
+                        @emitExit="emitExit"
+                        :propOrder="order"
+                    ></btnSummaryOfOrderDetails>
                     <btnAlertPayment
                         v-if="order.sum_all.sumBalance > 0"
                     ></btnAlertPayment>
@@ -95,6 +100,7 @@ import btnChangeCustomer from "@/js/components/order/changeCustomer/btnChangeCus
 import btnConnectSocialProfile from "@/js/components/order/connectSocialProfile/button";
 import btnChangeDateTimeGet from "@/js/components/order/changeDateTimeGet/btnChangeDateTimeGet";
 import btnDelivery from "@/js/components/order/delivery/btnDelivery";
+import btnSummaryOfOrderDetails from "@/js/components/order/summaryOfOrderDetails/btn";
 import btnPrepareGoods from "@/js/components/order/prepareGoods/btnPrepareGoods";
 import btnPickUpGoods from "@/js/components/order/pickUpGoods/btnPickUpGoods";
 
@@ -119,6 +125,7 @@ export default {
         btnDelivery,
         btnPrepareGoods,
         btnPickUpGoods,
+        btnSummaryOfOrderDetails,
 
         alertAdjustExcessPayment,
     },
@@ -135,6 +142,9 @@ export default {
         };
     },
     methods: {
+        emitExit() {
+            this.start();
+        },
         async start() {
             let loader = this.$loading.show();
             const payload = {

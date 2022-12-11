@@ -16,17 +16,18 @@
                 v-for="product in products"
                 :key="product.id"
             >
-                <v-card outlined>
+                <v-card outlined @click="clickToOrder(product.order_id)">
                     <imageThumbnailFullPathSizeFree
                         :path="product.image_for_menus[0]"
                         :size="500"
                         :propID="product.id"
                     >
-
-                </imageThumbnailFullPathSizeFree>
+                    </imageThumbnailFullPathSizeFree>
 
                     <v-card-text>
-                        <div class="d-flex flex-row text-body-2 font-weight-black">
+                        <div
+                            class="d-flex flex-row text-body-2 font-weight-black"
+                        >
                             {{ product.a_price.name_goods }}
                         </div>
 
@@ -61,7 +62,7 @@ Vue.filter("formatNumber", function (value) {
     return numeral(value).format("0,0.00"); // displaying other groupings/separators is possible, look at the docs
 });
 
-// import { mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 import imageThumbnailFullPathSizeFree from "@/js/components/google/drive/imageThumbnailFullPathSizeFree";
 export default {
     components: { imageThumbnailFullPathSizeFree },
@@ -73,6 +74,13 @@ export default {
         };
     },
     methods: {
+        clickToOrder(v) {
+            console.log(this.user);
+            if (this.user.type == 1) {
+                window.location.href = `/manages/order/${v}/showOrderByID`;
+                // window.location.href = `/manages/order/${v}/showOrderByID`;
+            }
+        },
         convert_tags(v) {
             let text = "";
             for (var i = 0; i < v.length; i++) {
@@ -101,7 +109,7 @@ export default {
         loader.hide();
     },
     computed: {
-        // ...mapGetters({ products: "punpangProduct/fetchAllUse" }),
+        ...mapGetters({ user: "main/User" }),
     },
 };
 </script>

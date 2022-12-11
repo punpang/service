@@ -3,7 +3,7 @@ export default {
     state: {
         orders: [],
         orders_details: [],
-        orders_details_pos:[],
+        orders_details_pos: [],
         setNameGoods: "",
         order: {
             sum_all: {
@@ -64,9 +64,9 @@ export default {
         orders_details(state, data) {
             state.orders_details = data;
         },
-        orders_details_pos(state, data){
+        orders_details_pos(state, data) {
             state.orders_details_pos = data;
-        }
+        },
     },
     getters: {
         order: (state) => state.order,
@@ -421,13 +421,24 @@ export default {
                 });
         },
 
-        
         async fetch_orders_details_pos({ commit }, payload) {
             return await axios
                 .get(`/api/admin/v1/orders/details/pos/fetch?${payload}`)
                 .then((response) => {
                     commit("orders_details_pos", response.data);
                     return response;
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        },
+        async summaryOfOrderDetails({}, payload) {
+            return await axios
+                .post(
+                    `/api/admin/v1/order/${payload.order_id}/summaryOfOrderDetails`
+                )
+                .then((response) => {
+                    return response.data;
                 })
                 .catch((err) => {
                     console.error(err);

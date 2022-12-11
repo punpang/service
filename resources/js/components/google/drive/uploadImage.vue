@@ -1,95 +1,97 @@
 <template>
-  <div>
-    <v-file-input
-      label="อัปโหลดรูป"
-      v-model="propUploadImange.file"
-      v-show="!propUploadImange.imagePreview"
-      :rules="rules.image"
-      prepend-icon="image"
-      @change="changeImage"
-      accept="image/*"
-      outlined
-      hide-details
-    >
-    </v-file-input>
-    <v-card v-show="propUploadImange.imagePreview">
-      <v-img
-        :src="
-          'https://drive.google.com/thumbnail?id=' +
-          propUploadImange.imagePreview +
-          '&sz=w800-h800'
-        "
-        :lazy-src="
-          'https://drive.google.com/thumbnail?id=' +
-          propUploadImange.imagePreview +
-          '&sz=w800-h800'
-        "
-        class="mb-4"
-      >
-        <v-btn
-          class="mt-1 ml-1"
-          color="error"
-          @click="clickRemoveImage"
-          v-show="propUploadImange.imagePreview"
-          fab
-          small
+    <div>
+        <v-file-input
+            :label="propLabel ? propLabel : label"
+            v-model="propUploadImange.file"
+            v-show="!propUploadImange.imagePreview"
+            :rules="rules.image"
+            prepend-icon="image"
+            @change="changeImage"
+            accept="image/*"
+            outlined
+            hide-details
         >
-          <v-icon>delete</v-icon>
-        </v-btn>
-      </v-img>
-    </v-card>
-  </div>
+        </v-file-input>
+
+        <v-card v-show="propUploadImange.imagePreview">
+            <v-img
+                :src="
+                    'https://drive.google.com/thumbnail?id=' +
+                    propUploadImange.imagePreview +
+                    '&sz=w800-h800'
+                "
+                :lazy-src="
+                    'https://drive.google.com/thumbnail?id=' +
+                    propUploadImange.imagePreview +
+                    '&sz=w800-h800'
+                "
+                class="mb-4"
+            >
+                <v-btn
+                    class="mt-1 ml-1"
+                    color="error"
+                    @click="clickRemoveImage"
+                    v-show="propUploadImange.imagePreview"
+                    fab
+                    small
+                >
+                    <v-icon>delete</v-icon>
+                </v-btn>
+            </v-img>
+        </v-card>
+    </div>
 </template>
 
 <script>
 export default {
-  props: ["propUploadImange"], // propUploadImange = uploadImange: { imagePreview: "", file: null,},
-  data() {
-    return {
-      rules: {
-        image: [(v) => !!v || "ห้ามเว้นว่าง"],
-      },
-    };
-  },
-  methods: {
-    clickUploadImage() {
-      this.image = event.target.files[0];
+    props: ["propUploadImange", "propLabel"], // propUploadImange = uploadImange: { imagePreview: "", file: null,},
+    data() {
+        return {
+            label: "อัปโหลดรูปภาพ",
+            rules: {
+                image: [(v) => !!v || "ห้ามเว้นว่าง"],
+            },
+        };
     },
-    async changeImage() {
-      this.image = event.target.files[0];
-      if (!this.image) {
-        return;
-      }
+    methods: {
+        clickUploadImage() {
+            this.image = event.target.files[0];
+        },
+        async changeImage() {
+            this.image = event.target.files[0];
+            if (!this.image) {
+                return;
+            }
 
-      let loader = this.$loading.show();
-      this.image = event.target.files[0];
-      const formData = new FormData();
-      formData.append("image", this.image);
-      //console.log(formData);
-      const response = await this.$store.dispatch(
-        "googleImage/store",
-        formData
-      );
-      if (response.status == 200) {
-        this.propUploadImange.imagePreview = response.data.src_name;
-        this.$toast.success("อัปโหลดรูปสำเร็จ");
-        //this.form.product_propImageId = response.data.id;
-        // console.log(response,"response");
-        this.$emit("emitImageId", response);
-        loader.hide();
-      } else {
-        this.$toast.error("อัปโหลดรูปไม่สำเร็จ เกิดข้อผิดพลาดบางอย่าง");
-        loader.hide();
-      }
+            let loader = this.$loading.show();
+            this.image = event.target.files[0];
+            const formData = new FormData();
+            formData.append("image", this.image);
+            //console.log(formData);
+            const response = await this.$store.dispatch(
+                "googleImage/store",
+                formData
+            );
+            if (response.status == 200) {
+                this.propUploadImange.imagePreview = response.data.src_name;
+                this.$toast.success("อัปโหลดรูปสำเร็จ");
+                //this.form.product_propImageId = response.data.id;
+                // console.log(response,"response");
+                this.$emit("emitImageId", response);
+                loader.hide();
+            } else {
+                this.$toast.error("อัปโหลดรูปไม่สำเร็จ เกิดข้อผิดพลาดบางอย่าง");
+                loader.hide();
+            }
+        },
+        async clickRemoveImage() {
+            let loader = this.$loading.show();
+            this.propUploadImange.imagePreview = "";
+            this.$emit("emitImageId", "");
+            this.$toast.success("ลบรูปภาพสำเร็จ");
+            this.propUploadImange.file = null;
+            loader.hide();
+        },
     },
-    async clickRemoveImage() {
-      let loader = this.$loading.show();
-      this.propUploadImange.imagePreview = "";
-      this.$emit("emitImageId", "");
-      this.$toast.success("ลบรูปภาพสำเร็จ");
-      this.propUploadImange.file = null;
-      loader.hide();
-    },
-  },
 };
 </script>

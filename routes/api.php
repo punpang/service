@@ -40,6 +40,9 @@ Route::get('menuBar/lists', 'ShabuNooNee\MenuMainController@lists');
 Route::prefix('v1')->group(function () { // api/v1/...
     Route::prefix('guest')->group(function () { // api/v1/guest/
 
+        Route::get('check_uuid/{uuid}', 'Order\AOrderController@check_uuid');
+
+
         Route::prefix('ksher')->group(function () { // api/v1/guest/ksher
             Route::get('fetch', 'Order\KsherChannelPaymentController@fetch');
             Route::get('getUseKsherChannelPayment', 'Order\KsherChannelPaymentController@getUseKsherChannelPayment');
@@ -301,7 +304,8 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                 Route::post('{order}/changeDateTimeGet', 'Order\AOrderController@changeDateTimeGet');
                 Route::post('{order}/prepareGoods', 'Order\AOrderController@prepareGoods');
                 Route::post('{order}/pickUpGoods', 'Order\AOrderController@pickUpGoods');
-                Route::post('{order}/customerNoPayment', 'Order\AOrderController@customerNoPayment');
+                Route::post('{order}/pickUpGoods', 'Order\AOrderController@pickUpGoods');
+                Route::post('{order}/summaryOfOrderDetails', 'Order\AOrderController@summaryOfOrderDetails');
 
                 Route::prefix('channelPayment')->group(function () { // api/admin/v1/...
                     Route::get('getUse', 'Order\ChannelPaymentController@getUse');
@@ -442,7 +446,7 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
 });
 
 Route::get('{promotion_id}/test', 'Momday\PromotionController@test');
-// Route::get('facebook/{order}', 'Order\FacebookController@set_qrcode_payment');
+Route::get('test/{order}', 'Order\FacebookController@test_sumup_message');
 
 
 Route::get('/clear-cache/fghrfywertgsdfdrwet', function () {

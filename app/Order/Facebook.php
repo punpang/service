@@ -10,6 +10,7 @@ use App\Order\Setting;
 use App\Order\ShotlinkV2;
 use Illuminate\Support\Str;
 use App\Order\RegisterMemberTemp;
+use App\Order\KsherChannelPayment;
 use Illuminate\Database\Eloquent\Model;
 
 class Facebook extends Model
@@ -317,36 +318,39 @@ $setting->open_store - $setting->close_store น. ชั่วคราว
         return $response->getBody();
     }
 
-    public static function send_reply_message($order, $message)
+    public static function send_reply_message($order, $message, $status_send = true)
     {
         if (
             $order->OrderChannel->keyword != "facebook" ||
             empty($order->customer->facebook) ||
-            $order->customer->facebook->updated_at->addHours("23") < now()
+            $order->customer->facebook->updated_at->addHours("23") < now() ||
+            $status_send == false
         ) {
             return;
         }
         Facebook::reply_message_v2($order->customer->facebook->psid, $message);
     }
 
-    public static function send_reply_image($order, $url)
+    public static function send_reply_image($order, $url, $status_send = true)
     {
         if (
             $order->OrderChannel->keyword != "facebook" ||
             empty($order->customer->facebook) ||
-            $order->customer->facebook->updated_at->addHours("23") < now()
+            $order->customer->facebook->updated_at->addHours("23") < now() ||
+            $status_send == false
         ) {
             return;
         }
         Facebook::reply_image($order->customer->facebook->psid, $url);
     }
 
-    public static function send_postback($order, $elements)
+    public static function send_postback($order, $elements, $status_send = true)
     {
         if (
             $order->OrderChannel->keyword != "facebook" ||
             empty($order->customer->facebook) ||
-            $order->customer->facebook->updated_at->addHours("23") < now()
+            $order->customer->facebook->updated_at->addHours("23") < now() ||
+            $status_send == false
         ) {
             return;
         }
@@ -519,33 +523,74 @@ $setting->open_store - $setting->close_store น. ชั่วคราว
         if ($keyword == "genarate_qrcode_promtpay_to_facebook") {
             self::set_qrcode_payment($postback["order_id"]);
         }
+
+        if ($keyword == "account_number_and_slip_attachment_link") {
+            $order = AOrder::find($postback["order_id"]);
+            $url = Url::base() . "/upload_slip/$order->auth_order";
+
+            if ($order->status_full_payment || $order->sumDeposited() > 0) {
+                $msg = "โปรดชำระด้วยจำนวนเงิน " . number_format($order->sumBalance(), 2) . " บาท";
+            } else {
+                $msg = "โปรดเลือกชำระด้วยจำนวนเงินระหว่าง " . number_format($order->sumTASC(), 2) . " บาท หรือ " . number_format($order->sumTASC() / 2, 2) . " บาท";
+            }
+
+            Facebook::send_reply_image($order, "https://punpang.net/images/payments/account_number_and_promptpay.jpg");
+            Facebook::send_reply_message($order, $msg);
+            Facebook::send_postback(
+                $order,
+                [
+                    [
+                        "title" => "แนบสลิปหลังชำระเงิน",
+                        "subtitle" => "หลังจากลูกค้าชำระเงินแล้ว ทางร้านสงวนสิทธิ์ลูกค้าตรวจสอบรายการสั่งซื้อแล้ว",
+                        "buttons" => [
+                            [
+                                "title" => "อัปโหลดสลิปที่นี่",
+                                "url" => $url,
+                                "type" => "web_url"
+                            ],
+                        ]
+                    ]
+                ]
+            );
+        }
     }
 
     public static function set_qrcode_payment($order_id)
     {
         $order = AOrder::find($order_id);
-        // $payload = [
-        //     "keyword" => "genarate_qrcode_promtpay_to_facebook",
-        //     "order_id" => $order->id,
-        // ];
 
+        $ksher = KsherChannelPayment::where("payment_code", "promptpayQR")
+            ->where("status_use", 1)
+            ->where("maximum", "<=", $order->sumTASC())
+            ->WhereDoesntHave("ksherDayOff", function ($query) {
+                return $query->where("day_off", \Carbon\Carbon::now()->format('Y-m-d'));
+            })->first();
 
-        // Facebook::send_postback(
-        //     $order,
-        //     [
-        //         [
-        //             "title" => "ทดสอบ QRCODE",
-        //             "buttons" => [
-        //                 [
-        //                     "title" => "สร้าง QR CODE ชำระเงิน",
-        //                     "payload" => json_encode($payload),
-        //                     "type" => "postback"
-        //                 ]
-        //             ]
-        //         ]
-        //     ]
-        // );
-        // return;
+        if (
+            !$ksher &&
+            $order->status >= 3 &&
+            $order->payment_deadline <= now()->format('Y-m-d H:i:s')
+        ) {
+            Facebook::send_postback(
+                $order,
+                [
+                    [
+                        "title" => "โปรดชำระเงินโดยกดปุ่ม ชำระเงิน",
+                        "subtitle" => "ไม่สามารถสร้าง QR CODE พร้่อมเพย์ได้",
+                        "buttons" => [
+                            [
+                                "title" => "ชำระเงิน",
+                                "url" => $order->link_for_customer,
+                                "type" => "web_url"
+                            ],
+                        ]
+                    ]
+                ]
+            );
+            // Facebook::send_reply_message($order, $msg);
+            return;
+        }
+
         $msg = "โปรดรอสักครู่ ระบบกำลังสร้าง QR CODE";
         Facebook::send_reply_message($order, $msg);
 

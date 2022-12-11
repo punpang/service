@@ -47,10 +47,7 @@ class AlertMessages extends Model
 
     public static function socialPaymentOrder($order, $amount, $is_pickup = false)
     {
-        
-
-
-        if (!$is_pickup) {
+        if ($is_pickup != true) {
             $nbfm_amount = number_format($amount, 2);
 
             Line::flex_receipt($order);
@@ -234,7 +231,6 @@ class AlertMessages extends Model
             ]
         );
         Line::send($order, $msg);
-
     }
 
     public static function smsImageGoodsReviewToCustomer($order, $alertSMS = true)
@@ -260,13 +256,13 @@ class AlertMessages extends Model
         return MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
     }
 
-    public static function socialChangeDateTimeGet($order)
+    public static function socialChangeDateTimeGet($order, $status_send = true)
     {
         // $link = URL::base() . "/o/" . $order->auth_order;
         // $bitly = Bitly::getUrl($link);
 
         $msg = 'หมายเลขคำสั่งซื้อ #' . $order->id . " ของคุณ ได้เปลี่ยนแปลงวัน-เวลานัดรับเป็น " . $order->date_get_th . " " . $order->time_get . " น. ";
-        Facebook::send_reply_message($order, $msg);
+        Facebook::send_reply_message($order, $msg, $status_send);
         Facebook::send_postback(
             $order,
             [
@@ -280,7 +276,8 @@ class AlertMessages extends Model
                         ]
                     ]
                 ]
-            ]
+            ],
+            $status_send
         );
         Line::send($order, $msg);
     }

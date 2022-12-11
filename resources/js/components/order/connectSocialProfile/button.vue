@@ -10,7 +10,9 @@
             <template v-slot:activator="{ on }">
                 <v-list-item v-on="on">
                     <v-list-item-title class="py-1">
-                        เชื่อมต่อบัญชีโซเชียล
+                        <v-badge class="mt-0" dot inline :color="colorBadge()"
+                            >เชื่อมต่อบัญชีโซเชียล</v-badge
+                        >
                     </v-list-item-title>
                 </v-list-item>
             </template>
@@ -115,6 +117,23 @@ export default {
                 title: result.data.title,
                 position: "bottom",
             });
+        },
+        colorBadge() {
+            if (this.order.customer.facebook && this.order.customer.line) {
+                return "deep-orange";
+            } else if (
+                this.order.customer.facebook &&
+                !this.order.customer.line
+            ) {
+                return "info"
+            } else if (
+                this.order.customer.line &&
+                !this.order.customer.facebook
+            ) {
+                return "success"
+            }
+
+            return "grey";
         },
         async clickDisconnectLine() {
             // let loader = this.$loading.show();

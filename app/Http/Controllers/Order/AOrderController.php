@@ -18,6 +18,7 @@ use App\Order\AHistoryPayed;
 use App\Order\AlertMessages;
 use App\Order\CustomerScore;
 use Illuminate\Http\Request;
+use App\Order\KsherChannelPayment;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
@@ -504,43 +505,65 @@ class AOrderController extends Controller
             AlertMessages::lineAlertPayment($order);
             AlertMessages::smsAlertPayment($order);
 
-            Facebook::send_reply_image($order, "https://punpang.net/images/payments/payment-process-Transfer-payment-by-yourself.jpg");
-            Facebook::send_reply_image($order, "https://punpang.net/images/payments/payment-process-qr-code-promptpay.jpg");
 
-            $message = "
-📌 หมายเลขคำสั่งซื้อ #" . $order->id . "
----------------------------
-📌 ข้อมูลลูกค้า
-คุณ " . $order->customer->name . "
-เบอร์โทรศัพท์ " . $order->customer->tel . "
----------------------------
-📌 วัน-เวลานัดรับสินค้า
-" . $order->date_time_get_th . " น.
----------------------------
-📌 ยอดรวมทั้งหมด " . number_format($order->sumTASC(), 2) . " บาท
-📌 ยอดชำระแล้ว " . number_format($order->sumDeposited(), 2) . " บาท
----------------------------
-📌 ยอดคงเหลือ " . number_format($order->sumBalance(), 2) . " บาท
----------------------------
-📌 โปรดชำระเงินภายใน
-" . $order->payment_deadline_th . " น.
----------------------------
-หลังจากลูกค้าชำระเงินแล้ว
-ทางร้านสงวนสิทธิ์ลูกค้าตรวจสอบรายการสั่งซื้อแล้ว";
-            Facebook::send_reply_message(
-                $order,
-                $message
-            );
+            //             $message = "
+            // 📌 หมายเลขคำสั่งซื้อ #" . $order->id . "
+            // ---------------------------
+            // 📌 ข้อมูลลูกค้า
+            // คุณ " . $order->customer->name . "
+            // เบอร์โทรศัพท์ " . $order->customer->tel . "
+            // ---------------------------
+            // 📌 วัน-เวลานัดรับสินค้า
+            // " . $order->date_time_get_th . " น.
+            // ---------------------------
+            // 📌 ยอดรวมทั้งหมด " . number_format($order->sumTASC(), 2) . " บาท
+            // 📌 ยอดชำระแล้ว " . number_format($order->sumDeposited(), 2) . " บาท
+            // ---------------------------
+            // 📌 ยอดคงเหลือ " . number_format($order->sumBalance(), 2) . " บาท
+            // ---------------------------
+            // 📌 โปรดชำระเงินภายใน
+            // " . $order->payment_deadline_th . " น.
+            // ---------------------------
+            // หลังจากลูกค้าชำระเงินแล้ว
+            // ทางร้านสงวนสิทธิ์ลูกค้าตรวจสอบรายการสั่งซื้อแล้ว";
+            //             Facebook::send_reply_message(
+            //                 $order,
+            //                 $message
+            //             );
+
+
+
+
+
+            // $payload_genarate_qrcode_promtpay_to_facebook = [
+            //     "keyword" => "genarate_qrcode_promtpay_to_facebook",
+            //     "order_id" => $order->id,
+            // ];
+            Facebook::send_reply_image($order, "https://punpang.net/images/payments/payment-process-Transfer-payment-by-yourself.jpg");
+
             $payload = [
                 "keyword" => "not_confirm_payment",
                 "order_id" => $order->id,
                 "link_for_customer" => $order->link_for_customer
             ];
 
+            $ksher = KsherChannelPayment::where("payment_code", "promptpayQR")
+                ->where("status_use", 1)
+                ->where("maximum", "<=", $order->sumTASC())
+                ->WhereDoesntHave("ksherDayOff", function ($query) {
+                    return $query->where("day_off", \Carbon\Carbon::now()->format('Y-m-d'));
+                })->first();
+            // Linenotify::send($ksher);
 
-            Facebook::send_postback(
-                $order,
-                [
+            if (
+                $ksher &&
+                $order->status < 3 &&
+                $order->payment_deadline >= now()->format('Y-m-d H:i:s')
+            ) {
+                Facebook::send_reply_image($order, "https://punpang.net/images/payments/payment-process-qr-code-promptpay.jpg");
+
+                // $order->customer->status_consent_condition == 1 &&
+                $payload_send_postback = [
                     [
                         "title" => "ชำระเงินและรายละเอียดสินค้า",
                         "subtitle" => "โปรดชำระเงินโดยกดปุ่ม ชำระเงิน",
@@ -554,10 +577,64 @@ class AOrderController extends Controller
                                 "title" => "ไม่สะดวกชำระเงิน",
                                 "payload" => json_encode($payload),
                                 "type" => "postback"
+                            ],
+                            [
+                                "title" => "ขอเลขที่บัญชี",
+                                "payload" => json_encode(
+                                    [
+                                        "keyword" => "account_number_and_slip_attachment_link",
+                                        "order_id" => $order->id,
+                                    ]
+                                ),
+                                "type" => "postback"
+                            ],
+                            [
+                                "title" => "สร้าง QR CODE พร้อมเพย์",
+                                "payload" => json_encode(
+                                    [
+                                        "keyword" => "genarate_qrcode_promtpay_to_facebook",
+                                        "order_id" => $order->id,
+                                    ]
+                                ),
+                                "type" => "postback"
                             ]
                         ]
                     ]
-                ]
+                ];
+            } else {
+                $payload_send_postback = [
+                    [
+                        "title" => "ชำระเงินและรายละเอียดสินค้า",
+                        "subtitle" => "โปรดชำระเงินโดยกดปุ่ม ชำระเงิน",
+                        "buttons" => [
+                            [
+                                "title" => "ชำระเงิน",
+                                "url" => $order->link_for_customer,
+                                "type" => "web_url"
+                            ],
+                            [
+                                "title" => "ไม่สะดวกชำระเงิน",
+                                "payload" => json_encode($payload),
+                                "type" => "postback"
+                            ],
+                            [
+                                "title" => "ขอเลขที่บัญชี",
+                                "payload" => json_encode(
+                                    [
+                                        "keyword" => "account_number_and_slip_attachment_link",
+                                        "order_id" => $order->id,
+                                    ]
+                                ),
+                                "type" => "postback"
+                            ],
+                        ]
+                    ]
+                ];
+            }
+            AOrder::summaryOfOrderDetails($order->id);
+            Facebook::send_postback(
+                $order,
+                $payload_send_postback
             );
 
             Line::flex_alert_payment($order);
@@ -702,7 +779,7 @@ class AOrderController extends Controller
 
         AlertMessages::lineChangeDateTimeGet($order);
         AlertMessages::smsChangeDateTimeGet($order, $request->alert_sms);
-        AlertMessages::socialChangeDateTimeGet($order);
+        AlertMessages::socialChangeDateTimeGet($order, $request->alert_sms);
 
         return response()->json([
             "status" => "success",
@@ -979,5 +1056,35 @@ class AOrderController extends Controller
         return $query->makeHidden(["sum_all"]);
 
         return $query;
+    }
+
+    public function check_uuid($uuid)
+    {
+        $order = AOrder::whereAuthOrder($uuid)
+            ->where("date_get", ">=", now()->format("Y-m-d"))
+            ->where("payment_deadline", ">=", now()->format("Y-m-d H:i:s"))
+            ->with("customer:id,name,tel")
+            ->first();
+
+        if ($order) {
+            return response()->json([
+                "order" => $order,
+                "status" => true
+            ], 200);
+        }
+
+        return response()->json([
+            "status" => false
+        ], 200);
+    }
+
+    public function summaryOfOrderDetails(AOrder $order)
+    {
+        AOrder::summaryOfOrderDetails($order->id);
+
+        return response()->json([
+            "title" => "ส่งสรุปรายการเรียบร้อย",
+            "icon" => "success"
+        ], 200);
     }
 }

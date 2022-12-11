@@ -103,6 +103,8 @@ class NoticeOfPaymentFromCustomerController extends Controller
             $order = AOrder::paymentByOrderID($notice->aOrder->id, $notice->amount);
             if ($order["status"] == "success") {
                 $AHistoryPayed = AHistoryPayed::paymentByOrderID($notice->aOrder->id, $notice->amount, 2, null, $notice->id);
+                AlertMessages::socialPaymentOrder($notice->aOrder,$amount);
+
                 if ($AHistoryPayed["status"] == "success") {
                     $setSuccess = NoticeOfPaymentFromCustomer::setSuccess($notice, $amount, request("ref"));
                     if ($setSuccess["status"] == "error") return AlertMessages::lineError("postCheckSlip");

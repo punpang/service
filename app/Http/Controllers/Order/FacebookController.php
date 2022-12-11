@@ -235,4 +235,143 @@ QR CODE นี้ จะหมดอายุ
         unlink("images/qr-code/$unique.png");
         return response()->json([], 200);
     }
+
+    public function test_sumup_message($order)
+    {
+        $order = AOrder::with(
+            // "customer.facebook",
+            // "customer.line",
+            // "OrderChannel",
+            // "am1",
+            // "am2",
+            // "am3",
+            // "am4",
+            "aStatus",
+            // "aHistoryPayed.channelPayment",
+            // "aHistoryPayed.ntpfc",
+            // "aHistoryPayed.ksherPay",
+            // "orderDetails.aPrice.googleImage",
+            // "orderDetailsOnlyTrashed",
+            // "orderDetails.productPrototypes.googleImage",
+            // "orderDetails.imageForMenus.googleImage",
+            // "orderDetails.imageFromCustomers.googleImage",
+            // "orderDetails.imageGoodsReviewToCustomers.googleImage",
+            // "orderDetails.orderTags.tag",
+            "orderDeliveryService",
+            "orderDetails.MoneyServices.category_money_service",
+            "adjustExcessPayments",
+            "posOrders.posGoods"
+        )
+            ->with("orderDetails.addOns.productAddOn.goodsAddOn")
+            ->findOrFail($order);
+
+        if ($order->sumMoneyCustomer() > 0 || $order->orderDeliveryService) {
+            $order->update(["status_full_payment" => 1]);
+        }
+
+
+
+
+        $m = "";
+        foreach ($order->orderDetails as $key_detail => $detail) {
+            $a = "";
+            foreach ($detail->addOns as $key => $addOn) {
+                $a = $a . $addOn->productAddOn->goodsAddOn->name . ($key + 1 != $detail->addOns->count() ? " ," : "");
+            }
+            if ($a) {
+                $aa = "
+เพิ่มเติม : $a";
+            } else {
+                $aa = "";
+            }
+
+
+            if ($detail->moneyServices->count() > 0) {
+                $ms = "";
+                foreach ($detail->moneyServices as $key_moneyService => $moneyService) {
+                    $ms = $ms . "
+" . ($key_moneyService + 1) . ".บริการ : " . $moneyService->category_money_service->text . "
+฿20x" . $moneyService->thb20 . " ฿50x" . $moneyService->thb50 . " ฿100x" . $moneyService->thb100 . "
+฿500x" . $moneyService->thb500 . " ฿1,000x" . $moneyService->thb1000 . "
+จำนวนเงิน : " . $moneyService->sum_money_format . " บาท
+ค่าบริการ : " . number_format($moneyService->category_money_service->fee, 2) . " บาท";
+                }
+
+                $message_money_services = "
+
+บริการเกี่ยวกับเงิน $ms";
+            } else {
+                $message_money_services = "";
+            }
+
+            /////
+            $message = $detail->message != "-" ? "
+ข้อความ : " . $detail->message : "";
+            $remark = $detail->detail != "-" ? "
+หมายเหตุ : " . $detail->detail : "";
+            ////
+            $m = $m . "รายการที่ " . ($key_detail + 1) . "
+" . $detail->aPrice->name_goods  . $aa .  $message . $remark . "
+ราคา " . number_format($detail->sum_total, 2) . " บาท $message_money_services
+-------------------------
+";
+        }
+
+        $message_pos = "";
+        if ($order->posOrders->count() > 0) {
+            foreach ($order->posOrders as $pos) {
+                $message_pos = $message_pos . "
+" . $pos->posGoods->text . "
+฿" . number_format($pos->price, 2) . " x " . $pos->quantity . " = ฿" . number_format($pos->total, 2);
+            }
+            $message_pos = $message_pos . "
+รวม " . number_format($order->sumPosOrder(), 2) . " บาท
+
+-------------------------";
+        }
+
+        if ($order->orderDeliveryService) {
+            $message_delivery_service = "บริการจัดส่ง
+ชื่อผู้รับ : " . $order->orderDeliveryService->recipient_name . "
+เบอร์โทรผู้รับ : " . $order->orderDeliveryService->recipient_phone . "
+วัน-เวลาจัดส่งถึงโดยประมาณ :
+" . $order->date_get_th . " " . $order->time_get_format . " - " . \Carbon\Carbon::createFromFormat("H:i", $order->time_get_format)->addMinutes(30)->format("H:i") . " น.
+สถานที่จัดส่ง : " . $order->orderDeliveryService->link_google_maps . "
+ค่าบริการ : " .  number_format($order->orderDeliveryService->delivery_fee, 2) . " บาท
+-------------------------
+";
+        } else {
+            $message_delivery_service = "";
+        }
+
+
+        $msg = "หมายเลขคำสั่งซื้อ #$order->id
+ชื่อลูกค้า : " . $order->customer->name . "
+เบอร์โทร : " . $order->customer->tel . "
+-------------------------
+วัน-เวลารับสินค้า
+" . $order->date_time_get_th . " น.
+-------------------------
+" . $m . $message_pos . "
+" . $message_delivery_service . "ยอดทั้งหมด " . number_format($order->sumTASC()) . " บาท
+ยอดชำระแล้ว " . number_format($order->sumDeposited()) . " บาท
+-------------------------
+ยอดคงเหลือ " . number_format($order->sumBalance()) . " บาท
+-------------------------
+สถานะ : " . $order->aStatus->status . "
+-------------------------
+หลังจากลูกค้าชำระเงินแล้ว
+ทางร้านสงวนสิทธิ์ลูกค้าตรวจสอบรายการสั่งซื้อแล้ว";
+
+        Linenotify::send($msg);
+
+        Facebook::send_reply_message($order, $msg);
+        return $msg;
+        return response()->json([
+            "order" => $order,
+
+            // "sumAll" => $order->sumAll(),
+            // "setNameGoods" => $order->setNameGoods()
+        ], 200);
+    }
 }

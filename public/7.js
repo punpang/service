@@ -6275,11 +6275,11 @@ var render = function render() {
         cols: "3",
         md: "2"
       }
-    }, [_vm.order.status < 8 ? _c("btnCardManagesCake", {
+    }, [_c("btnCardManagesCake", {
       attrs: {
         propOrderDetail: detail
       }
-    }) : _vm._e()], 1) : _vm._e()], 1)], 1), _vm._v(" "), _c("v-col", {
+    })], 1) : _vm._e()], 1)], 1), _vm._v(" "), _c("v-col", {
       staticClass: "pa-2",
       attrs: {
         cols: "3",
@@ -6340,7 +6340,7 @@ var render = function render() {
         }
       }, [_vm._v("priority_high")]) : _vm._e(), _vm._v(" "), _vm.user.type == 1 ? _c("div", {
         staticClass: "font-weight-bold"
-      }, [_vm._v("\n                                " + _vm._s(_vm._f("formatNumber")(addOn.price)) + " \n                            ")]) : _vm._e(), _vm._v(" "), _c("div", {
+      }, [_vm._v("\n                                " + _vm._s(_vm._f("formatNumber")(addOn.price)) + "\n                            ")]) : _vm._e(), _vm._v(" "), _c("div", {
         staticClass: "ml-1 text--secondary"
       }, [_vm._v("\n                                " + _vm._s(addOn.product_add_on.goods_add_on.name) + "\n                            ")])], 1);
     }), _vm._v(" "), _vm.user.type == 1 ? _c("p", {

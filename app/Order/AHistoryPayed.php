@@ -101,7 +101,7 @@ class AHistoryPayed extends Model
         $aHistoryPayed->save();
 
         AlertMessages::smsPaymentOrder($aHistoryPayed->order->id, $amount);
-        AlertMessages::socialPaymentOrder($aHistoryPayed->order,$amount);
+        //AlertMessages::socialPaymentOrder($aHistoryPayed->order,$amount);
         AlertMessages::linePaymentOrder($aHistoryPayed->order, $amount);
 
         // $point = CustomerScore::calculateScore($amount);

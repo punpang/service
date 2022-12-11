@@ -256,6 +256,11 @@ const routes = [
         component: () => import("@/js/pages/guest/orders/uuid"),
     },
     {
+        path: "/upload_slip/:uuid",
+        name: "guestUploadSlip",
+        component: () => import("@/js/pages/guest/orders/upload_slip_uuid"),
+    },
+    {
         path: "/r/:shotlink",
         name: "guestShotlink",
         component: () => import("@/js/pages/guest/orders/shotlink"),
