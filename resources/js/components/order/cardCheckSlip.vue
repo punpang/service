@@ -2,7 +2,7 @@
     <div>
         <v-dialog persistent width="800" v-model="dialog" scrollable>
             <template v-slot:activator="{ on }">
-                <v-btn elevation="0" v-on="on" @click="clickStart">
+                <v-btn elevation="0" v-on="on" @click="clickStart()">
                     <v-icon left>list</v-icon>
                     <strong>รายละเอียด</strong>
                 </v-btn>
@@ -30,7 +30,11 @@
                                     propNtpfc.src_name +
                                     '&sz=w1000-h1000'
                                 "
-                            ></v-img>
+                            >
+                                <!-- <v-btn @click="fetch_qrcode()"
+                                    >clickImage</v-btn
+                                > -->
+                            </v-img>
                         </v-col>
                         <v-col cols="12" sm="4" md="4">
                             <v-text-field
@@ -129,6 +133,42 @@ export default {
         };
     },
     methods: {
+        async fetch_qrcode() {
+            let loader = this.$loading.show();
+            const url = `https://lh3.googleusercontent.com/d/${this.propNtpfc.src_name}`;
+
+            var requestOptions = {
+                method: "GET",
+                redirect: "follow",
+            };
+
+            const result = await fetch(
+                `https://api.qrserver.com/v1/read-qr-code/?fileurl=${url}`,
+                requestOptions
+            )
+                .then((response) => response.json())
+                .catch((error) => console.log("error", error));
+
+            if (result[0].symbol[0].data != null) {
+                let ref_new = result[0].symbol[0].data.substr(25);
+                ref_new = ref_new.slice(0, -14);
+                this.ref = ref_new;
+            }
+
+            loader.hide();
+            const text = [
+                {
+                    type: "qrcode",
+                    symbol: [
+                        {
+                            seq: 0,
+                            data: "0041000600000101030040220012341130651BPM059845102TH910458A8",
+                            error: null,
+                        },
+                    ],
+                },
+            ];
+        },
         async processingCancelSlip() {
             let loader = this.$loading.show();
             const payload = this.propNtpfc;
@@ -317,6 +357,13 @@ export default {
             this.amount = notice.amount;
             this.status = notice.status;
             this.sumAll = res.data.sumAll;
+            if (!this.ref) {
+                await this.fetch_qrcode();
+            }
+
+            if (this.ref.startsWith("no-qrcode-")) {
+                this.ref = "";
+            }
         },
     },
 };

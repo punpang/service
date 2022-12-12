@@ -68,7 +68,7 @@ class NoticeOfPaymentFromCustomerController extends Controller
         $checkRef = NoticeOfPaymentFromCustomer::where("ref", request("ref"))->first();
         $notice = NoticeOfPaymentFromCustomer::where("id", request("ntpfc.id"))->whereStatus("create")->first();
 
-        if ($checkRef) {
+        if ($checkRef && $checkRef->id != $notice->id) {
 
             $setCancel = NoticeOfPaymentFromCustomer::setCancel($notice);
             if ($setCancel["status"] == "error") return AlertMessages::lineError("postCheckSlip");
@@ -81,7 +81,7 @@ class NoticeOfPaymentFromCustomerController extends Controller
                 [
                     "status" => "error",
                     "title" => "มีบางอย่างผิดพลาด",
-                    "text" => "ref มีอยู่ในระบบแล้ว"
+                    "text" => "ref มีอยู่ในระบบแล้ว" 
                 ],
                 200
             );
@@ -103,7 +103,7 @@ class NoticeOfPaymentFromCustomerController extends Controller
             $order = AOrder::paymentByOrderID($notice->aOrder->id, $notice->amount);
             if ($order["status"] == "success") {
                 $AHistoryPayed = AHistoryPayed::paymentByOrderID($notice->aOrder->id, $notice->amount, 2, null, $notice->id);
-                AlertMessages::socialPaymentOrder($notice->aOrder,$amount);
+                AlertMessages::socialPaymentOrder($notice->aOrder, $amount);
 
                 if ($AHistoryPayed["status"] == "success") {
                     $setSuccess = NoticeOfPaymentFromCustomer::setSuccess($notice, $amount, request("ref"));

@@ -21,6 +21,7 @@ class ImageGoodsReviewToCustomerController extends Controller
         $detail_id->imageGoodsReviewToCustomers()->createMany($img_id);
 
         AlertMessages::smsImageGoodsReviewToCustomer($detail_id->aOrder);
+        AlertMessages::socialImageGoodsReviewToCustomer($detail_id);
 
         return response()->json([
             "status" => "success"

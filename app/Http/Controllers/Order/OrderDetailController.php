@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Order;
 
 
+use App\Order\AOrder;
 use App\Events\OrderEvent;
 use App\Order\OrderDetail;
 use App\Order\ProductAddOn;
@@ -49,6 +50,8 @@ class OrderDetailController extends Controller
     public function fetch_pre_order_lists()
     {
         //$query = OrderDetail::query();
+
+
 
         $query = OrderDetail::
             // with([
@@ -192,13 +195,23 @@ class OrderDetailController extends Controller
 
     public function fetch_for_menu(Request $request)
     {
+        // $explodes = explode(",", $request->get("tags"));
+        // return $explodes;
+        // return $request->get("tags");
         $query = OrderDetail::query();
 
-        $query->select("id","order_id", "a_price_id");
-        $query->whereHas("aOrder", function ($query) {
-            $query->whereDate("date_get", "<=", now()->subDays(1)->format("Y-m-d"))
-               ;
+        $query->select("id", "order_id", "a_price_id");
+        $query->whereHas("aOrder", function ($q) {
+            $q->whereDate("date_get", "<=", now()->subDays(1)->format("Y-m-d"));
         });
+
+        if ($request->get("tags") != null) {
+            $query->whereHas("orderTag.tag", function ($q) use ($request) {
+                $tags = explode(",", $request->get("tags"));
+                $q->whereIn("text", $tags);
+            });
+        }
+
         // $query->orderBy("a_order.time_get", "DESC");
         $query->orderBy("id", "DESC");
 

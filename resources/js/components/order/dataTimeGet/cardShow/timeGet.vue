@@ -28,7 +28,7 @@
                 v-model="temp.temp.dateTimeGet.timeGet"
                 scrollable
                 full-width
-                min="9:00"
+                min="8:30"
                 max="18:30"
                 format="24hr"
             >
@@ -57,7 +57,7 @@ export default {
             const date = new Date().toISOString().substr(0, 10);
             if (date == this.temp.temp.dateTimeGet.dateGet) {
                 const time = new Date().getHours();
-                return v > time;
+                return v >= time;
             }
             return v;
         },

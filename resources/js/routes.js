@@ -97,6 +97,13 @@ const routes = [
         component: () => import("@/js/pages/test/drag-sort"),
         meta: { requiresAuth: true },
     },
+
+    {
+        path: "/test/qrcode-reader",
+        name: "/test/qrcode-reader",
+        component: () => import("@/js/pages/test/qr-code-reader"),
+        meta: { requiresAuth: true },
+    },
     {
         path: "/test/waitingForNameFile",
         name: "/test/waitingForNameFile",

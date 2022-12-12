@@ -77,7 +77,7 @@
                     :items="details"
                     hide-default-footer
                     :search="search"
-                    :sort-by="['a_order.date_get']"
+                    :sort-by="['a_order.date_get','a_order.time_get']"
                     :items-per-page="-1"
                 >
                     <template v-slot:item.image_goods="{ item }">

@@ -5,6 +5,34 @@
         <p class="text-subtitle-2">
             <strong>*ไม่มีนโยบายคืนเงินทุกกรณี*</strong>
         </p>
+        <v-card outlined class="mb-3" v-if="user.type == 1">
+            <v-card-title> ค้นหา </v-card-title>
+            <v-card-text class="pb-0">
+                <v-text-field
+                    label="ราคาไม่เกิน"
+                    outlined
+                    dense
+                    hide-details
+                    class="mb-3"
+                    v-model="search.price_rank"
+                ></v-text-field>
+                <v-combobox
+                    v-model="search.tags"
+                    :items="tags"
+                    label="แท็ก"
+                    multiple
+                    outlined
+                    dense
+                    hide-details
+                    class="mb-3"
+                ></v-combobox>
+            </v-card-text>
+            <v-card-actions>
+                <v-btn class="error" @click="clickSearchReset()">ล้าง</v-btn>
+                <v-spacer></v-spacer>
+                <v-btn class="success" @click="clickSearch()">ค้นหา</v-btn>
+            </v-card-actions>
+        </v-card>
 
         <v-row>
             <v-col
@@ -71,9 +99,31 @@ export default {
             //   path: "https://www.punpang.online/images/menu/",
             //   path: "http://192.168.1.103/images/menu/",
             products: [],
+            search: {
+                tags: [],
+                price_rank: "",
+            },
         };
     },
     methods: {
+        clickSearchReset() {
+            window.location.href = `/menu/orders`;
+        },
+        clickSearch() {
+            let tags_url = "";
+            for (let i = 0; i < this.search.tags.length; i++) {
+                tags_url = `${tags_url}${this.search.tags[i].text},`;
+            }
+            const tags = tags_url.slice(0, -1)
+                ? "&tags=" + tags_url.slice(0, -1)
+                : "";
+
+            const price_rank = this.search.price_rank
+                ? `&price_rank=${this.search.price_rank}`
+                : "";
+
+            window.location.href = `/menu/orders?${tags}${price_rank}`;
+        },
         clickToOrder(v) {
             console.log(this.user);
             if (this.user.type == 1) {
@@ -101,7 +151,21 @@ export default {
     },
     async mounted() {
         let loader = this.$loading.show();
-        const payload = `whereHas=imageForMenus,with=imageForMenus`;
+
+        await this.$store.dispatch("orderTags/fetch", "status=true");
+
+        const tags =
+            this.$route.query.tags != undefined
+                ? `&tags=${this.$route.query.tags}`
+                : "";
+
+        const price_rank =
+            this.$route.query.price_rank != undefined
+                ? `&price_rank=${this.$route.query.price_rank}`
+                : "";
+
+        const payload = `whereHas=imageForMenus,with=imageForMenus${tags}${price_rank}`;
+
         const result = await axios.get(
             `/api/v1/guest/product/punpang/order_details/fetch_for_menu?${payload}`
         );
@@ -109,7 +173,7 @@ export default {
         loader.hide();
     },
     computed: {
-        ...mapGetters({ user: "main/User" }),
+        ...mapGetters({ user: "main/User", tags: "orderTags/fetch" }),
     },
 };
 </script>

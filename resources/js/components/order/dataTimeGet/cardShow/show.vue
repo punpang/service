@@ -103,7 +103,8 @@ export default {
             const diffDateTime = dateTimeGet.valueOf() - datetimeNow.valueOf();
             if (isNaN(diffDateTime)) {
                 return;
-            } else if (diffDateTime < 1800000) {
+            } else if (diffDateTime < 0) { //1800000
+                // console.log("🚀 ~ file: show.vue:107 ~ checkDateGet ~ diffDateTime", diffDateTime)
                 const date = new Date().toISOString().substr(0, 10);
                 this.temp.temp.dateTimeGet.dateGet = date;
                 this.temp.temp.dateTimeGet.timeGet = "";

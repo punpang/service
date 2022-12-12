@@ -534,7 +534,7 @@ $setting->open_store - $setting->close_store น. ชั่วคราว
                 $msg = "โปรดเลือกชำระด้วยจำนวนเงินระหว่าง " . number_format($order->sumTASC(), 2) . " บาท หรือ " . number_format($order->sumTASC() / 2, 2) . " บาท";
             }
 
-            Facebook::send_reply_image($order, "https://punpang.net/images/payments/account_number_and_promptpay.jpg");
+            Facebook::send_reply_image($order, "https://lh3.googleusercontent.com/d/1mEoi5PyWNPcQnvZ_FyNWiGZUT6PLYgB7");
             Facebook::send_reply_message($order, $msg);
             Facebook::send_postback(
                 $order,

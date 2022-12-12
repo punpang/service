@@ -240,6 +240,13 @@ class AlertMessages extends Model
         return MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
     }
 
+    public static function socialImageGoodsReviewToCustomer($detail, $status_send = true)
+    {
+        foreach ($detail->imageGoodsReviewToCustomers as $image) {
+            Facebook::send_reply_image($detail->aOrder, "https://lh3.googleusercontent.com/d/" . $image->googleImage->src_name, $status_send);
+        }
+    }
+
     public static function lineChangeDateTimeGet($order)
     {
         $msgLine = 'เปลี่ยนแปลงวัน-เวลารับ => #' . $order->id . " | " . $order->date_get . " " . $order->time_get;

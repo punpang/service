@@ -539,8 +539,8 @@ class AOrderController extends Controller
             //     "keyword" => "genarate_qrcode_promtpay_to_facebook",
             //     "order_id" => $order->id,
             // ];
-            Facebook::send_reply_image($order, "https://punpang.net/images/payments/payment-process-Transfer-payment-by-yourself.jpg");
-
+            Facebook::send_reply_image($order, "https://lh3.googleusercontent.com/d/1MhRh4V6olX8pAtWU5kGPlLLjV9HOatCv");
+//1MhRh4V6olX8pAtWU5kGPlLLjV9HOatCv
             $payload = [
                 "keyword" => "not_confirm_payment",
                 "order_id" => $order->id,
@@ -560,7 +560,7 @@ class AOrderController extends Controller
                 $order->status < 3 &&
                 $order->payment_deadline >= now()->format('Y-m-d H:i:s')
             ) {
-                Facebook::send_reply_image($order, "https://punpang.net/images/payments/payment-process-qr-code-promptpay.jpg");
+                Facebook::send_reply_image($order, "https://lh3.googleusercontent.com/d/1qJvIUnRVopU7YLDKNQh6KCQZN8lss5uL");
 
                 // $order->customer->status_consent_condition == 1 &&
                 $payload_send_postback = [

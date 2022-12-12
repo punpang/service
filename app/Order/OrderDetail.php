@@ -127,4 +127,9 @@ class OrderDetail extends Model implements Auditable
     {
         return $this->hasMany(OrderTags::class);
     }
+
+    public function orderTag()
+    {
+        return $this->hasOne(OrderTags::class);
+    }
 }
