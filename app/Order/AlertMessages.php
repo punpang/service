@@ -37,6 +37,7 @@ class AlertMessages extends Model
         // $bitly = Bitly::getUrl($link);
         // $bitly = AOrder::genlinkUuid($order->id);
         $nbfm_amount = number_format($amount, 2);
+
         $msgSms = 'ขอบคุณที่ชำระเงิน จำนวน ' . $nbfm_amount  . ' บาท หมายเลขคำสั่งซื้อ #' . $order->id . ' รายละเอียดรายการสั่งซื้อคลิกลิงก์ [ ' . $order->link_for_customer . ' ]\n\nวัน-เวลานัดรับสินค้า\n' . $order->dateGetTimeFormat();
 
         return MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
@@ -203,7 +204,11 @@ class AlertMessages extends Model
     {
         $order = AOrder::findOrFail($orderID);
         $nbfm_amount = number_format($amount, 2);
-        $msgSms = 'เราได้รับการแจ้งชำระเงินของคุณ จำนวน ' . $nbfm_amount  . ' บาท หมายเลขคำสั่งซื้อ #' . $order->id . ' เราจะตรวจสอบและยืนยันการชำระเงิน ภายใน 15 นาที หลังจากชำระเงิน รายละเอียดรายการสั่งซื้อคลิกลิงก์ [ ' . $order->link_for_customer . ' ]\n\nวัน-เวลานัดรับสินค้า\n' . $order->dateGetTimeFormat();
+        if ($nbfm_amount == 0) {
+            $msgSms = 'เราได้รับการแจ้งชำระเงินของคุณ หมายเลขคำสั่งซื้อ #' . $order->id . ' เราจะตรวจสอบและยืนยันการชำระเงิน ภายใน 15 นาที หลังจากชำระเงิน รายละเอียดรายการสั่งซื้อคลิกลิงก์ [ ' . $order->link_for_customer . ' ]\n\nวัน-เวลานัดรับสินค้า\n' . $order->dateGetTimeFormat();
+        } else {
+            $msgSms = 'เราได้รับการแจ้งชำระเงินของคุณ จำนวน ' . $nbfm_amount  . ' บาท หมายเลขคำสั่งซื้อ #' . $order->id . ' เราจะตรวจสอบและยืนยันการชำระเงิน ภายใน 15 นาที หลังจากชำระเงิน รายละเอียดรายการสั่งซื้อคลิกลิงก์ [ ' . $order->link_for_customer . ' ]\n\nวัน-เวลานัดรับสินค้า\n' . $order->dateGetTimeFormat();
+        }
         MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
 
         $msgLine = 'แจ้งชำระเงินจากลูกค้า -> #' . $order->id . ' จำนวน ' . $nbfm_amount . ' บาท ';
@@ -213,7 +218,11 @@ class AlertMessages extends Model
     public static function socialNoticeOfPaymentByCustomer($order, $amount)
     {
         $nbfm_amount = number_format($amount, 2);
-        $msg = 'เราได้รับการแจ้งชำระเงินของคุณ จำนวน ' . $nbfm_amount  . ' บาท หมายเลขคำสั่งซื้อ #' . $order->id . ' เราจะตรวจสอบและยืนยันการชำระเงิน ภายใน 15 นาที หลังจากชำระเงิน';
+        if ($nbfm_amount == 0) {
+            $msg = 'เราได้รับการแจ้งชำระเงินของคุณ หมายเลขคำสั่งซื้อ #' . $order->id . ' เราจะตรวจสอบและยืนยันการชำระเงิน ภายใน 15 นาที หลังจากชำระเงิน';
+        } else {
+            $msg = 'เราได้รับการแจ้งชำระเงินของคุณ จำนวน ' . $nbfm_amount  . ' บาท หมายเลขคำสั่งซื้อ #' . $order->id . ' เราจะตรวจสอบและยืนยันการชำระเงิน ภายใน 15 นาที หลังจากชำระเงิน';
+        }
         Facebook::send_reply_message($order, $msg);
         Facebook::send_postback(
             $order,

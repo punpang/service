@@ -521,11 +521,49 @@ $setting->open_store - $setting->close_store น. ชั่วคราว
         }
 
         if ($keyword == "genarate_qrcode_promtpay_to_facebook") {
+            // Linenotify::send("genarate_qrcode_promtpay_to_facebook");
+
             self::set_qrcode_payment($postback["order_id"]);
+        }
+
+        if ($keyword == "extend_payment_time") {
+            // $order = AOrder::find($postback["order_id"]);
+            $url = Url::base() . "/manages/order/" . $postback["order_id"] . "/showOrderByID";
+            Linenotify::send("รายการสั่งซื้อ #" . $postback["order_id"] . " -> ขอขยายเวลาชำระเงิน -> $url");
+            return;
         }
 
         if ($keyword == "account_number_and_slip_attachment_link") {
             $order = AOrder::find($postback["order_id"]);
+
+            if (
+                $order->payment_deadline < now()->format("Y-m-d H:i:s")
+
+                // && $order->sumBalance() == 0
+            ) {
+                Facebook::send_postback(
+                    $order,
+                    [
+                        [
+                            "title" => "โปรดแจ้งทางร้าน เพื่อขยายเวลาชำระเงิน",
+                            "buttons" => [
+                                [
+                                    "title" => "ขอขยายเวลาชำระเงิน",
+                                    "payload" => json_encode(
+                                        [
+                                            "keyword" => "extend_payment_time",
+                                            "order_id" => $order->id
+                                        ]
+                                    ),
+                                    "type" => "postback"
+                                ]
+                            ]
+                        ]
+                    ]
+                );
+                return;
+            }
+
             $url = Url::base() . "/upload_slip/$order->auth_order";
 
             if ($order->status_full_payment || $order->sumDeposited() > 0) {
@@ -534,17 +572,26 @@ $setting->open_store - $setting->close_store น. ชั่วคราว
                 $msg = "โปรดเลือกชำระด้วยจำนวนเงินระหว่าง " . number_format($order->sumTASC(), 2) . " บาท หรือ " . number_format($order->sumTASC() / 2, 2) . " บาท";
             }
 
+            $msg = $msg . "
+
+โปรดชำระเงินภายใน
+$order->payment_deadline_th น.
+
+หลังจากลูกค้าชำระเงินแล้ว ทางร้านสงวนสิทธิ์ลูกค้าตรวจสอบรายการสั่งซื้อแล้ว
+*โปรดแจ้งชำระเงินภายในเว็บเท่านั้น ไม่ใช่ในแชท*
+**ทางร้านขอสงวนสิทธิ์ในการจัดลำดับคิวใหม่ หากแจ้งชำระเงินไม่ทันในวัน-เวลาที่ทางร้านกำหนด**";
+
             Facebook::send_reply_image($order, "https://lh3.googleusercontent.com/d/1mEoi5PyWNPcQnvZ_FyNWiGZUT6PLYgB7");
             Facebook::send_reply_message($order, $msg);
             Facebook::send_postback(
                 $order,
                 [
                     [
-                        "title" => "แนบสลิปหลังชำระเงิน",
-                        "subtitle" => "หลังจากลูกค้าชำระเงินแล้ว ทางร้านสงวนสิทธิ์ลูกค้าตรวจสอบรายการสั่งซื้อแล้ว",
+                        "title" => "แนบสลิปหลังชำระเงิน โดยกดที่ปุ่มด้านล่าง",
+                        "subtitle" => "หลังจากลูกค้าชำระเงินแล้ว ทางร้านสงวนสิทธิ์ลูกค้าตรวจสอบรายการสั่งซื้อแล้ว *โปรดแจ้งชำระเงินภายในเว็บเท่านั้น* **ไม่ใช่ในแชท** ***ทางร้านขอสงวนสิทธิ์ในการจัดลำดับคิวใหม่ หากแจ้งชำระเงินไม่ทันในวัน-เวลาที่ทางร้านกำหนด",
                         "buttons" => [
                             [
-                                "title" => "อัปโหลดสลิปที่นี่",
+                                "title" => "กดเพื่อแจ้งชำระเงิน",
                                 "url" => $url,
                                 "type" => "web_url"
                             ],
@@ -557,20 +604,25 @@ $setting->open_store - $setting->close_store น. ชั่วคราว
 
     public static function set_qrcode_payment($order_id)
     {
+        // Linenotify::send("set_qrcode_payment");
         $order = AOrder::find($order_id);
 
         $ksher = KsherChannelPayment::where("payment_code", "promptpayQR")
             ->where("status_use", 1)
-            ->where("maximum", "<=", $order->sumTASC())
+            ->where("maximum", ">=", $order->sumTASC())
             ->WhereDoesntHave("ksherDayOff", function ($query) {
                 return $query->where("day_off", \Carbon\Carbon::now()->format('Y-m-d'));
             })->first();
 
         if (
-            !$ksher &&
-            $order->status >= 3 &&
+            !$ksher ||
+            // $order->status >= 3 &&
             $order->payment_deadline <= now()->format('Y-m-d H:i:s')
+            // && $order->sumBalance() == 0
+            || $order->sumMoneyCustomer() > 0
+
         ) {
+            // !$has_fee
             Facebook::send_postback(
                 $order,
                 [
@@ -591,10 +643,11 @@ $setting->open_store - $setting->close_store น. ชั่วคราว
             return;
         }
 
-        $msg = "โปรดรอสักครู่ ระบบกำลังสร้าง QR CODE";
+        $msg = "โปรดรอสักครู่ ระบบกำลังสร้าง QR CODE สำหรับสแกนจ่าย";
+
         Facebook::send_reply_message($order, $msg);
 
-        $base64 = KsherPay::create_qrcode_promptpay_by_facebook($order);
+        $base64 = KsherPay::create_qrcode_promptpay_by_facebook($order, $ksher->fee_value);
 
         $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64));
         $unique = Str::uuid();
@@ -602,13 +655,14 @@ $setting->open_store - $setting->close_store น. ชั่วคราว
         $url = URL::base() . "/images/qr-code/$unique.png";
 
         Facebook::send_reply_image($order, $url);
-        $msg = "ชำระด้วยยอด " . number_format($order->sumBalance(), 2) . " บาท
+        $msg_fee = $ksher->fee_value > 0 ? "และมีค่าธรรมเนียม $ksher->fee_value บาท" : "";
+        $msg = "ชำระเงินด้วยยอด " . number_format($order->sumBalance(), 2) . " บาท $msg_fee
 ------------------------------
 QR CODE นี้ จะหมดอายุ
 " . now()->addMinutes(10)->format("d/m/y H:i:s") . " น.
 ------------------------------
-*ใช้ QR CODE พร้อมเพย์นี้ เพื่อชำระเงินได้เลยค่ะ*
-**หลังจากลูกค้าชำระเงินแล้ว ทางร้านสงวนสิทธิ์ว่าลูกค้าได้ทำการตรวจสอบรายการสั่งซื้อแล้ว และรายการสั่งซื้อนั้นถูกต้อง**";
+**ใช้ QR CODE พร้อมเพย์นี้ สแกนจ่ายเพื่อชำระเงินได้เลยค่ะ สะดวก รวดเร็ว ไม่ต้องส่งสลิป**
+***หลังจากลูกค้าชำระเงินแล้ว ทางร้านสงวนสิทธิ์ว่าลูกค้าได้ทำการตรวจสอบรายการสั่งซื้อแล้ว และรายการสั่งซื้อนั้นถูกต้อง***";
         Facebook::send_reply_message($order, $msg);
 
         unlink("images/qr-code/$unique.png");

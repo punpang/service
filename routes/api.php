@@ -303,7 +303,7 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                 Route::post('{order}/changeCustomer', 'Order\AOrderController@changeCustomer');
                 Route::post('{order}/changeDateTimeGet', 'Order\AOrderController@changeDateTimeGet');
                 Route::post('{order}/prepareGoods', 'Order\AOrderController@prepareGoods');
-                Route::post('{order}/pickUpGoods', 'Order\AOrderController@pickUpGoods');
+                Route::post('{order}/customerNoPayment', 'Order\AOrderController@customerNoPayment');
                 Route::post('{order}/pickUpGoods', 'Order\AOrderController@pickUpGoods');
                 Route::post('{order}/summaryOfOrderDetails', 'Order\AOrderController@summaryOfOrderDetails');
 
@@ -447,6 +447,7 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
 
 Route::get('{promotion_id}/test', 'Momday\PromotionController@test');
 Route::get('test/{order}', 'Order\FacebookController@test_sumup_message');
+Route::get('testssss/readerqrcode', 'Order\FacebookController@readerqrcode');
 
 
 Route::get('/clear-cache/fghrfywertgsdfdrwet', function () {

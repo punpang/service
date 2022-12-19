@@ -7,13 +7,14 @@ use App\Linenotify;
 use App\Order\AOrder;
 use App\Order\Setting;
 use App\Order\Facebook;
+use App\Order\KsherPay;
 use App\Order\FacebookMids;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Order\FacebookImages;
 use App\Order\FacebookWebhook;
 use App\Http\Controllers\Controller;
-use App\Order\KsherPay;
-use Illuminate\Support\Facades\Storage;
+// use Illuminate\Support\Facades\Storage;
 
 class FacebookController extends Controller
 {
@@ -88,6 +89,17 @@ class FacebookController extends Controller
             //     Facebook::sumCustomerScore($profile, $sender);
             //     // return $request["hub_challenge"];
             // }
+        }
+
+        // มี Image
+        if (!empty($input['entry'][0]['messaging'][0]['message']['attachments'])) {
+            $attachments = $input['entry'][0]['messaging'][0]['message']['attachments'];
+            foreach ($attachments as $attachment) {
+                if ($attachment["type"] == "image") {
+                    FacebookImages::createImages($attachment, $profile);
+                    // $attachment["payload"]["url"];
+                }
+            }
         }
 
         // มี POSTBACK
@@ -374,4 +386,23 @@ QR CODE นี้ จะหมดอายุ
             // "setNameGoods" => $order->setNameGoods()
         ], 200);
     }
+
+    // public function readerqrcode()
+    // {
+    //     $qrCodeText = QRcode::decode('path/to/qrcode.png');
+    //     // $imageUrl = "https://lh3.googleusercontent.com/d/1QN3OQt2AZz3k_2glnieL6Tb9478n2zt9";
+
+    //     // $text = $qrCode->read($imageUrl);
+
+    //     // return $text;
+
+    //     $qrCode = new QrCode();
+    //     $qrCode->read("https://lh3.googleusercontent.com/d/1QN3OQt2AZz3k_2glnieL6Tb9478n2zt9");
+
+    //     // Get the text from the QR code
+    //     $text = $qrCode->getText();
+
+    //     // Output the text
+    //     echo $text;
+    // }
 }

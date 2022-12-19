@@ -152,8 +152,6 @@ export default {
     async mounted() {
         let loader = this.$loading.show();
 
-        await this.$store.dispatch("orderTags/fetch", "status=true");
-
         const tags =
             this.$route.query.tags != undefined
                 ? `&tags=${this.$route.query.tags}`
@@ -170,10 +168,18 @@ export default {
             `/api/v1/guest/product/punpang/order_details/fetch_for_menu?${payload}`
         );
         this.products = result.data;
+
+        if (this.user.type == 1) {
+            await this.$store.dispatch("orderTags/fetch", "status=true");
+        }
+
         loader.hide();
     },
     computed: {
-        ...mapGetters({ user: "main/User", tags: "orderTags/fetch" }),
+        ...mapGetters({
+            user: "main/User",
+            tags: "orderTags/fetch",
+        }),
     },
 };
 </script>

@@ -26,9 +26,11 @@
                         <v-col cols="12" sm="8" md="8">
                             <v-img
                                 :src="
-                                    'https://drive.google.com/thumbnail?id=' +
-                                    propNtpfc.src_name +
-                                    '&sz=w1000-h1000'
+                                    is_url(propNtpfc.src_name)
+                                        ? propNtpfc.src_name
+                                        : 'https://drive.google.com/thumbnail?id=' +
+                                          propNtpfc.src_name +
+                                          '&sz=w1000-h1000'
                                 "
                             >
                                 <!-- <v-btn @click="fetch_qrcode()"
@@ -364,6 +366,12 @@ export default {
             if (this.ref.startsWith("no-qrcode-")) {
                 this.ref = "";
             }
+        },
+        is_url(v) {
+            if (v.startsWith("http")) {
+                return true;
+            }
+            return false;
         },
     },
 };

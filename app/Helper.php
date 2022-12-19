@@ -129,4 +129,22 @@ class Helper extends Model
             ]
         );
     }
+
+    public static function qrCodeReaderUrl($url)
+    {
+        $url_new = str_replace("&", "%26", $url);
+        $client = new \GuzzleHttp\Client();
+        $response = $client->get("https://api.qrserver.com/v1/read-qr-code/?fileurl=" . $url_new);
+        $result = json_decode($response->getBody(), true);
+        return $result;
+        // $result[0]["symbol"][0]["data"]
+    }
+
+    public static function substr_slip_ref($json)
+    {
+        $output_1 = substr($json, 25);
+        $ref = substr($output_1, 0, -14);
+
+        return $ref;
+    }
 }

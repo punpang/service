@@ -41,11 +41,11 @@ ivlxqdpiHPcOLdQ2RPSx/pORpsUu/E9wz0mYS2PY7hNc2mBgBOQT+wUCAwEAAQ==
 EOD;
     }
 
-    public static function create_qrcode_promptpay_by_facebook($order)
+    public static function create_qrcode_promptpay_by_facebook($order, $fee = 0)
     {
         $datas = [
             "mch_order_no" => $order->id . "-" . KsherPay::generate_nonce_str(10),
-            "total_fee" => round($order->sumBalance(), 2) * 100,
+            "total_fee" => round($order->sumBalance() + $fee, 2) * 100,
             "fee_type" => "THB",
             "expire_time" => 600
         ];
@@ -62,7 +62,7 @@ EOD;
         $new_KsherPay->mch_order_no = $datas["mch_order_no"];
         $new_KsherPay->result;
         $new_KsherPay->amount = $order->sumBalance();
-        $new_KsherPay->total_fee = 0;
+        $new_KsherPay->total_fee = $order->sumBalance() + $fee;
         $new_KsherPay->save();
 
         return $ksherDecode["data"]["imgdat"];
@@ -93,6 +93,7 @@ EOD;
         if ($result == "SUCCESS") {
             $ksher = KsherPay::where("mch_order_no", $mch_order_no)->first();
             $ksher->result = "success";
+            // $ksher->total_fee = $rate;
             $ksher->update();
             return ["ksher" => $ksher, "result" => "success"];
         }

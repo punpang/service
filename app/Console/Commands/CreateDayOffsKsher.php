@@ -59,7 +59,6 @@ class CreateDayOffsKsher extends Command
                         "day_off" => now()->addDays(1)->format("Y-m-d")
                     ]);
                 }
-                Linenotify::send("เพิ่มวันหยุดรับชำระช่องทาง Ksher แล้ว");
             }
         }
         Linenotify::send("เพิ่มวันหยุดรับชำระช่องทาง Ksher แล้ว");

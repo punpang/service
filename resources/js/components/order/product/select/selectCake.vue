@@ -22,7 +22,7 @@
                 </v-card-title>
                 <v-card-text class="pb-0">
                     <v-form lazy-validation ref="form">
-                        <v-select
+                        <v-autocomplete
                             outlined
                             :items="fop1"
                             item-text="m1"
@@ -33,8 +33,60 @@
                             hide-details
                             class="mb-3 py-1"
                             @change="fetchProduct()"
-                        ></v-select>
-                        <v-select
+                            no-data-text="ไม่พบข้อมูล"
+                        ></v-autocomplete>
+                        <v-autocomplete
+                            :items="fop2"
+                            item-text="m2"
+                            item-value="id"
+                            outlined
+                            :label="msg.text.op2"
+                            v-model="op2"
+                            :rules="rules.op"
+                            hide-details
+                            class="mb-3 py-1"
+                            @change="fetchProduct()"
+                            no-data-text="ไม่พบข้อมูล"
+                        ></v-autocomplete>
+                        <v-autocomplete
+                            :items="fop3"
+                            item-text="m3"
+                            item-value="id"
+                            outlined
+                            :label="msg.text.op3"
+                            v-model="op3"
+                            :rules="rules.op"
+                            hide-details
+                            class="mb-3 py-1"
+                            @change="fetchProduct()"
+                            no-data-text="ไม่พบข้อมูล"
+                        ></v-autocomplete>
+                        <v-autocomplete
+                            :items="fop4"
+                            item-text="m4"
+                            item-value="id"
+                            outlined
+                            :label="msg.text.op4"
+                            v-model="op4"
+                            :rules="rules.op"
+                            hide-details
+                            class="mb-3 py-1"
+                            @change="fetchProduct()"
+                            no-data-text="ไม่พบข้อมูล"
+                        ></v-autocomplete>
+                        <!-- <v-select
+                            outlined
+                            :items="fop1"
+                            item-text="m1"
+                            item-value="id"
+                            :label="msg.text.op1"
+                            v-model="op1"
+                            :rules="rules.op"
+                            hide-details
+                            class="mb-3 py-1"
+                            @change="fetchProduct()"
+                        ></v-select> -->
+                        <!-- <v-select
                             :items="fop2"
                             item-text="m2"
                             item-value="id"
@@ -69,7 +121,7 @@
                             hide-details
                             class="mb-3 py-1"
                             @change="fetchProduct()"
-                        ></v-select>
+                        ></v-select> -->
                     </v-form>
 
                     <v-simple-table

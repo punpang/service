@@ -43,7 +43,7 @@ class PaymentNotificationOfTomorrowOrderCommand extends Command
         $orders = AOrder::whereDate("date_get", now()->addDays(1)->format("Y-m-d"))
             ->where("status", "2")->get();
         foreach ($orders as $order) {
-            $message = "หมายเลขคำสั่งซื้อ #$order->id ของคุณ ยังไม่ได้ยืนยันการสั่งซื้อ โปรดชำระเงินภายใน $order->payment_deadline_th น. เพื่อรับคิว $order->date_time_get_th น. สามารถชำระได้ที่ [ $order->link_for_customer ]";
+            $message = "หมายเลขคำสั่งซื้อ #$order->id ของคุณ ยังไม่ได้ยืนยันการสั่งซื้อ โปรดชำระเงินภายใน $order->payment_deadline_th น. เพื่อรับคิว $order->date_time_get_th น. สามารถชำระเงินได้ที่ [ $order->link_for_customer ]";
             MSms::Sms($order->customer->tel, $message);
         }
 

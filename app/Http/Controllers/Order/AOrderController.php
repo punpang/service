@@ -532,64 +532,78 @@ class AOrderController extends Controller
             //             );
 
 
-
-
-
             // $payload_genarate_qrcode_promtpay_to_facebook = [
             //     "keyword" => "genarate_qrcode_promtpay_to_facebook",
             //     "order_id" => $order->id,
             // ];
             Facebook::send_reply_image($order, "https://lh3.googleusercontent.com/d/1MhRh4V6olX8pAtWU5kGPlLLjV9HOatCv");
-//1MhRh4V6olX8pAtWU5kGPlLLjV9HOatCv
-            $payload = [
-                "keyword" => "not_confirm_payment",
-                "order_id" => $order->id,
-                "link_for_customer" => $order->link_for_customer
+            //1MhRh4V6olX8pAtWU5kGPlLLjV9HOatCv
+
+            AOrder::summaryOfOrderDetails($order->id);
+
+            $payload_send_postback = [
+                [
+                    "title" => "ชำระเงินและรายละเอียดสินค้า",
+                    "subtitle" => "โปรดชำระเงินโดยกดปุ่ม ชำระเงิน",
+                    "buttons" => [
+                        [
+                            "title" => "ชำระเงิน",
+                            "url" => $order->link_for_customer,
+                            "type" => "web_url"
+                        ],
+                        [
+                            "title" => "ขอเลขที่บัญชี",
+                            "payload" => json_encode(
+                                [
+                                    "keyword" => "account_number_and_slip_attachment_link",
+                                    "order_id" => $order->id,
+                                ]
+                            ),
+                            "type" => "postback"
+                        ],
+                    ],
+
+                ]
             ];
+
+            Facebook::send_postback(
+                $order,
+                $payload_send_postback
+            );
+
+            // $payload = [
+            //     "keyword" => "not_confirm_payment",
+            //     "order_id" => $order->id,
+            //     "link_for_customer" => $order->link_for_customer
+            // ];
+            // [
+            //     "title" => "ไม่สะดวกชำระเงิน",
+            //     "payload" => json_encode($payload),
+            //     "type" => "postback"
+            // ],
+
 
             $ksher = KsherChannelPayment::where("payment_code", "promptpayQR")
                 ->where("status_use", 1)
-                ->where("maximum", "<=", $order->sumTASC())
+                ->where("maximum", ">=", $order->sumTASC())
                 ->WhereDoesntHave("ksherDayOff", function ($query) {
                     return $query->where("day_off", \Carbon\Carbon::now()->format('Y-m-d'));
                 })->first();
-            // Linenotify::send($ksher);
 
             if (
                 $ksher &&
-                $order->status < 3 &&
-                $order->payment_deadline >= now()->format('Y-m-d H:i:s')
+                // $order->status < 3 &&
+                $order->payment_deadline >= now()->format('Y-m-d H:i:s') &&
+                $order->sumMoneyCustomer() == 0
             ) {
-                Facebook::send_reply_image($order, "https://lh3.googleusercontent.com/d/1qJvIUnRVopU7YLDKNQh6KCQZN8lss5uL");
-
-                // $order->customer->status_consent_condition == 1 &&
-                $payload_send_postback = [
+                //Facebook::send_reply_image($order, "https://lh3.googleusercontent.com/d/1qJvIUnRVopU7YLDKNQh6KCQZN8lss5uL");
+                $create_qr_code_promptpay_send_postback = [
                     [
-                        "title" => "ชำระเงินและรายละเอียดสินค้า",
-                        "subtitle" => "โปรดชำระเงินโดยกดปุ่ม ชำระเงิน",
+                        "title" => "สแกนจ่าย QRพร้อมเพย์ สะดวก รวดเร็ว ไม่ต้องส่งสลิป",
+                        "subtitle" => "ค่าธรรมเนียม +$ksher->fee_value บาท",
                         "buttons" => [
                             [
-                                "title" => "ชำระเงิน",
-                                "url" => $order->link_for_customer,
-                                "type" => "web_url"
-                            ],
-                            [
-                                "title" => "ไม่สะดวกชำระเงิน",
-                                "payload" => json_encode($payload),
-                                "type" => "postback"
-                            ],
-                            [
-                                "title" => "ขอเลขที่บัญชี",
-                                "payload" => json_encode(
-                                    [
-                                        "keyword" => "account_number_and_slip_attachment_link",
-                                        "order_id" => $order->id,
-                                    ]
-                                ),
-                                "type" => "postback"
-                            ],
-                            [
-                                "title" => "สร้าง QR CODE พร้อมเพย์",
+                                "title" => "สแกนจ่าย QRพร้อมเพย์",
                                 "payload" => json_encode(
                                     [
                                         "keyword" => "genarate_qrcode_promtpay_to_facebook",
@@ -597,45 +611,15 @@ class AOrderController extends Controller
                                     ]
                                 ),
                                 "type" => "postback"
-                            ]
-                        ]
-                    ]
-                ];
-            } else {
-                $payload_send_postback = [
-                    [
-                        "title" => "ชำระเงินและรายละเอียดสินค้า",
-                        "subtitle" => "โปรดชำระเงินโดยกดปุ่ม ชำระเงิน",
-                        "buttons" => [
-                            [
-                                "title" => "ชำระเงิน",
-                                "url" => $order->link_for_customer,
-                                "type" => "web_url"
-                            ],
-                            [
-                                "title" => "ไม่สะดวกชำระเงิน",
-                                "payload" => json_encode($payload),
-                                "type" => "postback"
-                            ],
-                            [
-                                "title" => "ขอเลขที่บัญชี",
-                                "payload" => json_encode(
-                                    [
-                                        "keyword" => "account_number_and_slip_attachment_link",
-                                        "order_id" => $order->id,
-                                    ]
-                                ),
-                                "type" => "postback"
                             ],
                         ]
                     ]
                 ];
+                Facebook::send_postback(
+                    $order,
+                    $create_qr_code_promptpay_send_postback
+                );
             }
-            AOrder::summaryOfOrderDetails($order->id);
-            Facebook::send_postback(
-                $order,
-                $payload_send_postback
-            );
 
             Line::flex_alert_payment($order);
 

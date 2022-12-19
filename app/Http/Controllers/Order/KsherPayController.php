@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Order;
 
 use App\URL;
+use App\Linenotify;
 use App\Order\AOrder;
 use App\Order\Facebook;
 use App\Order\KsherPay;
-use App\Order\AHistoryPayed;
 // use App\Linenotify;
+use App\Order\AHistoryPayed;
 use App\Order\AlertMessages;
 use Illuminate\Http\Request;
 use App\Events\KsherPayEvent;
@@ -123,6 +124,7 @@ class KsherPayController extends Controller
 
         $orderID = KsherPay::explodeOrderId($mch_order_no);
 
+
         if ($result == "SUCCESS") {
 
             $KsherPay = KsherPay::updateStatusWhenCallbackSuccess($mch_order_no, $result);
@@ -132,6 +134,7 @@ class KsherPayController extends Controller
             if ($result_order["status"] == "success") {
 
                 $result_aHistoryPayed = AHistoryPayed::paymentByOrderID($orderID, $amount, 3, $mch_order_no);
+                AlertMessages::socialPaymentOrder($result_order["order"], $amount);
 
                 if ($result_aHistoryPayed["status"] == "success") {
                     $KsherPayEven = [
@@ -143,6 +146,8 @@ class KsherPayController extends Controller
                     broadcast(new KsherPayEvent($KsherPayEven));
                     // AlertMessages::smsPaymentOrder($result_order['order']->id, $amount);
                     // AlertMessages::linePaymentOrder($result_order['order'], $amount);
+                    // Linenotify::send($response["data"]["rate"]);
+
                     return ["result" => "SUCCESS", "msg" => "OK"];
                 }
             }

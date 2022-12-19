@@ -206,10 +206,25 @@ class OrderDetailController extends Controller
         });
 
         if ($request->get("tags") != null) {
-            $query->whereHas("orderTag.tag", function ($q) use ($request) {
-                $tags = explode(",", $request->get("tags"));
-                $q->whereIn("text", $tags);
-            });
+            $tags = explode(",", $request->get("tags"));
+            foreach ($tags as $tag) {
+                $query->whereHas("orderTag.tag", function ($q) use ($tag) {
+                    $q->where("text", $tag);
+                });
+            }
+
+
+
+            // $query->whereHas("orderTag.tag", function ($q) use ($request) {
+            //     $tags = explode(",", $request->get("tags"));
+            //     // foreach ($tags as $tag) {
+            //     //     $q->where("text", $tag);
+            //     // }
+            //     // $q->where("text", "มินิมอล");
+            //     // $q->where("text", "คัพเค้ก");
+
+            //     $q->whereIn("text", $tags);
+            // });
         }
 
         // $query->orderBy("a_order.time_get", "DESC");

@@ -607,7 +607,8 @@ class AOrder extends Model
             $message_delivery_service = "";
         }
 
-        if ($order->status < 3 && $order->payment_deadline_th != null) {
+        if ($order->payment_deadline >= now()->format('Y-m-d H:i:s')) {
+            // $order->status < 3 && $order->payment_deadline_th != null
             $message_payment_deadline_th = "โปรดชำระเงินภายใน
 " . $order->payment_deadline_th . " น.
 -------------------------";

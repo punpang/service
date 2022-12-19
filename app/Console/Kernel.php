@@ -30,6 +30,9 @@ class Kernel extends ConsoleKernel
         // แจ้งเตือนชำระเงินจากลูกค้า
         $schedule->command("Alert:NoticePaymentByCustomer")->everyMinute()->between('8:30', '19:00');
 
+        // แจ้งเตือนชำระเงินจากลูกค้า ที่ส่งสลิปมาในเพจ
+        $schedule->command("FacebookImages:AlertPaymentCommand")->everyMinute()->between('8:30', '19:00');
+
         // แจ้งเตือนรายการสั่งซื้อวันนี้
         $schedule->command("Alert:OrderToday")->dailyAt('08:30');
         $schedule->command("Notify:PaymentOfTomorrowOrder")->dailyAt('09:00');
