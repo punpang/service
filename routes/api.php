@@ -281,6 +281,7 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                 Route::post('postCheckSlip', 'Order\NoticeOfPaymentFromCustomerController@postCheckSlip');
                 Route::post('postUpdateSlip', 'Order\NoticeOfPaymentFromCustomerController@postUpdateSlip');
                 Route::post('postAppealSlip', 'Order\NoticeOfPaymentFromCustomerController@postAppealSlip');
+                Route::post('qrCodeReaderUrl', 'Order\NoticeOfPaymentFromCustomerController@qrCodeReaderUrl');
                 Route::post('{id}/setCancel', 'Order\NoticeOfPaymentFromCustomerController@setCancel');
             });
 

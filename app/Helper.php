@@ -2,10 +2,11 @@
 
 namespace App;
 
-use Carbon\Carbon;
-use Google\Service\HangoutsChat\Card;
+// use Carbon\Carbon;
+// use Google\Service\HangoutsChat\Card;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Zxing\QrReader;
 
 class Helper extends Model
 {
@@ -138,6 +139,15 @@ class Helper extends Model
         $result = json_decode($response->getBody(), true);
         return $result;
         // $result[0]["symbol"][0]["data"]
+    }
+
+    public static function qrCodeReaderUrl_v2($url)
+    {
+        // Linenotify::send("qrCodeReaderUrl_v2 $url");
+        // $path_to_image = "https://scontent.xx.fbcdn.net/v/t1.15752-9/320485838_707703987368960_3814132955435592475_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=58c789&_nc_ohc=LttICDvKvvcAX_vPtRP&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdQ0V0B9299hGIuyBXGNkcHZmHAsDnzTekBWxsPy0hLbgg&oe=63C73566";
+        $qrcode = new QrReader($url);
+        $text = $qrcode->text();
+        return $text;
     }
 
     public static function substr_slip_ref($json)

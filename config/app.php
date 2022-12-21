@@ -170,7 +170,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Shivella\Bitly\BitlyServiceProvider::class,
         // JD\Cloudder\CloudderServiceProvider::class,
-
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -242,6 +242,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Bitly' => Shivella\Bitly\Facade\Bitly::class,
         // 'Cloudder' => JD\Cloudder\Facades\Cloudder::class,
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
     ],
 
 ];

@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Order;
 
 use App\URL;
+use App\Helper;
 use App\Linenotify;
 use App\Order\AOrder;
 use App\Order\AHistoryPayed;
 use App\Order\AlertMessages;
 use Illuminate\Http\Request;
+use Google\Service\Compute\Help;
 use App\Http\Controllers\Controller;
 use App\Order\NoticeOfPaymentFromCustomer;
+
 // use App\Order\CustomerScore;
 
 class NoticeOfPaymentFromCustomerController extends Controller
@@ -81,7 +84,7 @@ class NoticeOfPaymentFromCustomerController extends Controller
                 [
                     "status" => "error",
                     "title" => "มีบางอย่างผิดพลาด",
-                    "text" => "ref มีอยู่ในระบบแล้ว" 
+                    "text" => "ref มีอยู่ในระบบแล้ว"
                 ],
                 200
             );
@@ -236,5 +239,14 @@ class NoticeOfPaymentFromCustomerController extends Controller
             ],
             200
         );
+    }
+
+    public function qrCodeReaderUrl(Request $request)
+    {
+        $qrCode = Helper::qrCodeReaderUrl_v2($request->url);
+        $ref = Helper::substr_slip_ref($qrCode);
+        return response()->json([
+            "ref" => $ref
+        ], 200);
     }
 }

@@ -3,8 +3,9 @@
 namespace App\Console\Commands;
 
 use App\URL;
-use App\Linenotify;
+use App\Helper;
 // use App\Order\Facebook;
+use App\Linenotify;
 use App\Order\AlertMessages;
 use Illuminate\Console\Command;
 use App\Order\NoticeOfPaymentFromCustomer;
@@ -94,34 +95,34 @@ class NoticePaymetByCustomerCommand extends Command
 
             foreach ($notices as $notice) {
                 if ($notice->ref == null) {
-                    $curl = curl_init();
+                    // $curl = curl_init();
 
-                    curl_setopt_array($curl, array(
-                        CURLOPT_URL => 'https://api.qrserver.com/v1/read-qr-code/?fileurl=https://lh3.googleusercontent.com/d/' . $notice->src_name,
-                        CURLOPT_RETURNTRANSFER => true,
-                        CURLOPT_ENCODING => '',
-                        CURLOPT_MAXREDIRS => 10,
-                        CURLOPT_TIMEOUT => 10,
-                        CURLOPT_FOLLOWLOCATION => true,
-                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                        CURLOPT_CUSTOMREQUEST => 'GET',
-                    ));
+                    // curl_setopt_array($curl, array(
+                    //     CURLOPT_URL => 'https://api.qrserver.com/v1/read-qr-code/?fileurl=https://lh3.googleusercontent.com/d/' . $notice->src_name,
+                    //     CURLOPT_RETURNTRANSFER => true,
+                    //     CURLOPT_ENCODING => '',
+                    //     CURLOPT_MAXREDIRS => 10,
+                    //     CURLOPT_TIMEOUT => 10,
+                    //     CURLOPT_FOLLOWLOCATION => true,
+                    //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    //     CURLOPT_CUSTOMREQUEST => 'GET',
+                    // ));
 
-                    $response = curl_exec($curl);
+                    // $response = curl_exec($curl);
 
-                    curl_close($curl);
+                    // curl_close($curl);
 
 
-                    $json = json_decode($response, true);
+                    // $json = json_decode($response, true);
                     // Linenotify::send($json[0]["symbol"][0]["data"]);
 
-                    if (is_null($json[0]["symbol"][0]["data"])) {
+                    $result =  Helper::qrCodeReaderUrl_v2("https://lh3.googleusercontent.com/d/$notice->src_name");
+
+                    if (is_null($result)) {
                         $notice->update(["ref" => "no-qrcode-$notice->id"]);
                         // Linenotify::send($response[0]["symbol"][0]["data"]);
                     } else {
-                        $output_1 = substr($json[0]["symbol"][0]["data"], 25);
-                        $ref = substr($output_1, 0, -14);
-
+                        $ref = Helper::substr_slip_ref($result);
                         $notice_double = NoticeOfPaymentFromCustomer::whereRef($ref)->first();
                         if ($notice_double) {
                             $notice->update(["status" => "cancel"]);

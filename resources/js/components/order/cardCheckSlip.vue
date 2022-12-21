@@ -23,7 +23,7 @@
                 </v-card-title>
                 <v-card-text class="pt-4">
                     <v-row>
-                        <v-col cols="12" sm="8" md="8">
+                        <v-col cols="12" sm="7" md="7">
                             <v-img
                                 :src="
                                     is_url(propNtpfc.src_name)
@@ -38,7 +38,7 @@
                                 > -->
                             </v-img>
                         </v-col>
-                        <v-col cols="12" sm="4" md="4">
+                        <v-col cols="12" sm="5" md="5">
                             <v-text-field
                                 label="ยอดคงเหลือ"
                                 hide-details
@@ -139,37 +139,51 @@ export default {
             let loader = this.$loading.show();
             const url = `https://lh3.googleusercontent.com/d/${this.propNtpfc.src_name}`;
 
-            var requestOptions = {
-                method: "GET",
-                redirect: "follow",
-            };
+            await axios
+                .post(
+                    `/api/admin/v1/noticeOfPaymentFromCustomer/qrCodeReaderUrl`,
+                    { url: url }
+                )
+                .then((response) => {
+                    if (response.data.ref != null) {
+                        this.ref = response.data.ref;
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
 
-            const result = await fetch(
-                `https://api.qrserver.com/v1/read-qr-code/?fileurl=${url}`,
-                requestOptions
-            )
-                .then((response) => response.json())
-                .catch((error) => console.log("error", error));
+            // var requestOptions = {
+            //     method: "GET",
+            //     redirect: "follow",
+            // };
 
-            if (result[0].symbol[0].data != null) {
-                let ref_new = result[0].symbol[0].data.substr(25);
-                ref_new = ref_new.slice(0, -14);
-                this.ref = ref_new;
-            }
+            // const result = await fetch(
+            //     `https://api.qrserver.com/v1/read-qr-code/?fileurl=${url}`,
+            //     requestOptions
+            // )
+            //     .then((response) => response.json())
+            //     .catch((error) => console.log("error", error));
+
+            // if (result[0].symbol[0].data != null) {
+            //     let ref_new = result[0].symbol[0].data.substr(25);
+            //     ref_new = ref_new.slice(0, -14);
+            //     this.ref = ref_new;
+            // }
 
             loader.hide();
-            const text = [
-                {
-                    type: "qrcode",
-                    symbol: [
-                        {
-                            seq: 0,
-                            data: "0041000600000101030040220012341130651BPM059845102TH910458A8",
-                            error: null,
-                        },
-                    ],
-                },
-            ];
+            // const text = [
+            //     {
+            //         type: "qrcode",
+            //         symbol: [
+            //             {
+            //                 seq: 0,
+            //                 data: "0041000600000101030040220012341130651BPM059845102TH910458A8",
+            //                 error: null,
+            //             },
+            //         ],
+            //     },
+            // ];
         },
         async processingCancelSlip() {
             let loader = this.$loading.show();
@@ -344,9 +358,11 @@ export default {
             loader.hide();
         },
         async clickStart() {
+            let loader = this.$loading.show();
             const payload = {
                 ntpfc: this.propNtpfc,
             };
+
             const res = await this.$store.dispatch(
                 `orderNoticeOfPaymentFromCustomer/getCheckSlip`,
                 payload
@@ -366,6 +382,7 @@ export default {
             if (this.ref.startsWith("no-qrcode-")) {
                 this.ref = "";
             }
+            loader.hide();
         },
         is_url(v) {
             if (v.startsWith("http")) {

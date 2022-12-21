@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Order;
 
 use App\URL;
 use App\Linenotify;
+use Zxing\QrReader;
 use App\Order\AOrder;
 use App\Order\Setting;
 use App\Order\Facebook;
@@ -14,7 +15,8 @@ use Illuminate\Http\Request;
 use App\Order\FacebookImages;
 use App\Order\FacebookWebhook;
 use App\Http\Controllers\Controller;
-// use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
 
 class FacebookController extends Controller
 {
@@ -49,15 +51,18 @@ class FacebookController extends Controller
         }
 
         // นอกเวลาทำการ
+
+        $is_time_close_store = now()->format("H:i") >= $setting->close_store || now()->format("H:i") <= $setting->open_store;
         if (
-            now()->format("H:i") >= $setting->close_store ||
-            now()->format("H:i") <= $setting->open_store
+            $is_time_close_store
+            // now()->format("H:i") >= $setting->close_store ||
+            // now()->format("H:i") <= $setting->open_store
         ) {
             $message_out = "ขณะนี้ ! อยู่นอกเวลาทำการ โปรดติดต่ออีกครั้งในช่วงเวลาทำการ ($setting->open_store - $setting->close_store น.) ขออภัยในความไม่สะดวก
 
 **ทุกข้อความตอบกลับโดยระบบอัตโนมัติ";
             Facebook::reply_message_v2($sender, $message_out);
-            return $request["hub_challenge"];
+            // return $request["hub_challenge"];
         }
 
         // มีข้อความไหม --เป็นตัวหนังสือ--
@@ -80,7 +85,7 @@ class FacebookController extends Controller
             ]);
 
             // ตอบข้อความที่ตรงกับฐานข้อมูล
-            if ($FacebookWebhook->reply) {
+            if ($FacebookWebhook->reply && !$is_time_close_store) {
                 Facebook::reply_message_v2($sender, $FacebookWebhook->reply->text_th);
             }
 
@@ -387,22 +392,21 @@ QR CODE นี้ จะหมดอายุ
         ], 200);
     }
 
-    // public function readerqrcode()
-    // {
-    //     $qrCodeText = QRcode::decode('path/to/qrcode.png');
-    //     // $imageUrl = "https://lh3.googleusercontent.com/d/1QN3OQt2AZz3k_2glnieL6Tb9478n2zt9";
-
-    //     // $text = $qrCode->read($imageUrl);
-
-    //     // return $text;
-
-    //     $qrCode = new QrCode();
-    //     $qrCode->read("https://lh3.googleusercontent.com/d/1QN3OQt2AZz3k_2glnieL6Tb9478n2zt9");
-
-    //     // Get the text from the QR code
-    //     $text = $qrCode->getText();
-
-    //     // Output the text
-    //     echo $text;
-    // }
+    public function readerqrcode()
+    {
+        // $path_to_image = "https://scontent.xx.fbcdn.net/v/t1.15752-9/320095387_1290231448216228_8449009203720903444_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=58c789&_nc_ohc=Gr-LfqWvbaUAX847LiN&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdSca0GP0eoshxnOlbZvnx2ghsYr7_D8Fa0Q_Zj3tu9Fqw&oe=63C8E750";
+        // $qrcode = new QrReader($path_to_image);
+        // $text = $qrcode->text();
+        // return $text;
+        // file_put_contents("images/qr-code/$unique.png", $data);
+        $qr = QrCode::size(300)->format("png")->generate('010156416503413035105416541651065');
+        // file_put_contents("images/qr-code/test_qr_code.png", $qr);
+        // $path_to_image = $qr;
+        // $qrcode = new QrReader($path_to_image);
+        // $text = $qrcode->text();
+        // return $text;
+        // file_put_contents("images/qr-code/$unique.png", $data);
+        // Linenotify::send($qr);
+        return $qr;
+    }
 }
