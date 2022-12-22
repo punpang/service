@@ -11,6 +11,11 @@ class URL extends Model
         return request()->getSchemeAndHttpHost();
     }
 
+    public static function base_to_link($path)
+    {
+        return Url::base() . "/$path";
+    }
+
     public static function punpang()
     {
         if (request()->getHttpHost() === 'punpang.store') {

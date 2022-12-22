@@ -90,7 +90,7 @@ class NoticePaymetByCustomerCommand extends Command
         //     }
         // }
 
-        $notices = NoticeOfPaymentFromCustomer::whereStatus("create")->get();
+        $notices = NoticeOfPaymentFromCustomer::whereStatus("create")->take(5)->get();
         if ($notices->count() > 0) {
 
             foreach ($notices as $notice) {
@@ -115,14 +115,12 @@ class NoticePaymetByCustomerCommand extends Command
 
                     // $json = json_decode($response, true);
                     // Linenotify::send($json[0]["symbol"][0]["data"]);
+                    $url = "https://lh3.googleusercontent.com/d/$notice->src_name";
+                    $result =  Helper::qrCodeReaderUrl_v2($url);
+                    // Linenotify::send($result);
 
-                    $result =  Helper::qrCodeReaderUrl_v2("https://lh3.googleusercontent.com/d/$notice->src_name");
-
-                    if (is_null($result)) {
-                        $notice->update(["ref" => "no-qrcode-$notice->id"]);
-                        // Linenotify::send($response[0]["symbol"][0]["data"]);
-                    } else {
-                        $ref = Helper::substr_slip_ref($result);
+                    if ($result["has_qrcode"]) {
+                        $ref = Helper::substr_slip_ref($result["text"]);
                         $notice_double = NoticeOfPaymentFromCustomer::whereRef($ref)->first();
                         if ($notice_double) {
                             $notice->update(["status" => "cancel"]);
@@ -130,6 +128,9 @@ class NoticePaymetByCustomerCommand extends Command
                         } else {
                             $notice->update(["ref" => $ref]);
                         }
+                    } else {
+                        $notice->update(["ref" => "no-qrcode-$notice->id"]);
+                        // Linenotify::send($response[0]["symbol"][0]["data"]);
                     }
                 }
             }

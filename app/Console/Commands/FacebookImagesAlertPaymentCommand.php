@@ -56,12 +56,11 @@ class FacebookImagesAlertPaymentCommand extends Command
                 $result =  Helper::qrCodeReaderUrl_v2($image->image_url);
                 // if ($result == null) {
                 //     $image->delete();
-
                 // ถ้ามีข้อมูลคิวอาร์
-                if (isset($result)) {
+                if ($result["has_qrcode"]) {
 
                     // แยกเอาเฉพาะ ref บนสลิป
-                    $dataQr = Helper::substr_slip_ref($result);
+                    $dataQr = Helper::substr_slip_ref($result["text"]);
 
                     // ค้นหาว่ามี ref นี้หรือยัง
                     $is_have = NoticeOfPaymentFromCustomer::where("ref", $dataQr)->first();

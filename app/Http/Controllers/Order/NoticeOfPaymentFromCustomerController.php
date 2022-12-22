@@ -244,9 +244,18 @@ class NoticeOfPaymentFromCustomerController extends Controller
     public function qrCodeReaderUrl(Request $request)
     {
         $qrCode = Helper::qrCodeReaderUrl_v2($request->url);
-        $ref = Helper::substr_slip_ref($qrCode);
-        return response()->json([
-            "ref" => $ref
-        ], 200);
+        $ref = Helper::substr_slip_ref($qrCode["text"]);
+
+        if ($qrCode["has_qrcode"]) {
+            return response()->json([
+                "has_qrcode" => true,
+                "ref" => $ref
+            ], 200);
+        } else {
+            return response()->json([
+                "has_qrcode" => false,
+                "ref" => null
+            ], 200);
+        }
     }
 }

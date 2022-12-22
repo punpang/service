@@ -5,8 +5,9 @@ namespace App;
 // use Carbon\Carbon;
 // use Google\Service\HangoutsChat\Card;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 use Zxing\QrReader;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Str;
 
 class Helper extends Model
 {
@@ -137,7 +138,16 @@ class Helper extends Model
         $client = new \GuzzleHttp\Client();
         $response = $client->get("https://api.qrserver.com/v1/read-qr-code/?fileurl=" . $url_new);
         $result = json_decode($response->getBody(), true);
-        return $result;
+
+        if ($result[0]["symbol"][0]["data"] == null) {
+            return ["has_qrcode" => false];
+        } else {
+            return [
+                "has_qrcode" => true,
+                "text" => $result[0]["symbol"][0]["data"]
+            ];
+        }
+        // return $result;
         // $result[0]["symbol"][0]["data"]
     }
 
@@ -147,7 +157,15 @@ class Helper extends Model
         // $path_to_image = "https://scontent.xx.fbcdn.net/v/t1.15752-9/320485838_707703987368960_3814132955435592475_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=58c789&_nc_ohc=LttICDvKvvcAX_vPtRP&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdQ0V0B9299hGIuyBXGNkcHZmHAsDnzTekBWxsPy0hLbgg&oe=63C73566";
         $qrcode = new QrReader($url);
         $text = $qrcode->text();
-        return $text;
+        if ($text == false) {
+            $result = Helper::qrCodeReaderUrl($url);
+            return $result;
+        } else {
+            return [
+                "has_qrcode" => true,
+                "text" => $text
+            ];
+        }
     }
 
     public static function substr_slip_ref($json)
@@ -156,5 +174,40 @@ class Helper extends Model
         $ref = substr($output_1, 0, -14);
 
         return $ref;
+    }
+
+    public static function generate_maemanee_promptpay($amount = 0)
+    {
+        $first = "00020101021230770016A000000677010112011501075360001028602150140000048953630315PUNPANGPRANBURI5802TH540";
+        $amount = number_format($amount, 2, '.', '');
+        $countAmount = strlen($amount);
+        $last = "53037646220071600000000007066306304";
+        $code = $first . $countAmount . $amount . $last;
+        $xFFFF = dechex(Helper::CRC16Normal($code));
+        $full = Str::upper($code . $xFFFF);
+        return $full;
+    }
+
+    public static function generate_qrcode_text($text = null)
+    {
+        if ($text == null) return;
+
+        $qr_code = QrCode::size(300)->format("png")->generate($text);
+        $name_unique = Helper::randomNumber();
+        file_put_contents("images/qr-code/$name_unique.png", $qr_code);
+        // $url = URL::base() . "/images/qr-code/$name_unique.png";
+
+        return "images/qr-code/$name_unique.png";
+    }
+
+    public static function unlink_url($url = null)
+    {
+        if ($url == null) return;
+
+        $path = strlen(URL::base());
+        $unlink = substr($url, $path, strlen($url) - $path);
+        unlink($unlink);
+
+        return;
     }
 }

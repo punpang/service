@@ -5,10 +5,12 @@ namespace App\Order;
 // use App\URL;
 use App\URL;
 use App\MSms;
+use App\Helper;
 use App\Linenotify;
 use App\Order\Setting;
 use App\Order\ShotlinkV2;
 use Illuminate\Support\Str;
+// use Google\Service\Compute\Help;
 use App\Order\RegisterMemberTemp;
 use App\Order\KsherChannelPayment;
 use Illuminate\Database\Eloquent\Model;
@@ -566,12 +568,13 @@ $setting->open_store - $setting->close_store น. ชั่วคราว
 
             $url = Url::base() . "/upload_slip/$order->auth_order";
 
-            if ($order->status_full_payment || $order->sumDeposited() > 0) {
-                $msg = "โปรดชำระด้วยจำนวนเงิน " . number_format($order->sumBalance(), 2) . " บาท";
-            } else {
-                $msg = "โปรดเลือกชำระด้วยจำนวนเงินระหว่าง " . number_format($order->sumTASC(), 2) . " บาท หรือ " . number_format($order->sumTASC() / 2, 2) . " บาท";
-            }
+            // if ($order->status_full_payment || $order->sumDeposited() > 0) {
+            //     $msg = "โปรดชำระด้วยจำนวนเงิน " . number_format($order->sumBalance(), 2) . " บาท";
+            // } else {
+            //     $msg = "โปรดเลือกชำระด้วยจำนวนเงินระหว่าง " . number_format($order->sumTASC(), 2) . " บาท หรือ " . number_format($order->sumTASC() / 2, 2) . " บาท";
+            // }
 
+            $msg = "โปรดชำระด้วยจำนวนเงิน " . number_format($order->sumBalance(), 2) . " บาท";
             $msg = $msg . "
 
 โปรดชำระเงินภายใน
@@ -581,7 +584,14 @@ $order->payment_deadline_th น.
 *โปรดแจ้งชำระเงินภายในเว็บเท่านั้น ไม่ใช่ในแชท*
 **ทางร้านขอสงวนสิทธิ์ในการจัดลำดับคิวใหม่ หากแจ้งชำระเงินไม่ทันในวัน-เวลาที่ทางร้านกำหนด**";
 
+
             Facebook::send_reply_image($order, "https://lh3.googleusercontent.com/d/1mEoi5PyWNPcQnvZ_FyNWiGZUT6PLYgB7");
+
+            // $generate_maemanee_promptpay = Helper::generate_maemanee_promptpay($order->sumBalance());
+            // $generate_qrcode_text = Helper::generate_qrcode_text($generate_maemanee_promptpay);
+            // Facebook::send_reply_image($order, URL::base_to_link($generate_qrcode_text));
+            // unlink($generate_qrcode_text);
+
             Facebook::send_reply_message($order, $msg);
             Facebook::send_postback(
                 $order,

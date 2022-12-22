@@ -4,7 +4,7 @@
             <template v-slot:activator="{ on }">
                 <div v-on="on">
                     <v-icon color="green accent-4">insert_photo</v-icon>
-                    {{ user.type === 1 ? "รูปภาพ" : "อัปโหลดรูปภาพ" }}
+                    {{ user.type == 1 ? "รูปภาพ" : "อัปโหลดรูปภาพ" }}
                 </div>
                 <!-- <v-btn v-on="on">
                     @click="save()" :disabled="!self.id"
@@ -14,7 +14,7 @@
             </template>
             <v-card>
                 <v-card-title>
-                    {{ user.type === 1 ? "รูปภาพ" : "อัปโหลดรูปภาพ" }}
+                    {{ user.type == 1 ? "รูปภาพ" : "อัปโหลดรูปภาพ" }}
                     <v-spacer></v-spacer>
                     <v-icon color="error" @click="exit">close</v-icon>
                 </v-card-title>
@@ -24,8 +24,9 @@
                             cols="12"
                             md="12"
                             class="pa-1"
-                            v-if="user.type != 1"
+
                         >
+                        <!-- v-if="user.type != 1" -->
                             <uploadImageMultiple
                                 :propUploadImange="propImageFormCustomers"
                                 @emitImagesId="emitImagesId"

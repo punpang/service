@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Order;
 
 use App\URL;
+use App\Helper;
+// use Zxing\QrReader;
 use App\Linenotify;
-use Zxing\QrReader;
 use App\Order\AOrder;
 use App\Order\Setting;
 use App\Order\Facebook;
@@ -15,7 +16,7 @@ use Illuminate\Http\Request;
 use App\Order\FacebookImages;
 use App\Order\FacebookWebhook;
 use App\Http\Controllers\Controller;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
+// use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 
 class FacebookController extends Controller
@@ -394,19 +395,16 @@ QR CODE นี้ จะหมดอายุ
 
     public function readerqrcode()
     {
-        // $path_to_image = "https://scontent.xx.fbcdn.net/v/t1.15752-9/320095387_1290231448216228_8449009203720903444_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=58c789&_nc_ohc=Gr-LfqWvbaUAX847LiN&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdSca0GP0eoshxnOlbZvnx2ghsYr7_D8Fa0Q_Zj3tu9Fqw&oe=63C8E750";
-        // $qrcode = new QrReader($path_to_image);
-        // $text = $qrcode->text();
-        // return $text;
-        // file_put_contents("images/qr-code/$unique.png", $data);
-        $qr = QrCode::size(300)->format("png")->generate('010156416503413035105416541651065');
-        // file_put_contents("images/qr-code/test_qr_code.png", $qr);
-        // $path_to_image = $qr;
-        // $qrcode = new QrReader($path_to_image);
-        // $text = $qrcode->text();
-        // return $text;
-        // file_put_contents("images/qr-code/$unique.png", $data);
-        // Linenotify::send($qr);
-        return $qr;
+        // dd("sss");
+        $result =  Helper::qrCodeReaderUrl_v2("https://lh3.googleusercontent.com/d/1cCQdMgMjOXjsoC2_3BkoXh_KX9vJ37vn");
+        //
+
+        // $generate_maemanee_promptpay = Helper::generate_maemanee_promptpay(100);
+        // $generate_qrcode_text = Helper::generate_qrcode_text($generate_maemanee_promptpay);
+        // unlink("$generate_qrcode_text");
+        // unlink("images/qr-code/$unique.png");
+
+
+        return $result;
     }
 }

@@ -145,7 +145,7 @@ export default {
                     { url: url }
                 )
                 .then((response) => {
-                    if (response.data.ref != null) {
+                    if (response.data.has_qrcode) {
                         this.ref = response.data.ref;
                     }
                 })
