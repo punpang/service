@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Order;
 
 use App\URL;
-use App\Helper;
 // use Zxing\QrReader;
+use App\Helper;
 use App\Linenotify;
 use App\Order\AOrder;
 use App\Order\Setting;
@@ -406,5 +406,817 @@ QR CODE นี้ จะหมดอายุ
 
 
         return $result;
+    }
+
+    public function get_bese64()
+    {
+        $b64image = base64_encode(file_get_contents('https://lh3.googleusercontent.com/d/1WXsIEycHHxe4YZ2s2tPUZQjOLqhvnoxO'));
+        return $b64image;
+    }
+
+    public function aiforthai()
+    {
+
+        $order = AOrder::orderBy("updated_at", "DESC")->first();
+
+        if ($order->orderDeliveryService) {
+            return "มีบริการจัดส่ง";
+        }
+
+        return "ไม่มีบริการจัดส่ง";
+        $slip_prototypes = [
+            "https://scontent.xx.fbcdn.net/v/t1.15752-9/321386752_4117037548520850_2443181519936123893_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=58c789&_nc_ohc=iL6rD1KOreYAX9QR7qn&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdRk6Sj6I_qEBYYydvna3Vm9bPYMrxND7FpNJI6wV5YOHQ&oe=63D220A7",
+            "https://lh3.googleusercontent.com/d/1zmFSxC7MpUhOddxdGntSiIORePVGCW_6",
+            "https://scontent.xx.fbcdn.net/v/t1.15752-9/321685468_3212906642355711_1607434823650167392_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=58c789&_nc_ohc=r_qZAUlc3cgAX-p1qkv&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdSgRSY8nYjFwxyS1J7tdkiOrtanl_le6zRO95bUI8vieA&oe=63D22B68",
+            "https://lh3.googleusercontent.com/d/1wSDbkDed5hnMcxzlY7rbUeA8tHBkj7P4",
+            "https://scontent.xx.fbcdn.net/v/t1.15752-9/321997930_935476037421855_2273680509304431328_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=58c789&_nc_ohc=EiEfBnvm5nUAX-bdImH&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdRyMS8cosWba5v-DeXSeaebR-6VoRnmGozA-cLRDh6e1A&oe=63D1E6E5",
+            "https://scontent.fkdt3-1.fna.fbcdn.net/v/t1.15752-9/316296557_680572783760954_6284968132752711889_n.png?_nc_cat=100&ccb=1-7&_nc_sid=ae9488&_nc_eui2=AeFAGLn9p8x0jR0C7ak2eYcCpsAXvKfqFfWmwBe8p-oV9QOlEJs9E_fPR0hcVgPJCgZeXWYjU0ewtjh9b9gMAPdr&_nc_ohc=ifB2iL7utjEAX-nWzi8&_nc_ht=scontent.fkdt3-1.fna&oh=03_AdReoVnDlTRxX7wqnj2u0QLQc7uEZ94Qkzi0Ljkn3VphbA&oe=63D31EF6"
+            // "https://scontent.fkdt3-1.fna.fbcdn.net/v/t39.30808-6/316831294_5385943404848102_8910622798598044883_n.jpg?stp=cp1_dst-jpg&_nc_cat=105&ccb=1-7&_nc_sid=973b4a&_nc_eui2=AeFyFrwVgLoHkmEOXDHqyMx9n1UZa9NE-tefVRlr00T616TjsywhmYr8qzdjMJhVTHQ0IQEpXdxKdO3mmLZveKQT&_nc_ohc=7zPVzHvwhq4AX9hh0kI&_nc_ht=scontent.fkdt3-1.fna&oh=00_AfAwpiJ8s5TZ9XhMBWkG_1OKUlM-U-JRaiAGE8CwFlqJqw&oe=63B11B6A"
+        ];
+
+        // $slip = "https://lh3.googleusercontent.com/d/1cCQdMgMjOXjsoC2_3BkoXh_KX9vJ37vn";
+        // $imagePath1 =
+        // "https://scontent.xx.fbcdn.net/v/t1.15752-9/321386752_4117037548520850_2443181519936123893_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=58c789&_nc_ohc=iL6rD1KOreYAX9QR7qn&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdRk6Sj6I_qEBYYydvna3Vm9bPYMrxND7FpNJI6wV5YOHQ&oe=63D220A7";
+
+        // $imagePath2 =
+        //     "https://scontent.xx.fbcdn.net/v/t1.15752-9/321386752_4117037548520850_2443181519936123893_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=58c789&_nc_ohc=iL6rD1KOreYAX9QR7qn&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdRk6Sj6I_qEBYYydvna3Vm9bPYMrxND7FpNJI6wV5YOHQ&oe=63D220A7";
+
+        // $imagePath3 =
+        //     "https://scontent.fkdt3-1.fna.fbcdn.net/v/t1.15752-9/321301696_831493394611931_183852941793471914_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=ae9488&_nc_eui2=AeEnHXJ2TM-2nj_GVIc25CENkBJsxt_rSP6QEmzG3-tI_rgvcCKda2xgv55HZZpEdXp0aclUV4r3oNzlwM7ouixm&_nc_ohc=2qXk2e0U6cMAX-i5_91&_nc_ht=scontent.fkdt3-1.fna&oh=03_AdTcNYf9o5DC7daAfEK6QXRNOfSlwYL3L2vy613hwuGgMA&oe=63D3340F";
+
+        // Create new Imagick object
+
+        $percents = [];
+
+        foreach ($slip_prototypes as $slip_prototype) {
+            $prototpe = new \Imagick($slip_prototype);
+            $slip = new \Imagick("https://lh3.googleusercontent.com/d/1cCQdMgMjOXjsoC2_3BkoXh_KX9vJ37vn");
+            $percents[] = $prototpe->compareImageChannels(
+                $slip,
+                \Imagick::CHANNEL_ALL,
+                \Imagick::METRIC_MEANABSOLUTEERROR
+            );
+            // dd($diff12);
+        }
+
+        dd($percents);
+        $diff12 = $prototpe->compareImageChannels(
+            $slip,
+            \Imagick::CHANNEL_ALL,
+            \Imagick::METRIC_MEANABSOLUTEERROR
+        );
+
+        dd($diff12);
+
+
+        // $imagick1 = new \Imagick($imagePath1);
+        // $imagick2 = new \Imagick($imagePath2);
+        // $imagick3 = new \Imagick($imagePath3);
+
+        // Use compareImageChannels() function to find
+        // the difference between images
+        $diff12 = $imagick1->compareImageChannels(
+            $imagick2,
+            \Imagick::CHANNEL_ALL,
+            \Imagick::METRIC_MEANABSOLUTEERROR
+        );
+
+        $diff13 = $imagick1->compareImageChannels(
+            $imagick3,
+            \Imagick::CHANNEL_ALL,
+            \Imagick::METRIC_MEANABSOLUTEERROR
+        );
+
+        // Print the difference in array
+        // print_r($diff12);
+        // print_r($diff13);
+
+        dd($diff12, $diff13);
+
+        return $diff12;
+
+        // $a =  Helper::generate_phone_promptpay(77);
+        // // dd($a);
+        // $b = Helper::generate_qrcode_text($a);
+        // return dd($a, $b);
+        // 00020101021153037645802TH29370016A00000067701011101130066918853402540 8 99999.00 6304 D287
+        // 00020101021153037645802TH29370016A00000067701011101130066918853402540 7 9999.00 6304 2BEB
+    }
+
+    public function check_slip()
+    {
+        $slip = Helper::verify_slip("0046000600000101030140225202212315HrxrtS8e9LSq4xIR5102TH91048BAE");
+
+        dd($slip);
+        return;
+        $names = [
+            "นางสาว ฐิติภัทร ศรีสุข",
+            "นางสาว ฐิติภัทร ศ",
+            "น.ส.ฐิติภัทร ศรีสุข",
+            "นาง เพชรรัตน์ จันทร์คำแก้ว",
+            "นาย ชรันดร์ กระแสสาย",
+            "นาย ณัฐพงษ์ เรืองสว่าง",
+            "นาย มานะ สมศักดิ์",
+            "นาง พณารัตน์ ศรีสุข",
+            "นางสาว มาริสา เกตุสาย",
+            "น.ส.กานดา เชิดฉิ่ง",
+            "น.ส.อภิชญา บุญศรี",
+            "นางสาว นันทิยา เพชรประดับ",
+            "นางอารีย์ นนธิจันทร์",
+            "น.ส.อัจฉราพร จันทร์ลาด",
+            "นาย ชนินทร์ ผูกศิริ",
+            "น.ส.ฐิติภัทธ์ สานวน",
+            "นางสาว พิชญา สุวรรณศิลป์",
+            "นาย เรวัต พิมพ์ไทย",
+            "นางสาว จริยา วงศ์พุทธิเดชา",
+            "พ.ต. สมพล ศิริโภคานนท์",
+            "นาง พันนิการ์ ชมสายพลายงาม"
+        ];
+
+
+        foreach ($names as $name) {
+            // $e1 = explode(" ", $name);
+            $names_true = [
+                "นางสาว ฐิติภัทร ศรีสุข",
+                "น.ส.ฐิติภัทร ศรีสุข",
+                "ฐิติภัทร ศรีสุข",
+                // "ฐิติภัทร"
+                "TITIPAT SRISUK"
+            ];
+            foreach ($names_true as $name_true) {
+                similar_text($name_true, $name, $percent_name);
+                if($percent_name >=  70 && $percent_name < 80){
+                    echo $name." =======> ".$percent_name." =======> $name_true <br>";
+
+                }
+                // if (
+                //     $percent_name == 100 &&
+                //     str_ends_with($name, "ศรีสุข") || str_ends_with($name, "SRISUK")
+
+                // ) {
+                //     echo "$name  ====>  $percent_name <==== $name_true<br><br>";
+                // }
+            }
+
+
+
+
+            // similar_text("นางสาว ฐิติภัทร ศรีสุข", $name, $percent_name);
+            // similar_text("ฐิติภัทร", $name, $percent_name);
+            // similar_text("ศรีสุข", $name, $percent_name);
+            // echo $name . "  <=========>  " . $percent_name . " <br>";
+        }
+
+
+
+        // $slips = [
+        //     [
+        //         "status" => 200,
+        //         "message" => [
+        //             "data" => [
+        //                 "type" => 1,
+        //                 "transRef" => "236313167750I000002B9790",
+        //                 "date" => "2022-12-29T13:01:13+07:00",
+        //                 "date_human" => "29 ธ.ค. 2022, 13:01",
+        //                 "amount" => 230,
+        //                 "sender" => [
+        //                     "bank" => [
+        //                         "id" => "030",
+        //                         "name" => "ธนาคารออมสิน",
+        //                         "short" => "gsb",
+        //                         "swiftCode" => "gsbathbk"
+        //                     ],
+        //                     "name" => null,
+        //                     "account" => "0201xxxx9743"
+        //                 ],
+        //                 "receiver" => [
+        //                     "bank" => [
+        //                         "id" => "014",
+        //                         "name" => "ธนาคารไทยพาณิชย์",
+        //                         "short" => "scb",
+        //                         "swiftCode" => "sicothbk"
+        //                     ],
+        //                     "name" => "นางสาว ฐิติภัทร ศรีสุข",
+        //                     "account" => "09xxxx3402"
+        //                 ],
+        //                 "ref1" => "<nil>",
+        //                 "ref2" => "<nil>",
+        //                 "ref3" => "<nil>"
+        //             ]
+        //         ]
+        //     ],
+        //     [
+        //         "status" => 200,
+        //         "message" => [
+        //             "data" => [
+        //                 "type" => 1,
+        //                 "transRef" => "2022122989521826",
+        //                 "date" => "2022-12-29T12:59:29+07:00",
+        //                 "date_human" => "29 ธ.ค. 2022, 12:59",
+        //                 "amount" => 450,
+        //                 "sender" => [
+        //                     "bank" => [
+        //                         "id" => "006",
+        //                         "name" => "ธนาคารกรุงไทย",
+        //                         "short" => "ktb",
+        //                         "swiftCode" => "krththbk"
+        //                     ],
+        //                     "name" => "AREE NONTHICHUN",
+        //                     "account" => "XXX-X-XX971-0"
+        //                 ],
+        //                 "receiver" => [
+        //                     "bank" => [
+        //                         "id" => "014",
+        //                         "name" => "ธนาคารไทยพาณิชย์",
+        //                         "short" => "scb",
+        //                         "swiftCode" => "sicothbk"
+        //                     ],
+        //                     "name" => "นางสาว ฐิติภัทร ศรีสุข",
+        //                     "account" => "XXXXXX3402"
+        //                 ],
+        //                 "ref1" => "<nil>",
+        //                 "ref2" => "<nil>",
+        //                 "ref3" => "<nil>"
+        //             ]
+        //         ]
+        //     ],
+        //     [
+        //         "status" => 200,
+        //         "message" => [
+        //             "data" => [
+        //                 "type" => 1,
+        //                 "transRef" => "202212291101008134",
+        //                 "date" => "2022-12-29T11:19:00+07:00",
+        //                 "date_human" => "29 ธ.ค. 2022, 11:19",
+        //                 "amount" => 480,
+        //                 "sender" => [
+        //                     "bank" => [
+        //                         "id" => "011",
+        //                         "name" => "ธนาคารทหารไทยธนชาต",
+        //                         "short" => "ttb",
+        //                         "swiftCode" => "tmbkthbk"
+        //                     ],
+        //                     "name" => "นาย ชนินทร์ ผูกศิริ",
+        //                     "account" => "xxx-x-04588-x"
+        //                 ],
+        //                 "receiver" => [
+        //                     "bank" => [
+        //                         "id" => "014",
+        //                         "name" => "ธนาคารไทยพาณิชย์",
+        //                         "short" => "scb",
+        //                         "swiftCode" => "sicothbk"
+        //                     ],
+        //                     "name" => "นางสาว ฐิติภัทร ศรีสุข",
+        //                     "account" => "4191081549"
+        //                 ],
+        //                 "ref1" => "",
+        //                 "ref2" => "",
+        //                 "ref3" => ""
+        //             ]
+        //         ]
+        //     ],
+        //     [
+        //         "status" => 200,
+        //         "message" => [
+        //             "data" => [
+        //                 "type" => 1,
+        //                 "transRef" => "012363085932BPP03256",
+        //                 "date" => "2022-12-29T08:59:32+07:00",
+        //                 "date_human" => "29 ธ.ค. 2022, 08:59",
+        //                 "amount" => 480,
+        //                 "sender" => [
+        //                     "bank" => [
+        //                         "id" => "004",
+        //                         "name" => "ธนาคารกสิกรไทย",
+        //                         "short" => "kbank",
+        //                         "swiftCode" => "kasithbk"
+        //                     ],
+        //                     "name" => "MS. KANYANAT T",
+        //                     "account" => "xxx-x-x2515-x"
+        //                 ],
+        //                 "receiver" => [
+        //                     "bank" => [
+        //                         "id" => "014",
+        //                         "name" => "ธนาคารไทยพาณิชย์",
+        //                         "short" => "scb",
+        //                         "swiftCode" => "sicothbk"
+        //                     ],
+        //                     "name" => "นางสาว ฐิติภัทร ศรีสุข",
+        //                     "account" => "xxx-xxx-3402"
+        //                 ],
+        //                 "ref1" => "<nil>",
+        //                 "ref2" => "<nil>",
+        //                 "ref3" => "<nil>"
+        //             ]
+        //         ]
+        //     ],
+        //     [
+        //         "status" => 200,
+        //         "message" => [
+        //             "data" => [
+        //                 "type" => 1,
+        //                 "transRef" => "2022122815523223004759308",
+        //                 "date" => "2022-12-28T15:52:00+07:00",
+        //                 "date_human" => "28 ธ.ค. 2022, 15:52",
+        //                 "amount" => 1050,
+        //                 "sender" => [
+        //                     "bank" => [
+        //                         "id" => "002",
+        //                         "name" => "ธนาคารกรุงเทพ",
+        //                         "short" => "bbl",
+        //                         "swiftCode" => "bkkbthbk"
+        //                     ],
+        //                     "name" => null,
+        //                     "account" => "973-0-xxx218"
+        //                 ],
+        //                 "receiver" => [
+        //                     "bank" => [
+        //                         "id" => "014",
+        //                         "name" => "ธนาคารไทยพาณิชย์",
+        //                         "short" => "scb",
+        //                         "swiftCode" => "sicothbk"
+        //                     ],
+        //                     "name" => "นางสาว ฐิติภัทร ศรีสุข",
+        //                     "account" => "091-xxx-3402"
+        //                 ],
+        //                 "ref1" => "",
+        //                 "ref2" => "",
+        //                 "ref3" => null
+        //             ]
+        //         ]
+        //     ],
+
+        //     [
+        //         "status" => 200,
+        //         "message" => [
+        //             "data" => [
+        //                 "type" => 1,
+        //                 "transRef" => "012358184534APP04231",
+        //                 "date" => "2022-12-24T18:45:34+07:00",
+        //                 "date_human" => "24 ธ.ค. 2022, 18:45",
+        //                 "amount" => 80,
+        //                 "sender" => [
+        //                     "bank" => [
+        //                         "id" => "004",
+        //                         "name" => "ธนาคารกสิกรไทย",
+        //                         "short" => "kbank",
+        //                         "swiftCode" => "kasithbk"
+        //                     ],
+        //                     "name" => "Mr. Charun G",
+        //                     "account" => "xxx-x-x7814-x"
+        //                 ],
+        //                 "receiver" => [
+        //                     "bank" => [
+        //                         "id" => "073",
+        //                         "name" => "ธนาคารแลนด์ แอนด์ เฮ้าส์",
+        //                         "short" => "lhfg",
+        //                         "swiftCode" => "lahrthb1"
+        //                     ],
+        //                     "name" => "นาง เพชรรัตน์ จันทร์คำแก้ว",
+        //                     "account" => "xxx-xxx-9592"
+        //                 ],
+        //                 "ref1" => "<nil>",
+        //                 "ref2" => "<nil>",
+        //                 "ref3" => "<nil>"
+        //             ]
+        //         ]
+        //     ]
+
+        // ];
+
+        // foreach ($slips as $key => $slip) {
+        //     if ($slip["status"] != "200") {
+        //         if ($slip["message"] == "not_enough_credit") {
+        //             Linenotify::send("Check_Slip ==> เครดิตไม่เพียงพอ");
+        //         }
+
+        //         return [
+        //             "verify" => false,
+        //             "message" => "สถานะไม่ถูกต้อง",
+        //         ];
+        //     }
+
+        //     $transRef = $slip["message"]["data"]["transRef"];
+        //     $date = \Carbon\Carbon::parse($slip["message"]["data"]["date"])->format("Y-m-d H:i:s");
+        //     $amount = $slip["message"]["data"]["amount"];
+        //     $receiver = $slip["message"]["data"]["receiver"];
+        //     similar_text("นางสาว ฐิติภัทร ศรีสุข", $receiver["name"], $percent_name);
+        //     echo $receiver["name"] . "  <=========>  " . $percent_name . " <br>";
+        //     if ($percent_name >= 100) {
+
+        //         // return [
+        //         //     "verify" => true,
+        //         //     "message" => "ตรวจสอบผ่าน",
+        //         //     "transRef" => $transRef,
+        //         //     "amount" => $amount,
+        //         //     "date" => $date,
+        //         //     "data" => $slip["message"]["data"]
+        //         // ];
+        //     } else if ($percent_name <= 80) {
+        //         // return [
+        //         //     "verify" => false,
+        //         //     "message" => "ไม่ผ่านการตรวจสอบ",
+        //         //     "transRef" => $transRef,
+        //         //     "amount" => $amount,
+        //         //     "date" => $date,
+        //         //     "data" => $slip["message"]["data"]
+        //         // ];
+        //     } else {
+
+        //         // return [
+        //         //     "verify" => false,
+        //         //     "message" => "ไม่ผ่านการตรวจสอบ",
+        //         //     "transRef" => $transRef,
+        //         //     "amount" => $amount,
+        //         //     "date" => $date,
+        //         //     "data" => $slip["message"]["data"]
+        //         // ];
+        //     }
+        // }
+
+
+
+        return "ไม่มี";
+
+
+        // $slips = [
+        //     [
+        //         "status" => 200,
+        //         "message" => [
+        //             "data" => [
+        //                 "type" => 1,
+        //                 "transRef" => "KMA221228145115Aiq49Z1Ch3",
+        //                 "date" => "2022-12-28T14:51:00+07:00",
+        //                 "date_human" => "28 ธ.ค. 2022, 14:51",
+        //                 "amount" => 200,
+        //                 "sender" => [
+        //                     "bank" => [
+        //                         "id" => "025",
+        //                         "name" => "ธนาคารกรุงศรีอยุธยา",
+        //                         "short" => "bay",
+        //                         "swiftCode" => "ayudthbk"
+        //                     ],
+        //                     "name" => "JULALAK KUMPI",
+        //                     "account" => "XXX-1-62865-X"
+        //                 ],
+        //                 "receiver" => [
+        //                     "bank" => null,
+        //                     "name" => "นางสาว ฐิติภัทร ศรีสุข",
+        //                     "account" => "0918853402"
+        //                 ],
+        //                 "ref1" => "4191081549",
+        //                 "ref2" => "TITIPAT SRISU",
+        //                 "ref3" => "นางสาว ฐิติภัทร ศรีส"
+        //             ]
+        //         ]
+        //     ], [
+        //         "status" => 200,
+        //         "message" => [
+        //             "data" => [
+        //                 "type" => 1,
+        //                 "transRef" => "202212294u5ezV3DBNBeVD1wX",
+        //                 "date" => "2022-12-29T09:28:00+07:00",
+        //                 "date_human" => "29 ธ.ค. 2022, 09:28",
+        //                 "amount" => 530,
+        //                 "sender" => [
+        //                     "bank" => [
+        //                         "id" => "014",
+        //                         "name" => "ธนาคารไทยพาณิชย์",
+        //                         "short" => "scb",
+        //                         "swiftCode" => "sicothbk"
+        //                     ],
+        //                     "name" => "นางสาว พิชญา สุวรรณศิลป์",
+        //                     "account" => "xxxx-xx210-5"
+        //                 ],
+        //                 "receiver" => [
+        //                     "bank" => [
+        //                         "id" => "014",
+        //                         "name" => "ธนาคารไทยพาณิชย์",
+        //                         "short" => "scb",
+        //                         "swiftCode" => "sicothbk"
+        //                     ],
+        //                     "name" => "นางสาว ฐิติภัทร ศรีสุข",
+        //                     "account" => "xxxx-xx154-9"
+        //                 ],
+        //                 "ref1" => null,
+        //                 "ref2" => null,
+        //                 "ref3" => null
+        //             ]
+        //         ]
+        //     ], [
+        //         "status" => 200,
+        //         "message" => [
+        //             "data" => [
+        //                 "type" => 1,
+        //                 "transRef" => "236313167750I000002B9790",
+        //                 "date" => "2022-12-29T13:01:13+07:00",
+        //                 "date_human" => "29 ธ.ค. 2022, 13:01",
+        //                 "amount" => 230,
+        //                 "sender" => [
+        //                     "bank" => [
+        //                         "id" => "030",
+        //                         "name" => "ธนาคารออมสิน",
+        //                         "short" => "gsb",
+        //                         "swiftCode" => "gsbathbk"
+        //                     ],
+        //                     "name" => null,
+        //                     "account" => "0201xxxx9743"
+        //                 ],
+        //                 "receiver" => [
+        //                     "bank" => [
+        //                         "id" => "014",
+        //                         "name" => "ธนาคารไทยพาณิชย์",
+        //                         "short" => "scb",
+        //                         "swiftCode" => "sicothbk"
+        //                     ],
+        //                     "name" => "นางสาว ฐิติภัทร ศรีสุข",
+        //                     "account" => "09xxxx3402"
+        //                 ],
+        //                 "ref1" => "<nil>",
+        //                 "ref2" => "<nil>",
+        //                 "ref3" => "<nil>"
+        //             ]
+        //         ]
+        //     ],
+        //     [
+        //         "status" => 200,
+        //         "message" => [
+        //             "data" => [
+        //                 "type" => 1,
+        //                 "transRef" => "2022122989521826",
+        //                 "date" => "2022-12-29T12:59:29+07:00",
+        //                 "date_human" => "29 ธ.ค. 2022, 12:59",
+        //                 "amount" => 450,
+        //                 "sender" => [
+        //                     "bank" => [
+        //                         "id" => "006",
+        //                         "name" => "ธนาคารกรุงไทย",
+        //                         "short" => "ktb",
+        //                         "swiftCode" => "krththbk"
+        //                     ],
+        //                     "name" => "AREE NONTHICHUN",
+        //                     "account" => "XXX-X-XX971-0"
+        //                 ],
+        //                 "receiver" => [
+        //                     "bank" => [
+        //                         "id" => "014",
+        //                         "name" => "ธนาคารไทยพาณิชย์",
+        //                         "short" => "scb",
+        //                         "swiftCode" => "sicothbk"
+        //                     ],
+        //                     "name" => "นางสาว ฐิติภัทร ศรีสุข",
+        //                     "account" => "XXXXXX3402"
+        //                 ],
+        //                 "ref1" => "<nil>",
+        //                 "ref2" => "<nil>",
+        //                 "ref3" => "<nil>"
+        //             ]
+        //         ]
+        //     ],
+        //     [
+        //         "status" => 200,
+        //         "message" => [
+        //             "data" => [
+        //                 "type" => 1,
+        //                 "transRef" => "202212291101008134",
+        //                 "date" => "2022-12-29T11:19:00+07:00",
+        //                 "date_human" => "29 ธ.ค. 2022, 11:19",
+        //                 "amount" => 480,
+        //                 "sender" => [
+        //                     "bank" => [
+        //                         "id" => "011",
+        //                         "name" => "ธนาคารทหารไทยธนชาต",
+        //                         "short" => "ttb",
+        //                         "swiftCode" => "tmbkthbk"
+        //                     ],
+        //                     "name" => "นาย ชนินทร์ ผูกศิริ",
+        //                     "account" => "xxx-x-04588-x"
+        //                 ],
+        //                 "receiver" => [
+        //                     "bank" => [
+        //                         "id" => "014",
+        //                         "name" => "ธนาคารไทยพาณิชย์",
+        //                         "short" => "scb",
+        //                         "swiftCode" => "sicothbk"
+        //                     ],
+        //                     "name" => "นางสาว ฐิติภัทร ศรีสุข",
+        //                     "account" => "4191081549"
+        //                 ],
+        //                 "ref1" => "",
+        //                 "ref2" => "",
+        //                 "ref3" => ""
+        //             ]
+        //         ]
+        //     ],
+        //     [
+        //         "status" => 200,
+        //         "message" => [
+        //             "data" => [
+        //                 "type" => 1,
+        //                 "transRef" => "012363085932BPP03256",
+        //                 "date" => "2022-12-29T08:59:32+07:00",
+        //                 "date_human" => "29 ธ.ค. 2022, 08:59",
+        //                 "amount" => 480,
+        //                 "sender" => [
+        //                     "bank" => [
+        //                         "id" => "004",
+        //                         "name" => "ธนาคารกสิกรไทย",
+        //                         "short" => "kbank",
+        //                         "swiftCode" => "kasithbk"
+        //                     ],
+        //                     "name" => "MS. KANYANAT T",
+        //                     "account" => "xxx-x-x2515-x"
+        //                 ],
+        //                 "receiver" => [
+        //                     "bank" => [
+        //                         "id" => "014",
+        //                         "name" => "ธนาคารไทยพาณิชย์",
+        //                         "short" => "scb",
+        //                         "swiftCode" => "sicothbk"
+        //                     ],
+        //                     "name" => "นางสาว ฐิติภัทร ศรีสุข",
+        //                     "account" => "xxx-xxx-3402"
+        //                 ],
+        //                 "ref1" => "<nil>",
+        //                 "ref2" => "<nil>",
+        //                 "ref3" => "<nil>"
+        //             ]
+        //         ]
+        //     ],
+        //     [
+        //         "status" => 200,
+        //         "message" => [
+        //             "data" => [
+        //                 "type" => 1,
+        //                 "transRef" => "2022122815523223004759308",
+        //                 "date" => "2022-12-28T15:52:00+07:00",
+        //                 "date_human" => "28 ธ.ค. 2022, 15:52",
+        //                 "amount" => 1050,
+        //                 "sender" => [
+        //                     "bank" => [
+        //                         "id" => "002",
+        //                         "name" => "ธนาคารกรุงเทพ",
+        //                         "short" => "bbl",
+        //                         "swiftCode" => "bkkbthbk"
+        //                     ],
+        //                     "name" => null,
+        //                     "account" => "973-0-xxx218"
+        //                 ],
+        //                 "receiver" => [
+        //                     "bank" => [
+        //                         "id" => "014",
+        //                         "name" => "ธนาคารไทยพาณิชย์",
+        //                         "short" => "scb",
+        //                         "swiftCode" => "sicothbk"
+        //                     ],
+        //                     "name" => "นางสาว ฐิติภัทร ศรีสุข",
+        //                     "account" => "091-xxx-3402"
+        //                 ],
+        //                 "ref1" => "",
+        //                 "ref2" => "",
+        //                 "ref3" => null
+        //             ]
+        //         ]
+        //     ]
+        // ];
+
+
+        // foreach ($slips as $key => $slip) {
+        //     // ตรวจสอบสถานะ = 200
+        //     if ($slip["status"] != "200") {
+        //         return "สถานไม่ถูกต้อง";
+        //     }
+
+        //     // ตรวจสอบเป็นพร้อมเพย์หรือไม่
+        //     $transRef = $slip["message"]["data"]["transRef"];
+        //     $date = \Carbon\Carbon::parse($slip["message"]["data"]["date"])->format("Y-m-d H:i:s");
+        //     $amount = $slip["message"]["data"]["amount"];
+        //     // $sender = $slip["message"]["data"]["sender"];
+        //     $receiver = $slip["message"]["data"]["receiver"];
+        //     // $receiver_name = $receiver["name"];
+        //     // $receiver_account = $receiver["account"];
+        //     // $ref1 = $slip["message"]["data"]["ref1"];
+        //     // $ref2 = $slip["message"]["data"]["ref2"];
+        //     // $ref3 = $slip["message"]["data"]["ref3"];
+        //     similar_text("นางสาว ฐิติภัทร ศรีสุข", $receiver["name"], $percent_name);
+
+        //     if ($percent_name == 100) {
+        //         return [
+        //             "verify" => true,
+        //             "transRef" => $transRef,
+        //             "amount" => $amount,
+        //             "date" => $date
+        //         ];
+        //     } else if ($percent_name <= 80) {
+        //         Linenotify::send("");
+        //         return [
+        //             "verify" => false,
+        //             "transRef" => $transRef,
+        //             "amount" => $amount,
+        //             "date" => $date
+        //         ];
+        //     } else {
+        //         Linenotify::send("");
+        //         return [
+        //             "verify" => false,
+        //             "transRef" => $transRef,
+        //             "amount" => $amount,
+        //             "date" => $date
+        //         ];
+        //     }
+
+
+        // echo $receiver_name . "  <======== $name% =========>  NO. " . ($key + 1) . " ========>  " . $sender["bank"]["name"] . "<br><br><br>";
+
+
+        // return $percent_ref3;
+        // เช็คพร้อมเพย์
+        // if (is_null($receiver["bank"])) {
+        //     // "receiver" => [
+        //     //     "bank" => null,
+        //     //     "name" => "นางสาว ฐิติภัทร ศรีสุข",
+        //     //     "account" => "0918853402"
+        //     // ],
+        //     similar_text("นางสาว ฐิติภัทร ศรีสุข", $receiver["name"], $name);
+        //     similar_text("0918853402", $receiver["account"], $account);
+        //     similar_text("4191081549", $ref1, $ref1);
+        //     similar_text("TITIPAT SRISUK", $ref2, $ref2);
+        //     similar_text("นางสาว ฐิติภัทร ศรีสุข", $ref3, $ref3);
+        //     $avg = ($name + $account + $ref1 + $ref2 + $ref3) / 5;
+        //     echo $avg . "% =========>  NO. " . ($key + 1) . " <br><br>";
+        //     // if (
+        //     //     $ref1 == 100 &&
+        //     //     $ref2 >= 90 &&
+        //     //     $ref3 >= 90 &&
+        //     //     $name >= 90 &&
+        //     //     $account == 100 &&
+        //     //     $avg >= 94
+        //     //     // $ref1 == "4191081549" &&
+        //     //     // str_starts_with($ref2, "TITIPAT SR") &&
+        //     //     // str_starts_with($ref3, "นางสาว ฐิติภัทร ศรีสุข") &&
+        //     //     // $receiver["name"] == "นางสาว ฐิติภัทร ศรีสุข" &&
+        //     //     // $receiver["account"] == "0918853402"
+        //     // ) {
+        //     //     return [
+        //     //         "verify" => true,
+        //     //         "transRef" => $transRef,
+        //     //         "amount" => $amount,
+        //     //         "channel" => "promptpay",
+        //     //         "date" => $date
+        //     //     ];
+        //     // } else {
+        //     //     return [
+        //     //         "verify" => false,
+        //     //         "transRef" => $transRef,
+        //     //         "amount" => $amount,
+        //     //         "channel" => "promptpay"
+        //     //     ];
+        //     // }
+        // }
+
+        // if (isset($receiver["bank"])) {
+        //     // "receiver" => [
+        //     //     "bank" => [
+        //     //         "id" => "014",
+        //     //         "name" => "ธนาคารไทยพาณิชย์",
+        //     //         "short" => "scb",
+        //     //         "swiftCode" => "sicothbk"
+        //     //     ],
+        //     //     "name" => "นางสาว ฐิติภัทร ศรีสุข",
+        //     //     "account" => "xxxx-xx154-9"
+        //     // ],
+
+        //     similar_text("sicothbk", $receiver["bank"]["swiftCode"], $swiftCode);
+        //     similar_text("นางสาว ฐิติภัทร ศรีสุข", $receiver["name"], $name);
+        //     similar_text("xxxx-xx154-9", $receiver["account"], $account);
+        //     $avg = ($swiftCode + $name + $account) / 3;
+        //     echo $avg . "% =========>  NO. " . ($key + 1) . " <br><br>";
+        //     // if (
+        //     //     $swiftCode == 100 &&
+        //     //     $name >= 90 &&
+        //     //     $account == 100 &&
+        //     //     $avg >= 95
+        //     //     // $receiver["bank"]["swiftCode"] == "sicothbk" &&
+        //     //     // $receiver["name"] == "นางสาว ฐิติภัทร ศรีสุข" &&
+        //     //     // $receiver["account"] == "xxxx-xx154-9"
+
+        //     // ) {
+        //     //     return [
+        //     //         "verify" => true,
+        //     //         "transRef" => $transRef,
+        //     //         "amount" => $amount,
+        //     //         "channel" => "bank_account",
+        //     //         "date" => $date
+        //     //     ];
+        //     // } else {
+        //     //     return [
+        //     //         "verify" => false,
+        //     //         "transRef" => $transRef,
+        //     //         "amount" => $amount,
+        //     //         "channel" => "bank_account"
+        //     //     ];
+        //     // }
+        // }
+        // }
     }
 }

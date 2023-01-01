@@ -536,10 +536,10 @@ class AOrderController extends Controller
             //     "keyword" => "genarate_qrcode_promtpay_to_facebook",
             //     "order_id" => $order->id,
             // ];
-            Facebook::send_reply_image($order, "https://lh3.googleusercontent.com/d/1MhRh4V6olX8pAtWU5kGPlLLjV9HOatCv");
+            // Facebook::send_reply_image($order, "https://lh3.googleusercontent.com/d/1MhRh4V6olX8pAtWU5kGPlLLjV9HOatCv");
             //1MhRh4V6olX8pAtWU5kGPlLLjV9HOatCv
 
-            AOrder::summaryOfOrderDetails($order->id);
+            AOrder::summaryOfOrderDetails($order->id, true);
 
             $payload_send_postback = [
                 [
@@ -547,7 +547,7 @@ class AOrderController extends Controller
                     "subtitle" => "โปรดชำระเงินโดยกดปุ่ม ชำระเงิน",
                     "buttons" => [
                         [
-                            "title" => "ชำระเงิน",
+                            "title" => "รายละเอียด",
                             "url" => $order->link_for_customer,
                             "type" => "web_url"
                         ],
@@ -583,43 +583,43 @@ class AOrderController extends Controller
             // ],
 
 
-            $ksher = KsherChannelPayment::where("payment_code", "promptpayQR")
-                ->where("status_use", 1)
-                ->where("maximum", ">=", $order->sumTASC())
-                ->WhereDoesntHave("ksherDayOff", function ($query) {
-                    return $query->where("day_off", \Carbon\Carbon::now()->format('Y-m-d'));
-                })->first();
+            // $ksher = KsherChannelPayment::where("payment_code", "promptpayQR")
+            //     ->where("status_use", 1)
+            //     ->where("maximum", ">=", $order->sumTASC())
+            //     ->WhereDoesntHave("ksherDayOff", function ($query) {
+            //         return $query->where("day_off", \Carbon\Carbon::now()->format('Y-m-d'));
+            //     })->first();
 
-            if (
-                $ksher &&
-                // $order->status < 3 &&
-                $order->payment_deadline >= now()->format('Y-m-d H:i:s') &&
-                $order->sumMoneyCustomer() == 0
-            ) {
-                //Facebook::send_reply_image($order, "https://lh3.googleusercontent.com/d/1qJvIUnRVopU7YLDKNQh6KCQZN8lss5uL");
-                $create_qr_code_promptpay_send_postback = [
-                    [
-                        "title" => "สแกนจ่าย QRพร้อมเพย์ สะดวก รวดเร็ว ไม่ต้องส่งสลิป",
-                        "subtitle" => "ค่าธรรมเนียม +$ksher->fee_value บาท",
-                        "buttons" => [
-                            [
-                                "title" => "สแกนจ่าย QRพร้อมเพย์",
-                                "payload" => json_encode(
-                                    [
-                                        "keyword" => "genarate_qrcode_promtpay_to_facebook",
-                                        "order_id" => $order->id,
-                                    ]
-                                ),
-                                "type" => "postback"
-                            ],
-                        ]
-                    ]
-                ];
-                Facebook::send_postback(
-                    $order,
-                    $create_qr_code_promptpay_send_postback
-                );
-            }
+            // if (
+            //     $ksher &&
+            //     // $order->status < 3 &&
+            //     $order->payment_deadline >= now()->format('Y-m-d H:i:s') &&
+            //     $order->sumMoneyCustomer() == 0
+            // ) {
+            //     //Facebook::send_reply_image($order, "https://lh3.googleusercontent.com/d/1qJvIUnRVopU7YLDKNQh6KCQZN8lss5uL");
+            //     $create_qr_code_promptpay_send_postback = [
+            //         [
+            //             "title" => "สแกนจ่าย QRพร้อมเพย์ สะดวก รวดเร็ว ไม่ต้องส่งสลิป",
+            //             "subtitle" => "ค่าธรรมเนียม +$ksher->fee_value บาท",
+            //             "buttons" => [
+            //                 [
+            //                     "title" => "สแกนจ่าย QRพร้อมเพย์",
+            //                     "payload" => json_encode(
+            //                         [
+            //                             "keyword" => "genarate_qrcode_promtpay_to_facebook",
+            //                             "order_id" => $order->id,
+            //                         ]
+            //                     ),
+            //                     "type" => "postback"
+            //                 ],
+            //             ]
+            //         ]
+            //     ];
+            //     Facebook::send_postback(
+            //         $order,
+            //         $create_qr_code_promptpay_send_postback
+            //     );
+            // }
 
             Line::flex_alert_payment($order);
 
@@ -868,11 +868,10 @@ class AOrderController extends Controller
             ], 201);
         }
 
-        $order->where("status", 1)
-            ->update([
-                "status" =>
-                $request->option["status_id"]
-            ]);
+        $order->update([
+            "status" =>
+            $request->option["status_id"]
+        ]);
 
         AlertMessages::smsCustomerNoPayment($order, $request->option["waiting_period"]);
         AlertMessages::lineCustomerNoPayment($order);
@@ -975,6 +974,7 @@ class AOrderController extends Controller
             //     return $query->where("auth_order", $request->uuid);
             // })->findOrFail($request->order_detail_id);
             whereHas("posOrders")->with("posOrders.posGoods")
+            ->with("aStatus:id,class,status")
 
             // ->whereHas("aOrder", function ($q) use ($request) {
             //     $q->where("date_get", $request->get("date_get"));
@@ -1020,6 +1020,7 @@ class AOrderController extends Controller
             //     return $query->where("auth_order", $request->uuid);
             // })->findOrFail($request->order_detail_id);
             whereHas("posOrders")->with("posOrders.posGoods")
+            ->with("aStatus:id,class,status")
 
             // ->whereHas("aOrder", function ($q) use ($request) {
             //     $q->where("date_get", $request->get("date_get"));

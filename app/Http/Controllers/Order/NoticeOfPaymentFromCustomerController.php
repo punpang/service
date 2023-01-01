@@ -258,4 +258,30 @@ class NoticeOfPaymentFromCustomerController extends Controller
             ], 200);
         }
     }
+
+    public function reqrcodetext()
+    {
+        $notices = NoticeOfPaymentFromCustomer::where("status", "success")
+            ->orderBy("updated_at", "ASC")
+            ->take(10)
+            ->get();
+
+        foreach ($notices as $notice) {
+            if (str_starts_with($notice->src_name, "http")) {
+                $result =  Helper::qrCodeReaderUrl_v2($notice->src_name);
+            } else {
+                $url = "https://lh3.googleusercontent.com/d/$notice->src_name";
+                $result =  Helper::qrCodeReaderUrl_v2($url);
+            }
+            if($result["has_qrcode"]){
+                $notice->update([
+                    "ref" => $result["text"]
+                ]);
+                echo "$notice->id || $notice->ref || SUCCESS <br><br>";
+            }else{
+                echo "<b style='color:red'>$notice->id || $notice->src_name || Failed </b> <br><br>";
+            }
+
+        }
+    }
 }

@@ -61,6 +61,6 @@ class CreateDayOffsKsher extends Command
                 }
             }
         }
-        Linenotify::send("เพิ่มวันหยุดรับชำระช่องทาง Ksher แล้ว");
+        // Linenotify::send("เพิ่มวันหยุดรับชำระช่องทาง Ksher แล้ว");
     }
 }

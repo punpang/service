@@ -24,8 +24,8 @@
                             </td>
                             <td class="text-right">
                                 <strong
-                                    >{{ order.date_get }}
-                                    {{ order.time_get }}</strong
+                                    >{{ order.date_get_th }}
+                                    {{ order.time_get_format }}</strong
                                 >
                             </td>
                         </tr>
@@ -74,6 +74,11 @@
                                         class="d-flex align-center"
                                         height="50"
                                         @click="toggle"
+                                        :disabled="
+                                            checkTimeDisabled(
+                                                option.time_minutes
+                                            )
+                                        "
                                     >
                                         <v-scroll-y-transition>
                                             <div
@@ -169,14 +174,43 @@ export default {
     data() {
         return {
             timeOptions: [
-                { id: 1, text: "15 นาที", status_use: 1 },
-                { id: 2, text: "30 นาที", status_use: 1 },
-                { id: 3, text: "1 ชั่วโมง", status_use: 1 },
-                { id: 4, text: "3 ชั่วโมง", status_use: 1 },
-                { id: 5, text: "6 ชั่วโมง", status_use: 1 },
-                { id: 7, text: "12 ชั่วโมง", status_use: 1 },
-                { id: 8, text: "24 ชั่วโมง", status_use: 1 },
-                { id: 6, text: "ก่อนวันรับสินค้า", status_use: 1 },
+                { id: 1, text: "15 นาที", time_minutes: 15, status_use: 1 },
+                { id: 2, text: "30 นาที", time_minutes: 30, status_use: 1 },
+                { id: 3, text: "1 ชั่วโมง", time_minutes: 60, status_use: 1 },
+                {
+                    id: 4,
+                    text: "2 ชั่วโมง",
+                    time_minutes: 120,
+                    status_use: 1,
+                },
+                {
+                    id: 5,
+                    text: "3 ชั่วโมง",
+                    time_minutes: 180,
+                    status_use: 1,
+                },
+                {
+                    id: 6,
+                    text: "6 ชั่วโมง",
+                    time_minutes: 360,
+                    status_use: 1,
+                },
+                {
+                    id: 7,
+                    text: "12 ชั่วโมง",
+                    time_minutes: 720,
+                    status_use: 1,
+                },
+                { id: 8, text: "1 วัน", time_minutes: 1440, status_use: 1 },
+                { id: 9, text: "2 วัน", time_minutes: 2880, status_use: 1 },
+                { id: 10, text: "3 วัน", time_minutes: 4320, status_use: 1 },
+                { id: 11, text: "4 วัน", time_minutes: 5760, status_use: 1 },
+                {
+                    id: 12,
+                    text: "ก่อนวันรับสินค้า",
+                    time_minutes: 0,
+                    status_use: 1,
+                },
             ],
             dateTimeForPay: "",
             status_full_payment: 0,
@@ -203,13 +237,16 @@ export default {
                 this.$toast.error("แจ้งเตือนชำระเงินไม่สำเร็จ");
             }
 
-            // this.dateTimeForPay = "";
-            // this.status_full_payment = 0;
-            // this.alertSMSToCustomer = 1;
+            this.dateTimeForPay = "";
+            this.status_full_payment = 0;
+            this.alertSMSToCustomer = 1;
 
             loader.hide();
         },
         exit() {
+            this.dateTimeForPay = "";
+            this.status_full_payment = 0;
+            this.alertSMSToCustomer = 1;
             this.$emit("emitAlertPayment");
         },
         detailText() {
@@ -246,10 +283,65 @@ export default {
             //   📌 หมายเลขคำสั่งซื้อ #${this.order.id}\n\n📌ข้อมูลลูกค้า\nคุณ ${this.order.customer.name}\nหมายเลขโทรศัพท์ ${this.order.customer.tel}\n\n📌 วัน-เวลานัดรับสินค้า\n${this.order.date_get} ${this.order.time_get}\n\n📌 รายละเอียดรายการสั่งซื้อ\n${detail}${other}${message}\n\n📌 ยอดรวมทั้งหมด ${sumUp} บาท\n\n📌 โปรดชำระเงินภายใน\n${this.dateTimeForPay}\n\n📌 วิธีชำระเงิน\nกดที่ลิงก์เพื่อตรวจสอบรายละเอียดและชำระเงินด้านในลิงก์ http://192.168.1.103:8000/o/${this.order.auth_order}\n\n❗️❗️ชำระเงินผ่านระบบหน้าเว็บเท่านั้น❗️❗️
             //   `;
         },
-        clickTimeOption(v) {
+        checkTimeDisabled(v) {
+            // return false;
             const datetime = new Date();
-            let oDateTime = new Date(this.formatDateTimeGetForAlert());
+            const datetimeV2 = new Date();
+            const oDateTime = new Date(this.formatDateTimeGetForAlert());
 
+            if (v == 0) {
+                oDateTime.setDate(oDateTime.getDate() - 1);
+                if (datetime >= oDateTime) {
+                    return true;
+                }
+                return false;
+            }
+
+            datetime.setMinutes(datetime.getMinutes() + v);
+
+            if (
+                datetime.toLocaleDateString() == oDateTime.toLocaleDateString()
+            ) {
+                if (
+                    datetimeV2.toLocaleDateString() ==
+                    oDateTime.toLocaleDateString()
+                ) {
+                    return false;
+                }
+                return true;
+            }
+
+            if (datetime > oDateTime) {
+                return true;
+            }
+            return false;
+        },
+
+        clickTimeOption(v) {
+            // { id: 1, text: "15 นาที", status_use: 1 },
+            //     { id: 2, text: "30 นาที", status_use: 1 },
+            //     { id: 3, text: "1 ชั่วโมง", status_use: 1 },
+            //     { id: 4, text: "2 ชั่วโมง", status_use: 1 },
+            //     { id: 5, text: "3 ชั่วโมง", status_use: 1 },
+            //     { id: 6, text: "6 ชั่วโมง", status_use: 1 },
+            //     { id: 7, text: "12 ชั่วโมง", status_use: 1 },
+            //     { id: 8, text: "1 วัน", status_use: 1 },
+            //     { id: 9, text: "2 วัน", status_use: 1 },
+            //     { id: 10, text: "3 วัน", status_use: 1 },
+            //     { id: 11, text: "ก่อนวันรับสินค้า", status_use: 1 },
+
+            if (v.time_minutes == 0) {
+                let oDateTime = new Date(this.formatDateTimeGetForAlert());
+                oDateTime.setDate(oDateTime.getDate() - 1);
+                oDateTime.setHours(12);
+                oDateTime.setMinutes(0);
+                this.dateTimeForPay = oDateTime.toLocaleString();
+                return;
+            }
+            const datetime = new Date();
+            datetime.setMinutes(datetime.getMinutes() + v.time_minutes);
+            this.dateTimeForPay = datetime.toLocaleString();
+            return;
 
             switch (v.id) {
                 case 1:
@@ -262,10 +354,13 @@ export default {
                     datetime.setMinutes(datetime.getMinutes() + 60);
                     break;
                 case 4:
-                    datetime.setMinutes(datetime.getMinutes() + 180);
+                    datetime.setMinutes(datetime.getMinutes() + 120);
                     break;
                 case 5:
-                    datetime.setMinutes(datetime.getMinutes() + 360);
+                    datetime.setMinutes(datetime.getMinutes() + 180);
+                    break;
+                case 6:
+                    datetime.setMinutes(datetime.getMinutes() + 180);
                     break;
                 case 7:
                     datetime.setMinutes(datetime.getMinutes() + 720);
@@ -273,14 +368,23 @@ export default {
                 case 8:
                     datetime.setMinutes(datetime.getMinutes() + 1440);
                     break;
-                case 6:
+                case 9:
+                    datetime.setMinutes(datetime.getMinutes() + 2880);
+                    break;
+                case 10:
+                    datetime.setMinutes(datetime.getMinutes() + 4320);
+                    break;
+                case 11:
+                    datetime.setMinutes(datetime.getMinutes() + 5760);
+                    break;
+                case 12:
                     oDateTime.setDate(oDateTime.getDate() - 1);
                     oDateTime.setHours(12);
                     oDateTime.setMinutes(0);
                     break;
             }
 
-            if (v.id == 6) {
+            if (v.id == 12) {
                 this.dateTimeForPay = oDateTime.toLocaleString();
             } else {
                 this.dateTimeForPay = datetime.toLocaleString();
@@ -291,12 +395,13 @@ export default {
         },
         formatDateTimeGetForAlert() {
             const d = this.order.date_get;
+            const t = this.order.time_get;
             const [yyyy, mm, dd] = d.split("-");
             // const dd = arr[0];
             // const mm = arr[1];
             // const yyyy = parseInt(arr[2]) - 543;
 
-            return `${yyyy}/${mm}/${dd}`;
+            return `${yyyy}/${mm}/${dd} ${t}`;
         },
         formatDateTimeGet() {
             const d = this.order.date_get;

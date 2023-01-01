@@ -6,6 +6,9 @@ use App\URL;
 use App\Helper;
 // use App\Order\Facebook;
 use App\Linenotify;
+use App\Order\AOrder;
+use App\Order\Setting;
+use App\order\AHistoryPayed;
 use App\Order\AlertMessages;
 use Illuminate\Console\Command;
 use App\Order\NoticeOfPaymentFromCustomer;
@@ -43,90 +46,36 @@ class NoticePaymetByCustomerCommand extends Command
      */
     public function handle()
     {
-        // $ns = NoticeOfPaymentFromCustomer::whereStatus("success")->get();
-        // foreach ($ns as $n) {
-        //     if(strlen($n->ref) >= 30){
-        //         $output_1 = substr($n->ref, 25);
-        //         $ref = substr($output_1, 0, -14);
-        //         $n->update(["ref" => $ref]);
-        //     }
-        // }
-        // return Linenotify::send("finished");
-
-        // AlertMessages::LineAlertGeneral("NoticePaymetByCustomerCommand");
-        // $ns = NoticeOfPaymentFromCustomer::whereStatus("success")->orderBy("updated_at", "asc")->take(5)->get();
-        // if ($ns->count() > 0) {
-
-        //     foreach ($ns as $notice) {
-        //         if ($notice->ref != null) {
-        //             $curl = curl_init();
-
-        //             curl_setopt_array($curl, array(
-        //                 CURLOPT_URL => 'https://api.qrserver.com/v1/read-qr-code/?fileurl=https://lh3.googleusercontent.com/d/' . $notice->src_name . '=w1000-h1000',
-        //                 CURLOPT_RETURNTRANSFER => true,
-        //                 CURLOPT_ENCODING => '',
-        //                 CURLOPT_MAXREDIRS => 10,
-        //                 CURLOPT_TIMEOUT => 10,
-        //                 CURLOPT_FOLLOWLOCATION => true,
-        //                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        //                 CURLOPT_CUSTOMREQUEST => 'GET',
-        //             ));
-
-        //             $response = curl_exec($curl);
-
-        //             curl_close($curl);
-
-
-        //             $json = json_decode($response, true);
-        //             // Linenotify::send($json[0]["symbol"][0]["data"]);
-
-        //             if (is_null($json[0]["symbol"][0]["data"])) {
-        //                 $notice->update(["ref" => $notice->ref]);
-        //                 // Linenotify::send($response[0]["symbol"][0]["data"]);
-        //             } else {
-        //                 $notice->update(["ref" => $json[0]["symbol"][0]["data"]]);
-        //             }
-        //         }
-        //     }
-        // }
-
-        $notices = NoticeOfPaymentFromCustomer::whereStatus("create")->take(5)->get();
+        $notices = NoticeOfPaymentFromCustomer::whereStatus("create")->take(10)->get();
+        $count_verify_slip = 0;
         if ($notices->count() > 0) {
 
             foreach ($notices as $notice) {
-                if ($notice->ref == null) {
-                    // $curl = curl_init();
 
-                    // curl_setopt_array($curl, array(
-                    //     CURLOPT_URL => 'https://api.qrserver.com/v1/read-qr-code/?fileurl=https://lh3.googleusercontent.com/d/' . $notice->src_name,
-                    //     CURLOPT_RETURNTRANSFER => true,
-                    //     CURLOPT_ENCODING => '',
-                    //     CURLOPT_MAXREDIRS => 10,
-                    //     CURLOPT_TIMEOUT => 10,
-                    //     CURLOPT_FOLLOWLOCATION => true,
-                    //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                    //     CURLOPT_CUSTOMREQUEST => 'GET',
-                    // ));
+                if (is_null($notice->ref)) {
+                    if (str_starts_with($notice->src_name, "http")) {
+                        $url = $notice->src_name;
+                    } else {
+                        $url = "https://lh3.googleusercontent.com/d/$notice->src_name";
+                    }
 
-                    // $response = curl_exec($curl);
-
-                    // curl_close($curl);
-
-
-                    // $json = json_decode($response, true);
-                    // Linenotify::send($json[0]["symbol"][0]["data"]);
-                    $url = "https://lh3.googleusercontent.com/d/$notice->src_name";
                     $result =  Helper::qrCodeReaderUrl_v2($url);
+
                     // Linenotify::send($result);
 
                     if ($result["has_qrcode"]) {
-                        $ref = Helper::substr_slip_ref($result["text"]);
+                        // $ref = Helper::substr_slip_ref($result["text"]);
+                        $ref = $result["text"];
                         $notice_double = NoticeOfPaymentFromCustomer::whereRef($ref)->first();
                         if ($notice_double) {
-                            $notice->update(["status" => "cancel"]);
+                            NoticeOfPaymentFromCustomer::setCancel($notice);
                             Linenotify::send("มีแจ้งชำระเงินซ้ำ หมายเลข #$notice->order_id");
                         } else {
                             $notice->update(["ref" => $ref]);
+                            $setSuccessFromVerifySlip = NoticeOfPaymentFromCustomer::setSuccessFromVerifySlip($result["text"], $notice);
+                            if ($setSuccessFromVerifySlip["success"]) {
+                                $count_verify_slip = $count_verify_slip + 1;
+                            }
                         }
                     } else {
                         $notice->update(["ref" => "no-qrcode-$notice->id"]);
@@ -136,10 +85,17 @@ class NoticePaymetByCustomerCommand extends Command
             }
             //  [{"type":"qrcode","symbol":[{"seq":0,"data":"0041000600000101030040220012341130651BPM059845102TH910458A8","error":null}]}]
 
-            $link = URL::base() . "/manages/order/checkNoticeOfPaymentFromCustomer";
-            $msgLine = 'รายการแจ้งชำระเงินจากลูกค้า ' . $notices->count() . ' รายการ กำลังรอตรวจสอบ ' . $link;
-            AlertMessages::LineAlertGeneral($msgLine);
-            return $msgLine;
+            $setting = Setting::first();
+            // 18:43 <= 19:00 /
+            // 18:43 >= 08:30 /
+            $is_time_close_store = now()->format("H:i") <= $setting->close_store && now()->format("H:i") >= $setting->open_store;
+            if ($is_time_close_store && ($notices->count() - $count_verify_slip) > 0) {
+                $link = URL::base() . "/manages/order/checkNoticeOfPaymentFromCustomer";
+                $msgLine = 'รายการแจ้งชำระเงินจากลูกค้า ' . ($notices->count() - $count_verify_slip) . ' รายการ กำลังรอตรวจสอบ ' . $link;
+                AlertMessages::LineAlertGeneral($msgLine);
+            }
+
+            return;
         }
     }
 }

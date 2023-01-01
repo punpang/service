@@ -566,7 +566,7 @@ $setting->open_store - $setting->close_store น. ชั่วคราว
                 return;
             }
 
-            $url = Url::base() . "/upload_slip/$order->auth_order";
+            // $url = Url::base() . "/upload_slip/$order->auth_order";
 
             // if ($order->status_full_payment || $order->sumDeposited() > 0) {
             //     $msg = "โปรดชำระด้วยจำนวนเงิน " . number_format($order->sumBalance(), 2) . " บาท";
@@ -574,41 +574,55 @@ $setting->open_store - $setting->close_store น. ชั่วคราว
             //     $msg = "โปรดเลือกชำระด้วยจำนวนเงินระหว่าง " . number_format($order->sumTASC(), 2) . " บาท หรือ " . number_format($order->sumTASC() / 2, 2) . " บาท";
             // }
 
-            $msg = "โปรดชำระด้วยจำนวนเงิน " . number_format($order->sumBalance(), 2) . " บาท";
+            $msg = "โปรดชำระด้วยจำนวนเงิน
+" . number_format($order->sumBalance(), 2) . " บาท";
+
+            $bank = "ช่องทางการโอนชำระเงิน
+พร้อมเพย์ (แนะนำ)
+0918853402
+ฐิติภัทร ศรีสุข
+
+ธนาคารไทยพาณิชย์
+4191081549
+ฐิติภัทร ศรีสุข";
             $msg = $msg . "
-
-โปรดชำระเงินภายใน
+--------------------
+โปรดแจ้งชำระเงินก่อน
 $order->payment_deadline_th น.
+--------------------
+$bank
+--------------------
+**หลังจากลูกค้าชำระเงินแล้ว ร้านสงวนสิทธิ์ว่าลูกค้าตรวจสอบรายการสั่งซื้อแล้ว**
+***โปรดแจ้งชำระเงินภายในวัน-เวลาที่ร้านกำหนด***
+****ร้านสงวนสิทธิ์ในการจัดลำดับคิวใหม่ หากแจ้งชำระเงินไม่ทันตามวัน-เวลาที่ร้านกำหนด****";
 
-หลังจากลูกค้าชำระเงินแล้ว ทางร้านสงวนสิทธิ์ลูกค้าตรวจสอบรายการสั่งซื้อแล้ว
-*โปรดแจ้งชำระเงินภายในเว็บเท่านั้น ไม่ใช่ในแชท*
-**ทางร้านขอสงวนสิทธิ์ในการจัดลำดับคิวใหม่ หากแจ้งชำระเงินไม่ทันในวัน-เวลาที่ทางร้านกำหนด**";
 
 
-            Facebook::send_reply_image($order, "https://lh3.googleusercontent.com/d/1mEoi5PyWNPcQnvZ_FyNWiGZUT6PLYgB7");
+            // Facebook::send_reply_image($order, "https://lh3.googleusercontent.com/d/1mEoi5PyWNPcQnvZ_FyNWiGZUT6PLYgB7");
 
-            // $generate_maemanee_promptpay = Helper::generate_maemanee_promptpay($order->sumBalance());
-            // $generate_qrcode_text = Helper::generate_qrcode_text($generate_maemanee_promptpay);
-            // Facebook::send_reply_image($order, URL::base_to_link($generate_qrcode_text));
-            // unlink($generate_qrcode_text);
+            $generate_phone_promptpay = Helper::generate_phone_promptpay($order->sumBalance());
+            $generate_qrcode_text = Helper::generate_qrcode_text($generate_phone_promptpay);
+            Facebook::send_reply_image($order, URL::base_to_link($generate_qrcode_text));
+            unlink($generate_qrcode_text);
 
             Facebook::send_reply_message($order, $msg);
-            Facebook::send_postback(
-                $order,
-                [
-                    [
-                        "title" => "แนบสลิปหลังชำระเงิน โดยกดที่ปุ่มด้านล่าง",
-                        "subtitle" => "หลังจากลูกค้าชำระเงินแล้ว ทางร้านสงวนสิทธิ์ลูกค้าตรวจสอบรายการสั่งซื้อแล้ว *โปรดแจ้งชำระเงินภายในเว็บเท่านั้น* **ไม่ใช่ในแชท** ***ทางร้านขอสงวนสิทธิ์ในการจัดลำดับคิวใหม่ หากแจ้งชำระเงินไม่ทันในวัน-เวลาที่ทางร้านกำหนด",
-                        "buttons" => [
-                            [
-                                "title" => "กดเพื่อแจ้งชำระเงิน",
-                                "url" => $url,
-                                "type" => "web_url"
-                            ],
-                        ]
-                    ]
-                ]
-            );
+
+            // Facebook::send_postback(
+            //     $order,
+            //     [
+            //         [
+            //             "title" => "แนบสลิปหลังชำระเงิน โดยกดที่ปุ่มด้านล่าง",
+            //             "subtitle" => "หรือส่งสลิปเข้ามาในแชตก่อนวัน-เวลากำหนดชำระเงิน",
+            //             "buttons" => [
+            //                 [
+            //                     "title" => "กดเพื่อแจ้งชำระเงิน",
+            //                     "url" => $url,
+            //                     "type" => "web_url"
+            //                 ],
+            //             ]
+            //         ]
+            //     ]
+            // );
         }
     }
 

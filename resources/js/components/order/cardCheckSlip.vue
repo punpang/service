@@ -128,6 +128,7 @@ export default {
         return {
             dialog: false,
             ref: "",
+            ref_full: "",
             amount: 0,
             status: "",
             ntpfc: {},
@@ -248,7 +249,7 @@ export default {
             let loader = this.$loading.show();
             const payload = {
                 ntpfc: this.ntpfc,
-                ref: this.ref,
+                ref: this.ref_full,
                 amount: this.amount,
             };
 
@@ -370,7 +371,8 @@ export default {
 
             //   this.ref = "012029151143828695";
             const notice = res.data.notice;
-            this.ref = notice.ref;
+            this.ref = notice.ref_format;
+            this.ref_full = notice.ref;
             this.ntpfc = notice;
             this.amount = notice.amount;
             this.status = notice.status;

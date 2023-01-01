@@ -2,9 +2,10 @@
 
 namespace App\Order;
 
+use App\Helper;
+use App\Order\AOrder;
 use App\Order\AHistoryPayed;
 use Illuminate\Database\Eloquent\Model;
-use App\Order\AOrder;
 
 class NoticeOfPaymentFromCustomer extends Model
 {
@@ -19,7 +20,7 @@ class NoticeOfPaymentFromCustomer extends Model
     ];
     protected $hidden = ['created_at', 'updated_at'];
 
-    protected $appends = ["created_at_th"];
+    protected $appends = ["created_at_th", "ref_format"];
 
 
     // public function getCreatedAtAttribute($date)
@@ -34,6 +35,11 @@ class NoticeOfPaymentFromCustomer extends Model
         // return $this->created_at;
         return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)
             ->addYears(543)->format('d/m/y H:i:s');
+    }
+
+    public function getRefFormatAttribute()
+    {
+        return Helper::substr_slip_ref($this->ref);
     }
 
     public function aOrder()
@@ -115,5 +121,24 @@ class NoticeOfPaymentFromCustomer extends Model
         return [
             "status" => "error",
         ];
+    }
+
+    public static function setSuccessFromVerifySlip($qr_code_text, $notice)
+    {
+        $verify_slip = Helper::verify_slip($qr_code_text);
+        // Linenotify::send('$verify_slip = Helper::verify_slip($result);');
+        if (
+            $verify_slip["verify"] &&
+            $verify_slip["date"] > $notice->aOrder->created_at &&
+            $verify_slip["amount"] <= $notice->aOrder->sumBalance()
+        ) {
+            NoticeOfPaymentFromCustomer::setSuccess($notice, $verify_slip["amount"], $notice->ref);
+            AOrder::paymentByOrderID($notice->aOrder->id, $notice->amount);
+            AHistoryPayed::paymentByOrderID($notice->aOrder->id, $notice->amount, 2, null, $notice->id);
+            // AlertMessages::smsPaymentOrder($notice->order_id, $verify_slip["amount"]);
+            AlertMessages::socialPaymentOrder($notice->aOrder, $verify_slip["amount"]);
+            // AlertMessages::linePaymentOrder($notice->aOrder, $verify_slip["amount"]);
+            return ["success" => true];
+        }
     }
 }

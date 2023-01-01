@@ -502,35 +502,37 @@ class AOrder extends Model
         return $this->posOrders()->sum("total");
     }
 
-    public static function summaryOfOrderDetails($order_id)
+    public static function summaryOfOrderDetails($order_id, $show_conditions = false)
     {
         // return $order;
-        $order = AOrder::with(
-            // "customer.facebook",
-            // "customer.line",
-            // "OrderChannel",
-            // "am1",
-            // "am2",
-            // "am3",
-            // "am4",
-            "aStatus",
-            // "aHistoryPayed.channelPayment",
-            // "aHistoryPayed.ntpfc",
-            // "aHistoryPayed.ksherPay",
-            // "orderDetails.aPrice.googleImage",
-            // "orderDetailsOnlyTrashed",
-            // "orderDetails.productPrototypes.googleImage",
-            // "orderDetails.imageForMenus.googleImage",
-            // "orderDetails.imageFromCustomers.googleImage",
-            // "orderDetails.imageGoodsReviewToCustomers.googleImage",
-            // "orderDetails.orderTags.tag",
-            "orderDeliveryService",
-            "orderDetails.MoneyServices.category_money_service",
-            "adjustExcessPayments",
-            "posOrders.posGoods"
-        )
-            ->with("orderDetails.addOns.productAddOn.goodsAddOn")
-            ->findOrFail($order_id);
+        $order = AOrder::findOrFail($order_id);
+
+        // $order = AOrder::with(
+        //     // "customer.facebook",
+        //     // "customer.line",
+        //     // "OrderChannel",
+        //     // "am1",
+        //     // "am2",
+        //     // "am3",
+        //     // "am4",
+        //     "aStatus",
+        //     // "aHistoryPayed.channelPayment",
+        //     // "aHistoryPayed.ntpfc",
+        //     // "aHistoryPayed.ksherPay",
+        //     // "orderDetails.aPrice.googleImage",
+        //     // "orderDetailsOnlyTrashed",
+        //     // "orderDetails.productPrototypes.googleImage",
+        //     // "orderDetails.imageForMenus.googleImage",
+        //     // "orderDetails.imageFromCustomers.googleImage",
+        //     // "orderDetails.imageGoodsReviewToCustomers.googleImage",
+        //     // "orderDetails.orderTags.tag",
+        //     "orderDeliveryService",
+        //     "orderDetails.MoneyServices.category_money_service",
+        //     "adjustExcessPayments",
+        //     "posOrders.posGoods"
+        // )
+        //     ->with("orderDetails.addOns.productAddOn.goodsAddOn")
+        //     ->findOrFail($order_id);
 
         if ($order->sumMoneyCustomer() > 0 || $order->orderDeliveryService) {
             $order->update(["status_full_payment" => 1]);
@@ -583,11 +585,14 @@ class AOrder extends Model
         $message_pos = "";
         if ($order->posOrders->count() > 0) {
             foreach ($order->posOrders as $pos) {
+                $msg_pos_note = is_null($pos->note) ? "" : "
+#$pos->note#";
                 $message_pos = $message_pos . "
 " . $pos->posGoods->text . "
-฿" . number_format($pos->price, 2) . " x " . $pos->quantity . " = ฿" . number_format($pos->total, 2);
+฿" . number_format($pos->price, 2) . " x " . $pos->quantity . " = ฿" . number_format($pos->total, 2) . $msg_pos_note;
             }
             $message_pos = $message_pos . "
+
 รวม " . number_format($order->sumPosOrder(), 2) . " บาท
 
 -------------------------";
@@ -616,6 +621,14 @@ class AOrder extends Model
             $message_payment_deadline_th = "";
         }
 
+        if ($show_conditions) {
+            $msg_conditutions = "
+โปรดศึกษาเงื่อนไขการสั่งซื้อได้ที่
+https://punpang.net/learning/conditions/order";
+        } else {
+            $msg_conditutions = "";
+        }
+
         $msg = "หมายเลขคำสั่งซื้อ #$order->id
 ชื่อลูกค้า : " . $order->customer->name . "
 เบอร์โทร : " . $order->customer->tel . "
@@ -633,12 +646,12 @@ class AOrder extends Model
 -------------------------
 $message_payment_deadline_th
 หลังจากลูกค้าชำระเงินแล้ว
-ทางร้านสงวนสิทธิ์ลูกค้าตรวจสอบรายการสั่งซื้อแล้ว";
+ทางร้านสงวนสิทธิ์ลูกค้าตรวจสอบรายการสั่งซื้อแล้ว$msg_conditutions";
 
         // Linenotify::send($msg);
 
         Facebook::send_reply_message($order, $msg);
-        return $msg;
+        return;
     }
 
     // กสิกร

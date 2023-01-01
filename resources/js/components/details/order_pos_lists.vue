@@ -16,6 +16,9 @@
                 </v-btn>
             </v-card-title>
             <v-card-text>
+                <v-btn x-small :class="order.a_status.class" elevation="0" class="mb-1">{{
+                    order.a_status.status
+                }}</v-btn>
                 <p class="font-weight-bold mb-0">วัน-เวลานัดรับสินค้า</p>
                 <p class="mb-4 caption">
                     {{ order.date_get_th }}
@@ -29,6 +32,12 @@
                     <p class="mb-0 caption deep-orange--text font-weight-bold">
                         {{ pos_order.quantity }} x
                         {{ pos_order.price | formatNumber }}
+                    </p>
+                    <p
+                        class="mb-0 caption font-weight-bold"
+                        v-if="pos_order.note"
+                    >
+                        ** {{ pos_order.note }} **
                     </p>
                 </div>
             </v-card-text>

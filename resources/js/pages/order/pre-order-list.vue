@@ -77,7 +77,7 @@
                     :items="details"
                     hide-default-footer
                     :search="search"
-                    :sort-by="['a_order.date_get','a_order.time_get']"
+                    :sort-by="['a_order.date_get', 'a_order.time_get']"
                     :items-per-page="-1"
                 >
                     <template v-slot:item.image_goods="{ item }">
@@ -255,7 +255,17 @@
                 </div>
             </template> -->
                     <template v-slot:item.a_order.date_get="{ item }">
-                        {{ item.a_order.date_get_th }}
+                        <!-- <p
+                            v-if="is_tomorrow(item.a_order.date_get)"
+                            class="mb-0 caption font-weight-bold deep-orange--text"
+                        >
+                            พรุ่งนี้
+                        </p> -->
+                        {{
+                            is_tomorrow(item.a_order.date_get)
+                                ? "พรุ่งนี้"
+                                : item.a_order.date_get_th
+                        }}
                     </template>
 
                     <template v-slot:item.manages="{ item }">
@@ -292,12 +302,26 @@
                         </v-btn>
                     </v-card-title>
                     <v-card-text>
+                        <v-btn
+                            x-small
+                            :class="order.a_status.class"
+                            elevation="0"
+                            class="mb-1"
+                            >{{ order.a_status.status }}</v-btn
+                        >
                         <p class="font-weight-bold mb-0">
                             วัน-เวลานัดรับสินค้า
                         </p>
+
                         <p class="mb-4 caption">
-                            {{ order.date_get_th }}
+                            {{
+                                is_tomorrow(order.date_get)
+                                    ? `พรุ่งนี้ `
+                                    : `${order.date_get_th} `
+                            }}
                             {{ order.time_get_format }} น.
+                            <!-- {{ order.date_get_th }}
+                            {{ order.time_get_format }} น. -->
                         </p>
                         <div
                             v-for="pos_order in order.pos_orders"
@@ -312,6 +336,12 @@
                             >
                                 {{ pos_order.quantity }} x
                                 {{ pos_order.price | formatNumber }}
+                            </p>
+                            <p
+                                class="mb-0 caption font-weight-bold"
+                                v-if="pos_order.note"
+                            >
+                                ** {{ pos_order.note }} **
                             </p>
                         </div>
                     </v-card-text>
@@ -381,6 +411,15 @@ export default {
         // src_name(v) {
         //     console.log(v.src_name);
         // },
+        is_tomorrow(d) {
+            const now = new Date();
+            const date = new Date(d);
+            now.setDate(now.getDate() + 1);
+            if (date.toDateString() == now.toDateString()) {
+                return true;
+            }
+            return false;
+        },
         clickToOrder(id) {
             window.location.href = `/manages/order/${id}/showOrderByID`;
         },

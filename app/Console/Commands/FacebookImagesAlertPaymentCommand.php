@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Helper;
 use App\Linenotify;
 // use App\Order\AlertMessages;
+use App\Order\AlertMessages;
 use App\Order\FacebookImages;
 use Illuminate\Console\Command;
 use App\Order\NoticeOfPaymentFromCustomer;
@@ -53,14 +54,15 @@ class FacebookImagesAlertPaymentCommand extends Command
             if (isset($image->facebook->customer)) {
 
                 // อ่านคิวอาร์โดยลิงก์ url
-                $result =  Helper::qrCodeReaderUrl_v2($image->image_url);
+                $result = Helper::qrCodeReaderUrl_v2($image->image_url);
                 // if ($result == null) {
                 //     $image->delete();
                 // ถ้ามีข้อมูลคิวอาร์
                 if ($result["has_qrcode"]) {
 
                     // แยกเอาเฉพาะ ref บนสลิป
-                    $dataQr = Helper::substr_slip_ref($result["text"]);
+                    // $dataQr = Helper::substr_slip_ref($result["text"]);
+                    $dataQr = $result["text"];
 
                     // ค้นหาว่ามี ref นี้หรือยัง
                     $is_have = NoticeOfPaymentFromCustomer::where("ref", $dataQr)->first();
@@ -93,15 +95,17 @@ class FacebookImagesAlertPaymentCommand extends Command
                             // ถ้ายอดคงเหลือมากกว่า 0
                             if ($order->sumBalance() > 0) {
                                 // สร้างการแจ้งเตือนชำระเงินจากลูกค้า
-                                NoticeOfPaymentFromCustomer::create([
+                                $notice = NoticeOfPaymentFromCustomer::create([
                                     "order_id" => $order->id,
                                     "src_name" => $image->image_url,
                                     "status" => "create",
                                     "amount" => $order->sumBalance(),
                                     "ref" => $dataQr
                                 ]);
-                                // แจ้งเตือนไลน์
                                 Linenotify::send("รับชำระเงินจากลูกค้า -> #$order->id -> Facebook");
+
+                                NoticeOfPaymentFromCustomer::setSuccessFromVerifySlip($result["text"], $notice);
+                                // แจ้งเตือนไลน์
                             }
                             // AlertMessages::bothNoticeOfPaymentByCustomer($order->id, 0);
                             // AlertMessages::socialNoticeOfPaymentByCustomer($order, 0);
