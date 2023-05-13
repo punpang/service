@@ -31,7 +31,7 @@ class APriceController extends Controller
                     $data->m4 = request('op4');
                     $data->save();
                 }
-                $data = APrice::whereCode($op)->with("am1", "am2", "am3", "am4", "googleImage")->first();
+                $data = APrice::whereCode($op)->with("am1:id,m1", "am2:id,m2", "am3:id,m3", "am4:id,m4", "googleImage:id,src_name")->first();
             }
 
             DB::commit();

@@ -6,6 +6,7 @@
             :key="detail.id"
         >
             <v-card-text>
+                <!-- v-if="detail.order_detail_id == null" -->
                 <v-row>
                     <v-col cols="12" md="12" class="px-2 pb-0 pt-1">
                         <v-row>
@@ -13,7 +14,16 @@
                                 :cols="user.type != 1 ? 12 : 9"
                                 :md="user.type != 1 ? 12 : 10"
                             >
-                                <strong>{{ detail.a_price.name_goods }}</strong>
+                                <v-icon
+                                    class="pb-2 px-1"
+                                    :color="detail.color_multi_cake.color"
+                                    v-if="detail.order_detail_id != null"
+                                    >cake</v-icon
+                                >
+
+                                <strong>
+                                    {{ detail.a_price.name_goods }}</strong
+                                >
                             </v-col>
                             <v-col
                                 cols="3"
@@ -47,6 +57,25 @@
                         ></imageThumbnailPathSizeW200H200>
                     </v-col>
                     <v-col cols="9" md="9" class="pa-2">
+                        <p class="mb-0" v-if="detail.order_detail_id != null">
+                            <v-badge
+                                tile
+                                inline
+                                :color="detail.color_multi_cake.color"
+                                :content="detail.color_multi_cake.number"
+                            >
+                                <strong>ชั้นที่ </strong>
+                                <strong class="text-subtitle-1"
+                                    > {{ detail.sort_group_multi_cake }}
+                                </strong>
+                                <v-icon
+                                    color="orange"
+                                    v-if="detail.id == detail.order_detail_id"
+                                    >flag</v-icon
+                                ></v-badge
+                            >
+                        </p>
+
                         <p class="mb-0" v-if="detail.message != '-'">
                             <strong>ข้อความ </strong>
                             <strong class="text-subtitle-1">{{
@@ -59,10 +88,12 @@
                                 detail.detail
                             }}</strong>
                         </p>
+
                         <p class="mb-0" v-if="user.type == 1">
                             <strong>ราคา </strong>
                             {{ detail.price | formatNumber }} บาท
                         </p>
+
                         <div
                             class="my-2 d-flex"
                             v-if="
@@ -78,6 +109,7 @@
                                 :propImageFormCustomers="
                                     detail.image_from_customers
                                 "
+                                :propAuthOrder="order.auth_order"
                                 v-if="detail.status_upload_images_from_customer"
                                 class="mx-1"
                             ></btnUploadImagesForOrderDetail>
@@ -209,7 +241,44 @@ export default {
         comboboxTags,
         btnShowImageForMenu,
     },
-    methods: {},
+    methods: {
+        color_order_detail_id(v) {
+            const vn = v.toString();
+            const color = [
+                "red",
+                "indigo",
+                "pink",
+                "purple",
+                "blue",
+                "cyan",
+                "green",
+                "light-blue",
+                "teal",
+                "lime",
+            ];
+
+            // console.log(vn[vn.length - 1]);
+            return color[vn[vn.length - 1]];
+        },
+        // random_color(n) {
+        //     // console.log(n);
+        //     let result = 0;
+        //     if (n > 9) {
+        //         result = this.sum_random(n);
+        //     } else {
+        //         console.log(n);
+        //         return n.toString();
+        //     }
+        // },
+        // sum_random(n) {
+        //     let result = 0;
+        //     let ns = n.toString();
+        //     for (let i = 0; i < ns.length; i++) {
+        //         result = result + parseInt(ns[i]);
+        //     }
+        //     this.random_color(result);
+        // },
+    },
     computed: {
         ...mapGetters({
             order: "orderIndex/order",

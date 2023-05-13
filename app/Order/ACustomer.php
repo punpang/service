@@ -102,4 +102,15 @@ class ACustomer extends Model implements Auditable
     {
         return $this->hasOne(Line::class, "customer_id", "id");
     }
+
+    public static function consent_condition($customer)
+    {
+        if (!$customer->status_consent_condition) {
+            $customer->update([
+                "status_consent_condition" => true,
+                "status_consent_condition_updated_at" => now()->format('Y-m-d H:i:s')
+            ]);
+            AlertMessages::smsConfirmConsentConditions($customer);
+        }
+    }
 }

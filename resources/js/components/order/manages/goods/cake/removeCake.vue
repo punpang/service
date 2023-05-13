@@ -2,7 +2,7 @@
     <div>
         <v-dialog persistent width="400" v-model="dialog" scrollable>
             <template v-slot:activator="{ on }">
-                <v-list-item v-on="on" @click="start()">
+                <v-list-item v-on="on" @click="start()" v-if="propOrderDetail.order_detail_id == null">
                     <v-list-item-icon>
                         <v-icon color="error">delete</v-icon>
                     </v-list-item-icon>
@@ -12,6 +12,18 @@
                         >
                     </v-list-item-content>
                 </v-list-item>
+
+                <v-list-item v-on="on" v-else disabled>
+                    <v-list-item-icon>
+                        <v-icon color="grey">delete</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content class="p-0">
+                        <v-list-item-title class="grey--text py-2"
+                            >ลบสินค้าไม่ได้</v-list-item-title
+                        >
+                    </v-list-item-content>
+                </v-list-item>
+                
 
                 <!-- <v-btn
                     class="white red--text"

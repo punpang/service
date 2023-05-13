@@ -3,6 +3,7 @@
 namespace App\Order;
 
 use App\Helper;
+use App\Linenotify;
 use App\Order\AOrder;
 use App\Order\AHistoryPayed;
 use Illuminate\Database\Eloquent\Model;
@@ -39,7 +40,16 @@ class NoticeOfPaymentFromCustomer extends Model
 
     public function getRefFormatAttribute()
     {
-        return Helper::substr_slip_ref($this->ref);
+        if (is_null($this->ref)) {
+            return $this->ref;
+        }
+
+        $ref = Helper::substr_slip_ref($this->ref);
+
+        if ($ref == false) {
+            return $this->ref;
+        }
+        return $ref;
     }
 
     public function aOrder()
@@ -127,6 +137,20 @@ class NoticeOfPaymentFromCustomer extends Model
     {
         $verify_slip = Helper::verify_slip($qr_code_text);
         // Linenotify::send('$verify_slip = Helper::verify_slip($result);');
+
+
+        if ($verify_slip["date"] <= $notice->aOrder->created_at) {
+            Linenotify::send("ตรวจสอบสลิป => #" . $notice->aOrder->id . " => วันที่สลิปไม่ถูกต้องเมืิ่อเทียบกับวันสร้างรายการ");
+        }
+
+        if ($verify_slip["amount"] > $notice->aOrder->sumBalance()) {
+            Linenotify::send("ตรวจสอบสลิป => #" . $notice->aOrder->id . " => จำนวนเงินสลิปมากกว่ายอดที่ต้องชำระ");
+        }
+
+        if ($verify_slip["verify"] == false) {
+            Linenotify::send("ตรวจสอบสลิป => #" . $notice->aOrder->id . " => สลิปไม่ผ่านการตรวจสอบ");
+        }
+
         if (
             $verify_slip["verify"] &&
             $verify_slip["date"] > $notice->aOrder->created_at &&
@@ -138,7 +162,44 @@ class NoticeOfPaymentFromCustomer extends Model
             // AlertMessages::smsPaymentOrder($notice->order_id, $verify_slip["amount"]);
             AlertMessages::socialPaymentOrder($notice->aOrder, $verify_slip["amount"]);
             // AlertMessages::linePaymentOrder($notice->aOrder, $verify_slip["amount"]);
-            return ["success" => true];
+            return ["status" => true];
         }
+
+        return ["status" => false];
+    }
+
+    public static function setSuccessFromVerifySlipV2($qr_code_text, $notice)
+    {
+        $verify_slip = Helper::verify_slip_v2($qr_code_text);
+        // Linenotify::send('$verify_slip = Helper::verify_slip($result);');
+
+
+        if ($verify_slip["date"] <= $notice->aOrder->created_at) {
+            Linenotify::send("ตรวจสอบสลิป => #" . $notice->aOrder->id . " => วันที่สลิปไม่ถูกต้องเมืิ่อเทียบกับวันสร้างรายการ");
+        }
+
+        if ($verify_slip["amount"] > $notice->aOrder->sumBalance()) {
+            Linenotify::send("ตรวจสอบสลิป => #" . $notice->aOrder->id . " => จำนวนเงินสลิปมากกว่ายอดที่ต้องชำระ");
+        }
+
+        if ($verify_slip["verify"] == false) {
+            Linenotify::send("ตรวจสอบสลิป => #" . $notice->aOrder->id . " => สลิปไม่ผ่านการตรวจสอบ");
+        }
+
+        if (
+            $verify_slip["verify"] &&
+            $verify_slip["date"] > $notice->aOrder->created_at &&
+            $verify_slip["amount"] <= $notice->aOrder->sumBalance()
+        ) {
+            NoticeOfPaymentFromCustomer::setSuccess($notice, $verify_slip["amount"], $notice->ref);
+            AOrder::paymentByOrderID($notice->aOrder->id, $notice->amount);
+            AHistoryPayed::paymentByOrderID($notice->aOrder->id, $notice->amount, 2, null, $notice->id);
+            // AlertMessages::smsPaymentOrder($notice->order_id, $verify_slip["amount"]);
+            AlertMessages::socialPaymentOrder($notice->aOrder, $verify_slip["amount"]);
+            // AlertMessages::linePaymentOrder($notice->aOrder, $verify_slip["amount"]);
+            return ["status" => true];
+        }
+
+        return ["status" => false];
     }
 }

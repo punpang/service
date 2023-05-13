@@ -21,22 +21,24 @@ export default {
                 .dispatch(`orderIndex/newOrder`, payload)
                 .then((result) => {
                     loader.hide();
-                    this.$swal({
-                        title: result.data.message,
-                        icon: result.data.status,
-                        allowOutsideClick: false,
-                        confirmButtonText: "ไปยังรายการใหม่",
-                        // denyButtonText: "รับรายการใหม่",
-                        showDenyButton: true,
-                        confirmButtonColor:"#2E7D32",
-                        // denyButtonColor: "#3F51B5"
-                    }).then((resultSwal) => {
-                        if (resultSwal.isConfirmed) {
-                            window.location.href = `/manages/order/${result.data.order_id}/showOrderByID`;
-                        } else {
-                            location.reload();
-                        }
-                    });
+                    window.location.href = `/manages/order/${result.data.order_id}/showOrderByID`;
+
+                    // this.$swal({
+                    //     title: result.data.message,
+                    //     icon: result.data.status,
+                    //     allowOutsideClick: false,
+                    //     confirmButtonText: "ไปยังรายการใหม่",
+                    //     // denyButtonText: "รับรายการใหม่",
+                    //     showDenyButton: true,
+                    //     confirmButtonColor: "#2E7D32",
+                    //     // denyButtonColor: "#3F51B5"
+                    // }).then((resultSwal) => {
+                    //     if (resultSwal.isConfirmed) {
+                    //         window.location.href = `/manages/order/${result.data.order_id}/showOrderByID`;
+                    //     } else {
+                    //         location.reload();
+                    //     }
+                    // });
                 })
                 .catch((err) => {
                     console.error(err);

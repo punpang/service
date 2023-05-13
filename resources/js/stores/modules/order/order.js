@@ -444,5 +444,62 @@ export default {
                     console.error(err);
                 });
         },
+
+        async update_channel_order({}, payload) {
+            return await axios
+                .post(
+                    `/api/admin/v1/order/${payload.order_id}/${payload.order_channel_id}/update_channel_order`
+                )
+                .then((response) => {
+                    return response.data;
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        },
+
+        async update_sort_group_multi_cake({}, payload) {
+            return await axios
+                .post(
+                    `/api/admin/v1/order/detail/update_sort_group_multi_cake`,
+                    payload
+                )
+                .then((response) => {
+                    return response;
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        },
+
+        async remove_muticake({}, payload) {
+            return await axios
+                .post(
+                    `/api/admin/v1/order/detail/${payload.detail_id}/remove_muticake`,
+                    payload
+                )
+                .then((response) => {
+                    return response;
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        },
+
+        async add_multi_cake({}, payload) {
+            return await axios
+                .post(
+                    `/api/admin/v1/order/detail/${payload.detail_id}/add_multi_cake`,
+                    payload
+                )
+                .then((response) => {
+                    return response;
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        },
+
+
     },
 };

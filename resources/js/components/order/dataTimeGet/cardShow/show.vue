@@ -42,6 +42,7 @@
                 <!-- // -->
             </v-card-text>
         </v-card>
+
     </div>
 </template>
 
@@ -61,7 +62,6 @@ export default {
             // timeGet: "",
             dateWrong: false,
             orders: {},
-
         };
     },
     methods: {
@@ -77,6 +77,7 @@ export default {
             // this.checkDateTimeGet();
         },
         async checkDateTimeGet() {
+
             if (
                 !this.temp.temp.dateTimeGet.dateGet ||
                 !this.temp.temp.dateTimeGet.timeGet
@@ -85,11 +86,21 @@ export default {
             // ไม่มีวันที่ หรือ เวลา หยุดทำงาน
             let loader = this.$loading.show();
             const data = this.temp.temp.dateTimeGet;
-            const result = await this.$store.dispatch(
-                "orderDateTimeGet/checkDateTimeGet",
-                data
-            );
-            this.orders = result.data;
+            await this.$store
+                .dispatch("orderDateTimeGet/checkDateTimeGet", data)
+                .then((result) => {
+                    if (result.data.status == "error") {
+                        this.$toast.error(result.data.message);
+                        this.temp.temp.dateTimeGet.dateGet = ""
+                        this.temp.temp.dateTimeGet.timeGet = ""
+                    } else {
+                        this.orders = result.data;
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+
             loader.hide();
         },
         checkDateGet() {
@@ -103,7 +114,8 @@ export default {
             const diffDateTime = dateTimeGet.valueOf() - datetimeNow.valueOf();
             if (isNaN(diffDateTime)) {
                 return;
-            } else if (diffDateTime < 0) { //1800000
+            } else if (diffDateTime < 0) {
+                //1800000
                 // console.log("🚀 ~ file: show.vue:107 ~ checkDateGet ~ diffDateTime", diffDateTime)
                 const date = new Date().toISOString().substr(0, 10);
                 this.temp.temp.dateTimeGet.dateGet = date;
@@ -124,7 +136,7 @@ export default {
         ...mapGetters({
             msgDateTimeGet: "orderDateTimeGet/msg",
             temp: "orderTemp/temp",
-        }),
+                  }),
         check() {
             this.checkDateGet();
             this.checkDateTimeGet();

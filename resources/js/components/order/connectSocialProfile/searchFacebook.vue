@@ -4,11 +4,10 @@
             v-model="dialog"
             width="500"
             scrollable
-            persistent
             transition="dialog-top-transition"
         >
             <template v-slot:activator="{ on }">
-                <v-btn v-on="on" class="white">เชื่อมต่อ</v-btn>
+                <v-btn v-on="on" class="white" @click="clickSearch()">เชื่อมต่อ</v-btn>
             </template>
 
             <v-card>

@@ -4,7 +4,7 @@
             v-model="dialog"
             width="400"
             scrollable
-            persistent
+
             transition="dialog-top-transition"
         >
             <template v-slot:activator="{ on }">

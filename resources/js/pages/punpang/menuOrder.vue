@@ -44,8 +44,28 @@
                 v-for="product in products"
                 :key="product.id"
             >
-                <v-card outlined @click="clickToOrder(product.order_id)">
+                <v-card outlined>
+                    <v-carousel
+                        hide-delimiters
+                        height="100%"
+                        v-if="product.image_for_menus.length > 1"
+                    >
+                        <v-carousel-item
+                            v-for="(item, i) in product.image_for_menus"
+                            :key="i"
+                            :src="`https://drive.google.com/thumbnail?id=${item.google_image.src_name}&sz=w500-h500`"
+                        >
+                            <v-btn
+                                outlined
+                                class="deep-orange mt-3 ml-3 font-weight-bold"
+                                dark
+                                x-small
+                                >#{{ product.id }}</v-btn
+                            ></v-carousel-item
+                        >
+                    </v-carousel>
                     <imageThumbnailFullPathSizeFree
+                        v-else
                         :path="product.image_for_menus[0]"
                         :size="500"
                         :propID="product.id"
@@ -77,6 +97,15 @@
                             {{ convert_tags(product.order_tags) }}
                         </div>
                     </v-card-text>
+                    <v-card-actions v-if="user.type == 1">
+                        <v-btn
+                            @click="clickToOrder(product.order_id)"
+                            block
+                            outlined
+                            color="primary"
+                            >ไปยังออร์เดอร์</v-btn
+                        >
+                    </v-card-actions>
                 </v-card>
             </v-col>
         </v-row>
@@ -125,7 +154,6 @@ export default {
             window.location.href = `/menu/orders?${tags}${price_rank}`;
         },
         clickToOrder(v) {
-            console.log(this.user);
             if (this.user.type == 1) {
                 window.location.href = `/manages/order/${v}/showOrderByID`;
                 // window.location.href = `/manages/order/${v}/showOrderByID`;
@@ -143,8 +171,10 @@ export default {
         convert_add_on_name(v) {
             let text = "";
             for (var i = 0; i < v.length; i++) {
-                let comma = i != v.length - 1 ? "," : "";
-                text = text + v[i].product_add_on.goods_add_on.name + comma;
+                if (v[i].product_add_on.price > 0) {
+                    let comma = i != v.length - 1 ? "," : "";
+                    text = text + v[i].product_add_on.goods_add_on.name + comma;
+                }
             }
             return text;
         },

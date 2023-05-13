@@ -1,6 +1,12 @@
 <template>
     <div>
-        <v-dialog v-model="dialog" persistent width="800" scrollable transition="dialog-top-transition">
+        <v-dialog
+            v-model="dialog"
+            persistent
+            width="800"
+            scrollable
+            transition="dialog-top-transition"
+        >
             <template v-slot:activator="{ on }">
                 <div v-on="on">
                     <v-icon color="green accent-4">insert_photo</v-icon>
@@ -20,20 +26,15 @@
                 </v-card-title>
                 <v-card-text class="pt-2">
                     <v-row>
-                        <v-col
-                            cols="12"
-                            md="12"
-                            class="pa-1"
-
-                        >
-                        <!-- v-if="user.type != 1" -->
+                        <v-col cols="12" md="12" class="pa-1">
+                            <!-- v-if="user.type != 1" -->
                             <uploadImageMultiple
                                 :propUploadImange="propImageFormCustomers"
                                 @emitImagesId="emitImagesId"
                                 @emitRemoveImage="emitRemoveImage"
                             ></uploadImageMultiple>
                         </v-col>
-
+                        <!-- {{ set_uuid() }} -->
                         <cardImageThumbnailPathSize800
                             v-for="(image, index) in propImageFormCustomers"
                             :path="image.google_image.src_name"
@@ -59,7 +60,7 @@ import uploadImageMultiple from "@/js/components/google/drive/uploadImageMultipl
 import cardImageThumbnailPathSize800 from "@/js/components/google/drive/cardImageThumbnailPathSize800";
 import { mapGetters } from "vuex";
 export default {
-    props: ["propImageFormCustomers", "propOrderDetail"],
+    props: ["propImageFormCustomers", "propOrderDetail", "propAuthOrder"],
     components: {
         uploadImageMultiple,
         cardImageThumbnailPathSize800,
@@ -79,7 +80,7 @@ export default {
         async emitImagesId(imagesData) {
             let loader = this.$loading.show();
             const data = {
-                uuid: this.$route.params.uuid,
+                uuid: this.set_uuid(),
                 order_detail_id: this.propOrderDetail.id,
                 imagesData: imagesData,
             };
@@ -91,7 +92,7 @@ export default {
 
             if (result.status == 200) {
                 await this.$store.dispatch("orderIndex/getOrderByUUID", {
-                    uuid: this.$route.params.uuid,
+                    uuid: this.set_uuid(),
                 });
                 this.start();
                 this.$swal({
@@ -112,10 +113,15 @@ export default {
 
             loader.hide();
         },
+        set_uuid() {
+            return this.$route.params.uuid
+                ? this.$route.params.uuid
+                : this.propAuthOrder;
+        },
         async emitRemoveImage(imageId) {
             let loader = this.$loading.show();
             const data = {
-                uuid: this.$route.params.uuid,
+                uuid: this.set_uuid(),
                 order_detail_id: this.propOrderDetail.id,
                 imagesData: imageId,
             };

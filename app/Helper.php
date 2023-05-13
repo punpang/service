@@ -6,10 +6,11 @@ namespace App;
 // use Google\Service\HangoutsChat\Card;
 
 // use App\Order\AllowedCheckSlip;
-use Illuminate\Database\Eloquent\Model;
 use Zxing\QrReader;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Database\Eloquent\Model;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class Helper extends Model
 {
@@ -136,7 +137,8 @@ class Helper extends Model
 
     public static function qrCodeReaderUrl($url)
     {
-        $url_new = str_replace("&", "%26", $url);
+        // $url_new = str_replace("&", "%26", $url);
+        $url_new = urlencode($url);
         $client = new \GuzzleHttp\Client();
         $response = $client->get("https://api.qrserver.com/v1/read-qr-code/?fileurl=" . $url_new);
         $result = json_decode($response->getBody(), true);
@@ -159,6 +161,10 @@ class Helper extends Model
         // $path_to_image = "https://scontent.xx.fbcdn.net/v/t1.15752-9/320485838_707703987368960_3814132955435592475_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=58c789&_nc_ohc=LttICDvKvvcAX_vPtRP&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdQ0V0B9299hGIuyBXGNkcHZmHAsDnzTekBWxsPy0hLbgg&oe=63C73566";
         $qrcode = new QrReader($url);
         $text = $qrcode->text();
+        return [
+            "has_qrcode" => true,
+            "text" => $text
+        ];
         if ($text == false) {
             $result = Helper::qrCodeReaderUrl($url);
             return $result;
@@ -276,9 +282,11 @@ class Helper extends Model
 
 
         if ($slip["status"] != "200") {
-            if ($slip["message"] == "not_enough_credit") {
-                Linenotify::send("Check_Slip ==> เครดิตไม่เพียงพอ");
-            }
+            Linenotify::send("CHECK_SLIP [ Helper::verify_slip() ] --> STATUS [ " . $slip["status"] . " ] --> MESSAGE [ " . $slip["message"] . " ]");
+
+            // if ($slip["message"] == "not_enough_credit") {
+            //     Linenotify::send("Check_Slip ==> เครดิตไม่เพียงพอ");
+            // }
             return [
                 "verify" => false,
                 "message" => "สถานะไม่ถูกต้อง",
@@ -289,7 +297,7 @@ class Helper extends Model
         $date = \Carbon\Carbon::parse($slip["message"]["data"]["date"])->format("Y-m-d H:i:s");
         $amount = $slip["message"]["data"]["amount"];
         $receiver = $slip["message"]["data"]["receiver"];
-        $sender = $slip["message"]["data"]["sender"];
+        // $sender = $slip["message"]["data"]["sender"];
 
         $allowed_bank_accounts = [
             // "0141111111111", // scb pp
@@ -313,11 +321,11 @@ class Helper extends Model
             if ($percent_bank_account == 100) {
                 // AllowedCheckSlip::firstOrCreate(["key" => $receiver["name"]]);
                 // AllowedCheckSlip::firstOrCreate(["key" => $receiver["account"]]);
-                Linenotify::send("
-ตรวจสอบจากเลขบัญชี
-NAME : " . $receiver["name"] . "
-ACCOUNT : " . $receiver["account"] . "
-BANK_NAME : " . $sender["bank"]["name"]);
+                //                 Linenotify::send("
+                // ตรวจสอบจากเลขบัญชี
+                // NAME : " . $receiver["name"] . "
+                // ACCOUNT : " . $receiver["account"] . "
+                // BANK_NAME : " . $sender["bank"]["name"]);
 
                 return [
                     "verify" => true,
@@ -330,42 +338,43 @@ BANK_NAME : " . $sender["bank"]["name"]);
             }
         }
 
-        // $allowed_names = [
-        //     "นางสาว ฐิติภัทร ศรีสุข",
-        //     // "น.ส.ฐิติภัทร ศรีสุข",
-        //     // "ฐิติภัทร ศรีสุข",
-        //     // // "ฐิติภัทร"
-        //     // "TITIPAT SRISUK"
-        // ];
+        $allowed_names = [
+            "นางสาว ฐิติภัทร ศรีสุข",
+            // "น.ส.ฐิติภัทร ศรีสุข",
+            // "ฐิติภัทร ศรีสุข",
+            // // "ฐิติภัทร"
+            // "TITIPAT SRISUK",
+            "TITIPAT SRISU"
+        ];
 
-        // foreach ($allowed_names as $allowed_name) {
-        similar_text("นางสาว ฐิติภัทร ศรีสุข", $receiver["name"], $percent_name);
-        // Linenotify::send("NAME =>" . $receiver["name"] . " || ACCOUNT => " . $receiver["account"]);
+        foreach ($allowed_names as $allowed_name) {
+            similar_text($allowed_name, $receiver["name"], $percent_name);
+            // Linenotify::send("NAME =>" . $receiver["name"] . " || ACCOUNT => " . $receiver["account"]);
 
-        if ($percent_name == 100) {
-            // AllowedCheckSlip::firstOrCreate(["key" => $receiver["name"]]);
-            // AllowedCheckSlip::firstOrCreate(["key" => $receiver["account"]]);
-            Linenotify::send("
-ตรวจสอบจากชื่อบัญชี
-NAME : " . $receiver["name"] . "
-ACCOUNT : " . $receiver["account"] . "
-BANK_NAME : " . $sender["bank"]["name"]);
+            if ($percent_name == 100) {
+                // AllowedCheckSlip::firstOrCreate(["key" => $receiver["name"]]);
+                // AllowedCheckSlip::firstOrCreate(["key" => $receiver["account"]]);
+                //                 Linenotify::send("
+                // ตรวจสอบจากชื่อบัญชี
+                // NAME : " . $receiver["name"] . "
+                // ACCOUNT : " . $receiver["account"] . "
+                // BANK_NAME : " . $sender["bank"]["name"]);
 
-            return [
-                "verify" => true,
-                "message" => "ตรวจสอบผ่าน",
-                "transRef" => $transRef,
-                "amount" => $amount,
-                "date" => $date,
-                "data" => $slip["message"]["data"]
-            ];
+                return [
+                    "verify" => true,
+                    "message" => "ตรวจสอบผ่าน",
+                    "transRef" => $transRef,
+                    "amount" => $amount,
+                    "date" => $date,
+                    "data" => $slip["message"]["data"]
+                ];
+            }
         }
-        // }
 
 
 
-        Linenotify::send("ตรวจสอบสลิป => ชื่อบัญชีอาจไม่ถูกต้อง => " . $receiver["name"] . " => Helper::verify_slip()");
-        Linenotify::send($slip);
+        Linenotify::send("ตรวจสอบสลิป --> ชื่อบัญชีหรือเลขที่บัญชีอาจไม่ถูกต้อง --> " . $receiver["name"] . " : " . $receiver["account"] . " --> Helper::verify_slip()");
+        // Linenotify::send($slip);
 
         return [
             "verify" => false,
@@ -411,5 +420,248 @@ BANK_NAME : " . $sender["bank"]["name"]);
                 "data" => $slip["message"]["data"]
             ];
         }
+    }
+
+    public static function verify_slip_v2($qr_code_text = null)
+    {
+        if (is_null($qr_code_text)) {
+            return [
+                "verify" => false,
+                "message" => "ไม่มีข้อมูล qr_code_text"
+            ];
+        }
+
+        $url = "https://api.slipok.com/api/line/apikey/4979";
+        $token = "SLIPOKCFRUR8F";
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 10,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => '{
+               "data" : "' . $qr_code_text . '"
+          }',
+            CURLOPT_HTTPHEADER => array(
+                'x-authorization: ' . $token,
+                'Content-Type: application/json'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+        $slip = json_decode($response, true);
+        // Linenotify::send("asfjasjmfp");
+        // Linenotify::send($slip);
+
+
+        if ($slip["success"] != true) {
+            Linenotify::send("CHECK_SLIP [ Helper::verify_slip_() ] --> STATUS [ " . $slip["success"] . " ] --> MESSAGE [ " . $slip["data"]["message"] . " ]");
+
+            // if ($slip["message"] == "not_enough_credit") {
+            //     Linenotify::send("Check_Slip ==> เครดิตไม่เพียงพอ");
+            // }
+            return [
+                "verify" => false,
+                "message" => "สถานะไม่ถูกต้อง",
+            ];
+        }
+
+        $transRef = $slip["data"]["transRef"];
+        // $date = \Carbon\Carbon::parse($slip["data"]["transDate"])->format("Y-m-d") . " " . $slip["data"]["transTime"];
+        $transDate = $slip["data"]["transDate"];
+        $date =  $transDate[0] . $transDate[1] . $transDate[2] . $transDate[3] . "-" . $transDate[4] . $transDate[5] . "-" . $transDate[6] . $transDate[7] . " " . $slip["data"]["transTime"];
+        $amount = $slip["data"]["amount"];
+        $receiver = $slip["data"]["receiver"];
+        // $sender = $slip["message"]["data"]["sender"];
+
+        $allowed_bank_accounts = [
+            // "0141111111111", // scb pp
+            // "xxxx-xx154-9", // scb bka
+            // "xxx-xxx-3402", // scb pp
+            // "xxx-x-x8154-x", // k+ bka
+            // "XXXXXX3402", // ktc pp
+            // "XXX-X-XX154-9", // ktc bka
+            // "419-1-xxx549", // bbl bka
+            // "091-xxx-3402", // bbl pp
+            // "09xxxx3402", // gsb pp
+            // "41xxxx1549", // gsb bka
+            "4191081549", // ttb bka
+            "0918853402", // bay pp
+
+
+            "xxxx-xx154-9", // scb bka
+            "xxx-xxx-3402", // scb pp
+
+            "XXXXXX3402", // ktb pp
+            "XXX-X-XX154-9", // ktb bak
+
+            "xxx-xxx-3402", // TTB PP
+
+            "xxx-x-x8154-x", // kbank pp
+            "xxx-x-x8154-x", //kbank bka
+
+            "09xxxx3402", //gsb pp
+
+        ];
+
+        foreach ($allowed_bank_accounts as $allowed_bank_account) {
+            similar_text($allowed_bank_account, $receiver["account"]["value"], $percent_bank_account);
+            similar_text($allowed_bank_account, $receiver["proxy"]["value"], $percent_proxy);
+            // Linenotify::send("NAME =>" . $receiver["name"] . " || ACCOUNT => " . $receiver["account"]);
+
+            if ($percent_bank_account == 100 || $percent_proxy == 100) {
+                // AllowedCheckSlip::firstOrCreate(["key" => $receiver["name"]]);
+                // AllowedCheckSlip::firstOrCreate(["key" => $receiver["account"]]);
+                //                 Linenotify::send("
+                // ตรวจสอบจากเลขบัญชี
+                // NAME : " . $receiver["name"] . "
+                // ACCOUNT : " . $receiver["account"] . "
+                // BANK_NAME : " . $sender["bank"]["name"]);
+
+                return [
+                    "verify" => true,
+                    "message" => "ตรวจสอบผ่าน",
+                    "transRef" => $transRef,
+                    "amount" => $amount,
+                    "date" => $date,
+                    "data" => $slip["data"]
+                ];
+            }
+        }
+
+        $allowed_names = [
+            "นางสาว ฐิติภัทร ศรีสุข",
+            "นางสาว ฐิติภัทร ศ",
+
+            // "น.ส.ฐิติภัทร ศรีสุข",
+            // "ฐิติภัทร ศรีสุข",
+            // // "ฐิติภัทร"
+            // "TITIPAT SRISUK",
+            "TITIPAT SRISU",
+            "TITIPAT S"
+
+        ];
+
+        foreach ($allowed_names as $allowed_name) {
+            similar_text($allowed_name, $receiver["name"], $percent_name);
+            // Linenotify::send("NAME =>" . $receiver["name"] . " || ACCOUNT => " . $receiver["account"]);
+
+            similar_text($allowed_name, $receiver["displayName"], $percent_displayName);
+
+            if ($percent_name == 100 || $percent_displayName == 100) {
+                // AllowedCheckSlip::firstOrCreate(["key" => $receiver["name"]]);
+                // AllowedCheckSlip::firstOrCreate(["key" => $receiver["account"]]);
+                //                 Linenotify::send("
+                // ตรวจสอบจากชื่อบัญชี
+                // NAME : " . $receiver["name"] . "
+                // ACCOUNT : " . $receiver["account"] . "
+                // BANK_NAME : " . $sender["bank"]["name"]);
+
+                return [
+                    "verify" => true,
+                    "message" => "ตรวจสอบผ่าน",
+                    "transRef" => $transRef,
+                    "amount" => $amount,
+                    "date" => $date,
+                    "data" => $slip["data"]
+                ];
+            }
+        }
+
+        Linenotify::send("ตรวจสอบสลิป --> ชื่อบัญชีหรือเลขที่บัญชีอาจไม่ถูกต้อง --> " . $receiver . " --> Helper::verify_slip()");
+        // Linenotify::send($slip);
+
+        return [
+            "verify" => false,
+            "message" => "ไม่ผ่านการตรวจสอบ",
+            "transRef" => $transRef,
+            "amount" => $amount,
+            "date" => $date,
+            "data" => $slip["data"]
+        ];
+
+        similar_text("นางสาว ฐิติภัทร ศรีสุข", $receiver["name"], $percent_name);
+
+        if ($percent_name >= 100) {
+            return [
+                "verify" => true,
+                "message" => "ตรวจสอบผ่าน",
+                "transRef" => $transRef,
+                "amount" => $amount,
+                "date" => $date,
+                "data" => $slip["message"]["data"]
+            ];
+        } else if ($percent_name <= 80) {
+            Linenotify::send("ตรวจสอบสลิป <= 80%");
+            Linenotify::send($slip);
+            return [
+                "verify" => false,
+                "message" => "ไม่ผ่านการตรวจสอบ",
+                "transRef" => $transRef,
+                "amount" => $amount,
+                "date" => $date,
+                "data" => $slip["message"]["data"]
+            ];
+        } else {
+            Linenotify::send("ตรวจสอบสลิป > 80% < 100%");
+            Linenotify::send($slip);
+
+            return [
+                "verify" => false,
+                "message" => "ไม่ผ่านการตรวจสอบ",
+                "transRef" => $transRef,
+                "amount" => $amount,
+                "date" => $date,
+                "data" => $slip["message"]["data"]
+            ];
+        }
+    }
+
+    public static function cut_comma_to_numeric($string)
+    {
+        $e1 = explode(",", $string);
+        $n = "";
+        foreach ($e1 as $e) {
+            $n = "$n$e";
+        }
+
+        return number_format($n, 0, "", "");
+    }
+
+    public static function get_params_url($url)
+    {
+        $parse_url = parse_url($url);
+
+        $ex1 = explode("&", $parse_url["query"]);
+        // $params = [];
+        foreach ($ex1 as $ex2) {
+            $ex3 = explode("=", $ex2);
+            $params[$ex3[0]] = $ex3[1];
+        }
+
+        $parse_url["params"] = $params;
+        $parse_url["url"] = $url;
+        return $parse_url;
+    }
+
+    public static function temporarySignedRouteUrl($name, $expires, $params = [])
+    {
+
+        $url =  URL::temporarySignedRoute(
+            $name,
+            $expires,
+            $params
+        );
+
+        return $url;
     }
 }

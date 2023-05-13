@@ -45,12 +45,16 @@
                             </td>
                         </tr>
                         <!-- / -->
-                        <tr v-if="user.type == 1 && social_startWith()">
+                        <tr v-if="user.type == 1">
                             <td colspan="2">
                                 <a
+                                    v-if="social_startWith()"
                                     target="_blank"
                                     :href="order.customer.social_is"
-                                    >Facebook</a
+                                    >FACEBOOK_LINK</a
+                                >
+                                <a target="_blank" :href="user_link()"
+                                    >USER_LINK</a
                                 >
                             </td>
                         </tr>
@@ -80,6 +84,10 @@ export default {
                 return true;
             }
             return false;
+        },
+        user_link() {
+            // window.location.href = `/o/${this.order.auth_order}`;
+            return `/o/${this.order.auth_order}`;
         },
     },
     computed: {

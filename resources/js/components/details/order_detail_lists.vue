@@ -25,6 +25,20 @@
             <template v-slot:item.a_price.name_goods="{ item }">
                 <div class="py-3">
                     <p class="mb-0 font-weight-black text-subtitle-2">
+                        <!-- <v-badge
+                            bordered
+                            overlap
+                            color="grey"
+                            :content="item.sort_group_multi_cake"
+                        > -->
+                        <v-icon
+                            class="pb-2 px-1"
+                            :color="item.color_multi_cake.color"
+                            v-if="item.order_detail_id != null"
+                            >cake</v-icon
+                        >
+                        <!-- </v-badge> -->
+
                         {{ item.a_price.name_goods }}
                     </p>
 
@@ -35,6 +49,25 @@
                     >
                         + {{ a.product_add_on.goods_add_on.name }}
                     </p>
+
+                    <div
+                        v-if="item.order_detail_id != null"
+                        class="d-flex justify-lg-start justify-md-start justify-sm-start justify-xl-start justify-end"
+                    >
+                        <p class="mb-1 text-caption font-weight-black">
+                            ชั้นที่
+                        </p>
+                        <p class="mb-1 text-caption">
+                            :
+                            <v-badge
+                                tile
+                                inline
+                                :color="item.color_multi_cake.color"
+                                :content="item.color_multi_cake.number"
+                                >{{ item.sort_group_multi_cake }}</v-badge
+                            >
+                        </p>
+                    </div>
 
                     <div
                         v-if="item.message != '-'"
@@ -93,6 +126,16 @@
                         v-if="item.is_take_a_photo"
                     >
                         ถ่ายรูปสินค้า
+                    </v-btn>
+
+                    <v-btn
+                        class="teal darken-4"
+                        x-small
+                        rounded
+                        dark
+                        v-if="item.order_detail_id"
+                    >
+                        เค้กหลายชั้น
                     </v-btn>
 
                     <v-btn

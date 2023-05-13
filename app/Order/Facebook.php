@@ -96,11 +96,11 @@ class Facebook extends Model
 
     public static function update_profile_by_message($profile, $message = null)
     {
-        if (is_null($profile->customer_id)) {
-            $profile->update([
-                "first_name" => $message,
-            ]);
-        }
+        // if (is_null($profile->customer_id)) {
+        $profile->update([
+            "first_name" => $message,
+        ]);
+        // }
     }
 
     public static function welcome_date($profile)
@@ -537,7 +537,7 @@ $setting->open_store - $setting->close_store น. ชั่วคราว
 
         if ($keyword == "account_number_and_slip_attachment_link") {
             $order = AOrder::find($postback["order_id"]);
-
+            ACustomer::consent_condition($order->customer);
             if (
                 $order->payment_deadline < now()->format("Y-m-d H:i:s")
 
@@ -584,7 +584,10 @@ $setting->open_store - $setting->close_store น. ชั่วคราว
 
 ธนาคารไทยพาณิชย์
 4191081549
-ฐิติภัทร ศรีสุข";
+ฐิติภัทร ศรีสุข
+
+True Wallet (ทรูวอลเลท)
+*โปรดแจ้ง หากสะดวกชำระช่องทางนี้*";
             $msg = $msg . "
 --------------------
 โปรดแจ้งชำระเงินก่อน
@@ -691,5 +694,169 @@ QR CODE นี้ จะหมดอายุ
 
         unlink("images/qr-code/$unique.png");
         return response()->json([], 200);
+    }
+
+    public static function payment_by_facebook_image_first()
+    {
+    }
+
+    public static function payment_by_facebook_image($attachments, $profile)
+    {
+
+        // นำข้อมูลมาวนลูป
+        // $attachment["payload"]["url"]
+        foreach ($attachments as $attachment) {
+
+            // อ่านคิวอาร์โดยลิงก์ url
+            $result = Helper::qrCodeReaderUrl_v2($attachment["payload"]["url"]);
+            // if ($result == null) {
+            //     $image->delete();
+            // ถ้ามีข้อมูลคิวอาร์
+            if ($result["has_qrcode"]) {
+
+                // แยกเอาเฉพาะ ref บนสลิป
+                // $dataQr = Helper::substr_slip_ref($result["text"]);
+                $dataQr = $result["text"];
+
+                // ค้นหาว่ามี ref นี้หรือยัง
+                $is_have = NoticeOfPaymentFromCustomer::where("ref", $dataQr)->first();
+                // if (isset($is_have)) {
+                //     $image->delete();
+                // }
+
+                // ถ้าไม่มี ref ซ่้ำ
+                if (empty($is_have)) {
+
+                    // ค้นหารายการสั่งซื้อที่มีเงื่อนไข
+                    // สถานะน้อยกว่า 9(รับสินค้า)
+                    // ยังไม่เลยกำหนดชำระเงิน
+                    // วันที่รับมากกว่าหรือเท่ากับปัจจุบัน
+                    // ช่องทางการสั่งซื้อคือ facebook
+                    // เรียงลำดับที่อัพเดทล่าสุด
+                    $orders = $profile->customer->orders
+                        ->where("status", "<", "9")
+                        ->where("payment_deadline", ">=", now()->format("Y-m-d H:i:s"))
+                        ->where("date_get", ">=", now()->format("Y-m-d"))
+                        ->where("channel", "3")
+                        ->sortByDesc("updated_at");
+
+                    // มีข้อมูลรายการสั่งซื้อเท่ากับ 1
+                    if ($orders->count() == 1) {
+
+                        // เอารายการสั่งซื้อแรก เปลี่ยนตัวแปร
+                        $order = $orders->first();
+
+                        // ถ้ายอดคงเหลือมากกว่า 0
+                        if ($order->sumBalance() > 0) {
+                            // สร้างการแจ้งเตือนชำระเงินจากลูกค้า
+                            $notice = NoticeOfPaymentFromCustomer::create([
+                                "order_id" => $order->id,
+                                "src_name" => $attachment["payload"]["url"],
+                                "status" => "create",
+                                "amount" => $order->sumBalance(),
+                                "ref" => $dataQr
+                            ]);
+                            Linenotify::send("รับชำระเงินจากลูกค้า -> #$order->id -> Facebook");
+
+                            NoticeOfPaymentFromCustomer::setSuccessFromVerifySlip($result["text"], $notice);
+                            // แจ้งเตือนไลน์
+                        }
+                        // AlertMessages::bothNoticeOfPaymentByCustomer($order->id, 0);
+                        // AlertMessages::socialNoticeOfPaymentByCustomer($order, 0);
+                    }
+                    // else if ($orders->count() == 0) {
+                    //     $facebook_link = str_starts_with($orders->customer->social_is, "https") ? " -> $orders->customer->social_is" : "";
+                    //     Linenotify::send("$facebook_link");
+                    // }
+
+                    // มีข้อมูลรายการสั่งซื้อไม่เท่ากับ 1
+                    else {
+                        $message = $orders->count() == 0 ? "ลูกค้าส่งสลิปเข้ามาในแชต แต่ไม่มีรายการสั่งซื้อรองรับ" : "ลูกค้าส่งสลิปเข้ามาในแชต แต่มีมากกว่า 1 คำสั่งซื้อขณะนี้";
+                        Linenotify::send($message);
+                    }
+                }
+            }
+        }
+    }
+
+    public static function register_wongnai_pos_bill($bill, $profile)
+    {
+        if (strlen($bill) == 5) {
+            $pattern = '/[A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9]/';
+            $uppercase = strtoupper($bill);
+            if (preg_match($pattern, $uppercase)) {
+                // 3 สามารถลงทะเบียนได้ 10 ใบเสร็จ / 1 ชั่วโมง โปรดลองอีกครั้งภายหลัง
+                $count_in_hours = RegisterWongnaiPosBill::where("facebook_id", $profile->id)
+                    ->where("created_at", ">=", now()->subDays(1)->format("Y-m-d H:i:s"))
+                    ->get();
+                if ($count_in_hours->count() > 5) {
+                    Facebook::reply_message_v2($profile->psid, "ท่านสามารถลงทะเบียนได้
+5 ใบเสร็จ / วัน
+โปรดลองอีกครั้งภายหลัง");
+                    return;
+                }
+
+                $find = RegisterWongnaiPosBill::where("bill_id", $uppercase)->first();
+                if (is_null($find)) {
+                    RegisterWongnaiPosBill::create([
+                        "bill_id" => $uppercase,
+                        "facebook_id" => $profile->id
+                    ]);
+                    Facebook::reply_message_v2($profile->psid, "ลงทะเบียนใบเสร็จเรียบร้อย");
+                    // 1 ลงทะเบียนใบเสร็จเรียบร้อย
+                } else {
+                    Facebook::reply_message_v2($profile->psid, "ใบเสร็จนี้ ! เคยลงทะเบียนแล้ว");
+
+                    // 2 ใบเสร็จนี้เคยลงทะเบียนแล้ว
+                }
+
+                if (empty($profile->customer)) {
+                    //                     Facebook::reply_message_v2($profile->psid, "ท่านยังไม่ได้เป็นสมาชิก
+
+                    // สมัครสมาชิกง่าย ๆ เพียงพิมพ์
+
+                    // สมัครสมาชิก
+                    // ชื่อ
+                    // เบอร์โทร
+
+                    // 📌 ตัวอย่าง
+                    // สมัครสมาชิก
+                    // ไก่
+                    // 0123456789
+
+                    // ❗️ โปรดพิมพ์ข้อมูลตามตัวอย่างเท่านั้น");
+
+                    $url = Helper::temporarySignedRouteUrl(
+                        "register_member_by_facebook",
+                        now()->addMinutes(5),
+                        ["psid" => $profile->psid]
+                    );
+
+                    $link = Helper::get_params_url($url);
+
+                    $link = ShotlinkV2::store("/register_member?" . $link["query"], 1);
+
+                    Facebook::postback(
+                        $profile->psid,
+                        [
+                            [
+                                "title" => "ท่านยังไม่ได้เป็นสมาชิก",
+                                "buttons" => [
+                                    [
+                                        "title" => "สมัครสมาชิก",
+                                        "url" => $link,
+                                        "type" => "web_url"
+                                    ]
+                                ]
+                            ]
+                        ]
+
+                    );
+                }
+            }
+            return "false - no pattern";
+        }
+
+        return "false - no lenght 5";
     }
 }

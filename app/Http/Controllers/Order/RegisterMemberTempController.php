@@ -6,6 +6,7 @@ use App\MSms;
 use App\Order\Line;
 use App\Order\Facebook;
 use App\Order\ACustomer;
+use App\Order\ShotlinkV2;
 use Illuminate\Http\Request;
 use App\Order\RegisterMemberTemp;
 use App\Http\Controllers\Controller;
@@ -53,5 +54,49 @@ class RegisterMemberTempController extends Controller
             "icon" => "success",
             "text" => "สมัครสมาชิกเรียบร้อย"
         ], 200);
+    }
+
+    public function register_member_by_facebook(Request $request)
+    {
+        if ($request->check_expires) {
+            $customer = Facebook::where("psid",$request->get("psid"))
+            ->with("customer:id,tel,name")
+            ->first();
+            return $customer;
+        }
+
+        $request->validate([
+            "name" => "required",
+            "phone" => "required|numeric|digits_between:10,10|starts_with:0",
+        ], [
+            "name.required" => "ห้ามว่าง",
+            "phone.starts_with" => "ต้องเริ่มต้นด้วย 0"
+
+        ]);
+
+        // return $request->name;
+
+        $temp = RegisterMemberTemp::updateOrCreate(
+            ["psid_userId" => $request->get("psid")],
+            [
+                "name" => $request->name,
+                "phone" => $request->phone,
+                "token" => bin2hex(openssl_random_pseudo_bytes(32)),
+                "channel" => "facebook",
+                "expiration_date" => now()->addMinutes("15")->format("Y-m-d H:i:s")
+            ]
+        );
+
+        $link = ShotlinkV2::store("/verify_identity/register_member/" . $temp->token, 1);
+        MSms::Sms($temp->phone, "คลิกลิงก์ [ " . $link . " ] เพื่อยืนยันการสมัครสมาชิก โปรดทำรายการภายใน 15 นาที");
+        // Facebook::reply_message_v2($request->get("psid"), "ระบบได้ส่งลิงก์สำหรับยืนยันตัวตนไปยัง SMS ตามหมายเลขที่ท่านแจ้งไว้ โปรดยืนยันภายใน 15 นาที");
+
+        return [
+            // "data" => $temp,
+            "status" => "success",
+            "title" => "สมัครสมาชิกแล้ว",
+            "text" => "ระบบได้ส่งลิงก์สำหรับยืนยันตัวตนไปยัง SMS ตามหมายเลขที่ท่านแจ้งไว้ โปรดยืนยันภายใน 15 นาที",
+            "icon" => "success"
+        ];
     }
 }

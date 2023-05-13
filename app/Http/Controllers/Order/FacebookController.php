@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Order;
 
-use App\URL;
+use PDO;
 // use Zxing\QrReader;
+use App\URL;
 use App\Helper;
 use App\Linenotify;
 use App\Order\AOrder;
@@ -16,6 +17,9 @@ use Illuminate\Http\Request;
 use App\Order\FacebookImages;
 use App\Order\FacebookWebhook;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Artisan;
+use App\Jobs\FacebookImagesAlertPaymentJob;
+
 // use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 
@@ -23,12 +27,19 @@ class FacebookController extends Controller
 {
     public function webhook(Request $request)
     {
+        // $token = "fdh5j41f65hg1aw6fg1h6jkl1hj65k1j6d5gs165i165re1d65fsd1x6j5nmk165try1r65qaw1gvf65z1h65sr16yg";
+        // if ($request["hub_verify_token"] != $token) {
+
+        //     Linenotify::send("hub_verify_token ไม่ถูกต้อง => " . $request);
+        //     return $request["hub_challenge"];
+        // }
 
         $setting = Setting::first();
         if (!$setting->facebook_status_bot || $request->method() == "GET") {
             Linenotify::send("Facebook Status Bot :: Off");
             return $request["hub_challenge"];
         }
+
 
         $input = json_decode($request->getContent(), true);
 
@@ -72,13 +83,15 @@ class FacebookController extends Controller
 
             Facebook::update_profile_by_message($profile, $message);
 
+            Facebook::register_wongnai_pos_bill($message, $profile);
+
             // สมัครสมาชิก
-            // if (
-            //     str_starts_with($message, "สมัครสมาชิก") &&
-            //     Facebook::register_member($sender, $message)
-            // ) {
-            //     return $request["hub_challenge"];
-            // }
+            if (
+                str_starts_with($message, "สมัครสมาชิก") &&
+                Facebook::register_member($sender, $message)
+            ) {
+                return $request["hub_challenge"];
+            }
 
             // สร้างคำที่ยังไม่มีในฐานข้อมูล พร้อมดึงข้อมูลออกมา
             $FacebookWebhook = FacebookWebhook::firstOrCreate([
@@ -91,21 +104,25 @@ class FacebookController extends Controller
             }
 
             // ตอบคะแนนของลูกค้า
-            // if ($message == "คะแนนของฉัน") {
-            //     Facebook::sumCustomerScore($profile, $sender);
-            //     // return $request["hub_challenge"];
-            // }
+            if ($message == "คะแนนของฉัน") {
+                Facebook::sumCustomerScore($profile, $sender);
+                // return $request["hub_challenge"];
+            }
         }
 
         // มี Image
         if (!empty($input['entry'][0]['messaging'][0]['message']['attachments'])) {
             $attachments = $input['entry'][0]['messaging'][0]['message']['attachments'];
-            foreach ($attachments as $attachment) {
-                if ($attachment["type"] == "image") {
-                    FacebookImages::createImages($attachment, $profile);
-                    // $attachment["payload"]["url"];
-                }
-            }
+            // Facebook::payment_by_facebook_image($attachments, $profile);
+            FacebookImages::createImages($attachments, $profile);
+            // foreach ($attachments as $attachment) {
+            //     if ($attachment["type"] == "image") {
+            //         FacebookImages::createImage($attachment, $profile);
+            //         // $attachment["payload"]["url"];
+            //         // FacebookImagesAlertPaymentJob::dispatch();
+            //     }
+            // }
+            // Artisan::queue('FacebookImages:AlertPaymentCommand');
         }
 
         // มี POSTBACK
@@ -139,7 +156,7 @@ class FacebookController extends Controller
             }
         }
 
-        $datas->orderBy("updated_at", "DESC");
+        $datas->orderBy("updated_at", "DESC")->orderBy("customer_id", "ASC");
 
         return $datas->get();
     }
@@ -505,6 +522,10 @@ QR CODE นี้ จะหมดอายุ
 
     public function check_slip()
     {
+        $qr = Helper::qrCodeReaderUrl_v2("https://scontent.fkdt3-1.fna.fbcdn.net/v/t1.15752-9/324981173_836759107413326_1494315589568600085_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=ae9488&_nc_eui2=AeGAnCM_pdTAsY4aks_pSCnOT88oYTzaPpNPzyhhPNo-k9tAl1v0LJEwJUxfhEbgqcury9Utjz66qiDwKUvHhIrp&_nc_ohc=lc2bI2dHe3oAX94wyak&_nc_ht=scontent.fkdt3-1.fna&oh=03_AdTF5hc5ZZmRv4i5CzfMD9Jay6mQyxLYlStrZVjFNmR-rw&oe=63E75807");
+        return $qr;
+        Artisan::queue('FacebookImages:AlertPaymentCommand');
+        return;
         $slip = Helper::verify_slip("0046000600000101030140225202212315HrxrtS8e9LSq4xIR5102TH91048BAE");
 
         dd($slip);
@@ -545,9 +566,8 @@ QR CODE นี้ จะหมดอายุ
             ];
             foreach ($names_true as $name_true) {
                 similar_text($name_true, $name, $percent_name);
-                if($percent_name >=  70 && $percent_name < 80){
-                    echo $name." =======> ".$percent_name." =======> $name_true <br>";
-
+                if ($percent_name >=  70 && $percent_name < 80) {
+                    echo $name . " =======> " . $percent_name . " =======> $name_true <br>";
                 }
                 // if (
                 //     $percent_name == 100 &&
@@ -1218,5 +1238,24 @@ QR CODE นี้ จะหมดอายุ
         //     // }
         // }
         // }
+    }
+
+    public function FacebookImagesAlertPaymentJob()
+    {
+        // $d = FacebookImages::find("7");
+        FacebookImagesAlertPaymentJob::dispatch();
+        // ->delay(now()->addMinutes(1));
+        return;
+    }
+
+    public function get_psid_profile(Request $request)
+    {
+        $psid = $request->get("psid");
+        $customer = Facebook::where("psid", $psid)->with("customer")->first();
+        return $customer;
+    }
+
+    public function post_psid_profile()
+    {
     }
 }

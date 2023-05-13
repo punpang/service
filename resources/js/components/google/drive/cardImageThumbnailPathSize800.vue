@@ -2,8 +2,10 @@
     <v-col cols="12" md="4" class="pa-1">
         <v-card>
             <imageThumbnailPathSize800 :path="path"></imageThumbnailPathSize800>
-            <v-card-actions v-if="user.type === 1">
+
+            <v-card-actions>
                 <v-btn
+                    v-if="user.type == 1"
                     :href="
                         'https://drive.google.com/uc?id=' +
                         path +
@@ -15,8 +17,6 @@
                 >
                     <v-icon>file_download</v-icon>ดาวน์โหลด</v-btn
                 >
-            </v-card-actions>
-            <v-card-actions v-else>
                 <v-btn
                     class="white error--text"
                     style="text-decoration: none"

@@ -23,6 +23,13 @@
             </v-col>
         </v-row>
 
+        <!-- <v-card>
+            <v-card-title>
+                {{orderDateTimeGet_orders}}
+            </v-card-title>
+            <orderDetailLists></orderDetailLists>
+        </v-card> -->
+
         <!-- <v-card v-if="dataSuccess" class="mb-4">
             <v-card-title class="text-h6">
                 รายการสั่งซื้อ
@@ -193,6 +200,8 @@ import cardManageCake from "@/js/components/order/cardManageCake";
 import btnNewOrderCake from "@/js/components/order/btnNewOrderCake";
 import tableListProductSelected from "@/js/components/order/tableListProductSelected";
 
+import orderDetailLists from "@/js/components/details/order_detail_lists";
+
 export default {
     components: {
         customerShow,
@@ -202,6 +211,7 @@ export default {
         cardManageCake,
         tableListProductSelected,
         btnNewOrderCake,
+        orderDetailLists
     },
     data() {
         return {
@@ -301,6 +311,7 @@ export default {
             detailTemps: "orderDetailTemp/temps",
             temp: "orderTemp/temp",
             customer: "orderCustomer/getSearch",
+            orderDateTimeGet_orders:"orderDateTimeGet/orders"
         }),
         dataSuccess() {
             if (!this.customer) return false;

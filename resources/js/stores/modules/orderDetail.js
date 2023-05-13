@@ -4,7 +4,7 @@ export default {
         dataUseOnly: [],
         getByOrderId: [],
         sum: "",
-        count: ""
+        count: "",
     },
     mutations: {
         dataUseOnly(state, data) {
@@ -18,13 +18,13 @@ export default {
         },
         count(state, data) {
             state.count = data;
-        }
+        },
     },
     getters: {
-        dataUseOnly: state => state.dataUseOnly,
-        getByOrderId: state => state.getByOrderId,
-        sum: state => state.sum,
-        count: state => state.count
+        dataUseOnly: (state) => state.dataUseOnly,
+        getByOrderId: (state) => state.getByOrderId,
+        sum: (state) => state.sum,
+        count: (state) => state.count,
     },
     actions: {
         async store({ dispatch }, payload) {
@@ -99,6 +99,14 @@ export default {
                 payload.formData
             );
             return res;
-        }
-    }
+        },
+
+        async updateSortGroupMultiCake({}, payload) {
+            const res = await axios.post(
+                "/api/order/detail/updateSortGroupMultiCake",
+                payload.formData
+            );
+            return res;
+        },
+    },
 };

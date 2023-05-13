@@ -26,6 +26,78 @@
                         locale="th-TH"
                         elevation="1"
                     ></v-date-picker>
+                    <v-row class="mt-2">
+                        <v-col cols="12" md="6">
+                            <v-menu
+                                ref="menu"
+                                v-model="start_time"
+                                :close-on-content-click="false"
+                                :nudge-right="40"
+                                :return-value.sync="start_time"
+                                transition="scale-transition"
+                                offset-y
+                                max-width="290px"
+                                min-width="290px"
+                            >
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-text-field
+                                        class="mt-2"
+                                        v-model="times.start"
+                                        label="เวลาสิ้นสุด"
+                                        readonly
+                                        v-bind="attrs"
+                                        v-on="on"
+                                        hide-details
+                                        outlined
+                                    ></v-text-field>
+                                </template>
+                                <v-time-picker
+                                    v-if="start_time"
+                                    v-model="times.start"
+                                    :allowed-minutes="allowedMinutes"
+                                    full-width
+                                    @click:minute="$refs.menu.save(times.start)"
+                                    scrollable
+                                    format="24hr"
+                                ></v-time-picker>
+                            </v-menu>
+                        </v-col>
+                        <v-col cols="12" md="6">
+                            <v-menu
+                                ref="menu"
+                                v-model="end_time"
+                                :close-on-content-click="false"
+                                :nudge-right="40"
+                                :return-value.sync="end_time"
+                                transition="scale-transition"
+                                offset-y
+                                max-width="290px"
+                                min-width="290px"
+                            >
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-text-field
+                                        class="mt-2"
+                                        v-model="times.end"
+                                        label="เวลาสิ้นสุด"
+                                        readonly
+                                        v-bind="attrs"
+                                        v-on="on"
+                                        hide-details
+                                        outlined
+                                    ></v-text-field>
+                                </template>
+                                <v-time-picker
+                                    v-if="end_time"
+                                    v-model="times.end"
+                                    :allowed-minutes="allowedMinutes"
+                                    full-width
+                                    @click:minute="$refs.menu.save(times.end)"
+                                    scrollable
+                                    format="24hr"
+                                ></v-time-picker>
+                            </v-menu>
+                        </v-col>
+                    </v-row>
                 </v-card-text>
                 <v-card-actions>
                     <v-btn large class="error" @click="exit()">
@@ -49,12 +121,18 @@ export default {
         return {
             dialog: false,
             dates: [],
+            times: {
+                start: "00:00",
+                end: "23:30",
+            },
+            start_time: false,
+            end_time: false,
         };
     },
     methods: {
+        allowedMinutes: (v) => v % 30 == 0,
         async save() {
             if (this.dates.length < 2) {
-
                 this.$swal({
                     toast: true,
                     allowOutsideClick: false,
@@ -68,30 +146,45 @@ export default {
                 return;
             }
             let loader = this.$loading.show();
-            const result = await axios.post(`/api/admin/v1/StoreDayOff/store`, {
-                dates: this.dates,
-            });
+            await axios
+                .post(`/api/admin/v1/StoreDayOff/store`, {
+                    dates: this.dates,
+                    times: this.times,
+                })
+                .then((result) => {
+                    if (result.data.status == "success") {
+                        this.$swal({
+                            toast: true,
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            title: "สำเร็จ",
+                            icon: "success",
+                            timer: 5000,
+                            timerProgressBar: true,
+                            position: "bottom",
+                        });
+                        this.exit();
+                        this.$emit("emitSuccess");
+                    } else if (result.data.status == "error") {
+                        this.$toast.error(result.data.message);
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
 
-            this.exit();
             loader.hide();
 
-            if (result.status == 200) {
-                this.$swal({
-                    toast: true,
-                    allowOutsideClick: false,
-                    showConfirmButton: false,
-                    title: "สำเร็จ",
-                    icon: "success",
-                    timer: 5000,
-                    timerProgressBar: true,
-                    position: "bottom",
-                });
-            }
+            // if (result.status == 200) {
 
-            this.$emit("emitSuccess");
+            // }
         },
         exit() {
             this.dates = [];
+            this.times = {
+                start: "00:00",
+                end: "23:59",
+            };
             this.dialog = false;
         },
         allowedDates(val) {

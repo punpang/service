@@ -55,29 +55,32 @@ class Line extends Model
         return;
     }
 
-    public static function create_profile($userId)
+    public static function create_profile($userId, $text = "default")
     {
         $profile = Line::where("userId", $userId)->first();
-        if (!$profile) {
-            $get_profile = self::get_profile($userId);
+        if (empty($profile)) {
+            // $get_profile = self::get_profile($userId);
             Line::create([
-                "displayName" => $get_profile["displayName"],
-                "userId" => $get_profile["userId"],
+                "displayName" => $text,
+                "userId" => $userId,
             ]);
         } else {
-            Line::update_profile($profile);
-            $profile->update(["updated_at" => now()]);
+            // Line::update_profile($profile, $text);
+            $profile->update([
+                "displayName" => $text,
+                "updated_at" => now()
+            ]);
         }
 
         return $profile;
     }
 
-    public static function update_profile($profile)
+    public static function update_profile($profile, $text = "default")
     {
         if ($profile->updated_at < now()->subDays(7)) {
-            $get_profile = Line::get_profile($profile->userId);
+            // $get_profile = Line::get_profile($profile->userId);
             $profile->update([
-                "displayName" => $get_profile["displayName"],
+                "displayName" => $text,
             ]);
         }
     }

@@ -25,6 +25,9 @@
                         : item.start_date_th
                 }}
             </template>
+            <template v-slot:item.time_get_th="{ item }">
+                {{ item.start_time }} - {{ item.end_time }}
+            </template>
             <template v-slot:item.manages="{ item }">
                 <v-icon color="error" @click="remove(item.id)">delete</v-icon>
             </template>
@@ -41,6 +44,7 @@ export default {
             fetchs: [],
             headers: [
                 { text: "วันที่เริ่มต้น-สิ้นสุด", value: "start_date_th" },
+                { text: "เวลาเริ่มต้น-สิ้นสุด", value: "time_get_th" },
                 { text: "การจัดการ", value: "manages", align: "end" },
             ],
         };

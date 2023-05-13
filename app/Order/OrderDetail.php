@@ -31,9 +31,15 @@ class OrderDetail extends Model implements Auditable
         "message",
         "detail",
         "is_show_public"
+
     ];
 
-    protected $appends = ["sum_all", "sum_money_customer", "sum_money_service"];
+    protected $appends = [
+        "sum_all",
+        "sum_money_customer",
+        "sum_money_service",
+        "color_multi_cake"
+    ];
 
     public function aPrice()
     {
@@ -118,6 +124,39 @@ class OrderDetail extends Model implements Auditable
         return number_format($this->price + $this->sum_add_on, 2);
     }
 
+    public function getColorMultiCakeAttribute()
+    {
+        if ($this->order_detail_id == null) {
+            return null;
+        }
+
+        $id = array_map("intval", str_split($this->order_detail_id));
+
+        $numbers = array_slice($id, -2, 2, true);
+        $number = "";
+        foreach ($numbers as $number_1) {
+            $number = $number . $number_1;
+        }
+
+        $colors = [
+            "red",
+            "indigo",
+            "pink",
+            "purple",
+            "blue",
+            "cyan",
+            "green",
+            "light-blue",
+            "teal",
+            "lime",
+        ];
+
+        return [
+            "color" => $colors[end($id)],
+            "number" => $number
+        ];
+    }
+
     public function onlyTrashed()
     {
         return $this->withTrashed();
@@ -131,5 +170,15 @@ class OrderDetail extends Model implements Auditable
     public function orderTag()
     {
         return $this->hasOne(OrderTags::class);
+    }
+
+    public function multiCakes()
+    {
+        return $this->hasMany(OrderDetail::class, "order_detail_id", "id")->orderBy("sort_group_multi_cake","ASC");
+    }
+
+    public function multiCake()
+    {
+        return $this->belongsTo(OrderDetail::class, "order_detail_id", "id");
     }
 }

@@ -166,7 +166,7 @@ const routes = [
     {
         path: "/manages/settings/store/dayOff",
         name: "managesStoreDayOff",
-        component: () => import("@/js/pages/store/dayOff.vue"),
+        component: () => import("@/js/pages/store/dayOff"),
         meta: { requiresAuth: true },
     },
 
@@ -240,6 +240,11 @@ const routes = [
         name: "managesLuckyRedeemCode",
         component: () => import("@/js/pages/lucky/rewardUUID"),
     },
+    {
+        path: "/import/excel",
+        name: "importExcel",
+        component: () => import("@/js/pages/import/excel"),
+    },
 
     // guest
     {
@@ -288,6 +293,20 @@ const routes = [
         name: "verify_identityRegister_member",
         component: () =>
             import("@/js/pages/guest/verify_identity/register_member"),
+    },
+
+    {
+        path: "/register_member",
+        name: "verify_identityRegister_member",
+        component: () =>
+            import("@/js/pages/guest/register_member"),
+    },
+
+    {
+        path: "/profile/psid",
+        name: "profile_psid",
+        component: () =>
+            import("@/js/pages/guest/profile_psid/index"),
     },
 ];
 

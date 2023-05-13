@@ -29,6 +29,11 @@ class LineController extends Controller
         $userId = $response["events"][0]["source"]["userId"];
         $replyToken = $response["events"][0]["replyToken"];
 
+        // Line::reply_message_v2($replyToken, $request->getContent());
+
+        // return;
+
+
         $profile = Line::create_profile($userId);
 
         if (
@@ -45,6 +50,8 @@ class LineController extends Controller
         if ($response["events"][0]["type"] == "message") {
             if ($response["events"][0]["message"]["type"] == "text") {
                 $text = $response["events"][0]["message"]["text"];
+
+                $profile = Line::create_profile($userId, $text);
 
                 Line::register_member($replyToken, $userId, $text);
 

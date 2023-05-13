@@ -72,8 +72,8 @@ class NoticePaymetByCustomerCommand extends Command
                             Linenotify::send("มีแจ้งชำระเงินซ้ำ หมายเลข #$notice->order_id");
                         } else {
                             $notice->update(["ref" => $ref]);
-                            $setSuccessFromVerifySlip = NoticeOfPaymentFromCustomer::setSuccessFromVerifySlip($result["text"], $notice);
-                            if ($setSuccessFromVerifySlip["success"]) {
+                            $setSuccessFromVerifySlip = NoticeOfPaymentFromCustomer::setSuccessFromVerifySlipV2($result["text"], $notice);
+                            if ($setSuccessFromVerifySlip["status"]) {
                                 $count_verify_slip = $count_verify_slip + 1;
                             }
                         }

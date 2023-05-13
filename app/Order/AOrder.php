@@ -457,6 +457,13 @@ class AOrder extends Model
         return $this->hasMany(OrderDetail::class, "order_id", "id");
     }
 
+
+
+    public function orderDetailsNull()
+    {
+        return $this->hasMany(OrderDetail::class, "order_id", "id")->whereNull("order_detail_id");
+    }
+
     public function orderDetailsOnlyTrashed()
     {
         return $this->orderDetails()->onlyTrashed();
@@ -574,13 +581,15 @@ class AOrder extends Model
 ข้อความ : " . $detail->message : "";
             $remark = $detail->detail != "-" ? "
 หมายเหตุ : " . $detail->detail : "";
+
             ////
             $m = $m . "รายการที่ " . ($key_detail + 1) . "
 " . $detail->aPrice->name_goods  . $aa .  $message . $remark . "
-ราคา " . number_format($detail->sum_total, 2) . " บาท $message_money_services
+ราคา " . $detail->sum_total . " บาท $message_money_services
 -------------------------
 ";
         }
+
 
         $message_pos = "";
         if ($order->posOrders->count() > 0) {

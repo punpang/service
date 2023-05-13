@@ -1,8 +1,9 @@
 <template>
     <v-col cols="12" md="4" class="pa-1">
         <v-card>
+
             <imageThumbnailPathSize800 :path="path"></imageThumbnailPathSize800>
-            <v-card-actions v-if="user.type === 1">
+            <v-card-actions v-if="user.type == 1">
                 <v-btn
                     :href="
                         'https://drive.google.com/uc?id=' +

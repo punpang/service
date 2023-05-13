@@ -99,9 +99,24 @@ Route::prefix('v1')->group(function () { // api/v1/...
 
         Route::post('endpoint_payment', 'Order\RewardCustomerController@endpointPayment');
 
+        Route::prefix('lottery')->group(function () { // api/gueœst/order/
+            Route::get('{customer}/get_period', 'Order\LotteryPeriodController@get_period');
+            Route::post('{customer}/{lottery}/register', 'Order\LotteryPeriodController@register');
+        });
+
         Route::prefix('verify_identity')->group(function () { // api/gueœst/order/
             Route::post('{token}/register_member', 'Order\RegisterMemberTempController@update');
+            Route::get('profile', 'Order\FacebookController@update');
+            Route::post('register_member', 'Order\FacebookController@update');
         });
+
+        Route::prefix('profile')->group(function () { // api/gueœst/order/
+            Route::get('psid', 'Order\FacebookController@get_psid_profile')->name("profile_psid");
+            // ->middleware("signed");
+            Route::post('psid', 'Order\FacebookController@post_psid_profile')->name("profile_psid")->middleware("signed");
+        });
+
+        Route::post('register_member_by_facebook', 'Order\RegisterMemberTempController@register_member_by_facebook')->name("register_member_by_facebook")->middleware("signed");
     });
 
 
@@ -136,6 +151,7 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
 
     Route::prefix('admin')->group(function () { // api/waitress/...
 
+
         Route::prefix('menuBar')->group(function () { // api/menuBar/...
             Route::get('all', 'ShabuNooNee\MenuMainController@all');
 
@@ -151,6 +167,10 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
 
 
         Route::prefix("v1")->group(function () {
+
+            Route::prefix('import')->group(function () { // api/v1/pos/goods/...
+                Route::post('excel', 'Order\WongnaiPosBillsController@import');
+            });
 
             Route::prefix('sms')->group(function () { // api/v1/pos/goods/...
                 Route::prefix('messages')->group(function () { // api/v1/pos/goods/...
@@ -307,6 +327,7 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                 Route::post('{order}/customerNoPayment', 'Order\AOrderController@customerNoPayment');
                 Route::post('{order}/pickUpGoods', 'Order\AOrderController@pickUpGoods');
                 Route::post('{order}/summaryOfOrderDetails', 'Order\AOrderController@summaryOfOrderDetails');
+                Route::post('{order}/{channel_id}/update_channel_order', 'Order\AOrderController@update_channel_order');
 
                 Route::prefix('channelPayment')->group(function () { // api/admin/v1/...
                     Route::get('getUse', 'Order\ChannelPaymentController@getUse');
@@ -336,6 +357,10 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
 
                     Route::post('{id}/delete', 'Order\OrderDetailController@delete');
                     Route::post('{id}/update', 'Order\OrderDetailController@update');
+
+                    Route::post('update_sort_group_multi_cake', 'Order\OrderDetailController@update_sort_group_multi_cake');
+                    Route::post('{id}/remove_muticake', 'Order\OrderDetailController@remove_muticake');
+                    Route::post('{id}/add_multi_cake', 'Order\OrderDetailController@add_multi_cake');
 
                     Route::prefix('addOn')->group(function () { // api/admin/v1/order/detail/addOn
                         Route::post('{id}/autoUpdateAddOns', 'Order\OrderDetailController@autoUpdateAddOns');
@@ -451,30 +476,53 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
 // Route::get('testssss/readerqrcode', 'Order\FacebookController@readerqrcode');
 // Route::get('get_bese64', 'Order\FacebookController@get_bese64');
 // Route::get('ocr_aiforthai', 'Order\FacebookController@aiforthai');
-Route::get('check_slip', 'Order\FacebookController@check_slip');
+// Route::get('check_slip', 'Order\FacebookController@check_slip');
+// Route::get('FacebookImagesAlertPaymentJob', 'Order\FacebookController@FacebookImagesAlertPaymentJob');
 // Route::get('reqrcodetext', 'Order\NoticeOfPaymentFromCustomerController@reqrcodetext');
+// Route::get('text_test/{text}', 'Order\WongnaiPosBillsController@text_test');
+// Route::get('text_test/{text}', 'Order\WongnaiPosBillsController@text_test');
+// Route::get('wongnai', 'Order\WongnaiPosBillsController@test');
+Route::get('set_url_timeout', 'Order\WongnaiPosBillsController@set_url_timeout');
+Route::post('url_set_time', 'Order\WongnaiPosBillsController@url_set_time')->name("url_set_time")->middleware("signed");
+Route::get('check_expires', 'Order\WongnaiPosBillsController@check_expires');
+
+Route::get('psid_member', 'Order\WongnaiPosBillsController@get_psid_member')->name("psid_member")->middleware("signed");
+Route::post('psid_member', 'Order\WongnaiPosBillsController@post_psid_member')->name("psid_member")->middleware("signed");
 
 
+// Route::get('/clear-cache/fghrfywertgsdfdrwet', function () {
+//     Artisan::call('optimize:clear');
+//     Artisan::call('config:clear');
+//     Artisan::call('cache:clear');
+//     Artisan::call('config:cache');
+//     return 'FINISHED';
+// });
 
-Route::get('/clear-cache/fghrfywertgsdfdrwet', function () {
-    Artisan::call('optimize:clear');
-    Artisan::call('config:clear');
-    Artisan::call('cache:clear');
-    Artisan::call('config:cache');
-    return 'FINISHED';
+// Route::get('/artisan/df4sd6f41wa6f1f6g8qw3f4as6df4196/migrate', function () {
+//     return Artisan::call('migrate');
+// });
+
+Route::get('/artisan/df4sd6f41wa6f1f6g8qw3f4as6df4196/queue/refresh', function () {
+    Artisan::call('queue:restart');
+    Artisan::call('queue:work --queue=high,default');
+    return "Finished";
 });
 
-Route::get('/artisan/df4sd6f41wa6f1f6g8qw3f4as6df4196/migrate', function () {
-    return Artisan::call('migrate');
+Route::get('/artisan/df4sd6f41wa6f1f6g8qw3f4as6df4196/queue/restart', function () {
+    return Artisan::call('queue:restart');
 });
 
-Route::get('/artisan/df4sd6f41wa6f1f6g8qw3f4as6df4196/db/seed/{seed}', function ($seed) {
-    return Artisan::call('db:seed --class=' . $seed);
+Route::get('/artisan/df4sd6f41wa6f1f6g8qw3f4as6df4196/queue/work', function () {
+    return Artisan::call('queue:work --queue=high,default');
 });
 
-Route::get('/artisan/df4sd6f41wa6f1f6g8qw3f4as6df4196/{value}', function ($value) {
-    return Artisan::call($value);
-});
+// Route::get('/artisan/df4sd6f41wa6f1f6g8qw3f4as6df4196/db/seed/{seed}', function ($seed) {
+//     return Artisan::call('db:seed --class=' . $seed);
+// });
+
+// Route::get('/artisan/df4sd6f41wa6f1f6g8qw3f4as6df4196/{value}', function ($value) {
+//     return Artisan::call($value);
+// });
 
 
 Route::prefix('callback')->group(function () { // api/callback/...

@@ -244,9 +244,9 @@ class NoticeOfPaymentFromCustomerController extends Controller
     public function qrCodeReaderUrl(Request $request)
     {
         $qrCode = Helper::qrCodeReaderUrl_v2($request->url);
-        $ref = Helper::substr_slip_ref($qrCode["text"]);
 
         if ($qrCode["has_qrcode"]) {
+            $ref = Helper::substr_slip_ref($qrCode["text"]);
             return response()->json([
                 "has_qrcode" => true,
                 "ref" => $ref
@@ -273,15 +273,14 @@ class NoticeOfPaymentFromCustomerController extends Controller
                 $url = "https://lh3.googleusercontent.com/d/$notice->src_name";
                 $result =  Helper::qrCodeReaderUrl_v2($url);
             }
-            if($result["has_qrcode"]){
+            if ($result["has_qrcode"]) {
                 $notice->update([
                     "ref" => $result["text"]
                 ]);
                 echo "$notice->id || $notice->ref || SUCCESS <br><br>";
-            }else{
+            } else {
                 echo "<b style='color:red'>$notice->id || $notice->src_name || Failed </b> <br><br>";
             }
-
         }
     }
 }

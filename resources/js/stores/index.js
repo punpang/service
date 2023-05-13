@@ -60,6 +60,8 @@ import orderLuckyReward from "@/js/stores/modules/order/luckyReward";
 
 import orderTags from "@/js/stores/modules/order/tags";
 
+import profilePsid from "@/js/stores/modules/order/profile_psid";
+
 import posGoods from "@/js/stores/modules/pos/goods";
 import posCategoryGoods from "@/js/stores/modules/pos/categoryGoods";
 import posOrder from "@/js/stores/modules/pos/order";
@@ -126,5 +128,6 @@ export default new Vuex.Store({
         posOrderDetail,
         orderTags,
         smsMessages,
+        profilePsid
     },
 });

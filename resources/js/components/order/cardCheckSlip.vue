@@ -377,13 +377,14 @@ export default {
             this.amount = notice.amount;
             this.status = notice.status;
             this.sumAll = res.data.sumAll;
-            if (!this.ref) {
+            if (this.ref == null) {
                 await this.fetch_qrcode();
             }
 
-            if (this.ref.startsWith("no-qrcode-")) {
+            if (this.ref != null && this.ref.startsWith("no-qrcode-")) {
                 this.ref = "";
             }
+
             loader.hide();
         },
         is_url(v) {

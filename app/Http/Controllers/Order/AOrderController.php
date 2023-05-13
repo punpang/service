@@ -12,29 +12,78 @@ use App\Order\AOrder;
 use App\Order\Facebook;
 use App\Order\OrderTemp;
 use App\Order\OrderDetail;
+use App\Order\StoreDayOff;
 use Illuminate\Support\Str;
-use App\Order\AHistoryPayed;
 // use App\Order\ImageFromCustomer;
+use App\Order\AHistoryPayed;
 use App\Order\AlertMessages;
 use App\Order\CustomerScore;
+// use App\Order\KsherChannelPayment;
 use Illuminate\Http\Request;
-use App\Order\KsherChannelPayment;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+
 
 class AOrderController extends Controller
 {
     public function checkDateTimeGet()
     {
-        // return AOrder::find(8554);
-        // dd(request("timeGet") . ":00");
-        $orders = AOrder::whereDateGet(request("dateGet"))
-            ->whereTimeGet(request("timeGet") . ":00")
-            ->whereIn("status", [0, 1, 2, 3, 4, 5, 6, 7])
-            // ->select("id","")
-            ->get()
-            ->makeHidden(['sum_all']);
+        // dd(request()->all());
+        // 20/01/2023 <= 21/01/2023 /
+        // 22/02/2023 >= 20/01/2023 /
+        $time_get =  request("timeGet") . ":00";
+        // 09.00 <=  15.00 /
+        // 14.00 >=  15.00 *
+        $day_off = StoreDayOff::where("start_date", "<=", request("dateGet"))
+            ->where("end_date", ">=", request("dateGet"))
+            ->where("start_time", "<=", $time_get)
+            ->where("end_time", ">=", $time_get)
+            ->first();
 
+        if (!is_null($day_off)) {
+            if ($day_off->start_time == "00:00:00" && $day_off->end_time == "23:59:59") {
+                $message = "ร้านหยุดให้บริการ $day_off->start_date_th - $day_off->end_date_th";
+            } else {
+                $message = "ร้านหยุดให้บริการ $day_off->start_date_th $day_off->start_time - $day_off->end_time น.";
+            }
+
+            return [
+                "status" => "error",
+                "message" => $message
+            ];
+        }
+
+
+        // $orders = AOrder::whereDateGet(request("dateGet"))
+        //     ->whereTimeGet($time_get)
+        //     ->whereIn("status", [0, 1, 2, 3, 4, 5, 6, 7])
+        //     // ->select("id","")
+        //     ->get()
+        //     ->makeHidden(['sum_all']);
+
+
+        $dateGet = request("dateGet");
+        $orders = OrderDetail::whereHas("aOrder", function ($q) use ($dateGet, $time_get) {
+            $q->where("date_get", $dateGet)
+                ->where("time_get", $time_get)
+                ->where("status", "<", "8");
+        })
+            ->with(
+                "aOrder",
+                "aOrder.orderDeliveryService",
+                "aOrder.aStatus",
+                "aPrice.googleImage",
+                "addOns.productAddOn.goodsAddOn",
+                "imageFromCustomers.googleImage",
+                "productPrototypes.googleImage"
+            )
+            ->get();
+
+
+        // ->whereHas("aOrder", function ($q) use ($request) {
+        //     $q->where("date_get", $request->get("date_get"));
+        //     $q->where("status", "<", "8");
+        // })
         return $orders;
     }
 
@@ -210,6 +259,9 @@ class AOrderController extends Controller
 
     public function getOrderByID($order_id)
     {
+
+        // $order = AOrder::with("orderDetailsNull")->findOrFail($order_id);
+        // return $order;
         $order = AOrder::with(
             "customer.facebook",
             "customer.line",
@@ -223,7 +275,7 @@ class AOrderController extends Controller
             "aHistoryPayed.ntpfc",
             "aHistoryPayed.ksherPay",
             "orderDetails.aPrice.googleImage",
-            "orderDetailsOnlyTrashed",
+            // "orderDetailsOnlyTrashed",
             "orderDetails.productPrototypes.googleImage",
             "orderDetails.imageForMenus.googleImage",
             "orderDetails.imageFromCustomers.googleImage",
@@ -232,10 +284,19 @@ class AOrderController extends Controller
             "orderDeliveryService",
             "orderDetails.MoneyServices.category_money_service",
             "adjustExcessPayments",
-            "posOrders.posGoods"
+            "posOrders.posGoods",
+            "orderDetails.multiCakes.aPrice",
+            
         )
             ->with("orderDetails.addOns.productAddOn.goodsAddOn")
+
             ->findOrFail($order_id);
+
+        // $detail = OrderDetail::whereHas("aOrder", function ($query) use ($request) {
+        //     return $query->where("auth_order", $request->uuid);
+        // })->findOrFail($request->order_detail_id);
+
+
 
         // ->with(
         //     "customer",
@@ -543,8 +604,8 @@ class AOrderController extends Controller
 
             $payload_send_postback = [
                 [
-                    "title" => "ชำระเงินและรายละเอียดสินค้า",
-                    "subtitle" => "โปรดชำระเงินโดยกดปุ่ม ชำระเงิน",
+                    "title" => "สรุปรายการสั่งซื้อและชำระเงิน",
+                    "subtitle" => "โปรดศึกษาเงื่อนไขก่อนกดปุ่ม -> ถูกต้อง, เลขที่บัญชี",
                     "buttons" => [
                         [
                             "title" => "รายละเอียด",
@@ -552,7 +613,7 @@ class AOrderController extends Controller
                             "type" => "web_url"
                         ],
                         [
-                            "title" => "ขอเลขที่บัญชี",
+                            "title" => "ถูกต้อง ,เลขที่บัญชี",
                             "payload" => json_encode(
                                 [
                                     "keyword" => "account_number_and_slip_attachment_link",
@@ -1070,6 +1131,19 @@ class AOrderController extends Controller
         return response()->json([
             "title" => "ส่งสรุปรายการเรียบร้อย",
             "icon" => "success"
+        ], 200);
+    }
+
+    public function update_channel_order(AOrder $order, $channel_id)
+    {
+        $order->update([
+            "channel" => $channel_id
+        ]);
+        return response()->json([
+            "title" => "เปลี่ยนแปลงช่องทางการสั่งซื้อสำเร็จ",
+            "message" => "เปลี่ยนแปลงช่องทางการสั่งซื้อสำเร็จ",
+            "icon" => "success",
+            "status" => "success"
         ], 200);
     }
 }

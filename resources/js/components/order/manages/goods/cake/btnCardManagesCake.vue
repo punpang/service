@@ -38,6 +38,9 @@
                             <btnMoneyService
                                 :propOrderDetail="propOrderDetail"
                             ></btnMoneyService>
+                            <btnMultiCake
+                                :propOrderDetail="propOrderDetail"
+                            ></btnMultiCake>
                         </v-list-item-group>
                     </v-list>
                     <!-- <editCake
@@ -79,8 +82,10 @@ import btnUploadProductPrototype from "@/js/components/order/manages/goods/cake/
 import btnSwitchUploadImageFromCustomer from "@/js/components/order/manages/goods/cake/btnSwitchUploadImageFromCustomer";
 import btnSwitchTakeAPhoto from "@/js/components/order/manages/goods/cake/btnSwitchTakeAPhoto";
 import btnMoneyService from "@/js/components/order/manages/goods/cake/moneyService/btn";
+import btnMultiCake from "@/js/components/order/manages/goods/cake/multiCake/btn"
+
 export default {
-    props: ["propOrderDetail"],
+    props: ["propOrderDetail","propOrder"],
     components: {
         editCake,
         removeCake,
@@ -89,6 +94,7 @@ export default {
         btnSwitchUploadImageFromCustomer,
         btnSwitchTakeAPhoto,
         btnMoneyService,
+        btnMultiCake
         // btnUploadImageForMenu
     },
     data() {

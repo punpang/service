@@ -256,4 +256,85 @@ class OrderDetailController extends Controller
 
         return  $query;
     }
+
+    public function update_sort_group_multi_cake(Request $request)
+    {
+        foreach ($request->all() as $detail) {
+            OrderDetail::where("id", $detail["detail_id"])->update([
+                "sort_group_multi_cake" => $detail["sort_group_multi_cake"]
+            ]);
+        }
+
+        return response()->json([
+            "success" => true,
+            "icon" => "success",
+            "text" => "เปลี่ยนแปลงลำดับเรียบร้อย",
+            "title" => "ดำเนินการเรียบร้อย"
+        ], 200);
+    }
+
+    public function remove_muticake(OrderDetail $id)
+    {
+        $detail_id = $id->order_detail_id;
+
+        $id->order_detail_id = null;
+        $id->sort_group_multi_cake = null;
+        $id->save();
+
+        $details = OrderDetail::where("order_detail_id", $detail_id)
+            ->orderBy("sort_group_multi_cake", "ASC")
+            ->get();
+
+
+
+        if ($details->count() <= 1) {
+            foreach ($details as $detail) {
+                $detail->order_detail_id = null;
+                $detail->sort_group_multi_cake = null;
+                $detail->save();
+            }
+        } else {
+
+            for ($i = 0; $i < $details->count(); $i++) {
+                // dd("FOR", $details->count(), $details[$i]);
+                $details[$i]->sort_group_multi_cake = $i + 1;
+                $details[$i]->save();
+            }
+        }
+
+        return response()->json([
+            // "data" => $details,
+            "success" => true,
+            "icon" => "success",
+            "text" => "ลบรายการออกเรียบร้อย",
+            "title" => "ดำเนินการเรียบร้อย"
+        ], 200);
+    }
+
+    public function add_multi_cake(OrderDetail $id, Request $request)
+    {
+        $details = OrderDetail::where("order_detail_id", $request->order_detail_id)->get();
+
+        if ($details->count() == 0) {
+            OrderDetail::where("id", $request->order_detail_id)->update([
+                "order_detail_id" => $request->order_detail_id,
+                "sort_group_multi_cake" => 1
+            ]);
+            $id->order_detail_id = $request->order_detail_id;
+            $id->sort_group_multi_cake = 2;
+            $id->save();
+        } else {
+            $id->order_detail_id = $request->order_detail_id;
+            $id->sort_group_multi_cake = $details->count() + 1;
+            $id->save();
+        }
+
+        return response()->json([
+            // "data" => $details,
+            "success" => true,
+            "icon" => "success",
+            "text" => "เพิ่มรายการออกเรียบร้อย",
+            "title" => "ดำเนินการเรียบร้อย"
+        ], 200);
+    }
 }

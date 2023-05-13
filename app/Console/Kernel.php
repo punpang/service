@@ -31,7 +31,7 @@ class Kernel extends ConsoleKernel
         $schedule->command("FacebookImages:AlertPaymentCommand")->everyMinute();
 
         // แจ้งเตือนชำระเงินจากลูกค้า
-        $schedule->command("Alert:NoticePaymentByCustomer")->everyMinute()->between('8:30', '19:00');
+        $schedule->command("Alert:NoticePaymentByCustomer")->everyMinute();
 
 
         // แจ้งเตือนรายการสั่งซื้อวันนี้
@@ -47,11 +47,16 @@ class Kernel extends ConsoleKernel
         // แจ้งยอดขายวันนี้
         $schedule->command("Alert:SumOrderToday")->dailyAt('19:00');
 
+        // ตรวจสอบและเพิ่มคะแนนจากใบเสร็จ wongnai pos
+        $schedule->command("ProcessingScore:WongnaiPosBill")->dailyAt('19:15');
+
         // แจ้งลูกค้าที่ยังไม่ได้รับสินค้า ให้รับก่อนร้านปิด
         $schedule->command("AlertCustomer:GetBeforeClose")->dailyAt('18:00');
 
         // $schedule->command('inspire')
         //          ->hourly();
+
+        // $schedule->command('queue:listen')->everyMinute()->withoutOverlapping();
     }
 
     /**
