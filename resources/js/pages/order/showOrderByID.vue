@@ -59,6 +59,7 @@
                     <btnPayment
                         v-if="order.sum_all.sumBalance > 0"
                     ></btnPayment>
+                    <btnUseAccumulatedPoints></btnUseAccumulatedPoints>
                     <btnNoPayment
                         v-if="
                             order.status == 1 &&
@@ -103,6 +104,8 @@ import btnDelivery from "@/js/components/order/delivery/btnDelivery";
 import btnSummaryOfOrderDetails from "@/js/components/order/summaryOfOrderDetails/btn";
 import btnPrepareGoods from "@/js/components/order/prepareGoods/btnPrepareGoods";
 import btnPickUpGoods from "@/js/components/order/pickUpGoods/btnPickUpGoods";
+import btnUseAccumulatedPoints from '@/js/components/order/useAccumulatedPoints/btnUseAccumulatedPoints';
+
 
 import alertAdjustExcessPayment from "@/js/components/order/adjustExcessPayment/alert";
 export default {
@@ -126,6 +129,7 @@ export default {
         btnPrepareGoods,
         btnPickUpGoods,
         btnSummaryOfOrderDetails,
+        btnUseAccumulatedPoints,
 
         alertAdjustExcessPayment,
     },

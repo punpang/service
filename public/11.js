@@ -109,7 +109,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_components_google_drive_imageThumbnailPathSizeFree__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/js/components/google/drive/imageThumbnailPathSizeFree */ "./resources/js/components/google/drive/imageThumbnailPathSizeFree.vue");
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["propPath"],
+  props: ["propPath", "propPaths"],
   components: {
     imageThumbnailPathSizeFree: _js_components_google_drive_imageThumbnailPathSizeFree__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -157,9 +157,21 @@ var render = function render() {
         }) : _vm._e()];
       }
     }, {
-      key: "item.a_price.name_goods",
+      key: "item.a_order.id",
       fn: function fn(_ref2) {
         var item = _ref2.item;
+        return [_vm._v("\n            " + _vm._s(item.order_detail_id != null && item.sort_group_multi_cake > 1 ? "" : item.a_order.id) + "\n        ")];
+      }
+    }, {
+      key: "item.a_order.time_get_format",
+      fn: function fn(_ref3) {
+        var item = _ref3.item;
+        return [_vm._v("\n            " + _vm._s(item.order_detail_id != null && item.sort_group_multi_cake > 1 ? "" : item.a_order.time_get_format) + "\n        ")];
+      }
+    }, {
+      key: "item.a_price.name_goods",
+      fn: function fn(_ref4) {
+        var item = _ref4.item;
         return [_c("div", {
           staticClass: "py-3"
         }, [_c("p", {
@@ -197,7 +209,7 @@ var render = function render() {
           staticClass: "mb-1 text-caption info--text font-weight-black"
         }, [_vm._v("\n                    *" + _vm._s(item.detail) + "*\n                ")]) : _vm._e(), _vm._v(" "), item.product_prototypes.length > 0 ? _c("btnPrototypeImage", {
           attrs: {
-            propPath: item.product_prototypes[0].google_image.src_name
+            propPaths: item.product_prototypes
           }
         }) : _vm._e(), _vm._v(" "), item.add_ons.length > 0 ? _c("v-btn", {
           staticClass: "pink accent-2",
@@ -250,8 +262,8 @@ var render = function render() {
       }
     }, {
       key: "item.manages",
-      fn: function fn(_ref3) {
-        var item = _ref3.item;
+      fn: function fn(_ref5) {
+        var item = _ref5.item;
         return [_c("v-btn", {
           staticClass: "info",
           attrs: {
@@ -403,7 +415,7 @@ var render = function render() {
             "x-small": "",
             rounded: ""
           }
-        }, on), [_vm._v("\n                ต้นแบบสินค้า\n            ")])];
+        }, on), [_vm._v("\n                ต้นแบบสินค้า (" + _vm._s(_vm.propPaths.length) + " รูป)\n            ")])];
       }
     }]),
     model: {
@@ -413,12 +425,15 @@ var render = function render() {
       },
       expression: "dialog"
     }
-  }, [_vm._v(" "), _c("v-card", [_c("imageThumbnailPathSizeFree", {
-    attrs: {
-      path: _vm.propPath,
-      size: 400
-    }
-  })], 1)], 1)], 1);
+  }, [_vm._v(" "), _c("v-card", _vm._l(_vm.propPaths, function (image) {
+    return _c("imageThumbnailPathSizeFree", {
+      key: image.id,
+      attrs: {
+        path: image.google_image.src_name,
+        size: 600
+      }
+    });
+  }), 1)], 1)], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;

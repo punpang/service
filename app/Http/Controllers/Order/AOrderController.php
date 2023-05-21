@@ -286,7 +286,7 @@ class AOrderController extends Controller
             "adjustExcessPayments",
             "posOrders.posGoods",
             "orderDetails.multiCakes.aPrice",
-            
+
         )
             ->with("orderDetails.addOns.productAddOn.goodsAddOn")
 
@@ -1144,6 +1144,58 @@ class AOrderController extends Controller
             "message" => "เปลี่ยนแปลงช่องทางการสั่งซื้อสำเร็จ",
             "icon" => "success",
             "status" => "success"
+        ], 200);
+    }
+
+    public function use_point_by_order_id(AOrder $order, Request $request)
+    {
+        if ($order->usePoint() != 0) {
+            return response()->json([
+                "icon" => "error",
+                "title" => "เกิดข้อผิดพลาดบางอย่าง",
+                "text" => "รายการสั่งซื้อนี้ ใช้คะแนนสะสมแล้ว"
+            ], 200);
+        }
+
+        if ($request->point > $order->sumGoods() / 2) {
+            return response()->json([
+                "icon" => "error",
+                "title" => "เกิดข้อผิดพลาดบางอย่าง",
+                "text" => "คะแนนที่ใช้ มากกว่า 50% ของรายการสั่งซื้อที่จะสามารถใช้ได้"
+            ], 200);
+        }
+
+        if ($request->point > $order->customer->sumDiffScore()) {
+            return response()->json([
+                "icon" => "error",
+                "title" => "เกิดข้อผิดพลาดบางอย่าง",
+                "text" => "คะแนนที่ใช้ มากกว่า คะแนนที่มีอยู่"
+            ], 200);
+        }
+
+        CustomerScore::useScore(
+            $order->customer->id,
+            $request->point,
+            0,
+            null,
+            $order->id
+        );
+
+        return response()->json([
+            "icon" => "success",
+            "title" => "ดำเนินการเรียบร้อย",
+            "text" => "ใช้คะแนนเรียบร้อยค่ะ"
+        ], 200);
+    }
+
+    public function remove_use_point_by_order_id(AOrder $order)
+    {
+
+        $order->CustomerScore->delete();
+        return response()->json([
+            "icon" => "success",
+            "title" => "ดำเนินการเรียบร้อย",
+            "text" => "ยกเลิกการใช้คะแนนสะสมเรียบร้อย"
         ], 200);
     }
 }

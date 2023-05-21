@@ -48,7 +48,12 @@ class SumOrderTodayCommand extends Command
 
         $count_order_details = 0;
         foreach ($orders as $order) {
-            $count_order_details += $order->orderDetails()->count();
+            // $count_order_details += $order->orderDetails()->count();
+            foreach ($order->orderDetails() as $detail) {
+                if ($detail->order_detail_id == null || $detail->order_detail_id == $detail->id) {
+                    $count_order_details += 1;
+                }
+            }
         }
         // AlertMessages::LineAlertGeneral("count_order_details => " . $count_order_details);
 

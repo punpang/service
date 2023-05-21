@@ -45,7 +45,7 @@ class Kernel extends ConsoleKernel
         // แจ้งเตือนรายการสั่งซื้อที่รอชำระสำหรับวันนี้
 
         // แจ้งยอดขายวันนี้
-        $schedule->command("Alert:SumOrderToday")->dailyAt('19:00');
+        $schedule->command("Alert:SumOrderToday")->everyMinute();
 
         // ตรวจสอบและเพิ่มคะแนนจากใบเสร็จ wongnai pos
         $schedule->command("ProcessingScore:WongnaiPosBill")->dailyAt('19:15');

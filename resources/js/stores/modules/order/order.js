@@ -500,6 +500,33 @@ export default {
                 });
         },
 
+        async use_point_by_order_id({}, payload) {
+            return await axios
+                .post(
+                    `/api/admin/v1/order/${payload.order_id}/use_point_by_order_id`,
+                    payload
+                )
+                .then((response) => {
+                    return response;
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        },
+        async remove_use_point_by_order_id({}, payload) {
+            return await axios
+                .post(
+                    `/api/admin/v1/order/${payload.order_id}/remove_use_point_by_order_id`
+                    
+                )
+                .then((response) => {
+                    return response;
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        },
+
 
     },
 };

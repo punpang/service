@@ -273,6 +273,9 @@ QR CODE นี้ จะหมดอายุ
 
     public function test_sumup_message($order)
     {
+        // dd("test");
+        $result = AOrder::summaryOfOrderDetails($order);
+        return $result;
         $order = AOrder::with(
             // "customer.facebook",
             // "customer.line",
@@ -1257,5 +1260,10 @@ QR CODE นี้ จะหมดอายุ
 
     public function post_psid_profile()
     {
+    }
+
+    public function summaryOfOrderDetails($order_id)
+    {
+        return AOrder::summaryOfOrderDetails($order_id);
     }
 }

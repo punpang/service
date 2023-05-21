@@ -328,6 +328,8 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                 Route::post('{order}/pickUpGoods', 'Order\AOrderController@pickUpGoods');
                 Route::post('{order}/summaryOfOrderDetails', 'Order\AOrderController@summaryOfOrderDetails');
                 Route::post('{order}/{channel_id}/update_channel_order', 'Order\AOrderController@update_channel_order');
+                Route::post('{order}/use_point_by_order_id', 'Order\AOrderController@use_point_by_order_id');
+                Route::post('{order}/remove_use_point_by_order_id', 'Order\AOrderController@remove_use_point_by_order_id');
 
                 Route::prefix('channelPayment')->group(function () { // api/admin/v1/...
                     Route::get('getUse', 'Order\ChannelPaymentController@getUse');
@@ -473,6 +475,9 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
 
 // Route::get('{promotion_id}/test', 'Momday\PromotionController@test');
 // Route::get('test/{order}', 'Order\FacebookController@test_sumup_message');
+Route::get('summaryOfOrderDetails/{order}', 'Order\FacebookController@summaryOfOrderDetails');
+
+
 // Route::get('testssss/readerqrcode', 'Order\FacebookController@readerqrcode');
 // Route::get('get_bese64', 'Order\FacebookController@get_bese64');
 // Route::get('ocr_aiforthai', 'Order\FacebookController@aiforthai');

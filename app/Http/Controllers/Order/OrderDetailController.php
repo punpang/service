@@ -200,7 +200,7 @@ class OrderDetailController extends Controller
         // return $request->get("tags");
         $query = OrderDetail::query();
 
-        $query->select("id", "order_id", "a_price_id");
+        $query->select("id", "order_id", "a_price_id", "order_detail_id");
         $query->whereHas("aOrder", function ($q) {
             $q->whereDate("date_get", "<=", now()->subDays(1)->format("Y-m-d"));
         });
@@ -239,12 +239,20 @@ class OrderDetailController extends Controller
             "aPrice",
             "addOns:id,order_detail_id,product_add_on_id",
             "addOns.productAddOn.goodsAddOn",
-            "orderTags.tag:id,text"
+            "orderTags.tag:id,text",
+            "multiCakes:id,a_price_id,order_detail_id,sort_group_multi_cake",
+            "multiCakes.addOns:id,order_detail_id,product_add_on_id",
+            "multiCakes.addOns.productAddOn.goodsAddOn",
+            "multiCakes.aPrice"
         );
         $query = $query->get();
 
         foreach ($query as $q) {
-            $q->setAppends(["sum_price_for_menu"]);
+            $q->setAppends(["sum_price_for_menu", "sum_price_multi_cake_for_menu"]);
+            // dd($q->multiCakes);
+            foreach ($q->multiCakes as $m) {
+                $m->setAppends([]);
+            }
         }
 
         if ($request->price_rank != null) {

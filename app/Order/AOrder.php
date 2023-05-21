@@ -6,6 +6,7 @@ namespace App\Order;
 // use App\URL;
 // use App\Linenotify;
 use App\Pos\Order;
+// use App\Linenotify;
 use App\Order\OrderDetail;
 use Illuminate\Support\Str;
 use App\Order\AHistoryPayed;
@@ -129,6 +130,20 @@ class AOrder extends Model
         return $this->belongsTo(ACustomer::class, "id_customer", "id");
     }
 
+    public function CustomerScore()
+    {
+        return $this->hasOne(CustomerScore::class, "order_id", "id");
+    }
+
+    public function usePoint()
+    {
+        if ($this->CustomerScore == null) {
+            return 0;
+        }
+
+        return $this->CustomerScore->point;
+    }
+
     public function imageFromCustomers()
     {
         return $this->hasMany(ImageFromCustomer::class, "order_id", "id")->whereStatusUse(1)->orderBy('created_at', "desc");
@@ -236,6 +251,7 @@ class AOrder extends Model
             "sumMoneyService" => $this->sumMoneyService(),
             "sumMoneyCustomer" => $this->sumMoneyCustomer(),
             "sumPosOrder" => $this->sumPosOrder(),
+            "usePoint" => $this->usePoint(),
             // "sumHistoryPayed" => $this->sumHistoryPayed()
         ];
     }
@@ -299,7 +315,8 @@ class AOrder extends Model
             $this->sumAccessoryServiceDiscount() +
             $this->sumDeliverService() +
             $this->sumMoneyCustomer() +
-            $this->sumMoneyService();
+            $this->sumMoneyService() +
+            $this->usePoint();
     }
 
     public function getSumTascAttribute()
@@ -576,6 +593,10 @@ class AOrder extends Model
                 $message_money_services = "";
             }
 
+            $layer_multi_cake =  $detail->order_detail_id != null ?
+                "
+                ชั้นที่ " . $detail->sort_group_multi_cake . "[#" . $detail->color_multi_cake[""] . "]"  : "";
+
             /////
             $message = $detail->message != "-" ? "
 ข้อความ : " . $detail->message : "";
@@ -584,7 +605,7 @@ class AOrder extends Model
 
             ////
             $m = $m . "รายการที่ " . ($key_detail + 1) . "
-" . $detail->aPrice->name_goods  . $aa .  $message . $remark . "
+" . $detail->aPrice->name_goods . $layer_multi_cake  . $aa .  $message . $remark . "
 ราคา " . $detail->sum_total . " บาท $message_money_services
 -------------------------
 ";
@@ -638,6 +659,11 @@ https://punpang.net/learning/conditions/order";
             $msg_conditutions = "";
         }
 
+        $usePoints = $order->usePoint() != 0 ? "
+        ใช้คะแนนสะสม " . $order->usePoint() . " คะแนน" :
+            "";
+
+
         $msg = "หมายเลขคำสั่งซื้อ #$order->id
 ชื่อลูกค้า : " . $order->customer->name . "
 เบอร์โทร : " . $order->customer->tel . "
@@ -647,7 +673,7 @@ https://punpang.net/learning/conditions/order";
 -------------------------
 " . $m . $message_pos . "
 " . $message_delivery_service . "ยอดทั้งหมด " . number_format($order->sumTASC()) . " บาท
-ยอดชำระแล้ว " . number_format($order->sumDeposited()) . " บาท
+ยอดชำระแล้ว " . number_format($order->sumDeposited()) . " บาท " . $usePoints . "
 -------------------------
 ยอดคงเหลือ " . number_format($order->sumBalance()) . " บาท
 -------------------------
@@ -660,7 +686,7 @@ $message_payment_deadline_th
         // Linenotify::send($msg);
 
         Facebook::send_reply_message($order, $msg);
-        return;
+        return $msg;
     }
 
     // กสิกร

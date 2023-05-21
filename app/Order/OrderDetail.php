@@ -66,6 +66,23 @@ class OrderDetail extends Model implements Auditable
         return $this->addOns->sum("price_addon") + $this->aPrice->price;
     }
 
+    public function getSumPriceMultiCakeForMenuAttribute()
+    {
+        return $this->multiCakes->sum("aPrice.price") + $this->sumMultiCakeAddOnPrice;
+        // return $this->multiCakes->sum("aPrice.price") + $this->multiCakes->sum("addOns.price_addon");
+    }
+
+    public function getSumMultiCakeAddOnPriceAttribute()
+    {
+
+        $sum = 0;
+        // return $sum;
+        foreach ($this->multiCakes as $multiCake) {
+            $sum += $multiCake->addOns->sum("price_addon");
+        }
+        return $sum;
+    }
+
     public function imageFromCustomers()
     {
         return $this->hasMany(ImageFromCustomer::class);
@@ -174,11 +191,15 @@ class OrderDetail extends Model implements Auditable
 
     public function multiCakes()
     {
-        return $this->hasMany(OrderDetail::class, "order_detail_id", "id")->orderBy("sort_group_multi_cake","ASC");
+        return $this->hasMany(OrderDetail::class, "order_detail_id", "id")->orderBy("sort_group_multi_cake", "ASC");
     }
 
     public function multiCake()
     {
         return $this->belongsTo(OrderDetail::class, "order_detail_id", "id");
+    }
+    public function multiCakeA()
+    {
+        return $this->hasOne(OrderDetail::class, "order_detail_id", "id");
     }
 }

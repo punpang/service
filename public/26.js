@@ -42,7 +42,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_components_google_drive_imageThumbnailPathSizeFree__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/js/components/google/drive/imageThumbnailPathSizeFree */ "./resources/js/components/google/drive/imageThumbnailPathSizeFree.vue");
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["propPath"],
+  props: ["propPath", "propPaths"],
   components: {
     imageThumbnailPathSizeFree: _js_components_google_drive_imageThumbnailPathSizeFree__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -338,7 +338,7 @@ var render = function render() {
             "x-small": "",
             rounded: ""
           }
-        }, on), [_vm._v("\n                ต้นแบบสินค้า\n            ")])];
+        }, on), [_vm._v("\n                ต้นแบบสินค้า (" + _vm._s(_vm.propPaths.length) + " รูป)\n            ")])];
       }
     }]),
     model: {
@@ -348,12 +348,15 @@ var render = function render() {
       },
       expression: "dialog"
     }
-  }, [_vm._v(" "), _c("v-card", [_c("imageThumbnailPathSizeFree", {
-    attrs: {
-      path: _vm.propPath,
-      size: 400
-    }
-  })], 1)], 1)], 1);
+  }, [_vm._v(" "), _c("v-card", _vm._l(_vm.propPaths, function (image) {
+    return _c("imageThumbnailPathSizeFree", {
+      key: image.id,
+      attrs: {
+        path: image.google_image.src_name,
+        size: 600
+      }
+    });
+  }), 1)], 1)], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;

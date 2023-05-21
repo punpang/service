@@ -105,7 +105,7 @@ Vue.filter("formatNumber", function (value) {
             loader = _this.$loading.show();
             tags = _this.$route.query.tags != undefined ? "&tags=".concat(_this.$route.query.tags) : "";
             price_rank = _this.$route.query.price_rank != undefined ? "&price_rank=".concat(_this.$route.query.price_rank) : "";
-            payload = "whereHas=imageForMenus,with=imageForMenus".concat(tags).concat(price_rank);
+            payload = "whereHas=imageForMenus,with=imageForMenus,multiCakes".concat(tags).concat(price_rank);
             _context.next = 6;
             return axios.get("/api/v1/guest/product/punpang/order_details/fetch_for_menu?".concat(payload));
           case 6:
@@ -294,15 +294,39 @@ var render = function render() {
         size: 500,
         propID: product.id
       }
-    }), _vm._v(" "), _c("v-card-text", [_c("div", {
+    }), _vm._v(" "), product.order_detail_id == null ? _c("v-card-text", [_c("div", {
       staticClass: "d-flex flex-row text-body-2 font-weight-black"
     }, [_vm._v("\n                        " + _vm._s(product.a_price.name_goods) + "\n                    ")]), _vm._v(" "), _c("div", {
       staticClass: "d-flex flex-row text-body-2 my-1 font-weight-bold deep-orange--text"
     }, [_vm._v("\n                        ฿" + _vm._s(_vm._f("formatNumber")(product.sum_price_for_menu)) + "\n                    ")]), _vm._v(" "), product.add_ons.length > 0 ? _c("div", {
       staticClass: "mt-1"
-    }, [_c("strong", [_vm._v("เพิ่มเติม : ")]), _vm._v("\n\n                        " + _vm._s(_vm.convert_add_on_name(product.add_ons)) + "\n                    ")]) : _vm._e(), _vm._v(" "), product.order_tags.length > 0 ? _c("div", {
+    }, [_c("v-divider", {
+      staticClass: "my-2"
+    }), _vm._v(" "), _c("strong", [_vm._v("เพิ่มเติม : ")]), _vm._v("\n\n                        " + _vm._s(_vm.convert_add_on_name(product.add_ons)) + "\n                    ")], 1) : _vm._e(), _vm._v(" "), product.order_tags.length > 0 ? _c("div", {
       staticClass: "mt-1"
-    }, [_c("strong", [_vm._v("แท็ก : ")]), _vm._v("\n\n                        " + _vm._s(_vm.convert_tags(product.order_tags)) + "\n                    ")]) : _vm._e()]), _vm._v(" "), _vm.user.type == 1 ? _c("v-card-actions", [_c("v-btn", {
+    }, [_c("v-divider", {
+      staticClass: "my-2"
+    }), _vm._v(" "), _c("strong", [_vm._v("แท็ก : ")]), _vm._v("\n\n                        " + _vm._s(_vm.convert_tags(product.order_tags)) + "\n                    ")], 1) : _vm._e()]) : _c("v-card-text", [_c("div", {
+      staticClass: "d-flex flex-row text-body-2 font-weight-black"
+    }, [_vm._v("\n                        เค้ก " + _vm._s(product.multi_cakes.length) + " ชั้น\n                    ")]), _vm._v(" "), _c("div", {
+      staticClass: "d-flex flex-row text-body-2 my-1 font-weight-bold deep-orange--text"
+    }, [_vm._v("\n                        ฿" + _vm._s(_vm._f("formatNumber")(product.sum_price_multi_cake_for_menu)) + "\n                    ")]), _vm._v(" "), _vm._l(product.multi_cakes, function (multi_cake) {
+      return _c("div", {
+        key: multi_cake.id
+      }, [_c("v-divider", {
+        staticClass: "my-2"
+      }), _vm._v(" "), _c("div", {
+        staticClass: "mt-1"
+      }, [_c("strong", [_vm._v("ชั้นที่ : ")]), _vm._v("\n                            " + _vm._s(multi_cake.sort_group_multi_cake) + "\n                        ")]), _vm._v(" "), _c("div", {
+        staticClass: "d-flex flex-row text-body-2 font-weight-black"
+      }, [_vm._v("\n                            " + _vm._s(multi_cake.a_price.name_goods) + "\n                        ")]), _vm._v(" "), multi_cake.add_ons.length > 0 ? _c("div", {
+        staticClass: "mt-1"
+      }, [_c("strong", [_vm._v("เพิ่มเติม : ")]), _vm._v("\n\n                            " + _vm._s(_vm.convert_add_on_name(multi_cake.add_ons)) + "\n                        ")]) : _vm._e()], 1);
+    }), _vm._v(" "), _c("v-divider", {
+      staticClass: "my-2"
+    }), _vm._v(" "), product.order_tags.length > 0 ? _c("div", {
+      staticClass: "mt-1"
+    }, [_c("strong", [_vm._v("แท็ก : ")]), _vm._v("\n\n                        " + _vm._s(_vm.convert_tags(product.order_tags)) + "\n                    ")]) : _vm._e()], 2), _vm._v(" "), _vm.user.type == 1 ? _c("v-card-actions", [_c("v-btn", {
       attrs: {
         block: "",
         outlined: "",

@@ -71,7 +71,7 @@
                     </td>
                 </tr>
                 <!-- / -->
-                <tr v-if="order.sum_all.sumMoneyService > 0 ">
+                <tr v-if="order.sum_all.sumMoneyService > 0">
                     <td>
                         <strong>ค่าบริการเสริม</strong>
                     </td>
@@ -128,7 +128,23 @@
                     <td class="text-right">
                         <strong
                             >-
-                            {{ order.sum_all.sumAdjustExcessPayment | formatNumber }}</strong
+                            {{
+                                order.sum_all.sumAdjustExcessPayment
+                                    | formatNumber
+                            }}</strong
+                        >
+                    </td>
+                </tr>
+                <!-- / -->
+                <tr v-if="order.sum_all.usePoint != 0">
+                    <td>
+                        <strong>ใช้คะแนนสะสม</strong>
+                    </td>
+
+                    <td class="text-right error--text">
+                        <btnRemoveUsePoint></btnRemoveUsePoint>
+                        <strong>
+                            {{ order.sum_all.usePoint | formatNumber }}</strong
                         >
                     </td>
                 </tr>
@@ -160,7 +176,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-
+import btnRemoveUsePoint from "@/js/components/order/useAccumulatedPoints/btnRemoveUsePoint";
 var numeral = require("numeral");
 Vue.filter("formatNumber", function (value) {
     return numeral(value).format("0,0.00");
@@ -168,6 +184,12 @@ Vue.filter("formatNumber", function (value) {
 export default {
     data() {
         return {};
+    },
+    components: {
+        btnRemoveUsePoint,
+    },
+    methods: {
+        removeUsePoint() {},
     },
     computed: {
         ...mapGetters({

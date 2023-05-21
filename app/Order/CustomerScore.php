@@ -93,7 +93,7 @@ class CustomerScore extends Model
         //AHistoryPayed
     }
 
-    public static function useScore($customer_id, $point, $can_refund = 0, $history_payed_id = null)
+    public static function useScore($customer_id, $point, $can_refund = 0, $history_payed_id = null, $order_id = null)
     {
         $score = new CustomerScore;
         $score->customer_id = $customer_id;
@@ -101,6 +101,7 @@ class CustomerScore extends Model
         $score->point = -$point;
         $score->can_refund = $can_refund;
         $score->expiration_date = \Carbon\Carbon::now();
+        $score->order_id = $order_id;
         $score->save();
 
         if ($score) {
@@ -118,5 +119,11 @@ class CustomerScore extends Model
     public function historyPaid()
     {
         return $this->belongsTo(AHistoryPayed::class, "history_payed_id", "id");
+    }
+
+
+    public function order()
+    {
+        return $this->belongsTo(AOrder::class, "order_id", "id");
     }
 }

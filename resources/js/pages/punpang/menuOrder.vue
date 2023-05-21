@@ -72,7 +72,7 @@
                     >
                     </imageThumbnailFullPathSizeFree>
 
-                    <v-card-text>
+                    <v-card-text v-if="product.order_detail_id == null">
                         <div
                             class="d-flex flex-row text-body-2 font-weight-black"
                         >
@@ -86,11 +86,61 @@
                         </div>
 
                         <div class="mt-1" v-if="product.add_ons.length > 0">
+                            <v-divider class="my-2"></v-divider>
                             <strong>เพิ่มเติม : </strong>
 
                             {{ convert_add_on_name(product.add_ons) }}
                         </div>
 
+                        <div class="mt-1" v-if="product.order_tags.length > 0">
+                            <v-divider class="my-2"></v-divider>
+                            <strong>แท็ก : </strong>
+
+                            {{ convert_tags(product.order_tags) }}
+                        </div>
+                    </v-card-text>
+
+                    <v-card-text v-else>
+                        <div
+                            class="d-flex flex-row text-body-2 font-weight-black"
+                        >
+                            เค้ก {{ product.multi_cakes.length }} ชั้น
+                        </div>
+
+                        <div
+                            class="d-flex flex-row text-body-2 my-1 font-weight-bold deep-orange--text"
+                        >
+                            ฿{{
+                                product.sum_price_multi_cake_for_menu
+                                    | formatNumber
+                            }}
+                        </div>
+
+                        <div
+                            v-for="multi_cake in product.multi_cakes"
+                            :key="multi_cake.id"
+                        >
+                            <v-divider class="my-2"></v-divider>
+                            <div class="mt-1">
+                                <strong>ชั้นที่ : </strong>
+                                {{ multi_cake.sort_group_multi_cake }}
+                            </div>
+                            <div
+                                class="d-flex flex-row text-body-2 font-weight-black"
+                            >
+                                {{ multi_cake.a_price.name_goods }}
+                            </div>
+                            <div
+                                class="mt-1"
+                                v-if="multi_cake.add_ons.length > 0"
+                            >
+                                <strong>เพิ่มเติม : </strong>
+
+                                {{ convert_add_on_name(multi_cake.add_ons) }}
+                            </div>
+                        </div>
+
+                        <v-divider class="my-2"></v-divider>
                         <div class="mt-1" v-if="product.order_tags.length > 0">
                             <strong>แท็ก : </strong>
 
@@ -192,7 +242,7 @@ export default {
                 ? `&price_rank=${this.$route.query.price_rank}`
                 : "";
 
-        const payload = `whereHas=imageForMenus,with=imageForMenus${tags}${price_rank}`;
+        const payload = `whereHas=imageForMenus,with=imageForMenus,multiCakes${tags}${price_rank}`;
 
         const result = await axios.get(
             `/api/v1/guest/product/punpang/order_details/fetch_for_menu?${payload}`

@@ -22,6 +22,22 @@
                     :size="80"
                 ></imageThumbnailFullPathSizeFree>
             </template>
+            <template v-slot:item.a_order.id="{ item }">
+                {{
+                    item.order_detail_id != null &&
+                    item.sort_group_multi_cake > 1
+                        ? ""
+                        : item.a_order.id
+                }}
+            </template>
+            <template v-slot:item.a_order.time_get_format="{ item }">
+                {{
+                    item.order_detail_id != null &&
+                    item.sort_group_multi_cake > 1
+                        ? ""
+                        : item.a_order.time_get_format
+                }}
+            </template>
             <template v-slot:item.a_price.name_goods="{ item }">
                 <div class="py-3">
                     <p class="mb-0 font-weight-black text-subtitle-2">
@@ -88,11 +104,11 @@
 
                     <!-- <v-btn class="info" x-small rounded> ต้นแบบสินค้า </v-btn> -->
                     <btnPrototypeImage
-                        :propPath="
-                            item.product_prototypes[0].google_image.src_name
-                        "
+                        :propPaths="item.product_prototypes"
                         v-if="item.product_prototypes.length > 0"
                     ></btnPrototypeImage>
+
+                    <!-- :propPath=" item.product_prototypes[0].google_image.src_name" -->
 
                     <v-btn
                         class="pink accent-2"
