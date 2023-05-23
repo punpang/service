@@ -595,7 +595,7 @@ class AOrder extends Model
 
             $layer_multi_cake =  $detail->order_detail_id != null ?
                 "
-                ชั้นที่ " . $detail->sort_group_multi_cake . "[#" . $detail->color_multi_cake[""] . "]"  : "";
+                ชั้นที่ " . $detail->sort_group_multi_cake . "[#" . $detail->color_multi_cake["number"] . "]"  : "";
 
             /////
             $message = $detail->message != "-" ? "
