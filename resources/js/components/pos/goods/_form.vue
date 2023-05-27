@@ -43,6 +43,10 @@
                     class="mb-3"
                     v-model="goods.status_use"
                 ></v-switch>
+                <!-- <v-btn text block large class="info--text" v-if="propGoods">
+                    <v-icon left>link</v-icon> ผูกวัตถุดิบ
+                </v-btn> -->
+
                 <!-- <v-btn text block large class="error--text" v-if="propGoods">
                     <v-icon left>delete</v-icon> ลบรายการนี้
                 </v-btn> -->

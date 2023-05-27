@@ -32,7 +32,12 @@
                 </p>
             </template>
             <template v-slot:item.price="{ item }">
-                {{ item.price | formatNumber }}
+                {{ item.price | formatNumber }} /
+                {{ item.sum_cost_link_raw_material | formatNumber }} /
+                {{
+                    (item.price - item.sum_cost_link_raw_material)
+                        | formatNumber
+                }}
             </template>
 
             <template v-slot:item.category_goodses="{ item }">
@@ -58,6 +63,11 @@
                         :propPosGoods="propPosGoods"
                         v-if="propPosGoods"
                     ></selectForOrder>
+                    <btnLinkRawMaterials
+                        :propGoods="item"
+                        @emitExit="emitExit"
+                        @emitFetchGoods="emitFetchGoods"
+                    ></btnLinkRawMaterials>
                     <updateGoods
                         :propGoods="item"
                         @emitExit="emitExit"
@@ -77,13 +87,14 @@ import { mapGetters } from "vuex";
 import createGoods from "@/js/components/pos/goods/create";
 import updateGoods from "@/js/components/pos/goods/update";
 import selectForOrder from "@/js/components/pos/goods/selectForOrder/create";
-
+import btnLinkRawMaterials from "@/js/components/pos/goods/link_raw_materials/btn";
 export default {
     props: ["propPosGoods"],
     components: {
         createGoods,
         updateGoods,
         selectForOrder,
+        btnLinkRawMaterials,
     },
     data() {
         return {
@@ -91,15 +102,18 @@ export default {
             headers: [
                 { text: "ชื่อสินค้า", align: "start", value: "text" },
                 { text: "ประเภท", value: "category_goodses.text" },
-                { text: "ราคา(฿)", value: "price", align: "end" },
+                { text: "ขาย/ต้นทุน/กำไร", value: "price", align: "end" },
                 { text: "สถานะสินค้า", value: "status_use", align: "center" },
                 { text: "", value: "manages", align: "end" },
             ],
         };
     },
     methods: {
+        async emitFetchGoods() {
+            await this.fetch_goods();
+        },
         async emitExit() {
-            console.log("fdsjklo");
+            // console.log("fdsjklo");
             await this.fetch_goods();
         },
         async clickSwitchStatusUse(e) {
@@ -137,7 +151,8 @@ export default {
         },
         async fetch_goods() {
             let loader = this.$loading.show();
-            const payload = "with=categoryGoodses&sortUpdatedAt=DESC";
+            const payload =
+                "with=categoryGoodses,posLinkRawMaterials.rawMaterial&sortUpdatedAt=DESC";
             await this.$store
                 .dispatch("posGoods/fetch", payload)
                 .then((response) => {

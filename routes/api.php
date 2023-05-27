@@ -195,6 +195,19 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                     Route::post('{id}/updateStatusUse', 'Pos\CategoryGoodsController@updateStatusUse');
                 });
 
+                Route::prefix('raw_material')->group(function () { // api/v1/pos/goods/...
+                    Route::post('store', 'Pos\RawMaterialsController@store');
+                    Route::get('fetch', 'Pos\RawMaterialsController@fetch');
+                    Route::post('{id}/update', 'Pos\RawMaterialsController@update');
+                    Route::post('{id}/updateStatusUse', 'Pos\RawMaterialsController@updateStatusUse');
+                });
+
+                Route::prefix('link_raw_material')->group(function () { // api/v1/pos/goods/...
+                    Route::post('store', 'Pos\LinkRawMaterialsController@store');
+                    Route::post('{id}/update', 'Pos\LinkRawMaterialsController@update');
+                    Route::post('{id}/remove', 'Pos\LinkRawMaterialsController@remove');
+                });
+
                 Route::prefix('order')->group(function () { // api/v1/pos/goods/...
                     Route::post('store', 'Pos\OrderController@store');
                     Route::post('{id}/update', 'Pos\OrderController@update');

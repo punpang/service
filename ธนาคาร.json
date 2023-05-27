@@ -1,0 +1,387 @@
+KTB
+
+{
+    "success": true,
+    "data": {
+        "success": true,
+        "message": "✅",
+        "language": null,
+        "transRef": "2023050134069226",
+        "sendingBank": "006",
+        "receivingBank": "014",
+        "transDate": "2023 05 01",
+        "transTime": "08:48:41",
+        "sender": {
+            "displayName": "น.ส.วรัญญา ท",
+            "name": "MISSWaranya T",
+            "proxy": {
+                "type": null,
+                "value": null
+            },
+            "account": {
+                "type": "BANKAC",
+                "value": "XXX-X-XX828-8"
+            }
+        },
+        "receiver": {
+            "displayName": "นางสาว ฐิติภัทร ศ",
+            "name": "TITIPAT S",
+            "proxy": {
+                "type": null,
+                "value": null
+            },
+            "account": {
+                "type": "BANKAC",
+                "value": "XXX-X-XX154-9"
+            }
+        },
+        "amount": 250,
+        "paidLocalAmount": null,
+        "paidLocalCurrency": null,
+        "countryCode": "TH",
+        "transFeeAmount": null,
+        "ref1": null,
+        "ref2": null,
+        "ref3": null,
+        "toMerchantId": null
+    }
+}
+
+{
+    "success": true,
+    "data": {
+        "success": true,
+        "message": "✅",
+        "language": null,
+        "transRef": "202305049639810",
+        "sendingBank": "006",
+        "receivingBank": "",
+        "transDate": "2023 05 04",
+        "transTime": "09:08:23",
+        "sender": {
+            "displayName": "นายทวีวัฒน์ จ",
+            "name": "MR.Taweewat J",
+            "proxy": {
+                "type": null,
+                "value": null
+            },
+            "account": {
+                "type": "BANKAC",
+                "value": "XXX-X-XX714-2"
+            }
+        },
+        "receiver": {
+            "displayName": "นางสาว ฐิติภัทร ศ",
+            "name": "TITIPAT S",
+            "proxy": {
+                "type": "MSISDN",
+                "value": "XXXXXX3402"
+            },
+            "account": {
+                "type": "",
+                "value": ""
+            }
+        },
+        "amount": 400,
+        "paidLocalAmount": null,
+        "paidLocalCurrency": null,
+        "countryCode": "TH",
+        "transFeeAmount": null,
+        "ref1": "",
+        "ref2": "",
+        "ref3": "",
+        "toMerchantId": ""
+    }
+}
+
+..
+SCB
+{
+    "success": true,
+    "data": {
+        "success": true,
+        "message": "✅",
+        "language": null,
+        "transRef": "202305037dWOXbfMkc573RHlO",
+        "sendingBank": "014",
+        "receivingBank": "014",
+        "transDate": "20230503",
+        "transTime": "10:42:29",
+        "sender": {
+            "displayName": "นาย สุรเดช ส",
+            "name": null,
+            "proxy": {
+                "type": null,
+                "value": null
+            },
+            "account": {
+                "type": "BANKAC",
+                "value": "xxxx-xx537-7"
+            }
+        },
+        "receiver": {
+            "displayName": "นางสาว ฐิติภัทร ศ",
+            "name": null,
+            "proxy": {
+                "type": null,
+                "value": null
+            },
+            "account": {
+                "type": "BANKAC",
+                "value": "xxxx-xx154-9"
+            }
+        },
+        "amount": 455,
+        "paidLocalAmount": null,
+        "paidLocalCurrency": null,
+        "countryCode": "TH",
+        "transFeeAmount": null,
+        "ref1": null,
+        "ref2": null,
+        "ref3": null,
+        "toMerchantId": null
+    }
+}
+
+{
+    "success": true,
+    "data": {
+        "success": true,
+        "message": "✅",
+        "language": null,
+        "transRef": "202305020cOrLWeZByFwODQiy",
+        "sendingBank": "014",
+        "receivingBank": "",
+        "transDate": "20230502",
+        "transTime": "12:31:31",
+        "sender": {
+            "displayName": "นางสาว นันทวัน จ",
+            "name": null,
+            "proxy": {
+                "type": null,
+                "value": null
+            },
+            "account": {
+                "type": "BANKAC",
+                "value": "xxxx-xx726-1"
+            }
+        },
+        "receiver": {
+            "displayName": "นางสาว ฐิติภัทร ศ",
+            "name": null,
+            "proxy": {
+                "type": "MSISDN",
+                "value": "xxx-xxx-3402"
+            },
+            "account": {
+                "type": "",
+                "value": ""
+            }
+        },
+        "amount": 330,
+        "paidLocalAmount": null,
+        "paidLocalCurrency": null,
+        "countryCode": "TH",
+        "transFeeAmount": null,
+        "ref1": "",
+        "ref2": "",
+        "ref3": "",
+        "toMerchantId": ""
+    }
+}
+
+..
+TTB
+{
+    "success": true,
+    "data": {
+        "success": true,
+        "message": "✅",
+        "language": null,
+        "transRef": "202305030900627445",
+        "sendingBank": "011",
+        "receivingBank": "",
+        "transDate": "20230503",
+        "transTime": "09:18:31",
+        "sender": {
+            "displayName": "น.ส. ทัศนีย์ ว",
+            "name": "TATSANEE W",
+            "proxy": {
+                "type": null,
+                "value": null
+            },
+            "account": {
+                "type": "BANKAC",
+                "value": "xxx-x-74803-x"
+            }
+        },
+        "receiver": {
+            "displayName": "นางสาว ฐิติภัทร ศ",
+            "name": "TITIPAT S",
+            "proxy": {
+                "type": "MSISDN",
+                "value": "xxx-xxx-3402"
+            },
+            "account": {
+                "type": "",
+                "value": ""
+            }
+        },
+        "amount": 380,
+        "paidLocalAmount": null,
+        "paidLocalCurrency": null,
+        "countryCode": "TH",
+        "transFeeAmount": null,
+        "ref1": "",
+        "ref2": "",
+        "ref3": "",
+        "toMerchantId": ""
+    }
+}
+
+..
+KBANK
+{
+    "success": true,
+    "data": {
+        "success": true,
+        "message": "✅",
+        "language": "TH",
+        "transRef": "013123084004BOR00069",
+        "sendingBank": "004",
+        "receivingBank": "014",
+        "transDate": "20230503",
+        "transTime": "08:40:04",
+        "sender": {
+            "displayName": "นาย ศุภชัย ธ",
+            "name": "MR. Supachai T",
+            "proxy": {
+                "type": null,
+                "value": null
+            },
+            "account": {
+                "type": "BANKAC",
+                "value": "xxx-x-x3454-x"
+            }
+        },
+        "receiver": {
+            "displayName": "นางสาว ฐิติภัทร ศ",
+            "name": "TITIPAT S",
+            "proxy": {
+                "type": "",
+                "value": ""
+            },
+            "account": {
+                "type": "BANKAC",
+                "value": "xxx-x-x8154-x"
+            }
+        },
+        "amount": 330,
+        "paidLocalAmount": 330,
+        "paidLocalCurrency": "764",
+        "countryCode": "TH",
+        "transFeeAmount": 0,
+        "ref1": "",
+        "ref2": "",
+        "ref3": "",
+        "toMerchantId": ""
+    }
+}
+
+{
+    "success": true,
+    "data": {
+        "success": true,
+        "message": "✅",
+        "language": "TH",
+        "transRef": "013122160220AOR01925",
+        "sendingBank": "004",
+        "receivingBank": "014",
+        "transDate": "20230502",
+        "transTime": "16:02:20",
+        "sender": {
+            "displayName": "นาง ฐิติมา ส",
+            "name": "MRS. THITIMA S",
+            "proxy": {
+                "type": null,
+                "value": null
+            },
+            "account": {
+                "type": "BANKAC",
+                "value": "xxx-x-x7033-x"
+            }
+        },
+        "receiver": {
+            "displayName": "นางสาว ฐิติภัทร ศ",
+            "name": "TITIPAT S",
+            "proxy": {
+                "type": "",
+                "value": ""
+            },
+            "account": {
+                "type": "BANKAC",
+                "value": "xxx-x-x8154-x"
+            }
+        },
+        "amount": 800,
+        "paidLocalAmount": 800,
+        "paidLocalCurrency": "764",
+        "countryCode": "TH",
+        "transFeeAmount": 0,
+        "ref1": "",
+        "ref2": "",
+        "ref3": "",
+        "toMerchantId": ""
+    }
+}
+
+..
+
+GSB
+
+{
+    "success": true,
+    "data": {
+        "success": true,
+        "message": "✅",
+        "language": null,
+        "transRef": "312218967107I000013B9790",
+        "sendingBank": "030",
+        "receivingBank": "",
+        "transDate": "20230502",
+        "transTime": "18:56:29",
+        "sender": {
+            "displayName": "นางสาว รัตนา จ",
+            "name": null,
+            "proxy": {
+                "type": null,
+                "value": null
+            },
+            "account": {
+                "type": "BANKAC",
+                "value": "0202xxxx9429"
+            }
+        },
+        "receiver": {
+            "displayName": "นางสาว ฐิติภัทร ศ",
+            "name": "TITIPAT S",
+            "proxy": {
+                "type": "MSISDN",
+                "value": "09xxxx3402"
+            },
+            "account": {
+                "type": "",
+                "value": ""
+            }
+        },
+        "amount": 470,
+        "paidLocalAmount": null,
+        "paidLocalCurrency": null,
+        "countryCode": "TH",
+        "transFeeAmount": null,
+        "ref1": "",
+        "ref2": "",
+        "ref3": "",
+        "toMerchantId": ""
+    }
+}

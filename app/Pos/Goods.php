@@ -25,4 +25,15 @@ class Goods extends Model
     {
         return $this->hasMany(Order::class);
     }
+
+    public function posLinkRawMaterials()
+    {
+        return $this->hasMany(LinkRawMaterial::class, "pos_goods_id", "id");
+    }
+
+    public function getSumCostLinkRawMaterialAttribute()
+    {
+        // return "1";
+        return $this->posLinkRawMaterials->sum("cost");
+    }
 }

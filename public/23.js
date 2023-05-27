@@ -362,12 +362,15 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_components_pos_goods_table__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/js/components/pos/goods/table */ "./resources/js/components/pos/goods/table.vue");
 /* harmony import */ var _js_components_pos_goods_categoryGoods_table__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/components/pos/goods/categoryGoods/table */ "./resources/js/components/pos/goods/categoryGoods/table.vue");
+/* harmony import */ var _js_components_pos_goods_raw_material_table__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/components/pos/goods/raw_material/table */ "./resources/js/components/pos/goods/raw_material/table.vue");
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     tableGoods: _js_components_pos_goods_table__WEBPACK_IMPORTED_MODULE_0__["default"],
-    tableCategoryGoods: _js_components_pos_goods_categoryGoods_table__WEBPACK_IMPORTED_MODULE_1__["default"]
+    tableCategoryGoods: _js_components_pos_goods_categoryGoods_table__WEBPACK_IMPORTED_MODULE_1__["default"],
+    tableRawMaterial: _js_components_pos_goods_raw_material_table__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
@@ -723,7 +726,7 @@ var render = function render() {
       },
       expression: "tab"
     }
-  }, [_c("v-tab", [_vm._v("สินค้า")]), _vm._v(" "), _c("v-tab", [_vm._v("ประเภท")])], 1), _vm._v(" "), _c("v-tabs-items", {
+  }, [_c("v-tab", [_vm._v("สินค้า")]), _vm._v(" "), _c("v-tab", [_vm._v("ประเภท")]), _vm._v(" "), _c("v-tab", [_vm._v("วัตถุดิบ")])], 1), _vm._v(" "), _c("v-tabs-items", {
     model: {
       value: _vm.tab,
       callback: function callback($$v) {
@@ -731,7 +734,7 @@ var render = function render() {
       },
       expression: "tab"
     }
-  }, [_c("v-tab-item", [_c("tableGoods")], 1), _vm._v(" "), _c("v-tab-item", [_c("tableCategoryGoods")], 1)], 1)], 1);
+  }, [_c("v-tab-item", [_c("tableGoods")], 1), _vm._v(" "), _c("v-tab-item", [_c("tableCategoryGoods")], 1), _vm._v(" "), _c("v-tab-item", [_c("tableRawMaterial")], 1)], 1)], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;

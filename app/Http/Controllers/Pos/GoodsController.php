@@ -36,9 +36,17 @@ class GoodsController extends Controller
                 $query->with($e);
             }
         }
+        $query = $query->get();
+
+        foreach ($query as $q) {
+            $q->setAppends(["sum_cost_link_raw_material"]);
+        }
+        // dd($qs);
+
+        // $query->with("posLinkRawMaterials.rawMaterial:id,text");
 
         return response()->json([
-            "goods" => $query->get(),
+            "goods" => $query,
             "title" => "โหลดข้อมูลสำเร็จ",
             "icon" => "success"
         ], 200);

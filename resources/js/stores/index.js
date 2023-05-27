@@ -66,6 +66,8 @@ import posGoods from "@/js/stores/modules/pos/goods";
 import posCategoryGoods from "@/js/stores/modules/pos/categoryGoods";
 import posOrder from "@/js/stores/modules/pos/order";
 import posOrderDetail from "@/js/stores/modules/pos/orderDetail";
+import posRawMaterial from "@/js/stores/modules/pos/rawMaterial";
+import posLinkRawMaterial from "@/js/stores/modules/pos/linkRawMaterial";
 
 Vue.use(Vuex);
 
@@ -126,8 +128,10 @@ export default new Vuex.Store({
         posCategoryGoods,
         posOrder,
         posOrderDetail,
+        posRawMaterial,
+        posLinkRawMaterial,
         orderTags,
         smsMessages,
-        profilePsid
+        profilePsid,
     },
 });
