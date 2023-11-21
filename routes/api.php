@@ -352,6 +352,7 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                 Route::post('{order}/{channel_id}/update_channel_order', 'Order\AOrderController@update_channel_order');
                 Route::post('{order}/use_point_by_order_id', 'Order\AOrderController@use_point_by_order_id');
                 Route::post('{order}/remove_use_point_by_order_id', 'Order\AOrderController@remove_use_point_by_order_id');
+                Route::post('{order}/update_alert_facebook_by_prepare', 'Order\AOrderController@update_alert_facebook_by_prepare');
 
                 Route::prefix('channelPayment')->group(function () { // api/admin/v1/...
                     Route::get('getUse', 'Order\ChannelPaymentController@getUse');

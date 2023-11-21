@@ -1225,4 +1225,17 @@ class AOrderController extends Controller
             "text" => "ยกเลิกการใช้คะแนนสะสมเรียบร้อย"
         ], 200);
     }
+
+    public function update_alert_facebook_by_prepare(AOrder $order, Request $request)
+    {
+        // dd($request->alert_facebook_by_prepare);
+        $order->alert_facebook_by_prepare = $request->alert_facebook_by_prepare;
+        $order->save();
+
+        return response()->json([
+            "icon" => "success",
+            "title" => "ดำเนินการเรียบร้อย",
+            "text" => "เปลี่ยนแปลงการแจ้งเตือนไปยัง Facebook เมื่อจัดเตรียมสินค้าเสร็จ"
+        ], 200);
+    }
 }

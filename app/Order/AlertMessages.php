@@ -327,6 +327,11 @@ class AlertMessages extends Model
         } else {
             $msgSms = 'หมายเลขคำสั่งซื้อ #' . $order->id . " ของคุณ สินค้าจัดเตรียมเรียบร้อยแล้ว สามารถเข้ารับสินค้าได้ทันที *ไม่สามารถรับสินค้าหลังเวลาร้านปิดได้ รายละเอียดคำสั่งซื้อคลิกลิงก์ [ " . $order->link_for_customer . " ]";
         }
+
+        if ($order->alert_facebook_by_prepare) {
+            Facebook::send_reply_message($order, $msgSms);
+        }
+
         return MSms::Sms($order->customer->tel, $msgSms, $alertSMS);
     }
 

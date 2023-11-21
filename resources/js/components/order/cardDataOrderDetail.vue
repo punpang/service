@@ -52,6 +52,14 @@
                     v-if="user.type == 1"
                     @change="changeChannelOrder()"
                 ></v-select>
+                <v-switch
+                    v-if="user.type == 1"
+                    label="แจ้งเตือน Facebook เมื่อจัดเตรียมสินค้า"
+                    v-model="order.alert_facebook_by_prepare"
+                    color="orange"
+                    hide-details
+                    @click="clickAlertFacebookByPrepare()"
+                ></v-switch>
             </v-card-text>
         </v-card>
     </div>
@@ -61,6 +69,28 @@
 import { mapGetters } from "vuex";
 export default {
     methods: {
+        async clickAlertFacebookByPrepare() {
+            let loader = this.$loading.show();
+            const payload = {
+                order_id: this.order.id,
+                alert_facebook_by_prepare:
+                    this.order.alert_facebook_by_prepare ==
+                    !this.alert_facebook_by_prepare,
+            };
+
+            const result = await this.$store.dispatch(
+                "orderIndex/update_alert_facebook_by_prepare",
+                payload
+            );
+
+            if (result.status == 200) {
+                this.$toast.success(result.data.text);
+            } else {
+                this.$toast.error("เปลี่ยนแปลงไม่สำเร็จ โปรดลองอีกครั้ง");
+            }
+
+            loader.hide();
+        },
         async changeChannelOrder() {
             let loader = this.$loading.show();
             const payload = {
@@ -75,7 +105,7 @@ export default {
 
             if (result.status == "success") {
                 this.$toast.success(result.message);
-            }else{
+            } else {
                 this.$toast.error("เปลี่ยนแปลงไม่สำเร็จ โปรดลองอีกครั้ง");
             }
             loader.hide();

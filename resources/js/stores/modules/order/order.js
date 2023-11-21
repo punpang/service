@@ -146,7 +146,10 @@ export default {
         },
         async alertPaymentExtendTimeByOrderID({}, payload) {
             return await axios
-                .post(`/api/admin/v1/order/${payload.orderID}/alertPaymentExtendTimeByOrderID`, payload)
+                .post(
+                    `/api/admin/v1/order/${payload.orderID}/alertPaymentExtendTimeByOrderID`,
+                    payload
+                )
                 .then((response) => {
                     return response;
                 })
@@ -527,7 +530,6 @@ export default {
             return await axios
                 .post(
                     `/api/admin/v1/order/${payload.order_id}/remove_use_point_by_order_id`
-
                 )
                 .then((response) => {
                     return response;
@@ -537,6 +539,18 @@ export default {
                 });
         },
 
-
+        async update_alert_facebook_by_prepare({}, payload) {
+            return await axios
+                .post(
+                    `/api/admin/v1/order/${payload.order_id}/update_alert_facebook_by_prepare`,
+                    payload
+                )
+                .then((response) => {
+                    return response;
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        },
     },
 };

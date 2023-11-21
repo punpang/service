@@ -634,7 +634,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
-    changeChannelOrder: function changeChannelOrder() {
+    clickAlertFacebookByPrepare: function clickAlertFacebookByPrepare() {
       var _this = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         var loader, payload, result;
@@ -644,14 +644,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               loader = _this.$loading.show();
               payload = {
                 order_id: _this.order.id,
-                order_channel_id: _this.order.order_channel.id
+                alert_facebook_by_prepare: _this.order.alert_facebook_by_prepare == !_this.alert_facebook_by_prepare
               };
               _context.next = 4;
-              return _this.$store.dispatch("orderIndex/update_channel_order", payload);
+              return _this.$store.dispatch("orderIndex/update_alert_facebook_by_prepare", payload);
             case 4:
               result = _context.sent;
-              if (result.status == "success") {
-                _this.$toast.success(result.message);
+              if (result.status == 200) {
+                _this.$toast.success(result.data.text);
               } else {
                 _this.$toast.error("เปลี่ยนแปลงไม่สำเร็จ โปรดลองอีกครั้ง");
               }
@@ -662,25 +662,54 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+    changeChannelOrder: function changeChannelOrder() {
+      var _this2 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var loader, payload, result;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              loader = _this2.$loading.show();
+              payload = {
+                order_id: _this2.order.id,
+                order_channel_id: _this2.order.order_channel.id
+              };
+              _context2.next = 4;
+              return _this2.$store.dispatch("orderIndex/update_channel_order", payload);
+            case 4:
+              result = _context2.sent;
+              if (result.status == "success") {
+                _this2.$toast.success(result.message);
+              } else {
+                _this2.$toast.error("เปลี่ยนแปลงไม่สำเร็จ โปรดลองอีกครั้ง");
+              }
+              loader.hide();
+            case 7:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2);
+      }))();
     }
   },
   mounted: function mounted() {
-    var _this2 = this;
-    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+    var _this3 = this;
+    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
       var loader;
-      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-        while (1) switch (_context2.prev = _context2.next) {
+      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+        while (1) switch (_context3.prev = _context3.next) {
           case 0:
-            loader = _this2.$loading.show();
-            _context2.next = 3;
-            return _this2.$store.dispatch("orderChannel/fetchUse");
+            loader = _this3.$loading.show();
+            _context3.next = 3;
+            return _this3.$store.dispatch("orderChannel/fetchUse");
           case 3:
             loader.hide();
           case 4:
           case "end":
-            return _context2.stop();
+            return _context3.stop();
         }
-      }, _callee2);
+      }, _callee3);
     }))();
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
@@ -4570,6 +4599,24 @@ var render = function render() {
         _vm.$set(_vm.order.order_channel, "id", $$v);
       },
       expression: "order.order_channel.id"
+    }
+  }) : _vm._e(), _vm._v(" "), _vm.user.type == 1 ? _c("v-switch", {
+    attrs: {
+      label: "แจ้งเตือน Facebook เมื่อจัดเตรียมสินค้า",
+      color: "orange",
+      "hide-details": ""
+    },
+    on: {
+      click: function click($event) {
+        return _vm.clickAlertFacebookByPrepare();
+      }
+    },
+    model: {
+      value: _vm.order.alert_facebook_by_prepare,
+      callback: function callback($$v) {
+        _vm.$set(_vm.order, "alert_facebook_by_prepare", $$v);
+      },
+      expression: "order.alert_facebook_by_prepare"
     }
   }) : _vm._e()], 1)], 1)], 1);
 };
