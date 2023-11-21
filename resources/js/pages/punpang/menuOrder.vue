@@ -2,8 +2,11 @@
     <div>
         <h2>รายการสินค้า</h2>
         <p class="text-subtitle-2 mb-1">สั่งซื้อวันนี้ รับราคาพิเศษ</p>
-        <p class="text-subtitle-2">
+        <p class="text-subtitle-2 mb-0">
             <strong>*ไม่มีนโยบายคืนเงินทุกกรณี*</strong>
+        </p>
+        <p class="text-subtitle-2">
+            <strong>*ราคาสินค้ายังไม่รวมภาษีมูลค่าเพิ่ม 7%*</strong>
         </p>
         <v-card outlined class="mb-3" v-if="user.type == 1">
             <v-card-title> ค้นหา </v-card-title>
@@ -84,6 +87,11 @@
                         >
                             ฿{{ product.sum_price_for_menu | formatNumber }}
                         </div>
+                        <div
+                            class="d-flex flex-row text-body-2 my-1 font-weight-bold black--text"
+                        >
+                           * ราคาไม่รวม vat ฿{{ product.sum_price_for_menu * 7 /100 | formatNumber }} *
+                        </div>
 
                         <div class="mt-1" v-if="product.add_ons.length > 0">
                             <v-divider class="my-2"></v-divider>
@@ -114,6 +122,11 @@
                                 product.sum_price_multi_cake_for_menu
                                     | formatNumber
                             }}
+                        </div>
+                        <div
+                            class="d-flex flex-row text-body-2 my-1 font-weight-bold black--text"
+                        >
+                           * ราคาไม่รวม vat ฿{{ product.sum_price_for_menu * 7 /100 | formatNumber }} *
                         </div>
 
                         <div

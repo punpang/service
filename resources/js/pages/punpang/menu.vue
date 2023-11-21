@@ -2,9 +2,12 @@
   <div>
     <h2>รายการสินค้า</h2>
     <p class="text-subtitle-2 mb-1">สั่งซื้อวันนี้ รับราคาพิเศษ</p>
-    <p class="text-subtitle-2">
-      <strong>*ไม่มีนโยบายคืนเงินทุกกรณี*</strong>
-    </p>
+    <p class="text-subtitle-2 mb-0">
+            <strong>*ไม่มีนโยบายคืนเงินทุกกรณี*</strong>
+        </p>
+        <p class="text-subtitle-2">
+            <strong>*ราคาสินค้ายังไม่รวมภาษีมูลค่าเพิ่ม 7%*</strong>
+        </p>
 
     <v-row>
       <v-col
@@ -41,6 +44,9 @@
                   <td class="text-center">
                     <p class="mb-0 font-weight-black deep-orange--text">
                       {{ price.price | formatNumber }} บาท
+                    </p>
+                    <p class="mb-0 text-caption ">
+                      ไม่รวม vat : ฿{{ price.price*7/100 | formatNumber }}
                     </p>
                     <p
                       class="mb-0 text-caption text-decoration-line-through"

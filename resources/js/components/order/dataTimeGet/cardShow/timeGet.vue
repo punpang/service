@@ -28,8 +28,8 @@
                 v-model="temp.temp.dateTimeGet.timeGet"
                 scrollable
                 full-width
-                min="8:30"
-                max="18:30"
+                min="00:00"
+                max="23:30"
                 format="24hr"
             >
                 <v-spacer></v-spacer>

@@ -7,6 +7,7 @@ namespace App\Order;
 // use App\Linenotify;
 use App\Pos\Order;
 // use App\Linenotify;
+use App\Order\Line;
 use App\Order\OrderDetail;
 use Illuminate\Support\Str;
 use App\Order\AHistoryPayed;
@@ -240,6 +241,8 @@ class AOrder extends Model
             "sumGoods" => $this->sumGoods(),
             "sumASC" => $this->sumAccessoryServiceDiscount(),
             "sumTASC" => $this->sumTASC(),
+            "sumGoodsVat7" => $this->sumGoodsVat7(),
+            "vat7" => $this->vat7(),
             "sumBalance" => $this->sumBalance(),
             "sumDeposited" => $this->sumDeposited(),
             "sumAccessory" => $this->sumAccessory(),
@@ -252,6 +255,7 @@ class AOrder extends Model
             "sumMoneyCustomer" => $this->sumMoneyCustomer(),
             "sumPosOrder" => $this->sumPosOrder(),
             "usePoint" => $this->usePoint(),
+            "useCoupon" => $this->useCoupon(),
             // "sumHistoryPayed" => $this->sumHistoryPayed()
         ];
     }
@@ -281,6 +285,16 @@ class AOrder extends Model
         return $this->sumAll();
     }
 
+    public function vat7()
+    {
+        return $this->sumGoods() * 7 / 100;
+    }
+
+    public function sumGoodsVat7()
+    {
+        return $this->sumGoods() + $this->vat7();
+    }
+
     public function sumAdjustExcessPayment()
     {
         return $this->adjustExcessPayments()->sum("amount");
@@ -296,6 +310,13 @@ class AOrder extends Model
         return $this->orderDetails->sum("sum_money_service");
     }
 
+    // public function sumBalance()
+    // {
+    //     return $this->sumTASC()
+    //         - $this->sumDeposited()
+    //         + $this->sumAdjustExcessPayment();
+    // }
+
     public function sumBalance()
     {
         return $this->sumTASC()
@@ -309,14 +330,26 @@ class AOrder extends Model
             $this->sumAccessoryServiceDiscount();
     }
 
+    // public function sumTASC()
+    // {
+    //     return  $this->sumGoods() +
+    //         $this->sumAccessoryServiceDiscount() +
+    //         $this->sumDeliverService() +
+    //         $this->sumMoneyCustomer() +
+    //         $this->sumMoneyService() +
+    //         $this->usePoint() -
+    //         $this->useCoupon();
+    // }
+
     public function sumTASC()
     {
-        return  $this->sumGoods() +
+        return  $this->sumGoodsVat7() +
             $this->sumAccessoryServiceDiscount() +
             $this->sumDeliverService() +
             $this->sumMoneyCustomer() +
             $this->sumMoneyService() +
-            $this->usePoint();
+            $this->usePoint() -
+            $this->useCoupon();
     }
 
     public function getSumTascAttribute()
@@ -474,8 +507,6 @@ class AOrder extends Model
         return $this->hasMany(OrderDetail::class, "order_id", "id");
     }
 
-
-
     public function orderDetailsNull()
     {
         return $this->hasMany(OrderDetail::class, "order_id", "id")->whereNull("order_detail_id");
@@ -489,6 +520,20 @@ class AOrder extends Model
     public function orderDetail()
     {
         return $this->hasOne(OrderDetail::class, "order_id", "id")->orderBy("created_at", "desc");
+    }
+
+    public function couponUsed()
+    {
+        return $this->hasOne(CouponUsed::class, "order_id", "id");
+    }
+
+    public function useCoupon()
+    {
+        if ($this->couponUsed == null) {
+            return 0;
+        }
+
+        return $this->couponUsed->discount;
     }
 
     public function orderDeliveryService()
@@ -528,35 +573,7 @@ class AOrder extends Model
 
     public static function summaryOfOrderDetails($order_id, $show_conditions = false)
     {
-        // return $order;
         $order = AOrder::findOrFail($order_id);
-
-        // $order = AOrder::with(
-        //     // "customer.facebook",
-        //     // "customer.line",
-        //     // "OrderChannel",
-        //     // "am1",
-        //     // "am2",
-        //     // "am3",
-        //     // "am4",
-        //     "aStatus",
-        //     // "aHistoryPayed.channelPayment",
-        //     // "aHistoryPayed.ntpfc",
-        //     // "aHistoryPayed.ksherPay",
-        //     // "orderDetails.aPrice.googleImage",
-        //     // "orderDetailsOnlyTrashed",
-        //     // "orderDetails.productPrototypes.googleImage",
-        //     // "orderDetails.imageForMenus.googleImage",
-        //     // "orderDetails.imageFromCustomers.googleImage",
-        //     // "orderDetails.imageGoodsReviewToCustomers.googleImage",
-        //     // "orderDetails.orderTags.tag",
-        //     "orderDeliveryService",
-        //     "orderDetails.MoneyServices.category_money_service",
-        //     "adjustExcessPayments",
-        //     "posOrders.posGoods"
-        // )
-        //     ->with("orderDetails.addOns.productAddOn.goodsAddOn")
-        //     ->findOrFail($order_id);
 
         if ($order->sumMoneyCustomer() > 0 || $order->orderDeliveryService) {
             $order->update(["status_full_payment" => 1]);
@@ -607,6 +624,7 @@ class AOrder extends Model
             $m = $m . "รายการที่ " . ($key_detail + 1) . "
 " . $detail->aPrice->name_goods . $layer_multi_cake  . $aa .  $message . $remark . "
 ราคา " . $detail->sum_total . " บาท $message_money_services
+(vat 7% : ฿" . number_format($detail->sum_total_not_format * 7 / 100, 2) . ")
 -------------------------
 ";
         }
@@ -624,6 +642,7 @@ class AOrder extends Model
             $message_pos = $message_pos . "
 
 รวม " . number_format($order->sumPosOrder(), 2) . " บาท
+(vat 7% : ฿" . number_format($order->sumPosOrder() * 7 / 100, 2) . ")
 
 -------------------------";
         }
@@ -660,7 +679,7 @@ https://punpang.net/learning/conditions/order";
         }
 
         $usePoints = $order->usePoint() != 0 ? "
-        ใช้คะแนนสะสม " . $order->usePoint() . " คะแนน" :
+ใช้คะแนนสะสม " . $order->usePoint() . " คะแนน" :
             "";
 
 
@@ -672,10 +691,11 @@ https://punpang.net/learning/conditions/order";
 " . $order->date_time_get_th . " น.
 -------------------------
 " . $m . $message_pos . "
-" . $message_delivery_service . "ยอดทั้งหมด " . number_format($order->sumTASC()) . " บาท
-ยอดชำระแล้ว " . number_format($order->sumDeposited()) . " บาท " . $usePoints . "
+" . $message_delivery_service . "ยอดทั้งหมด " . number_format($order->sumTASC(), 2) . " บาท
+รวม vat 7% " . number_format($order->vat7(), 2) . " บาท
+ยอดชำระแล้ว " . number_format($order->sumDeposited(), 2) . " บาท " . $usePoints . "
 -------------------------
-ยอดคงเหลือ " . number_format($order->sumBalance()) . " บาท
+ยอดคงเหลือ " . number_format($order->sumBalance(), 2) . " บาท
 -------------------------
 สถานะ : " . $order->aStatus->status . "
 -------------------------
@@ -686,6 +706,7 @@ $message_payment_deadline_th
         // Linenotify::send($msg);
 
         Facebook::send_reply_message($order, $msg);
+        // Line::reply_message_v2($order, $msg);
         return $msg;
     }
 

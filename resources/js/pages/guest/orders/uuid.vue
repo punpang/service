@@ -1,6 +1,7 @@
 <template>
     <div>
         <alertPaymentUUID></alertPaymentUUID>
+        <v-alert type="error">ราคาสินค้ายังไม่รวมภาษีมูลค่าเพิ่ม 7%</v-alert>
         <!-- <div v-if="order.status != 9">
             <v-alert
                 text

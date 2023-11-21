@@ -1,9 +1,9 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[45],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/import/excel.vue?vue&type=script&lang=js&":
-/*!******************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/import/excel.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/guest/register_member.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/guest/register_member.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -16,38 +16,123 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      file: {}
+      url: {
+        query: ""
+      },
+      name: "",
+      phone: "",
+      is_member: false,
+      showFormRegister: false
     };
   },
   methods: {
-    changeFile: function changeFile() {
+    check_expires: function check_expires() {
+      var _this = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var file, formData;
+        var loader;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              file = event.target.files[0];
-              formData = new FormData();
-              formData.append("file", file);
-              //console.log(formData);
-              _context.next = 5;
-              return axios.post("/api/admin/v1/import/excel", formData);
-            case 5:
+              loader = _this.$loading.show();
+              _context.next = 3;
+              return axios.post("/api/v1/guest/register_member_by_facebook?".concat(_this.url.query), {
+                check_expires: true
+              }).then(function (response) {
+                _this.showFormRegister = true;
+                if (response.data.customer_id != null) {
+                  var customer = response.data.customer;
+                  _this.name = customer.name;
+                  _this.phone = customer.tel;
+                  _this.is_member = true;
+                }
+              })["catch"](function (err) {
+                _this.$swal({
+                  icon: "error",
+                  title: "ลิงก์หมดอายุ",
+                  text: "โปรดทำรายการใหม่",
+                  showConfirmButton: false,
+                  allowOutsideClick: false
+                });
+              });
+            case 3:
+              loader.hide();
+            case 4:
             case "end":
               return _context.stop();
           }
         }, _callee);
       }))();
+    },
+    register: function register() {
+      var _this2 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var loader;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              if (!(_this2.name == "" || _this2.phone == "")) {
+                _context2.next = 3;
+                break;
+              }
+              _this2.$toast.error("โปรดกรอกช่องชื่อลูกค้าและเบอร์โทรศัพท์ให้ครบถ้วน");
+              return _context2.abrupt("return");
+            case 3:
+              loader = _this2.$loading.show();
+              _context2.next = 6;
+              return axios.post("/api/v1/guest/register_member_by_facebook?".concat(_this2.url.query), {
+                name: _this2.name,
+                phone: _this2.phone
+              }).then(function (response) {
+                if (response.data.status == "success") {
+                  _this2.$swal({
+                    icon: response.data.icon,
+                    title: response.data.title,
+                    text: response.data.text,
+                    showConfirmButton: false,
+                    allowOutsideClick: false
+                  });
+                }
+              })["catch"](function (error) {
+                console.log(error);
+              });
+            case 6:
+              loader.hide();
+            case 7:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2);
+      }))();
     }
+  },
+  mounted: function mounted() {
+    var _this3 = this;
+    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+      var fullPathSplit;
+      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+        while (1) switch (_context3.prev = _context3.next) {
+          case 0:
+            // console.log(this.$route);
+            // console.log(this.$route.fullPath);
+            fullPathSplit = _this3.$route.fullPath.split("?");
+            _this3.url.query = fullPathSplit[1];
+            _context3.next = 4;
+            return _this3.check_expires();
+          case 4:
+          case "end":
+            return _context3.stop();
+        }
+      }, _callee3);
+    }))();
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/import/excel.vue?vue&type=template&id=246a3336&":
-/*!****************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/import/excel.vue?vue&type=template&id=246a3336& ***!
-  \****************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/guest/register_member.vue?vue&type=template&id=2577b866&":
+/*!*************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/guest/register_member.vue?vue&type=template&id=2577b866& ***!
+  \*************************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -58,15 +143,73 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_c("v-file-input", {
+  return _c("div", [_vm.showFormRegister ? _c("v-card", {
+    staticClass: "mt-5",
     attrs: {
-      accept: ".csv",
-      label: "File input"
+      outlined: ""
+    }
+  }, [_c("v-card-title", [_c("v-icon", {
+    attrs: {
+      left: ""
+    }
+  }, [_vm._v("face")]), _vm._v("\n            " + _vm._s(_vm.is_member ? "สมาชิก" : "สมัครสมาชิก") + "\n        ")], 1), _vm._v(" "), _c("v-card-text", {
+    staticClass: "pt-5 pb-10"
+  }, [_c("v-row", {
+    attrs: {
+      justify: "center"
+    }
+  }, [_c("v-col", {
+    attrs: {
+      cols: "10",
+      md: "4"
+    }
+  }, [_c("v-text-field", {
+    staticClass: "mb-3",
+    attrs: {
+      label: "ชื่อลูกค้า",
+      outlined: "",
+      "hide-details": "",
+      "append-icon": "account_circle"
+    },
+    model: {
+      value: _vm.name,
+      callback: function callback($$v) {
+        _vm.name = $$v;
+      },
+      expression: "name"
+    }
+  }), _vm._v(" "), _c("v-text-field", {
+    staticClass: "mb-3",
+    attrs: {
+      label: "เบอร์โทรศัพท์",
+      outlined: "",
+      "hide-details": "",
+      "append-icon": "phone",
+      type: "number",
+      pattern: "\\d*"
+    },
+    model: {
+      value: _vm.phone,
+      callback: function callback($$v) {
+        _vm.phone = $$v;
+      },
+      expression: "phone"
+    }
+  }), _vm._v(" "), _c("v-btn", {
+    attrs: {
+      color: "success",
+      block: "",
+      large: "",
+      loading: _vm.loading
     },
     on: {
-      change: _vm.changeFile
+      click: _vm.register
     }
-  }), _vm._v("\n    " + _vm._s(_vm.file) + "\n")], 1);
+  }, [_c("v-icon", {
+    attrs: {
+      left: ""
+    }
+  }, [_vm._v("\n                            " + _vm._s(_vm.is_member ? "save" : "person_add") + "\n                        ")]), _vm._v("\n                        " + _vm._s(_vm.is_member ? "บันทึกข้อมูล" : "สมัครสมาชิก"))], 1)], 1)], 1)], 1)], 1) : _vm._e()], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -74,17 +217,17 @@ render._withStripped = true;
 
 /***/ }),
 
-/***/ "./resources/js/pages/import/excel.vue":
-/*!*********************************************!*\
-  !*** ./resources/js/pages/import/excel.vue ***!
-  \*********************************************/
+/***/ "./resources/js/pages/guest/register_member.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/pages/guest/register_member.vue ***!
+  \******************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _excel_vue_vue_type_template_id_246a3336___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./excel.vue?vue&type=template&id=246a3336& */ "./resources/js/pages/import/excel.vue?vue&type=template&id=246a3336&");
-/* harmony import */ var _excel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./excel.vue?vue&type=script&lang=js& */ "./resources/js/pages/import/excel.vue?vue&type=script&lang=js&");
+/* harmony import */ var _register_member_vue_vue_type_template_id_2577b866___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./register_member.vue?vue&type=template&id=2577b866& */ "./resources/js/pages/guest/register_member.vue?vue&type=template&id=2577b866&");
+/* harmony import */ var _register_member_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./register_member.vue?vue&type=script&lang=js& */ "./resources/js/pages/guest/register_member.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -94,9 +237,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _excel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _excel_vue_vue_type_template_id_246a3336___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _excel_vue_vue_type_template_id_246a3336___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _register_member_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _register_member_vue_vue_type_template_id_2577b866___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _register_member_vue_vue_type_template_id_2577b866___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -106,38 +249,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/pages/import/excel.vue"
+component.options.__file = "resources/js/pages/guest/register_member.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/pages/import/excel.vue?vue&type=script&lang=js&":
-/*!**********************************************************************!*\
-  !*** ./resources/js/pages/import/excel.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************/
+/***/ "./resources/js/pages/guest/register_member.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/pages/guest/register_member.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_excel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./excel.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/import/excel.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_excel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_register_member_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./register_member.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/guest/register_member.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_register_member_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/pages/import/excel.vue?vue&type=template&id=246a3336&":
-/*!****************************************************************************!*\
-  !*** ./resources/js/pages/import/excel.vue?vue&type=template&id=246a3336& ***!
-  \****************************************************************************/
+/***/ "./resources/js/pages/guest/register_member.vue?vue&type=template&id=2577b866&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/pages/guest/register_member.vue?vue&type=template&id=2577b866& ***!
+  \*************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_excel_vue_vue_type_template_id_246a3336___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./excel.vue?vue&type=template&id=246a3336& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/import/excel.vue?vue&type=template&id=246a3336&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_excel_vue_vue_type_template_id_246a3336___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_register_member_vue_vue_type_template_id_2577b866___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./register_member.vue?vue&type=template&id=2577b866& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/guest/register_member.vue?vue&type=template&id=2577b866&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_register_member_vue_vue_type_template_id_2577b866___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_excel_vue_vue_type_template_id_246a3336___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_register_member_vue_vue_type_template_id_2577b866___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

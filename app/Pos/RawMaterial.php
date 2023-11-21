@@ -3,6 +3,7 @@
 namespace App\Pos;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class RawMaterial extends Model
@@ -15,4 +16,9 @@ class RawMaterial extends Model
 
     protected $appends = [];
     protected $guarded = [];
+
+    public function linkRawMaterials()
+    {
+        return $this->hasMany(LinkRawMaterial::class, "pos_raw_material_id", "id");
+    }
 }

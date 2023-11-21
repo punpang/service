@@ -71,11 +71,16 @@ class NoticePaymetByCustomerCommand extends Command
                             NoticeOfPaymentFromCustomer::setCancel($notice);
                             Linenotify::send("มีแจ้งชำระเงินซ้ำ หมายเลข #$notice->order_id");
                         } else {
+                            Linenotify::send("Alert:NoticePaymentByCustomer :: 1");
                             $notice->update(["ref" => $ref]);
-                            $setSuccessFromVerifySlip = NoticeOfPaymentFromCustomer::setSuccessFromVerifySlipV2($result["text"], $notice);
-                            if ($setSuccessFromVerifySlip["status"]) {
+                            $setSuccessFromVerifySlipV2 = NoticeOfPaymentFromCustomer::setSuccessFromVerifySlipV3($result["text"], $notice);
+                            if ($setSuccessFromVerifySlipV2["status"]) {
                                 $count_verify_slip = $count_verify_slip + 1;
                             }
+                            // else {
+                            //     $count_verify_slip = $count_verify_slip + 1;
+                            //     $setSuccessFromVerifySlipV3 = NoticeOfPaymentFromCustomer::setSuccessFromVerifySlipV3($result["text"], $notice);
+                            // }
                         }
                     } else {
                         $notice->update(["ref" => "no-qrcode-$notice->id"]);

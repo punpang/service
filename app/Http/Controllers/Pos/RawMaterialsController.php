@@ -55,6 +55,12 @@ class RawMaterialsController extends Controller
             "weight" => $request->weight,
         ]);
 
+        foreach ($id->linkRawMaterials as $linkRawMaterial) {
+            $linkRawMaterial->update([
+                "cost" => $linkRawMaterial->weight
+            ]);
+        }
+
         return response()->json([
             "title" => "เปลี่ยนแปลงวัตถุดิบสำเร็จ",
             "icon" => "success"

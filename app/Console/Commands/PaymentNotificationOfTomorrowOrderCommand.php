@@ -40,7 +40,7 @@ class PaymentNotificationOfTomorrowOrderCommand extends Command
      */
     public function handle()
     {
-        $orders = AOrder::where("payment_deadline", now()->format("Y-m-d 12:00:00"))
+        $orders = AOrder::where("payment_deadline", now()->format("Y-m-d 13:00:00"))
             ->where("status", "1")
             ->whereDate("created_at", "<", now()->format("Y-m-d"))
             // ->where("payment_deadline", now()->format("Y-m-d") . " 12:00:00")

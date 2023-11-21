@@ -441,7 +441,7 @@ class Helper extends Model
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 10,
+            CURLOPT_TIMEOUT => 5,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
@@ -566,6 +566,208 @@ class Helper extends Model
                 // ACCOUNT : " . $receiver["account"] . "
                 // BANK_NAME : " . $sender["bank"]["name"]);
 
+                return [
+                    "verify" => true,
+                    "message" => "ตรวจสอบผ่าน",
+                    "transRef" => $transRef,
+                    "amount" => $amount,
+                    "date" => $date,
+                    "data" => $slip["data"]
+                ];
+            }
+        }
+
+        Linenotify::send("ตรวจสอบสลิป --> ชื่อบัญชีหรือเลขที่บัญชีอาจไม่ถูกต้อง --> " . $receiver . " --> Helper::verify_slip()");
+        // Linenotify::send($slip);
+
+        return [
+            "verify" => false,
+            "message" => "ไม่ผ่านการตรวจสอบ",
+            "transRef" => $transRef,
+            "amount" => $amount,
+            "date" => $date,
+            "data" => $slip["data"]
+        ];
+
+        similar_text("นางสาว ฐิติภัทร ศรีสุข", $receiver["name"], $percent_name);
+
+        if ($percent_name >= 100) {
+            return [
+                "verify" => true,
+                "message" => "ตรวจสอบผ่าน",
+                "transRef" => $transRef,
+                "amount" => $amount,
+                "date" => $date,
+                "data" => $slip["message"]["data"]
+            ];
+        } else if ($percent_name <= 80) {
+            Linenotify::send("ตรวจสอบสลิป <= 80%");
+            Linenotify::send($slip);
+            return [
+                "verify" => false,
+                "message" => "ไม่ผ่านการตรวจสอบ",
+                "transRef" => $transRef,
+                "amount" => $amount,
+                "date" => $date,
+                "data" => $slip["message"]["data"]
+            ];
+        } else {
+            Linenotify::send("ตรวจสอบสลิป > 80% < 100%");
+            Linenotify::send($slip);
+
+            return [
+                "verify" => false,
+                "message" => "ไม่ผ่านการตรวจสอบ",
+                "transRef" => $transRef,
+                "amount" => $amount,
+                "date" => $date,
+                "data" => $slip["message"]["data"]
+            ];
+        }
+    }
+
+    public static function verify_slip_v3($qr_code_text = null)
+    {
+        Linenotify::send("verify_slip_v3 :: 1");
+
+        if (is_null($qr_code_text)) {
+            return [
+                "verify" => false,
+                "message" => "ไม่มีข้อมูล qr_code_text"
+            ];
+        }
+
+        $url = "https://developer.easyslip.com/api/v1/verify?payload=" . $qr_code_text;
+        $token = "9b573bb4-db97-461c-ba7d-544e6a1502ec";
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 5,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer ' . $token
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        // echo $response;
+
+        $slip = json_decode($response, true);
+        // Linenotify::send("asfjasjmfp");
+        // Linenotify::send($slip);
+
+
+        if ($slip["status"] != 200) {
+            Linenotify::send("CHECK_SLIP [ Helper::verify_slip_v3() ] --> STATUS [ " . $slip["status"] . " ] --> MESSAGE [ " . $slip["message"] . " ]");
+
+            // if ($slip["message"] == "not_enough_credit") {
+            //     Linenotify::send("Check_Slip ==> เครดิตไม่เพียงพอ");
+            // }
+            return [
+                "verify" => false,
+                "message" => "สถานะไม่ถูกต้อง",
+            ];
+        }
+
+        $transRef = $slip["data"]["transRef"];
+        $date = \Carbon\Carbon::parse($slip["data"]["date"])->addHours(7)->format("Y-m-d H:i:s");
+        // $transDate = $slip["data"]["transDate"];
+        // $date =  $transDate[0] . $transDate[1] . $transDate[2] . $transDate[3] . "-" . $transDate[4] . $transDate[5] . "-" . $transDate[6] . $transDate[7] . " " . $slip["data"]["transTime"];
+        $amount = $slip["data"]["amount"]["amount"];
+        $receiver = $slip["data"]["receiver"];
+        // $sender = $slip["message"]["data"]["sender"];
+
+        $allowed_bank_accounts = [
+            // "0141111111111", // scb pp
+            // "xxxx-xx154-9", // scb bka
+            // "xxx-xxx-3402", // scb pp
+            // "xxx-x-x8154-x", // k+ bka
+            // "XXXXXX3402", // ktc pp
+            // "XXX-X-XX154-9", // ktc bka
+            // "419-1-xxx549", // bbl bka
+            // "091-xxx-3402", // bbl pp
+            // "09xxxx3402", // gsb pp
+            // "41xxxx1549", // gsb bka
+            "4191081549", // ttb bka
+            "0918853402", // bay pp
+
+
+            "xxxx-xx154-9", // scb bka
+            "xxx-xxx-3402", // scb pp
+
+            "XXXXXX3402", // ktb pp
+            "XXX-X-XX154-9", // ktb bak
+
+            "xxx-xxx-3402", // TTB PP
+
+            "xxx-x-x8154-x", // kbank pp
+            "xxx-x-x8154-x", //kbank bka
+
+            "09xxxx3402", //gsb pp
+
+        ];
+
+        foreach ($allowed_bank_accounts as $allowed_bank_account) {
+            similar_text($allowed_bank_account, $receiver["account"]["proxy"]["account"], $percent_bank_account);
+            // Linenotify::send("NAME =>" . $receiver["name"] . " || ACCOUNT => " . $receiver["account"]);
+
+            if ($percent_bank_account == 100) {
+                // AllowedCheckSlip::firstOrCreate(["key" => $receiver["name"]]);
+                // AllowedCheckSlip::firstOrCreate(["key" => $receiver["account"]]);
+                //                 Linenotify::send("
+                // ตรวจสอบจากเลขบัญชี
+                // NAME : " . $receiver["name"] . "
+                // ACCOUNT : " . $receiver["account"] . "
+                // BANK_NAME : " . $sender["bank"]["name"]);
+                Linenotify::send("Helper::verify_slip_v3() => ใช้งานได้");
+                return [
+                    "verify" => true,
+                    "message" => "ตรวจสอบผ่าน",
+                    "transRef" => $transRef,
+                    "amount" => $amount,
+                    "date" => $date,
+                    "data" => $slip["data"]
+                ];
+            }
+        }
+
+        $allowed_names = [
+            "นางสาว ฐิติภัทร ศรีสุข",
+            "นางสาว ฐิติภัทร ศ",
+
+            // "น.ส.ฐิติภัทร ศรีสุข",
+            // "ฐิติภัทร ศรีสุข",
+            // // "ฐิติภัทร"
+            // "TITIPAT SRISUK",
+            "TITIPAT SRISU",
+            "TITIPAT S"
+
+        ];
+
+        foreach ($allowed_names as $allowed_name) {
+            similar_text($allowed_name, $receiver["account"]["name"]["th"], $percent_name_th);
+            similar_text($allowed_name, $receiver["account"]["name"]["en"], $percent_name_en);
+
+            // Linenotify::send("NAME =>" . $receiver["name"] . " || ACCOUNT => " . $receiver["account"]);
+
+            if ($percent_name_th == 100 || $percent_name_en == 100) {
+                // AllowedCheckSlip::firstOrCreate(["key" => $receiver["name"]]);
+                // AllowedCheckSlip::firstOrCreate(["key" => $receiver["account"]]);
+                //                 Linenotify::send("
+                // ตรวจสอบจากชื่อบัญชี
+                // NAME : " . $receiver["name"] . "
+                // ACCOUNT : " . $receiver["account"] . "
+                // BANK_NAME : " . $sender["bank"]["name"]);
+                Linenotify::send("Helper::verify_slip_v3() => ใช้งานได้");
                 return [
                     "verify" => true,
                     "message" => "ตรวจสอบผ่าน",

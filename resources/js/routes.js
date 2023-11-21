@@ -204,6 +204,13 @@ const routes = [
         meta: { requiresAuth: true },
     },
 
+    {
+        path: "/manages/settings/coupons",
+        name: "/manages/settings/coupons",
+        component: () => import("@/js/pages/coupons/index"),
+        meta: { requiresAuth: true },
+    },
+
     // {
     //     path: "/manages/order/run",
     //     name: "managesOrderID",

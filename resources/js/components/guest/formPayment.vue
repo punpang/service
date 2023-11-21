@@ -408,11 +408,11 @@ export default {
                     break;
                 case 2:
                     this.textClickAlertAmount = `"ชำระเต็มจำนวน" / "ชำระ 50 %"`;
-                    this.deposit = parseInt(this.sumAll.sumTASC);
+                    this.deposit = this.sumAll.sumTASC;
                     break;
                 case 3:
                     this.textClickAlertAmount = `"ชำระยอดคงเหลือ"`;
-                    this.deposit = parseInt(this.sumAll.sumBalance);
+                    this.deposit = this.sumAll.sumBalance;
                     break;
             }
         },

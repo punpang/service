@@ -128,7 +128,8 @@ export default {
             //     },
             // ],
             // search_settings: {},
-            // timer: {},
+            // timer: {},.
+            timer: {},
         };
     },
     methods: {
@@ -139,6 +140,14 @@ export default {
         //     window.location.href = `/manages/order/${id}/showOrderByID`;
         // },
         async fetch() {
+            // clearTimeout(this.timer.running);
+            // // console.log(this.$route.fullPath)
+            // if (this.$route.fullPath == "/manages/order/details") {
+            //     this.count_time();
+            // } else {
+            //     return;
+            // }
+
             let loader = this.$loading.show();
             const payload = `date_get=${this.date}`;
             const result = await this.$store.dispatch(
@@ -150,6 +159,7 @@ export default {
                 "orderIndex/fetch_orders_details_pos",
                 payload
             );
+
             loader.hide();
         },
         formatDate(date) {
@@ -158,9 +168,13 @@ export default {
             let y = parseInt(year) + 543;
             return `${day}/${month}/${y}`;
         },
+        count_time() {
+            this.timer.running = setTimeout(this.fetch, 20000);
+        },
     },
     async mounted() {
         this.fetch();
+        // this.count_time();
     },
     computed: {
         ...mapGetters({

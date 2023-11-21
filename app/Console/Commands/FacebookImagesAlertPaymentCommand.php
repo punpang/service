@@ -116,6 +116,7 @@ class FacebookImagesAlertPaymentCommand extends Command
                             // Linenotify::send("รับชำระเงินจากลูกค้า -> #$order->id -> Facebook");
 
                             //NoticeOfPaymentFromCustomer::setSuccessFromVerifySlip($result["text"], $notice);
+                            NoticeOfPaymentFromCustomer::setSuccessFromVerifySlipV3($result["text"], $notice);
 
                             // แจ้งเตือนไลน์
                         }

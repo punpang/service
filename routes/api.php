@@ -181,6 +181,15 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                 });
             });
 
+            Route::prefix('coupons')->group(function () { // api/v1/pos/goods/...
+                Route::post('store', 'Order\CouponsController@store');
+                Route::post('{id}/update', 'Order\CouponsController@update');
+                Route::post('{id}/delete', 'Order\CouponsController@delete');
+                Route::get('fetch', 'Order\CouponsController@fetch');
+
+                Route::post('useCoupon', 'Order\CouponUsedController@useCoupon');
+            });
+
             Route::prefix('pos')->group(function () { // api/v1/pos/...
                 Route::prefix('goods')->group(function () { // api/v1/pos/goods/...
                     Route::post('store', 'Pos\GoodsController@store');
@@ -408,6 +417,7 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                 });
 
                 Route::post('alertPaymentByOrderID', 'Order\AOrderController@alertPaymentByOrderID');
+                Route::post('{order}/alertPaymentExtendTimeByOrderID', 'Order\AOrderController@alertPaymentExtendTimeByOrderID');
 
                 Route::get('{order_id}/getOrderByID', 'Order\AOrderController@getOrderByID');
                 Route::post('paymentByOrderID', 'Order\AOrderController@paymentByOrderID');

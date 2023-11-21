@@ -219,14 +219,14 @@ export default {
             const deposited = this.order.sum_all.sumDeposited;
             const total = this.order.sum_all.sumTASC;
             if (this.order.status == 8) {
-                this.amount = parseInt(this.order.sum_all.sumBalance);
+                this.amount = this.order.sum_all.sumBalance;
                 return;
             }
             if (deposited == 0) {
-                this.amount = parseInt(total / 2);
+                this.amount = total / 2;
                 return;
             } else {
-                this.amount = parseInt(total - deposited);
+                this.amount = total - deposited;
                 return;
             }
         },

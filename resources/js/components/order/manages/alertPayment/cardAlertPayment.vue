@@ -140,6 +140,17 @@
                 ></v-checkbox> -->
             </v-card-text>
             <v-card-actions>
+                <v-btn
+                    large
+                    class="info"
+                    v-if="order.payment_deadline"
+                    :disabled="dateTimeForPay == ''"
+                    @click="clickExtendTime()"
+                >
+                    <v-icon left>update</v-icon>
+                    <strong>ขยายเวลา</strong>
+                </v-btn>
+
                 <v-spacer></v-spacer>
                 <!-- <v-btn large dark class="success">
           <v-icon left>notifications</v-icon>
@@ -218,6 +229,28 @@ export default {
         };
     },
     methods: {
+        async clickExtendTime() {
+            let loader = this.$loading.show();
+            const payload = {
+                orderID: this.order.id,
+                payment_deadline: this.dateTimeForPay,
+                status_full_payment: this.status_full_payment,
+            };
+
+            const result = await this.$store.dispatch(
+                "orderIndex/alertPaymentExtendTimeByOrderID",
+                payload
+            );
+
+            if (result.status == 200) {
+                this.$toast.success(result.data.title);
+                this.exit();
+            } else {
+                this.$toast.error("ขยายเวลาชำระเงินไม่สำเร็จ");
+            }
+
+            loader.hide();
+        },
         async clickAlertPaymentByOrderID() {
             let loader = this.$loading.show();
             const payload = {
@@ -333,7 +366,7 @@ export default {
             if (v.time_minutes == 0) {
                 let oDateTime = new Date(this.formatDateTimeGetForAlert());
                 oDateTime.setDate(oDateTime.getDate() - 1);
-                oDateTime.setHours(12);
+                oDateTime.setHours(13);
                 oDateTime.setMinutes(0);
                 this.dateTimeForPay = oDateTime.toLocaleString();
                 return;

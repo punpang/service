@@ -202,4 +202,41 @@ class NoticeOfPaymentFromCustomer extends Model
 
         return ["status" => false];
     }
+
+    public static function setSuccessFromVerifySlipV3($qr_code_text, $notice)
+    {
+        Linenotify::send("setSuccessFromVerifySlipV3 :: 1");
+
+        $verify_slip = Helper::verify_slip_v3($qr_code_text);
+        // Linenotify::send('$verify_slip = Helper::verify_slip($result);');
+
+
+        if ($verify_slip["date"] <= $notice->aOrder->created_at) {
+            Linenotify::send("ตรวจสอบสลิป => #" . $notice->aOrder->id . " => วันที่สลิปไม่ถูกต้องเมืิ่อเทียบกับวันสร้างรายการ");
+        }
+
+        if ($verify_slip["amount"] > $notice->aOrder->sumBalance()) {
+            Linenotify::send("ตรวจสอบสลิป => #" . $notice->aOrder->id . " => จำนวนเงินสลิปมากกว่ายอดที่ต้องชำระ");
+        }
+
+        if ($verify_slip["verify"] == false) {
+            Linenotify::send("ตรวจสอบสลิป => #" . $notice->aOrder->id . " => สลิปไม่ผ่านการตรวจสอบ");
+        }
+
+        if (
+            $verify_slip["verify"] &&
+            $verify_slip["date"] > $notice->aOrder->created_at &&
+            $verify_slip["amount"] <= $notice->aOrder->sumBalance()
+        ) {
+            NoticeOfPaymentFromCustomer::setSuccess($notice, $verify_slip["amount"], $notice->ref);
+            AOrder::paymentByOrderID($notice->aOrder->id, $notice->amount);
+            AHistoryPayed::paymentByOrderID($notice->aOrder->id, $notice->amount, 2, null, $notice->id);
+            // AlertMessages::smsPaymentOrder($notice->order_id, $verify_slip["amount"]);
+            AlertMessages::socialPaymentOrder($notice->aOrder, $verify_slip["amount"]);
+            // AlertMessages::linePaymentOrder($notice->aOrder, $verify_slip["amount"]);
+            return ["status" => true];
+        }
+
+        return ["status" => false];
+    }
 }

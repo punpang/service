@@ -286,6 +286,7 @@ class AOrderController extends Controller
             "adjustExcessPayments",
             "posOrders.posGoods",
             "orderDetails.multiCakes.aPrice",
+            "couponUsed.coupon"
 
         )
             ->with("orderDetails.addOns.productAddOn.goodsAddOn")
@@ -699,6 +700,32 @@ class AOrderController extends Controller
 
 
         // dd($payment_deadline, $order->dateGetTime(), $payment_deadline < $order->date_get . " " . $order->time_get . ".00");
+    }
+
+    public function alertPaymentExtendTimeByOrderID(AOrder $order)
+    {
+        // dd($order);
+        $payment_deadline = \Carbon\Carbon::createFromFormat('d/m/Y H:i:s', request("payment_deadline"))->subYears(543)->format('Y-m-d H:i:s');
+
+        $order->payment_deadline = $payment_deadline;
+        $order->status_full_payment = request("status_full_payment");
+
+        if (
+            $order->sumMoneyCustomer() > 0
+            || $order->orderDeliveryService
+        ) {
+            $order->status_full_payment = 1;
+        }
+
+        $order->save();
+
+        Facebook::text_account_number_and_slip_attachment_link($order);
+
+        return response()->json([
+            "status" => "successs",
+            "title" => "ขยายเวลาชำระเงินสำเร็จ",
+            "text" => "โปรดคัดลอกรายละเอียดและส่งต่อให้ลูกค้า"
+        ], 200);
     }
 
     public function updateRatingByUuid()

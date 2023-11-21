@@ -69,6 +69,9 @@ import posOrderDetail from "@/js/stores/modules/pos/orderDetail";
 import posRawMaterial from "@/js/stores/modules/pos/rawMaterial";
 import posLinkRawMaterial from "@/js/stores/modules/pos/linkRawMaterial";
 
+import coupons from "@/js/stores/modules/order/coupons"
+import couponsUsed from "@/js/stores/modules/order/couponsUsed.js"
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -76,6 +79,8 @@ export default new Vuex.Store({
         main,
         productImage,
         // ////
+        coupons,
+        couponsUsed,
         pusher,
         productGroup,
         product,

@@ -13,6 +13,17 @@
                     </td>
                 </tr>
                 <!-- / -->
+                <tr>
+                    <td>
+                        <strong>ภาษีมูลค่าเพิ่ม 7%</strong>
+                    </td>
+                    <td class="text-right">
+                        <strong>{{
+                            order.sum_all.vat7 | formatNumber
+                        }}</strong>
+                    </td>
+                </tr>
+                <!-- / -->
 
                 <tr v-if="order.sum_all.sumAccessory != 0">
                     <td>
@@ -24,7 +35,7 @@
                     <td class="text-right">
                         <strong>{{
                             order.sum_all.sumAccessory | formatNumber
-                        }}</strong>
+                        }} </strong>
                     </td>
                 </tr>
                 <!-- / -->
@@ -109,6 +120,7 @@
                         }}</strong>
                     </td>
                 </tr>
+
                 <!-- / -->
                 <tr>
                     <td>
@@ -149,6 +161,9 @@
                     </td>
                 </tr>
                 <!-- / -->
+                <trUseCoupon :propOrder="order"></trUseCoupon>
+
+                <!-- / -->
                 <tr>
                     <td>
                         <strong>{{ paymentSummary.text.balance }}</strong>
@@ -159,7 +174,7 @@
                         }}</strong>
                     </td>
                 </tr>
-                <!-- / -->
+
                 <tr>
                     <td colspan="2">
                         <strong
@@ -177,6 +192,7 @@
 <script>
 import { mapGetters } from "vuex";
 import btnRemoveUsePoint from "@/js/components/order/useAccumulatedPoints/btnRemoveUsePoint";
+import trUseCoupon from "@/js/components/order/manages/useCoupon/tr"
 var numeral = require("numeral");
 Vue.filter("formatNumber", function (value) {
     return numeral(value).format("0,0.00");
@@ -186,7 +202,7 @@ export default {
         return {};
     },
     components: {
-        btnRemoveUsePoint,
+        btnRemoveUsePoint,trUseCoupon
     },
     methods: {
         removeUsePoint() {},

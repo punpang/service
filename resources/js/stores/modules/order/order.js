@@ -144,6 +144,16 @@ export default {
                     log.error(err);
                 });
         },
+        async alertPaymentExtendTimeByOrderID({}, payload) {
+            return await axios
+                .post(`/api/admin/v1/order/${payload.orderID}/alertPaymentExtendTimeByOrderID`, payload)
+                .then((response) => {
+                    return response;
+                })
+                .catch((err) => {
+                    log.error(err);
+                });
+        },
         async updateRatingByUuid({}, payload) {
             const res = await axios.post(
                 `/api/v1/guest/order/updateRatingByUuid`,
@@ -517,7 +527,7 @@ export default {
             return await axios
                 .post(
                     `/api/admin/v1/order/${payload.order_id}/remove_use_point_by_order_id`
-                    
+
                 )
                 .then((response) => {
                     return response;

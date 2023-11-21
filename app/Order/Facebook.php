@@ -7,10 +7,11 @@ use App\URL;
 use App\MSms;
 use App\Helper;
 use App\Linenotify;
+use App\Order\Line;
 use App\Order\Setting;
 use App\Order\ShotlinkV2;
-use Illuminate\Support\Str;
 // use Google\Service\Compute\Help;
+use Illuminate\Support\Str;
 use App\Order\RegisterMemberTemp;
 use App\Order\KsherChannelPayment;
 use Illuminate\Database\Eloquent\Model;
@@ -538,6 +539,10 @@ $setting->open_store - $setting->close_store น. ชั่วคราว
         if ($keyword == "account_number_and_slip_attachment_link") {
             $order = AOrder::find($postback["order_id"]);
             ACustomer::consent_condition($order->customer);
+            // if ($order->updated_at < now()->subMinutes(1)->format("Y-m-d H:i:s")) {
+            //     return;
+            // }
+
             if (
                 $order->payment_deadline < now()->format("Y-m-d H:i:s")
 
@@ -574,6 +579,11 @@ $setting->open_store - $setting->close_store น. ชั่วคราว
             //     $msg = "โปรดเลือกชำระด้วยจำนวนเงินระหว่าง " . number_format($order->sumTASC(), 2) . " บาท หรือ " . number_format($order->sumTASC() / 2, 2) . " บาท";
             // }
 
+            $msg = "โปรดรอสักครู่! ระบบกำลังประมวลผล";
+            Facebook::send_reply_message($order, $msg);
+            Facebook::text_account_number_and_slip_attachment_link($order);
+            return;
+
             $msg = "โปรดชำระด้วยจำนวนเงิน
 " . number_format($order->sumBalance(), 2) . " บาท";
 
@@ -588,6 +598,7 @@ $setting->open_store - $setting->close_store น. ชั่วคราว
 
 True Wallet (ทรูวอลเลท)
 *โปรดแจ้ง หากสะดวกชำระช่องทางนี้*";
+
             $msg = $msg . "
 --------------------
 โปรดแจ้งชำระเงินก่อน
@@ -627,6 +638,46 @@ $bank
             //     ]
             // );
         }
+    }
+
+    public static function text_account_number_and_slip_attachment_link($order)
+    {
+        $msg = "โปรดชำระด้วยจำนวนเงิน
+" . number_format($order->sumBalance(), 2) . " บาท";
+
+        $bank = "ช่องทางการโอนชำระเงิน
+พร้อมเพย์ (แนะนำ)
+0918853402
+ฐิติภัทร ศรีสุข
+
+ธนาคารไทยพาณิชย์
+4191081549
+ฐิติภัทร ศรีสุข
+
+True Wallet (ทรูวอลเลท)
+*โปรดแจ้ง หากสะดวกชำระช่องทางนี้*";
+
+        $msg = $msg . "
+--------------------
+โปรดแจ้งชำระเงินก่อน
+$order->payment_deadline_th น.
+--------------------
+$bank
+--------------------
+**หลังจากลูกค้าชำระเงินแล้ว ร้านสงวนสิทธิ์ว่าลูกค้าตรวจสอบรายการสั่งซื้อแล้ว**
+***โปรดแจ้งชำระเงินภายในวัน-เวลาที่ร้านกำหนด***
+****ร้านสงวนสิทธิ์ในการจัดลำดับคิวใหม่ หากแจ้งชำระเงินไม่ทันตามวัน-เวลาที่ร้านกำหนด****";
+
+
+
+        // Facebook::send_reply_image($order, "https://lh3.googleusercontent.com/d/1mEoi5PyWNPcQnvZ_FyNWiGZUT6PLYgB7");
+
+        $generate_phone_promptpay = Helper::generate_phone_promptpay($order->sumBalance());
+        $generate_qrcode_text = Helper::generate_qrcode_text($generate_phone_promptpay);
+        Facebook::send_reply_image($order, URL::base_to_link($generate_qrcode_text));
+        unlink($generate_qrcode_text);
+
+        Facebook::send_reply_message($order, $msg);
     }
 
     public static function set_qrcode_payment($order_id)

@@ -138,7 +138,12 @@ class OrderDetail extends Model implements Auditable
 
     public function getSumTotalAttribute()
     {
-        return number_format($this->price + $this->sum_add_on, 2);
+        return number_format($this->SumTotalNotFormat, 2);
+    }
+
+    public function getSumTotalNotFormatAttribute()
+    {
+        return $this->price + $this->sum_add_on;
     }
 
     public function getColorMultiCakeAttribute()

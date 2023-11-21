@@ -9,7 +9,8 @@ export default {
         },
     },
     getters: {
-        fetch:state => state.fetch
+        fetch:state => state.fetch,
+        fetch2:state => state.fetch
     },
     actions: {
         async fetch({ commit }, payload) {

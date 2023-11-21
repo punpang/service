@@ -800,6 +800,57 @@ class Line extends Model
         self::push_flex_message_v2($order->customer->line->userId, $message);
     }
 
+    public function flex_()
+    {
+        $flex = [
+            "type" => "bubble",
+            "body" => [
+                "type" => "box",
+                "layout" => "vertical",
+                "contents" => [
+                    [
+                        "type" => "text",
+                        "text" => "สรุปรายการสั่งซื้อและชำระเงิน",
+                        "weight" => "bold"
+                    ],
+                    [
+                        "type" => "text",
+                        "text" => "โปรดศึกษาเงื่อนไขก่อนกดปุ่ม -> ถูกต้อง, เลขที่บัญชี",
+                        "wrap" => true
+                    ]
+                ]
+            ],
+            "footer" => [
+                "type" => "box",
+                "layout" => "vertical",
+                "spacing" => "sm",
+                "contents" => [
+                    [
+                        "type" => "button",
+                        "style" => "link",
+                        "height" => "sm",
+                        "action" => [
+                            "type" => "uri",
+                            "label" => "รายละเอียดเพิ่มเติม",
+                            "uri" => "https=>//linecorp.com"
+                        ]
+                    ],
+                    [
+                        "type" => "button",
+                        "style" => "link",
+                        "height" => "sm",
+                        "action" => [
+                            "type" => "postback",
+                            "label" => "ถูกต้อง, เลขที่บัญชี",
+                            "data" => "https=>//linecorp.com"
+                        ]
+                    ]
+                ],
+                "flex" => 0
+            ]
+        ];
+    }
+
     public static function flex_receipt($order)
     {
         if (
