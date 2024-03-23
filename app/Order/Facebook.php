@@ -109,6 +109,7 @@ class Facebook extends Model
         $profile->update(["welcome_date" => now()->format("Y-m-d")]);
         $store_day_off = StoreDayOff::where("start_date", "<=", now()->format("Y-m-d"))
             ->where("end_date", ">=", now()->format("Y-m-d"))
+            ->where("end_time", ">", now()->format("H:i:s"))
             ->orderBy("start_date", "ASC")
             ->orderBy("end_date", "ASC")
             ->first();

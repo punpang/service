@@ -78,6 +78,7 @@
                 <orderPosLists></orderPosLists>
             </v-tab-item>
         </v-tabs-items>
+
     </div>
 </template>
 
@@ -159,6 +160,14 @@ export default {
                 "orderIndex/fetch_orders_details_pos",
                 payload
             );
+
+            if (this.pos.length >= 1) {
+                this.$swal({
+                    title: "มีรายการสั่งซื้อใน POS",
+                    icon: "warning",
+                    confirmButtonText: "รับทราบ",
+                });
+            }
 
             loader.hide();
         },

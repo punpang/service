@@ -13,6 +13,19 @@
                     </td>
                 </tr>
                 <!-- / -->
+                <tr v-if="order.sum_all.usePoint != 0">
+                    <td>
+                        <strong>ใช้คะแนนสะสม</strong>
+                    </td>
+
+                    <td class="text-right error--text">
+                        <btnRemoveUsePoint></btnRemoveUsePoint>
+                        <strong>
+                            {{ order.sum_all.usePoint | formatNumber }}</strong
+                        >
+                    </td>
+                </tr>
+                <!-- / -->
                 <tr>
                     <td>
                         <strong>ภาษีมูลค่าเพิ่ม 7%</strong>
@@ -147,19 +160,7 @@
                         >
                     </td>
                 </tr>
-                <!-- / -->
-                <tr v-if="order.sum_all.usePoint != 0">
-                    <td>
-                        <strong>ใช้คะแนนสะสม</strong>
-                    </td>
 
-                    <td class="text-right error--text">
-                        <btnRemoveUsePoint></btnRemoveUsePoint>
-                        <strong>
-                            {{ order.sum_all.usePoint | formatNumber }}</strong
-                        >
-                    </td>
-                </tr>
                 <!-- / -->
                 <trUseCoupon :propOrder="order"></trUseCoupon>
 

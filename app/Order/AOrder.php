@@ -287,12 +287,14 @@ class AOrder extends Model
 
     public function vat7()
     {
-        return $this->sumGoods() * 7 / 100;
+        // return $this->sumGoods() * 7 / 100;
+        return ($this->sumGoods() * 7 / 100) + ($this->usePoint() * 7 / 100);
     }
 
     public function sumGoodsVat7()
     {
-        return $this->sumGoods() + $this->vat7();
+        // return $this->sumGoods()+ $this->vat7();
+        return $this->sumGoods() + $this->usePoint() + $this->vat7();
     }
 
     public function sumAdjustExcessPayment()
@@ -348,7 +350,7 @@ class AOrder extends Model
             $this->sumDeliverService() +
             $this->sumMoneyCustomer() +
             $this->sumMoneyService() +
-            $this->usePoint() -
+            // $this->usePoint() -
             $this->useCoupon();
     }
 

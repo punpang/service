@@ -87,7 +87,13 @@
             </template>
 
             <template v-slot:item.tags="{ item }">
-                <v-btn rounded color="primary" dark x-small v-if="item.order_delivery_service">
+                <v-btn
+                    rounded
+                    color="primary"
+                    dark
+                    x-small
+                    v-if="item.order_delivery_service"
+                >
                     บริการจัดส่ง
                 </v-btn>
             </template>
@@ -107,6 +113,7 @@ import { mapGetters } from "vuex";
 import searchSettings from "@/js/components/orders/search_settings";
 export default {
     components: { searchSettings },
+
     data() {
         return {
             search: "",
@@ -137,12 +144,26 @@ export default {
         },
         async fetch() {
             let loader = this.$loading.show();
+            this.setSearchSettingsForPass();
             const payload = `date_get=${this.date}&sort_id=asc&sort_time_get=asc&makeHidden=sum_all,payment_deadline_th,status_payment_deadline,date_get_default,created_at_th,payment_deadline,rating,status_full_payment,auth_order,date_order&with=aStatus,customer,orderDeliveryService&status=${this.search_settings.status}`;
             const result = await this.$store.dispatch(
                 "orderIndex/fetch_orders",
                 payload
             );
             loader.hide();
+        },
+        setSearchSettingsForPass() {
+            const now_date = new Date(
+                Date.now() - new Date().getTimezoneOffset() * 60000
+            )
+                .toISOString()
+                .substr(0, 10);
+
+            if (this.date < now_date) {
+                this.search_settings.status = [1, 2, 3, 4, 8, 9];
+            } else {
+                this.search_settings.status = [1, 2, 3, 4, 8];
+            }
         },
         formatDate(date) {
             if (!date) return null;

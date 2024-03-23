@@ -15,6 +15,7 @@ class Sms extends Model
         $client = new \GuzzleHttp\Client();
         $response = $client->post("https://smsgateway.me/api/v4/message/send",
             [
+                'connect_timeout' => 5,
                 'headers' => [
                     'Authorization' => $Authorization,
                 ],
