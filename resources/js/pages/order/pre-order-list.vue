@@ -470,9 +470,54 @@ export default {
             let y = parseInt(year) + 543;
             return `${day}/${month}/${y}`;
         },
+        checkOrderPosTomorrow() {
+            let tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            var d = tomorrow,
+                month = "" + (d.getMonth() + 1),
+                day = "" + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2) month = "0" + month;
+            if (day.length < 2) day = "0" + day;
+
+            tomorrow = year + "-" + month + "-" + day;
+            const time = "13:00:00";
+
+            const orders_tomorrow = this.details.filter(
+                (e) =>
+                    e.a_order.date_get == tomorrow && e.a_order.time_get <= time
+            );
+
+            const pos_tomorrow = this.pos.filter(
+                (e) => e.date_get == tomorrow && e.time_get <= time
+            );
+
+            if (orders_tomorrow.length >= 1 || pos_tomorrow.length >= 1) {
+                this.$swal({
+                    title: "พรุ่งนี้ มี ORDER ก่อนเที่ยง",
+                    text:
+                        "ORDER " +
+                        orders_tomorrow.length +
+                        " รายการ | POS " +
+                        pos_tomorrow.length +
+                        " รายการ",
+                    icon: "warning",
+                    confirmButtonText: "รับทราบ",
+                    confirmButtonColor: "#3085d6",
+                    footer:
+                        "วัน-เวลารายการสั่งซื้อไม่เกิน " +
+                        this.formatDate(tomorrow) +
+                        " " +
+                        time +
+                        " น.",
+                });
+            }
+        },
     },
     async mounted() {
-        this.fetch();
+        await this.fetch();
+        await this.checkOrderPosTomorrow();
     },
     computed: {
         ...mapGetters({

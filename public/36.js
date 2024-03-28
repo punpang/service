@@ -158,27 +158,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) switch (_context.prev = _context.next) {
             case 0:
               loader = _this.$loading.show();
-              _this.setSearchSettingsForPass();
               payload = "date_get=".concat(_this.date, "&sort_id=asc&sort_time_get=asc&makeHidden=sum_all,payment_deadline_th,status_payment_deadline,date_get_default,created_at_th,payment_deadline,rating,status_full_payment,auth_order,date_order&with=aStatus,customer,orderDeliveryService&status=").concat(_this.search_settings.status);
-              _context.next = 5;
+              _context.next = 4;
               return _this.$store.dispatch("orderIndex/fetch_orders", payload);
-            case 5:
+            case 4:
               result = _context.sent;
               loader.hide();
-            case 7:
+            case 6:
             case "end":
               return _context.stop();
           }
         }, _callee);
       }))();
     },
-    setSearchSettingsForPass: function setSearchSettingsForPass() {
+    clickSetSearchSettingsForPast: function clickSetSearchSettingsForPast() {
       var now_date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10);
       if (this.date < now_date) {
         this.search_settings.status = [1, 2, 3, 4, 8, 9];
       } else {
         this.search_settings.status = [1, 2, 3, 4, 8];
       }
+      this.fetch();
     },
     formatDate: function formatDate(date) {
       if (!date) return null;
@@ -472,7 +472,7 @@ var render = function render() {
     },
     on: {
       click: function click($event) {
-        _vm.$refs.menu.save(_vm.date), _vm.fetch();
+        _vm.$refs.menu.save(_vm.date), _vm.fetch(), _vm.clickSetSearchSettingsForPast();
       }
     }
   }, [_vm._v("\n                        เลือก\n                    ")])], 1)], 1)], 1), _vm._v(" "), _c("v-col", {

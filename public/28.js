@@ -183,6 +183,34 @@ Vue.filter("formatNumber", function (value) {
         day = _date$split2[2];
       var y = parseInt(year) + 543;
       return "".concat(day, "/").concat(month, "/").concat(y);
+    },
+    checkOrderPosTomorrow: function checkOrderPosTomorrow() {
+      var tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      var d = tomorrow,
+        month = "" + (d.getMonth() + 1),
+        day = "" + d.getDate(),
+        year = d.getFullYear();
+      if (month.length < 2) month = "0" + month;
+      if (day.length < 2) day = "0" + day;
+      tomorrow = year + "-" + month + "-" + day;
+      var time = "13:00:00";
+      var orders_tomorrow = this.details.filter(function (e) {
+        return e.a_order.date_get == tomorrow && e.a_order.time_get <= time;
+      });
+      var pos_tomorrow = this.pos.filter(function (e) {
+        return e.date_get == tomorrow && e.time_get <= time;
+      });
+      if (orders_tomorrow.length >= 1 || pos_tomorrow.length >= 1) {
+        this.$swal({
+          title: "พรุ่งนี้ มี ORDER ก่อนเที่ยง",
+          text: "ORDER " + orders_tomorrow.length + " รายการ | POS " + pos_tomorrow.length + " รายการ",
+          icon: "warning",
+          confirmButtonText: "รับทราบ",
+          confirmButtonColor: "#3085d6",
+          footer: "วัน-เวลารายการสั่งซื้อไม่เกิน " + this.formatDate(tomorrow) + " " + time + " น."
+        });
+      }
     }
   },
   mounted: function mounted() {
@@ -191,8 +219,12 @@ Vue.filter("formatNumber", function (value) {
       return _regeneratorRuntime().wrap(function _callee2$(_context2) {
         while (1) switch (_context2.prev = _context2.next) {
           case 0:
-            _this2.fetch();
-          case 1:
+            _context2.next = 2;
+            return _this2.fetch();
+          case 2:
+            _context2.next = 4;
+            return _this2.checkOrderPosTomorrow();
+          case 4:
           case "end":
             return _context2.stop();
         }

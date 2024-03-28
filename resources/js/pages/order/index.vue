@@ -33,7 +33,11 @@
                         <v-btn
                             text
                             color="primary"
-                            @click="$refs.menu.save(date), fetch()"
+                            @click="
+                                $refs.menu.save(date),
+                                    fetch(),
+                                    clickSetSearchSettingsForPast()
+                            "
                         >
                             เลือก
                         </v-btn>
@@ -144,7 +148,6 @@ export default {
         },
         async fetch() {
             let loader = this.$loading.show();
-            this.setSearchSettingsForPass();
             const payload = `date_get=${this.date}&sort_id=asc&sort_time_get=asc&makeHidden=sum_all,payment_deadline_th,status_payment_deadline,date_get_default,created_at_th,payment_deadline,rating,status_full_payment,auth_order,date_order&with=aStatus,customer,orderDeliveryService&status=${this.search_settings.status}`;
             const result = await this.$store.dispatch(
                 "orderIndex/fetch_orders",
@@ -152,7 +155,7 @@ export default {
             );
             loader.hide();
         },
-        setSearchSettingsForPass() {
+        clickSetSearchSettingsForPast() {
             const now_date = new Date(
                 Date.now() - new Date().getTimezoneOffset() * 60000
             )
@@ -164,6 +167,7 @@ export default {
             } else {
                 this.search_settings.status = [1, 2, 3, 4, 8];
             }
+            this.fetch();
         },
         formatDate(date) {
             if (!date) return null;
