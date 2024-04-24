@@ -242,6 +242,14 @@ const routes = [
         component: () => import("@/js/pages/lucky/getLink"),
         meta: { requiresAuth: true },
     },
+
+    {
+        path: "/manages/product_interest/index",
+        name: "manages_register_product_interest",
+        component: () =>
+            import("@/js/pages/product_interest/index"),
+    },
+
     {
         path: "/lucky/reward/:uuid",
         name: "managesLuckyRedeemCode",
@@ -315,6 +323,7 @@ const routes = [
         component: () =>
             import("@/js/pages/guest/profile_psid/index"),
     },
+
 ];
 
 const router = new VueRouter({

@@ -32,6 +32,7 @@ export default {
         async start() {
             let loader = this.$loading.show();
             const fullPathSplit = this.$route.fullPath.split("?");
+            console.log(fullPathSplit);
             await this.$store
                 .dispatch("profilePsid/get_profile", {
                     query: fullPathSplit[1],

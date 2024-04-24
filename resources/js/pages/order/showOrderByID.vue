@@ -3,6 +3,16 @@
         <alertAdjustExcessPayment
             v-if="order.sum_all.sumBalance < 0"
         ></alertAdjustExcessPayment>
+        <v-alert
+            v-if="order.sum_all.sumBalance > 0"
+            color="warning white--text d-flex d-sm-flex d-md-none"
+            dense
+            border="left"
+            prominent
+        >
+            ยอดคงเหลือ {{ order.sum_all.sumBalance | formatNumber }} บาท [
+            {{ (order.sum_all.sumBalance * 0.9345794393) | formatNumber }} ]
+        </v-alert>
         <v-row>
             <v-col cols="12" md="8">
                 <cardManagesGoodsDetail
@@ -104,10 +114,14 @@ import btnDelivery from "@/js/components/order/delivery/btnDelivery";
 import btnSummaryOfOrderDetails from "@/js/components/order/summaryOfOrderDetails/btn";
 import btnPrepareGoods from "@/js/components/order/prepareGoods/btnPrepareGoods";
 import btnPickUpGoods from "@/js/components/order/pickUpGoods/btnPickUpGoods";
-import btnUseAccumulatedPoints from '@/js/components/order/useAccumulatedPoints/btnUseAccumulatedPoints';
-
+import btnUseAccumulatedPoints from "@/js/components/order/useAccumulatedPoints/btnUseAccumulatedPoints";
 
 import alertAdjustExcessPayment from "@/js/components/order/adjustExcessPayment/alert";
+
+var numeral = require("numeral");
+Vue.filter("formatNumber", function (value) {
+    return numeral(value).format("0,0.00");
+});
 export default {
     components: {
         cardDataCustomer,

@@ -2,6 +2,7 @@
 
 namespace App\Pos;
 
+use App\Order\ProductInterest;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -29,6 +30,11 @@ class Goods extends Model
     public function posLinkRawMaterials()
     {
         return $this->hasMany(LinkRawMaterial::class, "pos_goods_id", "id");
+    }
+
+    public function productInterests()
+    {
+        return $this->hasMany(ProductInterest::class, "pos_goods_id", "id");
     }
 
     public function getSumCostLinkRawMaterialAttribute()

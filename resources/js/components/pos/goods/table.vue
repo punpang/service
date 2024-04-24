@@ -63,6 +63,15 @@
                         :propPosGoods="propPosGoods"
                         v-if="propPosGoods"
                     ></selectForOrder>
+                    <selectForProductInterest
+                        :propSelectForProductInterest="
+                            propSelectForProductInterest
+                        "
+                        @emitAddGoodsProductInterest="
+                            emitAddGoodsProductInterest
+                        "
+                        :propGoods="item"
+                    ></selectForProductInterest>
                     <btnLinkRawMaterials
                         :propGoods="item"
                         @emitExit="emitExit"
@@ -87,14 +96,17 @@ import { mapGetters } from "vuex";
 import createGoods from "@/js/components/pos/goods/create";
 import updateGoods from "@/js/components/pos/goods/update";
 import selectForOrder from "@/js/components/pos/goods/selectForOrder/create";
+import selectForProductInterest from "@/js/pages/product_interest/btnSelectGoods";
+
 import btnLinkRawMaterials from "@/js/components/pos/goods/link_raw_materials/btn";
 export default {
-    props: ["propPosGoods"],
+    props: ["propPosGoods", "propSelectForProductInterest"],
     components: {
         createGoods,
         updateGoods,
         selectForOrder,
         btnLinkRawMaterials,
+        selectForProductInterest,
     },
     data() {
         return {
@@ -109,6 +121,9 @@ export default {
         };
     },
     methods: {
+        emitAddGoodsProductInterest(propGoods) {
+            this.$emit("emitAddGoodsProductInterest", propGoods);
+        },
         async emitFetchGoods() {
             await this.fetch_goods();
         },

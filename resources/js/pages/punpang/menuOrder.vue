@@ -6,7 +6,7 @@
             <strong>*ไม่มีนโยบายคืนเงินทุกกรณี*</strong>
         </p>
         <p class="text-subtitle-2">
-            <strong>*ราคาสินค้ายังไม่รวมภาษีมูลค่าเพิ่ม 7%*</strong>
+            <strong>*ราคาสินค้ารวมภาษีมูลค่าเพิ่ม 7%*</strong>
         </p>
         <v-card outlined class="mb-3" v-if="user.type == 1">
             <v-card-title> ค้นหา </v-card-title>
@@ -85,12 +85,21 @@
                         <div
                             class="d-flex flex-row text-body-2 my-1 font-weight-bold deep-orange--text"
                         >
-                            ฿{{ product.sum_price_for_menu | formatNumber }}
+                            ฿{{
+                                (product.sum_price_for_menu * 1.07)
+                                    | formatNumber
+                            }}
                         </div>
                         <div
                             class="d-flex flex-row text-body-2 my-1 font-weight-bold black--text"
                         >
-                           * ราคาไม่รวม vat ฿{{ product.sum_price_for_menu * 7 /100 | formatNumber }} *
+                            ราคาสินค้า ฿{{
+                                product.sum_price_for_menu | formatNumber
+                            }}
+                            | VAT ฿{{
+                                (product.sum_price_for_menu * 0.07)
+                                    | formatNumber
+                            }}
                         </div>
 
                         <div class="mt-1" v-if="product.add_ons.length > 0">
@@ -119,14 +128,21 @@
                             class="d-flex flex-row text-body-2 my-1 font-weight-bold deep-orange--text"
                         >
                             ฿{{
-                                product.sum_price_multi_cake_for_menu
+                                (product.sum_price_multi_cake_for_menu * 1.07)
                                     | formatNumber
                             }}
                         </div>
                         <div
                             class="d-flex flex-row text-body-2 my-1 font-weight-bold black--text"
                         >
-                           * ราคาไม่รวม vat ฿{{ product.sum_price_for_menu * 7 /100 | formatNumber }} *
+                            ราคาสินค้า ฿{{
+                                product.sum_price_multi_cake_for_menu
+                                    | formatNumber
+                            }}
+                            | VAT ฿{{
+                                (product.sum_price_multi_cake_for_menu * 0.07)
+                                    | formatNumber
+                            }}
                         </div>
 
                         <div

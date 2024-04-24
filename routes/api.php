@@ -168,6 +168,13 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
 
         Route::prefix("v1")->group(function () {
 
+
+            Route::prefix('product_interest')->group(function () { // api/v1/pos/goods/...
+                Route::post('store', 'Order\ProductInterestController@store');
+                Route::get('fetch', 'Order\ProductInterestController@fetch');
+                Route::post('{goods}/alert_to_customer', 'Order\ProductInterestController@alert_to_customer');
+            });
+
             Route::prefix('import')->group(function () { // api/v1/pos/goods/...
                 Route::post('excel', 'Order\WongnaiPosBillsController@import');
             });
@@ -565,6 +572,17 @@ Route::prefix('webhook')->group(function () { // api/webhook/...
     // Route::get('facebook', 'Order\FacebookController@webhook');
     // Route::get('hash_hmac', 'Order\FacebookController@hash_hmac');
     Route::get('save_image_base64', 'Order\FacebookController@save_image_base64');
+});
+
+
+Route::prefix('test')->group(function () { // api/webhook/...
+    Route::get('date', function () {
+        $day = "20240404";
+        $time = "13:09";
+        $date = \Carbon\Carbon::parse($day)->format("Y-m-d") . " " . $time . ":00";
+
+        return $date;
+    });
 });
 
 

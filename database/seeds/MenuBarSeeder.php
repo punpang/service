@@ -36,7 +36,8 @@ class MenuBarSeeder extends Seeder
                     ["title" => "รายละเอียดรายการสั่งซื้อ", "to" => "/manages/order/details", "admin" => 1, "customer" => 0],
                     ["title" => "รายการสั่งซื้อล่วงหน้า", "to" => "/manages/order/pre-order-lists", "admin" => 1, "customer" => 0],
                     ["title" => "ตรวจสอบสลิป", "to" => "/manages/order/checkNoticeOfPaymentFromCustomer", "admin" => 1, "customer" => 0],
-                ]
+                    ["title" => "ลงทะเบียนความสนใจ", "to" => "/manages/product_interest/index", "admin" => 1, "customer" => 0],
+                    ]
             ],
             // [
             //     // จัดการลุ้นโชค

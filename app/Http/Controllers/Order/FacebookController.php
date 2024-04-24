@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Order;
 
-use PDO;
+// use PDO;
 // use Zxing\QrReader;
 use App\URL;
 use App\Helper;
@@ -27,6 +27,9 @@ class FacebookController extends Controller
 {
     public function webhook(Request $request)
     {
+        // return "ss";
+        // Linenotify::send("onliness");
+
         // $token = "fdh5j41f65hg1aw6fg1h6jkl1hj65k1j6d5gs165i165re1d65fsd1x6j5nmk165try1r65qaw1gvf65z1h65sr16yg";
         // if ($request["hub_verify_token"] != $token) {
 
@@ -1253,6 +1256,7 @@ QR CODE นี้ จะหมดอายุ
 
     public function get_psid_profile(Request $request)
     {
+        // dd($request->get("psid"));
         $psid = $request->get("psid");
         $customer = Facebook::where("psid", $psid)->with("customer")->first();
         return $customer;

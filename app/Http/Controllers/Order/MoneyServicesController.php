@@ -23,7 +23,7 @@ class MoneyServicesController extends Controller
         $data->note = $request->note;
         $data->save();
 
-        $data->orderDetail->aOrder->update(["status_full_payment", 1]);
+        $data->orderDetail->aOrder->update(["status_full_payment" => 1]);
 
         return response()->json([
             "title" => "สร้างรายการสำเร็จ",

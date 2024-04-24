@@ -25,7 +25,7 @@
                     >ใช้ 1 คะแนน | สูงสุด 5 เลข/งวด</v-card-subtitle
                 >
 
-                <v-card-title >
+                <v-card-title>
                     <div v-for="lottery in lotterys" :key="lottery.id">
                         <v-btn
                             v-if="match_me(lottery)"
@@ -162,13 +162,13 @@ export default {
                 if (i < 10) {
                     this.lotterys.push({
                         id: i,
-                        text: "0" + i,
+                        text: `0${i}`,
                         match: false,
                     });
                 } else {
                     this.lotterys.push({
                         id: i,
-                        text: "" + i,
+                        text: i,
                         match: false,
                     });
                 }
