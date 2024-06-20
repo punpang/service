@@ -77,4 +77,28 @@ class GoodsController extends Controller
             "icon" => "success"
         ], 200);
     }
+
+    public function up_price_pos_goods()
+    {
+        $products = Goods::get();
+        foreach ($products as $product) {
+            $p = (int)($product->price * 1.07);
+            $p = strval($p);
+            $cp = strlen($p);
+
+            if ($p[$cp - 1] >= 1 && $p[$cp - 1] <= 5) {
+                $p[$cp - 1] = 5;
+            } else if ($p[$cp - 1] >= 6 && $p[$cp - 1] <= 9) {
+                $p[$cp - 1] = 0;
+                $p = $p + 9;
+            }
+
+            // $product->price_vat_up = (int)$p;
+            // $product->price_vat = $product->price * 1.07;
+            $product->price = (int)$p;
+            $product->update();
+        }
+
+        return $products;
+    }
 }

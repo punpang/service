@@ -28,7 +28,7 @@
                 <!-- / -->
                 <tr>
                     <td>
-                        <strong>ภาษีมูลค่าเพิ่ม 7%</strong>
+                        <strong>รวมภาษีมูลค่าเพิ่ม 7%</strong>
                     </td>
                     <td class="text-right">
                         <strong>{{

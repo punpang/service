@@ -64,9 +64,7 @@
                         v-if="propPosGoods"
                     ></selectForOrder>
                     <selectForProductInterest
-                        :propSelectForProductInterest="
-                            propSelectForProductInterest
-                        "
+                        v-if="propSelectForProductInterest"
                         @emitAddGoodsProductInterest="
                             emitAddGoodsProductInterest
                         "

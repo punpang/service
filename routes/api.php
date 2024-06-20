@@ -583,6 +583,12 @@ Route::prefix('test')->group(function () { // api/webhook/...
 
         return $date;
     });
+   // Route::get('up_price_goods_normal','Punpang\ProductController@up_price_goods_normal');
+    //Route::get('up_a_price','Order\APriceController@up_a_price');
+    // Route::get('up_price_product_add_on', 'Order\ProductAddOnController@up_price_product_add_on');
+    Route::get('up_price_product_add_on_discount', 'Order\ProductAddOnController@up_price_product_add_on_discount');
+   // Route::get('up_price_pos_goods', 'Pos\GoodsController@up_price_pos_goods');
+
 });
 
 

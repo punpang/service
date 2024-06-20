@@ -931,11 +931,13 @@ class AOrderController extends Controller
         $order->update(["status" => 9]);
 
         AlertMessages::linePickUpGoods($order);
-        AlertMessages::smsPickUpGoods($order);
+
 
         if ($request->is_AddScore) {
             CustomerScore::addScore($order->customer, $order->sumForScore());
         }
+
+        AlertMessages::smsPickUpGoods($order);
 
         return response()->json([
             "status" => "success",
@@ -1238,4 +1240,6 @@ class AOrderController extends Controller
             "text" => "เปลี่ยนแปลงการแจ้งเตือนไปยัง Facebook เมื่อจัดเตรียมสินค้าเสร็จ"
         ], 200);
     }
+
+
 }

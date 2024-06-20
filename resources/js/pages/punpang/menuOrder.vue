@@ -85,22 +85,21 @@
                         <div
                             class="d-flex flex-row text-body-2 my-1 font-weight-bold deep-orange--text"
                         >
-                            ฿{{
-                                (product.sum_price_for_menu * 1.07)
-                                    | formatNumber
-                            }}
+                            ฿{{ product.sum_price_for_menu | formatNumber }}
+                            <!-- ฿{{ product.sum_price_for_menu | formatNumber }} -->
                         </div>
-                        <div
+                        <!-- <div
                             class="d-flex flex-row text-body-2 my-1 font-weight-bold black--text"
                         >
                             ราคาสินค้า ฿{{
                                 product.sum_price_for_menu | formatNumber
                             }}
-                            | VAT ฿{{
-                                (product.sum_price_for_menu * 0.07)
+                            |
+                            รวม VAT ฿{{
+                                ((product.sum_price_for_menu * 7) / 107)
                                     | formatNumber
                             }}
-                        </div>
+                        </div> -->
 
                         <div class="mt-1" v-if="product.add_ons.length > 0">
                             <v-divider class="my-2"></v-divider>
@@ -127,23 +126,29 @@
                         <div
                             class="d-flex flex-row text-body-2 my-1 font-weight-bold deep-orange--text"
                         >
-                            ฿{{
-                                (product.sum_price_multi_cake_for_menu * 1.07)
-                                    | formatNumber
-                            }}
+                            <div v-if="user.type == 1">
+                                ฿{{
+                                    product.sum_price_multi_cake_for_menu
+                                        | formatNumber
+                                }}
+                            </div>
+                            <div v-else>โปรดสอบถามราคา</div>
                         </div>
-                        <div
+
+                        <!-- <div
                             class="d-flex flex-row text-body-2 my-1 font-weight-bold black--text"
                         >
                             ราคาสินค้า ฿{{
                                 product.sum_price_multi_cake_for_menu
                                     | formatNumber
                             }}
-                            | VAT ฿{{
-                                (product.sum_price_multi_cake_for_menu * 0.07)
+                            |
+                            รวม VAT ฿{{
+                                ((product.sum_price_multi_cake_for_menu * 7) /
+                                    107)
                                     | formatNumber
                             }}
-                        </div>
+                        </div> -->
 
                         <div
                             v-for="multi_cake in product.multi_cakes"
@@ -214,6 +219,30 @@ export default {
         };
     },
     methods: {
+        product_sum_price_for_menu(v) {
+            if (v.a_price.updated_at_date >= "2024-06-19") {
+                return v.sum_price_for_menu;
+            } else {
+                let price_vat = parseInt(v.sum_price_for_menu * 1.07);
+                let pv = String(price_vat);
+
+                // let lpv = pv[pv.length - 1];
+                let l = 0;
+                // if (lpv >= 1 && lpv <= 5) {
+                //     l = 5;
+                // }
+
+                let price = "";
+                for (let i = 0; i < pv.length - 1; i++) {
+                    price = price + pv[i];
+                }
+                price = price + l;
+                // if (l == 0) {
+                price = parseFloat(price) + 10;
+                // }
+                return parseFloat(price);
+            }
+        },
         clickSearchReset() {
             window.location.href = `/menu/orders`;
         },

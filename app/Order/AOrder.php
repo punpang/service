@@ -288,13 +288,16 @@ class AOrder extends Model
     public function vat7()
     {
         // return $this->sumGoods() * 7 / 100;
-        return ($this->sumGoods() * 7 / 100) + ($this->usePoint() * 7 / 100);
+        //return (float)number_format(($this->sumGoods() * 7 / 100) + ($this->usePoint() * 7 / 100),2);
+        return ($this->sumGoods() * 7 / 107) + $this->usePoint();
+        // return number_format(($this->sumGoods() * 7 / 100) + ($this->usePoint() * 7 / 100), 2);
     }
 
     public function sumGoodsVat7()
     {
         // return $this->sumGoods()+ $this->vat7();
-        return $this->sumGoods() + $this->usePoint() + $this->vat7();
+        // return $this->sumGoods() + $this->usePoint() + $this->vat7();
+        return $this->sumGoods() + $this->usePoint();
     }
 
     public function sumAdjustExcessPayment()
@@ -321,9 +324,11 @@ class AOrder extends Model
 
     public function sumBalance()
     {
-        return $this->sumTASC()
+        $data = $this->sumTASC()
             - $this->sumDeposited()
             + $this->sumAdjustExcessPayment();
+
+        return $data;
     }
 
     public function sumForScore()
@@ -626,9 +631,8 @@ class AOrder extends Model
             $m = $m . "รายการที่ " . ($key_detail + 1) . "
 " . $detail->aPrice->name_goods . $layer_multi_cake  . $aa .  $message . $remark . "
 ราคา " . $detail->sum_total . " บาท $message_money_services
-(vat 7% : ฿" . number_format($detail->sum_total_not_format * 7 / 100, 2) . ")
--------------------------
-";
+-------------------------";
+            // (vat 7% : ฿" . number_format($detail->sum_total_not_format * 7 / 107, 2) . ")";
         }
 
 
@@ -644,9 +648,8 @@ class AOrder extends Model
             $message_pos = $message_pos . "
 
 รวม " . number_format($order->sumPosOrder(), 2) . " บาท
-(vat 7% : ฿" . number_format($order->sumPosOrder() * 7 / 100, 2) . ")
-
 -------------------------";
+// (vat 7% : ฿" . number_format($order->sumPosOrder() * 7 / 107, 2) . ")
         }
 
         if ($order->orderDeliveryService) {

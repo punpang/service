@@ -34,6 +34,29 @@ Vue.filter("formatNumber", function (value) {
   methods: {
     toMenuOrders: function toMenuOrders() {
       window.location.href = "/menu/orders";
+    },
+    product_sum_price_for_menu: function product_sum_price_for_menu(v) {
+      // if (v.a_price.updated_at_date <= "2024-06-19") {
+      //     return v.sum_price_for_menu;
+      // } else {
+      var price_vat = parseInt(v.price * 1.07);
+      var pv = String(price_vat);
+
+      // let lpv = pv[pv.length - 1];
+      var l = 0;
+      // if (lpv >= 1 && lpv <= 5) {
+      //     l = 0;
+      // }
+
+      var price = "";
+      for (var i = 0; i < pv.length - 1; i++) {
+        price = price + pv[i];
+      }
+      price = price + l;
+      // if (l == 0) {
+      price = parseFloat(price) + 10;
+      // }
+      return parseFloat(price);
     }
   },
   mounted: function mounted() {
@@ -56,7 +79,8 @@ Vue.filter("formatNumber", function (value) {
     }))();
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
-    products: "punpangProduct/fetchAllUse"
+    products: "punpangProduct/fetchAllUse",
+    user: "main/User"
   }))
 });
 
@@ -92,9 +116,21 @@ var render = function render() {
       attrs: {
         src: "images/menu/".concat(product.img)
       }
-    }), _vm._v(" "), _c("v-card-title", [_c("h5", {
+    }), _vm._v(" "), _c("v-card-title", [_vm.user.type == 1 ? _c("v-btn", {
+      staticClass: "warning mr-2",
+      attrs: {
+        icon: "",
+        fab: "",
+        "x-small": ""
+      }
+    }, [_c("v-icon", {
+      attrs: {
+        color: "white",
+        small: ""
+      }
+    }, [_vm._v("edit")])], 1) : _vm._e(), _vm._v(" "), _c("h5", {
       staticClass: "mb-1"
-    }, [_vm._v(_vm._s(product.products))])]), _vm._v(" "), _c("v-card-subtitle", {
+    }, [_vm._v(_vm._s(product.products))])], 1), _vm._v(" "), _c("v-card-subtitle", {
       staticClass: "pb-0"
     }, [_c("p", {
       staticClass: "text-caption mb-0"
@@ -107,17 +143,25 @@ var render = function render() {
         key: price.id
       }, [_c("td", {
         staticClass: "text-center"
-      }, [_vm._v("\n                                    " + _vm._s(price.size.size) + "\n                                ")]), _vm._v(" "), _c("td", {
+      }, [_vm.user.type == 1 ? _c("v-btn", {
+        staticClass: "warning mr-2",
+        attrs: {
+          icon: "",
+          fab: "",
+          "x-small": ""
+        }
+      }, [_c("v-icon", {
+        attrs: {
+          color: "white",
+          small: ""
+        }
+      }, [_vm._v("edit")])], 1) : _vm._e(), _vm._v("\n                                    " + _vm._s(price.size.size) + "\n                                ")], 1), _vm._v(" "), _c("td", {
         staticClass: "text-center"
       }, [_c("p", {
         staticClass: "mb-0 font-weight-black deep-orange--text"
-      }, [_vm._v("\n                                        " + _vm._s(_vm._f("formatNumber")(price.price * 1.07)) + "\n                                        บาท\n                                    ")]), _vm._v(" "), _c("p", {
-        staticClass: "mb-0 text-caption"
-      }, [_vm._v("\n                                        ราคาสินค้า : ฿" + _vm._s(_vm._f("formatNumber")(price.price)) + "\n                                    ")]), _vm._v(" "), _c("p", {
-        staticClass: "mb-0 text-caption"
-      }, [_vm._v("\n                                        VAT : ฿" + _vm._s(_vm._f("formatNumber")(price.price * 0.07)) + "\n                                    ")]), _vm._v(" "), price.price < price.price_normal ? _c("p", {
+      }, [_vm._v("\n                                        " + _vm._s(_vm._f("formatNumber")(price.price)) + "\n                                        บาท\n                                    ")]), _vm._v(" "), price.price < price.price_normal ? _c("p", {
         staticClass: "mb-0 text-caption text-decoration-line-through"
-      }, [_vm._v("\n                                        " + _vm._s(_vm._f("formatNumber")(price.price_normal)) + "\n                                        บาท\n                                    ")]) : _vm._e()])]);
+      }, [_vm._v("\n                                        " + _vm._s(_vm._f("formatNumber")(price.price_normal * 1.07)) + "\n                                        บาท\n                                    ")]) : _vm._e()])]);
     }), 0)])], 1)], 1)], 1);
   }), 1), _vm._v(" "), _c("v-btn", {
     staticClass: "mt-5",

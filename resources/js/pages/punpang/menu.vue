@@ -22,6 +22,15 @@
                 <v-card>
                     <v-img :src="`images/menu/${product.img}`"></v-img>
                     <v-card-title>
+                        <v-btn
+                            icon
+                            fab
+                            x-small
+                            class="warning mr-2"
+                            v-if="user.type == 1"
+                        >
+                            <v-icon color="white" small>edit</v-icon></v-btn
+                        >
                         <h5 class="mb-1">{{ product.products }}</h5>
                     </v-card-title>
                     <v-card-subtitle class="pb-0">
@@ -44,19 +53,27 @@
                                     :key="price.id"
                                 >
                                     <td class="text-center">
+                                        <v-btn
+                                            icon
+                                            fab
+                                            x-small
+                                            class="warning mr-2"
+                                            v-if="user.type == 1"
+                                        >
+                                            <v-icon color="white" small
+                                                >edit</v-icon
+                                            ></v-btn
+                                        >
                                         {{ price.size.size }}
                                     </td>
                                     <td class="text-center">
                                         <p
                                             class="mb-0 font-weight-black deep-orange--text"
                                         >
-                                            {{
-                                                (price.price * 1.07)
-                                                    | formatNumber
-                                            }}
+                                            {{ price.price | formatNumber }}
                                             บาท
                                         </p>
-                                        <p class="mb-0 text-caption">
+                                        <!-- <p class="mb-0 text-caption">
                                             ราคาสินค้า : ฿{{
                                                 price.price | formatNumber
                                             }}
@@ -66,7 +83,7 @@
                                                 (price.price * 0.07)
                                                     | formatNumber
                                             }}
-                                        </p>
+                                        </p> -->
                                         <p
                                             class="mb-0 text-caption text-decoration-line-through"
                                             v-if="
@@ -74,7 +91,7 @@
                                             "
                                         >
                                             {{
-                                                price.price_normal
+                                                (price.price_normal * 1.07)
                                                     | formatNumber
                                             }}
                                             บาท
@@ -115,6 +132,30 @@ export default {
         toMenuOrders() {
             window.location.href = `/menu/orders`;
         },
+        product_sum_price_for_menu(v) {
+            // if (v.a_price.updated_at_date <= "2024-06-19") {
+            //     return v.sum_price_for_menu;
+            // } else {
+            let price_vat = parseInt(v.price * 1.07);
+            let pv = String(price_vat);
+
+            // let lpv = pv[pv.length - 1];
+            let l = 0;
+            // if (lpv >= 1 && lpv <= 5) {
+            //     l = 0;
+            // }
+
+            let price = "";
+
+            for (let i = 0; i < pv.length - 1; i++) {
+                price = price + pv[i];
+            }
+            price = price + l;
+            // if (l == 0) {
+            price = parseFloat(price) + 10;
+            // }
+            return parseFloat(price);
+        },
     },
     async mounted() {
         let loader = this.$loading.show();
@@ -124,6 +165,7 @@ export default {
     computed: {
         ...mapGetters({
             products: "punpangProduct/fetchAllUse",
+            user: "main/User",
         }),
     },
 };

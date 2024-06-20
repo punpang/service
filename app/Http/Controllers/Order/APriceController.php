@@ -212,4 +212,28 @@ class APriceController extends Controller
             "options" => $db
         ], 200);
     }
+
+    public function up_a_price()
+    {
+        $products = APrice::get();
+        foreach ($products as $product) {
+            if ($product->updated_at < "2024-06-19 00:00:00") {
+                // return $product;
+                $p = (int)($product->price * 1.07);
+                $p = strval($p);
+                $cp = strlen($p);
+                if ($p[$cp - 1] != 0) {
+                    $p[$cp - 1] = 0;
+                    $p = $p + 10;
+                }
+
+                $product->price = (int)$p;
+                // $product->price = $product->price - 9;
+                $product->update();
+                // return $product;
+            }
+        }
+
+        return $products;
+    }
 }

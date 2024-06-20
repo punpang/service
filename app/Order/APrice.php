@@ -12,9 +12,10 @@ class APrice extends Model
     protected $primaryKey = "id";
     protected $appends = [
         "name_goods",
-        "google_image"
+        "google_image",
+        // "updated_at_date"
     ];
-    protected $hidden = ['created_at', 'updated_at'];
+    protected $hidden = ['created_at','updated_at'];
 
     //protected $filable = ["code", "price", "m1", "m2", "m3", "m4"];
     protected $guarded = [];
@@ -24,6 +25,14 @@ class APrice extends Model
         return $price;
         // return number_format($price, 2);
     }
+
+    public function getUpdatedAtDateAttribute()
+    {
+        // return "ss";
+        // return \Carbon\Carbon::createFromFormat('Y-m-d', $date)->diffForHumans();
+        return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $this->updated_at)->format('Y-m-d');
+    }
+
 
     public function am1()
     {
