@@ -1,1 +1,187 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[19],{106:function(t,e,r){"use strict";r.r(e);var n=r(1),o=r(11);function a(t){return(a="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function i(t,e){var r=Object.keys(t);if(Object.getOwnPropertySymbols){var n=Object.getOwnPropertySymbols(t);e&&(n=n.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),r.push.apply(r,n)}return r}function c(t,e,r){var n;return n=function(t,e){if("object"!=a(t)||!t)return t;var r=t[Symbol.toPrimitive];if(void 0!==r){var n=r.call(t,e||"default");if("object"!=a(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===e?String:Number)(t)}(e,"string"),(e="symbol"==a(n)?n:n+"")in t?Object.defineProperty(t,e,{value:r,enumerable:!0,configurable:!0,writable:!0}):t[e]=r,t}function s(){s=function(){return e};var t,e={},r=Object.prototype,n=r.hasOwnProperty,o=Object.defineProperty||function(t,e,r){t[e]=r.value},i="function"==typeof Symbol?Symbol:{},c=i.iterator||"@@iterator",u=i.asyncIterator||"@@asyncIterator",l=i.toStringTag||"@@toStringTag";function f(t,e,r){return Object.defineProperty(t,e,{value:r,enumerable:!0,configurable:!0,writable:!0}),t[e]}try{f({},"")}catch(t){f=function(t,e,r){return t[e]=r}}function h(t,e,r,n){var a=e&&e.prototype instanceof g?e:g,i=Object.create(a.prototype),c=new F(n||[]);return o(i,"_invoke",{value:C(t,r,c)}),i}function v(t,e,r){try{return{type:"normal",arg:t.call(e,r)}}catch(t){return{type:"throw",arg:t}}}e.wrap=h;var d="suspendedStart",p="executing",_="completed",m={};function g(){}function y(){}function b(){}var w={};f(w,c,(function(){return this}));var x=Object.getPrototypeOf,k=x&&x(x(T([])));k&&k!==r&&n.call(k,c)&&(w=k);var O=b.prototype=g.prototype=Object.create(w);function j(t){["next","throw","return"].forEach((function(e){f(t,e,(function(t){return this._invoke(e,t)}))}))}function L(t,e){function r(o,i,c,s){var u=v(t[o],t,i);if("throw"!==u.type){var l=u.arg,f=l.value;return f&&"object"==a(f)&&n.call(f,"__await")?e.resolve(f.__await).then((function(t){r("next",t,c,s)}),(function(t){r("throw",t,c,s)})):e.resolve(f).then((function(t){l.value=t,c(l)}),(function(t){return r("throw",t,c,s)}))}s(u.arg)}var i;o(this,"_invoke",{value:function(t,n){function o(){return new e((function(e,o){r(t,n,e,o)}))}return i=i?i.then(o,o):o()}})}function C(e,r,n){var o=d;return function(a,i){if(o===p)throw Error("Generator is already running");if(o===_){if("throw"===a)throw i;return{value:t,done:!0}}for(n.method=a,n.arg=i;;){var c=n.delegate;if(c){var s=E(c,n);if(s){if(s===m)continue;return s}}if("next"===n.method)n.sent=n._sent=n.arg;else if("throw"===n.method){if(o===d)throw o=_,n.arg;n.dispatchException(n.arg)}else"return"===n.method&&n.abrupt("return",n.arg);o=p;var u=v(e,r,n);if("normal"===u.type){if(o=n.done?_:"suspendedYield",u.arg===m)continue;return{value:u.arg,done:n.done}}"throw"===u.type&&(o=_,n.method="throw",n.arg=u.arg)}}}function E(e,r){var n=r.method,o=e.iterator[n];if(o===t)return r.delegate=null,"throw"===n&&e.iterator.return&&(r.method="return",r.arg=t,E(e,r),"throw"===r.method)||"return"!==n&&(r.method="throw",r.arg=new TypeError("The iterator does not provide a '"+n+"' method")),m;var a=v(o,e.iterator,r.arg);if("throw"===a.type)return r.method="throw",r.arg=a.arg,r.delegate=null,m;var i=a.arg;return i?i.done?(r[e.resultName]=i.value,r.next=e.nextLoc,"return"!==r.method&&(r.method="next",r.arg=t),r.delegate=null,m):i:(r.method="throw",r.arg=new TypeError("iterator result is not an object"),r.delegate=null,m)}function S(t){var e={tryLoc:t[0]};1 in t&&(e.catchLoc=t[1]),2 in t&&(e.finallyLoc=t[2],e.afterLoc=t[3]),this.tryEntries.push(e)}function P(t){var e=t.completion||{};e.type="normal",delete e.arg,t.completion=e}function F(t){this.tryEntries=[{tryLoc:"root"}],t.forEach(S,this),this.reset(!0)}function T(e){if(e||""===e){var r=e[c];if(r)return r.call(e);if("function"==typeof e.next)return e;if(!isNaN(e.length)){var o=-1,i=function r(){for(;++o<e.length;)if(n.call(e,o))return r.value=e[o],r.done=!1,r;return r.value=t,r.done=!0,r};return i.next=i}}throw new TypeError(a(e)+" is not iterable")}return y.prototype=b,o(O,"constructor",{value:b,configurable:!0}),o(b,"constructor",{value:y,configurable:!0}),y.displayName=f(b,l,"GeneratorFunction"),e.isGeneratorFunction=function(t){var e="function"==typeof t&&t.constructor;return!!e&&(e===y||"GeneratorFunction"===(e.displayName||e.name))},e.mark=function(t){return Object.setPrototypeOf?Object.setPrototypeOf(t,b):(t.__proto__=b,f(t,l,"GeneratorFunction")),t.prototype=Object.create(O),t},e.awrap=function(t){return{__await:t}},j(L.prototype),f(L.prototype,u,(function(){return this})),e.AsyncIterator=L,e.async=function(t,r,n,o,a){void 0===a&&(a=Promise);var i=new L(h(t,r,n,o),a);return e.isGeneratorFunction(r)?i:i.next().then((function(t){return t.done?t.value:i.next()}))},j(O),f(O,l,"Generator"),f(O,c,(function(){return this})),f(O,"toString",(function(){return"[object Generator]"})),e.keys=function(t){var e=Object(t),r=[];for(var n in e)r.push(n);return r.reverse(),function t(){for(;r.length;){var n=r.pop();if(n in e)return t.value=n,t.done=!1,t}return t.done=!0,t}},e.values=T,F.prototype={constructor:F,reset:function(e){if(this.prev=0,this.next=0,this.sent=this._sent=t,this.done=!1,this.delegate=null,this.method="next",this.arg=t,this.tryEntries.forEach(P),!e)for(var r in this)"t"===r.charAt(0)&&n.call(this,r)&&!isNaN(+r.slice(1))&&(this[r]=t)},stop:function(){this.done=!0;var t=this.tryEntries[0].completion;if("throw"===t.type)throw t.arg;return this.rval},dispatchException:function(e){if(this.done)throw e;var r=this;function o(n,o){return c.type="throw",c.arg=e,r.next=n,o&&(r.method="next",r.arg=t),!!o}for(var a=this.tryEntries.length-1;a>=0;--a){var i=this.tryEntries[a],c=i.completion;if("root"===i.tryLoc)return o("end");if(i.tryLoc<=this.prev){var s=n.call(i,"catchLoc"),u=n.call(i,"finallyLoc");if(s&&u){if(this.prev<i.catchLoc)return o(i.catchLoc,!0);if(this.prev<i.finallyLoc)return o(i.finallyLoc)}else if(s){if(this.prev<i.catchLoc)return o(i.catchLoc,!0)}else{if(!u)throw Error("try statement without catch or finally");if(this.prev<i.finallyLoc)return o(i.finallyLoc)}}}},abrupt:function(t,e){for(var r=this.tryEntries.length-1;r>=0;--r){var o=this.tryEntries[r];if(o.tryLoc<=this.prev&&n.call(o,"finallyLoc")&&this.prev<o.finallyLoc){var a=o;break}}a&&("break"===t||"continue"===t)&&a.tryLoc<=e&&e<=a.finallyLoc&&(a=null);var i=a?a.completion:{};return i.type=t,i.arg=e,a?(this.method="next",this.next=a.finallyLoc,m):this.complete(i)},complete:function(t,e){if("throw"===t.type)throw t.arg;return"break"===t.type||"continue"===t.type?this.next=t.arg:"return"===t.type?(this.rval=this.arg=t.arg,this.method="return",this.next="end"):"normal"===t.type&&e&&(this.next=e),m},finish:function(t){for(var e=this.tryEntries.length-1;e>=0;--e){var r=this.tryEntries[e];if(r.finallyLoc===t)return this.complete(r.completion,r.afterLoc),P(r),m}},catch:function(t){for(var e=this.tryEntries.length-1;e>=0;--e){var r=this.tryEntries[e];if(r.tryLoc===t){var n=r.completion;if("throw"===n.type){var o=n.arg;P(r)}return o}}throw Error("illegal catch attempt")},delegateYield:function(e,r,n){return this.delegate={iterator:T(e),resultName:r,nextLoc:n},"next"===this.method&&(this.arg=t),m}},e}function u(t,e,r,n,o,a,i){try{var c=t[a](i),s=c.value}catch(t){return void r(t)}c.done?e(s):Promise.resolve(s).then(n,o)}var l=r(2);Vue.filter("formatNumber",(function(t){return l(t).format("0,0.00")}));var f={components:{imageThumbnailFullPathSizeFree:o.a},data:function(){return{products:[],search:{tags:[],price_rank:""}}},methods:{product_sum_price_for_menu:function(t){if(t.a_price.updated_at_date>="2024-06-19")return t.sum_price_for_menu;for(var e=parseInt(1.07*t.sum_price_for_menu),r=String(e),n="",o=0;o<r.length-1;o++)n+=r[o];return n+=0,n=parseFloat(n)+10,parseFloat(n)},clickSearchReset:function(){window.location.href="/menu/orders"},clickSearch:function(){for(var t="",e=0;e<this.search.tags.length;e++)t="".concat(t).concat(this.search.tags[e].text,",");var r=t.slice(0,-1)?"&tags="+t.slice(0,-1):"",n=this.search.price_rank?"&price_rank=".concat(this.search.price_rank):"";window.location.href="/menu/orders?".concat(r).concat(n)},clickToOrder:function(t){1==this.user.type&&(window.location.href="/manages/order/".concat(t,"/showOrderByID"))},convert_tags:function(t){for(var e="",r=0;r<t.length;r++){var n=r!=t.length-1?",":"";e=e+t[r].tag.text+n}return e},convert_add_on_name:function(t){for(var e="",r=0;r<t.length;r++)if(t[r].product_add_on.price>0){var n=r!=t.length-1?",":"";e=e+t[r].product_add_on.goods_add_on.name+n}return e}},mounted:function(){var t,e=this;return(t=s().mark((function t(){var r,n,o,a,i;return s().wrap((function(t){for(;;)switch(t.prev=t.next){case 0:return r=e.$loading.show(),n=null!=e.$route.query.tags?"&tags=".concat(e.$route.query.tags):"",o=null!=e.$route.query.price_rank?"&price_rank=".concat(e.$route.query.price_rank):"",a="whereHas=imageForMenus,with=imageForMenus,multiCakes".concat(n).concat(o),t.next=6,axios.get("/api/v1/guest/product/punpang/order_details/fetch_for_menu?".concat(a));case 6:if(i=t.sent,e.products=i.data,1!=e.user.type){t.next=11;break}return t.next=11,e.$store.dispatch("orderTags/fetch","status=true");case 11:r.hide();case 12:case"end":return t.stop()}}),t)})),function(){var e=this,r=arguments;return new Promise((function(n,o){var a=t.apply(e,r);function i(t){u(a,n,o,i,c,"next",t)}function c(t){u(a,n,o,i,c,"throw",t)}i(void 0)}))})()},computed:function(t){for(var e=1;e<arguments.length;e++){var r=null!=arguments[e]?arguments[e]:{};e%2?i(Object(r),!0).forEach((function(e){c(t,e,r[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(r)):i(Object(r)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(r,e))}))}return t}({},Object(n.b)({user:"main/User",tags:"orderTags/fetch"}))},h=r(0),v=Object(h.a)(f,(function(){var t=this,e=t._self._c;return e("div",[e("h2",[t._v("รายการสินค้า")]),t._v(" "),e("p",{staticClass:"text-subtitle-2 mb-1"},[t._v("สั่งซื้อวันนี้ รับราคาพิเศษ")]),t._v(" "),t._m(0),t._v(" "),t._m(1),t._v(" "),1==t.user.type?e("v-card",{staticClass:"mb-3",attrs:{outlined:""}},[e("v-card-title",[t._v(" ค้นหา ")]),t._v(" "),e("v-card-text",{staticClass:"pb-0"},[e("v-text-field",{staticClass:"mb-3",attrs:{label:"ราคาไม่เกิน",outlined:"",dense:"","hide-details":""},model:{value:t.search.price_rank,callback:function(e){t.$set(t.search,"price_rank",e)},expression:"search.price_rank"}}),t._v(" "),e("v-combobox",{staticClass:"mb-3",attrs:{items:t.tags,label:"แท็ก",multiple:"",outlined:"",dense:"","hide-details":""},model:{value:t.search.tags,callback:function(e){t.$set(t.search,"tags",e)},expression:"search.tags"}})],1),t._v(" "),e("v-card-actions",[e("v-btn",{staticClass:"error",on:{click:function(e){return t.clickSearchReset()}}},[t._v("ล้าง")]),t._v(" "),e("v-spacer"),t._v(" "),e("v-btn",{staticClass:"success",on:{click:function(e){return t.clickSearch()}}},[t._v("ค้นหา")])],1)],1):t._e(),t._v(" "),e("v-row",t._l(t.products,(function(r){return e("v-col",{key:r.id,attrs:{cols:"12",sm:"6",md:"4",lg:"4",xl:"4"}},[e("v-card",{attrs:{outlined:""}},[r.image_for_menus.length>1?e("v-carousel",{attrs:{"hide-delimiters":"",height:"100%"}},t._l(r.image_for_menus,(function(n,o){return e("v-carousel-item",{key:o,attrs:{src:"https://drive.google.com/thumbnail?id=".concat(n.google_image.src_name,"&sz=w500-h500")}},[e("v-btn",{staticClass:"deep-orange mt-3 ml-3 font-weight-bold",attrs:{outlined:"",dark:"","x-small":""}},[t._v("#"+t._s(r.id))])],1)})),1):e("imageThumbnailFullPathSizeFree",{attrs:{path:r.image_for_menus[0],size:500,propID:r.id}}),t._v(" "),null==r.order_detail_id?e("v-card-text",[e("div",{staticClass:"d-flex flex-row text-body-2 font-weight-black"},[t._v("\n                        "+t._s(r.a_price.name_goods)+"\n                    ")]),t._v(" "),e("div",{staticClass:"d-flex flex-row text-body-2 my-1 font-weight-bold deep-orange--text"},[t._v("\n                        ฿"+t._s(t._f("formatNumber")(r.sum_price_for_menu))+"\n                        ")]),t._v(" "),r.add_ons.length>0?e("div",{staticClass:"mt-1"},[e("v-divider",{staticClass:"my-2"}),t._v(" "),e("strong",[t._v("เพิ่มเติม : ")]),t._v("\n\n                        "+t._s(t.convert_add_on_name(r.add_ons))+"\n                    ")],1):t._e(),t._v(" "),r.order_tags.length>0?e("div",{staticClass:"mt-1"},[e("v-divider",{staticClass:"my-2"}),t._v(" "),e("strong",[t._v("แท็ก : ")]),t._v("\n\n                        "+t._s(t.convert_tags(r.order_tags))+"\n                    ")],1):t._e()]):e("v-card-text",[e("div",{staticClass:"d-flex flex-row text-body-2 font-weight-black"},[t._v("\n                        เค้ก "+t._s(r.multi_cakes.length)+" ชั้น\n                    ")]),t._v(" "),e("div",{staticClass:"d-flex flex-row text-body-2 my-1 font-weight-bold deep-orange--text"},[1==t.user.type?e("div",[t._v("\n                            ฿"+t._s(t._f("formatNumber")(r.sum_price_multi_cake_for_menu))+"\n                        ")]):e("div",[t._v("โปรดสอบถามราคา")])]),t._v(" "),t._l(r.multi_cakes,(function(r){return e("div",{key:r.id},[e("v-divider",{staticClass:"my-2"}),t._v(" "),e("div",{staticClass:"mt-1"},[e("strong",[t._v("ชั้นที่ : ")]),t._v("\n                            "+t._s(r.sort_group_multi_cake)+"\n                        ")]),t._v(" "),e("div",{staticClass:"d-flex flex-row text-body-2 font-weight-black"},[t._v("\n                            "+t._s(r.a_price.name_goods)+"\n                        ")]),t._v(" "),r.add_ons.length>0?e("div",{staticClass:"mt-1"},[e("strong",[t._v("เพิ่มเติม : ")]),t._v("\n\n                            "+t._s(t.convert_add_on_name(r.add_ons))+"\n                        ")]):t._e()],1)})),t._v(" "),e("v-divider",{staticClass:"my-2"}),t._v(" "),r.order_tags.length>0?e("div",{staticClass:"mt-1"},[e("strong",[t._v("แท็ก : ")]),t._v("\n\n                        "+t._s(t.convert_tags(r.order_tags))+"\n                    ")]):t._e()],2),t._v(" "),1==t.user.type?e("v-card-actions",[e("v-btn",{attrs:{block:"",outlined:"",color:"primary"},on:{click:function(e){return t.clickToOrder(r.order_id)}}},[t._v("ไปยังออร์เดอร์")])],1):t._e()],1)],1)})),1)],1)}),[function(){var t=this._self._c;return t("p",{staticClass:"text-subtitle-2 mb-0"},[t("strong",[this._v("*ไม่มีนโยบายคืนเงินทุกกรณี*")])])},function(){var t=this._self._c;return t("p",{staticClass:"text-subtitle-2"},[t("strong",[this._v("*ราคาสินค้ารวมภาษีมูลค่าเพิ่ม 7%*")])])}],!1,null,null,null);e.default=v.exports},11:function(t,e,r){"use strict";var n={props:["path","size","propID"]},o=r(0),a=Object(o.a)(n,(function(){var t=this,e=t._self._c;return e("v-img",{attrs:{src:"https://drive.google.com/thumbnail?id=".concat(t.path.google_image.src_name,"&sz=w").concat(t.size,"-h").concat(t.size),"lazy-src":"https://drive.google.com/thumbnail?id=".concat(t.path.google_image.src_name,"&sz=w").concat(t.size,"-h").concat(t.size)},scopedSlots:t._u([{key:"placeholder",fn:function(){return[e("v-row",{staticClass:"fill-height ma-0",attrs:{align:"center",justify:"center"}},[e("v-progress-circular",{attrs:{indeterminate:"",color:"grey lighten-5"}})],1)]},proxy:!0}])},[t.propID?e("v-btn",{staticClass:"deep-orange mt-3 ml-3 font-weight-bold",attrs:{outlined:"",dark:"","x-small":""}},[t._v("#"+t._s(t.propID))]):t._e()],1)}),[],!1,null,null,null);e.a=a.exports}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[19],{
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/learning/conditions/order.vue?vue&type=script&lang=js":
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/learning/conditions/order.vue?vue&type=script&lang=js ***!
+  \***********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/learning/conditions/order.vue?vue&type=template&id=2179044d":
+/*!*********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/learning/conditions/order.vue?vue&type=template&id=2179044d ***!
+  \*********************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _vm._m(0);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", [_c("p", {
+    staticClass: "text-subtitle-1 mb-0 mt-2"
+  }, [_vm._v("\n          เงื่อนไขการสั่งซื้อสินค้าและใช้บริการ\n        ")]), _vm._v(" "), _c("strong", [_vm._v("การยืนยันการสั่งซื้อ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-3"
+  }, [_vm._v("\n          1. ลูกค้าจำเป็นต้องชำระเงินมัดจำอย่างน้อย 50 % หรือเต็มจำนวน\n          เพื่อยืนยันการสั่งซื้อสินค้ากับทางร้าน\n        ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-3"
+  }, [_vm._v("\n          2. ลูกค้าจำเป็นต้องชำระเงินตามเวลาที่ทางร้านกำหนด\n          หากเลยกำหนดชำระเงิน สามารถแจ้งทางร้านเพื่อขยายเวลาชำระเงินออกไป\n          โดยยึดถือคำวินิจฉัยของทางร้านเป็นที่สุด\n        ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-3"
+  }, [_vm._v("\n          3. ทางร้านขอสงวนสิทธิ์จัดลำดับคิวนัดรับสินค้า\n          ให้กับลูกค้าท่านที่ชำระเงินก่อน\n        ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-3"
+  }, [_vm._v("\n          4. \u0E2B\u0E32\u0E01\u0E25\u0E39\u0E01\u0E04\u0E49\u0E32\u0E44\u0E21\u0E48\u0E2A\u0E30\u0E14\u0E27\u0E01\u0E0A\u0E33\u0E23\u0E30\u0E40\u0E07\u0E34\u0E19 \u0E42\u0E1B\u0E23\u0E14\u0E41\u0E08\u0E49\u0E07\u0E17\u0E32\u0E07\u0E23\u0E49\u0E32\u0E19\u0E17\u0E31\u0E19\u0E17\u0E35\n          \u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E2A\u0E33\u0E23\u0E2D\u0E07\u0E2A\u0E34\u0E19\u0E04\u0E49\u0E32\u0E41\u0E25\u0E30\u0E04\u0E34\u0E27\u0E02\u0E2D\u0E07\u0E17\u0E48\u0E32\u0E19 \u0E42\u0E14\u0E22\u0E21\u0E35\u0E02\u0E49\u0E2D\u0E15\u0E01\u0E25\u0E07\u0E15\u0E48\u0E2D\u0E44\u0E1B\u0E19\u0E35\u0E49\u2028-\n          \u0E25\u0E39\u0E01\u0E04\u0E49\u0E32\u0E08\u0E33\u0E40\u0E1B\u0E47\u0E19\u0E15\u0E49\u0E2D\u0E07\u0E40\u0E02\u0E49\u0E32\u0E23\u0E49\u0E32\u0E19\u0E15\u0E32\u0E21\u0E40\u0E27\u0E25\u0E32\u0E17\u0E35\u0E48\u0E15\u0E01\u0E25\u0E07\u0E01\u0E31\u0E1A\u0E17\u0E32\u0E07\u0E23\u0E49\u0E32\u0E19\u0E44\u0E27\u0E49\u2028-\n          \u0E40\u0E21\u0E37\u0E48\u0E2D\u0E25\u0E39\u0E01\u0E04\u0E49\u0E32\u0E16\u0E36\u0E07\u0E2B\u0E19\u0E49\u0E32\u0E23\u0E49\u0E32\u0E19 \u0E17\u0E32\u0E07\u0E23\u0E49\u0E32\u0E19\u0E08\u0E30\u0E14\u0E33\u0E40\u0E19\u0E34\u0E19\u0E01\u0E32\u0E23\u0E08\u0E31\u0E14\u0E40\u0E15\u0E23\u0E35\u0E22\u0E21\u0E2A\u0E34\u0E19\u0E04\u0E49\u0E32\u0E17\u0E31\u0E19\u0E17\u0E35\n          \u0E42\u0E14\u0E22\u0E43\u0E0A\u0E49\u0E40\u0E27\u0E25\u0E32\u0E08\u0E31\u0E14\u0E40\u0E15\u0E23\u0E35\u0E22\u0E21 15-30 \u0E19\u0E32\u0E17\u0E35 \u0E2B\u0E23\u0E37\u0E2D\u0E15\u0E32\u0E21\u0E17\u0E35\u0E48\u0E15\u0E01\u0E25\u0E07\u0E01\u0E31\u0E1A\u0E17\u0E32\u0E07\u0E23\u0E49\u0E32\u0E19\u0E44\u0E27\u0E49\u2028-\n          \u0E2B\u0E32\u0E01\u0E25\u0E39\u0E01\u0E04\u0E49\u0E32\u0E40\u0E02\u0E49\u0E32\u0E23\u0E49\u0E32\u0E19\u0E01\u0E48\u0E2D\u0E19 \u0E2B\u0E23\u0E37\u0E2D \u0E2B\u0E25\u0E31\u0E07\u0E40\u0E27\u0E25\u0E32\u0E17\u0E35\u0E48\u0E15\u0E01\u0E25\u0E07\u0E01\u0E31\u0E1A\u0E17\u0E32\u0E07\u0E23\u0E49\u0E32\u0E19\u0E44\u0E27\u0E49\n          \u0E2D\u0E32\u0E08\u0E43\u0E0A\u0E49\u0E40\u0E27\u0E25\u0E32\u0E08\u0E31\u0E14\u0E40\u0E15\u0E23\u0E35\u0E22\u0E21\u0E2A\u0E34\u0E19\u0E04\u0E49\u0E32\u0E21\u0E32\u0E01\u0E01\u0E27\u0E48\u0E32\u0E17\u0E35\u0E48\u0E15\u0E01\u0E25\u0E07\u0E01\u0E31\u0E1A\u0E17\u0E32\u0E07\u0E23\u0E49\u0E32\u0E19\u0E44\u0E27\u0E49\u2028-\n          \u0E2A\u0E34\u0E19\u0E04\u0E49\u0E32\u0E1A\u0E32\u0E07\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23 \u0E08\u0E33\u0E40\u0E1B\u0E47\u0E19\u0E15\u0E49\u0E2D\u0E07\u0E0A\u0E33\u0E23\u0E30\u0E21\u0E31\u0E14\u0E08\u0E33\u0E40\u0E17\u0E48\u0E32\u0E19\u0E31\u0E49\u0E19\n        ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-3"
+  }, [_vm._v("\n          5. หากลูกค้าไม่สะดวกชำระเงิน และไม่ได้แจ้งให้ทางร้านทราบไว้\n          ทางร้านขอสงวนสิทธิ์ปฏิเสธการจัดเตรียมสินค้า\n          โดยไม่ต้องแจ้งให้ทราบล่วงหน้า\n        ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-0 ml-3"
+  }, [_vm._v("\n          6. ลูกค้ายินยอมให้ทางร้านใช้งานรูปภาพสินค้า\n          ในการลงโฆษณาประชาสัมพันธ์ในสื่อต่าง ๆ ของทางร้านได้\n          โดยไม่ต้องแจ้งให้ทราบล่วงหน้า\n        ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-5"
+  }, [_vm._v("\n          ** หากลูกค้าไม่ยินยอมให้ทางร้านใช้งานรูปภาพสินค้า\n          ในการลงโฆษณาประชาสัมพันธ์ในสื่อต่าง ๆ ของทางร้าน\n          สามารถแจ้งได้ทุกเมื่อ เพื่อดำเนินการลบโฆษณาประชาสัมพันธ์ในสื่อต่าง ๆ\n          ของทางร้าน การรับสินค้า\n        ")]), _vm._v(" "), _c("strong", {
+    staticClass: "mt-2"
+  }, [_vm._v("การยืนยันการสั่งซื้อ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-3"
+  }, [_vm._v("\n          7. ลูกค้าสามารถรับสินค้าได้ตั้งแต่วัน - เวลาที่นัดรับ\n          หรือหลังจากได้รับการแจ้งเตือนจากทางร้าน ไม่ว่าจะเป็นทางร้านโทรศัพท์\n          ข้อความ(SMS) อื่น ๆ ได้ทันทีหลังจากได้รับการแจ้งเตือน\n        ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-3"
+  }, [_vm._v("\n          8. ลูกค้าจำเป็นต้องการรับสินค้าก่อนเวลาร้านปิด\n          เนื่องจากไม่สามารถรับสินค้าหลังเวลาร้านปิดได้\n        ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-5"
+  }, [_vm._v("\n          ** กรณีเปลี่ยนแปลงเวลาร้านปิดจากปกติ\n          ทางร้านจะแจ้งให้ลูกค้าทราบก่อนเวลาร้านปิด อย่างน้อย 120 นาที\n        ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-3"
+  }, [_vm._v("\n          9. กรณีลูกค้าไม่สามาถรับสินค้าตามวัน-เวลาที่นัดรับได้\n          ลูกค้าสามารถแจ้งรับสินค้าในวันถัดไปได้\n        ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-3"
+  }, [_vm._v("\n          10. กรณีลูกค้าประสงค์ให้ผู้อื่นรับสินค้าแทน\n          ลูกค้าสามารถใช้ผู้รับสินค้าแทน\n          แจ้งชื่อและหมายเลขโทรศัพท์ของผู้สั่งซื้อที่หน้าร้าน\n          เพื่อรับสินค้าของลูกค้า\n        ")]), _vm._v(" "), _c("strong", {
+    staticClass: "mt-2"
+  }, [_vm._v("การเพิ่มบริการจัดส่ง")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-3"
+  }, [_vm._v("\n          11. ลูกค้าจำเป็นต้องสั่งซื้อล่วงหน้าอย่างน้อย 24 ชั่วโมง\n          (เป็นบริการเสริมจากภายนอก grab express หรือ food panda\n          โดยทางร้านขอสงวนสิทธิ์ให้การเลือกบริการ)\n        ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-3"
+  }, [_vm._v("\n          12. ลูกค้าจำเป็นต้องส่ง GPS ที่ตรงกับสถานที่จริงเท่านั้น\n          (รัศมีไม่เกิน 300 เมตร) ไม่สามารถใช้เป็นที่อยู่ไปรษณีย์ได้\n        ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-3"
+  }, [_vm._v("13. การจัดส่งมีค่าบริการเพิ่มเติม")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-3"
+  }, [_vm._v("\n          14. ไม่รับประกันความเสียหายที่อาจเกิดขึ้นระหว่างจัดส่งทุกกรณี\n        ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-3"
+  }, [_vm._v("15. ทางร้านสงวนสิทธิ์จัดส่งตาม GPS เท่านั้น")]), _vm._v(" "), _c("strong", {
+    staticClass: "mt-2"
+  }, [_vm._v("การเลื่อนนัดรับสินค้า")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-3"
+  }, [_vm._v("\n          16. ลูกค้าสามารถเลื่อนวัน-เวลานัดรับสินค้าได้\n          โดยจำเป็นต้องแจ้งให้ทางร้านทราบล่วงหน้าอย่างน้อย 24 ชั่วโมง\n          เพื่อตรวจสอบคิวและเปลี่ยนแปลง\n          โดยยึดถือคำวินิจฉัยของทางร้านเป็นที่สุด การยกเลิกรายการสั่งซื้อ\n        ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-3"
+  }, [_vm._v("\n          17. ลูกค้าสามารถยกเลิกรายการสั่งซื้อได้\n          โดยยึดถือคำวินิจฉัยของทางร้านเป็นที่สุด โดยทางร้านขอสงวนสิทธิ์\n          ไม่คืนเงินมัดจำทั้งจำนวน และทางร้านจะออกคูปองแทนเงินสด\n          มีรายละเอียดดังนี้\n        ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-5"
+  }, [_vm._v("\n          * จำนวนเงินเท่ากับยอดเงินที่ชำระ สามารถใช้แทนเงินสด\n        ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-5"
+  }, [_vm._v("** ใช้ได้เพียงครั้งเดียว")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-5"
+  }, [_vm._v("** ไม่มีวันหมดอายุ")]), _vm._v(" "), _c("strong", {
+    staticClass: "mt-2"
+  }, [_vm._v("การคืนงิน")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-3"
+  }, [_vm._v("18. ทางร้านไม่มีนโยบายคืนเงินทั้งจำนวนทุกกรณี")]), _vm._v(" "), _c("strong", {
+    staticClass: "mt-2"
+  }, [_vm._v("การรักษาความลับ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-3"
+  }, [_vm._v("\n          19. ข้อมูลส่วนตัวของลูกค้า เช่น ชื่อ หมายเลขโทรศัพท์\n          รายละเอียดการสั่งซื้อ ทางร้านจะจัดเก็บข้อมูลเป็นความลับ\n        ")]), _vm._v(" "), _c("strong", {
+    staticClass: "mt-2"
+  }, [_vm._v("คำแนะนำเกี่ยบกับสินค้า")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-3"
+  }, [_vm._v("\n          20. สินค้าทุกรายการ จำเป็นต้องแช่เย็น เพื่อรักษาคุณภาพสูงสุด\n        ")]), _vm._v(" "), _c("strong", {
+    staticClass: "mt-2"
+  }, [_vm._v("การเปลี่ยนแปลงเงื่อนไข")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-3"
+  }, [_vm._v("\n          21. ทางร้านสามารถเปลี่ยนแปลงรายละเอียดเงื่อนไขได้\n          โดยไม่จำเป็นต้องแจ้งให้ทราบล่วงหน้า\n        ")]), _vm._v(" "), _c("strong", {
+    staticClass: "mt-2"
+  }, [_vm._v("การรับทราบและยินยอมเงื่อนไข")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-3"
+  }, [_vm._v("\n          22. ทางร้านขอสงวนสิทธิ์สรุปรายการสั่งซื้อถูกต้องทุกประการ\n          หลังจากลูกค้าทำรายการชำระเงินเสร็จสิ้น\n        ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-3"
+  }, [_vm._v("\n          23. ลูกค้ารับทราบและยินยอมเงื่อนไขทุกประการ\n          หลังจากลูกค้าทำรายการชำระเงินเสร็จสิ้น\n        ")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-1 ml-3"
+  })]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./resources/js/components/learning/conditions/order.vue":
+/*!***************************************************************!*\
+  !*** ./resources/js/components/learning/conditions/order.vue ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _order_vue_vue_type_template_id_2179044d__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./order.vue?vue&type=template&id=2179044d */ "./resources/js/components/learning/conditions/order.vue?vue&type=template&id=2179044d");
+/* harmony import */ var _order_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./order.vue?vue&type=script&lang=js */ "./resources/js/components/learning/conditions/order.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _order_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _order_vue_vue_type_template_id_2179044d__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _order_vue_vue_type_template_id_2179044d__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/learning/conditions/order.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/learning/conditions/order.vue?vue&type=script&lang=js":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/learning/conditions/order.vue?vue&type=script&lang=js ***!
+  \***************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_order_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./order.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/learning/conditions/order.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_order_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/learning/conditions/order.vue?vue&type=template&id=2179044d":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/learning/conditions/order.vue?vue&type=template&id=2179044d ***!
+  \*********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_order_vue_vue_type_template_id_2179044d__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../../node_modules/vue-loader/lib??vue-loader-options!./order.vue?vue&type=template&id=2179044d */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/learning/conditions/order.vue?vue&type=template&id=2179044d");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_order_vue_vue_type_template_id_2179044d__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_order_vue_vue_type_template_id_2179044d__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ })
+
+}]);

@@ -88,5 +88,6 @@ class SumOrderTodayCommand extends Command
             " มีรายการสั่งซื้อจำนวน " . $count_order_details . " รายการ | POS " . $count_pos . " รายการ | รวมเป็นเงิน " . number_format($sum_total, 2)
             . " บาท | บริการจัดส่ง " . $sum_delivery . " รายการ | บริการเกี่ยวกับเงิน " . $sum_service_money . " รายการ";
         AlertMessages::LineAlertGeneral($msg);
+
     }
 }

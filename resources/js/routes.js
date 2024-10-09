@@ -135,6 +135,13 @@ const routes = [
     },
 
     {
+        path: "/manages/members/addPointByPOS",
+        name: "managesMembersAddPointByPOS",
+        component: () => import("@/js/pages/members/add_point_by_pos.vue"),
+        meta: { requiresAuth: true },
+    },
+
+    {
         path: "/manages/order/checkNoticeOfPaymentFromCustomer",
         name: "managesOrderCheckNoticeOfPaymentFromCustomer",
         component: () =>

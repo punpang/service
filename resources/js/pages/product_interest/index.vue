@@ -121,6 +121,7 @@ export default {
                 .catch((error) => {
                     this.$swal({
                         title: "เกิดข้อผิดพลาดบางประการ",
+                        // text: error.data.text,
                         toast: true,
                         icon: "error",
                         showConfirmButton: false,

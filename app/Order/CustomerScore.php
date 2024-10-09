@@ -63,14 +63,23 @@ class CustomerScore extends Model
         return floor($amount / self::divisor());
     }
 
-    public static function addScore($customer, $amount, $can_refund = 0, $history_payed_id = null, $expiration_date = 365, $alert = true)
-    {
+    public static function addScore(
+        $customer,
+        $amount,
+        $can_refund = 0,
+        $history_payed_id = null,
+        $expiration_date = 365,
+        $alert = true,
+        $order_id = null
+    ) {
+
         $score = new CustomerScore;
         $score->customer_id = $customer->id;
         $score->history_payed_id = $history_payed_id;
         $score->point = self::processing_point($amount); //$amount / self::divisor();
         $score->can_refund = $can_refund;
         $score->expiration_date = \Carbon\Carbon::now()->addDays($expiration_date);
+        $score->order_id = $order_id;
         $score->save();
 
         if ($alert) {

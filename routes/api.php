@@ -175,6 +175,10 @@ Route::middleware("admin:api")->group(function () { //สำหรับ waitres
                 Route::post('{goods}/alert_to_customer', 'Order\ProductInterestController@alert_to_customer');
             });
 
+            Route::prefix('customer_score')->group(function () { // api/v1/pos/goods/...
+                Route::post('add_point_by_pos', 'Order\CustomerScoreController@add_point_by_pos');
+            });
+
             Route::prefix('import')->group(function () { // api/v1/pos/goods/...
                 Route::post('excel', 'Order\WongnaiPosBillsController@import');
             });
@@ -538,19 +542,19 @@ Route::post('psid_member', 'Order\WongnaiPosBillsController@post_psid_member')->
 //     return Artisan::call('migrate');
 // });
 
-Route::get('/artisan/df4sd6f41wa6f1f6g8qw3f4as6df4196/queue/refresh', function () {
-    Artisan::call('queue:restart');
-    Artisan::call('queue:work --queue=high,default');
-    return "Finished";
-});
+// Route::get('/artisan/df4sd6f41wa6f1f6g8qw3f4as6df4196/queue/refresh', function () {
+//     Artisan::call('queue:restart');
+//     Artisan::call('queue:work --queue=high,default');
+//     return "Finished";
+// });
 
-Route::get('/artisan/df4sd6f41wa6f1f6g8qw3f4as6df4196/queue/restart', function () {
-    return Artisan::call('queue:restart');
-});
+// Route::get('/artisan/df4sd6f41wa6f1f6g8qw3f4as6df4196/queue/restart', function () {
+//     return Artisan::call('queue:restart');
+// });
 
-Route::get('/artisan/df4sd6f41wa6f1f6g8qw3f4as6df4196/queue/work', function () {
-    return Artisan::call('queue:work --queue=high,default');
-});
+// Route::get('/artisan/df4sd6f41wa6f1f6g8qw3f4as6df4196/queue/work', function () {
+//     return Artisan::call('queue:work --queue=high,default');
+// });
 
 // Route::get('/artisan/df4sd6f41wa6f1f6g8qw3f4as6df4196/db/seed/{seed}', function ($seed) {
 //     return Artisan::call('db:seed --class=' . $seed);
@@ -576,18 +580,20 @@ Route::prefix('webhook')->group(function () { // api/webhook/...
 
 
 Route::prefix('test')->group(function () { // api/webhook/...
-    Route::get('date', function () {
-        $day = "20240404";
-        $time = "13:09";
-        $date = \Carbon\Carbon::parse($day)->format("Y-m-d") . " " . $time . ":00";
+//     Route::get('date', function () {
+//         $day = "20240404";
+//         $time = "13:09";
+//         $date = \Carbon\Carbon::parse($day)->format("Y-m-d") . " " . $time . ":00";
 
-        return $date;
-    });
-   // Route::get('up_price_goods_normal','Punpang\ProductController@up_price_goods_normal');
-    //Route::get('up_a_price','Order\APriceController@up_a_price');
-    // Route::get('up_price_product_add_on', 'Order\ProductAddOnController@up_price_product_add_on');
-    Route::get('up_price_product_add_on_discount', 'Order\ProductAddOnController@up_price_product_add_on_discount');
-   // Route::get('up_price_pos_goods', 'Pos\GoodsController@up_price_pos_goods');
+//         return $date;
+//     });
+//     // Route::get('up_price_goods_normal','Punpang\ProductController@up_price_goods_normal');
+//     //Route::get('up_a_price','Order\APriceController@up_a_price');
+//     // Route::get('up_price_product_add_on', 'Order\ProductAddOnController@up_price_product_add_on');
+//     Route::get('up_price_product_add_on_discount', 'Order\ProductAddOnController@up_price_product_add_on_discount');
+//     // Route::get('up_price_pos_goods', 'Pos\GoodsController@up_price_pos_goods');
+//     Route::get('check_pusher', 'Order\KsherPayController@check_pusher');
+    Route::get('is_day_off', 'Order\StoreDayOffController@is_day_off');
 
 });
 

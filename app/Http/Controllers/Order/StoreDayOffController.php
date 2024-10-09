@@ -71,4 +71,14 @@ class StoreDayOffController extends Controller
         $id->delete();
         return response()->json([], 200);
     }
+
+    public function is_day_off()
+    {
+        $is_day_off = StoreDayOff::isDayOff();
+        if ($is_day_off["status"]) {
+            return "ร้านปิด";
+        }
+
+        return "ร้านเปิด";
+    }
 }

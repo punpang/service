@@ -18,19 +18,24 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
 Broadcast::channel('newTask', function(){
     return true;
 });
-Broadcast::channel('taskRemoved', function(){
-    return true;
-});
 
-Broadcast::channel('DiningTableStatus', function(){
-    return true;
-});
+// Broadcast::channel('taskRemoved', function(){
+//     return true;
+// });
 
-Broadcast::channel('KitchenQueueOrderFetch', function (){
-    return true;
-});
+// Broadcast::channel('DiningTableStatus', function(){
+//     return true;
+// });
 
-Broadcast::channel('WaitressQueueOrderProcessing', function (){
+// Broadcast::channel('KitchenQueueOrderFetch', function (){
+//     return true;
+// });
+
+// Broadcast::channel('WaitressQueueOrderProcessing', function (){
+//     return true;
+// });
+
+Broadcast::channel('KsherPayEvent', function (){
     return true;
 });
 

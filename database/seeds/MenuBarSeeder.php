@@ -58,6 +58,14 @@ class MenuBarSeeder extends Seeder
             ],
 
             [
+                // จัดการสมาชิก
+                "title" => "สมาชิก", "action" => "person", "admin" => 1, "customer" => 0,
+                "subs" => [
+                    ["title" => "เพิ่มคะแนน", "to" => "/manages/members/addpointbypos", "admin" => 1, "customer" => 0],
+                ]
+            ],
+
+            [
                 // จัดการ ตั้งค่า
                 "title" => "ตั้งค่า", "action" => "settings", "admin" => 1, "customer" => 0,
                 "subs" => [

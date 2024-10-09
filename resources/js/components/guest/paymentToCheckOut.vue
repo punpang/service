@@ -6,10 +6,7 @@
                     v-on="on"
                     large
                     class="success"
-                    :disabled="
-                        propChannelID === 6 ||
-                        propDeposit <= 0 
-                    "
+                    :disabled="propChannelID === 6 || propDeposit <= 0"
                     @click="clickSubmitPayment"
                 >
                     <v-icon left>payments</v-icon>
@@ -19,7 +16,7 @@
             </template>
             <v-card>
                 <v-card-title class="text-h5 grey lighten-2">
-                    กำลังชำระเงิน 
+                    กำลังชำระเงิน
                     <v-spacer></v-spacer>
                     <v-btn icon fab small @click="exit">
                         <v-icon color="error" @click="exit">close</v-icon>
@@ -360,6 +357,8 @@ export default {
             ".KsherPayEventAs",
             (e) => {
                 const data = e.data;
+                // console.log(data);
+
                 if (
                     data.result === "success" &&
                     parseInt(data.order_id) === parseInt(this.order.id)

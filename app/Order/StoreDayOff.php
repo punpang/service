@@ -87,4 +87,23 @@ $end_time
             ->addMinutes(30)
             ->format('H:i:s');
     }
+
+    public static function isDayOff()
+    {
+        $store_day_off = self::where("start_date", "<=", now()->format("Y-m-d"))
+            ->where("end_date", ">=", now()->format("Y-m-d"))
+            ->where("end_time", ">", now()->format("H:i:s"))
+            ->orderBy("start_date", "ASC")
+            ->orderBy("end_date", "ASC")
+            ->first();
+
+        if ($store_day_off) {
+            return [
+                "status" => true,
+                "data" => $store_day_off
+            ];
+        }
+
+        return ["status" => false];
+    }
 }

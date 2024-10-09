@@ -752,12 +752,18 @@ class AOrderController extends Controller
 
     public function addGoodsCake(AOrder $order, Request $request)
     {
+
         $order->orderDetail()->create([
             "a_price_id" => $request->a_price["id"],
             "price" => $request->a_price["price"],
             "message" => $request->a_price["message"],
             "detail" => $request->a_price["detail"]
         ]);
+
+        if ($order->orderDetail->aPrice->m3 == 2) {
+            $order->orderDetail->status_upload_images_from_customer = 1;
+            $order->orderDetail->save();
+        }
 
         return response()->json([
             "status" => "success",
@@ -1240,6 +1246,4 @@ class AOrderController extends Controller
             "text" => "เปลี่ยนแปลงการแจ้งเตือนไปยัง Facebook เมื่อจัดเตรียมสินค้าเสร็จ"
         ], 200);
     }
-
-
 }

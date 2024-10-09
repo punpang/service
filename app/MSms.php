@@ -3,9 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Sms;
+// use App\Sms;
 use App\Linenotify;
 use App\FacebookMessager;
+use App\SendSmsAgain;
 
 class MSms extends Model
 {
@@ -17,13 +18,27 @@ class MSms extends Model
             $key = MSms::LCKEY();
             $MSms = MSms::LCSms($p, $m, $key);
             if ($MSms['status'] == 200) {
-                return response()->json([
+                return [
                     'success' => true,
                     'message' => 'ส่ง SMS สำเร็จ'
-                ], 200);
+                ];
+
+                // return response()->json([
+                //     'success' => true,
+                //     'message' => 'ส่ง SMS สำเร็จ'
+                // ], 200);
             } elseif ($MSms['status'] == 400) {
                 (new Linenotify)->line('แจ้งเตือน : ระบบ SMS ไม่ทำงาน กรุณาเปิดปิดแอพใหม่ !');
-                return;
+
+                SendSmsAgain::firstOrCreate([
+                    "phone" => $p,
+                    "message" => $m
+                ]);
+
+                return [
+                    'success' => false,
+                    'message' => 'ส่ง SMS ไม่สำเร็จ'
+                ];
                 // $sms = Sms::send($p,$m);
                 // if ($sms != 200) {
                 //   // return 400;
@@ -65,7 +80,7 @@ class MSms extends Model
         $response = curl_exec($curl);
         $err = curl_error($curl);
         curl_close($curl);
-        
+
         if ($err) {
             return [
                 "status" => 400,
@@ -109,7 +124,7 @@ class MSms extends Model
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 5,
+                CURLOPT_TIMEOUT => 10,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => "POST",
                 CURLOPT_POSTFIELDS => "{\n\t\"number\":\"$number\",\n\t\"text\":\"$message\"\n\t\n}",

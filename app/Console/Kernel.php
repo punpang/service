@@ -33,6 +33,11 @@ class Kernel extends ConsoleKernel
         // แจ้งเตือนชำระเงินจากลูกค้า
         $schedule->command("Alert:NoticePaymentByCustomer")->everyMinute();
 
+        // ลบ SMS ที่เกิน 10 นาที
+        $schedule->command("Sms:DeleteMessage")->everyTenMinutes()->between("08:30", "19:10");
+
+        // ส่ง SMS อีกครั้ง
+        $schedule->command("Sms:SendAgain")->everyMinute()->between("08:30", "19:05");
 
         // แจ้งเตือนรายการสั่งซื้อวันนี้
         $schedule->command("Alert:OrderToday")->dailyAt('08:30');
@@ -52,6 +57,8 @@ class Kernel extends ConsoleKernel
 
         // แจ้งลูกค้าที่ยังไม่ได้รับสินค้า ให้รับก่อนร้านปิด
         $schedule->command("AlertCustomer:GetBeforeClose")->dailyAt('18:00');
+        $schedule->command("AlertCustomer:GetBeforeClose")->dailyAt('18:30');
+        $schedule->command("AlertCustomer:GetBeforeClose")->dailyAt('18:45');
 
         // $schedule->command('inspire')
         //          ->hourly();

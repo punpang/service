@@ -277,4 +277,18 @@ class KsherPayController extends Controller
 
         return $ksherDecode["data"];
     }
+
+    public function check_pusher()
+    {
+        // return "test";
+        $KsherPayEven = [
+            "result" => "success",
+            "message" => "ชำระเงินสำเร็จ",
+            "event" => "KsherPayEvent",
+            "order_id" => "20083"
+        ];
+
+        $bo = broadcast(new KsherPayEvent($KsherPayEven));
+        return $KsherPayEven;
+    }
 }

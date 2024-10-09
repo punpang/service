@@ -122,6 +122,12 @@ class OrderDetailController extends Controller
             "detail" => $request->detail
         ]);
 
+        // return $id->aPrice->m3;
+        if ($id->aPrice->m3 == 2) {
+            $id->status_upload_images_from_customer = 1;
+            $id->save();
+        }
+
         return response()->json([
             "status" => "success",
         ], 200);

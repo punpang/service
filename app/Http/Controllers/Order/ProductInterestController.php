@@ -67,10 +67,18 @@ class ProductInterestController extends Controller
 
 
         foreach ($productInterests as $productInterest) {
-            $productInterest->update(["status_sms_alert" => 1]);
             $msgSms = "ปั้นแป้ง สวัสดีค่ะ วันนี้ ($date) [ $goods->text ] มีสินค้าพร้อมจำหน่ายนะคะ";
 
-            MSms::Sms($productInterest->customer->tel, $msgSms, true);
+            $result_sms = MSms::Sms($productInterest->customer->tel, $msgSms, true);
+            if ($result_sms["success"] == false) {
+                return response()->json([
+                    "title" => "ส่งข้อความไม่สำเร็จ",
+                    "icon" => "error",
+                    "text" =>  "ระบบ SMS ไม่ทำงาน",
+                ], 200);
+            }
+
+            $productInterest->update(["status_sms_alert" => 1]);
         }
 
         $goods->update(["count_product_interest" => 0]);
